@@ -4,6 +4,16 @@ const minLength = 3;
 
 const SmashedSchema = new mongoose.Schema(
   {
+    smashConfig: {
+      type: String,
+      required: [true, "Smash config is required"],
+      minlength: [minLength, "Smash config must be at least 3 characters"],
+    },
+    debug: {
+      type: String,
+      required: [true, "Debug is required"],
+      minlength: [minLength, "Debug must be at least 3 characters"],
+    },
     ip: {
       type: String,
       required: [true, "IP is required"],

@@ -32,10 +32,21 @@ import {
   WorkingController,
 } from "../scenes/interfaces";
 import { debugInit, debugMax } from "../debugOptions";
-import { ClientInformation, getClientInformation } from "./client";
+import {
+  ClientInformation,
+  getClientInformation,
+  saveToAxios,
+  SessionInfo,
+} from "./client";
 
 function Play() {
   let myPhaser: any = useRef(null);
+
+  const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
+
+  useEffect(() => {
+    console.log("sessionInfo", sessionInfo);
+  }, [sessionInfo]);
 
   const space: string = "&nbsp";
 
@@ -311,8 +322,8 @@ function Play() {
 
     (async () => {
       let c: ClientInformation = await getClientInformation();
-
-      console.log("c", c);
+      let s: SessionInfo = await saveToAxios(c, newSmashConfig, debug);
+      setSessionInfo(s);
     })();
   };
 

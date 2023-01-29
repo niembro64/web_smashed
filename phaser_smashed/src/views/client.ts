@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import { Moment } from "moment";
+import { Debug, SmashConfig } from "../scenes/interfaces";
 
 export interface ClientInformation {
   city: string;
@@ -69,12 +70,48 @@ export const getClientInformation = async (): Promise<ClientInformation> => {
   };
 
   // axios post to server http://localhost:9000/api/smashed/create
-  await axios.post(
-    "http://localhost:9000/api/smashed/create",
-    clientInformation
-  );
+  // await axios.post(
+  //   "http://localhost:9000/api/smashed/create",
+  //   clientInformation
+  // );
 
   console.log(clientInformation);
 
   return clientInformation;
+};
+
+export interface SessionInfo {
+  smashConfig: string;
+  debug: string;
+  ip: string;
+  timeStamp: Moment;
+  city: string;
+  region: string;
+  country: string;
+  clientVisits: number;
+}
+
+export const saveToAxios = async (
+  clientInformation: ClientInformation,
+  smashConfig: SmashConfig,
+  debug: Debug
+): Promise<SessionInfo> => {
+  let sessionInfo: SessionInfo = {
+    smashConfig: JSON.stringify(smashConfig),
+    debug: JSON.stringify(debug),
+    ip: clientInformation.ip,
+    timeStamp: clientInformation.timeStamp,
+    city: clientInformation.city,
+    region: clientInformation.region,
+    country: clientInformation.country,
+    clientVisits: clientInformation.clientVisits,
+  };
+
+  if (process.env.NODE_ENV === "production") {
+    await axios.post("/api/smashed/create", sessionInfo);
+  } else {
+    await axios.post("http://localhost:9000/api/smashed/create", sessionInfo);
+  }
+  // await axios.post("http://localhost:9000/api/smashed/create", sessionInfo);
+  return sessionInfo;
 };
