@@ -1,0 +1,29 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  /* background-color: black;
+  color: white; */
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
+  /* font-family: "Press Start 2P", cursive; */
+  font-family: "Press Start 2P";
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+
+  /* font-family: "Press Start 2P", "Courier New", Courier, monospace; */
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-family: "Press Start 2P";
+}
