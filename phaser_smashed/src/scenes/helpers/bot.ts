@@ -320,5 +320,5 @@ export function updateMoveBot(
   //   p.up = false;
   // }
 
-  console.log('v.y', v.y);
+  // console.log('v.y', v.y);
 }
