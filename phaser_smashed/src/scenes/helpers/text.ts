@@ -19,26 +19,46 @@ export function updateText(game: Game): void {
   const redOffsetY =
     game.cameraMover.char.sprite.y - game.cameraCenter.char.sprite.y;
 
-  let z =
-    1 / zoom +
+  const newDataTitleY =
+    dataTitleY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
     game.cameraMover.char.sprite.y * (-1 / zoom + 1);
-
-  let p =
-    1 / zoom +
+  const newDataY =
+    dataY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newSplashY =
+    splashY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newControllerY =
+    controllerY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newTopY =
+    glassY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newReadyY =
+    readyY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newGameTimeY =
+    gameTimeY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newUpperY =
+    damageY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newTimeTimeY =
+    timeTimeY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
     game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
-
-  const newDataTitleY = dataTitleY * z;
-  const newDataY = dataY * z;
-  const newSplashY = splashY * z;
-  const newControllerY = controllerY * z;
-  const newTopY = glassY * z;
-  const newReadyY = readyY * z;
-  const newGameTimeY = gameTimeY * z;
-  const newUpperY = damageY * z;
-  const newTimeTimeY = timeTimeY * p;
-  const newLowerY = killsY * p;
+  const newLowerY =
+    killsY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
 
   updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
