@@ -115,3 +115,14 @@ export const saveToAxios = async (
   // await axios.post("http://localhost:9000/api/smashed/create", sessionInfo);
   return sessionInfo;
 };
+
+export const getAllAxios = async (): Promise<SessionInfo[]> => {
+  let response;
+  if (process.env.NODE_ENV === "production") {
+    response = await axios.get("/api/smashed");
+  } else {
+    response = await axios.get("http://localhost:9000/api/smashed");
+  }
+  // let response = await axios.get("http://localhost:9000/api/smashed");
+  return response.data;
+};

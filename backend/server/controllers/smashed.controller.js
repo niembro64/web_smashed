@@ -11,7 +11,7 @@ module.exports.test = (req, res) => {
 module.exports.findAllSmashed = (req, res) => {
   Smashed.find()
     .collation({ locale: 'en', strength: 2 })
-    .sort({ smashedName: 1 })
+    .sort({ timeStamp: -1 })
     .then((allSmashed) => res.json(allSmashed))
     .catch((err) =>
       res.status(400).json({ message: 'Something went wrong', error: err })

@@ -34,19 +34,37 @@ import {
 import { debugInit, debugMax } from "../debugOptions";
 import {
   ClientInformation,
+  getAllAxios,
   getClientInformation,
   saveToAxios,
   SessionInfo,
 } from "./client";
+import { Session } from "inspector";
+import moment from "moment";
 
 function Play() {
   let myPhaser: any = useRef(null);
 
-  const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
+  const [session, setSession] = useState<SessionInfo | null>(null);
+  const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
   useEffect(() => {
-    console.log("sessionInfo", sessionInfo);
-  }, [sessionInfo]);
+    (async () => {
+      let allSessions: SessionInfo[] = await getAllAxios();
+      setAllSessions(allSessions);
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log("sessionInfo", session);
+  }, [session]);
+
+  useEffect(() => {
+    if (allSessions === null) {
+      return;
+    }
+    console.log("allSesssions", allSessions);
+  }, [allSessions]);
 
   const space: string = "&nbsp";
 
@@ -323,7 +341,7 @@ function Play() {
     (async () => {
       let c: ClientInformation = await getClientInformation();
       let s: SessionInfo = await saveToAxios(c, newSmashConfig, debug);
-      setSessionInfo(s);
+      setSession(s);
     })();
   };
 
@@ -1454,33 +1472,55 @@ function Play() {
                 Assets & sounds that you don't immediately recognize are
                 probably OC.
               </p>
-              <h4>Tech Used</h4>
-              <ul>
-                <li>Phaser 3</li>
-                <li>ReactTS 17</li>
-                <li>Bootstrap 5</li>
-                <li
-                  onMouseDown={() => {
-                    console.log("MOUSE ENTER");
-                    setFirstCharacterSlot(5);
-                  }}
-                >
-                  Press Start 2P
-                </li>
-              </ul>
-              <img
-                className="kirbyNiembro"
-                src="./images/character_3_cropped.png"
-                alt="kirby"
-                onMouseDown={() => {
-                  console.log("MOUSE DOWN");
-                  setFirstCharacterSlot(5);
-                }}
-              />
-              <p>by NIEMBRO64</p>
-              <a className="link-tag btn btn-dark" href="http://niembro64.com/">
-                <span>See Other Projects</span>
-              </a>
+              <div className="horiz">
+                <div className="horiz-item">
+                  <h4>Recent Games</h4>
+                  <ul>
+                    {allSessions.map((session: SessionInfo) => {
+                      return (
+                        <li className="small-text">
+                          {session.country} {session.region} {session.city} {session.ip}{" "}
+                          {moment(session.timeStamp).format("YYYY-MM-DD HH:mm")}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <div className="horiz-item">
+                  <h4>Tech Used</h4>
+                  <ul>
+                    <li>Phaser 3</li>
+                    <li>ReactTS 17</li>
+                    <li>Bootstrap 5</li>
+                    <li
+                      onMouseDown={() => {
+                        console.log("MOUSE ENTER");
+                        setFirstCharacterSlot(5);
+                      }}
+                    >
+                      Press Start 2P
+                    </li>
+                  </ul>
+
+                  <img
+                    className="kirbyNiembro"
+                    src="./images/character_3_cropped.png"
+                    alt="kirby"
+                    onMouseDown={() => {
+                      console.log("MOUSE DOWN");
+                      setFirstCharacterSlot(5);
+                    }}
+                  />
+                  <p>by NIEMBRO64</p>
+                  <a
+                    className="link-tag btn btn-dark"
+                    href="http://niembro64.com/"
+                  >
+                    <span>See Other Projects</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         )}
