@@ -1473,21 +1473,24 @@ function Play() {
                 probably OC.
               </p>
               <div className="horiz">
-                <div className="horiz-item">
-                  <h4>Recent Games</h4>
+                <div className="horiz-item-start">
                   <ul>
+                    <li>
+                      <h4>Recent Games</h4>
+                    </li>
                     {allSessions.map((session: SessionInfo) => {
                       return (
                         <li className="small-text">
-                          {session.country} {session.region} {session.city} {session.ip}{" "}
-                          {moment(session.timeStamp).format("YYYY-MM-DD HH:mm")}
+                          {moment(session.timeStamp).format("YYYY-MM-DD HH:mm")}{" "}
+                          {session.country} {session.region} {session.city}
+                          {/* {session.ip}{" "} */}
                         </li>
                       );
                     })}
                   </ul>
                 </div>
 
-                <div className="horiz-item">
+                <div className="horiz-item-center">
                   <h4>Tech Used</h4>
                   <ul>
                     <li>Phaser 3</li>

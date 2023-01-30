@@ -198,7 +198,7 @@ body {
 
   flex-wrap: nowrap;
 }
-.horiz-item {
+.horiz-item-center {
   width: 50%;
   height: 100%;
   /* margin-top: 2vh; */
@@ -207,6 +207,19 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+.horiz-item-start {
+  width: 50%;
+  height: 100%;
+  /* margin-top: 2vh; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   flex-wrap: nowrap;
   overflow: auto;
