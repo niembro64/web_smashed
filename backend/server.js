@@ -25,7 +25,7 @@ AllMySmashedRoutes(app);
 
 app.get("/api", (req, res) => {
   console.log("trying to talk to database");
-  res.json({ assignment: "Niemo Exam Pirates", port: port });
+  res.json({ assignment: "Niemo Smashed", port: port });
 });
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -168,7 +168,7 @@ export function preload(game: Game): void {
   game.load.image('platformShort', 'images/brickhorizshorter.bmp');
   game.load.image('platformVertical', 'images/brickvert.bmp');
   game.load.image('brick', 'images/blockcracked.png');
-  game.load.image('suburb', 'images/suburb.png');
+  // game.load.image('suburb', 'images/suburb.png');
 
   game.load.image('flag_joey', 'images/flagpole_JK2.png');
   game.load.image('glass_full', 'images/niemo_shot_full.png');
