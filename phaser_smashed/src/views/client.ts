@@ -1,7 +1,7 @@
-import axios from "axios";
-import moment from "moment";
-import { Moment } from "moment";
-import { Debug, SmashConfig } from "../scenes/interfaces";
+import axios from 'axios';
+import moment from 'moment';
+import { Moment } from 'moment';
+import { Debug, SmashConfig } from '../scenes/interfaces';
 
 export interface ClientInformation {
   city: string;
@@ -15,7 +15,7 @@ export interface ClientInformation {
 export const getClientInformation = async (): Promise<ClientInformation> => {
   // let counterContainer = document.querySelector("#visits");
   // let resetButton = document.querySelector('#reset');
-  let visitCountString: string | null = localStorage.getItem("page_view");
+  let visitCountString: string | null = localStorage.getItem('page_view');
   let visitCountNumber: number = Number(visitCountString)
     ? Number(visitCountString)
     : 0;
@@ -24,9 +24,9 @@ export const getClientInformation = async (): Promise<ClientInformation> => {
   if (visitCountString !== null) {
     visitCountNumber =
       (Number(visitCountString) ? Number(visitCountString) : 0) + 1;
-    localStorage.setItem("page_view", JSON.stringify(visitCountNumber));
+    localStorage.setItem('page_view', JSON.stringify(visitCountNumber));
   } else {
-    localStorage.setItem("page_view", "1");
+    localStorage.setItem('page_view', '1');
   }
 
   // if (counterContainer !== null) {
@@ -37,7 +37,7 @@ export const getClientInformation = async (): Promise<ClientInformation> => {
   // let href = location.href;
   // let agent = navigator.userAgent;
 
-  let response = await fetch("https://ipapi.co/json/");
+  let response = await fetch('https://ipapi.co/json/');
   let responseJSON = await response.json();
   // let city = responseJSON.city;
   // let country = responseJSON.country;
@@ -68,12 +68,6 @@ export const getClientInformation = async (): Promise<ClientInformation> => {
     country: responseJSON.country,
     clientVisits: visitCountNumber,
   };
-
-  // axios post to server http://localhost:9000/api/smashed/create
-  // await axios.post(
-  //   "http://localhost:9000/api/smashed/create",
-  //   clientInformation
-  // );
 
   console.log(clientInformation);
 
@@ -107,10 +101,10 @@ export const saveToAxios = async (
     clientVisits: clientInformation.clientVisits,
   };
 
-  if (process.env.NODE_ENV === "production") {
-    await axios.post("/api/smashed/create", sessionInfo);
+  if (process.env.NODE_ENV === 'production') {
+    await axios.post('/api/smashed/create', sessionInfo);
   } else {
-    await axios.post("http://localhost:9000/api/smashed/create", sessionInfo);
+    await axios.post('http://localhost:9000/api/smashed/create', sessionInfo);
   }
   // await axios.post("http://localhost:9000/api/smashed/create", sessionInfo);
   return sessionInfo;
@@ -118,10 +112,10 @@ export const saveToAxios = async (
 
 export const getAllAxios = async (): Promise<SessionInfo[]> => {
   let response;
-  if (process.env.NODE_ENV === "production") {
-    response = await axios.get("/api/smashed");
+  if (process.env.NODE_ENV === 'production') {
+    response = await axios.get('/api/smashed');
   } else {
-    response = await axios.get("http://localhost:9000/api/smashed");
+    response = await axios.get('http://localhost:9000/api/smashed');
   }
   // let response = await axios.get("http://localhost:9000/api/smashed");
   return response.data;
