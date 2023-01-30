@@ -200,7 +200,7 @@ body {
 }
 .horiz-item-center {
   width: 50%;
-  height: 100%;
+  height: 30vh;
   /* margin-top: 2vh; */
 
   display: flex;
@@ -213,7 +213,7 @@ body {
 }
 .horiz-item-start {
   width: 50%;
-  height: 100%;
+  height: 30vh;
   /* margin-top: 2vh; */
 
   display: flex;
@@ -222,16 +222,23 @@ body {
   align-items: flex-start;
 
   flex-wrap: nowrap;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-.small-text {
+/* .text-small {
   font-size: 1vh;
   color: white;
   margin: 0;
   padding: 0;
   text-align: center;
+} */
+.text-white {
+  /* font-size: 2vh; */
+  color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
-
 .popup {
   position: absolute;
   top: 0%;

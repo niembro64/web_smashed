@@ -1480,7 +1480,7 @@ function Play() {
                     </li>
                     {allSessions.map((session: SessionInfo) => {
                       return (
-                        <li className="small-text">
+                        <li>
                           {moment(session.timeStamp).format("YYYY-MM-DD HH:mm")}{" "}
                           {session.country} {session.region} {session.city}
                           {/* {session.ip}{" "} */}
@@ -1517,10 +1517,10 @@ function Play() {
                   />
                   <p>by NIEMBRO64</p>
                   <a
-                    className="link-tag btn btn-dark"
+                    className="link-tag btn btn-dark text-light"
                     href="http://niembro64.com/"
                   >
-                    <span>See Other Projects</span>
+                    <span className="text-white">See Other Projects</span>
                   </a>
                 </div>
               </div>
