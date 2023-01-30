@@ -101,22 +101,24 @@ export const saveToAxios = async (
     clientVisits: clientInformation.clientVisits,
   };
 
-  if (process.env.NODE_ENV === 'production') {
-    await axios.post('/api/smashed/create', sessionInfo);
-  } else {
-    await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
-  }
+  await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
+  // if (process.env.NODE_ENV === 'production') {
+  //   await axios.post('/api/smashed/create', sessionInfo);
+  // } else {
+  //   await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
+  // }
   // await axios.post("http://localhost:8000/api/smashed/create", sessionInfo);
   return sessionInfo;
 };
 
 export const getAllAxios = async (): Promise<SessionInfo[]> => {
   let response;
-  if (process.env.NODE_ENV === 'production') {
-    response = await axios.get('/api/smashed');
-  } else {
-    response = await axios.get('http://localhost:8000/api/smashed');
-  }
+  response = await axios.get('http://localhost:8000/api/smashed');
+  // if (process.env.NODE_ENV === 'production') {
+  //   response = await axios.get('/api/smashed');
+  // } else {
+  //   response = await axios.get('http://localhost:8000/api/smashed');
+  // }
   // let response = await axios.get("http://localhost:8000/api/smashed");
   return response.data;
 };
