@@ -49,13 +49,6 @@ function Play() {
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
   useEffect(() => {
-    (async () => {
-      let allSessions: SessionInfo[] = await getAllAxios();
-      setAllSessions(allSessions);
-    })();
-  }, []);
-
-  useEffect(() => {
     console.log('sessionInfo', session);
   }, [session]);
 
@@ -104,6 +97,24 @@ function Play() {
   const [webState, setWebState] = useState<WebState>('start');
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 3]);
+
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log('webState', webState);
+    switch (webState) {
+      case 'start':
+        (async () => {
+          let allSessions: SessionInfo[] = await getAllAxios();
+          setAllSessions(allSessions);
+        })();
+        break;
+      case 'play':
+        break;
+      default:
+        break;
+    }
+  }, [webState]);
 
   const keyboardGroups: KeyboardGroup[][] = [
     [
@@ -575,6 +586,42 @@ function Play() {
       }
     }
   };
+
+  useEffect(() => {
+    if (scrollerRef.current) {
+      const handleScroll = () => {
+        if (scrollerRef.current) {
+          console.log(scrollerRef.current.scrollTop);
+        }
+      };
+
+      scrollerRef.current.addEventListener('scroll', handleScroll);
+
+      return () => {
+        if (scrollerRef.current) {
+          scrollerRef.current.removeEventListener('scroll', handleScroll);
+        }
+      };
+    }
+  }, [showAbout]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (scrollerRef.current) {
+        console.log(
+          'scrollerRef.current.scrollHeight',
+          scrollerRef.current.scrollHeight,
+          'scrollerRef.current.clientHeight',
+          scrollerRef.current.clientHeight
+        );
+
+        scrollerRef.current.scrollTop = -400;
+
+        scrollerRef.current.scrollTop = scrollerRef.current.scrollHeight;
+        // scrollerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 300);
+  }, [showAbout, scrollerRef]);
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
     blipSound();
@@ -1463,7 +1510,7 @@ function Play() {
               <div className="horiz">
                 <div className="horiz-item-start">
                   <h4>Recently Played Games</h4>
-                  <div className="scroller">
+                  <div className="scroller" ref={scrollerRef}>
                     {allSessions.map((session: SessionInfo, index: number) => {
                       const totalDigits = allSessions.length.toString().length;
                       const paddedIndex = index
@@ -1471,7 +1518,7 @@ function Play() {
                         .padStart(totalDigits, '0');
 
                       return (
-                        <p className="text-small">
+                        <p className="text-small" key={index}>
                           {paddedIndex}{' '}
                           {moment(session.timeStamp).format('YYYY-MM-DD HH:mm')}{' '}
                           {session.country} {session.region} {session.city}
