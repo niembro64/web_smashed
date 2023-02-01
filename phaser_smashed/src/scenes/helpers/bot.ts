@@ -174,11 +174,38 @@ export function getIsBotInPitArea(player: Player, game: Game): boolean {
   return false;
 }
 
+export function allPadToFalse(player: Player): void {
+  player.padCurr = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    A: false,
+    B: false,
+    X: false,
+    Y: false,
+    L: false,
+    R: false,
+    start: false,
+    select: false,
+  };
+}
+
 export function updateBot(
   player: Player,
   playerIndex: number,
   game: Game
 ): void {
+  let p = player.padCurr;
+  if (game.gameState.nameCurr !== 'game-state-play') {
+    if (game.timeSeconds % 2 === 0) {
+      allPadToFalse(player);
+    } else {
+      p.L = true;
+    }
+    return;
+  }
+
   let nearestPlayerPosition: Position = getNearestPlayerAliveXY(
     player,
     playerIndex,
@@ -196,7 +223,6 @@ export function updateBot(
 
   let v: Velocity = player.char.sprite.body.velocity;
 
-  let p = player.padCurr;
   let d = player.padDebounced;
   let t = player.char.sprite.body.touching;
   let jumps = player.char.jumps;
@@ -204,7 +230,7 @@ export function updateBot(
   let hasJump = player.char.jumps[jumpIndex] > 0.3;
   let onLastJump = jumpIndex === jumps.length - 1;
 
-  p.select = true;
+  // p.select = true;
   // p.L = true;
 
   //////////////////////
