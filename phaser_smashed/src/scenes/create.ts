@@ -1775,6 +1775,28 @@ export function createScoreboardShotGlass(game: Game): void {
       .setOrigin(0.5, 0.5);
 
     player.shotGlassImage.setTint(game.colorCircles[playerIndex].colorNumber);
+
+    player.shotGlassNumber = game.add
+      .text(
+        SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[playerIndex],
+        SCREEN_DIMENSIONS.HEIGHT / 2 + 200,
+        (player.shotCountCurr - player.shotCountPrev).toString(),
+        {
+          // font: "Arial 100px",
+          fontSize: '40px',
+          fontFamily: 'Impact',
+          // fontFamily: game.FONT_DEFAULT,
+          // fontFamily: "'Courier New'",
+          // fontFamily: "'Press Start 2P'",
+          // color: "white",
+          color: game.colorCircles[playerIndex].colorString,
+          // stroke: player.char.color.primary,
+          stroke: game.colorCircles[playerIndex].colorString,
+          strokeThickness: 2,
+        }
+      )
+      .setOrigin(0.5, 0.5)
+      .setAlpha(1);
   });
 }
 

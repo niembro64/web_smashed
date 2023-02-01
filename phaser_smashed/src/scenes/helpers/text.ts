@@ -62,6 +62,7 @@ export function updateText(game: Game): void {
 
   updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
+  updateShotsOnPlayers(game);
   updateGlasses(game, zoom, newTopY);
   updateDamageShotsText(game, zoom, newUpperY);
   updateControllerText(game, zoom, newControllerY);
@@ -193,7 +194,6 @@ export function updateGlassesTransparency(game: Game): void {
 }
 
 export function updateGlasses(game: Game, zoom: number, newY: number): void {
-  updateShotsOnPlayers(game);
   game.players.forEach((player, playerIndex) => {
     player.shotGlassImage.setScale(0.7 / zoom, 0.7 / zoom);
     player.shotGlassImage.x =
@@ -203,6 +203,19 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
         (1 / zoom);
 
     player.shotGlassImage.y = newY;
+
+    player.shotGlassNumber.setScale(1 / zoom, 1 / zoom);
+    player.shotGlassNumber.x =
+      game.cameraMover.char.sprite.x +
+      (game.textLocations[game.playerSpawnOrder[playerIndex]] +
+        game.glassLocationLROffset) *
+        (1 / zoom);
+
+    player.shotGlassNumber.y = newY + 10;
+
+    player.shotGlassNumber.setText(
+      (player.shotCountCurr - player.shotCountPrev).toString()
+    );
   });
 }
 
@@ -211,7 +224,6 @@ export function updateDamageShotsText(
   zoom: number,
   newY: number
 ): void {
-  updateShotsOnPlayers(game);
   // if (game.debug.statsInit) {
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardUpper
