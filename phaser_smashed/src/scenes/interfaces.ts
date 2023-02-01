@@ -127,8 +127,8 @@ export interface Player {
   emitterHurt: any;
   killCount: number;
   deathCount: number;
-  shotCount: number;
-  shotsNow: number;
+  shotCountCurr: number;
+  shotCountPrev: number;
   playerReadySound: any;
   circleOffset: number;
 }

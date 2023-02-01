@@ -40,7 +40,6 @@ export function create(game: Game) {
   createAttackEnergies(game);
   createColliderTableAttackEnergies(game);
   createScoreboardShotGlass(game);
-  // createSplashRuleFinished(game);
   createChomp(game);
   createGun(game);
   createEmitterChompFollowChomp(game);

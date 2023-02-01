@@ -173,9 +173,10 @@ export function updateClockTextLower(
 
 export function updateShotsOnPlayers(game: Game) {
   game.players.forEach((player, playerIndex) => {
-    player.shotCount = 0;
+    player.shotCountPrev = player.shotCountCurr;
+    player.shotCountCurr = 0;
     for (let j = 0; j < game.players.length; j++) {
-      player.shotCount += game.numberShotsTakenByMeMatrix[playerIndex][j];
+      player.shotCountCurr += game.numberShotsTakenByMeMatrix[playerIndex][j];
     }
   });
 }
@@ -225,7 +226,7 @@ export function updateDamageShotsText(
         ).toString() +
           game.TEXT_GAMEBAR_CHARS.damage +
           '  ' +
-          player.shotCount.toString() +
+          player.shotCountCurr.toString() +
           game.TEXT_GAMEBAR_CHARS.shots
       );
     player.scoreBoardUpper.x =

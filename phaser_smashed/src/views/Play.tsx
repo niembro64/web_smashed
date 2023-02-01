@@ -39,7 +39,6 @@ import {
   saveToAxios,
   SessionInfo,
 } from './client';
-import { Session } from 'inspector';
 import moment from 'moment';
 
 function Play() {
