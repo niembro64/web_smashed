@@ -79,7 +79,7 @@ export function update(game: Game, time: number, delta: number): void {
   debugUpdatePrintAllControllerButtonsWhenActive(game);
   debugUpdateControllersPrintConnected(game);
 
-  switch (game.gameState.name) {
+  switch (game.gameState.nameCurr) {
     case 'game-state-start':
       break;
     case 'game-state-play':
@@ -331,13 +331,7 @@ export function updateAttackPhysicals(
       ////////////////////////////////
       ///////// duration => cooldown
       ////////////////////////////////
-      if (
-        getHasGameDurationPassedAttack(
-          ap,
-          ap.durationAttack,
-          game
-        )
-      ) {
+      if (getHasGameDurationPassedAttack(ap, ap.durationAttack, game)) {
         setAttackPhysicalState(
           ap,
           player,
@@ -355,13 +349,7 @@ export function updateAttackPhysicals(
       ////////////////////////////////
       ///////// duration => off
       ////////////////////////////////
-      if (
-        getHasGameDurationPassedAttack(
-          ap,
-          ap.durationCooldown,
-          game
-        )
-      ) {
+      if (getHasGameDurationPassedAttack(ap, ap.durationCooldown, game)) {
         setAttackPhysicalState(
           ap,
           player,

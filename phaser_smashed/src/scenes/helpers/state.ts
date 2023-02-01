@@ -43,15 +43,27 @@ import {
   setSoundStartPlay,
 } from './sound';
 import { setBlinkFalse, setBlinkTrue } from './sprites';
-import { setRuleSplashOn, setSplashDataOff, setSplashDataOn } from './text';
+import {
+  setRuleSplashOn,
+  setSplashDataOff,
+  setSplashDataOn,
+  updateShotsOnPlayers,
+} from './text';
 
 export function setGameState(game: Game, state: GameState): void {
-  game.gameState.name = state;
-  game.gameState.gameStamp = game.gameNanoseconds;
-  game.gameState.timeStamp = game.timeNanoseconds;
-  console.log('GAME STATE', game.gameState.name);
+  game.gameState.namePrev = game.gameState.nameCurr;
+  game.gameState.gameStampPrev = game.gameState.gameStampCurr;
+  game.gameState.timeStampPrev = game.gameState.timeStampCurr;
 
-  switch (game.gameState.name) {
+  game.gameState.nameCurr = state;
+  game.gameState.gameStampCurr = game.gameNanoseconds;
+  game.gameState.timeStampCurr = game.timeNanoseconds;
+  console.log('GAME STATE', game.gameState.nameCurr);
+
+  let isDrinkingCurr = false;
+  let isDrinkingPrev = false;
+
+  switch (game.gameState.nameCurr) {
     case 'game-state-start':
       break;
     case 'game-state-play':
@@ -78,6 +90,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSoundSquishPlay(game);
       setPhysicsPause(game);
       setSplashDataOn(game);
+      isDrinkingCurr = true;
       break;
     case 'game-state-screen-clear':
       setRuleSplashOn(game, 'splash-screen-clear');
@@ -86,6 +99,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSoundSquishPlay(game);
       setPhysicsPause(game);
       setSplashDataOn(game);
+      isDrinkingCurr = true;
       break;
     case 'game-state-finished':
       setPhysicsPause(game);
@@ -96,6 +110,29 @@ export function setGameState(game: Game, state: GameState): void {
       break;
     default:
       console.log('BROKEN_____________________');
+  }
+
+  switch (game.gameState.namePrev) {
+    case 'game-state-start':
+      break;
+    case 'game-state-play':
+      break;
+    case 'game-state-paused':
+      break;
+    case 'game-state-first-blood':
+      isDrinkingPrev = true;
+      break;
+    case 'game-state-screen-clear':
+      isDrinkingPrev = true;
+      break;
+    case 'game-state-finished':
+      break;
+    default:
+      console.log('BROKEN_____________________');
+  }
+
+  if (isDrinkingCurr && !isDrinkingPrev) {
+    updateShotsOnPlayers(game);
   }
 }
 
@@ -262,7 +299,7 @@ export function getLongEnoughGameDuration(
   duration: number,
   game: Game
 ): boolean {
-  if (game.gameNanoseconds > game.gameState.gameStamp + duration + 20) {
+  if (game.gameNanoseconds > game.gameState.gameStampCurr + duration + 20) {
     return true;
   }
   return false;
@@ -271,14 +308,14 @@ export function getLongEnoughTimeDuration(
   duration: number,
   game: Game
 ): boolean {
-  if (game.timeNanoseconds > game.gameState.timeStamp + duration + 20) {
+  if (game.timeNanoseconds > game.gameState.timeStampCurr + duration + 20) {
     return true;
   }
   return false;
 }
 
 export function updateGameTime(game: Game, time: number, delta: number): void {
-  if (game.gameState.name !== 'game-state-play') {
+  if (game.gameState.nameCurr !== 'game-state-play') {
     return;
   }
   game.gameNanoseconds += delta;

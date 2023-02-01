@@ -522,9 +522,12 @@ export default class Game extends Phaser.Scene {
   colliderAEvAP: any[][] = [];
 
   gameState: GameStateWithTime = {
-    name: 'game-state-start',
-    gameStamp: 0,
-    timeStamp: 0,
+    nameCurr: 'game-state-start',
+    gameStampCurr: 0,
+    timeStampCurr: 0,
+    namePrev: 'game-state-start',
+    gameStampPrev: 0,
+    timeStampPrev: 0,
   };
   keyboardHandPositions: keyboard[] = [
     {

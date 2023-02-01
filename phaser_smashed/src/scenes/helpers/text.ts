@@ -62,7 +62,7 @@ export function updateText(game: Game): void {
 
   updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
-  updateShotsOnPlayers(game);
+  // updateShotsOnPlayers(game);
   updateGlasses(game, zoom, newTopY);
   updateDamageShotsText(game, zoom, newUpperY);
   updateControllerText(game, zoom, newControllerY);
@@ -186,7 +186,7 @@ export function updateGlassesTransparency(game: Game): void {
 
     if (
       player.state.name === 'player-state-dead' &&
-      game.gameState.name !== 'game-state-play'
+      game.gameState.nameCurr !== 'game-state-play'
     ) {
       player.shotGlassImage.setAlpha(1);
     }
@@ -253,8 +253,8 @@ export function updateDamageShotsText(
 export function updateReadyText(game: Game, zoom: number, newY: number): void {
   game.players.forEach((player, playerIndex) => {
     if (
-      game.gameState.name === 'game-state-play' ||
-      game.gameState.name === 'game-state-finished'
+      game.gameState.nameCurr === 'game-state-play' ||
+      game.gameState.nameCurr === 'game-state-finished'
     ) {
       player.scoreBoardReady.setAlpha(0);
     } else {
@@ -288,8 +288,8 @@ export function updateControllerText(
 ): void {
   game.players.forEach((player, playerIndex) => {
     if (
-      game.gameState.name === 'game-state-play' ||
-      game.gameState.name === 'game-state-finished'
+      game.gameState.nameCurr === 'game-state-play' ||
+      game.gameState.nameCurr === 'game-state-finished'
     ) {
       player.scoreBoardController.setAlpha(0);
     } else {

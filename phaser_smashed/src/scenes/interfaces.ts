@@ -198,9 +198,12 @@ export interface PlayerStateWithTime {
   timeStamp: number;
 }
 export interface GameStateWithTime {
-  name: GameState;
-  gameStamp: number;
-  timeStamp: number;
+  nameCurr: GameState;
+  gameStampCurr: number;
+  timeStampCurr: number;
+  namePrev: GameState;
+  gameStampPrev: number;
+  timeStampPrev: number;
 }
 
 export interface Color {
