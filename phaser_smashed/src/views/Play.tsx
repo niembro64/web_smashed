@@ -1246,7 +1246,7 @@ function Play() {
                       }}
                     >
                       <span>Bot</span>
-                      <span id="input-sub">In Progress</span>
+                      {/* <span id="input-sub">In Progress</span> */}
                       <div className="button-input-emoji">{emoji.bot}</div>
                     </div>
                   )}
