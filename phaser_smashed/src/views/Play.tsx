@@ -1532,7 +1532,7 @@ function Play() {
                       setFirstCharacterSlot(5);
                     }}
                   />
-                  <p>by NIEMBRO64</p>
+                  <p>by niembro64</p>
                   <a
                     className="link-tag btn btn-dark text-light"
                     href="http://niembro64.com/"

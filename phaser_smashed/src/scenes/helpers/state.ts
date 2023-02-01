@@ -107,6 +107,7 @@ export function setGameState(game: Game, state: GameState): void {
       setMusicPause(game);
       setSoundFinishPlay(game);
       setSplashDataOn(game);
+      isDrinkingCurr = true;
       break;
     default:
       console.log('BROKEN_____________________');
@@ -126,6 +127,7 @@ export function setGameState(game: Game, state: GameState): void {
       isDrinkingPrev = true;
       break;
     case 'game-state-finished':
+      isDrinkingPrev = true;
       break;
     default:
       console.log('BROKEN_____________________');

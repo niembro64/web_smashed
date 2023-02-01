@@ -62,8 +62,8 @@ export function updateText(game: Game): void {
 
   updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
-  // updateShotsOnPlayers(game);
   updateGlasses(game, zoom, newTopY);
+  updateGlassesNumberShots(game, zoom, newTopY);
   updateDamageShotsText(game, zoom, newUpperY);
   updateControllerText(game, zoom, newControllerY);
   updateReadyText(game, zoom, newReadyY);
@@ -180,15 +180,17 @@ export function updateShotsOnPlayers(game: Game) {
   });
 }
 
-export function updateGlassesTransparency(game: Game): void {
+export function updateShotGlassTransparency(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    player.shotGlassImage.setAlpha(0);
-
     if (
       player.state.name === 'player-state-dead' &&
       game.gameState.nameCurr !== 'game-state-play'
     ) {
       player.shotGlassImage.setAlpha(1);
+      player.shotGlassNumber.setAlpha(1);
+    } else {
+      player.shotGlassImage.setAlpha(0);
+      player.shotGlassNumber.setAlpha(0);
     }
   });
 }
@@ -203,7 +205,15 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
         (1 / zoom);
 
     player.shotGlassImage.y = newY;
+  });
+}
 
+export function updateGlassesNumberShots(
+  game: Game,
+  zoom: number,
+  newY: number
+): void {
+  game.players.forEach((player, playerIndex) => {
     player.shotGlassNumber.setScale(1 / zoom, 1 / zoom);
     player.shotGlassNumber.x =
       game.cameraMover.char.sprite.x +
@@ -214,7 +224,10 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
     player.shotGlassNumber.y = newY - 60;
 
     player.shotGlassNumber.setText(
-      (player.shotCountCurr - player.shotCountPrev).toString()
+      (player.shotCountCurr - player.shotCountPrev > 0
+        ? player.shotCountCurr - player.shotCountPrev
+        : ' '
+      ).toString()
     );
   });
 }

@@ -48,7 +48,7 @@ import {
   setPlayWiiMusicWaitLong,
   playWiiMusic,
 } from './helpers/sound';
-import { updateGlassesTransparency, updateText } from './helpers/text';
+import { updateShotGlassTransparency, updateText } from './helpers/text';
 import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
 import { Player } from './interfaces';
 import { updatePlayerDarknessEvents } from './helpers/powers';
@@ -74,7 +74,7 @@ export function update(game: Game, time: number, delta: number): void {
   updateText(game);
   updateNumShotsLeft(game);
   updateNumCurrentlyDead(game);
-  updateGlassesTransparency(game);
+  updateShotGlassTransparency(game);
   updateGamePadsMaster(game);
   debugUpdatePrintAllControllerButtonsWhenActive(game);
   debugUpdateControllersPrintConnected(game);
