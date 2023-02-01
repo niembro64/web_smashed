@@ -9,7 +9,7 @@ export const debugInit: Debug = {
   TimeMinutes: 7, //01234567
   MusicActive: true,
   MusicTrack: 2, // 012
-  ReadySoundActive: true,
+  ReadySoundActive: false,
   Camera: true,
   CamerasVisible: false,
   CollidersPvP: false,

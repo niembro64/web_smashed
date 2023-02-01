@@ -39,10 +39,10 @@ export function create(game: Game) {
   createColliderTableAttackPhysicals(game);
   createAttackEnergies(game);
   createColliderTableAttackEnergies(game);
-  createScoreboardController(game);
-  createScoreboardReady(game);
   createScoreboardShotGlass(game);
   createScoreboardShotGlassNumber(game);
+  createScoreboardController(game);
+  createScoreboardReady(game);
   createChomp(game);
   createGun(game);
   createEmitterChompFollowChomp(game);
