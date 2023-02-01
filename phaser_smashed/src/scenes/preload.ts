@@ -147,7 +147,7 @@ export function preload(game: Game): void {
 
   game.load.image('blockcracked', 'images/blockcracked.png');
   game.load.image('fireball', 'images/fireball.png');
-  game.load.image('flagpole', 'images/flagpole.png');
+  // game.load.image('flagpole', 'images/flagpole.png');
   game.load.image('greenshell', 'images/greenshell.png');
   game.load.image('redshell', 'images/redshell.png');
   game.load.image('blueshell', 'images/blueshell_wing.png');
@@ -157,7 +157,8 @@ export function preload(game: Game): void {
   game.load.image('sword', 'images/sword_right.png');
 
   game.load.image('table', 'images/table.png');
-  game.load.image('flag', 'images/flagpole_JK2.png');
+  game.load.image('flag', 'images/qflag.png');
+  game.load.image('pole', 'images/pole.png');
 
   game.load.image('background', 'images/darkxp.jpg');
   game.load.image('background_outline', 'images/outline_blocks_05.png');

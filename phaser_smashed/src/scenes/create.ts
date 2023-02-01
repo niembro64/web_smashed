@@ -69,11 +69,11 @@ export function create(game: Game) {
 
 export function createFlagBoi(game: Game): void {
   game.flag.sprite = game.physics.add.sprite(
-    (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
-    SCREEN_DIMENSIONS.HEIGHT * 0.5,
+    (1920 - 100 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
+    SCREEN_DIMENSIONS.HEIGHT * 0.65,
     'flag'
   );
-  game.flag.sprite.setImmovable(true).setBounce(0).setOrigin(0.5, 1);
+  game.flag.sprite.setImmovable(true).setBounce(0).setOrigin(0.5, 0.5);
   game.flag.sprite.allowGravity = false;
 }
 
@@ -81,7 +81,7 @@ export function createFlagNew(game: Game): void {
   game.FLAG = game.physics.add.sprite(
     (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
-    'flag'
+    'pole'
   );
   game.FLAG.setScale(1);
   game.FLAG.setImmovable(true);
