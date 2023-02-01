@@ -30,6 +30,7 @@ import {
   emoji,
   KeyboardGroup,
   WorkingController,
+  PlayerConfigSmall,
 } from '../scenes/interfaces';
 import { debugInit, debugMax } from '../debugOptions';
 import {
@@ -157,29 +158,25 @@ function Play() {
     players: [
       {
         characterId: 0,
-        scale: 0.9,
-        name: 'Mario',
+        input: 2,
       },
       {
         characterId: 7,
-        scale: 0.6,
-        name: 'RedKoopa',
+        input: 0,
       },
       {
         characterId: 6,
-        scale: 0.6,
-        name: 'GreenKoopa',
+        input: 0,
       },
       {
         characterId: 1,
-        scale: 0.9,
-        name: 'Link',
+        input: 3,
       },
     ],
   });
 
   // always keep Chez and BlackChez at positions 4 and 5
-  const smashConfigScaleArray: PlayerConfig[] = [
+  const smashConfigOptions: PlayerConfig[] = [
     { characterId: 0, scale: 0.9, name: 'Mario' },
     { characterId: 1, scale: 0.9, name: 'Link' },
     { characterId: 2, scale: 1, name: 'Pikachu' },
@@ -294,32 +291,38 @@ function Play() {
     //   characterId: CharacterId;
     //   scale: number;
     // }[] = [];
-    let newPlayers: PlayerConfig[] = [];
+    let newPlayers: PlayerConfigSmall[] = [];
     inputArray.forEach((input, inputIndex) => {
       switch (input) {
         case 0:
           break;
         case 1:
           newPlayers.push({
-            name: players[inputIndex].name,
+            // name: players[inputIndex].name,
+            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            scale: players[inputIndex].scale,
+            // scale: players[inputIndex].scale,
+            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
         case 2:
           newPlayers.push({
-            name: players[inputIndex].name,
+            // name: players[inputIndex].name
+            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            scale: players[inputIndex].scale,
+            // scale: players[inputIndex].scale,
+            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
         case 3:
           newPlayers.push({
-            name: players[inputIndex].name,
+            // name: players[inputIndex].name,
+            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            scale: players[inputIndex].scale,
+            // scale: players[inputIndex].scale,
+            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
@@ -333,7 +336,7 @@ function Play() {
       //   });
       // }
     });
-    let newSmashConfig = { players: [...newPlayers] };
+    let newSmashConfig: SmashConfig = { players: [...newPlayers] };
     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
     if (!debug.LoadTimeExtra || debug.DevMode) {
@@ -464,18 +467,18 @@ function Play() {
     let choice = choices[0];
     choice.characterId = charId;
     let tempScale = ensureTypeCharacterId(
-      smashConfigScaleArray.find((s, sIndex) => {
+      smashConfigOptions.find((s, sIndex) => {
         return s.characterId === choice.characterId;
       })
     ).scale;
     let tempName = ensureTypeCharacterName(
-      smashConfigScaleArray.find((s) => {
+      smashConfigOptions.find((s) => {
         return s.characterId === choice.characterId;
       })
     ).name;
 
-    choice.scale = tempScale;
-    choice.name = tempName;
+    // choice.scale = tempScale;
+    // choice.name = tempName;
     setSmashConfig({ players: [...choices] });
   };
 
@@ -515,7 +518,7 @@ function Play() {
       }
     }
 
-    if (newCharacterId > smashConfigScaleArray.length - 1) {
+    if (newCharacterId > smashConfigOptions.length - 1) {
       newCharacterId = 0;
     }
 
@@ -525,17 +528,17 @@ function Play() {
 
     choice.characterId = newCharacterId as CharacterId;
 
-    let tempScale = smashConfigScaleArray.find((s, sIndex) => {
+    let tempScale = smashConfigOptions.find((s, sIndex) => {
       return s.characterId === choice.characterId;
     })?.scale;
     let tempName = ensureTypeCharacterName(
-      smashConfigScaleArray.find((s, sIndex) => {
+      smashConfigOptions.find((s, sIndex) => {
         return s.characterId === choice.characterId;
       })
     ).name;
 
-    choice.scale = tempScale ? tempScale : 1;
-    choice.name = tempName;
+    // choice.scale = tempScale ? tempScale : 1;
+    // choice.name = tempName;
     setSmashConfig({ players: [...choices] });
   };
 
@@ -1111,11 +1114,19 @@ function Play() {
                               p.characterId.toString() +
                               '_cropped.png'
                             }
-                            width={(55 * p.scale).toString() + '%'}
+                            // width={(55 * p.scale).toString() + '%'}
+                            width={
+                              (
+                                55 * smashConfigOptions[p.characterId].scale
+                              ).toString() + '%'
+                            }
                             alt="char"
                           />
                         )}
-                        <p className="player-char-image-name">{p.name}</p>
+                        {/* <p className="player-char-image-name">{p.name}</p> */}
+                        <p className="player-char-image-name">
+                          {smashConfigOptions[p.characterId].name}
+                        </p>
                       </div>
                     </div>
                   )}
@@ -1141,11 +1152,19 @@ function Play() {
                               p.characterId.toString() +
                               '_cropped.png'
                             }
-                            width={(55 * p.scale).toString() + '%'}
+                            // width={(55 * p.scale).toString() + '%'}
+                            width={
+                              (
+                                55 * smashConfigOptions[p.characterId].scale
+                              ).toString() + '%'
+                            }
                             alt="char"
                           />
                         )}
-                        <p className="player-char-image-name">{p.name}</p>
+                        {/* <p className="player-char-image-name">{p.name}</p> */}
+                        <p className="player-char-image-name">
+                          {smashConfigOptions[p.characterId].name}
+                        </p>
                       </div>
                     </div>
                   )}

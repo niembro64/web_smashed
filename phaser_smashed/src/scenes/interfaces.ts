@@ -444,7 +444,12 @@ export type CharacterName =
   | 'BlueKoopa';
 
 export interface SmashConfig {
-  players: PlayerConfig[];
+  players: PlayerConfigSmall[];
+}
+
+export interface PlayerConfigSmall {
+  characterId: CharacterId;
+  input: InputType;
 }
 
 export interface PlayerConfig {
