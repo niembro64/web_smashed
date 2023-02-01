@@ -1776,7 +1776,12 @@ export function createScoreboardShotGlass(game: Game): void {
       )
       .setOrigin(0.5, 0.5);
 
-    player.shotGlassImage.setTint(game.colorCircles[playerIndex].colorNumber);
+    player.shotGlassImage.setTint(
+      game.colorCircles[playerIndex].colorNumber,
+      game.colorCircles[playerIndex].colorNumber,
+      0xffffff,
+      0xffffff
+    );
   });
 }
 export function createScoreboardShotGlassNumber(game: Game): void {
