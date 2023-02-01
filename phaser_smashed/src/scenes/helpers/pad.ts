@@ -6,7 +6,7 @@ import {
   setPhysicsAttackEnergyOff,
   setPhysicsAttackEnergyOn,
 } from './attacks';
-import { getIsBot, updateMoveBot } from './bot';
+import { getIsBot, updateBot } from './bot';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 
@@ -44,7 +44,7 @@ export function updateGamePadsMaster(game: Game): void {
         updatePadCurrKeyboard(player, game);
         break;
       case 3:
-        updateMoveBot(player, playerIndex, game);
+        updateBot(player, playerIndex, game);
         break;
       default:
         break;
@@ -314,6 +314,14 @@ export function getPlayerPressedBothLR(player: Player, game: Game): boolean {
 }
 
 export function getIsPlayerReady(player: Player, game: Game): boolean {
+  if (player.padCurr.L && player.padCurr.R) {
+    return false;
+  }
+
+  if (player.padCurr.start) {
+    return false;
+  }
+
   if (
     !player.padCurr.up &&
     !player.padCurr.down &&
@@ -324,7 +332,8 @@ export function getIsPlayerReady(player: Player, game: Game): boolean {
     !player.padCurr.X &&
     !player.padCurr.Y &&
     !player.padCurr.R &&
-    !player.padCurr.L
+    !player.padCurr.L &&
+    !player.padCurr.select
   ) {
     return false;
   }

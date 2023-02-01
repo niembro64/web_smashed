@@ -174,7 +174,7 @@ export function getIsBotInPitArea(player: Player, game: Game): boolean {
   return false;
 }
 
-export function updateMoveBot(
+export function updateBot(
   player: Player,
   playerIndex: number,
   game: Game
@@ -203,6 +203,9 @@ export function updateMoveBot(
   let jumpIndex = player.char.jumpIndex;
   let hasJump = player.char.jumps[jumpIndex] > 0.3;
   let onLastJump = jumpIndex === jumps.length - 1;
+
+  p.select = true;
+  // p.L = true;
 
   //////////////////////
   // MOVEMENT

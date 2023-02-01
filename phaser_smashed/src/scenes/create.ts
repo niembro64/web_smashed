@@ -40,6 +40,7 @@ export function create(game: Game) {
   createAttackEnergies(game);
   createColliderTableAttackEnergies(game);
   createScoreboardShotGlass(game);
+  createScoreboardShotGlassNumber(game);
   createChomp(game);
   createGun(game);
   createEmitterChompFollowChomp(game);
@@ -1775,7 +1776,10 @@ export function createScoreboardShotGlass(game: Game): void {
       .setOrigin(0.5, 0.5);
 
     player.shotGlassImage.setTint(game.colorCircles[playerIndex].colorNumber);
-
+  });
+}
+export function createScoreboardShotGlassNumber(game: Game): void {
+  game.players.forEach((player, playerIndex) => {
     player.shotGlassNumber = game.add
       .text(
         SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[playerIndex],
