@@ -1059,18 +1059,9 @@ function Play() {
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
-          {debug.TypedLoadingText && (
-            <p className="third-loader-p">
-              Loading{space};can{space};take{space};a{space};few{space};seconds.
-              {space};
-            </p>
-          )}
-          {/* {!debug.TypedText && (
-            <p className="fourth-loader-p">
-              Loading&nbsp;can&nbsp;take&nbsp;a&nbsp;few&nbsp;seconds.&nbsp;
-            </p>
+          <p className="third-loader-p">Loading can take a few seconds.</p>
+          {/* {debug.TypedLoadingText && (
           )} */}
-          {/* <p className="third-loader-p">{loadingTwenty}</p> */}
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
