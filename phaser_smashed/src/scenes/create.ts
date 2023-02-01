@@ -39,6 +39,8 @@ export function create(game: Game) {
   createColliderTableAttackPhysicals(game);
   createAttackEnergies(game);
   createColliderTableAttackEnergies(game);
+  createScoreboardController(game);
+  createScoreboardReady(game);
   createScoreboardShotGlass(game);
   createScoreboardShotGlassNumber(game);
   createChomp(game);
@@ -50,7 +52,6 @@ export function create(game: Game) {
   createKeyboards(game);
   createPlayerIdCircles(game);
   createScoreboard(game);
-  createScoreboardReady(game);
   createCameras(game);
   createCollidersPvP(game);
   createCollidersPvAP(game);
@@ -1844,7 +1845,7 @@ export function createScoreboardReady(game: Game): void {
   });
 }
 
-export function createScoreboard(game: Game): void {
+export function createScoreboardController(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardController = game.add
       .text(SCREEN_DIMENSIONS.WIDTH / 2, SCREEN_DIMENSIONS.HEIGHT / 2, '🎮', {
@@ -1870,7 +1871,9 @@ export function createScoreboard(game: Game): void {
       })
       .setOrigin(0.5, 0.5);
   });
+}
 
+export function createScoreboard(game: Game): void {
   game.scoreBoardTimeGame = game.add.text(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
