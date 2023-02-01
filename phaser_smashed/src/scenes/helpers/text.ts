@@ -84,9 +84,12 @@ export function updateText(game: Game): void {
 }
 
 export function updateBgLocation(game: Game, zoom: number, newY: number): void {
-  game.BACKGROUND.setScale(1 / zoom, 1 / zoom);
-  game.BACKGROUND.x = game.cameraMover.char.sprite.x;
-  game.BACKGROUND.y = newY;
+  // game.BACKGROUND.setScale(1.1, 1.1);
+  game.BACKGROUND.setScale(1.2 / zoom, 1.2 / zoom);
+  let x = SCREEN_DIMENSIONS.WIDTH / 2;
+  let y = SCREEN_DIMENSIONS.HEIGHT / 2;
+  game.BACKGROUND.x = game.cameraMover.char.sprite.x * 0.7 + x * 0.3;
+  game.BACKGROUND.y = game.cameraMover.char.sprite.y * 0.7 + y * 0.3;
 }
 
 export function setSplashDataOn(game: Game): void {

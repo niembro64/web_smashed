@@ -22,7 +22,7 @@ export function create(game: Game) {
   createDataMatrices(game);
   createSoundsGame(game);
   createBackground(game);
-  createBackgroundTitles(game);
+  // createBackgroundTitles(game);
   createSplashBlack(game);
   createBackgroundOutline(game);
   createLavas(game);
@@ -69,12 +69,23 @@ export function create(game: Game) {
 
 export function createFlagBoi(game: Game): void {
   game.flag.sprite = game.physics.add.sprite(
-    SCREEN_DIMENSIONS.WIDTH * 0.5,
+    (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
     SCREEN_DIMENSIONS.HEIGHT * 0.5,
     'flag'
   );
   game.flag.sprite.setImmovable(true).setBounce(0).setOrigin(0.5, 1);
   game.flag.sprite.allowGravity = false;
+}
+
+export function createFlagNew(game: Game): void {
+  game.FLAG = game.physics.add.sprite(
+    (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
+    (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
+    'flag'
+  );
+  game.FLAG.setScale(1);
+  game.FLAG.setImmovable(true);
+  game.FLAG.body.allowGravity = false;
 }
 
 export function createGun(game: Game): void {
@@ -1614,17 +1625,6 @@ export function createTable(game: Game): void {
 
 export function createColliderTablePlatforms(game: Game): void {
   game.physics.add.collider(game.TABLE, game.PLATFORMS);
-}
-
-export function createFlagNew(game: Game): void {
-  game.FLAG = game.physics.add.sprite(
-    (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
-    (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
-    'flag'
-  );
-  game.FLAG.setScale(1);
-  game.FLAG.setImmovable(true);
-  game.FLAG.body.allowGravity = false;
 }
 
 export function createBackgroundTitles(game: Game): void {
