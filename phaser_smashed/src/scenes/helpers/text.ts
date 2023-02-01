@@ -15,6 +15,7 @@ export function updateText(game: Game): void {
   const gameTimeY = SCREEN_DIMENSIONS.HEIGHT - 85;
   const timeTimeY = SCREEN_DIMENSIONS.HEIGHT - 95;
   const killsY = SCREEN_DIMENSIONS.HEIGHT - 75;
+  const bgY = SCREEN_DIMENSIONS.HEIGHT / 2;
 
   const zoom = game.cameras.main.zoom;
   const redOffsetY =
@@ -64,6 +65,10 @@ export function updateText(game: Game): void {
     killsY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
     game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
+  const newBgY =
+    bgY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
 
   updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
@@ -75,6 +80,13 @@ export function updateText(game: Game): void {
   updateSplashRules(game, zoom, newSplashY);
   updateDeathsKillsText(game, zoom, newLowerY);
   updateEndDataMatrices(game, zoom, newDataY, newDataTitleY);
+  updateBgLocation(game, zoom, newBgY);
+}
+
+export function updateBgLocation(game: Game, zoom: number, newY: number): void {
+  game.BACKGROUND.setScale(1 / zoom, 1 / zoom);
+  game.BACKGROUND.x = game.cameraMover.char.sprite.x;
+  game.BACKGROUND.y = newY;
 }
 
 export function setSplashDataOn(game: Game): void {

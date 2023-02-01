@@ -777,11 +777,13 @@ export default class Game extends Phaser.Scene {
   };
 
   flag: Flag = {
-    powerStateCurr: { name: 'light', gameStamp: 0 },
-    powerStatePrev: { name: 'none', gameStamp: 0 },
-    emitterLight: null,
-    particles: null,
-    bullets: null,
+    sprite: null,
+    yPosition: 0,
+    // powerStateCurr: { name: 'light', gameStamp: 0 },
+    // powerStatePrev: { name: 'none', gameStamp: 0 },
+    // emitterLight: null,
+    // particles: null,
+    // bullets: null,
   };
 
   players: Player[] = [];

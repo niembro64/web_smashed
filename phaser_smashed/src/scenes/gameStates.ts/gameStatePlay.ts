@@ -3,6 +3,7 @@ import { updateAttackEnergyOffscreen } from '../helpers/attacks';
 import { updateCamera } from '../helpers/camera';
 import { updateAtThreeShots, updateChomp } from '../helpers/chomp';
 import { updateDeathsAndKillsMatrices } from '../helpers/damage';
+import { updateFlag } from '../helpers/flag';
 import {
   updateAttackEnergyFlipXVel,
   updateAttackEnergyFollow,
@@ -35,6 +36,7 @@ export function updateGameStatePlay(
   delta: number
 ): void {
   // BEFORE PLAYERS
+  updateFlag(game);
   updateAttackEnergyFollow(game);
   updateWallTouchArray(game);
   updateCamera(game);

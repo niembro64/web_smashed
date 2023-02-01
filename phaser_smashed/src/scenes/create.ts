@@ -29,7 +29,7 @@ export function create(game: Game) {
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createExplosions(game);
-  createFlag(game);
+  createFlagNew(game);
   createEmitterChomp(game);
   createEmittersPlayers(game);
   createPlatforms(game);
@@ -61,9 +61,20 @@ export function create(game: Game) {
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
+  createFlagBoi(game);
 
   // INIT UPDATE
   setPreUpdate(game);
+}
+
+export function createFlagBoi(game: Game): void {
+  game.flag.sprite = game.physics.add.sprite(
+    SCREEN_DIMENSIONS.WIDTH * 0.5,
+    SCREEN_DIMENSIONS.HEIGHT * 0.5,
+    'flag'
+  );
+  game.flag.sprite.setImmovable(true).setBounce(0).setOrigin(0.5, 1);
+  game.flag.sprite.allowGravity = false;
 }
 
 export function createGun(game: Game): void {
@@ -1605,7 +1616,7 @@ export function createColliderTablePlatforms(game: Game): void {
   game.physics.add.collider(game.TABLE, game.PLATFORMS);
 }
 
-export function createFlag(game: Game): void {
+export function createFlagNew(game: Game): void {
   game.FLAG = game.physics.add.sprite(
     (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
