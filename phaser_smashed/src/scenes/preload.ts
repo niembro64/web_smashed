@@ -20,6 +20,7 @@ export function preload(game: Game): void {
   game.debug = game.game.registry.get('debug');
   console.log('this.smashConfig', game.smashConfig);
   if (game.smashConfig) {
+    game.durationPlayerDead = game.smashConfig.players.length * 2000;
     game.playerChoicesCharacterType = [];
     game.playerChoicesInputType = [];
     game.smashConfig.players.forEach((player, playerIndex) => {

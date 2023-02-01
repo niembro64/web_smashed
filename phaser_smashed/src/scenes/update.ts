@@ -297,11 +297,7 @@ export function updatePlayers(game: Game): void {
         ///////// duration => alive
         ////////////////////////////////
         if (
-          getHasGameDurationPassedPlayer(
-            player,
-            game.DURATION_PLAYER_DEAD,
-            game
-          )
+          getHasGameDurationPassedPlayer(player, game.durationPlayerDead, game)
         ) {
           setPlayerState(player, playerIndex, 'player-state-alive', game);
         }

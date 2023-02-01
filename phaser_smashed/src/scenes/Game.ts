@@ -196,7 +196,7 @@ export default class Game extends Phaser.Scene {
   ////////// PLAYER CONSTANTS
   ////////////////////////////////
   DURATION_PLAYER_HURT: number = 1000;
-  DURATION_PLAYER_DEAD: number = 5000;
+  durationPlayerDead: number = 5000; // will be some function of number of players
   DURATION_PLAYER_FILTER_FLICKER: number = this.DURATION_PLAYER_HURT / 10;
   RATIO_ACCELERATION_VELOCITY = 0.85;
   DEFAULT_PLAYER_HITBACK: any = { x: 0.03, y: -0.03 };
