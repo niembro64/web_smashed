@@ -9,7 +9,8 @@ export function updateText(game: Game): void {
   const splashY = SCREEN_DIMENSIONS.HEIGHT / 2;
   const controllerY = SCREEN_DIMENSIONS.HEIGHT - 220;
   const glassY = SCREEN_DIMENSIONS.HEIGHT - 180;
-  const readyY = SCREEN_DIMENSIONS.HEIGHT - 140;
+  const glassNumY = SCREEN_DIMENSIONS.HEIGHT - 175;
+  const readyY = SCREEN_DIMENSIONS.HEIGHT - 380;
   const damageY = SCREEN_DIMENSIONS.HEIGHT - 76;
   const gameTimeY = SCREEN_DIMENSIONS.HEIGHT - 85;
   const timeTimeY = SCREEN_DIMENSIONS.HEIGHT - 95;
@@ -39,6 +40,10 @@ export function updateText(game: Game): void {
     glassY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
     game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newTopNumY =
+    glassNumY * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
   const newReadyY =
     readyY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
@@ -63,7 +68,7 @@ export function updateText(game: Game): void {
   updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
   updateGlasses(game, zoom, newTopY);
-  updateGlassesNumberShots(game, zoom, newTopY);
+  updateGlassesNumberShots(game, zoom, newTopNumY);
   updateDamageShotsText(game, zoom, newUpperY);
   updateControllerText(game, zoom, newControllerY);
   updateReadyText(game, zoom, newReadyY);
