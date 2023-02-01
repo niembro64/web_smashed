@@ -403,10 +403,10 @@ function Play() {
     let i = newInput;
     let k = getNumKeyboardsInUse();
     if (i === 2 && k >= 2) {
-      i = 0;
+      i++;
     }
     let newInputArray = [...inputArray];
-    newInputArray[playerIndex] = i;
+    newInputArray[playerIndex] = i as InputType;
     setInputArray([...newInputArray]);
     // console.log('newInputArray', newInputArray);
   };
