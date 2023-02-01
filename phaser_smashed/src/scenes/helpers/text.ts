@@ -9,7 +9,7 @@ export function updateText(game: Game): void {
   const splashY = SCREEN_DIMENSIONS.HEIGHT / 2;
   const controllerY = SCREEN_DIMENSIONS.HEIGHT - 220;
   const glassY = SCREEN_DIMENSIONS.HEIGHT - 180;
-  const glassNumY = SCREEN_DIMENSIONS.HEIGHT - 175;
+  const glassNumY = SCREEN_DIMENSIONS.HEIGHT - 180;
   const readyY = SCREEN_DIMENSIONS.HEIGHT - 380;
   const damageY = SCREEN_DIMENSIONS.HEIGHT - 76;
   const gameTimeY = SCREEN_DIMENSIONS.HEIGHT - 85;
