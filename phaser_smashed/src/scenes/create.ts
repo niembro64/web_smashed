@@ -1790,13 +1790,14 @@ export function createScoreboardShotGlassNumber(game: Game): void {
           // font: "Arial 100px",
           fontSize: '200px',
           // fontFamily: "'Courier New'",
-          // fontFamily: game.FONT_DEFAULT_MONOSPACE,
-          fontFamily: game.debug.ModeInfinity
-            ? game.FONT_DEFAULT_NICE
-            : game.FONT_DEFAULT_VIDEOGAME,
+          fontFamily: game.FONT_DEFAULT_NICE,
+          // fontFamily: game.FONT_DEFAULT_VIDEOGAME,
+          // fontFamily: game.debug.ModeInfinity
+          //   ? game.FONT_DEFAULT_NICE
+          //   : game.FONT_DEFAULT_VIDEOGAME,
           // fontFamily: "'Press Start 2P'",
           stroke: 'black',
-          strokeThickness: 1,
+          strokeThickness: 10,
           shadow: {
             offsetX: 0,
             offsetY: 3,
@@ -1827,7 +1828,8 @@ export function createScoreboardReady(game: Game): void {
           // fontFamily: "'Courier New'",
           // fontFamily: "'Press Start 2P'",
           // color: "white",
-          color: game.colorCircles[playerIndex].colorString,
+          color: 'white',
+          // color: game.colorCircles[playerIndex].colorString,
           // stroke: player.char.color.primary,
           stroke: 'black',
           strokeThickness: 1,
