@@ -73,6 +73,10 @@ export function onHitHandlerAttackEnergy(
     return;
   }
 
+  if (playerHit.emitterPlayer.on) {
+    return;
+  }
+
   game.overlappingPlayerIAttackEnergyJ[playerHitIndex][j] = true;
 
   for (var bj = 0; bj < game.players.length; bj++) {
@@ -122,6 +126,10 @@ export function onHitHandlerBullets(
   damage: number,
   game: Game
 ): void {
+  if (playerHit.emitterPlayer.on) {
+    return;
+  }
+
   let b = attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
 
   if (!b) {

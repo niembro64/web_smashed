@@ -558,7 +558,7 @@ function Play() {
     { button: 'D-Pad', move: 'Move', status: emoji.greenCheck },
     { button: 'Ground + X', move: 'Jump', status: emoji.greenCheck },
     { button: 'Air + X', move: 'Jump-Double', status: emoji.greenCheck },
-    { button: 'Air + D-Pad + A', move: 'Jump-Energy', status: emoji.caution },
+    { button: 'Air + D-Pad + A', move: 'Jump-Dodge', status: emoji.caution },
     { button: 'B', move: 'Attack-Physical', status: emoji.caution },
     { button: 'Y', move: 'Attack-Energy', status: emoji.greenCheck },
     { button: 'Forward + B', move: 'Attack-Smash', status: emoji.redX },
