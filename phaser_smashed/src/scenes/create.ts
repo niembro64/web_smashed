@@ -27,6 +27,7 @@ export function create(game: Game) {
   createBackgroundOutline(game);
   createLavas(game);
   createSplashes(game);
+  createSplashRuleFinished(game); // MAYBE
   createExplosions(game);
   createFlag(game);
   createEmitterChomp(game);
@@ -39,7 +40,7 @@ export function create(game: Game) {
   createAttackEnergies(game);
   createColliderTableAttackEnergies(game);
   createScoreboardShotGlass(game);
-  createSplashRuleFinished(game);
+  // createSplashRuleFinished(game);
   createChomp(game);
   createGun(game);
   createEmitterChompFollowChomp(game);
