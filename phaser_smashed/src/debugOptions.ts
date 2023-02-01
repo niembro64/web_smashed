@@ -36,7 +36,7 @@ export const debugInit: Debug = {
   AllowCharsChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
-  CharOverride: false,
+  CharOverride: true,
   CharOverrideId: 3,
   BulletsAllowGroups: true,
   BulletsFullScreen: false,

@@ -1793,7 +1793,7 @@ export function createScoreboardShotGlassNumber(game: Game): void {
         (player.shotCountCurr - player.shotCountPrev).toString(),
         {
           // font: "Arial 100px",
-          fontSize: '200px',
+          fontSize: '180px',
           // fontFamily: "'Courier New'",
           fontFamily: game.FONT_DEFAULT_NICE,
           // fontFamily: game.FONT_DEFAULT_VIDEOGAME,
