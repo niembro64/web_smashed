@@ -101,8 +101,8 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
 
     // if (this.timeAlive > 500) {
-    // if (this.timeAlive > 1000 || distance > 200) {
-    if (distance > 350) {
+    if (this.timeAlive > 5000 || distance > 350) {
+      // if (distance > 350) {
       this.body.bounce.set(0);
       this.setActive(false);
       this.setVisible(false);
