@@ -26,7 +26,6 @@ import {
   updateSpritesheets,
 } from '../helpers/sprites';
 import { updateResetAllHitboxesAttackEnergy } from '../helpers/state';
-import { updateShotsOnPlayers } from '../helpers/text';
 import { updateTimeSlowdown } from '../helpers/time';
 import { updatePlayers } from '../update';
 

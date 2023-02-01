@@ -211,7 +211,7 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
         game.glassLocationLROffset) *
         (1 / zoom);
 
-    player.shotGlassNumber.y = newY + 10;
+    player.shotGlassNumber.y = newY - 60;
 
     player.shotGlassNumber.setText(
       (player.shotCountCurr - player.shotCountPrev).toString()

@@ -1783,16 +1783,23 @@ export function createScoreboardShotGlass(game: Game): void {
         (player.shotCountCurr - player.shotCountPrev).toString(),
         {
           // font: "Arial 100px",
-          fontSize: '40px',
-          fontFamily: 'Impact',
-          // fontFamily: game.FONT_DEFAULT,
+          fontSize: '200px',
           // fontFamily: "'Courier New'",
+          // fontFamily: game.FONT_DEFAULT_MONOSPACE,
+          fontFamily: game.debug.ModeInfinity
+            ? game.FONT_DEFAULT_NICE
+            : game.FONT_DEFAULT_VIDEOGAME,
           // fontFamily: "'Press Start 2P'",
-          // color: "white",
-          color: game.colorCircles[playerIndex].colorString,
-          // stroke: player.char.color.primary,
-          stroke: game.colorCircles[playerIndex].colorString,
-          strokeThickness: 2,
+          stroke: 'black',
+          strokeThickness: 1,
+          shadow: {
+            offsetX: 0,
+            offsetY: 3,
+            color: '#000',
+            blur: 10,
+            stroke: true,
+            fill: true,
+          },
         }
       )
       .setOrigin(0.5, 0.5)
