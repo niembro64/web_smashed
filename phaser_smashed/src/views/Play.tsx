@@ -587,41 +587,41 @@ function Play() {
     }
   };
 
-  useEffect(() => {
-    if (scrollerRef.current) {
-      const handleScroll = () => {
-        if (scrollerRef.current) {
-          console.log(scrollerRef.current.scrollTop);
-        }
-      };
+  // useEffect(() => {
+  //   if (scrollerRef.current) {
+  //     const handleScroll = () => {
+  //       if (scrollerRef.current) {
+  //         console.log(scrollerRef.current.scrollTop);
+  //       }
+  //     };
 
-      scrollerRef.current.addEventListener('scroll', handleScroll);
+  //     scrollerRef.current.addEventListener('scroll', handleScroll);
 
-      return () => {
-        if (scrollerRef.current) {
-          scrollerRef.current.removeEventListener('scroll', handleScroll);
-        }
-      };
-    }
-  }, [showAbout]);
+  //     return () => {
+  //       if (scrollerRef.current) {
+  //         scrollerRef.current.removeEventListener('scroll', handleScroll);
+  //       }
+  //     };
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (scrollerRef.current) {
-        console.log(
-          'scrollerRef.current.scrollHeight',
-          scrollerRef.current.scrollHeight,
-          'scrollerRef.current.clientHeight',
-          scrollerRef.current.clientHeight
-        );
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (scrollerRef.current) {
+  //       console.log(
+  //         'scrollerRef.current.scrollHeight',
+  //         scrollerRef.current.scrollHeight,
+  //         'scrollerRef.current.clientHeight',
+  //         scrollerRef.current.clientHeight
+  //       );
 
-        scrollerRef.current.scrollTop = -400;
+  //       // scrollerRef.current.scrollTop = -400;
 
-        scrollerRef.current.scrollTop = scrollerRef.current.scrollHeight;
-        // scrollerRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 300);
-  }, [showAbout, scrollerRef]);
+  //       scrollerRef.current.scrollTop = scrollerRef.current.scrollHeight;
+  //       // scrollerRef.current.scrollIntoView({ behavior: 'smooth' });
+  //     }
+  //   }, 300);
+  // }, [showAbout, scrollerRef]);
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
     blipSound();
@@ -1508,27 +1508,6 @@ function Play() {
                 sounds that you don't immediately recognize are probably OC.
               </p>
               <div className="horiz">
-                <div className="horiz-item-start">
-                  <h4>Recently Played Games</h4>
-                  <div className="scroller" ref={scrollerRef}>
-                    {allSessions.map((session: SessionInfo, index: number) => {
-                      const totalDigits = allSessions.length.toString().length;
-                      const paddedIndex = index
-                        .toString()
-                        .padStart(totalDigits, '0');
-
-                      return (
-                        <p className="text-small" key={index}>
-                          {paddedIndex}{' '}
-                          {moment(session.timeStamp).format('YYYY-MM-DD HH:mm')}{' '}
-                          {session.country} {session.region} {session.city}
-                          {/* {session.ip}{" "} */}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 <div className="horiz-item-center">
                   <h4>Tech Used</h4>
                   <ul>
@@ -1561,6 +1540,27 @@ function Play() {
                   >
                     <span className="text-white">See Other Projects</span>
                   </a>
+                </div>
+                <div className="horiz-item-start">
+                  <h4>Recently Played Games</h4>
+                  <div className="scroller" ref={scrollerRef}>
+                    {allSessions.map((session: SessionInfo, index: number) => {
+                      const allSessionsLength: number = allSessions.length;
+                      const totalDigits = allSessionsLength.toString().length;
+                      const paddedIndex = (allSessionsLength - index)
+                        .toString()
+                        .padStart(totalDigits, '\u00a0');
+
+                      return (
+                        <p className="text-small" key={index}>
+                          {paddedIndex}{' '}
+                          {moment(session.timeStamp).format('YYYY-MM-DD HH:mm')}{' '}
+                          {session.country} {session.region} {session.city}
+                          {/* {session.ip}{" "} */}
+                        </p>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
