@@ -1762,7 +1762,7 @@ export function createSplashes(game: Game): void {
 
 export function createScoreboardShotGlass(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    player.shotGlass = game.add
+    player.shotGlassImage = game.add
       .sprite(
         SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[playerIndex],
         SCREEN_DIMENSIONS.HEIGHT / 2 + 200,
@@ -1773,6 +1773,8 @@ export function createScoreboardShotGlass(game: Game): void {
         2 / game.cameras.main.zoom / 10
       )
       .setOrigin(0.5, 0.5);
+
+    player.shotGlassImage.setTint(game.colorCircles[playerIndex].colorNumber);
   });
 }
 

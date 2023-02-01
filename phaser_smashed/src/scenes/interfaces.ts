@@ -107,7 +107,8 @@ export interface CameraHelper {
 
 export interface Player {
   playerId: number;
-  shotGlass: any | Phaser.GameObjects.Sprite;
+  shotGlassImage: any | Phaser.GameObjects.Sprite;
+  shotGlassNumber: number;
   scoreBoardUpper: string | any;
   scoreBoardLower: string | any;
   scoreBoardReady: string | any;

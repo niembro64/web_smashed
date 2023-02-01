@@ -159,9 +159,7 @@ export function updateClockTextLower(
 ): void {
   game.scoreBoardTimeTime.setScale(1 / zoom, 1 / zoom);
   game.scoreBoardTimeTime.x = game.cameraMover.char.sprite.x;
-  // game.cameraMover.char.sprite.x + game.textLocationLROffset * (1 / zoom);
   game.scoreBoardTimeTime.y = newLowerY;
-  //  SCREEN_DIMENSIONS.HEIGHT / 2;
 
   game.scoreBoardTimeTime.setText(
     game.timeClock.minutes.toString() +
@@ -183,13 +181,13 @@ export function updateShotsOnPlayers(game: Game) {
 
 export function updateGlassesTransparency(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    player.shotGlass.setAlpha(0);
+    player.shotGlassImage.setAlpha(0);
 
     if (
       player.state.name === 'player-state-dead' &&
       game.gameState.name !== 'game-state-play'
     ) {
-      player.shotGlass.setAlpha(1);
+      player.shotGlassImage.setAlpha(1);
     }
   });
 }
@@ -197,14 +195,14 @@ export function updateGlassesTransparency(game: Game): void {
 export function updateGlasses(game: Game, zoom: number, newY: number): void {
   updateShotsOnPlayers(game);
   game.players.forEach((player, playerIndex) => {
-    player.shotGlass.setScale(0.7 / zoom, 0.7 / zoom);
-    player.shotGlass.x =
+    player.shotGlassImage.setScale(0.7 / zoom, 0.7 / zoom);
+    player.shotGlassImage.x =
       game.cameraMover.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.glassLocationLROffset) *
         (1 / zoom);
 
-    player.shotGlass.y = newY;
+    player.shotGlassImage.y = newY;
   });
 }
 
