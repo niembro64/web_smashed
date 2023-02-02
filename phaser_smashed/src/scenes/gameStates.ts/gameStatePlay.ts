@@ -70,7 +70,7 @@ export function updateGameStatePlay(
   updateFlagOwner(game);
   updateFlagMovement(game);
   updateFlagColor(game);
-  printFlagOwnerAndToucher(game);
+  // printFlagOwnerAndToucher(game);
 
   // UPDATE PLAYERS
   updatePlayers(game);

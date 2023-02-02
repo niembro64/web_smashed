@@ -788,7 +788,7 @@ export default class Game extends Phaser.Scene {
   };
 
   flagSpeedDark = 70;
-  flagSpeed = 20;
+  flagSpeed = 30;
   flag: Flag = {
     movement: 'none',
     box: {
