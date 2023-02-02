@@ -26,7 +26,15 @@ export const updateFlagToucher = (game: Game): void => {
   let ptStamps = f.poleTouchStamps;
 
   game.players.forEach((player, pIndex) => {
-    if (getIsInPole(player.char.sprite.x, player.char.sprite.y, game)) {
+    let pTouchingDown = player.char.sprite.body.touching.down;
+
+    // currently touching if
+    // in flag area
+    // and touching down
+    if (
+      pTouchingDown &&
+      getIsInPole(player.char.sprite.x, player.char.sprite.y, game)
+    ) {
       if (ptStamps[pIndex].touching) {
       } else {
         ptStamps[pIndex].touching = true;
@@ -60,6 +68,8 @@ export const updateFlagToucher = (game: Game): void => {
 
 export const updateFlagMovement = (game: Game): void => {
   let f = game.flag;
+  let darkSpeed = 70;
+  let speed = 20;
 
   if (f.completed) {
     f.sprite.body.setVelocityY(0);
@@ -84,14 +94,16 @@ export const updateFlagMovement = (game: Game): void => {
   // owner is toucher
   // go up
   if (toucher === owner) {
-    f.sprite.body.setVelocityY(-50);
+    let v = game.players[toucher].emitterDark.visible ? -darkSpeed : -speed;
+    f.sprite.body.setVelocityY(v);
     return;
   }
 
   // another player is toucher
   // go down
   if (toucher !== owner) {
-    f.sprite.body.setVelocityY(50);
+    let v = game.players[toucher].emitterDark.visible ? darkSpeed : speed;
+    f.sprite.body.setVelocityY(v);
   }
 };
 
