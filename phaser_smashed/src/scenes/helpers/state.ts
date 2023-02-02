@@ -101,6 +101,15 @@ export function setGameState(game: Game, state: GameState): void {
       setSplashDataOn(game);
       isDrinkingCurr = true;
       break;
+    case 'game-state-captured-flag':
+      setRuleSplashOn(game, 'splash-captured-flag');
+      setMusicPause(game);
+      setSoundEnerjaPlay(game);
+      setSoundSquishPlay(game);
+      setPhysicsPause(game);
+      setSplashDataOn(game);
+      isDrinkingCurr = true;
+      break;
     case 'game-state-finished':
       setPhysicsPause(game);
       setRuleSplashOn(game, 'splash-finished');

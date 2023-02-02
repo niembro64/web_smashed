@@ -66,6 +66,7 @@ export type GameState =
   | 'game-state-paused'
   | 'game-state-first-blood'
   | 'game-state-screen-clear'
+  | 'game-state-captured-flag'
   | 'game-state-finished';
 
 export type PlayerState =
@@ -86,6 +87,7 @@ export type SplashName =
   | 'splash-paused'
   | 'splash-first-blood'
   | 'splash-screen-clear'
+  | 'splash-captured-flag'
   | 'splash-cool-down'
   | 'splash-finished';
 
@@ -493,7 +495,8 @@ export interface Flag {
   movement: 'none' | 'up' | 'down';
   box: Box;
   poleTouchStamps: PoleTouchStamp[];
-  completed: boolean;
+  completedCurr: boolean;
+  completedPrev: boolean;
   toucherCurr: Owner;
   toucherPrev: Owner;
   ownerCurr: Owner;

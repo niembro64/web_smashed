@@ -2,7 +2,7 @@ import Game from '../Game';
 
 export const getIsInPole = (x: number, y: number, game: Game): boolean => {
   let f = game.flag;
-  if (f.completed) {
+  if (f.completedCurr) {
     return false;
   }
 
@@ -19,7 +19,7 @@ export const getIsInPole = (x: number, y: number, game: Game): boolean => {
 export const updateFlagToucher = (game: Game): void => {
   let f = game.flag;
 
-  if (f.completed) {
+  if (f.completedCurr) {
     return;
   }
 
@@ -68,10 +68,10 @@ export const updateFlagToucher = (game: Game): void => {
 
 export const updateFlagMovement = (game: Game): void => {
   let f = game.flag;
-  let darkSpeed = 70;
-  let speed = 20;
 
-  if (f.completed) {
+  f.completedPrev = f.completedCurr;
+
+  if (f.completedCurr) {
     f.sprite.body.setVelocityY(0);
     return;
   }
@@ -80,7 +80,7 @@ export const updateFlagMovement = (game: Game): void => {
   let owner = game.flag.ownerCurr.id;
 
   if (owner !== null && f.sprite.y < f.box.top) {
-    f.completed = true;
+    f.completedCurr = true;
     f.sprite.body.setVelocityY(0);
   }
 
@@ -94,7 +94,9 @@ export const updateFlagMovement = (game: Game): void => {
   // owner is toucher
   // go up
   if (toucher === owner) {
-    let v = game.players[toucher].emitterDark.visible ? -darkSpeed : -speed;
+    let v = game.players[toucher].emitterDark.visible
+      ? -game.flagSpeedDark
+      : -game.flagSpeed;
     f.sprite.body.setVelocityY(v);
     return;
   }
@@ -102,7 +104,9 @@ export const updateFlagMovement = (game: Game): void => {
   // another player is toucher
   // go down
   if (toucher !== owner) {
-    let v = game.players[toucher].emitterDark.visible ? darkSpeed : speed;
+    let v = game.players[toucher].emitterDark.visible
+      ? game.flagSpeedDark
+      : game.flagSpeed;
     f.sprite.body.setVelocityY(v);
   }
 };
@@ -110,7 +114,7 @@ export const updateFlagMovement = (game: Game): void => {
 export const updateFlagOwner = (game: Game): void => {
   let f = game.flag;
 
-  if (f.completed) {
+  if (f.completedCurr) {
     return;
   }
 

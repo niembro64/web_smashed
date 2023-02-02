@@ -358,6 +358,17 @@ export default class Game extends Phaser.Scene {
     },
     {
       text: null,
+      name: 'splash-captured-flag',
+      word: 'CAPTURED FLAG',
+      color: '#552200',
+      backgroundColor: '#bb9944',
+      shadowColor: 'black',
+      size: '300px',
+      src: 'glass.png',
+      strokeThickness: 10,
+    },
+    {
+      text: null,
       name: 'splash-cool-down',
       word: 'COOLDOWN PERIOD',
       color: '#ffffff',
@@ -776,6 +787,8 @@ export default class Game extends Phaser.Scene {
     posInit: { x: 0, y: 0 },
   };
 
+  flagSpeedDark = 70;
+  flagSpeed = 20;
   flag: Flag = {
     movement: 'none',
     box: {
@@ -789,7 +802,8 @@ export default class Game extends Phaser.Scene {
     toucherPrev: { id: null, gameStamp: Infinity },
     ownerCurr: { id: null, gameStamp: Infinity },
     ownerPrev: { id: null, gameStamp: Infinity },
-    completed: false,
+    completedCurr: false,
+    completedPrev: false,
     sprite: null,
     yPosition: 0,
     // powerStateCurr: { name: 'light', gameStamp: 0 },

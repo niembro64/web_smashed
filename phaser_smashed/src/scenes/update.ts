@@ -118,6 +118,13 @@ export function update(game: Game, time: number, delta: number): void {
       }
 
       ////////////////////////////////
+      ///////// flag up => flag shot
+      ////////////////////////////////
+      if (game.flag.completedCurr && !game.flag.completedPrev) {
+        setGameState(game, 'game-state-captured-flag');
+      }
+
+      ////////////////////////////////
       ///////// GAME ENDING CONDITIONS
       ////////////////////////////////
       ///////// done shots => finished
