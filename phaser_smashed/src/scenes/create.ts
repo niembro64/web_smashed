@@ -30,8 +30,8 @@ export function create(game: Game) {
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createExplosions(game);
-  createFlagNew(game);
-  createFlagBoi(game);
+  createPole(game);
+  createFlag(game);
   createEmitterChomp(game);
   createEmittersPlayers(game);
   createPlatforms(game);
@@ -69,7 +69,7 @@ export function create(game: Game) {
   setPreUpdate(game);
 }
 
-export function createFlagBoi(game: Game): void {
+export function createFlag(game: Game): void {
   game.flag.sprite = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     SCREEN_DIMENSIONS.HEIGHT * 0.382,
@@ -88,7 +88,7 @@ export function createFlagBoi(game: Game): void {
   });
 }
 
-export function createFlagNew(game: Game): void {
+export function createPole(game: Game): void {
   game.POLE = game.physics.add.sprite(
     (1920 - 87 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
