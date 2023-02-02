@@ -171,6 +171,22 @@ export function update(game: Game, time: number, delta: number): void {
         setGameState(game, 'game-state-play');
       }
       break;
+    case 'game-state-captured-flag':
+      ////////////////////////////////
+      ///////// WHILE IN LOOP
+      ////////////////////////////////
+      setPlayWiiMusicWaitLong(game);
+
+      ////////////////////////////////
+      ///////// ready & duration => play
+      ////////////////////////////////
+      if (
+        getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
+        getIsAllPlayersReady(game)
+      ) {
+        setGameState(game, 'game-state-play');
+      }
+      break;
     case 'game-state-finished':
       ////////////////////////////////
       ///////// WHILE IN LOOP
