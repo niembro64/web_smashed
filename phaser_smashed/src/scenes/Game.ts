@@ -777,6 +777,19 @@ export default class Game extends Phaser.Scene {
   };
 
   flag: Flag = {
+    movement: 'none',
+    box: {
+      top: SCREEN_DIMENSIONS.HEIGHT * 0.382,
+      bottom: SCREEN_DIMENSIONS.HEIGHT * 0.561,
+      left: SCREEN_DIMENSIONS.WIDTH * 0.8,
+      right: SCREEN_DIMENSIONS.WIDTH * 0.9,
+    },
+    poleTouchStamps: [],
+    toucherCurr: { id: null, gameStamp: Infinity },
+    toucherPrev: { id: null, gameStamp: Infinity },
+    ownerCurr: { id: null, gameStamp: Infinity },
+    ownerPrev: { id: null, gameStamp: Infinity },
+    completed: false,
     sprite: null,
     yPosition: 0,
     // powerStateCurr: { name: 'light', gameStamp: 0 },

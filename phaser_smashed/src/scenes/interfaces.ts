@@ -472,7 +472,32 @@ export interface Gun {
   posInit: Position;
 }
 
+export interface Owner {
+  id: null | number;
+  gameStamp: number;
+}
+
+export interface PoleTouchStamp {
+  touching: boolean;
+  gameStamp: number;
+}
+
+export interface Box {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
 export interface Flag {
+  movement: 'none' | 'up' | 'down';
+  box: Box;
+  poleTouchStamps: PoleTouchStamp[];
+  completed: boolean;
+  toucherCurr: Owner;
+  toucherPrev: Owner;
+  ownerCurr: Owner;
+  ownerPrev: Owner;
   sprite: any | Phaser.GameObjects.Sprite;
   yPosition: number; // 0 to 1
   // powerStateCurr: PowerStateFlag;
@@ -604,3 +629,7 @@ export interface WorkingController {
   name: string;
   url: string;
 }
+
+export const bar = () => {
+  console.log('------------------');
+};

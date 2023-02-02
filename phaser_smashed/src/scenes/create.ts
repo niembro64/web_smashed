@@ -78,7 +78,12 @@ export function createFlagBoi(game: Game): void {
   game.flag.sprite.setScale(0.65);
   game.flag.sprite.setImmovable(true);
   game.flag.sprite.body.allowGravity = false;
-  game.flag.sprite.setVelocityY(100);
+  // game.flag.sprite.setVelocityY(100);
+
+  game.flag.poleTouchStamps = [];
+  game.players.forEach((player, playerIndex) => {
+    game.flag.poleTouchStamps.push({ touching: false, gameStamp: 0 });
+  });
 }
 
 export function createFlagNew(game: Game): void {
