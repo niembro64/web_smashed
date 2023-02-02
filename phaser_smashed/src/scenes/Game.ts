@@ -60,7 +60,7 @@ export default class Game extends Phaser.Scene {
   BACKGROUND: any | Phaser.GameObjects.Sprite;
   BACKGROUND_OUTLINE: any | Phaser.GameObjects.Sprite;
   TABLE: any | Phaser.GameObjects.Sprite;
-  FLAG: any | Phaser.GameObjects.Sprite;
+  POLE: any | Phaser.GameObjects.Sprite;
   ZOOM_MULTIPLIER_X = 0.95;
   ZOOM_MULTIPLIER_Y = 0.7;
   ZOOM_RATIO_SLOW = 0.999;

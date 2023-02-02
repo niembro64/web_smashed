@@ -70,22 +70,27 @@ export function create(game: Game) {
 export function createFlagBoi(game: Game): void {
   game.flag.sprite = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
-    SCREEN_DIMENSIONS.HEIGHT * 0.65,
+    SCREEN_DIMENSIONS.HEIGHT * 0.382,
     'flag'
   );
-  game.flag.sprite.setImmovable(true).setBounce(0).setOrigin(0.5, 0.5);
-  game.flag.sprite.allowGravity = false;
+  game.flag.sprite.setBounce(0);
+  // game.flag.sprite.setOrigin(0.5, 0.5);
+  game.flag.sprite.setScale(0.65);
+  game.flag.sprite.setImmovable(true);
+  game.flag.sprite.body.allowGravity = false;
+  game.flag.sprite.setVelocityY(100);
 }
 
 export function createFlagNew(game: Game): void {
-  game.FLAG = game.physics.add.sprite(
+  game.POLE = game.physics.add.sprite(
     (1920 - 87 - game.ASSET_BRICK_WIDTH * 2) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
     'pole'
   );
-  game.FLAG.setScale(1);
-  game.FLAG.setImmovable(true);
-  game.FLAG.body.allowGravity = false;
+  game.POLE.setScale(1);
+  game.POLE.setImmovable(true);
+  game.POLE.body.allowGravity = false;
+  game.POLE.setImmovable(false);
 }
 
 export function createGun(game: Game): void {
