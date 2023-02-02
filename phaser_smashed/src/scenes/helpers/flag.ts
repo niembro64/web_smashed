@@ -1,7 +1,11 @@
 import Game from '../Game';
-import { bar } from '../interfaces';
 
 export const getIsInPole = (x: number, y: number, game: Game): boolean => {
+  let f = game.flag;
+  if (f.completed) {
+    return false;
+  }
+
   let pole = game.POLE;
 
   let xMin = pole.x - pole.width / 2;
@@ -14,6 +18,11 @@ export const getIsInPole = (x: number, y: number, game: Game): boolean => {
 
 export const updateFlagToucher = (game: Game): void => {
   let f = game.flag;
+
+  if (f.completed) {
+    return;
+  }
+
   let ptStamps = f.poleTouchStamps;
 
   game.players.forEach((player, pIndex) => {
@@ -50,9 +59,20 @@ export const updateFlagToucher = (game: Game): void => {
 };
 
 export const updateFlagMovement = (game: Game): void => {
+  let f = game.flag;
+
+  if (f.completed) {
+    f.sprite.body.setVelocityY(0);
+    return;
+  }
+
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
-  let f = game.flag;
+
+  if (owner !== null && f.sprite.y < f.box.top) {
+    f.completed = true;
+    f.sprite.body.setVelocityY(0);
+  }
 
   // no one toucher
   // no movement
@@ -76,9 +96,14 @@ export const updateFlagMovement = (game: Game): void => {
 };
 
 export const updateFlagOwner = (game: Game): void => {
+  let f = game.flag;
+
+  if (f.completed) {
+    return;
+  }
+
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
-  let f = game.flag;
   let fs = game.flag.sprite;
 
   // do nothing
