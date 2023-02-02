@@ -1010,6 +1010,14 @@ export function createPlayers(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     setBlinkTrue(player);
   });
+
+  game.players.forEach((player, playerIndex) => {
+    // IF BOT
+    if (player.inputType === 3) {
+      player.padCurr.right = true;
+      player.padCurr.left = false;
+    }
+  });
 }
 
 export function createAttackPhysicals(game: Game): void {
@@ -1877,12 +1885,13 @@ export function createScoreboardController(game: Game): void {
         color: game.colorCircles[playerIndex].colorString,
         // stroke: player.char.color.primary,
         stroke: 'black',
-        strokeThickness: 1,
+        strokeThickness: 3,
+        // fill: game.colorCircles[playerIndex].colorString,
         shadow: {
           offsetX: 0,
           offsetY: 3,
           color: '#000',
-          blur: 3,
+          blur: 10,
           stroke: true,
           fill: true,
         },
