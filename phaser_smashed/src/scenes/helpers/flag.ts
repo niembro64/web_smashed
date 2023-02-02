@@ -17,18 +17,6 @@ export const updateFlagToucher = (game: Game): void => {
   let ptStamps = f.poleTouchStamps;
 
   game.players.forEach((player, pIndex) => {
-    bar();
-    bar();
-    bar();
-    bar();
-    bar();
-    console.log('game.flag.poleTouchStamps', game.flag.poleTouchStamps);
-    console.log('pIndex', pIndex);
-    bar();
-    bar();
-    bar();
-    bar();
-    bar();
     if (getIsInPole(player.char.sprite.x, player.char.sprite.y, game)) {
       if (ptStamps[pIndex].touching) {
       } else {
@@ -82,7 +70,9 @@ export const updateFlagMovement = (game: Game): void => {
 
   // another player is toucher
   // go down
-  f.sprite.body.setVelocityY(100);
+  if (toucher !== owner) {
+    f.sprite.body.setVelocityY(100);
+  }
 };
 
 export const updateFlagOwner = (game: Game): void => {
@@ -108,4 +98,11 @@ export const updateFlagOwner = (game: Game): void => {
     f.ownerCurr.id = toucher;
     f.ownerCurr.gameStamp = game.gameNanoseconds;
   }
+};
+
+export const printFlagOwnerAndToucher = (game: Game): void => {
+  let toucher = game.flag.toucherCurr.id;
+  let owner = game.flag.ownerCurr.id;
+
+  console.log('t:', toucher, 'o:', owner);
 };

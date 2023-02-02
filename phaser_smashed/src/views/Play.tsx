@@ -56,10 +56,10 @@ function Play() {
     if (allSessions === null) {
       return;
     }
-    console.log('allSesssions', allSessions);
+    // console.log('allSesssions', allSessions);
   }, [allSessions]);
 
-  const space: string = '&nbsp';
+  // const space: string = '&nbsp';
 
   function captureScreenshot() {
     console.log('captureScreenshot');
@@ -96,7 +96,7 @@ function Play() {
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('start');
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 3]);
+  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 2]);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -158,22 +158,26 @@ function Play() {
     players: [
       {
         characterId: 0,
-        input: 2,
+        input: 0, // don't set this here
       },
       {
         characterId: 7,
-        input: 0,
+        input: 0, // don't set this here
       },
       {
         characterId: 6,
-        input: 0,
+        input: 0, // don't set this here
       },
       {
         characterId: 1,
-        input: 3,
+        input: 0, // don't set this here
       },
     ],
   });
+
+  useEffect(() => {
+    console.log('smashConfig', smashConfig);
+  }, [smashConfig]);
 
   // always keep Chez and BlackChez at positions 4 and 5
   const smashConfigOptions: PlayerConfig[] = [
@@ -478,7 +482,7 @@ function Play() {
     ).name;
 
     // choice.scale = tempScale;
-    // choice.name = tempName;
+
     setSmashConfig({ players: [...choices] });
   };
 

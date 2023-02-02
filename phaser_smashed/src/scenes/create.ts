@@ -16,6 +16,7 @@ import {
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { Bullets } from './helpers/bullets';
+import { printFlagOwnerAndToucher } from './helpers/flag';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -62,6 +63,7 @@ export function create(game: Game) {
   createEndDataMatrices(game);
   createShake(game);
   createFlagBoi(game);
+
 
   // INIT UPDATE
   setPreUpdate(game);

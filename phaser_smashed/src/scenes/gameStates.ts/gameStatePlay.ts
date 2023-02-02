@@ -4,6 +4,7 @@ import { updateCamera } from '../helpers/camera';
 import { updateAtThreeShots, updateChomp } from '../helpers/chomp';
 import { updateDeathsAndKillsMatrices } from '../helpers/damage';
 import {
+  printFlagOwnerAndToucher,
   updateFlagMovement,
   updateFlagOwner,
   updateFlagToucher,
@@ -67,6 +68,7 @@ export function updateGameStatePlay(
   updateFlagToucher(game);
   updateFlagOwner(game);
   updateFlagMovement(game);
+  printFlagOwnerAndToucher(game);
 
   // UPDATE PLAYERS
   updatePlayers(game);
