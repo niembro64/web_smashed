@@ -64,14 +64,14 @@ export const updateFlagMovement = (game: Game): void => {
   // owner is toucher
   // go up
   if (toucher === owner) {
-    f.sprite.body.setVelocityY(-100);
+    f.sprite.body.setVelocityY(-50);
     return;
   }
 
   // another player is toucher
   // go down
   if (toucher !== owner) {
-    f.sprite.body.setVelocityY(100);
+    f.sprite.body.setVelocityY(50);
   }
 };
 
@@ -89,9 +89,8 @@ export const updateFlagOwner = (game: Game): void => {
 
   // if the flag is down
   // and the toucher is not the owner
-  // and the toucher is not the previous owner
   // make the toucher the owner
-  if (fs.y > f.box.bottom && toucher !== owner && toucher !== f.ownerPrev.id) {
+  if (fs.y > f.box.bottom && toucher !== owner) {
     f.ownerPrev.id = f.ownerCurr.id;
     f.ownerPrev.gameStamp = f.ownerCurr.gameStamp;
 
@@ -105,4 +104,18 @@ export const printFlagOwnerAndToucher = (game: Game): void => {
   let owner = game.flag.ownerCurr.id;
 
   console.log('t:', toucher, 'o:', owner);
+};
+
+export const updateFlagColor = (game: Game): void => {
+  let f = game.flag;
+  let fs = game.flag.sprite;
+  let owner = game.flag.ownerCurr.id;
+
+  if (owner === null) {
+    fs.setTint(0xffffff);
+    return;
+  }
+
+  let color = game.colorCircles[owner].colorNumber;
+  fs.setTint(color);
 };
