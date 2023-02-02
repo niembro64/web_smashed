@@ -202,15 +202,38 @@ export function updateShotsOnPlayers(game: Game) {
 
 export function updateShotGlassTransparency(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    if (
-      player.state.name === 'player-state-dead' &&
-      game.gameState.nameCurr !== 'game-state-play'
-    ) {
-      player.shotGlassImage.setAlpha(1);
-      player.shotGlassNumber.setAlpha(1);
-    } else {
-      player.shotGlassImage.setAlpha(0);
-      player.shotGlassNumber.setAlpha(0);
+    switch (game.gameState.nameCurr) {
+      case 'game-state-play':
+        player.shotGlassImage.setAlpha(0);
+        player.shotGlassNumber.setAlpha(0);
+        break;
+      case 'game-state-screen-clear':
+        if (player.state.name === 'player-state-dead') {
+          player.shotGlassImage.setAlpha(1);
+          player.shotGlassNumber.setAlpha(1);
+        } else {
+          player.shotGlassImage.setAlpha(0);
+          player.shotGlassNumber.setAlpha(0);
+        }
+        break;
+      case 'game-state-first-blood':
+        if (player.state.name === 'player-state-dead') {
+          player.shotGlassImage.setAlpha(1);
+          player.shotGlassNumber.setAlpha(1);
+        } else {
+          player.shotGlassImage.setAlpha(0);
+          player.shotGlassNumber.setAlpha(0);
+        }
+        break;
+      case 'game-state-captured-flag':
+        if (game.flag.ownerCurr.id === playerIndex) {
+          player.shotGlassImage.setAlpha(0);
+          player.shotGlassNumber.setAlpha(0);
+        } else {
+          player.shotGlassImage.setAlpha(1);
+          player.shotGlassNumber.setAlpha(1);
+        }
+        break;
     }
   });
 }

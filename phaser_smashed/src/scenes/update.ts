@@ -40,6 +40,7 @@ import {
 import {
   getIsFirstBlood,
   getIsScreenClear,
+  setAddShotsToMatrixFlagCaptured,
   updateNumShotsLeft,
 } from './helpers/drinking';
 import {
@@ -53,6 +54,7 @@ import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
 import { Player } from './interfaces';
 import { updatePlayerDarknessEvents } from './helpers/powers';
 import { printKeyboard } from './helpers/keyboard';
+import { getIsFlagShots } from './helpers/flag';
 
 export function setPreUpdate(game: Game): void {
   setMusicPlay(game);
@@ -120,7 +122,7 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       ///////// flag up => flag shot
       ////////////////////////////////
-      if (game.flag.completedCurr && !game.flag.completedPrev) {
+      if (getIsFlagShots(game)) {
         setGameState(game, 'game-state-captured-flag');
       }
 

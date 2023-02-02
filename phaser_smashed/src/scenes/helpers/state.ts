@@ -23,6 +23,7 @@ import {
 import {
   getIsFirstBlood,
   getIsScreenClear,
+  setAddShotsToMatrixFlagCaptured,
   setAddShotToMatrixFirstBlood,
   setAddToShotsMatrixScreenClear,
 } from './drinking';
@@ -109,6 +110,7 @@ export function setGameState(game: Game, state: GameState): void {
       setPhysicsPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
+      setAddShotsToMatrixFlagCaptured(game);
       break;
     case 'game-state-finished':
       setPhysicsPause(game);
@@ -133,6 +135,9 @@ export function setGameState(game: Game, state: GameState): void {
       isDrinkingPrev = true;
       break;
     case 'game-state-screen-clear':
+      isDrinkingPrev = true;
+      break;
+    case 'game-state-captured-flag':
       isDrinkingPrev = true;
       break;
     case 'game-state-finished':

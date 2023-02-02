@@ -69,6 +69,10 @@ export const updateFlagToucher = (game: Game): void => {
 export const updateFlagMovement = (game: Game): void => {
   let f = game.flag;
 
+  if (f.completedPrev) {
+    return;
+  }
+
   f.completedPrev = f.completedCurr;
 
   if (f.completedCurr) {
@@ -159,4 +163,8 @@ export const updateFlagColor = (game: Game): void => {
 
   let color = game.colorCircles[owner].colorNumber;
   fs.setTint(color);
+};
+
+export const getIsFlagShots = (game: Game): boolean => {
+  return game.flag.completedCurr && !game.flag.completedPrev;
 };

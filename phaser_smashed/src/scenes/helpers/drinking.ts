@@ -98,6 +98,20 @@ export function setAddToShotsMatrixScreenClear(
   }
 }
 
+export function setAddShotsToMatrixFlagCaptured(game: Game): void {
+  let ownerIndex = game.flag.ownerCurr.id;
+
+  if (ownerIndex === null) {
+    return;
+  }
+
+  game.players.forEach((player, playerIndex) => {
+    if (ownerIndex !== null && ownerIndex !== playerIndex) {
+      game.numberShotsTakenByMeMatrix[playerIndex][ownerIndex]++;
+    }
+  });
+}
+
 export function updateNumShotsLeft(game: Game): void {
   if (!game.debug.ModeInfinity) {
     return;
