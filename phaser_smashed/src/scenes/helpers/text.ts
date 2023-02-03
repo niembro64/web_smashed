@@ -257,7 +257,7 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
     game.gameState.nameCurr === 'game-state-captured-flag'
   ) {
     ecs.forEach((ec, ecIndex) => {
-      ec.sprite.setAlpha(0.5);
+      ec.sprite.setAlpha(game.debug.ShowCurrentWinners ? 0.5 : 0);
     });
   } else {
     ecs.forEach((ec, ecIndex) => {

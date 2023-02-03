@@ -40,6 +40,7 @@ export interface Debug {
   CharOverrideId: CharacterId;
   BulletsAllowGroups: boolean;
   BulletsFullScreen: boolean;
+  ShowCurrentWinners: boolean;
 }
 
 export interface CharacterMove {
