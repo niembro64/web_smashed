@@ -130,14 +130,15 @@ export function updateNumShotsLeft(game: Game): void {
 
 export interface PositionEndGame {
   id: number;
+  input: number;
   shots: number;
   deaths: number;
   hits: number;
 }
 
-export function getEndGamePositions(p: PositionEndGame[]): number[] {
-  let pNew = [...p];
-  pNew.sort((a: PositionEndGame, b: PositionEndGame) => {
+export function getSortedPositionsEndGame(p: PositionEndGame[]): number[] {
+  let orderedPlayers = [...p];
+  orderedPlayers.sort((a: PositionEndGame, b: PositionEndGame) => {
     if (a.shots > b.shots) {
       return -1;
     } else if (a.shots < b.shots) {
@@ -165,43 +166,48 @@ export function getEndGamePositions(p: PositionEndGame[]): number[] {
     }
   });
 
-  let ids: number[] = [];
-  pNew.forEach((p, i) => {
-    ids.push(p.id);
+  let playerPositions: number[] = [];
+  orderedPlayers.forEach((pNew, i) => {
+    playerPositions.push(-1);
+  });
+  orderedPlayers.forEach((pNew, i) => {
+    playerPositions[pNew.id] = i;
   });
 
-  return ids;
+  return playerPositions;
 }
 
 export function getEndGame(game: Game): number[] {
-  let index: number[] = [];
+  let indexes: number[] = [];
 
   game.players.forEach((player, playerIndex) => {
-    index.push(playerIndex);
+    indexes.push(playerIndex);
   });
 
   let s = game.numberShotsTakenByMeMatrix;
   let d = game.numberKilledByMatrix;
   let h = game.numberHitByMatrix;
+  let i = game.playerChoicesInputType;
 
   let positionsEndGame: PositionEndGame[] = [];
 
-  index.forEach((id) => {
+  indexes.forEach((index) => {
     let shots = 0;
     let deaths = 0;
     let hits = 0;
+    let input = i[index];
 
     for (let j = 0; j < game.players.length; j++) {
-      shots += s[id][j];
-      deaths += d[id][j];
-      hits += h[id][j];
+      shots += s[index][j];
+      deaths += d[index][j];
+      hits += h[index][j];
     }
 
-    positionsEndGame.push({ id, shots, deaths, hits });
+    positionsEndGame.push({ id: index, input, shots, deaths, hits });
   });
 
   console.log(positionsEndGame);
-  let z = getEndGamePositions(positionsEndGame);
+  let z = getSortedPositionsEndGame(positionsEndGame);
   console.log(z);
 
   return z;
