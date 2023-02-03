@@ -70,7 +70,6 @@ export function updateText(game: Game): void {
     redOffsetY * (1 / zoom) +
     game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
 
-  updateClockTextUpper(game, zoom, newGameTimeY);
   updateClockTextLower(game, zoom, newTimeTimeY);
   updateGlasses(game, zoom, newTopY);
   updateGlassesNumberShots(game, zoom, newTopNumY);
@@ -239,6 +238,7 @@ export function updateShotGlassTransparency(game: Game): void {
 }
 
 export function updateGlasses(game: Game, zoom: number, newY: number): void {
+  // update shotGlassImage
   game.players.forEach((player, playerIndex) => {
     player.shotGlassImage.setScale(0.7 / zoom, 0.7 / zoom);
     player.shotGlassImage.x =
@@ -248,6 +248,18 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
         (1 / zoom);
 
     player.shotGlassImage.y = newY;
+  });
+
+  // update endCupImage
+  game.players.forEach((player, playerIndex) => {
+    player.endCupImage.setScale(1 / zoom, 1 / zoom);
+    player.endCupImage.x =
+      game.cameraMover.char.sprite.x +
+      (game.textLocations[game.playerSpawnOrder[playerIndex]] +
+        game.glassLocationLROffset) *
+        (1 / zoom);
+
+    player.endCupImage.y = newY;
   });
 }
 

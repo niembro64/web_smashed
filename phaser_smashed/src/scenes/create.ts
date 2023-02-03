@@ -1794,7 +1794,7 @@ export function createSplashes(game: Game): void {
 
 export function createScoreboardShotGlass(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    player.endGameTrophy = game.add
+    player.endCupImage = game.add
       .sprite(
         SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[playerIndex],
         SCREEN_DIMENSIONS.HEIGHT / 2 + 200,

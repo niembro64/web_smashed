@@ -134,8 +134,8 @@ export interface Player {
   shotCountPrev: number;
   playerReadySound: any;
   circleOffset: number;
-  endGamePlace: number | null;
-  endGameTrophy: any;
+  endPlace: number | null;
+  endCupImage: any;
 }
 
 export interface Char {

@@ -217,6 +217,6 @@ export function setPlayerWinningPositions(game: Game): void {
   let positions: number[] = getEndGame(game);
 
   game.players.forEach((player, playerIndex) => {
-    player.endGamePlace = positions[playerIndex];
+    player.endPlace = positions[playerIndex];
   });
 }
