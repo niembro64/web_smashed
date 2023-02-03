@@ -1,5 +1,6 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { emoji, SplashName } from '../interfaces';
+import { getCameraPlayerStatus } from './camera';
 import { updatePlayerWinningPositions } from './drinking';
 import { getIsPlayerReady } from './pad';
 import { pauseReadySoundPlayer, playReadySoundPlayer } from './sound';
@@ -257,9 +258,16 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
     game.gameState.nameCurr === 'game-state-first-blood' ||
     game.gameState.nameCurr === 'game-state-captured-flag'
   ) {
-    ecs.forEach((ec, ecIndex) => {
-      ec.sprite.setAlpha(game.debug.CurrentTrophyWinners ? 0.5 : 0);
-    });
+    if (game.debug.CurrentTrophyWinners) {
+      ecs.forEach((ec, ecIndex) => {
+        ec.sprite.setAlpha(0.5);
+      });
+    } else {
+      ecs.forEach((ec, ecIndex) => {
+        ec.sprite.setAlpha(0);
+      });
+      return;
+    }
   } else {
     ecs.forEach((ec, ecIndex) => {
       ec.sprite.setAlpha(0);
