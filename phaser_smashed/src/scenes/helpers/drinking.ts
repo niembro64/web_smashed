@@ -127,3 +127,90 @@ export function updateNumShotsLeft(game: Game): void {
   });
   game.shotsLeftCurr = game.debug.InfinityShots - shots;
 }
+
+export interface PositionEndGame {
+  id: number;
+  shots: number;
+  deaths: number;
+  hits: number;
+}
+
+export function getEndGamePositions(p: PositionEndGame[]): number[] {
+  let pNew = [...p];
+  pNew.sort((a: PositionEndGame, b: PositionEndGame) => {
+    if (a.shots > b.shots) {
+      return -1;
+    } else if (a.shots < b.shots) {
+      return 1;
+    } else {
+      if (a.deaths > b.deaths) {
+        return -1;
+      } else if (a.deaths < b.deaths) {
+        return 1;
+      } else {
+        if (a.hits > b.hits) {
+          return -1;
+        } else if (a.hits < b.hits) {
+          return 1;
+        } else {
+          if (a.id > b.id) {
+            return 1;
+          } else if (a.id < b.id) {
+            return -1;
+          } else {
+            return 1;
+          }
+        }
+      }
+    }
+  });
+
+  let ids: number[] = [];
+  pNew.forEach((p, i) => {
+    ids.push(p.id);
+  });
+
+  return ids;
+}
+
+export function getEndGame(game: Game): number[] {
+  let index: number[] = [];
+
+  game.players.forEach((player, playerIndex) => {
+    index.push(playerIndex);
+  });
+
+  let s = game.numberShotsTakenByMeMatrix;
+  let d = game.numberKilledByMatrix;
+  let h = game.numberHitByMatrix;
+
+  let positionsEndGame: PositionEndGame[] = [];
+
+  index.forEach((id) => {
+    let shots = 0;
+    let deaths = 0;
+    let hits = 0;
+
+    for (let j = 0; j < game.players.length; j++) {
+      shots += s[id][j];
+      deaths += d[id][j];
+      hits += h[id][j];
+    }
+
+    positionsEndGame.push({ id, shots, deaths, hits });
+  });
+
+  console.log(positionsEndGame);
+  let z = getEndGamePositions(positionsEndGame);
+  console.log(z);
+
+  return z;
+}
+
+export function setPlayerPositions(game: Game): void {
+  let positions: number[] = getEndGame(game);
+
+  game.players.forEach((player, playerIndex) => {
+    player.endGamePlace = positions[playerIndex];
+  });
+}

@@ -134,6 +134,7 @@ export interface Player {
   shotCountPrev: number;
   playerReadySound: any;
   circleOffset: number;
+  endGamePlace: number | null;
 }
 
 export interface Char {

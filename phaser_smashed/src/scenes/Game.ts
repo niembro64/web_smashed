@@ -1005,6 +1005,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 1,
@@ -1179,6 +1180,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 2,
@@ -1352,6 +1354,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 3,
@@ -1541,6 +1544,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 4,
@@ -1714,6 +1718,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 5,
@@ -1887,6 +1892,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 6,
@@ -2060,6 +2066,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 8,
@@ -2233,6 +2240,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
     {
       playerId: 8,
@@ -2409,6 +2417,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
+      endGamePlace: null,
     },
   ];
 
