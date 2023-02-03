@@ -139,7 +139,7 @@ export interface Player {
   shotCountPrev: number;
   playerReadySound: any;
   circleOffset: number;
-  endPlace: number | null;
+  endPlace: number;
 }
 
 export interface Char {

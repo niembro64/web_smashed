@@ -1,5 +1,6 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { emoji, SplashName } from '../interfaces';
+import { updatePlayerWinningPositions } from './drinking';
 import { getIsPlayerReady } from './pad';
 import { pauseReadySoundPlayer, playReadySoundPlayer } from './sound';
 
@@ -244,20 +245,23 @@ export function updateShotGlassTransparency(game: Game): void {
 }
 
 export function updateCups(game: Game, zoom: number, newY: number): void {
+  updatePlayerWinningPositions(game);
   let players = game.players;
-  let ec = game.endCups;
+  let ecs = game.endCups;
 
-  ec.forEach((endCup, i) => {
-    endCup.sprite.setScale(0.65 / zoom, 0.65 / zoom);
+  for (let i = 0; i < ecs.length; i++) {
+    let p = players[i].endPlace;
+    console.log('players[i].endPlace: ' + players[i].endPlace);
+    ecs[p].sprite.setScale(0.65 / zoom, 0.65 / zoom);
 
-    endCup.sprite.x =
+    ecs[p].sprite.x =
       game.cameraMover.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[i]] +
         game.glassLocationLROffset) *
         (1 / zoom);
 
-    endCup.sprite.y = newY;
-  });
+    ecs[p].sprite.y = newY;
+  }
 }
 
 export function updateGlasses(game: Game, zoom: number, newY: number): void {
