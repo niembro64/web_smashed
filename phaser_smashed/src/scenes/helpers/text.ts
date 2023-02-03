@@ -87,6 +87,7 @@ export function updateText(game: Game): void {
   updateDeathsKillsText(game, zoom, newLowerY);
   updateEndDataMatrices(game, zoom, newDataY, newDataTitleY);
   updateBgLocation(game, zoom, newBgY);
+  updateClockTextUpper(game, zoom, newGameTimeY);
 }
 
 export function updateBgLocation(game: Game, zoom: number, newY: number): void {
@@ -257,7 +258,7 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
     game.gameState.nameCurr === 'game-state-captured-flag'
   ) {
     ecs.forEach((ec, ecIndex) => {
-      ec.sprite.setAlpha(game.debug.ShowCurrentWinners ? 0.5 : 0);
+      ec.sprite.setAlpha(game.debug.CurrentTrophyWinners ? 0.5 : 0);
     });
   } else {
     ecs.forEach((ec, ecIndex) => {
