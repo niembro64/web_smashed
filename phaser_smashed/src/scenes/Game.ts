@@ -814,7 +814,7 @@ export default class Game extends Phaser.Scene {
     // bullets: null,
   };
 
-  endCup: EndCup[] = [];
+  endCups: EndCup[] = [];
 
   players: Player[] = [];
   playerOptions: Player[] = [
@@ -1008,7 +1008,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 1,
@@ -1183,7 +1183,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 2,
@@ -1357,7 +1357,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 3,
@@ -1547,7 +1547,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 4,
@@ -1721,7 +1721,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 5,
@@ -1895,7 +1895,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 6,
@@ -2069,7 +2069,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 8,
@@ -2243,7 +2243,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
     {
       playerId: 8,
@@ -2420,7 +2420,7 @@ export default class Game extends Phaser.Scene {
         select: 0,
       },
       playerReadySound: null,
-      endPlace: null,
+      endPlace: 0,
     },
   ];
 

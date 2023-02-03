@@ -244,16 +244,19 @@ export function updateShotGlassTransparency(game: Game): void {
 }
 
 export function updateCups(game: Game, zoom: number, newY: number): void {
-  // update endCupImage
-  game.endCup.forEach((endCupImage, playerIndex) => {
-    endCupImage.sprite.setScale(0.65 / zoom, 0.65 / zoom);
-    endCupImage.sprite.x =
+  let players = game.players;
+  let ec = game.endCups;
+
+  ec.forEach((endCup, i) => {
+    endCup.sprite.setScale(0.65 / zoom, 0.65 / zoom);
+
+    endCup.sprite.x =
       game.cameraMover.char.sprite.x +
-      (game.textLocations[game.playerSpawnOrder[playerIndex]] +
+      (game.textLocations[game.playerSpawnOrder[i]] +
         game.glassLocationLROffset) *
         (1 / zoom);
 
-    endCupImage.sprite.y = newY;
+    endCup.sprite.y = newY;
   });
 }
 

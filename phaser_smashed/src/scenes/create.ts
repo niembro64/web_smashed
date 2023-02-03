@@ -1795,12 +1795,13 @@ export function createSplashes(game: Game): void {
 
 export function createScoreboardShotGlass(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    game.endCup.push({
+    game.endCups.push({
       sprite: null,
+      ownerId: playerIndex,
     });
   });
 
-  game.endCup.forEach((endCup, i) => {
+  game.endCups.forEach((endCup, i) => {
     endCup.sprite = game.add
       .sprite(
         SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[i],

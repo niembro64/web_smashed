@@ -109,6 +109,7 @@ export interface CameraHelper {
 
 export interface EndCup {
   sprite: any | Phaser.GameObjects.Sprite;
+  ownerId: number;
 }
 
 export interface Player {
