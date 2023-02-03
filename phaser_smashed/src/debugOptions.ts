@@ -40,7 +40,8 @@ export const debugInit: Debug = {
   CharOverrideId: 3,
   BulletsAllowGroups: true,
   BulletsFullScreen: false,
-  CurrentTrophyWinners: false,
+  TrophiesOnShots: false,
+  TrophiesAlways: false,
 };
 
 export const debugMax: Debug = {
@@ -83,5 +84,6 @@ export const debugMax: Debug = {
   CharOverrideId: 8,
   BulletsAllowGroups: true,
   BulletsFullScreen: true,
-  CurrentTrophyWinners: true,
+  TrophiesOnShots: true,
+  TrophiesAlways: true,
 };

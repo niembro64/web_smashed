@@ -40,7 +40,8 @@ export interface Debug {
   CharOverrideId: CharacterId;
   BulletsAllowGroups: boolean;
   BulletsFullScreen: boolean;
-  CurrentTrophyWinners: boolean;
+  TrophiesOnShots: boolean;
+  TrophiesAlways: boolean;
 }
 
 export interface CharacterMove {

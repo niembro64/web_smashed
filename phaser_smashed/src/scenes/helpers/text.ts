@@ -258,7 +258,7 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
     game.gameState.nameCurr === 'game-state-first-blood' ||
     game.gameState.nameCurr === 'game-state-captured-flag'
   ) {
-    if (game.debug.CurrentTrophyWinners) {
+    if (game.debug.TrophiesOnShots || game.debug.TrophiesAlways) {
       ecs.forEach((ec, ecIndex) => {
         ec.sprite.setAlpha(0.5);
       });
@@ -269,10 +269,16 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
       return;
     }
   } else {
-    ecs.forEach((ec, ecIndex) => {
-      ec.sprite.setAlpha(0);
-    });
-    return;
+    if (game.debug.TrophiesAlways) {
+      ecs.forEach((ec, ecIndex) => {
+        ec.sprite.setAlpha(0.5);
+      });
+    } else {
+      ecs.forEach((ec, ecIndex) => {
+        ec.sprite.setAlpha(0);
+      });
+      return;
+    }
   }
 
   // | 'game-state-start'
