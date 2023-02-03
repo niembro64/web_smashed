@@ -245,9 +245,36 @@ export function updateShotGlassTransparency(game: Game): void {
 }
 
 export function updateCups(game: Game, zoom: number, newY: number): void {
-  updatePlayerWinningPositions(game);
   let players = game.players;
   let ecs = game.endCups;
+  if (game.gameState.nameCurr === 'game-state-finished') {
+    ecs.forEach((ec, ecIndex) => {
+      ec.sprite.setAlpha(1);
+    });
+  } else if (
+    game.gameState.nameCurr === 'game-state-screen-clear' ||
+    game.gameState.nameCurr === 'game-state-first-blood' ||
+    game.gameState.nameCurr === 'game-state-captured-flag'
+  ) {
+    ecs.forEach((ec, ecIndex) => {
+      ec.sprite.setAlpha(0.5);
+    });
+  } else {
+    ecs.forEach((ec, ecIndex) => {
+      ec.sprite.setAlpha(0);
+    });
+    return;
+  }
+
+  // | 'game-state-start'
+  // | 'game-state-play'
+  // | 'game-state-paused'
+  // | 'game-state-first-blood'
+  // | 'game-state-screen-clear'
+  // | 'game-state-captured-flag'
+  // | 'game-state-finished';
+
+  updatePlayerWinningPositions(game);
 
   for (let i = 0; i < ecs.length; i++) {
     let p = players[i].endPlace;

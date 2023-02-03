@@ -140,19 +140,19 @@ export function getSortedPositionsEndGame(p: PositionEndGame[]): number[] {
   let orderedPlayers = [...p];
   orderedPlayers.sort((a: PositionEndGame, b: PositionEndGame) => {
     if (a.shots > b.shots) {
-      return -1;
-    } else if (a.shots < b.shots) {
       return 1;
+    } else if (a.shots < b.shots) {
+      return -1;
     } else {
       if (a.deaths > b.deaths) {
-        return -1;
-      } else if (a.deaths < b.deaths) {
         return 1;
+      } else if (a.deaths < b.deaths) {
+        return -1;
       } else {
         if (a.hits > b.hits) {
-          return -1;
-        } else if (a.hits < b.hits) {
           return 1;
+        } else if (a.hits < b.hits) {
+          return -1;
         } else {
           if (a.id > b.id) {
             return 1;
