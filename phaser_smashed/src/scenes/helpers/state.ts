@@ -26,6 +26,7 @@ import {
   setAddShotsToMatrixFlagCaptured,
   setAddShotToMatrixFirstBlood,
   setAddToShotsMatrixScreenClear,
+  setPlayerWinningPositions,
 } from './drinking';
 import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
 import { setPhysicsPause, setPhysicsResume } from './physics';
@@ -92,6 +93,7 @@ export function setGameState(game: Game, state: GameState): void {
       setPhysicsPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
+      setPlayerWinningPositions(game);
       break;
     case 'game-state-screen-clear':
       setRuleSplashOn(game, 'splash-screen-clear');
@@ -101,6 +103,7 @@ export function setGameState(game: Game, state: GameState): void {
       setPhysicsPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
+      setPlayerWinningPositions(game);
       break;
     case 'game-state-captured-flag':
       setRuleSplashOn(game, 'splash-captured-flag');
@@ -111,6 +114,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setAddShotsToMatrixFlagCaptured(game);
+      setPlayerWinningPositions(game);
       break;
     case 'game-state-finished':
       setPhysicsPause(game);
@@ -119,6 +123,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSoundFinishPlay(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
+      setPlayerWinningPositions(game);
       break;
     default:
       console.log('BROKEN_____________________');

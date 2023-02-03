@@ -135,6 +135,7 @@ export interface Player {
   playerReadySound: any;
   circleOffset: number;
   endGamePlace: number | null;
+  endGameTrophy: any;
 }
 
 export interface Char {

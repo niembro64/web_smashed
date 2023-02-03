@@ -64,7 +64,6 @@ export function create(game: Game) {
   createEndDataMatrices(game);
   createShake(game);
 
-
   // INIT UPDATE
   setPreUpdate(game);
 }
@@ -1794,6 +1793,27 @@ export function createSplashes(game: Game): void {
 }
 
 export function createScoreboardShotGlass(game: Game): void {
+  game.players.forEach((player, playerIndex) => {
+    player.endGameTrophy = game.add
+      .sprite(
+        SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[playerIndex],
+        SCREEN_DIMENSIONS.HEIGHT / 2 + 200,
+        'cup' + (playerIndex + 1).toString()
+      )
+      .setScale(
+        2 / game.cameras.main.zoom / 10,
+        2 / game.cameras.main.zoom / 10
+      )
+      .setOrigin(0.5, 0.5);
+
+    // player.endGameTrophy.setTint(
+    //   0xffffff,
+    //   0xffffff,
+    //   game.colorCircles[playerIndex].colorNumber,
+    //   game.colorCircles[playerIndex].colorNumber
+    // );
+  });
+
   game.players.forEach((player, playerIndex) => {
     player.shotGlassImage = game.add
       .sprite(

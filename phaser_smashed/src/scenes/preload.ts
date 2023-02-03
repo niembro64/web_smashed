@@ -47,8 +47,6 @@ export function preload(game: Game): void {
 
   game.shotsLeftCurr = game.debug.InfinityShots;
 
-
-
   //////////////////////////////
   // Load Audio
   //////////////////////////////
@@ -180,6 +178,13 @@ export function preload(game: Game): void {
 
   game.load.image('chomp_block', 'images/chomp_block.png');
   game.load.image('chomp_link', 'images/chomp_chain_trans.png');
+
+  for (let i = 0; i < 4; i++) {
+    game.load.image(
+      'cup' + (i + 1).toString(),
+      'images/cup' + (i + 1).toString() + '.png'
+    );
+  }
 
   //////////////////////////////
   //  LOAD SPRITESHEETS

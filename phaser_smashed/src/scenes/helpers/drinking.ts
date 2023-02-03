@@ -213,7 +213,7 @@ export function getEndGame(game: Game): number[] {
   return z;
 }
 
-export function setPlayerPositions(game: Game): void {
+export function setPlayerWinningPositions(game: Game): void {
   let positions: number[] = getEndGame(game);
 
   game.players.forEach((player, playerIndex) => {
