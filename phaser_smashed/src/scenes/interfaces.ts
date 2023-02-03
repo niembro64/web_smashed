@@ -107,6 +107,10 @@ export interface CameraHelper {
   helperState: Loc | any;
 }
 
+export interface EndCup {
+  sprite: any | Phaser.GameObjects.Sprite;
+}
+
 export interface Player {
   playerId: number;
   shotGlassImage: any | Phaser.GameObjects.Sprite;
@@ -135,7 +139,6 @@ export interface Player {
   playerReadySound: any;
   circleOffset: number;
   endPlace: number | null;
-  endCupImage: any;
 }
 
 export interface Char {

@@ -17,6 +17,7 @@ import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { Bullets } from './helpers/bullets';
 import { printFlagOwnerAndToucher } from './helpers/flag';
+import { getCameraBorderStatus } from './helpers/camera';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -1794,15 +1795,17 @@ export function createSplashes(game: Game): void {
 
 export function createScoreboardShotGlass(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    player.endCupImage = game.add
+    game.endCup.push({
+      sprite: null,
+    });
+  });
+
+  game.endCup.forEach((endCup, i) => {
+    endCup.sprite = game.add
       .sprite(
-        SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[playerIndex],
+        SCREEN_DIMENSIONS.WIDTH / 2 + game.playerSpawnLocationsX[i],
         SCREEN_DIMENSIONS.HEIGHT / 2 + 200,
-        'cup' + (playerIndex + 1).toString()
-      )
-      .setScale(
-        2 / game.cameras.main.zoom / 10,
-        2 / game.cameras.main.zoom / 10
+        'cup' + (i + 1).toString()
       )
       .setOrigin(0.5, 0.5);
 
@@ -1835,6 +1838,7 @@ export function createScoreboardShotGlass(game: Game): void {
     );
   });
 }
+
 export function createScoreboardShotGlassNumber(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     player.shotGlassNumber = game.add

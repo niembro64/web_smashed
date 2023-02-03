@@ -251,15 +251,15 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
   });
 
   // update endCupImage
-  game.players.forEach((player, playerIndex) => {
-    player.endCupImage.setScale(1 / zoom, 1 / zoom);
-    player.endCupImage.x =
+  game.endCup.forEach((endCupImage, playerIndex) => {
+    endCupImage.sprite.setScale(0.65 / zoom, 0.65 / zoom);
+    endCupImage.sprite.x =
       game.cameraMover.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.glassLocationLROffset) *
         (1 / zoom);
 
-    player.endCupImage.y = newY;
+    endCupImage.sprite.y = newY;
   });
 }
 

@@ -9,6 +9,7 @@ import {
   ColorCircle,
   Debug,
   emoji,
+  EndCup,
   Flag,
   GameStateWithTime,
   Gun,
@@ -813,6 +814,8 @@ export default class Game extends Phaser.Scene {
     // bullets: null,
   };
 
+  endCup: EndCup[] = [];
+
   players: Player[] = [];
   playerOptions: Player[] = [
     {
@@ -1006,7 +1009,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 1,
@@ -1182,7 +1184,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 2,
@@ -1357,7 +1358,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 3,
@@ -1548,7 +1548,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 4,
@@ -1723,7 +1722,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 5,
@@ -1898,7 +1896,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 6,
@@ -2073,7 +2070,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 8,
@@ -2248,7 +2244,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
     {
       playerId: 8,
@@ -2426,7 +2421,6 @@ export default class Game extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: null,
-      endCupImage: null,
     },
   ];
 
