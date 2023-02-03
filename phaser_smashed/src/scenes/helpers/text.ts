@@ -9,6 +9,7 @@ export function updateText(game: Game): void {
   const splashY = SCREEN_DIMENSIONS.HEIGHT / 2;
   const controllerY = SCREEN_DIMENSIONS.HEIGHT - 220;
   const glassY = SCREEN_DIMENSIONS.HEIGHT - 180;
+  const glassYCups = SCREEN_DIMENSIONS.HEIGHT - 280;
   const glassNumY = SCREEN_DIMENSIONS.HEIGHT - 180;
   const readyY = SCREEN_DIMENSIONS.HEIGHT - 140;
   const damageY = SCREEN_DIMENSIONS.HEIGHT - 76;
@@ -41,6 +42,10 @@ export function updateText(game: Game): void {
     glassY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
     game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+  const newTopYCups =
+    glassYCups * (1 / zoom) +
+    redOffsetY * (1 / zoom) +
+    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
   const newTopNumY =
     glassNumY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
@@ -71,6 +76,7 @@ export function updateText(game: Game): void {
     game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
 
   updateClockTextLower(game, zoom, newTimeTimeY);
+  updateCups(game, zoom, newTopYCups);
   updateGlasses(game, zoom, newTopY);
   updateGlassesNumberShots(game, zoom, newTopNumY);
   updateDamageShotsText(game, zoom, newUpperY);
@@ -237,6 +243,20 @@ export function updateShotGlassTransparency(game: Game): void {
   });
 }
 
+export function updateCups(game: Game, zoom: number, newY: number): void {
+  // update endCupImage
+  game.endCup.forEach((endCupImage, playerIndex) => {
+    endCupImage.sprite.setScale(0.65 / zoom, 0.65 / zoom);
+    endCupImage.sprite.x =
+      game.cameraMover.char.sprite.x +
+      (game.textLocations[game.playerSpawnOrder[playerIndex]] +
+        game.glassLocationLROffset) *
+        (1 / zoom);
+
+    endCupImage.sprite.y = newY;
+  });
+}
+
 export function updateGlasses(game: Game, zoom: number, newY: number): void {
   // update shotGlassImage
   game.players.forEach((player, playerIndex) => {
@@ -248,18 +268,6 @@ export function updateGlasses(game: Game, zoom: number, newY: number): void {
         (1 / zoom);
 
     player.shotGlassImage.y = newY;
-  });
-
-  // update endCupImage
-  game.endCup.forEach((endCupImage, playerIndex) => {
-    endCupImage.sprite.setScale(0.65 / zoom, 0.65 / zoom);
-    endCupImage.sprite.x =
-      game.cameraMover.char.sprite.x +
-      (game.textLocations[game.playerSpawnOrder[playerIndex]] +
-        game.glassLocationLROffset) *
-        (1 / zoom);
-
-    endCupImage.sprite.y = newY;
   });
 }
 
