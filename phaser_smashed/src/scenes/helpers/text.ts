@@ -294,7 +294,7 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
   for (let i = 0; i < ecs.length; i++) {
     let p = players[i].endPlace;
     console.log('players[i].endPlace: ' + players[i].endPlace);
-    ecs[p].sprite.setScale(0.65 / zoom, 0.65 / zoom);
+    ecs[p].sprite.setScale(0.682 / zoom, 0.682 / zoom);
 
     ecs[p].sprite.x =
       game.cameraMover.char.sprite.x +
