@@ -162,10 +162,14 @@ export const updateFlagColor = (game: Game): void => {
   let f = game.flag;
   let fs = game.flag.sprite;
   let owner = game.flag.ownerCurr.id;
+  let fire = game.flag.firework;
 
-  if (f.completedCurr) {
+  if (f.completedCurr && f.completedCurr && !f.completedPrev) {
     fs.setAlpha(0.5);
     game.POLE.setAlpha(0.5);
+    // fire.setScale(3);
+    // fire.setAlpha(1);
+    // fire.play('firework');
     return;
   }
 

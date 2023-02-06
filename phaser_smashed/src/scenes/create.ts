@@ -882,16 +882,16 @@ export function createLavas(game: Game): void {
 }
 
 export function createFirework(game: Game): void {
-  let f = game.flag;
-  let fire = game.flag.firework;
-  fire = game.physics.add.sprite(
-    SCREEN_DIMENSIONS.WIDTH * 0.5,
-    SCREEN_DIMENSIONS.HEIGHT * 0.5,
+  // let f = game.flag;
+  // let fire = f.firework;
+  game.flag.firework = game.physics.add.sprite(
+    SCREEN_DIMENSIONS.WIDTH * 0.89,
+    SCREEN_DIMENSIONS.HEIGHT * 0.47,
     'firework'
   );
 
-  var configFirework = {
-    key: 'firework',
+  var configFireworkActive = {
+    key: 'firework-active',
     frames: game.anims.generateFrameNumbers('firework', {
       start: 0,
       end: 5 * 6 - 1,
@@ -902,14 +902,32 @@ export function createFirework(game: Game): void {
     repeat: 0,
     yoyo: false,
   };
+  var configFireworkPassive = {
+    key: 'firework-passive',
+    frames: game.anims.generateFrameNumbers('firework', {
+      start: 0,
+      end: 1,
+      first: 0,
+    }),
 
-  game.anims.create(configFirework);
-  fire.setScale(3);
-  fire.setImmovable(true);
-  fire.body.allowGravity = false;
-  fire.setOrigin(0.5, 0.5);
+    frameRate: 10,
+    repeat: 0,
+    yoyo: false,
+  };
 
-  // fire.play('firework');
+  game.anims.create(configFireworkActive);
+  game.anims.create(configFireworkPassive);
+  game.flag.firework.setScale(3);
+  game.flag.firework.setImmovable(true);
+  game.flag.firework.body.allowGravity = false;
+  game.flag.firework.setOrigin(0.5, 0.5);
+
+  // game.flag.firework.play('firework-passive');
+  game.flag.firework.play('firework-active');
+  // game.flag.firework.setAlpha(0);
+  game.flag.firework.on('animationcomplete', function () {
+    // game.flag.firework.setAlpha(0);
+  });
 }
 
 export function createLava(i: number, game: Game, posX: number): void {
