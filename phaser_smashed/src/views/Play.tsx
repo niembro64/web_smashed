@@ -1273,9 +1273,9 @@ function Play() {
               );
             })}
           </div>
-          <button className="b-start" onClick={onClickStartStartButton}>
+          <div className="b-start" onClick={onClickStartStartButton}>
             <span>START</span>
-          </button>
+          </div>
         </div>
       )}
       <div className="over-div">

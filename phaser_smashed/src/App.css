@@ -117,8 +117,10 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  z-index: 3;
+  z-index: 1;
   transition: 2s ease;
+
+  border: 1px dashed cyan;
 }
 
 .top-bar-eye-open > .link-tag,
@@ -563,6 +565,11 @@ body {
   transition: 0.5s ease;
   z-index: 0;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
 }
 .b-start:hover {
@@ -803,8 +810,10 @@ body {
   height: 100%;
   background-color: black;
   animation: revealAnimation 5s ease-out both;
-  z-index: 2;
+  z-index: 4;
   box-shadow: 0vh 0vh 20vh 20vh rgba(0, 0, 0, 1);
+
+  border: 1px dashed lime;
 }
 
 @keyframes revealAnimation {
@@ -1450,7 +1459,7 @@ body {
 
 /* ///////////////////////////////////////////////////////////////////////// */
 
-#top-leve-download {
+/* #top-leve-download {
   width: 200px;
   height: 200px;
   background-color: 'green';
@@ -1460,7 +1469,7 @@ body {
   left: 50%;
 
   z-index: 5;
-}
+} */
 
 .game-bar {
   position: absolute;
@@ -1516,7 +1525,7 @@ body {
   width: 50%;
   height: 25%;
   background-color: rgba(0, 0, 0, 0);
-  z-index: 100;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   justify-content: center;
