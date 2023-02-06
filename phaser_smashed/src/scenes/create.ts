@@ -922,11 +922,11 @@ export function createFirework(game: Game): void {
   game.flag.firework.body.allowGravity = false;
   game.flag.firework.setOrigin(0.5, 0.5);
 
-  // game.flag.firework.play('firework-passive');
-  game.flag.firework.play('firework-active');
-  // game.flag.firework.setAlpha(0);
+  game.flag.firework.play('firework-passive');
+  // game.flag.firework.play('firework-active');
+  game.flag.firework.setAlpha(0);
   game.flag.firework.on('animationcomplete', function () {
-    // game.flag.firework.setAlpha(0);
+    game.flag.firework.setAlpha(0);
   });
 }
 

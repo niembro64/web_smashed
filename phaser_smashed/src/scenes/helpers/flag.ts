@@ -165,8 +165,8 @@ export const updateFlagColor = (game: Game): void => {
   let fire = game.flag.firework;
 
   if (f.completedCurr && f.completedCurr && !f.completedPrev) {
-    fs.setAlpha(0.5);
-    game.POLE.setAlpha(0.5);
+    // fs.setAlpha(0.5);
+    // game.POLE.setAlpha(0.5);
     // fire.setScale(3);
     // fire.setAlpha(1);
     // fire.play('firework');

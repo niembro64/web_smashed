@@ -107,7 +107,14 @@ export function setGameState(game: Game, state: GameState): void {
       setPlayerWinningPositions(game);
       break;
     case 'game-state-captured-flag':
+      game.POLE.setAlpha(0.5);
       game.flag.firework.setAlpha(1);
+      game.flag.sprite.setAlpha(0.5);
+
+      let tint =
+        game.colorCircles[game.flag.ownerCurr.id ? game.flag.ownerCurr.id : 0]
+          .colorNumber;
+      game.flag.firework.setTint(tint);
       game.flag.firework.play('firework-active');
       setRuleSplashOn(game, 'splash-captured-flag');
       setMusicPause(game);
