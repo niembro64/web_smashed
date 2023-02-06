@@ -91,7 +91,7 @@ export function createFlag(game: Game): void {
     volume: 0.2,
   });
   f.soundFlagComplete = game.sound.add('flag_complete', {
-    volume: 0.3,
+    volume: 0.5,
   });
 }
 
@@ -437,7 +437,7 @@ export function createSoundsGame(game: Game): void {
   game.ENERJA_SMASHED = game.sound.add('enerja_smashed', { volume: 0.8 });
   game.ENERJA_TURTLE = game.sound.add('enerja_turtle', { volume: 0.2 });
   game.ENERJA_TWO_SHOTS = game.sound.add('enerja_shots', { volume: 0.2 });
-  game.ENERJA_UGH = game.sound.add('enerja_ugh', { volume: 0.2 });
+  game.ENERJA_UGH = game.sound.add('enerja_ugh', { volume: 0.8 });
 
   game.SOUND_PAUSED = game.sound.add('mii', { volume: 0.1, loop: true });
   game.SOUND_BGM = game.sound.add('bgm', { volume: 0.2, loop: true });

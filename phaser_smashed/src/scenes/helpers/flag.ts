@@ -88,7 +88,7 @@ export const updateFlagMovement = (game: Game): void => {
     f.completedCurr = true;
 
     if (f.completedCurr && !f.completedPrev) {
-      f.soundFlagComplete.play();
+      // f.soundFlagComplete.play();
       f.sprite.body.setVelocityY(0);
     }
   }

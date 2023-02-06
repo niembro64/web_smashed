@@ -108,8 +108,10 @@ export function setGameState(game: Game, state: GameState): void {
     case 'game-state-captured-flag':
       setRuleSplashOn(game, 'splash-captured-flag');
       setMusicPause(game);
-      setSoundEnerjaPlay(game);
-      setSoundSquishPlay(game);
+      // setSoundEnerjaPlay(game);
+      // setSoundSquishPlay(game);
+      game.flag.soundFlagComplete.play();
+      game.ENERJA_UGH.play();
       setPhysicsPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
