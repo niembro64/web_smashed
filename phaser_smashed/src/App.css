@@ -124,7 +124,7 @@ body {
 .top-bar-eye-open > .link-tag,
 .top-bar-eye-open > .question-mark {
   border: 0;
-  background-color: rgba(0, 0, 0, 255);
+  /* background-color: rgba(0, 0, 0, 255); */
   color: white;
   filter: opacity(1);
   transition: 0.1s ease;
@@ -170,7 +170,7 @@ body {
 .top-bar-eye-closed:hover > .question-mark {
   /* display: block; */
   border: 0;
-  background-color: rgba(0, 0, 0, 0);
+  /* background-color: rgba(0, 0, 0, 0); */
   color: white;
   filter: opacity(1);
   transition: 0.1s ease;
@@ -197,7 +197,8 @@ body {
   border: 0;
   padding: 0vh 2vw;
   margin: 0;
-  color: rgba(255, 255, 255, 0);
+  /* color: rgba(255, 255, 255, 0); */
+  color: transparent;
 
   font-size: 3vh;
   transition: 2s ease;
