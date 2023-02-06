@@ -515,6 +515,7 @@ export interface Flag {
   // soundFlagDown: any;
   soundFlagCapture: any;
   soundFlagComplete: any;
+  firework: any;
   // powerStateCurr: PowerStateFlag;
   // powerStatePrev: PowerStateFlag;
   // emitterLight: any;

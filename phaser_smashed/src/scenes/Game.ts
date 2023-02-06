@@ -814,6 +814,7 @@ export default class Game extends Phaser.Scene {
     // soundFlagDown: null,
     soundFlagCapture: null,
     soundFlagComplete: null,
+    firework: null,
     // powerStateCurr: { name: 'light', gameStamp: 0 },
     // powerStatePrev: { name: 'none', gameStamp: 0 },
     // emitterLight: null,

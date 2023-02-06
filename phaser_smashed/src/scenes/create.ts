@@ -29,6 +29,7 @@ export function create(game: Game) {
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createExplosions(game);
+  createFirework(game);
   createPole(game);
   createFlag(game);
   createEmitterChomp(game);
@@ -878,6 +879,37 @@ export function createLavas(game: Game): void {
   for (let i = 0; i < game.lavas.length; i++) {
     createLava(i, game, initialLeftMostLava + i * game.lavas[i].width);
   }
+}
+
+export function createFirework(game: Game): void {
+  let f = game.flag;
+  let fire = game.flag.firework;
+  fire = game.physics.add.sprite(
+    SCREEN_DIMENSIONS.WIDTH * 0.5,
+    SCREEN_DIMENSIONS.HEIGHT * 0.5,
+    'firework'
+  );
+
+  var configFirework = {
+    key: 'firework',
+    frames: game.anims.generateFrameNumbers('firework', {
+      start: 0,
+      end: 5 * 6 - 1,
+      first: 0,
+    }),
+
+    frameRate: 10,
+    repeat: 0,
+    yoyo: false,
+  };
+
+  game.anims.create(configFirework);
+  fire.setScale(3);
+  fire.setImmovable(true);
+  fire.body.allowGravity = false;
+  fire.setOrigin(0.5, 0.5);
+
+  // fire.play('firework');
 }
 
 export function createLava(i: number, game: Game, posX: number): void {

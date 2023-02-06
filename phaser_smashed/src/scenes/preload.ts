@@ -137,7 +137,6 @@ export function preload(game: Game): void {
   game.load.audio('flag_capture', pathSounds + game.FILE_SOUNDS.FLAG_CAPTURE);
   game.load.audio('flag_complete', pathSounds + game.FILE_SOUNDS.FLAG_COMPLETE);
 
-  
   //////////////////////////////
   // Load Images
   //////////////////////////////
@@ -193,6 +192,19 @@ export function preload(game: Game): void {
   //////////////////////////////
   //  LOAD SPRITESHEETS
   //////////////////////////////
+
+  game.load.spritesheet({
+    key: 'firework',
+    url: 'images/firework-horiz-spritesheet.png',
+    frameConfig: {
+      frameWidth: 256,
+      frameHeight: 256,
+      startFrame: 0,
+      endFrame: 6 * 5 - 1,
+      margin: 0,
+      spacing: 0,
+    },
+  });
 
   game.load.spritesheet({
     key: 'lava',
