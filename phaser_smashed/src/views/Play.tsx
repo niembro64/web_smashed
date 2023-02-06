@@ -1279,8 +1279,8 @@ function Play() {
         </div>
       )}
       <div className="over-div">
-        <div className="top-bar">
-          {showTopBar && (
+        <div className={showTopBar ? 'top-bar-eye-open' : 'top-bar-eye-closed'}>
+          {!showTopBar && (
             <img
               className="question-mark"
               src="/images/eye-shut-trans.png"
@@ -1288,12 +1288,8 @@ function Play() {
               // onClick={captureScreenshot}
               onClick={onClickShowTopBar}
             />
-            // </div>
           )}
-          {!showTopBar && (
-            // <div className="link-tag" onClick={onClickShowTopBar}>
-            //   <span>Hide</span>
-            // </div>
+          {showTopBar && (
             <img
               className="question-mark"
               src="/images/eye-open-trans.png"
