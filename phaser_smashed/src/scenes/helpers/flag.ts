@@ -1,4 +1,5 @@
 import Game from '../Game';
+import { Player } from '../interfaces';
 
 export const getIsInPole = (x: number, y: number, game: Game): boolean => {
   let f = game.flag;
@@ -162,6 +163,12 @@ export const updateFlagColor = (game: Game): void => {
   let fs = game.flag.sprite;
   let owner = game.flag.ownerCurr.id;
 
+  if (f.completedCurr) {
+    fs.setAlpha(0.5);
+    game.POLE.setAlpha(0.5);
+    return;
+  }
+
   if (owner === null) {
     fs.setTint(0xffffff);
     return;
@@ -173,4 +180,21 @@ export const updateFlagColor = (game: Game): void => {
 
 export const getIsFlagShots = (game: Game): boolean => {
   return game.flag.completedCurr && !game.flag.completedPrev;
+};
+
+export const setFlagOwnerNullIfDead = (player: Player, game: Game): void => {
+  let f = game.flag;
+  let owner = f.ownerCurr.id;
+
+  if (owner === null) {
+    return;
+  }
+
+  if (owner === player.playerId) {
+    f.ownerPrev.id = f.ownerCurr.id;
+    f.ownerPrev.gameStamp = f.ownerCurr.gameStamp;
+
+    f.ownerCurr.id = null;
+    f.ownerCurr.gameStamp = game.gameNanoseconds;
+  }
 };

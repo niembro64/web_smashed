@@ -28,6 +28,7 @@ import {
   setAddToShotsMatrixScreenClear,
   setPlayerWinningPositions,
 } from './drinking';
+import { setFlagOwnerNullIfDead } from './flag';
 import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
 import { setPhysicsPause, setPhysicsResume } from './physics';
 import { setPlayerPowerState } from './powers';
@@ -221,6 +222,7 @@ export function setPlayerState(
       setBlinkFalse(player);
       break;
     case 'player-state-dead':
+      setFlagOwnerNullIfDead(player, game);
       setEmitterPlayerOnFalse(player);
       setEmitterHurtActiveFalse(player);
       setEmitterHurtVisibleTrue(player);
