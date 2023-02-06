@@ -1281,21 +1281,26 @@ function Play() {
       <div className="over-div">
         <div className="top-bar">
           {showTopBar && (
-            <div className="link-tag" onClick={onClickShowTopBar}>
-              <span>Show </span>
-            </div>
+            <img
+              className="question-mark"
+              src="/images/eye-shut-trans.png"
+              alt="question mark"
+              // onClick={captureScreenshot}
+              onClick={onClickShowTopBar}
+            />
+            // </div>
           )}
           {!showTopBar && (
-            <div className="link-tag" onClick={onClickShowTopBar}>
-              <span>Hide</span>
-            </div>
-            // <img
-            //   className="question-mark"
-            //   src="/images/qblack_trans.png"
-            //   alt="question mark"
-            //   // onClick={captureScreenshot}
-            //   onClick={onClickShowTopBar}
-            // />
+            // <div className="link-tag" onClick={onClickShowTopBar}>
+            //   <span>Hide</span>
+            // </div>
+            <img
+              className="question-mark"
+              src="/images/eye-open-trans.png"
+              alt="question mark"
+              // onClick={captureScreenshot}
+              onClick={onClickShowTopBar}
+            />
           )}
           {webState === 'start' && (
             <div
