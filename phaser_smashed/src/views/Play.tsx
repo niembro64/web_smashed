@@ -1419,9 +1419,9 @@ function Play() {
                     </div>
                   );
                 })}
-                {keyboardGroups.map((kGroup: KeyboardGroup[]) => {
+                {keyboardGroups.map((kGroup: KeyboardGroup[], kIndex) => {
                   return (
-                    <div id="keyboard">
+                    <div id="keyboard" key={kIndex}>
                       <div id="keyboard-top">
                         <h3>Keyboard {kGroup[0].right}</h3>
                       </div>

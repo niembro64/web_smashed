@@ -1,6 +1,5 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { emoji, SplashName } from '../interfaces';
-import { getCameraPlayerStatus } from './camera';
 import { updatePlayerWinningPositions } from './drinking';
 import { getIsPlayerReady } from './pad';
 import { pauseReadySoundPlayer, playReadySoundPlayer } from './sound';

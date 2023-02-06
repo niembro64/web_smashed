@@ -41,7 +41,7 @@ export const debugInit: Debug = {
   BulletsAllowGroups: true,
   BulletsFullScreen: false,
   TrophiesOnShots: false,
-  TrophiesAlways: true,
+  TrophiesAlways: false,
 };
 
 export const debugMax: Debug = {
