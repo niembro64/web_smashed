@@ -16,8 +16,6 @@ import {
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { Bullets } from './helpers/bullets';
-import { printFlagOwnerAndToucher } from './helpers/flag';
-import { getCameraBorderStatus } from './helpers/camera';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -70,21 +68,30 @@ export function create(game: Game) {
 }
 
 export function createFlag(game: Game): void {
-  game.flag.sprite = game.physics.add.sprite(
+  let f = game.flag;
+
+  f.sprite = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     SCREEN_DIMENSIONS.HEIGHT * 0.382,
     'flag'
   );
-  game.flag.sprite.setBounce(0);
-  // game.flag.sprite.setOrigin(0.5, 0.5);
-  game.flag.sprite.setScale(0.65);
-  game.flag.sprite.setImmovable(true);
-  game.flag.sprite.body.allowGravity = false;
-  // game.flag.sprite.setVelocityY(100);
+  f.sprite.setBounce(0);
+  // f.sprite.setOrigin(0.5, 0.5);
+  f.sprite.setScale(0.65);
+  f.sprite.setImmovable(true);
+  f.sprite.body.allowGravity = false;
+  // f.sprite.setVelocityY(100);
 
-  game.flag.poleTouchStamps = [];
+  f.poleTouchStamps = [];
   game.players.forEach((player, playerIndex) => {
-    game.flag.poleTouchStamps.push({ touching: false, gameStamp: 0 });
+    f.poleTouchStamps.push({ touching: false, gameStamp: 0 });
+  });
+
+  f.soundFlagCapture = game.sound.add('flag_capture', {
+    volume: 0.2,
+  });
+  f.soundFlagComplete = game.sound.add('flag_complete', {
+    volume: 0.3,
   });
 }
 

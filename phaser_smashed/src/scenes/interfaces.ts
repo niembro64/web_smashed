@@ -511,6 +511,10 @@ export interface Flag {
   ownerPrev: Owner;
   sprite: any | Phaser.GameObjects.Sprite;
   yPosition: number; // 0 to 1
+  // soundFlagUp: any;
+  // soundFlagDown: any;
+  soundFlagCapture: any;
+  soundFlagComplete: any;
   // powerStateCurr: PowerStateFlag;
   // powerStatePrev: PowerStateFlag;
   // emitterLight: any;

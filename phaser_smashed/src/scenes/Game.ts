@@ -114,6 +114,8 @@ export default class Game extends Phaser.Scene {
     PING2: '/ping2.wav',
     POP: '/pop.wav',
     POP2: '/pop2.wav',
+    FLAG_CAPTURE: 'trumpet-short.wav',
+    FLAG_COMPLETE: 'trumpet-medium.wav',
   };
 
   SOUND_INTRO: any;
@@ -807,6 +809,10 @@ export default class Game extends Phaser.Scene {
     completedPrev: false,
     sprite: null,
     yPosition: 0,
+    // soundFlagUp: null,
+    // soundFlagDown: null,
+    soundFlagCapture: null,
+    soundFlagComplete: null,
     // powerStateCurr: { name: 'light', gameStamp: 0 },
     // powerStatePrev: { name: 'none', gameStamp: 0 },
     // emitterLight: null,

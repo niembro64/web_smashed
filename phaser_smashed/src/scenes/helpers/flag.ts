@@ -76,6 +76,7 @@ export const updateFlagMovement = (game: Game): void => {
   f.completedPrev = f.completedCurr;
 
   if (f.completedCurr) {
+    // f.soundFlagComplete.play();
     f.sprite.body.setVelocityY(0);
     return;
   }
@@ -85,7 +86,11 @@ export const updateFlagMovement = (game: Game): void => {
 
   if (owner !== null && f.sprite.y < f.box.top) {
     f.completedCurr = true;
-    f.sprite.body.setVelocityY(0);
+
+    if (f.completedCurr && !f.completedPrev) {
+      f.soundFlagComplete.play();
+      f.sprite.body.setVelocityY(0);
+    }
   }
 
   // no one toucher
@@ -141,6 +146,7 @@ export const updateFlagOwner = (game: Game): void => {
 
     f.ownerCurr.id = toucher;
     f.ownerCurr.gameStamp = game.gameNanoseconds;
+    f.soundFlagCapture.play();
   }
 };
 

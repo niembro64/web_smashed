@@ -134,6 +134,10 @@ export function preload(game: Game): void {
   game.load.audio('bb_bam', pathSounds + game.FILE_SOUNDS.BLACK_BETTY_BAMBALAM);
   game.load.audio('bb_woah', pathSounds + game.FILE_SOUNDS.BLACK_BETTY_WOAH);
 
+  game.load.audio('flag_capture', pathSounds + game.FILE_SOUNDS.FLAG_CAPTURE);
+  game.load.audio('flag_complete', pathSounds + game.FILE_SOUNDS.FLAG_COMPLETE);
+
+  
   //////////////////////////////
   // Load Images
   //////////////////////////////
