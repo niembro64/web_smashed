@@ -97,24 +97,30 @@ function Play() {
   const [webState, setWebState] = useState<WebState>('start');
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 2]);
-  const [showTopBar, setShowTopBar] = useState<boolean>(true);
+  const [openEye, setOpenEye] = useState<boolean>(true);
+  const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  const onClickShowTopBar = () => {
-    setShowTopBar(!showTopBar);
+  const onClickEye = () => {
+    setOpenEye(!openEye);
   };
 
   useEffect(() => {
     console.log('webState', webState);
     switch (webState) {
       case 'start':
+        setTopBarDivExists(false);
+        setTimeout(() => {
+          setTopBarDivExists(true);
+        }, 7000);
         (async () => {
           let allSessions: SessionInfo[] = await getAllAxios();
           setAllSessions(allSessions);
         })();
         break;
       case 'play':
+        setTopBarDivExists(true);
         break;
       default:
         break;
@@ -1076,6 +1082,7 @@ function Play() {
       <div className="phaser-container" id="phaser-container"></div>
       {webState === 'start' && (
         <div className="start-class-div">
+          {!debug.DevMode && <div className="black-hiding-div"></div>}
           <div className="startTitleWrapper2">
             <div className="startTitleWrapper1">
               <div
@@ -1089,7 +1096,7 @@ function Play() {
               </div>
             </div>
           </div>
-          {!debug.DevMode && <div className="black-hiding-div"></div>}
+          {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
           <div className="player-choices">
             {smashConfig.players.map((p, pIndex) => {
               return (
@@ -1279,88 +1286,92 @@ function Play() {
         </div>
       )}
       <div className="over-div">
-        <div className={showTopBar ? 'top-bar-eye-open' : 'top-bar-eye-closed'}>
-          {!showTopBar && (
-            <img
-              className="question-mark"
-              src="/images/eye-shut-trans.png"
-              alt="question mark"
-              // onClick={captureScreenshot}
-              onClick={onClickShowTopBar}
-            />
-          )}
-          {showTopBar && (
-            <img
-              className="question-mark"
-              src="/images/eye-open-trans.png"
-              alt="question mark"
-              // onClick={captureScreenshot}
-              onClick={onClickShowTopBar}
-            />
-          )}
-          {webState === 'start' && (
-            <div
-              className="link-tag"
-              onClick={() => {
-                onClickPlayNavButtons('Options');
-              }}
-            >
-              {showOptions && <span className="dark-span">Options</span>}
-              {!showOptions && <span>Options</span>}
-            </div>
-          )}
-          {webState === 'start' && (
-            <div
-              className="link-tag"
-              onClick={() => {
-                onClickPlayNavButtons('Controllers');
-              }}
-            >
-              {showControllers && <span className="dark-span">Pads</span>}
-              {!showControllers && <span>Pads</span>}
-            </div>
-          )}
-          {webState !== 'start' && (
-            <div className="link-tag" onClick={onClickBackEventHandler}>
-              <span>Back</span>
-            </div>
-          )}
-          {webState !== 'start' && (
-            <div className="link-tag" onClick={onClickReStartEventHandler}>
-              <span>ReStart</span>
-            </div>
-          )}
+        {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
 
-          <div
-            className="link-tag"
-            onClick={() => {
-              onClickPlayNavButtons('Controls');
-            }}
-          >
-            {showControls && <span className="dark-span">Buttons</span>}
-            {!showControls && <span>Buttons</span>}
-          </div>
-          <div
-            className="link-tag"
-            onClick={() => {
-              onClickPlayNavButtons('Rules-N64');
-            }}
-          >
-            {showRulesN64 && <span className="dark-span">Rules</span>}
-            {!showRulesN64 && <span>Rules</span>}
-          </div>
-          {webState === 'start' && (
+        {topBarDivExists && (
+          <div className={openEye ? 'top-bar-eye-open' : 'top-bar-eye-closed'}>
+            {!openEye && (
+              <img
+                className="question-mark"
+                src="/images/eye-shut-trans.png"
+                alt="question mark"
+                // onClick={captureScreenshot}
+                onClick={onClickEye}
+              />
+            )}
+            {openEye && (
+              <img
+                className="question-mark"
+                src="/images/eye-open-trans.png"
+                alt="question mark"
+                // onClick={captureScreenshot}
+                onClick={onClickEye}
+              />
+            )}
+            {webState === 'start' && (
+              <div
+                className="link-tag"
+                onClick={() => {
+                  onClickPlayNavButtons('Options');
+                }}
+              >
+                {showOptions && <span className="dark-span">Options</span>}
+                {!showOptions && <span>Options</span>}
+              </div>
+            )}
+            {webState === 'start' && (
+              <div
+                className="link-tag"
+                onClick={() => {
+                  onClickPlayNavButtons('Controllers');
+                }}
+              >
+                {showControllers && <span className="dark-span">Pads</span>}
+                {!showControllers && <span>Pads</span>}
+              </div>
+            )}
+            {webState !== 'start' && (
+              <div className="link-tag" onClick={onClickBackEventHandler}>
+                <span>Back</span>
+              </div>
+            )}
+            {webState !== 'start' && (
+              <div className="link-tag" onClick={onClickReStartEventHandler}>
+                <span>ReStart</span>
+              </div>
+            )}
+
             <div
               className="link-tag"
               onClick={() => {
-                onClickPlayNavButtons('About');
+                onClickPlayNavButtons('Controls');
               }}
             >
-              {showAbout && <span className="dark-span">About</span>}
-              {!showAbout && <span>About</span>}
+              {showControls && <span className="dark-span">Buttons</span>}
+              {!showControls && <span>Buttons</span>}
             </div>
-          )}
-        </div>
+            <div
+              className="link-tag"
+              onClick={() => {
+                onClickPlayNavButtons('Rules-N64');
+              }}
+            >
+              {showRulesN64 && <span className="dark-span">Rules</span>}
+              {!showRulesN64 && <span>Rules</span>}
+            </div>
+            {webState === 'start' && (
+              <div
+                className="link-tag"
+                onClick={() => {
+                  onClickPlayNavButtons('About');
+                }}
+              >
+                {showAbout && <span className="dark-span">About</span>}
+                {!showAbout && <span>About</span>}
+              </div>
+            )}
+          </div>
+        )}
         {showOptions && (
           <div className="over-div">
             <div
@@ -1598,6 +1609,7 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
+      {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
     </div>
   );
 }
