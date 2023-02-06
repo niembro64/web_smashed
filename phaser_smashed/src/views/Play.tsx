@@ -1425,9 +1425,9 @@ function Play() {
                       <div id="keyboard-top">
                         <h3>Keyboard {kGroup[0].right}</h3>
                       </div>
-                      {kGroup.map((kItem) => {
+                      {kGroup.map((kItem, kItemIndex) => {
                         return (
-                          <div id="keyboard-bottom">
+                          <div id="keyboard-bottom" key={kItemIndex}>
                             <div id="keyboard-left">{kItem.left}</div>
                             <div id="keyboard-right">{kItem.right}</div>
                           </div>
