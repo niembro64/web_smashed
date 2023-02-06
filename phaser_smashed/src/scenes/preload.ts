@@ -195,7 +195,7 @@ export function preload(game: Game): void {
 
   game.load.spritesheet({
     key: 'firework',
-    url: 'images/firework-horiz-spritesheet.png',
+    url: 'images/firework-horiz-spritesheet-white.png',
     frameConfig: {
       frameWidth: 256,
       frameHeight: 256,
