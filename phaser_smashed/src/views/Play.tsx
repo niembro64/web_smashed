@@ -97,8 +97,13 @@ function Play() {
   const [webState, setWebState] = useState<WebState>('start');
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 2]);
+  const [showTopBar, setShowTopBar] = useState<boolean>(true);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const onClickShowTopBar = () => {
+    setShowTopBar(!showTopBar);
+  };
 
   useEffect(() => {
     console.log('webState', webState);
@@ -1275,12 +1280,23 @@ function Play() {
       )}
       <div className="over-div">
         <div className="top-bar">
-          <img
-            className="question-mark"
-            src="/images/qblack_trans.png"
-            alt="question mark"
-            onClick={captureScreenshot}
-          />
+          {showTopBar && (
+            <div className="link-tag" onClick={onClickShowTopBar}>
+              <span>Show </span>
+            </div>
+          )}
+          {!showTopBar && (
+            <div className="link-tag" onClick={onClickShowTopBar}>
+              <span>Hide</span>
+            </div>
+            // <img
+            //   className="question-mark"
+            //   src="/images/qblack_trans.png"
+            //   alt="question mark"
+            //   // onClick={captureScreenshot}
+            //   onClick={onClickShowTopBar}
+            // />
+          )}
           {webState === 'start' && (
             <div
               className="link-tag"
