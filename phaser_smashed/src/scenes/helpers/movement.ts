@@ -2,7 +2,7 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Player } from '../interfaces';
 import { getIsAttackEnergyOffscreen } from './attacks';
 import { getIsBot } from './bot';
-import { getNormalizedVector } from './damage';
+import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
 export function updateCirclesLocations(game: Game): void {
   if (!game.debug.PlayerIdVisible) {
@@ -279,16 +279,18 @@ export function hitbackFly(
   hitbackx: number,
   hitbacky: number
 ): void {
+  let hbm = game.basePlayerHitbackGameMultiplier;
+  hbm = getGameHitbackMultiplier(game);
   player.char.sprite.body.setVelocityY(
     hitbacky * game.BASE_PLAYER_HITBACK.y +
       ((hitbacky > 0 ? 1 : -1) *
-        (game.BASE_PLAYER_HITBACK.y * player.char.damage)) /
+        (game.BASE_PLAYER_HITBACK.y * player.char.damage * hbm)) /
         5
   );
   player.char.sprite.body.setVelocityX(
     hitbackx * game.BASE_PLAYER_HITBACK.x +
       ((hitbackx > 0 ? 1 : -1) *
-        (game.BASE_PLAYER_HITBACK.x * player.char.damage)) /
+        (game.BASE_PLAYER_HITBACK.x * player.char.damage * hbm)) /
         5
   );
 }

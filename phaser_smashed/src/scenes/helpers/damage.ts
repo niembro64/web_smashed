@@ -321,3 +321,14 @@ export function getDistance(
 
   return newRatio;
 }
+
+export function getGameHitbackMultiplier(game: Game): number {
+  let t = game.gameNanoseconds * 0.001;
+  let h: number = 0;
+  let m = t / 60;
+
+  h = Math.pow(1 + m * 0.1, 1.7);
+  console.log('HBM', h);
+
+  return h;
+}
