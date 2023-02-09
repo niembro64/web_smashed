@@ -89,7 +89,7 @@ export function createFlag(game: Game): void {
   });
 
   f.soundFlagCapture = game.sound.add('flag_capture', {
-    volume: 0.2,
+    volume: 0.5,
   });
   f.soundFlagComplete = game.sound.add('flag_complete', {
     volume: 0.5,

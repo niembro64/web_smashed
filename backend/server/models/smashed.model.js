@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const minLength = 3;
 
@@ -6,45 +6,65 @@ const SmashedSchema = new mongoose.Schema(
   {
     smashConfig: {
       type: String,
-      required: [true, "Smash config is required"],
-      minlength: [minLength, "Smash config must be at least 3 characters"],
+      required: [true, 'Smash config is required'],
+      minlength: [minLength, 'Smash config must be at least 3 characters'],
     },
     debug: {
       type: String,
-      required: [true, "Debug is required"],
-      minlength: [minLength, "Debug must be at least 3 characters"],
+      required: [true, 'Debug is required'],
+      minlength: [minLength, 'Debug must be at least 3 characters'],
     },
     ip: {
       type: String,
-      required: [true, "IP is required"],
-      minlength: [minLength, "IP must be at least 3 characters"],
+      required: [true, 'IP is required'],
+      minlength: [minLength, 'IP must be at least 3 characters'],
     },
     timeStamp: {
       type: String,
-      required: [true, "Time stamp is required"],
-      minlength: [minLength, "Time stamp must be at least 3 characters"],
+      required: [true, 'Time stamp is required'],
+      minlength: [minLength, 'Time stamp must be at least 3 characters'],
     },
     city: {
       type: String,
-      required: [true, "City is required"],
+      required: [true, 'City is required'],
     },
     region: {
       type: String,
-      required: [true, "Region is required"],
+      required: [true, 'Region is required'],
     },
     country: {
       type: String,
-      required: [true, "Country is required"],
+      required: [true, 'Country is required'],
     },
     clientVisits: {
       type: String,
-      required: [true, "Client visits is required"],
+      required: [true, 'Client visits is required'],
+    },
+    countryArea: {
+      type: String,
+      required: [true, 'Country area is required'],
+    },
+    latitude: {
+      type: String,
+      required: [true, 'Latitude is required'],
+    },
+    longitude: {
+      type: String,
+      required: [true, 'Longitude is required'],
+    },
+    network: {
+      type: String,
+      required: [true, 'Network is required'],
+    },
+    postal: {
+      type: String,
+      required: [true, 'Postal is required'],
     },
   },
   { timestamps: true }
 );
 
-const Smashed = mongoose.model("Smashed", SmashedSchema);
+const Smashed = mongoose.model('Smashed', SmashedSchema);
 
 module.exports = Smashed;
 
