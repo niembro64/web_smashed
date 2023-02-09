@@ -10,6 +10,11 @@ export interface ClientInformation {
   ip: string;
   timeStamp: Moment;
   clientVisits: number;
+  countryArea: number;
+  latitude: number;
+  longitude: number;
+  network: string;
+  postal: string;
 }
 
 export const getClientInformation = async (): Promise<ClientInformation> => {
@@ -29,36 +34,10 @@ export const getClientInformation = async (): Promise<ClientInformation> => {
     localStorage.setItem('page_view', '1');
   }
 
-  // if (counterContainer !== null) {
-  //   counterContainer.innerHTML = visitCountString ? visitCountString : '1';
-  // }
-
-  // let ref = document.referrer;
-  // let href = location.href;
-  // let agent = navigator.userAgent;
-
   let response = await fetch('https://ipapi.co/json/');
   let responseJSON = await response.json();
-  // let city = responseJSON.city;
-  // let country = responseJSON.country;
-  // location =
-  //   responseJSON.city +
-  //   ", " +
-  //   responseJSON.region +
-  //   " (" +
-  //   responseJSON.country +
-  //   ")";
-  // if (
-  //   document.querySelector('#city') !== null &&
-  //   document.querySelector('#city') !== undefined &&
-  //   document.querySelector('#city')?.innerHTML !== null
-  // ) {
-  //   document.querySelector('#city').innerHTML = location;
-  // }
-  // document.querySelector('#ip').innerHTML = responseJSON.ip;
-  // document.querySelector("#region").innerHTML=responseJSON.region;
-  // document.querySelector("#country").innerHTML=responseJSON.country;
-  console.log(responseJSON);
+
+  console.log('responseJSON', responseJSON);
 
   let clientInformation: ClientInformation = {
     ip: responseJSON.ip,
@@ -67,6 +46,11 @@ export const getClientInformation = async (): Promise<ClientInformation> => {
     region: responseJSON.region,
     country: responseJSON.country,
     clientVisits: visitCountNumber,
+    countryArea: responseJSON.country_area,
+    latitude: responseJSON.latitude,
+    longitude: responseJSON.longitude,
+    network: responseJSON.network,
+    postal: responseJSON.postal,
   };
 
   console.log(clientInformation);
@@ -83,6 +67,11 @@ export interface SessionInfo {
   region: string;
   country: string;
   clientVisits: number;
+  countryArea: number;
+  latitude: number;
+  longitude: number;
+  network: string;
+  postal: string;
 }
 
 export const saveToAxios = async (
@@ -99,6 +88,11 @@ export const saveToAxios = async (
     region: clientInformation.region,
     country: clientInformation.country,
     clientVisits: clientInformation.clientVisits,
+    countryArea: clientInformation.countryArea,
+    latitude: clientInformation.latitude,
+    longitude: clientInformation.longitude,
+    network: clientInformation.network,
+    postal: clientInformation.postal,
   };
 
   if (process.env.NODE_ENV === 'production') {
