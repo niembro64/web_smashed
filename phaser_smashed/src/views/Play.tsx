@@ -1479,7 +1479,7 @@ function Play() {
             >
               <div className="rules-top">
                 <div className="rules-col">
-                  <h1>Web-Rules</h1>
+                  <h1>Web Rules</h1>
                   <div className="rules-outline-web">
                     <img
                       id="rules-web-gif"
@@ -1487,20 +1487,23 @@ function Play() {
                       alt="smash title"
                       // width={300}
                     />
+                    <p className="rules-web-since">Since 2022</p>
                     <ul>
                       <li>
                         <p>
-                          1. If you have died and no others have died yet, you take
-                          1 shot.
+                          1. If you died and no others have died yet, you take a
+                          shot.
                         </p>
-                        <p>2. If all are dead but you, they all take shots. </p>
-                        <p>3. If you rase the flag, all others take shots. </p>
+                        <p>
+                          2. If all are dead but you, they each take a shot.{' '}
+                        </p>
+                        <p>3. If you rase the flag, all others each take a shot. </p>
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="rules-col">
-                  <h1>N64-Rules</h1>
+                  <h1>N64 Rules</h1>
                   <div className="rules-outline-n64">
                     <img
                       id="RulesN64Image"
