@@ -96,7 +96,6 @@ function Play() {
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('start');
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 2]);
   const [openEye, setOpenEye] = useState<boolean>(true);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
@@ -144,27 +143,33 @@ function Play() {
     WorkingController[]
   >([
     {
-      name: 'Wired | SNES | iNNEXT',
+      name: 'Wired SNES iNNEXT',
       url: 'https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/',
     },
     {
-      name: 'Wired | N64 | KIWITATA',
+      name: 'Wired N64 KIWITATA',
       url: 'https://www.amazon.com/gp/product/B08X677HR4/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',
     },
     {
-      name: 'Wired | GameCube | Mekela NGC',
+      name: 'Wired GameCube Mekela NGC',
       url: 'https://www.amazon.com/Mekela-5-8-foot-classic-controller-Windows/dp/B07GSSXS84/ref=sr_1_5?crid=3N3MSRPF8INFK&keywords=Mekela+5.8+feet+Classic+USB+wired+NGC+Controller&qid=1673335159&sprefix=mekela+5.8+feet+classic+usb+wired+ngc+controller%2Caps%2C68&sr=8-5',
     },
     {
-      name: 'Wired | Switch | PowerA | Nintendo',
+      name: 'Wired Switch PowerA Nintendo',
       url: 'https://www.amazon.com/gp/product/B07PDJ45BT/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',
     },
     {
-      name: 'Wireless | Switch | Pro | Nintendo',
+      name: 'Wireless Switch Pro Nintendo',
       url: 'https://www.amazon.com/gp/product/B01NAWKYZ0/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',
     },
   ]);
 
+  // set initial inputs in inputArray
+  // 0 -> none
+  // 1 -> gamepad
+  // 2 -> keyboard
+  // 3 -> bot
+  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 3]);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>({
     players: [
       {
@@ -172,11 +177,11 @@ function Play() {
         input: 0, // don't set this here
       },
       {
-        characterId: 7,
+        characterId: 2,
         input: 0, // don't set this here
       },
       {
-        characterId: 6,
+        characterId: 3,
         input: 0, // don't set this here
       },
       {
@@ -1497,7 +1502,9 @@ function Play() {
                         <p>
                           2. If all are dead but you, they each take a shot.{' '}
                         </p>
-                        <p>3. If you rase the flag, all others each take a shot. </p>
+                        <p>
+                          3. If you rase the flag, all others each take a shot.{' '}
+                        </p>
                       </li>
                     </ul>
                   </div>
@@ -1525,30 +1532,41 @@ function Play() {
               }}
             >
               <h1>GamePads</h1>
-
-              <a
-                className="link-tag btn btn-dark"
+              {/* className="link-tag btn btn-dark" */}
+              {/* <a
+                className="working-controller"
                 href="https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/"
               >
-                <span>Amazon: USB Hub/Extension $13</span>
-              </a>
-              <p>USB controllers are recommended: </p>
-              <div>
-                <ul>
-                  {/* These work: */}
-                  {workingControllers.map((controller) => {
-                    return (
-                      <li>
-                        <a className="working-controller" href={controller.url}>
-                          <span>
-                            {emoji.greenCheck} &nbsp;
-                            {controller.name}
-                          </span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <span>USB Extension Cord $13</span>
+              </a> */}
+              <h2>GamePads Suggested: </h2>
+              {/* These work: */}
+              <div id="wcl">
+                {workingControllers.map((controller) => {
+                  return (
+                    <a className="working-controller" href={controller.url}>
+                      <span>
+                        {emoji.greenCheck} &nbsp;
+                        {controller.name}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+              <h2>Accessories Suggested: </h2>
+              <div id="wcl">
+                <a
+                  className="working-controller"
+                  href="https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/"
+                >
+                  <span>{emoji.greenCheck} &nbsp; USB-A Extension Cord</span>
+                </a>
+                <a
+                  className="working-controller"
+                  href="https://www.amazon.com/gp/product/B01N5KGBGQ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1"
+                >
+                  <span>{emoji.greenCheck} &nbsp; USB-C Splitter</span>
+                </a>
               </div>
             </div>
           </div>
