@@ -6,6 +6,7 @@ import {
   setPhysicsAttackEnergyOff,
 } from './attacks';
 import { hitbackFly } from './movement';
+import { getPlayerPressedBothLR } from './pad';
 import { setPlayerState } from './state';
 
 export function onHitHandlerAttackPhysical(
@@ -338,9 +339,9 @@ export function updateSuicide(game: Game): void {
     if (player.state.name !== 'player-state-alive') {
       return;
     }
-    let pCurr = player.padCurr;
 
-    if (pCurr.R && pCurr.L && pCurr.select) {
+    // if (pCurr.R && pCurr.L && pCurr.select) {
+    if (getPlayerPressedBothLR(player, game)) {
       player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
       player.char.sprite.y = -200;
     }
