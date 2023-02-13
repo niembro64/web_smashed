@@ -128,6 +128,7 @@ export interface Player {
   keyboard: keyboard | any;
   gamepad: Gamepad | any;
   padCurr: GamepadData;
+  LRStamp: number | null;
   padPrev: GamepadData;
   padDebounced: PadStateDebounced;
   particles: any;

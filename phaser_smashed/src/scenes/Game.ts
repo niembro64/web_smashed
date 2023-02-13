@@ -973,6 +973,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1148,6 +1149,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1322,6 +1324,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1512,6 +1515,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1686,6 +1690,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1860,6 +1865,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -2034,6 +2040,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -2208,6 +2215,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -2385,6 +2393,7 @@ export default class Game extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
+      LRStamp: null,
       padCurr: {
         up: false,
         down: false,

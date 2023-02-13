@@ -7,6 +7,7 @@ import {
 } from './attacks';
 import { hitbackFly } from './movement';
 import { getPlayerPressedBothLR } from './pad';
+import { getHasBeenGameDurationSinceMoment } from './powers';
 import { setPlayerState } from './state';
 
 export function onHitHandlerAttackPhysical(
@@ -336,14 +337,38 @@ export function getGameHitbackMultiplier(game: Game): number {
 
 export function updateSuicide(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    if (player.state.name !== 'player-state-alive') {
+    // console.log('updateSuicide', playerIndex, player.LRStamp);
+    console.log(
+      'currL',
+      player.padCurr.L,
+      'currR',
+      player.padCurr.R,
+      'prevL',
+      player.padPrev.L,
+      'prevR',
+      player.padPrev.R
+    );
+    if (
+      player.state.name !== 'player-state-alive' ||
+      !player.padCurr.L ||
+      !player.padCurr.R
+    ) {
+      player.LRStamp = null;
       return;
     }
 
-    // if (pCurr.R && pCurr.L && pCurr.select) {
-    if (getPlayerPressedBothLR(player, game)) {
-      player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+    if (player.LRStamp === null && (player.padPrev.L || player.padPrev.R)) {
+      player.LRStamp = game.gameNanoseconds;
+      console.log('LRStamp', player.LRStamp);
+    }
+
+    if (
+      player.LRStamp &&
+      getHasBeenGameDurationSinceMoment(2000, player.LRStamp, game)
+    ) {
+      console.log('SUICIDE');
       player.char.sprite.y = -200;
+      player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
     }
   });
 }

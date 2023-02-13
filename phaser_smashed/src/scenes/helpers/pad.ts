@@ -712,6 +712,8 @@ export function updatePadPreviousAndDebounced(game: Game): void {
     p.B = c.B;
     p.X = c.X;
     p.Y = c.Y;
+    p.L = c.L;
+    p.R = c.R;
     p.start = c.start;
     p.select = c.select;
 
@@ -757,6 +759,17 @@ export function updatePadPreviousAndDebounced(game: Game): void {
       d.Y += d.Y >= k ? 0 : 1;
     } else {
       d.Y += d.Y <= 0 ? 0 : -1;
+    }
+
+    if (c.L) {
+      d.L += d.L >= k ? 0 : 1;
+    } else {
+      d.L += d.L <= 0 ? 0 : -1;
+    }
+    if (c.R) {
+      d.R += d.R >= k ? 0 : 1;
+    } else {
+      d.R += d.R <= 0 ? 0 : -1;
     }
 
     if (c.start) {
