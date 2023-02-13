@@ -336,6 +336,8 @@ export function getGameHitbackMultiplier(game: Game): number {
 }
 
 export function updateSuicide(game: Game): void {
+  const lengthOfSuicideHold = 5000;
+
   game.players.forEach((player, playerIndex) => {
     // console.log('updateSuicide', playerIndex, player.LRStamp);
     console.log(
@@ -349,6 +351,14 @@ export function updateSuicide(game: Game): void {
       player.padPrev.R
     );
     if (
+      player.padCurr.up ||
+      player.padCurr.down ||
+      player.padCurr.left ||
+      player.padCurr.right ||
+      player.padCurr.A ||
+      player.padCurr.B ||
+      player.padCurr.X ||
+      player.padCurr.Y ||
       player.state.name !== 'player-state-alive' ||
       !player.padCurr.L ||
       !player.padCurr.R
@@ -364,7 +374,11 @@ export function updateSuicide(game: Game): void {
 
     if (
       player.LRStamp &&
-      getHasBeenGameDurationSinceMoment(2000, player.LRStamp, game)
+      getHasBeenGameDurationSinceMoment(
+        lengthOfSuicideHold,
+        player.LRStamp,
+        game
+      )
     ) {
       console.log('SUICIDE');
       player.char.sprite.y = -200;
