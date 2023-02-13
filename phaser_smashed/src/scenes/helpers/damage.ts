@@ -330,7 +330,7 @@ export function getGameHitbackMultiplier(game: Game): number {
   let m = t / 60;
 
   h = Math.pow(1 + m * 0.1, 1.7);
-  console.log('HBM', h);
+  // console.log('HBM', h);
 
   return h;
 }
@@ -340,16 +340,16 @@ export function updateSuicide(game: Game): void {
 
   game.players.forEach((player, playerIndex) => {
     // console.log('updateSuicide', playerIndex, player.LRStamp);
-    console.log(
-      'currL',
-      player.padCurr.L,
-      'currR',
-      player.padCurr.R,
-      'prevL',
-      player.padPrev.L,
-      'prevR',
-      player.padPrev.R
-    );
+    // console.log(
+    //   'currL',
+    //   player.padCurr.L,
+    //   'currR',
+    //   player.padCurr.R,
+    //   'prevL',
+    //   player.padPrev.L,
+    //   'prevR',
+    //   player.padPrev.R
+    // );
     if (
       player.padCurr.up ||
       player.padCurr.down ||
