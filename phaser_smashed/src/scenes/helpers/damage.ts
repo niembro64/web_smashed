@@ -1,4 +1,4 @@
-import Game from '../Game';
+import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { AttackEnergy, AttackPhysical, Player, xyVector } from '../interfaces';
 import {
   setAttackEnergyOffscreen,
@@ -331,4 +331,18 @@ export function getGameHitbackMultiplier(game: Game): number {
   console.log('HBM', h);
 
   return h;
+}
+
+export function updateSuicide(game: Game): void {
+  game.players.forEach((player, playerIndex) => {
+    if (player.state.name !== 'player-state-alive') {
+      return;
+    }
+    let pCurr = player.padCurr;
+
+    if (pCurr.R && pCurr.L && pCurr.select) {
+      player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+      player.char.sprite.y = -200;
+    }
+  });
 }

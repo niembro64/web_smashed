@@ -293,9 +293,8 @@ export function getIsAnyPlayerPausing(game: Game): boolean {
 }
 
 export function getPlayerPauses(player: Player, game: Game): boolean {
-  return (
-    getPlayerPressedBothLR(player, game) || getPlayerPressedStart(player, game)
-  );
+  return getPlayerPressedStart(player, game);
+  // getPlayerPressedBothLR(player, game) || getPlayerPressedStart(player, game)
 }
 
 export function getPlayerPressedStart(player: Player, game: Game): boolean {
