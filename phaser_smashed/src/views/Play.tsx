@@ -62,7 +62,7 @@ function Play() {
   // const space: string = '&nbsp';
 
   function captureScreenshot() {
-    console.log('captureScreenshot');
+    console.log('Capture Screenshot');
     // Select the element that you want to capture a screenshot of
     const element = document.querySelector('#top-level');
 
@@ -78,7 +78,7 @@ function Play() {
       link.href = dataUrl;
 
       // Set the download attribute of the anchor element
-      link.download = 'screenshot.png';
+      link.download = 'Smashed_Rules.png';
 
       // Click the anchor element to trigger the download
       link.click();
@@ -1490,12 +1490,16 @@ function Play() {
               <div className="rules-top">
                 <div className="rules-col">
                   <h1>Web Rules</h1>
-                  <div className="rules-outline-web">
+                  <div
+                    className="rules-outline-web"
+                    onClick={() => {
+                      captureScreenshot();
+                    }}
+                  >
                     <img
                       id="rules-web-gif"
                       src="images/smashed_x10_gif.gif"
                       alt="smash title"
-                      // width={300}
                     />
                     <p className="rules-web-since">Since 2022</p>
                     <ul>
@@ -1516,7 +1520,12 @@ function Play() {
                 </div>
                 <div className="rules-col">
                   <h1>N64 Rules</h1>
-                  <div className="rules-outline-n64">
+                  <div
+                    className="rules-outline-n64"
+                    onClick={() => {
+                      captureScreenshot();
+                    }}
+                  >
                     <img
                       id="RulesN64Image"
                       src="images/smashRulesGimp01.png"

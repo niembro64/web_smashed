@@ -174,7 +174,7 @@ h2 {
   align-items: flex-start;
   /* border: 1px dashed lime; */
 }
-#wcl > a > span{
+#wcl > a > span {
   position: relative;
   /* border: 1px dashed lime; */
   margin-left: 3vw;
@@ -412,6 +412,7 @@ h2 {
   justify-content: flex-start;
   align-items: center;
   /* flex-wrap: wrap; */
+  /* cursor: pointer; */
 }
 
 .kirbyNiembro {
@@ -555,6 +556,7 @@ h2 {
   justify-content: center;
   align-items: center;
   overflow: hide;
+  cursor: pointer;
 }
 .rules-outline-n64 {
   width: auto;
@@ -571,6 +573,7 @@ h2 {
   justify-content: center;
   align-items: center;
   overflow: hide;
+  cursor: pointer;
 }
 .dark-span {
   color: rgba(255, 255, 255, 0.25);
