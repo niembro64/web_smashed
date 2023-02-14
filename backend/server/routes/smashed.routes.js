@@ -10,4 +10,5 @@ module.exports = (app) => {
     SmashedController.deleteAnExistingSmashed
   );
   app.patch('/api/smashed/update/:_id', SmashedController.updateExistingSmashed);
+  app.patch('/api/smashed/upsert/:timeStamp', SmashedController.upsertSmashed);
 };

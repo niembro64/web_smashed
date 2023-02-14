@@ -36,14 +36,16 @@ import { debugInit, debugMax } from '../debugOptions';
 import {
   ClientInformation,
   getAllAxios,
-  getClientInformation,
-  saveToAxios,
+  fetchClientData,
+  axiosSaveOne,
   SessionInfo,
 } from './client';
 import moment from 'moment';
+// import { useParams } from 'react-router-dom';
 
 function Play() {
   let myPhaser: any = useRef(null);
+  // const { _id } = useParams();
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -372,8 +374,8 @@ function Play() {
     setShowLoaderIntervalFunction();
 
     (async () => {
-      let c: ClientInformation = await getClientInformation();
-      let s: SessionInfo = await saveToAxios(c, newSmashConfig, debug);
+      let c: ClientInformation = await fetchClientData();
+      let s: SessionInfo = await axiosSaveOne(c, newSmashConfig, debug);
       setSession(s);
     })();
   };

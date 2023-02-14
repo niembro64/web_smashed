@@ -73,3 +73,15 @@ module.exports.updateExistingSmashed = (req, res) => {
 //     .then((results) => res.json( results ))
 //     .catch((err) => res.status(400).json({ message: "that didn't work", err }));
 // };
+
+module.exports.upsertSmashed = (req, res) => {
+  Smashed.findOneAndUpdate({ timeStamp: req.params.timeStamp }, req.body, {
+    // new: true,
+    upsert: true,
+    runValidators: true,
+  })
+    .then((updatedSmashed) => res.json(updatedSmashed))
+    .catch((err) =>
+      res.status(400).json({ message: 'Something went wrong', error: err })
+    );
+};

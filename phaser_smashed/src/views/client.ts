@@ -17,7 +17,7 @@ export interface ClientInformation {
   postal: string;
 }
 
-export const getClientInformation = async (): Promise<ClientInformation> => {
+export const fetchClientData = async (): Promise<ClientInformation> => {
   // let counterContainer = document.querySelector("#visits");
   // let resetButton = document.querySelector('#reset');
   let visitCountString: string | null = localStorage.getItem('page_view');
@@ -72,9 +72,16 @@ export interface SessionInfo {
   longitude: number;
   network: string;
   postal: string;
+  matrixShotsUnto: string | null;
+  matrixDeathsUnto: string | null;
+  matrixHitsUnto: string | null;
 }
 
-export const saveToAxios = async (
+export interface GameMatrix {
+  gameMatrix: number[][];
+}
+
+export const axiosSaveOne = async (
   clientInformation: ClientInformation,
   smashConfig: SmashConfig,
   debug: Debug
@@ -93,6 +100,9 @@ export const saveToAxios = async (
     longitude: clientInformation.longitude,
     network: clientInformation.network,
     postal: clientInformation.postal,
+    matrixShotsUnto: null,
+    matrixDeathsUnto: null,
+    matrixHitsUnto: null,
   };
 
   if (process.env.NODE_ENV === 'production') {
@@ -100,6 +110,41 @@ export const saveToAxios = async (
     await axios.post('/api/smashed/create', sessionInfo);
   } else {
     await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
+  }
+  return sessionInfo;
+};
+
+export const axiosUpsertOne = async (
+  clientInformation: ClientInformation,
+  smashConfig: SmashConfig,
+  debug: Debug,
+  matrixShotsUnto: GameMatrix,
+  matrixDeathsUnto: GameMatrix,
+  matrixHitsUnto: GameMatrix
+): Promise<SessionInfo> => {
+  let sessionInfo: SessionInfo = {
+    smashConfig: JSON.stringify(smashConfig),
+    debug: JSON.stringify(debug),
+    ip: clientInformation.ip,
+    timeStamp: clientInformation.timeStamp,
+    city: clientInformation.city,
+    region: clientInformation.region,
+    country: clientInformation.country,
+    clientVisits: clientInformation.clientVisits,
+    countryArea: clientInformation.countryArea,
+    latitude: clientInformation.latitude,
+    longitude: clientInformation.longitude,
+    network: clientInformation.network,
+    postal: clientInformation.postal,
+    matrixShotsUnto: JSON.stringify(matrixShotsUnto),
+    matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
+    matrixHitsUnto: JSON.stringify(matrixHitsUnto),
+  };
+
+  if (process.env.NODE_ENV === 'production') {
+    await axios.post('/api/smashed/upsert/', sessionInfo);
+  } else {
+    await axios.post('http://localhost:8000/api/smashed/upsert', sessionInfo);
   }
   return sessionInfo;
 };

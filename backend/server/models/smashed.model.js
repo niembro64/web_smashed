@@ -60,6 +60,18 @@ const SmashedSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Postal is required'],
     },
+    matrixShotsUnto: {
+      type: String,
+      required: [true, 'Matrix shots unto is required'],
+    },
+    matrixDeathsUnto: {
+      type: String,
+      required: [true, 'Matrix deaths unto is required'],
+    },
+    matrixHitsUnto: {
+      type: String,
+      required: [true, 'Matrix hits unto is required'],
+    }
   },
   { timestamps: true }
 );
