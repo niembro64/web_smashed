@@ -587,7 +587,11 @@ function Play() {
       move: 'Wall Slide',
       status: emoji.greenCheck,
     },
-    { button: 'L + R for 5 Seconds', move: 'Suicide', status: emoji.greenCheck },
+    {
+      button: 'L + R for 5 Seconds',
+      move: 'Suicide',
+      status: emoji.greenCheck,
+    },
     { button: 'Start', move: 'Pause', status: emoji.greenCheck },
     { button: 'Paused + Any Button', move: 'Ready', status: emoji.greenCheck },
     { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
@@ -1540,9 +1544,9 @@ function Play() {
               >
                 <span>USB Extension Cord $13</span>
               </a> */}
-              <h2>GamePads Suggested: </h2>
               {/* These work: */}
               <div id="wcl">
+                <h2>GamePads Suggested: </h2>
                 {workingControllers.map((controller) => {
                   return (
                     <a className="working-controller" href={controller.url}>
@@ -1554,19 +1558,19 @@ function Play() {
                   );
                 })}
               </div>
-              <h2>Accessories Suggested: </h2>
               <div id="wcl">
+                <h2>Accessories Suggested: </h2>
                 <a
                   className="working-controller"
                   href="https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/"
                 >
-                  <span>{emoji.greenCheck} &nbsp; USB-A Extension Cord</span>
+                  <span>{emoji.greenCheck} &nbsp;USB-A Extension Cord</span>
                 </a>
                 <a
                   className="working-controller"
                   href="https://www.amazon.com/gp/product/B01N5KGBGQ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1"
                 >
-                  <span>{emoji.greenCheck} &nbsp; USB-C Splitter</span>
+                  <span>{emoji.greenCheck} &nbsp;USB-C Splitter</span>
                 </a>
               </div>
             </div>

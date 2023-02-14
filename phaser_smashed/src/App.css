@@ -165,20 +165,26 @@ h2 {
 #wcl {
   position: relative;
   /* height: 100%; */
-  width: 100%;
+  width: 50%;
+  min-width: 750px;
   margin-bottom: 3vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   /* border: 1px dashed lime; */
+}
+#wcl > a > span{
+  position: relative;
+  /* border: 1px dashed lime; */
+  margin-left: 3vw;
 }
 
 .working-controller {
   /* position: relative; */
   /* display: block; */
   /* height: 20%; */
-  width: 50%;
+  width: 100%;
   padding: 1vh;
   /* margin: 0.05vh; */
   border: 0;
