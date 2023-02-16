@@ -114,12 +114,14 @@ export function createFlag(game: Game): void {
   }
   f.spriteFlagChar.setBounce(0);
   // f.spriteFlagChar.setScale(
-    //   0.65 / f.spriteFlagChar.displayWidth,
-    //   0.65 / f.spriteFlagChar.displayHeight
-    // );
-    f.spriteFlagChar.displayWidth = 0.1 * game.SCREEN_SCALE.WIDTH;
-    // f.spriteFlagChar.scaleY = f.spriteFlagChar.scaleX;
-    f.spriteFlagChar.setScale(0.65);
+  //   0.65 / f.spriteFlagChar.displayWidth,
+  //   0.65 / f.spriteFlagChar.displayHeight
+  // );
+  // f.spriteFlagChar.displayWidth = 0.1 * game.SCREEN_SCALE.WIDTH;
+  // f.spriteFlagChar.scaleY = f.spriteFlagChar.scaleX;
+  f.spriteFlagChar.displayWidth = 60;
+  f.spriteFlagChar.scaleY = f.spriteFlagChar.scaleX;
+  // f.spriteFlagChar.setScale(0.65);
 
   f.spriteFlagChar.setImmovable(true);
   f.spriteFlagChar.body.allowGravity = false;
