@@ -30,8 +30,8 @@ module.exports.findOneSingleSmashed = (req, res) => {
     );
 };
 
-module.exports.findSmashedByTimeStamp = (req, res) => {
-  Smashed.find({ timeStamp: req.params.timeStamp })
+module.exports.findSmashedByDate = (req, res) => {
+  Smashed.find({ date: req.params.date })
     .then((oneSingleSmashed) => res.json(oneSingleSmashed))
     .catch((err) =>
       res.status(400).json({ message: 'Something went wrong', error: err })
@@ -71,7 +71,7 @@ module.exports.updateExistingSmashed = (req, res) => {
 };
 
 module.exports.upsertExistingSmashed = (req, res) => {
-  Smashed.findOneAndUpdate({ timeStamp: req.params.timeStamp }, req.body, {
+  Smashed.findOneAndUpdate({ date: req.params.date }, req.body, {
     new: true,
     upsert: true,
     runValidators: true,

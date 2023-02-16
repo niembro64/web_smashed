@@ -81,6 +81,7 @@ export interface SessionInfo {
 export type GameMatrix = number[][];
 
 export const axiosSaveOne = async (
+  myDate: Date,
   clientInformation: ClientInformation,
   smashConfig: SmashConfig,
   debug: Debug
@@ -89,7 +90,7 @@ export const axiosSaveOne = async (
     smashConfig: JSON.stringify(smashConfig),
     debug: JSON.stringify(debug),
     ip: clientInformation.ip,
-    date: clientInformation.date,
+    date: myDate,
     city: clientInformation.city,
     region: clientInformation.region,
     country: clientInformation.country,
@@ -114,14 +115,13 @@ export const axiosSaveOne = async (
 };
 
 export const axiosUpsertOne = async (
-  momentObject: Moment,
+  myDate: Date,
   matrixShotsUnto: GameMatrix,
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<SessionInfo> => {
-  let myDate = momentToDate(momentObject);
   console.log('about to call timestamp:', myDate);
-  let s: SessionInfo = await axios.get('/api/smashed/timestamp/' + myDate);
+  let s: SessionInfo = await axios.get('/api/smashed/date/' + myDate);
 
   let sessionInfo: SessionInfo = {
     smashConfig: s.smashConfig,

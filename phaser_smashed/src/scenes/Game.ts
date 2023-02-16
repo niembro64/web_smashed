@@ -3,6 +3,7 @@ import { Moment } from 'moment';
 import 'phaser';
 import Shake from 'phaser3-rex-plugins/plugins/shakeposition';
 import { create } from './create';
+import { momentToDate } from './helpers/time';
 import {
   Camera,
   CharacterId,
@@ -35,7 +36,7 @@ export default class Game extends Phaser.Scene {
   ////////////////////////////////
   debug!: Debug;
   // debug: Debug | any;
-  sessionTimeStamp: Moment = moment();
+  myDate: Date = momentToDate(moment());
 
   ////////////////////////////////
   ////////// GAME CONSTANTS

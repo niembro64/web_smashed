@@ -1,5 +1,4 @@
 import Game from '../Game';
-import axios from 'axios';
 import {
   AttackPhysical,
   AttackState,
@@ -173,7 +172,7 @@ export function setGameState(game: Game, state: GameState): void {
     (async () => {
       updateShotsOnPlayers(game);
       await axiosUpsertOne(
-        game.sessionTimeStamp,
+        game.myDate,
         game.numberShotsTakenByMeMatrix,
         game.numberKilledByMatrix,
         game.numberHitByMatrix

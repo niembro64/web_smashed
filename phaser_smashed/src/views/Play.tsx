@@ -41,6 +41,7 @@ import {
   SessionInfo,
 } from './client';
 import moment from 'moment';
+import { momentToDate } from '../scenes/helpers/time';
 // import { useParams } from 'react-router-dom';
 
 function Play() {
@@ -368,18 +369,20 @@ function Play() {
     if (!debug.LoadTimeExtra || debug.DevMode) {
       setTimeoutQuotesLengthStart = 0;
     }
+    let myMoment = moment();
+    let myDate = momentToDate(myMoment);
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debug);
-      myPhaser.current.registry.set('sessionTimeStamp', moment());
+      myPhaser.current.registry.set('myDate', myDate);
     }, setTimeoutQuotesLengthStart);
 
     setShowLoaderIntervalFunction();
 
     let c: ClientInformation = await fetchClientData();
-    let s: SessionInfo = await axiosSaveOne(c, newSmashConfig, debug);
+    let s: SessionInfo = await axiosSaveOne(myDate, c, newSmashConfig, debug);
     setSession(s);
   };
 
