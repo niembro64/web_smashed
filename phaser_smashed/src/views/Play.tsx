@@ -80,7 +80,10 @@ function Play() {
       link.href = dataUrl;
 
       // Set the download attribute of the anchor element
-      link.download = 'Smashed_Rules.png';
+      let m = moment();
+      let mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
+      let fileName = `Smashed_Rules_${mFormatted}.png`;
+      link.download = fileName;
 
       // Click the anchor element to trigger the download
       link.click();
