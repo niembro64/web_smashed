@@ -108,9 +108,10 @@ export function setGameState(game: Game, state: GameState): void {
       setPlayerWinningPositions(game);
       break;
     case 'game-state-captured-flag':
-      game.POLE.setAlpha(0.5);
       game.flag.firework.setAlpha(1);
-      game.flag.sprite.setAlpha(0.5);
+      // game.POLE.setAlpha(0.5);
+      // game.flag.sprite.setAlpha(0.5);
+      game.flag.spritePost.setAlpha(1);
 
       let tint =
         game.colorCircles[game.flag.ownerCurr.id ? game.flag.ownerCurr.id : 0]

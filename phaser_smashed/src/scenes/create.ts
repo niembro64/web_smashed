@@ -90,6 +90,7 @@ export function createFlag(game: Game): void {
   f.spritePost.setScale(0.65);
   f.spritePost.setImmovable(true);
   f.spritePost.body.allowGravity = false;
+  f.spritePost.setAlpha(0);
 
   f.poleTouchStamps = [];
   game.players.forEach((player, playerIndex) => {
