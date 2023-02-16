@@ -510,8 +510,9 @@ export interface Flag {
   toucherPrev: Owner;
   ownerCurr: Owner;
   ownerPrev: Owner;
-  sprite: any | Phaser.GameObjects.Sprite;
-  spritePost: any | Phaser.GameObjects.Sprite;
+  spriteFlagMove: any | Phaser.GameObjects.Sprite;
+  spriteFlagPost: any | Phaser.GameObjects.Sprite;
+  spriteFlagChar: any | Phaser.GameObjects.Sprite;
   yPosition: number; // 0 to 1
   // soundFlagUp: any;
   // soundFlagDown: any;

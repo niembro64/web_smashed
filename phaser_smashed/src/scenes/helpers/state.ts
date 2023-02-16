@@ -111,7 +111,7 @@ export function setGameState(game: Game, state: GameState): void {
       game.flag.firework.setAlpha(1);
       // game.POLE.setAlpha(0.5);
       // game.flag.sprite.setAlpha(0.5);
-      game.flag.spritePost.setAlpha(1);
+      game.flag.spriteFlagPost.setAlpha(1);
 
       let tint =
         game.colorCircles[game.flag.ownerCurr.id ? game.flag.ownerCurr.id : 0]

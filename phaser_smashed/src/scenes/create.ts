@@ -71,26 +71,58 @@ export function create(game: Game) {
 export function createFlag(game: Game): void {
   let f = game.flag;
 
-  f.sprite = game.physics.add.sprite(
+  f.spriteFlagMove = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     SCREEN_DIMENSIONS.HEIGHT * 0.382,
     'flag'
   );
-  f.sprite.setBounce(0);
-  f.sprite.setScale(0.65);
-  f.sprite.setImmovable(true);
-  f.sprite.body.allowGravity = false;
+  f.spriteFlagMove.setBounce(0);
+  f.spriteFlagMove.setScale(0.65);
+  f.spriteFlagMove.setImmovable(true);
+  f.spriteFlagMove.body.allowGravity = false;
 
-  f.spritePost = game.physics.add.sprite(
+  f.spriteFlagPost = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     SCREEN_DIMENSIONS.HEIGHT * 0.382,
     'blank'
   );
-  f.spritePost.setBounce(0);
-  f.spritePost.setScale(0.65);
-  f.spritePost.setImmovable(true);
-  f.spritePost.body.allowGravity = false;
-  f.spritePost.setAlpha(0);
+  f.spriteFlagPost.setBounce(0);
+  f.spriteFlagPost.setScale(0.65);
+  f.spriteFlagPost.setImmovable(true);
+  f.spriteFlagPost.body.allowGravity = false;
+  // f.spritePost.setAlpha(0);
+
+  if (game.smashConfig) {
+    if (
+      game.playerOptions[game.smashConfig.players[0].characterId].char
+        .srcSpriteSheet !== ''
+    ) {
+      f.spriteFlagChar = game.physics.add.sprite(
+        (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+        SCREEN_DIMENSIONS.HEIGHT * 0.382,
+        game.playerOptions[game.smashConfig.players[0].characterId].char.name +
+          '_spritesheet',
+        0
+      );
+    } else {
+      f.spriteFlagChar = game.physics.add.sprite(
+        (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+        SCREEN_DIMENSIONS.HEIGHT * 0.382,
+        game.playerOptions[game.smashConfig.players[0].characterId].char.name
+      );
+    }
+  }
+  f.spriteFlagChar.setBounce(0);
+  // f.spriteFlagChar.setScale(
+    //   0.65 / f.spriteFlagChar.displayWidth,
+    //   0.65 / f.spriteFlagChar.displayHeight
+    // );
+    f.spriteFlagChar.displayWidth = 0.1 * game.SCREEN_SCALE.WIDTH;
+    // f.spriteFlagChar.scaleY = f.spriteFlagChar.scaleX;
+    f.spriteFlagChar.setScale(0.65);
+
+  f.spriteFlagChar.setImmovable(true);
+  f.spriteFlagChar.body.allowGravity = false;
 
   f.poleTouchStamps = [];
   game.players.forEach((player, playerIndex) => {

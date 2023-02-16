@@ -78,26 +78,26 @@ export const updateFlagMovement = (game: Game): void => {
 
   if (f.completedCurr) {
     // f.soundFlagComplete.play();
-    f.sprite.body.setVelocityY(0);
+    f.spriteFlagMove.body.setVelocityY(0);
     return;
   }
 
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
 
-  if (owner !== null && f.sprite.y < f.box.top) {
+  if (owner !== null && f.spriteFlagMove.y < f.box.top) {
     f.completedCurr = true;
 
     if (f.completedCurr && !f.completedPrev) {
       // f.soundFlagComplete.play();
-      f.sprite.body.setVelocityY(0);
+      f.spriteFlagMove.body.setVelocityY(0);
     }
   }
 
   // no one toucher
   // no movement
   if (toucher === null) {
-    f.sprite.body.setVelocityY(0);
+    f.spriteFlagMove.body.setVelocityY(0);
     return;
   }
 
@@ -107,7 +107,7 @@ export const updateFlagMovement = (game: Game): void => {
     let v = game.players[toucher].emitterDark.visible
       ? -game.flagSpeedDark
       : -game.flagSpeed;
-    f.sprite.body.setVelocityY(v);
+    f.spriteFlagMove.body.setVelocityY(v);
     return;
   }
 
@@ -117,7 +117,7 @@ export const updateFlagMovement = (game: Game): void => {
     let v = game.players[toucher].emitterDark.visible
       ? game.flagSpeedDark
       : game.flagSpeed;
-    f.sprite.body.setVelocityY(v);
+    f.spriteFlagMove.body.setVelocityY(v);
   }
 };
 
@@ -130,7 +130,7 @@ export const updateFlagOwner = (game: Game): void => {
 
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
-  let fs = game.flag.sprite;
+  let fs = game.flag.spriteFlagMove;
 
   // do nothing
   // if no one is touching the flat
@@ -160,8 +160,8 @@ export const printFlagOwnerAndToucher = (game: Game): void => {
 
 export const updateFlagColor = (game: Game): void => {
   let f = game.flag;
-  let fs = game.flag.sprite;
-  let fb = game.flag.spritePost;
+  let fs = game.flag.spriteFlagMove;
+  let fb = game.flag.spriteFlagPost;
   let owner = game.flag.ownerCurr.id;
 
   if (f.completedCurr && f.completedCurr && !f.completedPrev) {
@@ -174,8 +174,8 @@ export const updateFlagColor = (game: Game): void => {
   }
 
   if (owner === null) {
-    console.log('fs', fs);
-    console.log('fb', fb);
+    // console.log('fs', fs);
+    // console.log('fb', fb);
     fs.setTint(0xffffff);
     fb.setTint(0xffffff);
     return;
