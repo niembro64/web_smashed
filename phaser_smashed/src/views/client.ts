@@ -121,7 +121,13 @@ export const axiosUpsertOne = async (
   matrixHitsUnto: GameMatrix
 ): Promise<SessionInfo> => {
   console.log('about to call timestamp:', myDate);
-  let s: SessionInfo = await axios.get('/api/smashed/date/' + myDate);
+
+  let s: SessionInfo;
+  if (process.env.NODE_ENV === 'production') {
+    s = await axios.get('/api/smashed/date/' + myDate);
+  } else {
+    s = await axios.get('http://localhost:8000/api/smashed/date/' + myDate);
+  }
 
   let sessionInfo: SessionInfo = {
     smashConfig: s.smashConfig,
