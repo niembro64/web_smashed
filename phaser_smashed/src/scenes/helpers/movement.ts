@@ -1,7 +1,6 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Player } from '../interfaces';
 import { getIsAttackEnergyOffscreen } from './attacks';
-import { getIsBot } from './bot';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
 export function updateCirclesLocations(game: Game): void {
@@ -493,3 +492,23 @@ export function updateAttackEnergyVelPrev(game: Game): void {
   }
   // console.log(game.players[0].char.attackEnergy.accX);
 }
+
+export function getIsSpriteMoving(
+  sprite: Phaser.Physics.Arcade.Sprite
+): boolean {
+  const tolerance = 0.1;
+  const isMoving = Math.abs(sprite.body.velocity.x) > tolerance;
+  console.log('isMoving', isMoving, 'velocity', sprite.body.velocity);
+  return isMoving;
+}
+
+// export function getIsSpriteOnScreen(
+//   sprite: Phaser.Physics.Arcade.Sprite
+// ): boolean {
+//   return (
+//     sprite.x > 0 &&
+//     sprite.x < SCREEN_DIMENSIONS.WIDTH &&
+//     sprite.y > 0 &&
+//     sprite.y < SCREEN_DIMENSIONS.HEIGHT
+//   );
+// }

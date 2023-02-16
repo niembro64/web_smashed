@@ -8,6 +8,7 @@ import {
 } from './attacks';
 import { getIsBot, updateBot } from './bot';
 import { updatePadCurrKeyboard } from './keyboard';
+import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 
 export function updateGamePadsMaster(game: Game): void {
@@ -615,8 +616,11 @@ export function updateAttackEnergy(player: Player, game: Game): void {
   ////////////////////////////////////////////////
 
   if (
-    !getIsAttackEnergyOffscreen(player.char.attackEnergy, game) &&
-    !isAttackEnergyNearPlayer(player)
+    !(
+      getIsAttackEnergyOffscreen(player.char.attackEnergy, game) ||
+      isAttackEnergyNearPlayer(player) ||
+      !getIsSpriteMoving(player.char.attackEnergy.sprite)
+    )
   ) {
     return;
   }

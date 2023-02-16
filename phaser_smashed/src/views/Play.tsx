@@ -65,6 +65,7 @@ function Play() {
 
   function captureScreenshot() {
     console.log('Capture Screenshot');
+
     // Select the element that you want to capture a screenshot of
     const element = document.querySelector('#top-level');
 
