@@ -1,5 +1,4 @@
 const Smashed = require('../models/smashed.model');
-
 module.exports.test = (req, res) => {
   Smashed.find()
     .then(res.json({ smashed: 'test smashed' }))
@@ -7,7 +6,6 @@ module.exports.test = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
-
 module.exports.findAllSmashed = (req, res) => {
   Smashed.find()
     .collation({ locale: 'en', strength: 2 })
@@ -24,7 +22,6 @@ module.exports.findAllSmashed = (req, res) => {
 //       res.status(400).json({ message: "Something went wrong", error: err })
 //     );
 // };
-
 module.exports.findOneSingleSmashed = (req, res) => {
   Smashed.findOne({ _id: req.params._id })
     .then((oneSingleSmashed) => res.json(oneSingleSmashed))
@@ -32,7 +29,6 @@ module.exports.findOneSingleSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
-
 module.exports.createNewSmashed = (req, res) => {
   Smashed.create(req.body)
     .then((newlyCreatedSmashed) => res.json(newlyCreatedSmashed))
@@ -40,7 +36,6 @@ module.exports.createNewSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
-
 module.exports.deleteAnExistingSmashed = (req, res) => {
   Smashed.deleteOne({ _id: req.params._id })
     .then((result) => res.json(result))
@@ -48,9 +43,7 @@ module.exports.deleteAnExistingSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
-
 ///////////
-
 // module.exports.updateExistingSmashed = (req, res) => {
 //   Smashed.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true })
 //     .then((updatedSmashed) => res.json(updatedSmashed))
@@ -67,21 +60,8 @@ module.exports.updateExistingSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
-
 // module.exports.updateExistingSmashedePart = (req, res) => {
 //   Smashed.updateOne({ _id: req.params._id }, req.body)
 //     .then((results) => res.json( results ))
 //     .catch((err) => res.status(400).json({ message: "that didn't work", err }));
 // };
-
-module.exports.upsertSmashed = (req, res) => {
-  Smashed.findOneAndUpdate({ timeStamp: req.params.timeStamp }, req.body, {
-    // new: true,
-    upsert: true,
-    runValidators: true,
-  })
-    .then((updatedSmashed) => res.json(updatedSmashed))
-    .catch((err) =>
-      res.status(400).json({ message: 'Something went wrong', error: err })
-    );
-};

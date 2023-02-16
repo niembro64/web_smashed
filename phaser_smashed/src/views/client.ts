@@ -100,9 +100,9 @@ export const axiosSaveOne = async (
     longitude: clientInformation.longitude,
     network: clientInformation.network,
     postal: clientInformation.postal,
-    matrixShotsUnto: '',
-    matrixDeathsUnto: '',
-    matrixHitsUnto: '',
+    matrixShotsUnto: 'null',
+    matrixDeathsUnto: 'null',
+    matrixHitsUnto: 'null',
   };
 
   if (process.env.NODE_ENV === 'production') {

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
 const minLength = 3;
-
 const SmashedSchema = new mongoose.Schema(
   {
     smashConfig: {
@@ -71,13 +69,10 @@ const SmashedSchema = new mongoose.Schema(
     matrixHitsUnto: {
       type: String,
       required: [true, 'Matrix hits unto is required'],
-    }
+    },
   },
   { timestamps: true }
 );
-
 const Smashed = mongoose.model('Smashed', SmashedSchema);
-
 module.exports = Smashed;
-
 // ${minLength}
