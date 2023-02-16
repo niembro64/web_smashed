@@ -125,6 +125,9 @@ export function createFlag(game: Game): void {
 
   f.spriteFlagChar.setImmovable(true);
   f.spriteFlagChar.body.allowGravity = false;
+  // f.spriteFlagChar.setTintFill(0x000000);
+  f.spriteFlagChar.setTintFill(0xffffff);
+  // f.spriteFlagChar.setTint(0x555555);
 
   f.poleTouchStamps = [];
   game.players.forEach((player, playerIndex) => {
