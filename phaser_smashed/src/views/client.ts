@@ -119,7 +119,7 @@ export const axiosUpsertOne = async (
   matrixShotsUnto: GameMatrix,
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
-): Promise<SessionInfo> => {
+): Promise<void> => {
   console.log('about to call timestamp:', myDate);
 
   let s: SessionInfo;
@@ -129,7 +129,7 @@ export const axiosUpsertOne = async (
     s = await axios.get('http://localhost:8000/api/smashed/date/' + myDate);
   }
 
-  let sessionInfo: SessionInfo = {
+  let si: SessionInfo = {
     smashConfig: s.smashConfig,
     debug: s.debug,
     ip: s.ip,
@@ -148,24 +148,24 @@ export const axiosUpsertOne = async (
     matrixHitsUnto: JSON.stringify(matrixHitsUnto),
   };
 
-  let sessionInfoReturn = {
-    smashConfig: JSON.parse(sessionInfo.smashConfig),
-    debug: JSON.parse(sessionInfo.debug),
-    ip: sessionInfo.ip,
-    date: sessionInfo.date,
-    city: sessionInfo.city,
-    region: sessionInfo.region,
-    country: sessionInfo.country,
-    clientVisits: sessionInfo.clientVisits,
-    countryArea: sessionInfo.countryArea,
-    latitude: sessionInfo.latitude,
-    longitude: sessionInfo.longitude,
-    network: sessionInfo.network,
-    postal: sessionInfo.postal,
-    matrixShotsUnto: JSON.parse(sessionInfo.matrixShotsUnto),
-    matrixDeathsUnto: JSON.parse(sessionInfo.matrixDeathsUnto),
-    matrixHitsUnto: JSON.parse(sessionInfo.matrixHitsUnto),
-  };
+  // let sessionInfoReturn = {
+  //   smashConfig: JSON.parse(si.smashConfig),
+  //   debug: JSON.parse(si.debug),
+  //   ip: si.ip,
+  //   date: si.date,
+  //   city: si.city,
+  //   region: si.region,
+  //   country: si.country,
+  //   clientVisits: si.clientVisits,
+  //   countryArea: si.countryArea,
+  //   latitude: si.latitude,
+  //   longitude: si.longitude,
+  //   network: si.network,
+  //   postal: si.postal,
+  //   matrixShotsUnto: JSON.parse(si.matrixShotsUnto),
+  //   matrixDeathsUnto: JSON.parse(si.matrixDeathsUnto),
+  //   matrixHitsUnto: JSON.parse(si.matrixHitsUnto),
+  // };
 
   // let sessionInfo: SessionInfo = {
   //   smashConfig: JSON.stringify(smashConfig),
@@ -187,11 +187,10 @@ export const axiosUpsertOne = async (
   // };
 
   if (process.env.NODE_ENV === 'production') {
-    await axios.patch('/api/smashed/upsert/', sessionInfo);
+    await axios.patch('/api/smashed/upsert/', si);
   } else {
-    await axios.patch('http://localhost:8000/api/smashed/upsert', sessionInfo);
+    await axios.patch('http://localhost:8000/api/smashed/upsert', si);
   }
-  return sessionInfoReturn;
 };
 
 export const getAllAxios = async (): Promise<SessionInfo[]> => {
