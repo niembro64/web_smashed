@@ -809,6 +809,7 @@ export default class Game extends Phaser.Scene {
     completedCurr: false,
     completedPrev: false,
     sprite: null,
+    spritePost: null,
     yPosition: 0,
     // soundFlagUp: null,
     // soundFlagDown: null,
