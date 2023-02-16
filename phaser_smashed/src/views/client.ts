@@ -1,6 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import { Moment } from 'moment';
+import { momentToDate } from '../scenes/helpers/time';
 import { Debug, SmashConfig } from '../scenes/interfaces';
 
 export interface ClientInformation {
@@ -8,7 +9,7 @@ export interface ClientInformation {
   region: string;
   country: string;
   ip: string;
-  timeStamp: Moment;
+  date: Date;
   clientVisits: number;
   countryArea: number;
   latitude: number;
@@ -41,7 +42,7 @@ export const fetchClientData = async (): Promise<ClientInformation> => {
 
   let clientInformation: ClientInformation = {
     ip: responseJSON.ip,
-    timeStamp: moment(),
+    date: momentToDate(moment()),
     city: responseJSON.city,
     region: responseJSON.region,
     country: responseJSON.country,
@@ -62,7 +63,7 @@ export interface SessionInfo {
   smashConfig: string;
   debug: string;
   ip: string;
-  timeStamp: Moment;
+  date: Date;
   city: string;
   region: string;
   country: string;
@@ -77,9 +78,7 @@ export interface SessionInfo {
   matrixHitsUnto: string;
 }
 
-export interface GameMatrix {
-  gameMatrix: number[][];
-}
+export type GameMatrix = number[][];
 
 export const axiosSaveOne = async (
   clientInformation: ClientInformation,
@@ -90,7 +89,7 @@ export const axiosSaveOne = async (
     smashConfig: JSON.stringify(smashConfig),
     debug: JSON.stringify(debug),
     ip: clientInformation.ip,
-    timeStamp: clientInformation.timeStamp,
+    date: clientInformation.date,
     city: clientInformation.city,
     region: clientInformation.region,
     country: clientInformation.country,
@@ -115,38 +114,78 @@ export const axiosSaveOne = async (
 };
 
 export const axiosUpsertOne = async (
-  clientInformation: ClientInformation,
-  smashConfig: SmashConfig,
-  debug: Debug,
+  momentObject: Moment,
   matrixShotsUnto: GameMatrix,
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<SessionInfo> => {
+  let myDate = momentToDate(momentObject);
+  console.log('about to call timestamp:', myDate);
+  let s: SessionInfo = await axios.get('/api/smashed/timestamp/' + myDate);
+
   let sessionInfo: SessionInfo = {
-    smashConfig: JSON.stringify(smashConfig),
-    debug: JSON.stringify(debug),
-    ip: clientInformation.ip,
-    timeStamp: clientInformation.timeStamp,
-    city: clientInformation.city,
-    region: clientInformation.region,
-    country: clientInformation.country,
-    clientVisits: clientInformation.clientVisits,
-    countryArea: clientInformation.countryArea,
-    latitude: clientInformation.latitude,
-    longitude: clientInformation.longitude,
-    network: clientInformation.network,
-    postal: clientInformation.postal,
+    smashConfig: s.smashConfig,
+    debug: s.debug,
+    ip: s.ip,
+    date: s.date,
+    city: s.city,
+    region: s.region,
+    country: s.country,
+    clientVisits: s.clientVisits,
+    countryArea: s.countryArea,
+    latitude: s.latitude,
+    longitude: s.longitude,
+    network: s.network,
+    postal: s.postal,
     matrixShotsUnto: JSON.stringify(matrixShotsUnto),
     matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
     matrixHitsUnto: JSON.stringify(matrixHitsUnto),
   };
 
+  let sessionInfoReturn = {
+    smashConfig: JSON.parse(sessionInfo.smashConfig),
+    debug: JSON.parse(sessionInfo.debug),
+    ip: sessionInfo.ip,
+    date: sessionInfo.date,
+    city: sessionInfo.city,
+    region: sessionInfo.region,
+    country: sessionInfo.country,
+    clientVisits: sessionInfo.clientVisits,
+    countryArea: sessionInfo.countryArea,
+    latitude: sessionInfo.latitude,
+    longitude: sessionInfo.longitude,
+    network: sessionInfo.network,
+    postal: sessionInfo.postal,
+    matrixShotsUnto: JSON.parse(sessionInfo.matrixShotsUnto),
+    matrixDeathsUnto: JSON.parse(sessionInfo.matrixDeathsUnto),
+    matrixHitsUnto: JSON.parse(sessionInfo.matrixHitsUnto),
+  };
+
+  // let sessionInfo: SessionInfo = {
+  //   smashConfig: JSON.stringify(smashConfig),
+  //   debug: JSON.stringify(debug),
+  //   ip: clientInformation.ip,
+  //   timeStamp: clientInformation.timeStamp,
+  //   city: clientInformation.city,
+  //   region: clientInformation.region,
+  //   country: clientInformation.country,
+  //   clientVisits: clientInformation.clientVisits,
+  //   countryArea: clientInformation.countryArea,
+  //   latitude: clientInformation.latitude,
+  //   longitude: clientInformation.longitude,
+  //   network: clientInformation.network,
+  //   postal: clientInformation.postal,
+  //   matrixShotsUnto: JSON.stringify(matrixShotsUnto),
+  //   matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
+  //   matrixHitsUnto: JSON.stringify(matrixHitsUnto),
+  // };
+
   if (process.env.NODE_ENV === 'production') {
-    await axios.post('/api/smashed/upsert/', sessionInfo);
+    await axios.patch('/api/smashed/upsert/', sessionInfo);
   } else {
-    await axios.post('http://localhost:8000/api/smashed/upsert', sessionInfo);
+    await axios.patch('http://localhost:8000/api/smashed/upsert', sessionInfo);
   }
-  return sessionInfo;
+  return sessionInfoReturn;
 };
 
 export const getAllAxios = async (): Promise<SessionInfo[]> => {

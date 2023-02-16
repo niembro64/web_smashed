@@ -1,3 +1,5 @@
+import moment from 'moment';
+import { Moment } from 'moment';
 import 'phaser';
 import Shake from 'phaser3-rex-plugins/plugins/shakeposition';
 import { create } from './create';
@@ -33,6 +35,7 @@ export default class Game extends Phaser.Scene {
   ////////////////////////////////
   debug!: Debug;
   // debug: Debug | any;
+  sessionTimeStamp: Moment = moment();
 
   ////////////////////////////////
   ////////// GAME CONSTANTS

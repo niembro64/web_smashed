@@ -53,6 +53,7 @@ import {
   setSplashDataOn,
   updateShotsOnPlayers,
 } from './text';
+import { axiosUpsertOne } from '../../views/client';
 
 export function setGameState(game: Game, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;
@@ -169,7 +170,15 @@ export function setGameState(game: Game, state: GameState): void {
   }
 
   if (isDrinkingCurr && !isDrinkingPrev) {
-    updateShotsOnPlayers(game);
+    (async () => {
+      updateShotsOnPlayers(game);
+      await axiosUpsertOne(
+        game.sessionTimeStamp,
+        game.numberShotsTakenByMeMatrix,
+        game.numberKilledByMatrix,
+        game.numberHitByMatrix
+      );
+    })();
   }
 }
 

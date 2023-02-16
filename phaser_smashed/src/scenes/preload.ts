@@ -15,7 +15,7 @@ export function preload(game: Game): void {
   //////////////////////////////
   // Pull Configs
   //////////////////////////////
-
+  game.sessionTimeStamp = game.game.registry.get('sessionTimeStamp');
   game.smashConfig = game.game.registry.get('smashConfig');
   game.debug = game.game.registry.get('debug');
   console.log('this.smashConfig', game.smashConfig);

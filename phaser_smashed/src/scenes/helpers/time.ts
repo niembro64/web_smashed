@@ -1,3 +1,4 @@
+import moment, { Moment } from 'moment';
 import Game from '../Game';
 
 export function updateTimeSlowdown(game: Game): void {
@@ -33,4 +34,14 @@ export function isAnyExplosionActive(game: Game): boolean {
 
 export function addToMotionSlowdown(amount: number, game: Game): void {
   game.motionSlowdown *= amount;
+}
+
+// Function to convert a moment.js object to a Date object
+export function momentToDate(momentObj: Moment): Date {
+  return momentObj.toDate();
+}
+
+// Function to convert a Date object to a moment.js object
+export function dateToMoment(dateObj: Date): Moment {
+  return moment(dateObj);
 }

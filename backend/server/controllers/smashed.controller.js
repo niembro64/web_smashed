@@ -29,6 +29,15 @@ module.exports.findOneSingleSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
+
+module.exports.findSmashedByTimeStamp = (req, res) => {
+  Smashed.find({ timeStamp: req.params.timeStamp })
+    .then((oneSingleSmashed) => res.json(oneSingleSmashed))
+    .catch((err) =>
+      res.status(400).json({ message: 'Something went wrong', error: err })
+    );
+};
+
 module.exports.createNewSmashed = (req, res) => {
   Smashed.create(req.body)
     .then((newlyCreatedSmashed) => res.json(newlyCreatedSmashed))
@@ -60,6 +69,19 @@ module.exports.updateExistingSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
+
+module.exports.upsertExistingSmashed = (req, res) => {
+  Smashed.findOneAndUpdate({ timeStamp: req.params.timeStamp }, req.body, {
+    new: true,
+    upsert: true,
+    runValidators: true,
+  })
+    .then((updatedSmashed) => res.json(updatedSmashed))
+    .catch((err) =>
+      res.status(400).json({ message: 'Something went wrong', error: err })
+    );
+};
+
 // module.exports.updateExistingSmashedePart = (req, res) => {
 //   Smashed.updateOne({ _id: req.params._id }, req.body)
 //     .then((results) => res.json( results ))

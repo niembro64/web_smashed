@@ -373,6 +373,7 @@ function Play() {
       myPhaser.current.registry.set('parentContext', Play);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debug);
+      myPhaser.current.registry.set('sessionTimeStamp', moment());
     }, setTimeoutQuotesLengthStart);
 
     setShowLoaderIntervalFunction();
@@ -1659,7 +1660,7 @@ function Play() {
                       return (
                         <p className="text-small" key={index}>
                           {paddedIndex}{' '}
-                          {moment(session.timeStamp).format('YYYY-MM-DD HH:mm')}{' '}
+                          {moment(session.date).format('YYYY-MM-DD HH:mm')}{' '}
                           {session.country} {session.region} {session.city}
                           {/* {session.ip}{" "} */}
                         </p>
