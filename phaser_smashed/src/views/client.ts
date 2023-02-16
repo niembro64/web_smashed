@@ -72,9 +72,9 @@ export interface SessionInfo {
   longitude: number;
   network: string;
   postal: string;
-  matrixShotsUnto: string | null;
-  matrixDeathsUnto: string | null;
-  matrixHitsUnto: string | null;
+  matrixShotsUnto: string;
+  matrixDeathsUnto: string;
+  matrixHitsUnto: string;
 }
 
 export interface GameMatrix {
@@ -100,9 +100,9 @@ export const axiosSaveOne = async (
     longitude: clientInformation.longitude,
     network: clientInformation.network,
     postal: clientInformation.postal,
-    matrixShotsUnto: null,
-    matrixDeathsUnto: null,
-    matrixHitsUnto: null,
+    matrixShotsUnto: '',
+    matrixDeathsUnto: '',
+    matrixHitsUnto: '',
   };
 
   if (process.env.NODE_ENV === 'production') {

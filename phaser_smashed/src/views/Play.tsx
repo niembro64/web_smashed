@@ -299,7 +299,7 @@ function Play() {
   const [anyKeyWasPressed, setAnyKeyWasPressed] = useState<boolean>(false);
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
-  const onClickStartStartButton = () => {
+  const onClickStartStartButton = async () => {
     setShowControls(false);
     setShowControllers(false);
     setShowRulesN64(false);
@@ -377,11 +377,9 @@ function Play() {
 
     setShowLoaderIntervalFunction();
 
-    (async () => {
-      let c: ClientInformation = await fetchClientData();
-      let s: SessionInfo = await axiosSaveOne(c, newSmashConfig, debug);
-      setSession(s);
-    })();
+    let c: ClientInformation = await fetchClientData();
+    let s: SessionInfo = await axiosSaveOne(c, newSmashConfig, debug);
+    setSession(s);
   };
 
   const setShowLoaderIntervalFunction = () => {
