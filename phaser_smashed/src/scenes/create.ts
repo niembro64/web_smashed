@@ -90,7 +90,7 @@ export function createFlag(game: Game): void {
   f.spriteFlagPost.setScale(0.65);
   f.spriteFlagPost.setImmovable(true);
   f.spriteFlagPost.body.allowGravity = false;
-  // f.spritePost.setAlpha(0);
+  f.spriteFlagPost.setAlpha(0);
 
   if (game.smashConfig) {
     if (
@@ -127,6 +127,7 @@ export function createFlag(game: Game): void {
   f.spriteFlagChar.body.allowGravity = false;
   // f.spriteFlagChar.setTintFill(0x000000);
   f.spriteFlagChar.setTintFill(0xffffff);
+  f.spriteFlagChar.setAlpha(0);
   // f.spriteFlagChar.setTint(0x555555);
 
   f.poleTouchStamps = [];

@@ -184,6 +184,14 @@ export const updateFlagColor = (game: Game): void => {
   let color = game.colorCircles[owner].colorNumber;
   fs.setTint(color);
   fb.setTint(color);
+
+  let player = game.players[owner];
+
+  if (player.char.srcSpriteSheet !== '') {
+    f.spriteFlagChar.setTexture(player.char.name + '_spritesheet', 0);
+  } else {
+    f.spriteFlagChar.setTexture(player.char.src);
+  }
 };
 
 export const getIsFlagShots = (game: Game): boolean => {
