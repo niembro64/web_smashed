@@ -81,16 +81,15 @@ export function createFlag(game: Game): void {
   f.sprite.setImmovable(true);
   f.sprite.body.allowGravity = false;
 
-  let fe = f.spritePost;
-  fe = game.physics.add.sprite(
+  f.spritePost = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     SCREEN_DIMENSIONS.HEIGHT * 0.382,
-    'flag'
+    'blank'
   );
-  fe.setBounce(0);
-  fe.setScale(0.65);
-  fe.setImmovable(true);
-  fe.body.allowGravity = false;
+  f.spritePost.setBounce(0);
+  f.spritePost.setScale(0.65);
+  f.spritePost.setImmovable(true);
+  f.spritePost.body.allowGravity = false;
 
   f.poleTouchStamps = [];
   game.players.forEach((player, playerIndex) => {

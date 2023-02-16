@@ -160,7 +160,8 @@ export function preload(game: Game): void {
   game.load.image('sword', 'images/sword_right.png');
 
   game.load.image('table', 'images/table.png');
-  game.load.image('flag', 'images/qflag.png');
+  game.load.image('flag', 'images/qflag3.png');
+  game.load.image('blank', 'images/blank.png');
   game.load.image('pole', 'images/pole.png');
 
   game.load.image('background', 'images/darkxp.jpg');

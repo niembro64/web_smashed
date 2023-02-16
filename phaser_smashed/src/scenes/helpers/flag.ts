@@ -161,8 +161,8 @@ export const printFlagOwnerAndToucher = (game: Game): void => {
 export const updateFlagColor = (game: Game): void => {
   let f = game.flag;
   let fs = game.flag.sprite;
+  let fb = game.flag.spritePost;
   let owner = game.flag.ownerCurr.id;
-  let fire = game.flag.firework;
 
   if (f.completedCurr && f.completedCurr && !f.completedPrev) {
     // fs.setAlpha(0.5);
@@ -174,12 +174,16 @@ export const updateFlagColor = (game: Game): void => {
   }
 
   if (owner === null) {
+    console.log('fs', fs);
+    console.log('fb', fb);
     fs.setTint(0xffffff);
+    fb.setTint(0xffffff);
     return;
   }
 
   let color = game.colorCircles[owner].colorNumber;
   fs.setTint(color);
+  fb.setTint(color);
 };
 
 export const getIsFlagShots = (game: Game): boolean => {
