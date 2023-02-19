@@ -349,7 +349,8 @@ function Play() {
     setShowHistory(false);
     setShowOptions(false);
 
-    trance.pause();
+    setPlayChezState({ name: 'up', moment: moment() });
+    // trance.pause();
     startSound();
     setWebState('play');
 
@@ -1270,7 +1271,7 @@ function Play() {
                       className="b-oscuro b-black"
                       onClick={() => {
                         onClickOscura(pIndex);
-                        setPlayChezState({ name: 'up', moment: moment() });
+                        // setPlayChezState({ name: 'up', moment: moment() });
                         // onClickSetInputArrayElement(
                         //   cPlayerIndex,
                         //   inputArray[cPlayerIndex] + 1 > 2
@@ -1290,7 +1291,7 @@ function Play() {
                       className="b-oscuro b-dark"
                       onClick={() => {
                         onClickOscura(pIndex);
-                        setPlayChezState({ name: 'up', moment: moment() });
+                        // setPlayChezState({ name: 'up', moment: moment() });
                         // onClickSetInputArrayElement(
                         //   cPlayerIndex,
                         //   inputArray[cPlayerIndex] + 1 > 2
@@ -1329,7 +1330,7 @@ function Play() {
                       className="b-oscuro b-dark"
                       onClick={() => {
                         onClickOscura(pIndex);
-                        setPlayChezState({ name: 'up', moment: moment() });
+                        // setPlayChezState({ name: 'up', moment: moment() });
                         // onClickSetInputArrayElement(
                         //   cPlayerIndex,
                         //   inputArray[cPlayerIndex] + 1 > 2
@@ -1362,7 +1363,7 @@ function Play() {
                       className="b-oscuro b-dark"
                       onClick={() => {
                         onClickOscura(pIndex);
-                        setPlayChezState({ name: 'up', moment: moment() });
+                        // setPlayChezState({ name: 'up', moment: moment() });
                       }}
                     >
                       <span>Bot</span>
@@ -1374,8 +1375,46 @@ function Play() {
               );
             })}
           </div>
-          <div className="b-start" onClick={onClickStartStartButton}>
-            <span>START</span>
+          <div className="bottom-zone">
+            <div
+              className="b-all-bots"
+              onClick={() => {
+                setInputArray([2, 0, 0, 3]);
+                blipSound();
+              }}
+            >
+              <span>KB vs Bot</span>
+            </div>
+            <div
+              className="b-all-bots"
+              onClick={() => {
+                setInputArray([2, 0, 0, 2]);
+                blipSound();
+              }}
+            >
+              <span>2 KBs</span>
+            </div>
+            <div
+              className="b-all-bots"
+              onClick={() => {
+                setInputArray([1, 1, 1, 1]);
+                blipSound();
+              }}
+            >
+              <span>4 Pads</span>
+            </div>
+            <div
+              className="b-all-bots"
+              onClick={() => {
+                setInputArray([3, 3, 3, 3]);
+                blipSound();
+              }}
+            >
+              <span>4 Bots</span>
+            </div>
+            <div className="b-start" onClick={onClickStartStartButton}>
+              <span>START</span>
+            </div>
           </div>
         </div>
       )}

@@ -498,7 +498,7 @@ export function getIsSpriteMoving(
 ): boolean {
   const tolerance = 0.1;
   const isMoving = Math.abs(sprite.body.velocity.x) > tolerance;
-  console.log('isMoving', isMoving, 'velocity', sprite.body.velocity);
+  // console.log('isMoving', isMoving, 'velocity', sprite.body.velocity);
   return isMoving;
 }
 
