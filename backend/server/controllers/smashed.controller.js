@@ -9,7 +9,7 @@ module.exports.test = (req, res) => {
 module.exports.findAllSmashed = (req, res) => {
   Smashed.find()
     .collation({ locale: 'en', strength: 2 })
-    .sort({ timeStamp: -1 })
+    // .sort({ momentCreated: -1 })
     .then((allSmashed) => res.json(allSmashed))
     .catch((err) =>
       res.status(400).json({ message: 'Something went wrong', error: err })
@@ -31,7 +31,7 @@ module.exports.findOneSingleSmashed = (req, res) => {
 };
 
 module.exports.findSmashedByDate = (req, res) => {
-  Smashed.find({ date: req.params.date })
+  Smashed.find({ momentCreated: req.params.momentCreated })
     .then((oneSingleSmashed) => res.json(oneSingleSmashed))
     .catch((err) =>
       res.status(400).json({ message: 'Something went wrong', error: err })
@@ -71,11 +71,13 @@ module.exports.updateExistingSmashed = (req, res) => {
 };
 
 module.exports.upsertExistingSmashed = (req, res) => {
-  Smashed.findOneAndUpdate({ date: req.params.date }, req.body, {
-    new: true,
-    upsert: true,
-    runValidators: true,
-  })
+  Smashed.findOneAndUpdate(
+    { momentCreated: req.params.momentCreated },
+    req.body,
+    {
+      upsert: true,
+    }
+  )
     .then((updatedSmashed) => res.json(updatedSmashed))
     .catch((err) =>
       res.status(400).json({ message: 'Something went wrong', error: err })

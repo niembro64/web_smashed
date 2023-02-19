@@ -1,6 +1,5 @@
 import axios from 'axios';
-import moment from 'moment';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { momentToDate } from '../scenes/helpers/time';
 import { Debug, SmashConfig } from '../scenes/interfaces';
 
@@ -9,7 +8,7 @@ export interface ClientInformation {
   region: string;
   country: string;
   ip: string;
-  date: Date;
+  momentCreated: string;
   clientVisits: number;
   countryArea: number;
   latitude: number;
@@ -42,7 +41,7 @@ export const fetchClientData = async (): Promise<ClientInformation> => {
 
   let clientInformation: ClientInformation = {
     ip: responseJSON.ip,
-    date: momentToDate(moment()),
+    momentCreated: JSON.stringify(moment()),
     city: responseJSON.city,
     region: responseJSON.region,
     country: responseJSON.country,
@@ -54,7 +53,7 @@ export const fetchClientData = async (): Promise<ClientInformation> => {
     postal: responseJSON.postal,
   };
 
-  console.log(clientInformation);
+  console.log('clientInformation', clientInformation);
 
   return clientInformation;
 };
@@ -63,7 +62,7 @@ export interface SessionInfo {
   smashConfig: string;
   debug: string;
   ip: string;
-  date: Date;
+  momentCreated: string;
   city: string;
   region: string;
   country: string;
@@ -81,7 +80,7 @@ export interface SessionInfo {
 export type GameMatrix = number[][];
 
 export const axiosSaveOne = async (
-  myDate: Date,
+  momentCreated: Moment,
   clientInformation: ClientInformation,
   smashConfig: SmashConfig,
   debug: Debug
@@ -90,7 +89,7 @@ export const axiosSaveOne = async (
     smashConfig: JSON.stringify(smashConfig),
     debug: JSON.stringify(debug),
     ip: clientInformation.ip,
-    date: myDate,
+    momentCreated: JSON.stringify(momentCreated),
     city: clientInformation.city,
     region: clientInformation.region,
     country: clientInformation.country,
@@ -105,6 +104,8 @@ export const axiosSaveOne = async (
     matrixHitsUnto: 'null',
   };
 
+  console.log('sessionInfo', sessionInfo);
+
   if (process.env.NODE_ENV === 'production') {
     // await axios.post('http://3.86.180.36:8000/api/smashed/create', sessionInfo);
     await axios.post('/api/smashed/create', sessionInfo);
@@ -115,25 +116,27 @@ export const axiosSaveOne = async (
 };
 
 export const axiosUpsertOne = async (
-  myDate: Date,
+  momentCreated: Moment,
   matrixShotsUnto: GameMatrix,
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<void> => {
-  console.log('about to call timestamp:', myDate);
+  console.log('about to call timestamp:', momentCreated);
 
   let s: SessionInfo;
   if (process.env.NODE_ENV === 'production') {
-    s = await axios.get('/api/smashed/date/' + myDate);
+    s = await axios.get('/api/smashed/date/' + momentCreated);
   } else {
-    s = await axios.get('http://localhost:8000/api/smashed/date/' + myDate);
+    s = await axios.get(
+      'http://localhost:8000/api/smashed/date/' + momentCreated
+    );
   }
 
   let si: SessionInfo = {
     smashConfig: s.smashConfig,
     debug: s.debug,
     ip: s.ip,
-    date: s.date,
+    momentCreated: s.momentCreated,
     city: s.city,
     region: s.region,
     country: s.country,

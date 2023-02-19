@@ -412,19 +412,19 @@ function Play() {
       setTimeoutQuotesLengthStart = 0;
     }
     let myMoment = moment();
-    let myDate = momentToDate(myMoment);
+    // let myDate = momentToDate(myMoment);
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debug);
-      myPhaser.current.registry.set('myDate', myDate);
+      myPhaser.current.registry.set('myMoment', myMoment);
     }, setTimeoutQuotesLengthStart);
 
     setShowLoaderIntervalFunction();
 
     let c: ClientInformation = await fetchClientData();
-    let s: SessionInfo = await axiosSaveOne(myDate, c, newSmashConfig, debug);
+    let s: SessionInfo = await axiosSaveOne(myMoment, c, newSmashConfig, debug);
     setSession(s);
   };
 
@@ -1778,7 +1778,9 @@ function Play() {
                       return (
                         <p className="text-small" key={index}>
                           {paddedIndex}{' '}
-                          {moment(session.date).format('YYYY-MM-DD HH:mm')}{' '}
+                          {moment(session.momentCreated).format(
+                            'YYYY-MM-DD HH:mm'
+                          )}{' '}
                           {session.country} {session.region} {session.city}
                           {/* {session.ip}{" "} */}
                         </p>

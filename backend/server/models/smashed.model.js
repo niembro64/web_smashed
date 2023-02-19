@@ -18,7 +18,7 @@ const SmashedSchema = new mongoose.Schema(
       minlength: [minLength, 'IP must be at least 3 characters'],
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, 'Time stamp is required'],
       minlength: [minLength, 'Time stamp must be at least 3 characters'],
     },

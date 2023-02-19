@@ -36,7 +36,7 @@ export default class Game extends Phaser.Scene {
   ////////////////////////////////
   debug!: Debug;
   // debug: Debug | any;
-  myDate: Date = momentToDate(moment());
+  myMoment: Moment = moment();
 
   ////////////////////////////////
   ////////// GAME CONSTANTS
