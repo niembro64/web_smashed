@@ -31,8 +31,6 @@ import {
   KeyboardGroup,
   WorkingController,
   PlayerConfigSmall,
-  PlayChezStateName,
-  PlayerState,
   PlayChezState,
 } from '../scenes/interfaces';
 import { debugInit, debugMax } from '../debugOptions';
@@ -44,8 +42,6 @@ import {
   SessionInfo,
 } from './client';
 import moment from 'moment';
-import { momentToDate } from '../scenes/helpers/time';
-// import { useParams } from 'react-router-dom';
 
 function Play() {
   let myPhaser: any = useRef(null);
@@ -62,7 +58,7 @@ function Play() {
     if (allSessions === null) {
       return;
     }
-    // console.log('allSesssions', allSessions);
+    console.log('allSesssions', allSessions);
   }, [allSessions]);
 
   // const space: string = '&nbsp';
