@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { Bullets } from './helpers/bullets';
 
 export interface Debug {
@@ -652,3 +653,10 @@ export interface WorkingController {
 export const bar = () => {
   console.log('------------------');
 };
+
+export type PlayChezStateName = 'up' | 'down' | 'chez';
+
+export interface PlayChezState {
+  name: PlayChezStateName;
+  moment: Moment;
+}

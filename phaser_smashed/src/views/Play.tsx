@@ -31,6 +31,9 @@ import {
   KeyboardGroup,
   WorkingController,
   PlayerConfigSmall,
+  PlayChezStateName,
+  PlayerState,
+  PlayChezState,
 } from '../scenes/interfaces';
 import { debugInit, debugMax } from '../debugOptions';
 import {
@@ -96,6 +99,9 @@ function Play() {
 
   const trance = new Audio(importedTrance);
   trance.volume = 0.3;
+
+  const tranceRef = useRef<HTMLAudioElement>(trance);
+  tranceRef.current.volume = 0.3;
   const [woah] = useSound(importedWoah, { volume: 0.2 });
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
@@ -107,6 +113,41 @@ function Play() {
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const [playChezState, setPlayChezState] = useState<PlayChezState>({
+    name: 'up',
+    moment: moment(),
+  });
+  const [playChezStatePrev, setPlayChezStatePrev] = useState<PlayChezState>({
+    name: 'up',
+    moment: moment(),
+  });
+
+  useEffect(() => {
+    playChezStatePrev.name = playChezState.name;
+    playChezStatePrev.moment = playChezState.moment;
+
+    const handleTranceEnded = (): void => {
+      setFirstCharacterSlot(4);
+      setPlayChezState({ name: 'chez', moment: moment() });
+    };
+
+    console.log('playChezState', playChezState.name);
+    switch (playChezState.name) {
+      case 'up':
+        tranceRef.current.pause();
+        tranceRef.current.removeEventListener('ended', handleTranceEnded);
+        break;
+      case 'down':
+        tranceRef.current.play();
+        tranceRef.current.addEventListener('ended', handleTranceEnded, {
+          once: true,
+        });
+        break;
+      case 'chez':
+        break;
+    }
+  }, [playChezState]);
 
   const onClickEye = () => {
     setOpenEye(!openEye);
@@ -451,22 +492,19 @@ function Play() {
 
   let playNumber = useRef(0);
 
-  const trancePlay = (): void => {
-    if (playNumber.current === 0) {
-      playNumber.current += 1;
-      trance.play();
-      trance.addEventListener(
-        'ended',
-        () => {
-          setFirstCharacterSlot(4);
-        },
-        { once: true }
-      );
-    }
-  };
-  const trancePause = (): void => {
-    trance.pause();
-  };
+  // const trancePlay = (): void => {
+  //   if (playNumber.current === 0) {
+  //     playNumber.current += 1;
+  //     trance.play();
+  //     trance.addEventListener(
+  //       'ended',
+  //       () => {
+  //         setFirstCharacterSlot(4);
+  //       },
+  //       { once: true }
+  //     );
+  //   }
+  // };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
     if (debug.AllowCharsChez || webState === 'play') {
@@ -1105,8 +1143,20 @@ function Play() {
             <div className="startTitleWrapper1">
               <div
                 className="startTitle"
-                onMouseDown={trancePlay}
-                onMouseUp={trancePause}
+                onMouseDown={() => {
+                  let newPlayChezState: PlayChezState = {
+                    name: 'down',
+                    moment: moment(),
+                  };
+                  setPlayChezState(newPlayChezState);
+                }}
+                onMouseUp={() => {
+                  let newPlayChezState: PlayChezState = {
+                    name: 'up',
+                    moment: moment(),
+                  };
+                  setPlayChezState(newPlayChezState);
+                }}
               >
                 <img src="images/smashed_x10_gif.gif" alt="smash title" />
                 {/* <img src="images/smashed-gif-cropped.gif" alt="smash title" /> */}
