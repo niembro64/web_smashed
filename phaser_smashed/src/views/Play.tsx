@@ -1143,14 +1143,12 @@ function Play() {
           <div
             className={
               'startTitleWrapper2' +
-              ' ' +
               (playChezState.name === 'down' ? ' startTitleWrapper2Active' : '')
             }
           >
             <div
               className={
                 'startTitleWrapper1' +
-                ' ' +
                 (playChezState.name === 'down'
                   ? ' startTitleWrapper1Active'
                   : '')
@@ -1159,7 +1157,6 @@ function Play() {
               <div
                 className={
                   'startTitle' +
-                  ' ' +
                   (playChezState.name === 'down' ? ' startTitleActive' : '')
                 }
                 onMouseDown={() => {
