@@ -124,15 +124,13 @@ function Play() {
   });
 
   useEffect(() => {
-    playChezStatePrev.name = playChezState.name;
-    playChezStatePrev.moment = playChezState.moment;
-
     const handleTranceEnded = (): void => {
       setFirstCharacterSlot(4);
       setPlayChezState({ name: 'chez', moment: moment() });
     };
 
     console.log('playChezState', playChezState.name);
+
     switch (playChezState.name) {
       case 'up':
         tranceRef.current.pause();
@@ -147,6 +145,7 @@ function Play() {
       case 'chez':
         break;
     }
+    setPlayChezStatePrev(JSON.parse(JSON.stringify(playChezState)));
   }, [playChezState]);
 
   const onClickEye = () => {
@@ -241,6 +240,7 @@ function Play() {
 
   useEffect(() => {
     console.log('smashConfig', smashConfig);
+    // setPlayChezState({ name: 'up', moment: moment() });
   }, [smashConfig]);
 
   // always keep Chez and BlackChez at positions 4 and 5
@@ -966,6 +966,7 @@ function Play() {
   };
 
   useEffect(() => {
+    // setPlayChezState({ name: 'up', moment: moment() });
     let numK = 0;
     inputArray.forEach((input) => {
       if (input === 2) {
@@ -1139,23 +1140,45 @@ function Play() {
       {webState === 'start' && (
         <div className="start-class-div">
           {!debug.DevMode && <div className="black-hiding-div"></div>}
-          <div className="startTitleWrapper2">
-            <div className="startTitleWrapper1">
+          <div
+            className={
+              'startTitleWrapper2' +
+              ' ' +
+              (playChezState.name === 'down' ? ' startTitleWrapper2Active' : '')
+            }
+          >
+            <div
+              className={
+                'startTitleWrapper1' +
+                ' ' +
+                (playChezState.name === 'down'
+                  ? ' startTitleWrapper1Active'
+                  : '')
+              }
+            >
               <div
-                className="startTitle"
+                className={
+                  'startTitle' +
+                  ' ' +
+                  (playChezState.name === 'down' ? ' startTitleActive' : '')
+                }
                 onMouseDown={() => {
-                  let newPlayChezState: PlayChezState = {
-                    name: 'down',
-                    moment: moment(),
-                  };
-                  setPlayChezState(newPlayChezState);
+                  if (playChezState.name === 'up') {
+                    let newPlayChezState: PlayChezState = {
+                      name: 'down',
+                      moment: moment(),
+                    };
+                    setPlayChezState(newPlayChezState);
+                  }
                 }}
                 onMouseUp={() => {
-                  let newPlayChezState: PlayChezState = {
-                    name: 'up',
-                    moment: moment(),
-                  };
-                  setPlayChezState(newPlayChezState);
+                  if (playChezState.name === 'down') {
+                    let newPlayChezState: PlayChezState = {
+                      name: 'up',
+                      moment: moment(),
+                    };
+                    setPlayChezState(newPlayChezState);
+                  }
                 }}
               >
                 <img src="images/smashed_x10_gif.gif" alt="smash title" />
@@ -1174,6 +1197,7 @@ function Play() {
                       className="player-char-blank"
                       onClick={() => {
                         onClickRotateSelection(pIndex);
+                        setPlayChezState({ name: 'up', moment: moment() });
                       }}
                     >
                       <div className="startImageWrapper">
@@ -1212,6 +1236,7 @@ function Play() {
                       className="player-char"
                       onClick={() => {
                         onClickRotateSelection(pIndex);
+                        setPlayChezState({ name: 'up', moment: moment() });
                       }}
                     >
                       <div className="startImageWrapper">
@@ -1248,6 +1273,7 @@ function Play() {
                       className="b-oscuro b-black"
                       onClick={() => {
                         onClickOscura(pIndex);
+                        setPlayChezState({ name: 'up', moment: moment() });
                         // onClickSetInputArrayElement(
                         //   cPlayerIndex,
                         //   inputArray[cPlayerIndex] + 1 > 2
@@ -1267,6 +1293,7 @@ function Play() {
                       className="b-oscuro b-dark"
                       onClick={() => {
                         onClickOscura(pIndex);
+                        setPlayChezState({ name: 'up', moment: moment() });
                         // onClickSetInputArrayElement(
                         //   cPlayerIndex,
                         //   inputArray[cPlayerIndex] + 1 > 2
@@ -1305,6 +1332,7 @@ function Play() {
                       className="b-oscuro b-dark"
                       onClick={() => {
                         onClickOscura(pIndex);
+                        setPlayChezState({ name: 'up', moment: moment() });
                         // onClickSetInputArrayElement(
                         //   cPlayerIndex,
                         //   inputArray[cPlayerIndex] + 1 > 2
@@ -1337,6 +1365,7 @@ function Play() {
                       className="b-oscuro b-dark"
                       onClick={() => {
                         onClickOscura(pIndex);
+                        setPlayChezState({ name: 'up', moment: moment() });
                       }}
                     >
                       <span>Bot</span>

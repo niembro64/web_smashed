@@ -946,7 +946,7 @@ h2 {
   filter: grayscale(0) brightness(1);
   transition: 0.2s ease;
 } */
-.startTitle:active {
+.startTitleActive {
   /* height: 50%; */
   transition: 0.1s ease;
   animation: titleShake 0.07 infinite both;
@@ -972,7 +972,7 @@ h2 {
     transform: rotateZ(1deg);
   }
 }
-.startTitleWrapper1:active {
+.startTitleWrapper1Active {
   transition: 0.1s ease;
   animation-name: wrapperAnimation1;
   animation-duration: 0.09s;
@@ -995,7 +995,7 @@ h2 {
   overflow: visible;
   z-index: 4;
 }
-.startTitleWrapper2:active {
+.startTitleWrapper2Active {
   transition: 0.1s ease;
 
   animation-name: wrapperAnimation2;
