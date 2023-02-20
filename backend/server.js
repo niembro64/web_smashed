@@ -20,12 +20,12 @@ const AllMyAuthorRoutes = require("./server/routes/author.routes");
 AllMyAuthorRoutes(app);
 const AllMyPirateRoutes = require("./server/routes/pirate.routes");
 AllMyPirateRoutes(app);
-// const AllMySmashedRoutes = require("./server/routes/smashed.routes");
-// AllMySmashedRoutes(app);
+const AllMySmashedRoutes = require("./server/routes/smashed.routes");
+AllMySmashedRoutes(app);
 
 app.get("/api", (req, res) => {
   console.log("trying to talk to database");
-  res.json({ assignment: "Niemo Smashed", port: port });
+  res.json({ title: "Niemo Smashed", port: port });
 });
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
