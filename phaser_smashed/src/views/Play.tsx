@@ -1774,7 +1774,7 @@ function Play() {
                       return (
                         <p className="text-small" key={index}>
                           {paddedIndex}{' '}
-                          {moment(session.momentCreated).format(
+                          {moment(JSON.parse(session.momentCreated)).format(
                             'YYYY-MM-DD HH:mm'
                           )}{' '}
                           {session.country} {session.region} {session.city}
