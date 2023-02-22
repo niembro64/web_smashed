@@ -1764,11 +1764,11 @@ function Play() {
                     className="link-tag btn btn-dark text-light"
                     href="http://niembro64.com/"
                   >
-                    <span className="text-white">See Other Projects</span>
+                    <span className="text-white">niembro64.com</span>
                   </a>
                 </div>
                 <div className="horiz-item-start">
-                  <h4 id="recent-games">Recent Games (TZ:{tz})</h4>
+                  <h4 id="recent-games">Recent Games z:{tz}</h4>
                   <div className="scroller" ref={scrollerRef}>
                     {allSessions.map((session: SessionInfo, index: number) => {
                       const allSessionsLength: number = allSessions.length;
@@ -1785,11 +1785,36 @@ function Play() {
                       const formattedDate = moment
                         .tz(JSON.parse(session.momentCreated), clientTimezone)
                         .format('YYYY-MM-DD HH:mm');
+                      let totalShots: number = 0;
+                      if (session.matrixShotsUnto === null) {
+                      } else {
+                        totalShots = 0;
+                        for (
+                          let i = 0;
+                          i < session.matrixShotsUnto.length;
+                          i++
+                        ) {
+                          console.log(session);
+                          let totalShotsPlayer = 0;
+                          for (
+                            let j = 0;
+                            j < session.matrixDeathsUnto[i].length;
+                            j++
+                          ) {
+                            totalShotsPlayer =
+                              totalShotsPlayer +
+                              parseInt(session.matrixShotsUnto[i][j]);
+                          }
+
+                          totalShots =
+                            totalShots + parseInt(session.matrixShotsUnto[i]);
+                        }
+                      }
 
                       return (
                         <p className="text-small" key={index}>
                           {paddedIndex} {formattedDate} {session.country}{' '}
-                          {session.region} {session.city}
+                          {session.region} {session.city} {totalShots}
                           {/* {session.ip}{" "} */}
                         </p>
                       );

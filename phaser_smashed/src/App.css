@@ -304,6 +304,7 @@ h2 {
   /* overflow-y: scroll; */
   /* overflow-x: hidden; */
   padding: 1%;
+  border: 3px solid white;
   background-color: #0a0a1a;
 }
 .scroller {
