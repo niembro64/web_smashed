@@ -285,6 +285,10 @@ h2 {
   /* flex-wrap: nowrap; */
   /* overflow: auto; */
 }
+#recent-games {
+  font-size: 1.1vw;
+  margin-bottom: 2vh;
+}
 .horiz-item-start {
   width: 60%;
   /* height: 30vh; */
@@ -299,6 +303,8 @@ h2 {
   /* flex-wrap: nowrap; */
   /* overflow-y: scroll; */
   /* overflow-x: hidden; */
+  padding: 1%;
+  background-color: #0a0a1a;
 }
 .scroller {
   width: 100%;

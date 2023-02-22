@@ -1768,7 +1768,7 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-start">
-                  <h4>Recent Games TZ_{tz}</h4>
+                  <h4 id="recent-games">Recent Games (TZ:{tz})</h4>
                   <div className="scroller" ref={scrollerRef}>
                     {allSessions.map((session: SessionInfo, index: number) => {
                       const allSessionsLength: number = allSessions.length;
