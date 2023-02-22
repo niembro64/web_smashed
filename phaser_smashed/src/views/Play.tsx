@@ -1771,12 +1771,18 @@ function Play() {
                         .toString()
                         .padStart(totalDigits, '\u00a0');
 
+                      const moment = require('moment-timezone');
+
+                      const clientTimezone =
+                        Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+
+                      const formattedDate = moment
+                        .tz(JSON.parse(session.momentCreated), clientTimezone)
+                        .format('YYYY-MM-DD HH:mm z');
+
                       return (
                         <p className="text-small" key={index}>
-                          {paddedIndex}{' '}
-                          {moment(JSON.parse(session.momentCreated)).format(
-                            'YYYY-MM-DD HH:mm'
-                          )}{' '}
+                          {paddedIndex} {'|'} {formattedDate} {'|'}{' '}
                           {session.country} {session.region} {session.city}
                           {/* {session.ip}{" "} */}
                         </p>
