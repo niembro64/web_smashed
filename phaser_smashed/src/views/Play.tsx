@@ -934,6 +934,12 @@ function Play() {
     return num;
   };
 
+  const [tz, setTz] = useState('');
+  useEffect(() => {
+    const clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+    setTz(clientTimezone);
+  }, []);
+
   const getDoesKeyboardExistLower = (myI: number): boolean => {
     let exists: boolean = false;
 
@@ -1762,7 +1768,7 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-start">
-                  <h4>Recently Played Games</h4>
+                  <h4>Recent Games TZ_{tz}</h4>
                   <div className="scroller" ref={scrollerRef}>
                     {allSessions.map((session: SessionInfo, index: number) => {
                       const allSessionsLength: number = allSessions.length;
@@ -1778,12 +1784,12 @@ function Play() {
 
                       const formattedDate = moment
                         .tz(JSON.parse(session.momentCreated), clientTimezone)
-                        .format('YYYY-MM-DD HH:mm z');
+                        .format('YYYY-MM-DD HH:mm');
 
                       return (
                         <p className="text-small" key={index}>
-                          {paddedIndex} {'|'} {formattedDate} {'|'}{' '}
-                          {session.country} {session.region} {session.city}
+                          {paddedIndex} {formattedDate} {session.country}{' '}
+                          {session.region} {session.city}
                           {/* {session.ip}{" "} */}
                         </p>
                       );
