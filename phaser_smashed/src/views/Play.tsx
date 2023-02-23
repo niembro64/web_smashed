@@ -1896,14 +1896,21 @@ function Play() {
                         .tz(moment(sessionMomentObject), clientTimezone)
                         .format('YYYY-MM-DD HH:mm');
                       let totalShots: number = 0;
-                      if (session.matrixShotsUnto === null) {
+                      if (
+                        session.matrixShotsUnto === null ||
+                        session.matrixDeathsUnto === 'null'
+                      ) {
                       } else {
+                        console.log(
+                          'session.matrixShotsUnto',
+                          session.matrixShotsUnto
+                        );
+                        let smsu: number[][] = JSON.parse(
+                          session.matrixShotsUnto
+                        );
+                        console.log('smsu', smsu);
                         totalShots = 0;
-                        for (
-                          let i = 0;
-                          i < session.matrixShotsUnto.length;
-                          i++
-                        ) {
+                        for (let i = 0; i < smsu.length; i++) {
                           console.log(session);
                           let totalShotsPlayer = 0;
                           for (
@@ -1911,13 +1918,10 @@ function Play() {
                             j < session.matrixDeathsUnto[i].length;
                             j++
                           ) {
-                            totalShotsPlayer =
-                              totalShotsPlayer +
-                              parseInt(session.matrixShotsUnto[i][j]);
+                            totalShotsPlayer = totalShotsPlayer + smsu[i][j];
                           }
 
-                          totalShots =
-                            totalShots + parseInt(session.matrixShotsUnto[i]);
+                          totalShots = totalShots + totalShotsPlayer;
                         }
                       }
 
