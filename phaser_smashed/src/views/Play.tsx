@@ -1898,7 +1898,7 @@ function Play() {
                       let totalShots: number = 0;
                       if (
                         session.matrixShotsUnto === null ||
-                        session.matrixDeathsUnto === 'null'
+                        session.matrixShotsUnto === 'null'
                       ) {
                       } else {
                         console.log(
@@ -1924,11 +1924,70 @@ function Play() {
                           totalShots = totalShots + totalShotsPlayer;
                         }
                       }
+                      let totalDeaths: number = 0;
+                      if (
+                        session.matrixDeathsUnto === null ||
+                        session.matrixDeathsUnto === 'null'
+                      ) {
+                      } else {
+                        console.log(
+                          'session.matrixDeathsUnto',
+                          session.matrixDeathsUnto
+                        );
+                        let smdu: number[][] = JSON.parse(
+                          session.matrixDeathsUnto
+                        );
+                        console.log('smsu', smdu);
+                        totalDeaths = 0;
+                        for (let i = 0; i < smdu.length; i++) {
+                          console.log(session);
+                          let totalDeathsPlayer = 0;
+                          for (
+                            let j = 0;
+                            j < session.matrixDeathsUnto[i].length;
+                            j++
+                          ) {
+                            totalDeathsPlayer = totalDeathsPlayer + smdu[i][j];
+                          }
+
+                          totalDeaths = totalDeaths + totalDeathsPlayer;
+                        }
+                      }
+                      let totalHits: number = 0;
+                      if (
+                        session.matrixHitsUnto === null ||
+                        session.matrixHitsUnto === 'null'
+                      ) {
+                      } else {
+                        console.log(
+                          'session.matrixHitsUnto',
+                          session.matrixHitsUnto
+                        );
+                        let smhu: number[][] = JSON.parse(
+                          session.matrixHitsUnto
+                        );
+                        console.log('smsu', smhu);
+                        totalHits = 0;
+                        for (let i = 0; i < smhu.length; i++) {
+                          console.log(session);
+                          let totalHitsPlayer = 0;
+                          for (
+                            let j = 0;
+                            j < session.matrixHitsUnto[i].length;
+                            j++
+                          ) {
+                            totalHitsPlayer = totalHitsPlayer + smhu[i][j];
+                          }
+
+                          totalHits = totalHits + totalHitsPlayer;
+                        }
+                      }
 
                       return (
                         <p className="text-small" key={index}>
                           {paddedIndex} {formattedDate} {session.country}{' '}
-                          {session.region} {session.city} {totalShots}
+                          {session.region} {session.city} S{totalShots} D
+                          {totalDeaths} H{totalHits}
                           {/* {session.ip}{" "} */}
                         </p>
                       );
