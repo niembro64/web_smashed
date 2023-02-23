@@ -1802,3 +1802,21 @@ h2 {
     transform: rotate(0deg) rotateX(-205deg) rotateY(25deg);
   }
 }
+
+#dice {
+  transform-origin: 50% 60%;
+  font-size: 300%;
+  transform: rotate(0deg);
+  filter: grayscale(1) contrast(3);
+  background-color: transparent;
+  transition: 0.5s ease;
+}
+#dice:hover {
+  transform: rotate(15deg);
+  transition: 0.5s ease, 5;
+}
+#dice:active {
+  transform: rotate(735deg);
+  filter: brightness(0.5);
+  transition: 0s ease;
+}

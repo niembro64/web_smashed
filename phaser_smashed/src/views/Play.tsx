@@ -1385,7 +1385,7 @@ function Play() {
                 blipSound();
               }}
             >
-              <span>KB vs Bot</span>
+              <span>K-WASD vs Bot</span>
             </div>
             <div
               className="b-all-bots"
@@ -1394,7 +1394,7 @@ function Play() {
                 blipSound();
               }}
             >
-              <span>2 KBs</span>
+              <span>K-WASD vs Arrows</span>
             </div>
             <div
               className="b-all-bots"
@@ -1403,7 +1403,7 @@ function Play() {
                 blipSound();
               }}
             >
-              <span>4 Pads</span>
+              <span>All Pads</span>
             </div>
             <div
               className="b-all-bots"
@@ -1412,7 +1412,17 @@ function Play() {
                 blipSound();
               }}
             >
-              <span>4 Bots</span>
+              <span>All Bots</span>
+            </div>
+            <div
+              className="b-all-bots"
+              id="dice"
+              onClick={() => {
+                setInputArray([3, 3, 3, 3]);
+                blipSound();
+              }}
+            >
+              {emoji.dice}
             </div>
             <div className="b-start" onClick={onClickStartStartButton}>
               <span>START</span>
