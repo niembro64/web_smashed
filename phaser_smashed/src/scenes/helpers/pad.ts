@@ -82,8 +82,8 @@ export function updatePadCurrControllerTypePro(
       player.padCurr.up = false;
       player.padCurr.down = false;
     }
-    console.log('stickX', stickX);
-    console.log('stickY', stickY);
+    // console.log('stickX', stickX);
+    // console.log('stickY', stickY);
     // if (stickX === -1 && stickY === -1) {
     //   player.padCurr.left = true;
     //   player.padCurr.right = !player.padCurr.left;

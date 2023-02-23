@@ -112,7 +112,8 @@ function Play() {
     if (allSessions === null) {
       return;
     }
-    console.log('allSesssions', allSessions);
+    console.log('allSesssions Updated');
+    // console.log('allSesssions', allSessions);
   }, [allSessions]);
 
   // const space: string = '&nbsp';
@@ -184,11 +185,15 @@ function Play() {
     switch (playChezState.name) {
       case 'up':
         tranceRef.current.pause();
-        garageRef.current.play();
+        if (canPlayAudio) {
+          garageRef.current.play();
+        }
         tranceRef.current.removeEventListener('ended', handleTranceEnded);
         break;
       case 'down':
-        tranceRef.current.play();
+        if (canPlayAudio) {
+          tranceRef.current.play();
+        }
         garageRef.current.pause();
         tranceRef.current.addEventListener('ended', handleTranceEnded, {
           once: true,
