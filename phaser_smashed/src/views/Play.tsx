@@ -73,7 +73,7 @@ function Play() {
       });
 
       monkeysRef.current.addEventListener('ended', () => {
-        monkeysRef.current.play();
+        // monkeysRef.current.play();
       });
     }
   }, [canPlayAudio]);
@@ -221,7 +221,7 @@ function Play() {
         break;
       case 'play':
         garageRef.current.pause();
-        monkeysRef.current.play();
+        // monkeysRef.current.play();
         setTopBarDivExists(true);
         break;
       default:
@@ -512,6 +512,7 @@ function Play() {
   };
 
   const setShowLoaderIntervalFunction = () => {
+    monkeysRef.current.play();
     setShowLoader(true);
     const myInterval = setInterval(() => {
       console.log(
@@ -981,6 +982,7 @@ function Play() {
 
   const onClickReStartEventHandler = () => {
     if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+      // monkeysRef.current.play();
       startSound();
       myPhaser.current.scene.keys.game.loaded = false;
       setShowLoaderIntervalFunction();
