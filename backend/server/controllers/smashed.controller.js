@@ -32,6 +32,13 @@ module.exports.findOneSingleSmashed = (req, res) => {
       res.status(400).json({ message: 'Something went wrong', error: err })
     );
 };
+module.exports.findOneSingleSmashedByMomentCreated = (req, res) => {
+  Smashed.findOne({ momentCreated: req.params.momentCreated })
+    .then((oneSingleSmashed) => res.json(oneSingleSmashed))
+    .catch((err) =>
+      res.status(400).json({ message: 'Something went wrong', error: err })
+    );
+};
 
 module.exports.createNewSmashed = (req, res) => {
   Smashed.create(req.body)
@@ -73,3 +80,18 @@ module.exports.updateExistingSmashed = (req, res) => {
 //     .then((results) => res.json( results ))
 //     .catch((err) => res.status(400).json({ message: "that didn't work", err }));
 // };
+
+module.exports.updateExistingSmashedByMomentCreated = (req, res) => {
+  Smashed.findOneAndUpdate(
+    { momentCreated: req.params.momentCreated },
+    req.body,
+    {
+      upsert: true,
+      runValidators: true,
+    }
+  )
+    .then((updatedSmashed) => res.json(updatedSmashed))
+    .catch((err) =>
+      res.status(400).json({ message: 'Something went wrong', error: err })
+    );
+};

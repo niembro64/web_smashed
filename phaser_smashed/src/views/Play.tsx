@@ -113,8 +113,8 @@ function Play() {
     if (allSessions === null) {
       return;
     }
-    console.log('allSesssions Updated');
-    // console.log('allSesssions', allSessions);
+    console.log('allSessions Updated');
+    // console.log('allSessions', allSessions);
   }, [allSessions]);
 
   // const space: string = '&nbsp';

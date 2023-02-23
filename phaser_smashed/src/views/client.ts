@@ -129,13 +129,13 @@ export const axiosUpsertOne = async (
   let s: SessionInfo;
   if (process.env.NODE_ENV === 'production') {
     let apiString: string =
-      '/api/smashed/date/' +
+      '/api/smashedByMomentCreated/momentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     console.log('apiString', apiString);
     s = await axios.get(apiString);
   } else {
     let apiString: string =
-      'http://localhost:8000/api/smashed/date/' +
+      'http://localhost:8000/api/smashedByMomentCreated/momentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     console.log('apiString', apiString);
     s = await axios.get(apiString);
