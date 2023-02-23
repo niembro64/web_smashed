@@ -45,3 +45,7 @@ export function momentToDate(momentObj: Moment): Date {
 export function dateToMoment(dateObj: Date): Moment {
   return moment(dateObj);
 }
+
+export function momentStringToMoment(momentString: string): Moment {
+  return moment(momentString, 'YYYY-MM-DDTHH:mm:ss.SSSZ');
+}

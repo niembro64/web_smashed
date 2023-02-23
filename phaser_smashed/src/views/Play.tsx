@@ -47,6 +47,7 @@ import {
   SessionInfo,
 } from './client';
 import moment from 'moment';
+import { momentStringToMoment } from '../scenes/helpers/time';
 
 function Play() {
   let myPhaser: any = useRef(null);
@@ -1884,14 +1885,15 @@ function Play() {
                       const paddedIndex = (allSessionsLength - index)
                         .toString()
                         .padStart(totalDigits, '\u00a0');
-
-                      const moment = require('moment-timezone');
-
+                      const sessionMomentObject = momentStringToMoment(
+                        session.momentCreated
+                      );
+                      const mTZ = require('moment-timezone');
                       const clientTimezone =
                         Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
 
-                      const formattedDate = moment
-                        .tz(JSON.parse(session.momentCreated), clientTimezone)
+                      const formattedDate = mTZ
+                        .tz(moment(sessionMomentObject), clientTimezone)
                         .format('YYYY-MM-DD HH:mm');
                       let totalShots: number = 0;
                       if (session.matrixShotsUnto === null) {

@@ -172,7 +172,7 @@ export function setGameState(game: Game, state: GameState): void {
     (async () => {
       updateShotsOnPlayers(game);
       await axiosUpsertOne(
-        game.myMoment,
+        game.sessionMoment,
         game.numberShotsTakenByMeMatrix,
         game.numberKilledByMatrix,
         game.numberHitByMatrix

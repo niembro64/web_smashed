@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment, { Moment } from 'moment';
-import { momentToDate } from '../scenes/helpers/time';
+import { momentStringToMoment, momentToDate } from '../scenes/helpers/time';
 import { Debug, SmashConfig } from '../scenes/interfaces';
 
 export interface ClientInformation {
@@ -89,7 +89,7 @@ export const axiosSaveOne = async (
     smashConfig: JSON.stringify(smashConfig),
     debug: JSON.stringify(debug),
     ip: clientInformation.ip,
-    momentCreated: JSON.stringify(momentCreated),
+    momentCreated: moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
     city: clientInformation.city,
     region: clientInformation.region,
     country: clientInformation.country,
@@ -121,22 +121,34 @@ export const axiosUpsertOne = async (
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<void> => {
-  console.log('about to call timestamp:', momentCreated);
+  console.log(
+    'about to call timestamp:',
+    moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
+  );
 
   let s: SessionInfo;
   if (process.env.NODE_ENV === 'production') {
-    s = await axios.get('/api/smashed/date/' + momentCreated);
+    let apiString: string =
+      '/api/smashed/date/' +
+      moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    console.log('apiString', apiString);
+    s = await axios.get(apiString);
   } else {
-    s = await axios.get(
-      'http://localhost:8000/api/smashed/date/' + momentCreated
-    );
+    let apiString: string =
+      'http://localhost:8000/api/smashed/date/' +
+      moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    console.log('apiString', apiString);
+    s = await axios.get(apiString);
   }
+
+  console.log('axiosUpsertOne');
+  console.log('PREVIOUS SESSION PULLED', s);
 
   let si: SessionInfo = {
     smashConfig: s.smashConfig,
     debug: s.debug,
     ip: s.ip,
-    momentCreated: s.momentCreated,
+    momentCreated: moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
     city: s.city,
     region: s.region,
     country: s.country,
@@ -150,6 +162,7 @@ export const axiosUpsertOne = async (
     matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
     matrixHitsUnto: JSON.stringify(matrixHitsUnto),
   };
+  console.log('NEW SESSION', si);
 
   // let sessionInfoReturn = {
   //   smashConfig: JSON.parse(si.smashConfig),
@@ -204,5 +217,6 @@ export const getAllAxios = async (): Promise<SessionInfo[]> => {
   } else {
     response = await axios.get('http://localhost:8000/api/smashed');
   }
+
   return response.data;
 };

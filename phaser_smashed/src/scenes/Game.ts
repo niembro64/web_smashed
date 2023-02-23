@@ -36,7 +36,10 @@ export default class Game extends Phaser.Scene {
   ////////////////////////////////
   debug!: Debug;
   // debug: Debug | any;
-  myMoment: Moment = moment();
+  // NOT USING THIS MOMENT
+  // PULLING FROM PRELOAD
+
+  sessionMoment: Moment = moment();
 
   ////////////////////////////////
   ////////// GAME CONSTANTS
