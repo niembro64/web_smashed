@@ -1405,41 +1405,43 @@ function Play() {
             })}
           </div>
           <div className="bottom-zone">
-            <div
-              className="b-all-bots"
-              onClick={() => {
-                setInputArray([2, 0, 0, 3]);
-                blipSound();
-              }}
-            >
-              <span>K-WASD vs Bot</span>
-            </div>
-            <div
-              className="b-all-bots"
-              onClick={() => {
-                setInputArray([2, 0, 0, 2]);
-                blipSound();
-              }}
-            >
-              <span>K-WASD vs Arrows</span>
-            </div>
-            <div
-              className="b-all-bots"
-              onClick={() => {
-                setInputArray([1, 1, 1, 1]);
-                blipSound();
-              }}
-            >
-              <span>All Pads</span>
-            </div>
-            <div
-              className="b-all-bots"
-              onClick={() => {
-                setInputArray([3, 3, 3, 3]);
-                blipSound();
-              }}
-            >
-              <span>All Bots</span>
+            <div className="input-group">
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([2, 0, 0, 3]);
+                  blipSound();
+                }}
+              >
+                <span>K-WASD vs Bot</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([2, 0, 0, 2]);
+                  blipSound();
+                }}
+              >
+                <span>K-WASD vs Arrows</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([1, 1, 1, 1]);
+                  blipSound();
+                }}
+              >
+                <span>All Pads</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([3, 3, 3, 3]);
+                  blipSound();
+                }}
+              >
+                <span>All Bots</span>
+              </div>
             </div>
             <div
               className="b-all-bots"
