@@ -12,11 +12,16 @@ import importedWoah from '../sounds/BlackBetty_Woah.mp3';
 // @ts-ignore
 import importedBambalam from '../sounds/BlackBetty_Bambalam.mp3';
 // @ts-ignore
-import importedTrance from '../sounds/trance.wav';
+import importedTrance from '../sounds/trance-loop.ogg';
 // @ts-ignore
 import importedStartSound from '../sounds/start.wav';
 // @ts-ignore
 import importedBlipSound from '../sounds/game-start-liquid.wav';
+// @ts-ignore
+import importedGarage from '../sounds/garage.ogg';
+// @ts-ignore
+import importedMonkeys from '../sounds/monkeys.ogg';
+
 import {
   CharacterId,
   Debug,
@@ -49,6 +54,55 @@ function Play() {
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
+
+  const [canPlayAudio, setCanPlayAudio] = useState<boolean>(false);
+  const garage = new Audio(importedGarage);
+  garage.volume = 0.05;
+  const garageRef = useRef<HTMLAudioElement>(garage);
+  const monkeys = new Audio(importedMonkeys);
+  monkeys.volume = 0.05;
+  const monkeysRef = useRef<HTMLAudioElement>(monkeys);
+
+  useEffect(() => {
+    console.log('canPlayAudio', canPlayAudio);
+
+    if (canPlayAudio) {
+      garageRef.current.play();
+      garageRef.current.addEventListener('ended', () => {
+        garageRef.current.play();
+      });
+
+      monkeysRef.current.addEventListener('ended', () => {
+        monkeysRef.current.play();
+      });
+    }
+  }, [canPlayAudio]);
+
+  useEffect(() => {
+    const handleInteraction = () => {
+      setCanPlayAudio(true);
+      document.removeEventListener('click', handleInteractionReturn);
+      document.removeEventListener('keydown', handleInteractionReturn);
+      document.removeEventListener('touchstart', handleInteractionReturn);
+      console.log('An interaction has occurred!');
+    };
+    const handleInteractionReturn = () => {
+      setCanPlayAudio(false);
+      console.log('An interaction has occurred!');
+    };
+
+    // Add event listener to document object for any user interaction
+    document.addEventListener('click', handleInteraction, { once: true });
+    document.addEventListener('keydown', handleInteraction, { once: true });
+    document.addEventListener('touchstart', handleInteraction, { once: true });
+
+    // Clean up event listener on unmount
+    return () => {
+      document.removeEventListener('click', handleInteractionReturn);
+      document.removeEventListener('keydown', handleInteractionReturn);
+      document.removeEventListener('touchstart', handleInteractionReturn);
+    };
+  }, []);
 
   useEffect(() => {
     console.log('sessionInfo', session);
@@ -130,15 +184,18 @@ function Play() {
     switch (playChezState.name) {
       case 'up':
         tranceRef.current.pause();
+        garageRef.current.play();
         tranceRef.current.removeEventListener('ended', handleTranceEnded);
         break;
       case 'down':
         tranceRef.current.play();
+        garageRef.current.pause();
         tranceRef.current.addEventListener('ended', handleTranceEnded, {
           once: true,
         });
         break;
       case 'chez':
+        garageRef.current.play();
         break;
     }
     setPlayChezStatePrev(JSON.parse(JSON.stringify(playChezState)));
@@ -152,6 +209,7 @@ function Play() {
     console.log('webState', webState);
     switch (webState) {
       case 'start':
+        garageRef.current.play();
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -162,6 +220,8 @@ function Play() {
         })();
         break;
       case 'play':
+        garageRef.current.pause();
+        monkeysRef.current.play();
         setTopBarDivExists(true);
         break;
       default:
@@ -466,6 +526,7 @@ function Play() {
           debug.DevMode ? 0 : 1
         );
         clearInterval(myInterval);
+        monkeysRef.current.pause();
       }
     }, 1);
   };
@@ -1449,6 +1510,7 @@ function Play() {
               onClick={() => {
                 randomizeCharacters();
                 blipSound();
+                setPlayChezState({ name: 'up', moment: moment() });
               }}
             >
               {emoji.dice}
@@ -1867,6 +1929,16 @@ function Play() {
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
+      {/* {canPlayAudio && (
+        <audio
+          src="../../public/sounds/deep.mp3"
+          autoPlay
+          loop
+          onEnded={() => {
+            console.log('AUDIO ENDED');
+          }}
+        />
+      )} */}
     </div>
   );
 }

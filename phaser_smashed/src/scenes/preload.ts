@@ -128,6 +128,7 @@ export function preload(game: Game): void {
     game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_ROYKSOP);
   }
   if (game.debug.MusicTrack === 3) {
+    // game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_SHORT);
     game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DMT);
   }
 
