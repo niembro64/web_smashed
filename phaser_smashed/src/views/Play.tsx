@@ -251,6 +251,33 @@ function Play() {
     { characterId: 7, scale: 0.6, name: 'RedKoopa' },
     { characterId: 8, scale: 0.6, name: 'BlueKoopa' },
   ];
+
+  const randomizeCharacters = () => {
+    let numCharacters = smashConfigOptions.length;
+
+    let newPlayers: PlayerConfigSmall[] = [];
+    for (let i = 0; i < smashConfig.players.length; i++) {
+      let ratioLower = 4 / (numCharacters - 2);
+      let newCharacterId: number;
+
+      if (debug.AllowCharsChez) {
+        newCharacterId = Math.floor(Math.random() * numCharacters);
+      } else {
+        if (Math.random() < ratioLower) {
+          newCharacterId = Math.floor(Math.random() * (numCharacters - 6)) + 6;
+        } else {
+          newCharacterId = Math.floor(Math.random() * 4);
+        }
+      }
+
+      let newPlayer: PlayerConfigSmall = {
+        characterId: newCharacterId as CharacterId,
+        input: smashConfig.players[i].input,
+      };
+      newPlayers.push(newPlayer);
+    }
+    setSmashConfig({ players: newPlayers });
+  };
   let config: Phaser.Types.Core.GameConfig = {
     plugins: {
       global: [
@@ -1418,7 +1445,7 @@ function Play() {
               className="b-all-bots"
               id="dice"
               onClick={() => {
-                setInputArray([3, 3, 3, 3]);
+                randomizeCharacters();
                 blipSound();
               }}
             >

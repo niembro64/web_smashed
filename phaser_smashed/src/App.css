@@ -1804,19 +1804,20 @@ h2 {
 }
 
 #dice {
-  transform-origin: 50% 60%;
-  font-size: 300%;
+  transform-origin: 50% 64%;
+  font-size: 400%;
   transform: rotate(0deg);
-  filter: grayscale(1) contrast(3);
+  filter: grayscale(1) contrast(3) brightness(0.5);
   background-color: transparent;
-  transition: 0.5s ease;
+  transition: 1s ease;
+  overflow: visible;
 }
 #dice:hover {
-  transform: rotate(15deg);
-  transition: 0.5s ease, 5;
+  filter: grayscale(1) contrast(3);
+  transition: 1s cubic-bezier(0.3, 0.72, 0.48, 0.98);
 }
 #dice:active {
-  transform: rotate(735deg);
-  filter: brightness(0.5);
+  transform: rotate(1440deg);
+  filter: grayscale(1) contrast(3);
   transition: 0s ease;
 }
