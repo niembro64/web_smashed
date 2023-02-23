@@ -129,13 +129,13 @@ export const axiosUpsertOne = async (
   let s: SessionInfo;
   if (process.env.NODE_ENV === 'production') {
     let apiString: string =
-      '/api/smashedByMomentCreated/momentCreated/' +
+      '/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     console.log('apiString', apiString);
     s = await axios.get(apiString);
   } else {
     let apiString: string =
-      'http://localhost:8000/api/smashedByMomentCreated/momentCreated/' +
+      'http://localhost:8000/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     console.log('apiString', apiString);
     s = await axios.get(apiString);
@@ -203,9 +203,12 @@ export const axiosUpsertOne = async (
   // };
 
   if (process.env.NODE_ENV === 'production') {
-    await axios.patch('/api/smashed/upsert/', si);
+    await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
   } else {
-    await axios.patch('http://localhost:8000/api/smashed/upsert', si);
+    await axios.patch(
+      'http://localhost:8000/api/smashed/momentCreated/' + si.momentCreated,
+      si
+    );
   }
 };
 
