@@ -117,7 +117,10 @@ export function preload(game: Game): void {
   game.load.audio('enerja_ugh', pathSounds + game.FILE_SOUNDS.ENERJA_UGH);
 
   game.load.audio('mii', pathSounds + game.FILE_SOUNDS.BGM_MII);
-
+  game.load.audio(
+    'garage_repeat',
+    pathSounds + game.FILE_SOUNDS.BGM_GARAGE_REPEAT
+  );
   if (game.debug.MusicTrack === 0) {
     game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DREAM);
   }

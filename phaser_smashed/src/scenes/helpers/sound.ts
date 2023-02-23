@@ -31,6 +31,13 @@ export function setSoundStartPlay(game: Game): void {
 export function setPauseWiiMusic(game: Game): void {
   game.SOUND_PAUSED.pause();
 }
+
+export function playGarageRepeat(game: Game): void {
+  if (game.SOUND_GARAGE_REPEAT.isPlaying) {
+    return;
+  }
+  game.SOUND_GARAGE_REPEAT.play();
+}
 export function playWiiMusic(game: Game): void {
   if (game.SOUND_PAUSED.isPlaying) {
     return;

@@ -48,6 +48,7 @@ import {
   setPlayWiiMusicWaitShort,
   setPlayWiiMusicWaitLong,
   playWiiMusic,
+  playGarageRepeat,
 } from './helpers/sound';
 import { updateShotGlassTransparency, updateText } from './helpers/text';
 import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
@@ -193,7 +194,8 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
-      setPlayWiiMusicWaitShort(game);
+      // setPlayWiiMusicWaitShort(game);
+      playGarageRepeat(game);
       break;
     case 'game-state-paused':
       playWiiMusic(game);

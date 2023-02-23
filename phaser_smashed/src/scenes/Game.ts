@@ -111,6 +111,7 @@ export default class Game extends Phaser.Scene {
     BGM_ROYKSOP: '/na/macumba_loop.ogg',
     BGM_DMT: '/smashed_dmt.ogg',
     BGM_SHORT: '/garage_short.ogg',
+    BGM_GARAGE_REPEAT: '/garage-repeat.ogg',
     CHAIN_CHOMP_ATTACK: '/chain_chomp_sound.wav',
     BOOM_SHORT_01: '/boom_short_01.wav',
     BOOM_SHORT_02: '/boom_short_02.wav',
@@ -155,6 +156,7 @@ export default class Game extends Phaser.Scene {
   ENERJA_UGH: any;
   SOUND_PAUSED: any;
   SOUND_BGM: any;
+  SOUND_GARAGE_REPEAT: any;
 
   ////////////////////////////////
   ////////// GAME VARIABLES
