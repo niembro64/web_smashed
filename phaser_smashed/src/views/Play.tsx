@@ -1422,7 +1422,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>K-WASD vs Arrows</span>
+                <span>All Keyboards</span>
               </div>
               <div
                 className="b-all-bots"

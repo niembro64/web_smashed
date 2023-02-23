@@ -8,7 +8,7 @@ export const debugInit: Debug = {
   InfinityShots: 7, //7
   TimeMinutes: 7, //01234567
   MusicActive: true,
-  MusicTrack: 2, // 012
+  MusicTrack: 3, // 012
   ReadySoundActive: false,
   Camera: true,
   CamerasVisible: false,
@@ -50,7 +50,7 @@ export const debugMax: Debug = {
   InfinityShots: 15,
   TimeMinutes: 15, //01234567
   MusicActive: true,
-  MusicTrack: 2, // 012
+  MusicTrack: 3, // 012
   ReadySoundActive: true,
   Camera: true,
   CamerasVisible: false,

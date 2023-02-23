@@ -109,6 +109,7 @@ export default class Game extends Phaser.Scene {
     BGM_DREAM: 'kirbyloop.wav',
     BGM_MONKEY: '/na/monkeys2.wav',
     BGM_ROYKSOP: '/na/royksop_macumba_05loop.wav',
+    BGM_DMT: '/dmt4.wav',
     CHAIN_CHOMP_ATTACK: '/chain_chomp_sound.wav',
     BOOM_SHORT_01: '/boom_short_01.wav',
     BOOM_SHORT_02: '/boom_short_02.wav',

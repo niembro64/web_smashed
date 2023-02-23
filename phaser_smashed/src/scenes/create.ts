@@ -488,7 +488,10 @@ export function createSoundsGame(game: Game): void {
   game.ENERJA_UGH = game.sound.add('enerja_ugh', { volume: 0.8 });
 
   game.SOUND_PAUSED = game.sound.add('mii', { volume: 0.1, loop: true });
-  game.SOUND_BGM = game.sound.add('bgm', { volume: 0.2, loop: true });
+  game.SOUND_BGM = game.sound.add('bgm', {
+    volume: game.debug.MusicTrack === 3 ? 0.15 : 0.2,
+    loop: true,
+  });
 
   if (!game.debug.MusicActive) {
     game.SOUND_BGM.volume = 0;
