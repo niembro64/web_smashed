@@ -336,18 +336,5 @@ export function updateBot(
     p.left = false;
   }
 
-  // //////////////////////
-  // // IN PIT
-  // //////////////////////
-  // if (getIsBotInPitArea(player, game)) {
-  //   p.up = true;
 
-  //   if (v.y > 300) {
-  //     p.Y = p.Y ? false : true;
-  //   }
-  // } else {
-  //   p.up = false;
-  // }
-
-  // console.log('v.y', v.y);
 }

@@ -35,7 +35,7 @@ import {
 } from './helpers/state';
 import {
   updatePhysicalAttackFollowsPlayer,
-  updateJumpEnergy,
+  updateAirDodge,
 } from './helpers/attacks';
 import {
   getIsFirstBlood,
@@ -251,7 +251,7 @@ export function updatePlayers(game: Game): void {
         updateJumpPhysical(player, game);
         updateJumpFloat(player, game);
         updateControllerMovement(player, game);
-        updateJumpEnergy(player, game);
+        updateAirDodge(player, game);
         updatePlayerDarknessEvents(game);
 
         // UPDATE ATTACK PHYSICAL
@@ -289,7 +289,7 @@ export function updatePlayers(game: Game): void {
         updateFrictionAirY(player, game);
         updateJumpPhysical(player, game);
         updateControllerMovement(player, game);
-        updateJumpEnergy(player, game);
+        updateAirDodge(player, game);
 
         ////////////////////////////////
         ///////// !offscreen && duration => alive
@@ -318,7 +318,7 @@ export function updatePlayers(game: Game): void {
         ///////// WHILE IN LOOP
         ////////////////////////////////
         setRespawn(player, game);
-        updateJumpEnergy(player, game);
+        updateAirDodge(player, game);
 
         ////////////////////////////////
         ///////// duration => alive
