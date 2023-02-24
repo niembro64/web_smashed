@@ -242,7 +242,7 @@ function Play() {
       { left: 'L Select Start R', right: 'R T Y U' },
     ],
     [
-      { left: 'ArrowKeys', right: 'D-Pad' },
+      { left: 'D-Pad', right: 'ArrowKeys' },
       { left: 'A X B Y', right: '4 5 6 Enter' },
       { left: 'L Select Start R', right: '7 8 9 +' },
     ],
@@ -1399,18 +1399,9 @@ function Play() {
                       }}
                     >
                       <span>Gamepad</span>
-                      {getNumControllersExistLower(pIndex) === 0 && (
-                        <span id="input-sub">1</span>
-                      )}
-                      {getNumControllersExistLower(pIndex) === 1 && (
-                        <span id="input-sub">2</span>
-                      )}
-                      {getNumControllersExistLower(pIndex) === 2 && (
-                        <span id="input-sub">3</span>
-                      )}
-                      {getNumControllersExistLower(pIndex) === 3 && (
-                        <span id="input-sub">4</span>
-                      )}
+                      <span id="input-sub">
+                        {getNumControllersExistLower(pIndex) + 1}
+                      </span>
                       {pIndex < 2 && (
                         <div className="button-input-emoji">
                           {emoji.gamepad}
