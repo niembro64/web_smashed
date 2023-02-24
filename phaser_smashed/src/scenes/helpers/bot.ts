@@ -11,6 +11,7 @@ import { getNormalizedVector } from './damage';
 import {
   getDistance,
   getNearestAttackEnergyXY,
+  getNearestAttackEnergyXYAbove,
   getNearestPlayerAliveXY,
   hasPlayerTouchedWallRecently,
 } from './movement';
@@ -287,6 +288,15 @@ export function updateBot(
     v.y > 0
   ) {
     p.Y = true;
+  } else if (
+    //////////////////////
+    // JUMPING AWAY FROM AE
+    //////////////////////
+    !player.padCurr.A &&
+    !getIsPlayerInAir(player) &&
+    getIsNearestAttackEnergyThisCloseAbove(player, playerIndex, game, 200)
+  ) {
+    player.padCurr.A = true;
   } else {
     p.Y = false;
   }
@@ -348,6 +358,14 @@ export function updateBot(
   if (v.y > 0 && onLastJump && getIsBotInPitAreaRight(player, game)) {
     p.right = true;
     p.left = false;
+  }
+
+  //////////////////////
+  // WAKE UP BOT
+  //////////////////////
+  if (!p.left && !p.right) {
+    p.right = true;
+    p.Y = !p.Y;
   }
 }
 
@@ -413,6 +431,21 @@ export const getIsNearestAttackEnergyThisClose = (
   distance: number
 ): boolean => {
   let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+  let dCalc: number = getDistance(
+    player.char.sprite.x,
+    player.char.sprite.y,
+    ae.x,
+    ae.y
+  );
+  return dCalc < distance;
+};
+export const getIsNearestAttackEnergyThisCloseAbove = (
+  player: Player,
+  playerIndex: number,
+  game: Game,
+  distance: number
+): boolean => {
+  let ae: Position = getNearestAttackEnergyXYAbove(player, playerIndex, game);
   let dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,

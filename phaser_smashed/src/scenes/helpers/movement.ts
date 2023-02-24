@@ -477,6 +477,42 @@ export function getNearestAttackEnergyXY(
   return { x: goToX, y: goToY };
 }
 
+export function getNearestAttackEnergyXYAbove(
+  player: Player,
+  pIndex: number,
+  game: Game
+): { x: number; y: number } {
+  let goToX = Infinity;
+  let goToY = Infinity;
+  let ae = player.char.attackEnergy;
+
+  game.players.forEach((player, playerIndex) => {
+    if (pIndex !== playerIndex) {
+      let aeX = player.char.attackEnergy.sprite.x;
+      let aeY = player.char.attackEnergy.sprite.y;
+      let myX = ae.sprite.x;
+      let myY = ae.sprite.y;
+      if (aeY < myY + player.char.sprite.height * 0.5) {
+        if (
+          getDistance(myX, myY, aeX, aeY) < getDistance(myX, myY, goToX, goToY)
+        ) {
+          goToX = aeX;
+          goToY = aeY;
+        }
+      }
+    }
+  });
+
+  if (goToX === Infinity) {
+    goToX = SCREEN_DIMENSIONS.WIDTH / 2;
+  }
+  if (goToY === Infinity) {
+    goToY = SCREEN_DIMENSIONS.HEIGHT / 2;
+  }
+
+  return { x: goToX, y: goToY };
+}
+
 export function getDistance(
   startX: number,
   startY: number,
