@@ -6,7 +6,7 @@ import {
   Velocity,
   xyVector,
 } from '../interfaces';
-import { updateCanPlayerDodge } from './attacks';
+import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
 import {
   getDistance,
@@ -243,6 +243,11 @@ export function updateBot(
   // p.L = true;
 
   //////////////////////
+  // DODGING
+  //////////////////////
+  updatePlayerDodgeIfAttackEnergyTooClose(player, playerIndex, game);
+
+  //////////////////////
   // MOVEMENT
   //////////////////////
   if (getSameVerticalSlice(player, game)) {
@@ -344,11 +349,6 @@ export function updateBot(
     p.right = true;
     p.left = false;
   }
-
-  //////////////////////
-  // DODGING
-  //////////////////////
-  updatePlayerDodgeIfAttackEnergyTooClose(player, playerIndex, game);
 }
 
 export type DodgeDirection =
@@ -406,19 +406,20 @@ export const getDodgeDirectionPlayerToAttackEnergy = (
   return direction;
 };
 
-export const getIsNearestAttackEnergyTooClose = (
+export const getIsNearestAttackEnergyThisClose = (
   player: Player,
   playerIndex: number,
-  game: Game
+  game: Game,
+  distance: number
 ): boolean => {
   let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
-  let distance: number = getDistance(
+  let dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
     ae.x,
     ae.y
   );
-  return distance < 100;
+  return dCalc < distance;
 };
 
 export const updatePlayerDodgeInThisDirection = (
@@ -485,9 +486,32 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
   playerIndex: number,
   game: Game
 ): void => {
+  const shortRange = SCREEN_DIMENSIONS.HEIGHT * 0.2;
+  const longRange = SCREEN_DIMENSIONS.HEIGHT * 0.5;
+  let pCurr = player.padCurr;
+
   if (
-    updateCanPlayerDodge(player) &&
-    getIsNearestAttackEnergyTooClose(player, playerIndex, game)
+    pCurr.B &&
+    (getIsBotTooFarUp(player, game) ||
+      getIsBotTooFarLeft(player, game) ||
+      getIsBotTooFarRight(player, game))
+  ) {
+    player.padCurr.B = false;
+    return;
+  }
+
+  if (
+    pCurr.B &&
+    !player.char.upB.canUse &&
+    !getIsNearestAttackEnergyThisClose(player, playerIndex, game, longRange)
+  ) {
+    player.padCurr.B = false;
+  }
+
+  if (
+    !pCurr.B &&
+    getIsPlayerInAir(player) &&
+    getIsNearestAttackEnergyThisClose(player, playerIndex, game, shortRange)
   ) {
     let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
     let ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
@@ -496,7 +520,5 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
       ae
     );
     updatePlayerDodgeInThisDirection(player, direction);
-  } else {
-    player.padCurr.B = false;
   }
 };

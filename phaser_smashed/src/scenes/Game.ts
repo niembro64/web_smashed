@@ -2360,7 +2360,7 @@ export default class Game extends Phaser.Scene {
           audio: null,
         },
         attackEnergy: {
-          diesOnHitbox: true,
+          diesOnHitbox: true, // TODO: TRUE
           sprite: null,
           state: 'released',
           timestampThrow: 0,

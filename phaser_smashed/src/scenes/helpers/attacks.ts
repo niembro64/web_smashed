@@ -2,7 +2,7 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { AttackEnergy, Player } from '../interfaces';
 import { setEmitterPlayerOnFalse } from './damage';
 
-export function updateCanPlayerDodge(player: Player): boolean {
+export function getIsPlayerInAir(player: Player): boolean {
   return (
     !player.char.sprite.body.touching.down &&
     !player.char.sprite.body.touching.left &&
@@ -34,7 +34,7 @@ export function updateAirDodge(player: Player, game: Game): void {
     player.padCurr.B &&
     !player.padPrev.B &&
     player.char.upB.canUse &&
-    updateCanPlayerDodge(player)
+    getIsPlayerInAir(player)
   ) {
     game.SOUND_JUMP_ENERGY.play();
     if (pCurr.up && pCurr.left) {

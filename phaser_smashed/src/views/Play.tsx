@@ -1171,13 +1171,11 @@ function Play() {
               onClickPlayNavButtons('Controls');
             }}
           >
-            {!p1KeysTouched && (
-              <div className="keyboard-left-checkmark">
-                <span>Awaiting</span>
-                <div className="small-spinner ss-red"></div>
-                <span>WASD</span>
-              </div>
-            )}
+            <div className="keyboard-left-checkmark">
+              <span>Awaiting</span>
+              <div className="small-spinner ss-red"></div>
+              <span>WASD</span>
+            </div>
           </div>
         )}
       {webState !== 'start' && showLoader && (
