@@ -12,6 +12,10 @@
   --duration-hover: 0.2s;
   --distance-hover-pos: 50px;
   --distance-hover-neg: calc(-1 * var(--distance-hover-pos));
+  --id-red: #e81224;
+  --id-blue: #0078d7;
+  --id-yellow: #fff100;
+  --id-green: #16c60c;
 }
 
 * {
@@ -630,7 +634,30 @@ h2 {
 
   overflow: visible;
 }
-
+.id-circle {
+  height: 4vh;
+  width: 4vh;
+  border-radius: 50%;
+  background-color: var(--gray-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5vw;
+  color: white;
+}
+.id-red {
+  background-color: var(--id-red);
+}
+.id-blue {
+  background-color: var(--id-blue);
+}
+.id-yellow {
+  background-color: var(--id-yellow);
+}
+.id-green {
+  background-color: var(--id-green);
+}
 .playLink {
   height: 15%;
   width: 90%;

@@ -237,14 +237,14 @@ function Play() {
 
   const keyboardGroups: KeyboardGroup[][] = [
     [
-      { left: 'D-Pad', right: 'W A S D' },
-      { left: 'A X B Y', right: 'F G H Space' },
-      { left: 'L Select Start R', right: 'R T Y U' },
+      { left: 'D-Pad:', right: 'W A S D' },
+      { left: 'A X B Y:', right: 'F G H Space' },
+      { left: 'L Select Start R:', right: 'R T Y U' },
     ],
     [
-      { left: 'D-Pad', right: 'ArrowKeys' },
-      { left: 'A X B Y', right: '4 5 6 Enter' },
-      { left: 'L Select Start R', right: '7 8 9 +' },
+      { left: 'D-Pad:', right: 'ArrowKeys' },
+      { left: 'A X B Y:', right: '4 5 6 Enter' },
+      { left: 'L Select Start R:', right: '7 8 9 +' },
     ],
   ];
 
@@ -299,6 +299,17 @@ function Play() {
       },
     ],
   });
+
+  const getNumActiveBeforeMe = (index: number): number => {
+    let numActiveBeforeMe = 0;
+    for (let i = 0; i < index; i++) {
+      if (inputArray[i] !== 0) {
+        numActiveBeforeMe++;
+      }
+    }
+    return numActiveBeforeMe;
+  };
+  const idColors: string[] = ['id-red', 'id-blue', 'id-yellow', 'id-green'];
 
   useEffect(() => {
     console.log('smashConfig', smashConfig);
@@ -1336,6 +1347,12 @@ function Play() {
                       }}
                     >
                       <div className="startImageWrapper">
+                        <div
+                          className={
+                            'id-circle ' +
+                            idColors[getNumActiveBeforeMe(pIndex)]
+                          }
+                        ></div>
                         {(inputArray[pIndex] === 1 ||
                           inputArray[pIndex] === 2 ||
                           inputArray[pIndex] === 3) && (
