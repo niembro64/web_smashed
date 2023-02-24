@@ -292,11 +292,10 @@ export function updateBot(
     //////////////////////
     // JUMPING AWAY FROM AE
     //////////////////////
-    !player.padCurr.A &&
     !getIsPlayerInAir(player) &&
     getIsNearestAttackEnergyThisCloseAbove(player, playerIndex, game, 200)
   ) {
-    player.padCurr.A = true;
+    p.A = !p.A;
   } else {
     p.Y = false;
   }
