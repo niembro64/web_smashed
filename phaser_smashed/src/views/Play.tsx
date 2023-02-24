@@ -1843,20 +1843,20 @@ function Play() {
                 sounds that you don't immediately recognize are probably OC.
               </p>
               <div className="horiz">
-                <div className="horiz-item-center">
-                  <h4>Tech Used</h4>
+                <div className="horiz-item-left">
                   <ul>
-                    <li>Phaser 3</li>
-                    <li>ReactTS 17</li>
-                    <li>Bootstrap 5</li>
-                    <li
+                    <li>Tech Used:</li>
+                    <li>Phaser</li>
+                    <li>React</li>
+                    <li>Bootstrap</li>
+                    {/* <li
                       onMouseDown={() => {
                         console.log('MOUSE ENTER');
                         setFirstCharacterSlot(5);
                       }}
                     >
                       Press Start 2P
-                    </li>
+                    </li> */}
                   </ul>
 
                   <img
@@ -1868,15 +1868,16 @@ function Play() {
                       setFirstCharacterSlot(5);
                     }}
                   />
-                  <p>by niembro64</p>
+                  {/* <p>niembro64</p> */}
                   <a
-                    className="link-tag btn btn-dark text-light"
+                    className="btn btn-dark text-light"
+                    // className="link-tag btn btn-dark text-light"
                     href="http://niembro64.com/"
                   >
                     <span className="text-white">niembro64.com</span>
                   </a>
                 </div>
-                <div className="horiz-item-start">
+                <div className="horiz-item-right">
                   <h4 id="recent-games">Recent Games z:{tz}</h4>
                   <div className="scroller" ref={scrollerRef}>
                     {allSessions.map((session: SessionInfo, index: number) => {

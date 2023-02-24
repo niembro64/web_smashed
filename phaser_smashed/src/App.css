@@ -271,15 +271,15 @@ h2 {
 
   flex-wrap: nowrap;
 }
-.horiz-item-center {
-  width: 40%;
+.horiz-item-left {
+  width: 20%;
   /* height: 30vh; */
   height: 100%;
   /* margin-top: 2vh; */
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   /* flex-wrap: nowrap; */
@@ -289,8 +289,8 @@ h2 {
   font-size: 1.1vw;
   margin-bottom: 2vh;
 }
-.horiz-item-start {
-  width: 60%;
+.horiz-item-right {
+  width: 80%;
   /* height: 30vh; */
   height: 100%;
   /* margin-top: 2vh; */
