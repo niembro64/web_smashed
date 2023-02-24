@@ -2,6 +2,14 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { AttackEnergy, Player } from '../interfaces';
 import { setEmitterPlayerOnFalse } from './damage';
 
+export function updateCanPlayerDodge(player: Player): boolean {
+  return (
+    !player.char.sprite.body.touching.down &&
+    !player.char.sprite.body.touching.left &&
+    !player.char.sprite.body.touching.right
+  );
+}
+
 export function updateAirDodge(player: Player, game: Game): void {
   if (player.state.name === 'player-state-dead') {
     setEmitterPlayerOnFalse(player);
@@ -25,12 +33,8 @@ export function updateAirDodge(player: Player, game: Game): void {
   if (
     player.padCurr.B &&
     !player.padPrev.B &&
-    // player.padCurr.X &&
-    // !player.padPrev.X &&
     player.char.upB.canUse &&
-    !player.char.sprite.body.touching.down &&
-    !player.char.sprite.body.touching.left &&
-    !player.char.sprite.body.touching.right
+    updateCanPlayerDodge(player)
   ) {
     game.SOUND_JUMP_ENERGY.play();
     if (pCurr.up && pCurr.left) {

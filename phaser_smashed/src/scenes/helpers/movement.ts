@@ -442,6 +442,41 @@ export function getNearestPlayerAliveXY(
   return { x: goToX, y: goToY };
 }
 
+export function getNearestAttackEnergyXY(
+  player: Player,
+  pIndex: number,
+  game: Game
+): { x: number; y: number } {
+  let goToX = Infinity;
+  let goToY = Infinity;
+  let ae = player.char.attackEnergy;
+
+  game.players.forEach((player, playerIndex) => {
+    if (pIndex !== playerIndex) {
+      let otherPlayerX = player.char.attackEnergy.sprite.x;
+      let otherPlayerY = player.char.attackEnergy.sprite.y;
+      let myX = ae.sprite.x;
+      let myY = ae.sprite.y;
+      if (
+        getDistance(myX, myY, otherPlayerX, otherPlayerY) <
+        getDistance(myX, myY, goToX, goToY)
+      ) {
+        goToX = otherPlayerX;
+        goToY = otherPlayerY;
+      }
+    }
+  });
+
+  if (goToX === Infinity) {
+    goToX = SCREEN_DIMENSIONS.WIDTH / 2;
+  }
+  if (goToY === Infinity) {
+    goToY = SCREEN_DIMENSIONS.HEIGHT / 2;
+  }
+
+  return { x: goToX, y: goToY };
+}
+
 export function getDistance(
   startX: number,
   startY: number,

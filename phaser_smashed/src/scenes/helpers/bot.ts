@@ -6,8 +6,11 @@ import {
   Velocity,
   xyVector,
 } from '../interfaces';
+import { updateCanPlayerDodge } from './attacks';
 import { getNormalizedVector } from './damage';
 import {
+  getDistance,
+  getNearestAttackEnergyXY,
   getNearestPlayerAliveXY,
   hasPlayerTouchedWallRecently,
 } from './movement';
@@ -341,6 +344,11 @@ export function updateBot(
     p.right = true;
     p.left = false;
   }
+
+  //////////////////////
+  // DODGING
+  //////////////////////
+  updatePlayerDodgeIfAttackEnergyTooClose(player, playerIndex, game);
 }
 
 export type DodgeDirection =
@@ -385,17 +393,110 @@ export function getDodgeDirectionFromNormalizedVector(
   }
 }
 
-export const getDodgeDirectionPlayerToAE = (
-  px: number,
-  py: number,
-  ax: number,
-  ay: number
+export const getDodgeDirectionPlayerToAttackEnergy = (
+  p: Position,
+  a: Position
 ): DodgeDirection => {
-  let v: xyVector = getNormalizedVector(px, py, ax, ay);
+  let v: xyVector = getNormalizedVector(p.x, p.y, a.x, a.y);
   let direction: DodgeDirection = getDodgeDirectionFromNormalizedVector(
     v.x,
     v.y
   );
   console.log('direction', direction);
   return direction;
+};
+
+export const getIsNearestAttackEnergyTooClose = (
+  player: Player,
+  playerIndex: number,
+  game: Game
+): boolean => {
+  let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+  let distance: number = getDistance(
+    player.char.sprite.x,
+    player.char.sprite.y,
+    ae.x,
+    ae.y
+  );
+  return distance < 100;
+};
+
+export const updatePlayerDodgeInThisDirection = (
+  player: Player,
+  direction: DodgeDirection
+): void => {
+  let pc = player.padCurr;
+  pc.B = true;
+
+  switch (direction) {
+    case 'up':
+      pc.up = true;
+      pc.down = false;
+      pc.left = false;
+      pc.right = false;
+      break;
+    case 'down':
+      pc.down = true;
+      pc.up = false;
+      pc.left = false;
+      pc.right = false;
+      break;
+    case 'left':
+      pc.left = true;
+      pc.right = false;
+      pc.up = false;
+      pc.down = false;
+      break;
+    case 'right':
+      pc.right = true;
+      pc.left = false;
+      pc.up = false;
+      pc.down = false;
+      break;
+    case 'up-left':
+      pc.up = true;
+      pc.left = true;
+      pc.down = false;
+      pc.right = false;
+      break;
+    case 'up-right':
+      pc.up = true;
+      pc.right = true;
+      pc.down = false;
+      pc.left = false;
+      break;
+    case 'down-left':
+      pc.down = true;
+      pc.left = true;
+      pc.up = false;
+      pc.right = false;
+      break;
+    case 'down-right':
+      pc.down = true;
+      pc.right = true;
+      pc.up = false;
+      pc.left = false;
+      break;
+  }
+};
+
+export const updatePlayerDodgeIfAttackEnergyTooClose = (
+  player: Player,
+  playerIndex: number,
+  game: Game
+): void => {
+  if (
+    updateCanPlayerDodge(player) &&
+    getIsNearestAttackEnergyTooClose(player, playerIndex, game)
+  ) {
+    let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+    let ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
+    let direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
+      ps,
+      ae
+    );
+    updatePlayerDodgeInThisDirection(player, direction);
+  } else {
+    player.padCurr.B = false;
+  }
 };
