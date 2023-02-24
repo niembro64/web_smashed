@@ -1,5 +1,11 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
-import { Player, Position, Velocity, xyVector } from '../interfaces';
+import {
+  AttackEnergy,
+  Player,
+  Position,
+  Velocity,
+  xyVector,
+} from '../interfaces';
 import { getNormalizedVector } from './damage';
 import {
   getNearestPlayerAliveXY,
@@ -335,6 +341,61 @@ export function updateBot(
     p.right = true;
     p.left = false;
   }
-
-
 }
+
+export type DodgeDirection =
+  | 'up'
+  | 'down'
+  | 'left'
+  | 'right'
+  | 'up-left'
+  | 'up-right'
+  | 'down-left'
+  | 'down-right';
+
+export function getDodgeDirectionFromNormalizedVector(
+  x: number,
+  y: number
+): DodgeDirection {
+  const tolerance = 0.25;
+  if (y < -tolerance) {
+    if (x < -tolerance) {
+      return 'up-left';
+    } else if (x > tolerance) {
+      return 'up-right';
+    } else {
+      return 'up';
+    }
+  } else if (y > tolerance) {
+    if (x < -tolerance) {
+      return 'down-left';
+    } else if (x > tolerance) {
+      return 'down-right';
+    } else {
+      return 'down';
+    }
+  } else {
+    if (x < -tolerance) {
+      return 'left';
+    } else if (x > tolerance) {
+      return 'right';
+    } else {
+      return 'up'; // ideally not possible
+    }
+  }
+}
+
+export const getDodgeDirectionPlayerToAE = (
+  px: number,
+  py: number,
+  ax: number,
+  ay: number
+): DodgeDirection => {
+  let v: xyVector = getNormalizedVector(px, py, ax, ay);
+  let direction: DodgeDirection = getDodgeDirectionFromNormalizedVector(
+    v.x,
+    v.y
+  );
+  console.log('direction', direction);
+  return direction;
+};

@@ -56,6 +56,7 @@ import { Player } from './interfaces';
 import { updatePlayerDarknessEvents } from './helpers/powers';
 import { printKeyboard } from './helpers/keyboard';
 import { getIsFlagShots } from './helpers/flag';
+import { getDodgeDirectionPlayerToAE } from './helpers/bot';
 
 export function setPreUpdate(game: Game): void {
   setMusicPlay(game);
@@ -221,6 +222,15 @@ export function update(game: Game, time: number, delta: number): void {
 
 export function updatePlayers(game: Game): void {
   game.players.forEach((player, playerIndex) => {
+    // debugging
+    if (playerIndex === 0) {
+      getDodgeDirectionPlayerToAE(
+        player.char.sprite.x,
+        player.char.sprite.y,
+        player.char.attackEnergy.sprite.x,
+        player.char.attackEnergy.sprite.y
+      );
+    }
     switch (player.state.name) {
       case 'player-state-start':
         ////////////////////////////////
