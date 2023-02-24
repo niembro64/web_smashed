@@ -219,7 +219,7 @@ function Play() {
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
-        }, 7000);
+        }, 4000);
         (async () => {
           let allSessions: SessionInfo[] = await getAllAxios();
           setAllSessions(allSessions);
@@ -1901,7 +1901,7 @@ function Play() {
 
                       const formattedDate = mTZ
                         .tz(moment(sessionMomentObject), clientTimezone)
-                        .format('YYYY-MM-DD HH:mm');
+                        .format('YYYY-MM-DD_HH:mm');
                       let totalShots: number = 0;
                       if (
                         session.matrixShotsUnto === null ||
@@ -1992,9 +1992,14 @@ function Play() {
 
                       return (
                         <p className="text-small" key={index}>
-                          {paddedIndex} {formattedDate} {session.country}{' '}
-                          {session.region} {session.city} S{totalShots} D
-                          {totalDeaths} H{totalHits}
+                          {paddedIndex} {formattedDate} S
+                          {totalShots < 10 ? '0' + totalShots : totalShots}_D
+                          {totalDeaths < 10 ? '0' + totalDeaths : totalDeaths}_H
+                          {totalHits < 100
+                            ? '0' +
+                              (totalHits < 10 ? '0' + totalHits : totalHits)
+                            : totalHits}{' '}
+                          {session.country}_{session.region}_{session.city}
                           {/* {session.ip}{" "} */}
                         </p>
                       );
