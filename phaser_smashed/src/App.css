@@ -635,16 +635,11 @@ h2 {
   overflow: visible;
 }
 .id-circle {
-  height: 4vh;
-  width: 4vh;
+  height: 3vh;
+  width: 3vh;
   border-radius: 50%;
   background-color: var(--gray-light);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5vw;
-  color: white;
+  margin-bottom: 2.5vh;
 }
 .id-red {
   background-color: var(--id-red);
