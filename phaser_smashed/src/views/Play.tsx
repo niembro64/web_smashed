@@ -1070,7 +1070,6 @@ function Play() {
     intervalClock.current = null;
     componentPseudoLoad.current = true;
     myPhaser.current.destroy(true);
-
     setP1KeysTouched(false);
     setP2KeysTouched(false);
   };
