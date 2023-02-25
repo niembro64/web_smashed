@@ -1900,7 +1900,7 @@ function Play() {
 
                       const formattedDate = mTZ
                         .tz(moment(sessionMomentObject), clientTimezone)
-                        .format('YYYY-MM-DD_HH:mm');
+                        .format('YYYY-MM-DD HH:mm');
                       let totalShots: number = 0;
                       if (
                         session.matrixShotsUnto === null ||
@@ -1917,19 +1917,17 @@ function Play() {
                         console.log('smsu', smsu);
                         totalShots = 0;
                         for (let i = 0; i < smsu.length; i++) {
-                          console.log(session);
-                          let totalShotsPlayer = 0;
+                          // console.log(session);
                           for (
                             let j = 0;
                             j < session.matrixDeathsUnto[i].length;
                             j++
                           ) {
-                            totalShotsPlayer = totalShotsPlayer + smsu[i][j];
+                            totalShots += smsu[i][j];
                           }
-
-                          totalShots = totalShots + totalShotsPlayer;
                         }
                       }
+                      console.log('totalShots', totalShots);
                       let totalDeaths: number = 0;
                       if (
                         session.matrixDeathsUnto === null ||
@@ -1946,19 +1944,17 @@ function Play() {
                         console.log('smsu', smdu);
                         totalDeaths = 0;
                         for (let i = 0; i < smdu.length; i++) {
-                          console.log(session);
-                          let totalDeathsPlayer = 0;
+                          // console.log(session);
                           for (
                             let j = 0;
                             j < session.matrixDeathsUnto[i].length;
                             j++
                           ) {
-                            totalDeathsPlayer = totalDeathsPlayer + smdu[i][j];
+                            totalDeaths += smdu[i][j];
                           }
-
-                          totalDeaths = totalDeaths + totalDeathsPlayer;
                         }
                       }
+                      console.log('totalDeaths', totalDeaths);
                       let totalHits: number = 0;
                       if (
                         session.matrixHitsUnto === null ||
@@ -1975,30 +1971,28 @@ function Play() {
                         console.log('smsu', smhu);
                         totalHits = 0;
                         for (let i = 0; i < smhu.length; i++) {
-                          console.log(session);
-                          let totalHitsPlayer = 0;
+                          // console.log(session);
                           for (
                             let j = 0;
                             j < session.matrixHitsUnto[i].length;
                             j++
                           ) {
-                            totalHitsPlayer = totalHitsPlayer + smhu[i][j];
+                            totalHits += smhu[i][j];
                           }
-
-                          totalHits = totalHits + totalHitsPlayer;
                         }
                       }
+                      console.log('totalHits', totalHits);
 
                       return (
                         <p className="text-small" key={index}>
                           {paddedIndex} {formattedDate} S
-                          {totalShots < 10 ? '0' + totalShots : totalShots}_D
-                          {totalDeaths < 10 ? '0' + totalDeaths : totalDeaths}_H
+                          {totalShots < 10 ? '_' + totalShots : totalShots} D
+                          {totalDeaths < 10 ? '_' + totalDeaths : totalDeaths} H
                           {totalHits < 100
-                            ? '0' +
-                              (totalHits < 10 ? '0' + totalHits : totalHits)
+                            ? '_' +
+                              (totalHits < 10 ? '_' + totalHits : totalHits)
                             : totalHits}{' '}
-                          {session.country}_{session.region}_{session.city}
+                          {session.country} {session.region} {session.city}
                           {/* {session.ip}{" "} */}
                         </p>
                       );
