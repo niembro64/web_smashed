@@ -450,7 +450,6 @@ function Play() {
     setShowOptions(false);
 
     setPlayChezState({ name: 'up', moment: moment() });
-    // trance.pause();
     startSound();
     setWebState('play');
 
@@ -999,7 +998,13 @@ function Play() {
 
   const onClickReStartEventHandler = () => {
     if (myPhaser?.current?.scene?.keys?.game?.loaded) {
-      // monkeysRef.current.play();
+      setShowControls(false);
+      setShowControllers(false);
+      setShowRulesN64(false);
+      setShowAbout(false);
+      setShowHistory(false);
+      setShowOptions(false);
+
       startSound();
       myPhaser.current.scene.keys.game.loaded = false;
       setShowLoaderIntervalFunction();
