@@ -514,11 +514,11 @@ function Play() {
     let myMoment = moment();
     // let myDate = momentToDate(myMoment);
     setTimeout(() => {
-      myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debug);
       myPhaser.current.registry.set('myMoment', myMoment);
+      myPhaser.current = new Phaser.Game(config);
     }, setTimeoutQuotesLengthStart);
 
     setShowLoaderIntervalFunction();
@@ -1020,11 +1020,13 @@ function Play() {
       if (!debug.LoadTimeExtra || debug.DevMode) {
         setTimeoutQuotesLengthReStart = 0;
       }
+      let myMoment = moment();
       setTimeout(() => {
-        myPhaser.current = new Phaser.Game(config);
         myPhaser.current.registry.set('parentContext', Play);
         myPhaser.current.registry.set('smashConfig', newSmashConfig);
         myPhaser.current.registry.set('debug', newDebug);
+        myPhaser.current.registry.set('myMoment', myMoment);
+        myPhaser.current = new Phaser.Game(config);
       }, setTimeoutQuotesLengthReStart);
     }
   };
