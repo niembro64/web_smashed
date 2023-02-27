@@ -1898,15 +1898,19 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-right">
-                  <h4 id="recent-games">Recent Games z:{tz}</h4>
+                  {/* <h4 id="recent-games">Recent Games z:{tz}</h4> */}
                   <div className="scroller" ref={scrollerRef}>
                     <table>
                       <thead>
                         <tr>
-                          <th className="td-left">WHERE</th>
-                          <th className="td-right">SHOTS</th>
+                          <td className="td-left">
+                            RECENT GAMES TIMEZONE:{tz}
+                          </td>
+                          {/* <th className="td-left">WHERE</th> */}
+                          <th className="td-right"> SHOTS</th>
                           <th className="td-right">DEATHS</th>
                           <th className="td-right">HITS</th>
+                          <th> </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1962,26 +1966,29 @@ function Play() {
                             }
 
                             return (
-                              <tr key={index}>
+                              <tr
+                                className={index % 2 ? 'td-odd' : 'td-even'}
+                                key={index}
+                              >
                                 <td className="td-left">
                                   {paddedIndex} {formattedDate}{' '}
                                   {session.country} {session.region}{' '}
                                   {session.city}
                                 </td>
                                 <td className="td-right">
-                                  {totalShots}
+                                  {totalShots ? totalShots : ' '}
                                   {/* {totalShots < 10
                                     ? '_' + totalShots
                                     : totalShots} */}
                                 </td>
                                 <td className="td-right">
-                                  {totalDeaths}
+                                  {totalDeaths ? totalDeaths : ' '}
                                   {/* {totalDeaths < 10
                                     ? '_' + totalDeaths
                                     : totalDeaths} */}
                                 </td>
                                 <td className="td-right">
-                                  {totalHits}
+                                  {totalHits ? totalHits : ' '}
                                   {/* {totalHits < 100
                                     ? '_' +
                                       (totalHits < 10
@@ -1989,6 +1996,7 @@ function Play() {
                                         : totalHits)
                                     : totalHits} */}
                                 </td>
+                                <td> </td>
                               </tr>
                             );
                           }
