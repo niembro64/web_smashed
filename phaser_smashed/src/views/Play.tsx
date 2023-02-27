@@ -520,10 +520,6 @@ function Play() {
 
     setShowLoaderIntervalFunction();
 
-    let c: ClientInformation = await fetchClientData();
-    let s: SessionInfo = await axiosSaveOne(myMoment, c, newSmashConfig, debug);
-    setSession(s);
-
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
@@ -531,6 +527,10 @@ function Play() {
       myPhaser.current.registry.set('debug', debug);
       myPhaser.current.registry.set('myMoment', myMoment);
     }, setTimeoutQuotesLengthStart);
+
+    let c: ClientInformation = await fetchClientData();
+    let s: SessionInfo = await axiosSaveOne(myMoment, c, newSmashConfig, debug);
+    setSession(s);
   };
 
   const setShowLoaderIntervalFunction = () => {
@@ -1915,92 +1915,88 @@ function Play() {
                       </thead>
                       <tbody>
                         {/* <p className="text-small">ID DATE</p> */}
-                        {allSessions.map(
-                          (session: SessionInfo, index: number) => {
-                            const allSessionsLength: number =
-                              allSessions.length;
-                            const totalDigits =
-                              allSessionsLength.toString().length;
-                            const paddedIndex = (allSessionsLength - index)
-                              .toString()
-                              .padStart(totalDigits, '\u00a0');
-                            const sessionMomentObject = momentStringToMoment(
-                              session.momentCreated
+                        {allSessions.map((s: SessionInfo, sIndex: number) => {
+                          const allSessionsLength: number = allSessions.length;
+                          const totalDigits =
+                            allSessionsLength.toString().length;
+                          const paddedIndex = (allSessionsLength - sIndex)
+                            .toString()
+                            .padStart(totalDigits, '\u00a0');
+                          const sessionMomentObject = momentStringToMoment(
+                            s.momentCreated
+                          );
+                          const mTZ = require('moment-timezone');
+                          const clientTimezone =
+                            Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+
+                          const formattedDate = mTZ
+                            .tz(moment(sessionMomentObject), clientTimezone)
+                            .format('YYYY-MM-DD HH:mm');
+                          let totalShots: number = 0;
+                          if (
+                            s.matrixShotsUnto === null ||
+                            s.matrixShotsUnto === 'null'
+                          ) {
+                          } else {
+                            totalShots = sumNumbersIn2DArrayString(
+                              s.matrixShotsUnto
                             );
-                            const mTZ = require('moment-timezone');
-                            const clientTimezone =
-                              Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+                          }
+                          let totalDeaths: number = 0;
+                          if (
+                            s.matrixDeathsUnto === null ||
+                            s.matrixDeathsUnto === 'null'
+                          ) {
+                          } else {
+                            totalDeaths = sumNumbersIn2DArrayString(
+                              s.matrixDeathsUnto
+                            );
+                          }
+                          let totalHits: number = 0;
+                          if (
+                            s.matrixHitsUnto === null ||
+                            s.matrixHitsUnto === 'null'
+                          ) {
+                          } else {
+                            totalHits = sumNumbersIn2DArrayString(
+                              s.matrixHitsUnto
+                            );
+                          }
 
-                            const formattedDate = mTZ
-                              .tz(moment(sessionMomentObject), clientTimezone)
-                              .format('YYYY-MM-DD HH:mm');
-                            let totalShots: number = 0;
-                            if (
-                              session.matrixShotsUnto === null ||
-                              session.matrixShotsUnto === 'null'
-                            ) {
-                            } else {
-                              totalShots = sumNumbersIn2DArrayString(
-                                session.matrixShotsUnto
-                              );
-                            }
-                            let totalDeaths: number = 0;
-                            if (
-                              session.matrixDeathsUnto === null ||
-                              session.matrixDeathsUnto === 'null'
-                            ) {
-                            } else {
-                              totalDeaths = sumNumbersIn2DArrayString(
-                                session.matrixDeathsUnto
-                              );
-                            }
-                            let totalHits: number = 0;
-                            if (
-                              session.matrixHitsUnto === null ||
-                              session.matrixHitsUnto === 'null'
-                            ) {
-                            } else {
-                              totalHits = sumNumbersIn2DArrayString(
-                                session.matrixHitsUnto
-                              );
-                            }
-
-                            return (
-                              <tr
-                                className={index % 2 ? 'td-odd' : 'td-even'}
-                                key={index}
-                              >
-                                <td className="td-left">
-                                  {paddedIndex} {formattedDate}{' '}
-                                  {session.country} {session.region}{' '}
-                                  {session.city}
-                                </td>
-                                <td className="td-right">
-                                  {totalShots ? totalShots : ' '}
-                                  {/* {totalShots < 10
+                          return (
+                            <tr
+                              className={sIndex % 2 ? 'td-odd' : 'td-even'}
+                              key={sIndex}
+                            >
+                              <td className="td-left">
+                                {paddedIndex} {formattedDate} {s.country}{' '}
+                                {s.region} {s.city}
+                              </td>
+                              <td className="td-right">
+                                {totalShots ? totalShots : ' '}
+                                {/* {totalShots < 10
                                     ? '_' + totalShots
                                     : totalShots} */}
-                                </td>
-                                <td className="td-right">
-                                  {totalDeaths ? totalDeaths : ' '}
-                                  {/* {totalDeaths < 10
+                              </td>
+                              <td className="td-right">
+                                {totalDeaths ? totalDeaths : ' '}
+                                {/* {totalDeaths < 10
                                     ? '_' + totalDeaths
                                     : totalDeaths} */}
-                                </td>
-                                <td className="td-right">
-                                  {totalHits ? totalHits : ' '}
-                                  {/* {totalHits < 100
+                              </td>
+                              <td className="td-right">
+                                {totalHits ? totalHits : ' '}
+                                {/* {totalHits < 100
                                     ? '_' +
                                       (totalHits < 10
                                         ? '_' + totalHits
                                         : totalHits)
                                     : totalHits} */}
-                                </td>
-                                <td> </td>
-                              </tr>
-                            );
-                          }
-                        )}
+                              </td>
+                              <td> </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
