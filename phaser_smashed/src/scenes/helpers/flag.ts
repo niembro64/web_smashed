@@ -7,7 +7,7 @@ export const getIsInPole = (x: number, y: number, game: Game): boolean => {
     return false;
   }
 
-  let pole = game.POLE;
+  let pole = game.flag.spriteFlagPole;
 
   let xMin = pole.x - pole.width / 2;
   let xMax = pole.x + pole.width / 2;
@@ -78,26 +78,26 @@ export const updateFlagMovement = (game: Game): void => {
 
   if (f.completedCurr) {
     // f.soundFlagComplete.play();
-    f.spriteFlagMove.body.setVelocityY(0);
+    f.spriteFlagMover.body.setVelocityY(0);
     return;
   }
 
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
 
-  if (owner !== null && f.spriteFlagMove.y < f.box.top) {
+  if (owner !== null && f.spriteFlagMover.y < f.box.top) {
     f.completedCurr = true;
 
     if (f.completedCurr && !f.completedPrev) {
       // f.soundFlagComplete.play();
-      f.spriteFlagMove.body.setVelocityY(0);
+      f.spriteFlagMover.body.setVelocityY(0);
     }
   }
 
   // no one toucher
   // no movement
   if (toucher === null) {
-    f.spriteFlagMove.body.setVelocityY(0);
+    f.spriteFlagMover.body.setVelocityY(0);
     return;
   }
 
@@ -107,7 +107,7 @@ export const updateFlagMovement = (game: Game): void => {
     let v = game.players[toucher].emitterDark.visible
       ? -game.flagSpeedDark
       : -game.flagSpeed;
-    f.spriteFlagMove.body.setVelocityY(v);
+    f.spriteFlagMover.body.setVelocityY(v);
     return;
   }
 
@@ -117,7 +117,7 @@ export const updateFlagMovement = (game: Game): void => {
     let v = game.players[toucher].emitterDark.visible
       ? game.flagSpeedDark
       : game.flagSpeed;
-    f.spriteFlagMove.body.setVelocityY(v);
+    f.spriteFlagMover.body.setVelocityY(v);
   }
 };
 
@@ -130,7 +130,7 @@ export const updateFlagOwner = (game: Game): void => {
 
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
-  let fs = game.flag.spriteFlagMove;
+  let fs = game.flag.spriteFlagMover;
 
   // do nothing
   // if no one is touching the flat
@@ -160,8 +160,8 @@ export const printFlagOwnerAndToucher = (game: Game): void => {
 
 export const updateFlagColor = (game: Game): void => {
   let f = game.flag;
-  let fs = game.flag.spriteFlagMove;
-  let fb = game.flag.spriteFlagPost;
+  let fs = game.flag.spriteFlagMover;
+  let fb = game.flag.spriteFlagStationary;
   let owner = game.flag.ownerCurr.id;
 
   if (f.completedCurr && f.completedCurr && !f.completedPrev) {

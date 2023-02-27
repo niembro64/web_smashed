@@ -481,58 +481,39 @@ export function updatePlayerHoldAttackEnergy(player: Player): void {
 // }
 
 export function playerShootAttackEnergy(player: Player, game: Game): void {
+  let ae = player.char.attackEnergy;
   var vX =
     player.char.sprite.body.velocity.x * player.char.attackEnergy.VEL.x * 0.5;
-
   var vY = 0;
-  if (player.char.attackEnergy.allowVelocityY) {
-    vY = 300 * player.char.attackEnergy.VEL.y;
+  if (ae.allowVelocityY) {
+    vY = 300 * ae.VEL.y;
     vY += player.char.sprite.body.velocity.y * 0.5;
   }
 
-  if (
-    player.char.attackEnergy.allowVelocityY &&
-    player.char.attackEnergy.gravity
-  ) {
-    player.char.attackEnergy.sprite.body.allowGravity = true;
+  if (ae.allowVelocityY && ae.gravity) {
+    ae.sprite.body.allowGravity = true;
   }
 
   if (player.char.sprite.flipX) {
-    player.char.attackEnergy.sprite.x =
-      player.char.sprite.x - player.char.attackEnergy.posFromCenter.x;
-    player.char.attackEnergy.sprite.y =
-      player.char.sprite.y + player.char.attackEnergy.posFromCenter.y;
+    ae.sprite.x = player.char.sprite.x - ae.posFromCenter.x;
+    ae.sprite.y = player.char.sprite.y + ae.posFromCenter.y;
 
-    player.char.attackEnergy.sprite.body.setVelocityX(
-      -1 * game.BASE_PLAYER_ATTACKENERGY.x + vX
-    );
-    player.char.attackEnergy.sprite.body.setVelocityY(vY);
+    ae.sprite.body.setVelocityX(-1 * game.BASE_PLAYER_ATTACKENERGY.x + vX);
+    ae.sprite.body.setVelocityY(vY);
 
-    player.char.attackEnergy.sprite.flipX = true;
-    player.char.attackEnergy.sprite.setRotation(
-      (player.char.attackEnergy.rotation.initial * Math.PI) / 2
-    );
-    player.char.attackEnergy.sprite.setAngularVelocity(
-      player.char.attackEnergy.rotation.speed * Math.PI * -1
-    );
+    ae.sprite.flipX = true;
+    ae.sprite.setRotation((ae.rotation.initial * Math.PI) / 2);
+    ae.sprite.setAngularVelocity(ae.rotation.speed * Math.PI * -1);
   } else {
-    player.char.attackEnergy.sprite.x =
-      player.char.sprite.x + player.char.attackEnergy.posFromCenter.x;
-    player.char.attackEnergy.sprite.y =
-      player.char.sprite.y + player.char.attackEnergy.posFromCenter.y;
+    ae.sprite.x = player.char.sprite.x + ae.posFromCenter.x;
+    ae.sprite.y = player.char.sprite.y + ae.posFromCenter.y;
 
-    player.char.attackEnergy.sprite.body.setVelocityX(
-      game.BASE_PLAYER_ATTACKENERGY.x + vX
-    );
-    player.char.attackEnergy.sprite.body.setVelocityY(vY);
+    ae.sprite.body.setVelocityX(game.BASE_PLAYER_ATTACKENERGY.x + vX);
+    ae.sprite.body.setVelocityY(vY);
 
-    player.char.attackEnergy.sprite.flipX = false;
-    player.char.attackEnergy.sprite.setRotation(
-      player.char.attackEnergy.rotation.initial
-    );
-    player.char.attackEnergy.sprite.setAngularVelocity(
-      player.char.attackEnergy.rotation.speed * Math.PI
-    );
+    ae.sprite.flipX = false;
+    ae.sprite.setRotation(ae.rotation.initial);
+    ae.sprite.setAngularVelocity(ae.rotation.speed * Math.PI);
   }
 }
 

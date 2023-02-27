@@ -71,26 +71,28 @@ export function create(game: Game) {
 export function createFlag(game: Game): void {
   let f = game.flag;
 
-  f.spriteFlagMove = game.physics.add.sprite(
+  let h = 0.382;
+
+  f.spriteFlagMover = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
-    SCREEN_DIMENSIONS.HEIGHT * 0.382,
+    SCREEN_DIMENSIONS.HEIGHT * h,
     'flag'
   );
-  f.spriteFlagMove.setBounce(0);
-  f.spriteFlagMove.setScale(0.65);
-  f.spriteFlagMove.setImmovable(true);
-  f.spriteFlagMove.body.allowGravity = false;
+  f.spriteFlagMover.setBounce(0);
+  f.spriteFlagMover.setScale(0.65);
+  f.spriteFlagMover.setImmovable(true);
+  f.spriteFlagMover.body.allowGravity = false;
 
-  f.spriteFlagPost = game.physics.add.sprite(
+  f.spriteFlagStationary = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
-    SCREEN_DIMENSIONS.HEIGHT * 0.382,
+    SCREEN_DIMENSIONS.HEIGHT * h,
     'blank'
   );
-  f.spriteFlagPost.setBounce(0);
-  f.spriteFlagPost.setScale(0.65);
-  f.spriteFlagPost.setImmovable(true);
-  f.spriteFlagPost.body.allowGravity = false;
-  f.spriteFlagPost.setAlpha(0);
+  f.spriteFlagStationary.setBounce(0);
+  f.spriteFlagStationary.setScale(0.65);
+  f.spriteFlagStationary.setImmovable(true);
+  f.spriteFlagStationary.body.allowGravity = false;
+  f.spriteFlagStationary.setAlpha(0);
 
   if (game.smashConfig) {
     if (
@@ -99,7 +101,7 @@ export function createFlag(game: Game): void {
     ) {
       f.spriteFlagChar = game.physics.add.sprite(
         (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
-        SCREEN_DIMENSIONS.HEIGHT * 0.382,
+        SCREEN_DIMENSIONS.HEIGHT * h,
         game.playerOptions[game.smashConfig.players[0].characterId].char.name +
           '_spritesheet',
         0
@@ -107,7 +109,7 @@ export function createFlag(game: Game): void {
     } else {
       f.spriteFlagChar = game.physics.add.sprite(
         (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
-        SCREEN_DIMENSIONS.HEIGHT * 0.382,
+        SCREEN_DIMENSIONS.HEIGHT * h,
         game.playerOptions[game.smashConfig.players[0].characterId].char.name
       );
     }
@@ -144,15 +146,15 @@ export function createFlag(game: Game): void {
 }
 
 export function createPole(game: Game): void {
-  game.POLE = game.physics.add.sprite(
-    (1920 - 87 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+  game.flag.spriteFlagPole = game.physics.add.sprite(
+    (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
     'pole'
   );
-  game.POLE.setScale(1);
-  game.POLE.setImmovable(true);
-  game.POLE.body.allowGravity = false;
-  game.POLE.setImmovable(false);
+  game.flag.spriteFlagPole.setScale(1);
+  game.flag.spriteFlagPole.setImmovable(true);
+  game.flag.spriteFlagPole.body.allowGravity = false;
+  game.flag.spriteFlagPole.setImmovable(false);
 }
 
 export function createGun(game: Game): void {

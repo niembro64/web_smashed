@@ -111,8 +111,8 @@ export function setGameState(game: Game, state: GameState): void {
       game.flag.firework.setAlpha(1);
       // game.POLE.setAlpha(0.5);
       // game.flag.sprite.setAlpha(0.5);
-      game.flag.spriteFlagMove.setAlpha(0);
-      game.flag.spriteFlagPost.setAlpha(1);
+      game.flag.spriteFlagMover.setAlpha(0);
+      game.flag.spriteFlagStationary.setAlpha(1);
       game.flag.spriteFlagChar.setAlpha(1);
 
       let tint =

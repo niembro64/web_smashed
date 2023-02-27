@@ -68,7 +68,7 @@ export default class Game extends Phaser.Scene {
   BACKGROUND: any | Phaser.GameObjects.Sprite;
   BACKGROUND_OUTLINE: any | Phaser.GameObjects.Sprite;
   TABLE: any | Phaser.GameObjects.Sprite;
-  POLE: any | Phaser.GameObjects.Sprite;
+  // spritePole: any | Phaser.GameObjects.Sprite;
   ZOOM_MULTIPLIER_X = 0.95;
   ZOOM_MULTIPLIER_Y = 0.7;
   ZOOM_RATIO_SLOW = 0.999;
@@ -819,9 +819,10 @@ export default class Game extends Phaser.Scene {
     ownerPrev: { id: null, gameStamp: Infinity },
     completedCurr: false,
     completedPrev: false,
-    spriteFlagMove: null,
-    spriteFlagPost: null,
+    spriteFlagMover: null,
+    spriteFlagStationary: null,
     spriteFlagChar: null,
+    spriteFlagPole: null,
     yPosition: 0,
     // soundFlagUp: null,
     // soundFlagDown: null,
