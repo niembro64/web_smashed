@@ -381,7 +381,7 @@ export function updateBot(
     getIsBotNearNearestPlayer(player, playerIndex, game, 200) &&
     getIsBotFacingNearestPlayer(player, playerIndex, game)
   ) {
-    if (Math.random() > 0.9) {
+    if (Math.random() > 0.97) {
       p.A = !p.A;
     }
   } else {

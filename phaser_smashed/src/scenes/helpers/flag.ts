@@ -64,6 +64,9 @@ export const updateFlagToucher = (game: Game): void => {
 
   f.toucherCurr.id = newToucherId;
   f.toucherCurr.gameStamp = toucherGameStamp;
+
+  console.log('toucher', f.toucherCurr.id);
+  console.log('toucherStamp', f.toucherCurr.gameStamp);
 };
 
 export const updateFlagMovement = (game: Game): void => {
@@ -102,7 +105,7 @@ export const updateFlagMovement = (game: Game): void => {
 
   // owner is toucher
   // go up
-  if (toucher === owner) {
+  if (toucher !== null && toucher === owner) {
     let v = game.players[toucher].emitterDark.visible
       ? -game.flagSpeedDark
       : -game.flagSpeed;
@@ -112,7 +115,7 @@ export const updateFlagMovement = (game: Game): void => {
 
   // another player is toucher
   // go down
-  if (toucher !== owner) {
+  if (toucher !== null && toucher !== owner) {
     let v = game.players[toucher].emitterDark.visible
       ? game.flagSpeedDark
       : game.flagSpeed;
