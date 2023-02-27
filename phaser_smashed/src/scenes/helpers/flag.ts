@@ -199,6 +199,10 @@ export const getIsFlagShots = (game: Game): boolean => {
 };
 
 export const setFlagOwnerNullIfDead = (player: Player, game: Game): void => {
+  if (game.flag.completedCurr) {
+    return;
+  }
+
   let f = game.flag;
   let owner = f.ownerCurr.id;
 
