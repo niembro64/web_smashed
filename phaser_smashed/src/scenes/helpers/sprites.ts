@@ -239,31 +239,84 @@ export function filterAttackEnergyNormal(
   game: Game
 ): void {
   if (game.debug.CharacterTinted) {
-    setFillAttacksID(player, game.colorCircles[playerIndex].colorNumber);
+    setFillAttackPhysicalID(player, game.colorCircles[playerIndex].colorNumber);
+    setFillAttackEnergyID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
-    setTintAttacksNormal(player);
+    setTintAttackEnergyNormal(player);
+    if (player.char.name === 'link') {
+      setTintAttackPhysicalNormal(player);
+    } else {
+      setFillAttackPhysicalID(
+        player,
+        game.colorCircles[playerIndex].colorNumber
+      );
+    }
   }
 }
 
-export function setTintAttacksID(player: Player, circleColor: number): void {
+export function setTintAttackEnergyID(
+  player: Player,
+  circleColor: number
+): void {
   player.char.attackEnergy.sprite.setTint(circleColor);
   player.char.attackEnergy.sprite.setAlpha(1);
+  // let aebs = player.char.attackEnergy.attackBullets;
+  // if (aebs !== null && aebs.bullets !== null) {
+  //   aebs.bullets.children.iterate((child: any) => {
+  //     child.setTint(circleColor);
+  //     child.setAlpha(1);
+  //   });
+  // }
+}
+export function setTintAttackPhysicalID(
+  player: Player,
+  circleColor: number
+): void {
   player.char.attackPhysical.sprite.setTint(circleColor);
   player.char.attackPhysical.sprite.setAlpha(1);
 }
-export function setTintAttacksNormal(player: Player): void {
-  player.char.attackEnergy.sprite.setTint(0xffffff);
-  player.char.attackEnergy.sprite.setAlpha(1);
+export function setTintAttackPhysicalNormal(player: Player): void {
   player.char.attackPhysical.sprite.setTint(0xffffff);
   player.char.attackPhysical.sprite.setAlpha(1);
 }
-export function setFillAttacksID(player: Player, circleColor: number): void {
-  player.char.attackEnergy.sprite.setTint('transparent');
-  player.char.attackEnergy.sprite.setTintFill(circleColor);
+export function setTintAttackEnergyNormal(player: Player): void {
+  player.char.attackEnergy.sprite.setTint(0xffffff);
   player.char.attackEnergy.sprite.setAlpha(1);
+  // let aebs = player.char.attackEnergy.attackBullets;
+  // if (aebs !== null && aebs.bullets !== null) {
+  //   aebs.bullets.children.iterate((child: any) => {
+  //     child.setTint(0xffffff);
+  //     child.setAlpha(1);
+  //   });
+  // }
+}
+export function setFillAttackPhysicalID(
+  player: Player,
+  circleColor: number
+): void {
   player.char.attackPhysical.sprite.setTint('transparent');
   player.char.attackPhysical.sprite.setTintFill(circleColor);
   player.char.attackPhysical.sprite.setAlpha(1);
+}
+export function setFillAttackEnergyID(
+  player: Player,
+  circleColor: number
+): void {
+  player.char?.attackEnergy?.sprite.setTint('transparent');
+  player.char?.attackEnergy?.sprite.setTintFill(circleColor);
+  player.char?.attackEnergy?.sprite.setAlpha(1);
+  let aebs = player.char.attackEnergy.attackBullets;
+  console.log('aebs.bullets', aebs);
+
+  // aebs?.bullets?.setFillBulletSprites();
+  // if (aebs !== null && aebs.bullets !== null) {
+  //   aebs.bullets.children.iterate((child: any) => {
+  //     console.log('bullet child', child);
+  //     child.setTint('transparent');
+  //     child.setTintFill(circleColor);
+  //     child.setAlpha(1);
+  //   });
+  // }
 }
 
 // player.char.sprite.setBlendMode(Phaser.BlendModes.MULTIPLY);

@@ -1,7 +1,7 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
-  DevMode: true,
+  DevMode: false,
   DevZoom: 8,
   Level: 6, //0123456
   ModeInfinity: true,
@@ -25,7 +25,7 @@ export const debugInit: Debug = {
   DefaultDamage: false,
   DefaultHitback: false,
   PlayerIdVisible: true,
-  CharacterTinted: false,
+  CharacterTinted: true,
   HealthInverted: false,
   MatricesAlways: false,
   ConsoleLogButtons: false,
@@ -36,7 +36,7 @@ export const debugInit: Debug = {
   AllowCharsChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
-  CharOverride: false,
+  CharOverride: true,
   CharOverrideId: 3,
   BulletsAllowGroups: true,
   BulletsFullScreen: false,
@@ -67,7 +67,7 @@ export const debugMax: Debug = {
   DefaultDamage: false,
   DefaultHitback: false,
   PlayerIdVisible: true,
-  CharacterTinted: false,
+  CharacterTinted: true,
   HealthInverted: false,
   MatricesAlways: false,
   ConsoleLogButtons: false,

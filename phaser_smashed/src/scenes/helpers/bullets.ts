@@ -144,6 +144,18 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
     // game.physics.add.collider(this, game.TABLE);
   }
 
+  getBulletSprites(): Phaser.Physics.Arcade.Sprite[] {
+    return this.children.entries as Phaser.Physics.Arcade.Sprite[];
+  }
+
+  setFillBulletSprites(): void {
+    let bulletSprites = this.getBulletSprites();
+    for (let i = 0; i < bulletSprites.length; i++) {
+      bulletSprites[i].setTintFill(0xff0000);
+      console.log('setFillBulletSprites', bulletSprites[i]);
+    }
+  }
+
   numSkip = 0;
 
   fireBullet(
