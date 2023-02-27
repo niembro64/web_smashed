@@ -295,9 +295,9 @@ export function updateBot(
     ///////////////////////
     if (
       !t.down &&
-      Math.random() > (game.flag.toucherCurr.id === null ? 0.99 : 0.9)
+      Math.random() > (game.flag.toucherCurr.id === null ? 0.95 : 0.7)
     ) {
-      if (botSprite.x < game.flag.spriteFlagPole.x - 400) {
+      if (botSprite.x < game.flag.spriteFlagPole.x - 300) {
         p.right = true;
         p.left = false;
       }
@@ -337,7 +337,8 @@ export function updateBot(
     (d.left === 9 || d.right === 9) &&
     t.down
   ) {
-    p.Y = true;
+    p.Y = !p.Y;
+    // p.Y = true;
   } else if (
     //////////////////////
     // AIR JUMPING
@@ -485,7 +486,6 @@ export const getDodgeDirectionPlayerToAttackEnergy = (
     v.x,
     v.y
   );
-  console.log('direction', direction);
   return direction;
 };
 

@@ -1,5 +1,8 @@
 import Game from '../Game';
-import { updateAttackEnergyOffscreen } from '../helpers/attacks';
+import {
+  updateAttackEnergyOffscreen,
+  updateRemoveAttackPhysicalsIfNotNearPlayer,
+} from '../helpers/attacks';
 import { updateCamera } from '../helpers/camera';
 import { updateAtThreeShots, updateChomp } from '../helpers/chomp';
 import { updateDeathsAndKillsMatrices, updateSuicide } from '../helpers/damage';
@@ -70,8 +73,9 @@ export function updateGameStatePlay(
   updateFlagOwner(game);
   updateFlagMovement(game);
   updateFlagColor(game);
-  // printFlagOwnerAndToucher(game);
+  printFlagOwnerAndToucher(game);
   updateSuicide(game);
+  updateRemoveAttackPhysicalsIfNotNearPlayer(game);
 
   // UPDATE PLAYERS
   updatePlayers(game);

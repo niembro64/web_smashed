@@ -1,6 +1,7 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { AttackEnergy, Player } from '../interfaces';
 import { setEmitterPlayerOnFalse } from './damage';
+import { getDistance } from './movement';
 
 export function getIsPlayerInAir(player: Player): boolean {
   return (
@@ -272,4 +273,15 @@ export function updatePhysicalAttackFollowsPlayer(
 
     ap.sprite.flipX = false;
   }
+}
+
+export function updateRemoveAttackPhysicalsIfNotNearPlayer(game: Game): void {
+  game.players.forEach((player, playerIndex) => {
+    let p = player.char.sprite;
+    let ap = player.char.attackPhysical.sprite;
+
+    if (getDistance(p.x, p.y, ap.x, ap.y) > 300) {
+      setAttackPhysicalOffscreen(player, game);
+    }
+  });
 }

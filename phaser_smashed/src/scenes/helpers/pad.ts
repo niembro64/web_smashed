@@ -686,9 +686,9 @@ export function updatePadPreviousAndDebounced(game: Game): void {
     let d = player.padDebounced;
     let k = game.GAMEPAD_DEBOUNCE_NUMBER_CYCLES;
 
-    if (c.up !== p.up) {
-      console.log('c.up', c.up, 'p.up', p.up);
-    }
+    // if (c.up !== p.up) {
+    //   console.log('c.up', c.up, 'p.up', p.up);
+    // }
     p.up = c.up;
     p.down = c.down;
     p.left = c.left;

@@ -36,8 +36,7 @@ export const updateFlagToucher = (game: Game): void => {
       pTouchingDown &&
       getIsInPole(player.char.sprite.x, player.char.sprite.y, game)
     ) {
-      if (ptStamps[pIndex].touching) {
-      } else {
+      if (!ptStamps[pIndex].touching) {
         ptStamps[pIndex].touching = true;
         ptStamps[pIndex].gameStamp = game.gameNanoseconds;
       }
@@ -46,24 +45,24 @@ export const updateFlagToucher = (game: Game): void => {
       ptStamps[pIndex].gameStamp = game.gameNanoseconds;
     }
   });
-  let toucherId: null | number = null;
+  let newToucherId: null | number = null;
   let toucherGameStamp = Infinity;
 
   ptStamps.forEach((ptStamp, ptIndex) => {
     if (ptStamp.touching && ptStamp.gameStamp < toucherGameStamp) {
-      toucherId = ptIndex;
+      newToucherId = ptIndex;
       toucherGameStamp = ptStamp.gameStamp;
     }
   });
 
-  if (f.toucherPrev.id === toucherId) {
+  if (f.toucherPrev.id === newToucherId) {
     return;
   }
 
   f.toucherPrev.id = f.toucherCurr.id;
   f.toucherPrev.gameStamp = f.toucherCurr.gameStamp;
 
-  f.toucherCurr.id = toucherId;
+  f.toucherCurr.id = newToucherId;
   f.toucherCurr.gameStamp = toucherGameStamp;
 };
 
@@ -152,6 +151,10 @@ export const updateFlagOwner = (game: Game): void => {
 };
 
 export const printFlagOwnerAndToucher = (game: Game): void => {
+  if (game.flag.completedCurr) {
+    return;
+  }
+
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
 
