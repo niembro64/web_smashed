@@ -147,7 +147,7 @@ export function createFlag(game: Game): void {
 
 export function createPole(game: Game): void {
   game.flag.spriteFlagPole = game.physics.add.sprite(
-    (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+    (1920 - 105 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
     'pole'
   );
