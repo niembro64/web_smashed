@@ -160,6 +160,7 @@ export function createPole(game: Game): void {
   game.flag.spriteFlagPole.setImmovable(true);
   game.flag.spriteFlagPole.body.allowGravity = false;
   game.flag.spriteFlagPole.setImmovable(false);
+  game.flag.spriteFlagPole.setOrigin(0.5, 0.5);
 }
 
 export function createGun(game: Game): void {
