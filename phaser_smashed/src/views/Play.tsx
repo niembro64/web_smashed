@@ -1003,45 +1003,45 @@ function Play() {
     window.addEventListener<'keydown'>('keydown', cb, { once: true });
   }, [anyKeyWasPressed]);
 
-  const onClickReStartEventHandler = () => {
-    if (myPhaser?.current?.scene?.keys?.game?.loaded) {
-      setShowControls(false);
-      setShowControllers(false);
-      setShowRulesN64(false);
-      setShowAbout(false);
-      setShowHistory(false);
-      setShowOptions(false);
+  // const onClickReStartEventHandler = () => {
+  //   if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+  //     setShowControls(false);
+  //     setShowControllers(false);
+  //     setShowRulesN64(false);
+  //     setShowAbout(false);
+  //     setShowHistory(false);
+  //     setShowOptions(false);
 
-      startSound();
-      myPhaser.current.scene.keys.game.loaded = false;
-      setShowLoaderIntervalFunction();
-      onClickPlayNavButtons('ReStart');
-      setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
+  //     startSound();
+  //     myPhaser.current.scene.keys.game.loaded = false;
+  //     setShowLoaderIntervalFunction();
+  //     onClickPlayNavButtons('ReStart');
+  //     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
-      let newSmashConfig = JSON.parse(
-        JSON.stringify(myPhaser.current?.scene?.keys?.game.smashConfig)
-      );
-      let newDebug = JSON.parse(
-        JSON.stringify(myPhaser.current?.scene?.keys?.game.debug)
-      );
-      clearInterval(intervalClock.current);
-      intervalClock.current = null;
-      componentPseudoLoad.current = true;
-      myPhaser.current.destroy(true);
+  //     let newSmashConfig = JSON.parse(
+  //       JSON.stringify(myPhaser.current?.scene?.keys?.game.smashConfig)
+  //     );
+  //     let newDebug = JSON.parse(
+  //       JSON.stringify(myPhaser.current?.scene?.keys?.game.debug)
+  //     );
+  //     clearInterval(intervalClock.current);
+  //     intervalClock.current = null;
+  //     componentPseudoLoad.current = true;
+  //     myPhaser.current.destroy(true);
 
-      if (!debug.LoadTimeExtra || debug.DevMode) {
-        setTimeoutQuotesLengthReStart = 0;
-      }
-      let myMoment = moment();
-      setTimeout(() => {
-        myPhaser.current = new Phaser.Game(config);
-        myPhaser.current.registry.set('parentContext', Play);
-        myPhaser.current.registry.set('smashConfig', newSmashConfig);
-        myPhaser.current.registry.set('debug', newDebug);
-        myPhaser.current.registry.set('myMoment', myMoment);
-      }, setTimeoutQuotesLengthReStart);
-    }
-  };
+  //     if (!debug.LoadTimeExtra || debug.DevMode) {
+  //       setTimeoutQuotesLengthReStart = 0;
+  //     }
+  //     let myMoment = moment();
+  //     setTimeout(() => {
+  //       myPhaser.current = new Phaser.Game(config);
+  //       myPhaser.current.registry.set('parentContext', Play);
+  //       myPhaser.current.registry.set('smashConfig', newSmashConfig);
+  //       myPhaser.current.registry.set('debug', newDebug);
+  //       myPhaser.current.registry.set('myMoment', myMoment);
+  //     }, setTimeoutQuotesLengthReStart);
+  //   }
+  // };
 
   const getNumControllersExistLower = (myI: number): number => {
     let num: number = 0;
