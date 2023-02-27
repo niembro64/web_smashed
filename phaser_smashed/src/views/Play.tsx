@@ -457,7 +457,7 @@ function Play() {
     startSound();
     setWebState('play');
 
-    let players = [...smashConfig.players];
+    let players = JSON.parse(JSON.stringify(smashConfig.players));
     // let newPlayers: {
     //   name: CharacterName;
     //   characterId: CharacterId;
@@ -516,6 +516,13 @@ function Play() {
     }
     let myMoment = moment();
     // let myDate = momentToDate(myMoment);
+
+    setShowLoaderIntervalFunction();
+
+    let c: ClientInformation = await fetchClientData();
+    let s: SessionInfo = await axiosSaveOne(myMoment, c, newSmashConfig, debug);
+    setSession(s);
+
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
@@ -523,12 +530,6 @@ function Play() {
       myPhaser.current.registry.set('debug', debug);
       myPhaser.current.registry.set('myMoment', myMoment);
     }, setTimeoutQuotesLengthStart);
-
-    setShowLoaderIntervalFunction();
-
-    let c: ClientInformation = await fetchClientData();
-    let s: SessionInfo = await axiosSaveOne(myMoment, c, newSmashConfig, debug);
-    setSession(s);
   };
 
   const setShowLoaderIntervalFunction = () => {
@@ -1597,7 +1598,8 @@ function Play() {
               </div>
             )}
             {webState !== 'start' && (
-              <div className="link-tag" onClick={onClickReStartEventHandler}>
+              // <div className="link-tag" onClick={onClickReStartEventHandler}>
+              <div className="link-tag" onClick={onClickStartStartButton}>
                 <span>ReStart</span>
               </div>
             )}
