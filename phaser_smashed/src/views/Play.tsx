@@ -442,6 +442,10 @@ function Play() {
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
   const onClickStartStartButton = async () => {
+    if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+      myPhaser.current.destroy(true);
+    }
+
     setShowControls(false);
     setShowControllers(false);
     setShowRulesN64(false);
@@ -978,7 +982,8 @@ function Play() {
       }
       switch (k) {
         case 'Backspace':
-          onClickReStartEventHandler();
+          // onClickReStartEventHandler();
+          onClickStartStartButton();
           break;
         case 'Escape':
           onClickBackEventHandler();
