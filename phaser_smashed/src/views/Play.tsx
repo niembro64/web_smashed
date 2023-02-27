@@ -1932,11 +1932,7 @@ function Play() {
                         totalShots = 0;
                         for (let i = 0; i < smsu.length; i++) {
                           // console.log(session);
-                          for (
-                            let j = 0;
-                            j < session.matrixDeathsUnto[i].length;
-                            j++
-                          ) {
+                          for (let j = 0; j < smsu[i].length; j++) {
                             totalShots += smsu[i][j];
                           }
                         }
@@ -1959,11 +1955,7 @@ function Play() {
                         totalDeaths = 0;
                         for (let i = 0; i < smdu.length; i++) {
                           // console.log(session);
-                          for (
-                            let j = 0;
-                            j < session.matrixDeathsUnto[i].length;
-                            j++
-                          ) {
+                          for (let j = 0; j < smdu[i].length; j++) {
                             totalDeaths += smdu[i][j];
                           }
                         }
@@ -1986,11 +1978,7 @@ function Play() {
                         totalHits = 0;
                         for (let i = 0; i < smhu.length; i++) {
                           // console.log(session);
-                          for (
-                            let j = 0;
-                            j < session.matrixHitsUnto[i].length;
-                            j++
-                          ) {
+                          for (let j = 0; j < smhu[i].length; j++) {
                             totalHits += smhu[i][j];
                           }
                         }
