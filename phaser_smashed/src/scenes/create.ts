@@ -72,9 +72,11 @@ export function createFlag(game: Game): void {
   let f = game.flag;
 
   let h = 0.382;
+  let horizOffset = 57 - game.ASSET_BRICK_WIDTH * 4;
 
   f.spriteFlagMover = game.physics.add.sprite(
-    (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+    (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
+      horizOffset,
     SCREEN_DIMENSIONS.HEIGHT * h,
     'flag'
   );
@@ -84,7 +86,8 @@ export function createFlag(game: Game): void {
   f.spriteFlagMover.body.allowGravity = false;
 
   f.spriteFlagStationary = game.physics.add.sprite(
-    (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+    (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
+      horizOffset,
     SCREEN_DIMENSIONS.HEIGHT * h,
     'blank'
   );
@@ -100,7 +103,8 @@ export function createFlag(game: Game): void {
         .srcSpriteSheet !== ''
     ) {
       f.spriteFlagChar = game.physics.add.sprite(
-        (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+        (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
+          horizOffset,
         SCREEN_DIMENSIONS.HEIGHT * h,
         game.playerOptions[game.smashConfig.players[0].characterId].char.name +
           '_spritesheet',
@@ -108,7 +112,8 @@ export function createFlag(game: Game): void {
       );
     } else {
       f.spriteFlagChar = game.physics.add.sprite(
-        (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
+        (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
+          horizOffset,
         SCREEN_DIMENSIONS.HEIGHT * h,
         game.playerOptions[game.smashConfig.players[0].characterId].char.name
       );
@@ -941,7 +946,7 @@ export function createFirework(game: Game): void {
   // let f = game.flag;
   // let fire = f.firework;
   game.flag.firework = game.physics.add.sprite(
-    SCREEN_DIMENSIONS.WIDTH * 0.89,
+    SCREEN_DIMENSIONS.WIDTH * 0.86,
     SCREEN_DIMENSIONS.HEIGHT * 0.47,
     'firework'
   );
@@ -973,7 +978,7 @@ export function createFirework(game: Game): void {
 
   game.anims.create(configFireworkActive);
   game.anims.create(configFireworkPassive);
-  game.flag.firework.setScale(3);
+  game.flag.firework.setScale(5);
   game.flag.firework.setImmovable(true);
   game.flag.firework.body.allowGravity = false;
   game.flag.firework.setOrigin(0.5, 0.5);
