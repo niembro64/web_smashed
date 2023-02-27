@@ -45,6 +45,7 @@ import {
   fetchClientData,
   axiosSaveOne,
   SessionInfo,
+  sumNumbersIn2DArrayString,
 } from './client';
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
@@ -1921,69 +1922,30 @@ function Play() {
                         session.matrixShotsUnto === 'null'
                       ) {
                       } else {
-                        console.log(
-                          'session.matrixShotsUnto',
+                        totalShots = sumNumbersIn2DArrayString(
                           session.matrixShotsUnto
                         );
-                        let smsu: number[][] = JSON.parse(
-                          session.matrixShotsUnto
-                        );
-                        console.log('smsu', smsu);
-                        totalShots = 0;
-                        for (let i = 0; i < smsu.length; i++) {
-                          // console.log(session);
-                          for (let j = 0; j < smsu[i].length; j++) {
-                            totalShots += smsu[i][j];
-                          }
-                        }
                       }
-                      console.log('totalShots', totalShots);
                       let totalDeaths: number = 0;
                       if (
                         session.matrixDeathsUnto === null ||
                         session.matrixDeathsUnto === 'null'
                       ) {
                       } else {
-                        console.log(
-                          'session.matrixDeathsUnto',
+                        totalDeaths = sumNumbersIn2DArrayString(
                           session.matrixDeathsUnto
                         );
-                        let smdu: number[][] = JSON.parse(
-                          session.matrixDeathsUnto
-                        );
-                        console.log('smsu', smdu);
-                        totalDeaths = 0;
-                        for (let i = 0; i < smdu.length; i++) {
-                          // console.log(session);
-                          for (let j = 0; j < smdu[i].length; j++) {
-                            totalDeaths += smdu[i][j];
-                          }
-                        }
                       }
-                      console.log('totalDeaths', totalDeaths);
                       let totalHits: number = 0;
                       if (
                         session.matrixHitsUnto === null ||
                         session.matrixHitsUnto === 'null'
                       ) {
                       } else {
-                        console.log(
-                          'session.matrixHitsUnto',
+                        totalHits = sumNumbersIn2DArrayString(
                           session.matrixHitsUnto
                         );
-                        let smhu: number[][] = JSON.parse(
-                          session.matrixHitsUnto
-                        );
-                        console.log('smsu', smhu);
-                        totalHits = 0;
-                        for (let i = 0; i < smhu.length; i++) {
-                          // console.log(session);
-                          for (let j = 0; j < smhu[i].length; j++) {
-                            totalHits += smhu[i][j];
-                          }
-                        }
                       }
-                      console.log('totalHits', totalHits);
 
                       return (
                         <p className="text-small" key={index}>

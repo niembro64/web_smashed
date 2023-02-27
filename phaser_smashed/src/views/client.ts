@@ -223,3 +223,18 @@ export const getAllAxios = async (): Promise<SessionInfo[]> => {
 
   return response.data;
 };
+
+export function sumNumbersIn2DArrayString(s: string) {
+  const arr: number[][] = JSON.parse(s);
+  const sum = arr
+    .reduce((acc, curr) => {
+      // Concatenate the current sub-array with the accumulator array
+      return acc.concat(curr);
+    }, [])
+    .reduce((acc, curr) => {
+      // Check if the current element is a number, and add it to the accumulator
+      return typeof curr === 'number' ? acc + curr : acc;
+    }, 0);
+
+  return sum;
+}
