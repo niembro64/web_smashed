@@ -1900,67 +1900,101 @@ function Play() {
                 <div className="horiz-item-right">
                   <h4 id="recent-games">Recent Games z:{tz}</h4>
                   <div className="scroller" ref={scrollerRef}>
-                    {allSessions.map((session: SessionInfo, index: number) => {
-                      const allSessionsLength: number = allSessions.length;
-                      const totalDigits = allSessionsLength.toString().length;
-                      const paddedIndex = (allSessionsLength - index)
-                        .toString()
-                        .padStart(totalDigits, '\u00a0');
-                      const sessionMomentObject = momentStringToMoment(
-                        session.momentCreated
-                      );
-                      const mTZ = require('moment-timezone');
-                      const clientTimezone =
-                        Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="td-left">WHERE</th>
+                          <th className="td-right">SHOTS</th>
+                          <th className="td-right">DEATHS</th>
+                          <th className="td-right">HITS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* <p className="text-small">ID DATE</p> */}
+                        {allSessions.map(
+                          (session: SessionInfo, index: number) => {
+                            const allSessionsLength: number =
+                              allSessions.length;
+                            const totalDigits =
+                              allSessionsLength.toString().length;
+                            const paddedIndex = (allSessionsLength - index)
+                              .toString()
+                              .padStart(totalDigits, '\u00a0');
+                            const sessionMomentObject = momentStringToMoment(
+                              session.momentCreated
+                            );
+                            const mTZ = require('moment-timezone');
+                            const clientTimezone =
+                              Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
 
-                      const formattedDate = mTZ
-                        .tz(moment(sessionMomentObject), clientTimezone)
-                        .format('YYYY-MM-DD HH:mm');
-                      let totalShots: number = 0;
-                      if (
-                        session.matrixShotsUnto === null ||
-                        session.matrixShotsUnto === 'null'
-                      ) {
-                      } else {
-                        totalShots = sumNumbersIn2DArrayString(
-                          session.matrixShotsUnto
-                        );
-                      }
-                      let totalDeaths: number = 0;
-                      if (
-                        session.matrixDeathsUnto === null ||
-                        session.matrixDeathsUnto === 'null'
-                      ) {
-                      } else {
-                        totalDeaths = sumNumbersIn2DArrayString(
-                          session.matrixDeathsUnto
-                        );
-                      }
-                      let totalHits: number = 0;
-                      if (
-                        session.matrixHitsUnto === null ||
-                        session.matrixHitsUnto === 'null'
-                      ) {
-                      } else {
-                        totalHits = sumNumbersIn2DArrayString(
-                          session.matrixHitsUnto
-                        );
-                      }
+                            const formattedDate = mTZ
+                              .tz(moment(sessionMomentObject), clientTimezone)
+                              .format('YYYY-MM-DD HH:mm');
+                            let totalShots: number = 0;
+                            if (
+                              session.matrixShotsUnto === null ||
+                              session.matrixShotsUnto === 'null'
+                            ) {
+                            } else {
+                              totalShots = sumNumbersIn2DArrayString(
+                                session.matrixShotsUnto
+                              );
+                            }
+                            let totalDeaths: number = 0;
+                            if (
+                              session.matrixDeathsUnto === null ||
+                              session.matrixDeathsUnto === 'null'
+                            ) {
+                            } else {
+                              totalDeaths = sumNumbersIn2DArrayString(
+                                session.matrixDeathsUnto
+                              );
+                            }
+                            let totalHits: number = 0;
+                            if (
+                              session.matrixHitsUnto === null ||
+                              session.matrixHitsUnto === 'null'
+                            ) {
+                            } else {
+                              totalHits = sumNumbersIn2DArrayString(
+                                session.matrixHitsUnto
+                              );
+                            }
 
-                      return (
-                        <p className="text-small" key={index}>
-                          {paddedIndex} {formattedDate} S
-                          {totalShots < 10 ? '_' + totalShots : totalShots} D
-                          {totalDeaths < 10 ? '_' + totalDeaths : totalDeaths} H
-                          {totalHits < 100
-                            ? '_' +
-                              (totalHits < 10 ? '_' + totalHits : totalHits)
-                            : totalHits}{' '}
-                          {session.country} {session.region} {session.city}
-                          {/* {session.ip}{" "} */}
-                        </p>
-                      );
-                    })}
+                            return (
+                              <tr key={index}>
+                                <td className="td-left">
+                                  {paddedIndex} {formattedDate}{' '}
+                                  {session.country} {session.region}{' '}
+                                  {session.city}
+                                </td>
+                                <td className="td-right">
+                                  {totalShots}
+                                  {/* {totalShots < 10
+                                    ? '_' + totalShots
+                                    : totalShots} */}
+                                </td>
+                                <td className="td-right">
+                                  {totalDeaths}
+                                  {/* {totalDeaths < 10
+                                    ? '_' + totalDeaths
+                                    : totalDeaths} */}
+                                </td>
+                                <td className="td-right">
+                                  {totalHits}
+                                  {/* {totalHits < 100
+                                    ? '_' +
+                                      (totalHits < 10
+                                        ? '_' + totalHits
+                                        : totalHits)
+                                    : totalHits} */}
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
