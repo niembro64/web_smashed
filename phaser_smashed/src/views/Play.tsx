@@ -279,7 +279,7 @@ function Play() {
   // 1 -> gamepad
   // 2 -> keyboard
   // 3 -> bot
-  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 2]);
+  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 3]);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>({
     players: [
       {

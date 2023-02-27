@@ -267,7 +267,7 @@ export function updateBot(
     // ON GROUND
     ///////////////////////
     if (t.down && Math.random() > 0.1) {
-      if (botSprite.x < game.flag.spriteFlagPole.x - botSprite.width * 0.4) {
+      if (botSprite.x < game.flag.spriteFlagPole.x - botSprite.width * 0.2) {
         p.right = true;
         p.left = false;
       } else if (
