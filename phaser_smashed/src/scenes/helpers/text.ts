@@ -77,8 +77,8 @@ export function updateText(game: Game): void {
     game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
 
   updateClockTextLower(game, zoom, newTimeTimeY);
-  updateCups(game, zoom, newTopYCups);
-  updateGlasses(game, zoom, newTopY);
+  updatePlaceCups(game, zoom, newTopYCups);
+  updateShotGlasses(game, zoom, newTopY);
   updateGlassesNumberShots(game, zoom, newTopNumY);
   updateDamageShotsText(game, zoom, newUpperY);
   updateControllerText(game, zoom, newControllerY);
@@ -241,11 +241,15 @@ export function updateShotGlassTransparency(game: Game): void {
           player.shotGlassNumber.setAlpha(1);
         }
         break;
+      case 'game-state-finished':
+        // player.shotGlassImage.setAlpha(1);
+        // player.shotGlassNumber.setAlpha(1);
+        break;
     }
   });
 }
 
-export function updateCups(game: Game, zoom: number, newY: number): void {
+export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
   let players = game.players;
   let ecs = game.endCups;
   if (game.gameState.nameCurr === 'game-state-finished') {
@@ -305,7 +309,11 @@ export function updateCups(game: Game, zoom: number, newY: number): void {
   }
 }
 
-export function updateGlasses(game: Game, zoom: number, newY: number): void {
+export function updateShotGlasses(
+  game: Game,
+  zoom: number,
+  newY: number
+): void {
   // update shotGlassImage
   game.players.forEach((player, playerIndex) => {
     player.shotGlassImage.setScale(0.7 / zoom, 0.7 / zoom);
