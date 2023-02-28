@@ -49,6 +49,7 @@ import {
 } from './client';
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
+import { flattenDiagnosticMessageText } from 'typescript';
 
 function Play() {
   let myPhaser: any = useRef(null);
@@ -165,6 +166,26 @@ function Play() {
   const [openEye, setOpenEye] = useState<boolean>(true);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (webState === 'start') {
+      if (garageRef.current.paused) {
+        garageRef.current.play();
+      }
+    }
+    if (webState === 'play') {
+      garageRef.current.pause();
+      if (showLoader) {
+        garageRef.current.pause();
+        if (monkeysRef.current.paused) {
+          monkeysRef.current.play();
+        }
+      } else {
+        garageRef.current.pause();
+        monkeysRef.current.pause();
+      }
+    }
+  }, [webState, showLoader]);
+
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const [playChezState, setPlayChezState] = useState<PlayChezState>({
@@ -216,7 +237,7 @@ function Play() {
     console.log('webState', webState);
     switch (webState) {
       case 'start':
-        garageRef.current.play();
+        // garageRef.current.play();
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -227,7 +248,7 @@ function Play() {
         })();
         break;
       case 'play':
-        garageRef.current.pause();
+        // garageRef.current.pause();
         // monkeysRef.current.play();
         setTopBarDivExists(true);
         break;
@@ -1084,9 +1105,33 @@ function Play() {
     intervalClock.current = null;
     componentPseudoLoad.current = true;
     myPhaser.current.destroy(true);
-    setP1KeysTouched(false);
-    setP2KeysTouched(false);
+    // setP1KeysTouched(false);
+    // setP2KeysTouched(false);
   };
+
+  useEffect(() => {
+    if (webState === 'start') {
+      setP1KeysTouched(true);
+      setP2KeysTouched(true);
+    }
+    if (webState === 'play') {
+      let numKeyboards = getNumKeyboardsInUse();
+      switch (numKeyboards) {
+        case 0:
+          setP1KeysTouched(true);
+          setP2KeysTouched(true);
+          break;
+        case 1:
+          setP1KeysTouched(false);
+          setP2KeysTouched(true);
+          break;
+        case 2:
+          setP1KeysTouched(false);
+          setP2KeysTouched(false);
+          break;
+      }
+    }
+  }, [webState, showLoader]);
 
   useEffect(() => {
     // setPlayChezState({ name: 'up', moment: moment() });
