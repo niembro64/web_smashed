@@ -125,7 +125,7 @@ export function updateNumShotsLeft(game: Game): void {
       shots += game.numberShotsTakenByMeMatrix[playerIndex][i];
     }
   });
-  game.shotsLeftCurr = game.debug.InfinityShots - shots;
+  game.shotsLeftCurr = game.debug.NumShots - shots;
 }
 
 export interface PositionEndGame {

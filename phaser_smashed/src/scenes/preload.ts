@@ -46,7 +46,7 @@ export function preload(game: Game): void {
     hatPos += hatAdder * 2;
   }
 
-  game.shotsLeftCurr = game.debug.InfinityShots;
+  game.shotsLeftCurr = game.debug.NumShots;
 
   //////////////////////////////
   // Load Audio

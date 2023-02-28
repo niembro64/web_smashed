@@ -39,7 +39,7 @@ import {
   PlayChezState,
   bar,
 } from '../scenes/interfaces';
-import { debugInit, debugMax } from '../debugOptions';
+import { debugInit, debugMax, debugShow } from '../debugOptions';
 import {
   ClientInformation,
   getAllAxios,
@@ -1741,6 +1741,11 @@ function Play() {
               <h1>Debug Options</h1>
               <div id="debug-col">
                 {Object.entries(debug).map(([key, value], index: number) => {
+                  const showInDebug: boolean = !!debugShow[key] ;
+                  if (showInDebug) {
+                    return null;
+                  }
+
                   return (
                     <div
                       id="option"
@@ -1753,7 +1758,8 @@ function Play() {
                             ...prevState,
                             [key]:
                               value - 1 < 0
-                                ? getMaxFromKey(key as keyof Debug)
+                                ? getMaxFromKey(key)
+                                // ? getMaxFromKey(key as keyof Debug)
                                 : value - 1,
                           }));
                           console.log(index, key, value);

@@ -5,7 +5,7 @@ export const debugInit: Debug = {
   DevZoom: 8,
   Level: 6, //0123456
   ModeInfinity: true,
-  InfinityShots: 7, //7
+  NumShots: 7, //7
   TimeMinutes: 7, //01234567
   MusicActive: true,
   MusicTrack: 3, // 012
@@ -47,7 +47,7 @@ export const debugInit: Debug = {
 export const debugMax: Debug = {
   Level: 6, //0123456
   ModeInfinity: true,
-  InfinityShots: 15,
+  NumShots: 15,
   TimeMinutes: 15, //01234567
   MusicActive: true,
   MusicTrack: 3, // 012
@@ -86,4 +86,49 @@ export const debugMax: Debug = {
   BulletsFullScreen: true,
   TrophiesOnShots: true,
   TrophiesAlways: true,
+};
+
+// TRUE means SHOWN ON MAIN PAGE
+export const debugShow: Debug = {
+  Level: 0, //0123456
+  ModeInfinity: false,
+  NumShots: 1,
+  TimeMinutes: 0, //01234567
+  MusicActive: false,
+  MusicTrack: 1, // 012
+  ReadySoundActive: false,
+  Camera: false,
+  CamerasVisible: false,
+  CollidersPvP: false,
+  CollidersPvAP: false,
+  CollidersPvAE: false,
+  CollidersAEvAE: false,
+  CollidersAEvAP: false,
+  CollidersABvAE: false,
+  CollidersABvAP: false,
+  FrictionAirActive: false,
+  AEWrapScreen: false,
+  WallJumpsActive: false,
+  DefaultDamage: false,
+  DefaultHitback: false,
+  PlayerIdVisible: false,
+  CharacterTinted: true,
+  HealthInverted: false,
+  MatricesAlways: false,
+  ConsoleLogButtons: false,
+  ConsoleLogConnected: false,
+  UpdateLoopsNumSkip: 0, // 012
+  LoadTimeExtra: false,
+  AllowCharsExtended: false,
+  AllowCharsChez: false,
+  SlowMoExplosions: false,
+  TypedLoadingText: false,
+  DevMode: false,
+  DevZoom: 0,
+  CharOverride: false,
+  CharOverrideId: 0,
+  BulletsAllowGroups: false,
+  BulletsFullScreen: false,
+  TrophiesOnShots: false,
+  TrophiesAlways: false,
 };

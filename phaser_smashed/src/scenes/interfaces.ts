@@ -7,7 +7,7 @@ export interface Debug {
   Level: number;
   ModeInfinity: boolean;
   TimeMinutes: number;
-  InfinityShots: number;
+  NumShots: number;
   MusicTrack: number;
   MusicActive: boolean;
   UpdateLoopsNumSkip: number;
@@ -43,6 +43,7 @@ export interface Debug {
   BulletsFullScreen: boolean;
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
+  [key: string]: any; // add index signature
 }
 
 export interface CharacterMove {
