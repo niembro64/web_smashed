@@ -520,7 +520,7 @@ export function createShields(game: Game): void {
   });
 }
 export function createPlayerIdCircles(game: Game): void {
-  if (!game.debug.PlayerIdVisible) {
+  if (!game.debug.PlayerIdVisible || game.debug.CharsColored) {
     return;
   }
 

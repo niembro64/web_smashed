@@ -4,7 +4,7 @@ import { getIsAttackEnergyOffscreen } from './attacks';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
 export function updateCirclesLocations(game: Game): void {
-  if (!game.debug.PlayerIdVisible) {
+  if (!game.debug.PlayerIdVisible || game.debug.CharsColored) {
     return;
   }
 

@@ -642,12 +642,10 @@ h2 {
   justify-content: space-evenly;
   align-items: center;
   overflow: visible;
-  border: 1px dashed lime;
 }
 .player-choices-left {
   flex: 1;
   height: 100%;
-  border: 1px dashed red;
   padding-left: 2vw;
   padding-right: 1vw;
   display: flex;
@@ -659,7 +657,6 @@ h2 {
 .player-choices-right {
   flex: 4;
   height: 100%;
-  border: 1px dashed blue;
   padding-left: 1vw;
   padding-right: 2vw;
   display: flex;
