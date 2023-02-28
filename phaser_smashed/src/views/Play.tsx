@@ -1428,16 +1428,37 @@ function Play() {
                       }
                     }}
                   >
-                    <div className="debug-value">
-                      <p>
-                        {typeof value !== 'boolean'
-                          ? value
-                          : value
-                          ? emoji.greenCheck
-                          : emoji.redX}
+                    {key === 'MusicTrack' && (
+                      <p className="key-start">
+                        Music{' '}
+                        {(() => {
+                          switch (value) {
+                            case 0:
+                              return 'Dreamland';
+                            case 1:
+                              return 'NA-Monkey';
+                            case 2:
+                              return 'NA-Royksopp';
+                            case 3:
+                              return '1200 Micro';
+                            default:
+                              return 'Off';
+                          }
+                        })()}
                       </p>
-                    </div>
-                    <p className="key">{key}</p>
+                    )}
+                    {key !== 'MusicTrack' && (
+                      <div className="debug-value">
+                        <p>
+                          {typeof value !== 'boolean'
+                            ? value
+                            : value
+                            ? emoji.greenCheck
+                            : emoji.redX}
+                        </p>
+                      </div>
+                    )}
+                    {key !== 'MusicTrack' && <p className="key-start">{key}</p>}
                   </div>
                 );
               })}
