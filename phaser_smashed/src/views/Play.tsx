@@ -25,7 +25,7 @@ import importedMonkeys from '../sounds/monkeys.ogg';
 import {
   CharacterId,
   Debug,
-  PlayerConfig,
+  PlayerConfigOption,
   Quote,
   WebState,
   InputType,
@@ -303,16 +303,16 @@ function Play() {
   }, [smashConfig]);
 
   // always keep Chez and BlackChez at positions 4 and 5
-  const smashConfigOptions: PlayerConfig[] = [
-    { characterId: 0, scale: 0.9, name: 'Mario' },
-    { characterId: 1, scale: 0.9, name: 'Link' },
-    { characterId: 2, scale: 1, name: 'Pikachu' },
-    { characterId: 3, scale: 0.7, name: 'Kirby' },
-    { characterId: 4, scale: 1.2, name: 'Chez' },
-    { characterId: 5, scale: 1.2, name: 'BlackChez' },
-    { characterId: 6, scale: 0.6, name: 'GreenKoopa' },
-    { characterId: 7, scale: 0.6, name: 'RedKoopa' },
-    { characterId: 8, scale: 0.6, name: 'BlueKoopa' },
+  const smashConfigOptions: PlayerConfigOption[] = [
+    { characterId: 0, scale: 0.9, name: 'Mario', nameShort: 'MR' },
+    { characterId: 1, scale: 0.9, name: 'Link', nameShort: 'LK' },
+    { characterId: 2, scale: 1, name: 'Pikachu', nameShort: 'PK' },
+    { characterId: 3, scale: 0.7, name: 'Kirby', nameShort: 'KB' },
+    { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CZ' },
+    { characterId: 5, scale: 1.2, name: 'BlackChez', nameShort: 'BZ' },
+    { characterId: 6, scale: 0.6, name: 'GreenKoopa', nameShort: 'GK' },
+    { characterId: 7, scale: 0.6, name: 'RedKoopa', nameShort: 'RK' },
+    { characterId: 8, scale: 0.6, name: 'BlueKoopa', nameShort: 'BK' },
   ];
 
   const randomizeCharacters = () => {

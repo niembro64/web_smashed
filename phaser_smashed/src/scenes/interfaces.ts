@@ -455,6 +455,17 @@ export type CharacterName =
   | 'RedKoopa'
   | 'BlueKoopa';
 
+export type CharacterNameShort =
+  | 'MR'
+  | 'LK'
+  | 'PK'
+  | 'KB'
+  | 'CZ'
+  | 'BZ'
+  | 'GK'
+  | 'RK'
+  | 'BK';
+
 export interface SmashConfig {
   players: PlayerConfigSmall[];
 }
@@ -464,8 +475,9 @@ export interface PlayerConfigSmall {
   input: InputType;
 }
 
-export interface PlayerConfig {
+export interface PlayerConfigOption {
   name: CharacterName;
+  nameShort: CharacterNameShort;
   characterId: CharacterId;
   scale: number;
   input?: InputType;
