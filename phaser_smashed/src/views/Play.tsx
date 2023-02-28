@@ -803,17 +803,24 @@ function Play() {
   ];
 
   const clickPauseParent = () => {
+    console.log(
+      'GAME STATE',
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr
+    );
     if (webState === 'play') {
       if (
-        !(
-          myPhaser.current.scene.keys.game.gameState.name ===
-            'game-state-paused' ||
-          myPhaser.current?.scene?.keys?.game.gameState.name ===
-            'game-state-first-blood' ||
-          myPhaser.current?.scene?.keys?.game.gameState.name ===
-            'game-state-screen-clear'
-        )
+        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+          'game-state-paused' &&
+        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+          'game-state-first-blood' &&
+        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+          'game-state-screen-clear' &&
+        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+          'game-state-captured-flag' &&
+        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+          'game-state-finished'
       ) {
+        console.log('CLICK AND PAUSING');
         setGameState(myPhaser.current?.scene?.keys?.game, 'game-state-paused');
       }
     }
