@@ -37,6 +37,7 @@ import {
   WorkingController,
   PlayerConfigSmall,
   PlayChezState,
+  bar,
 } from '../scenes/interfaces';
 import { debugInit, debugMax } from '../debugOptions';
 import {
@@ -66,6 +67,8 @@ function Play() {
   monkeys.volume = 0.05;
   const monkeysRef = useRef<HTMLAudioElement>(monkeys);
 
+  // const [hasRunOnce, setHasRunOnce] = useState<boolean>(false);
+
   useEffect(() => {
     console.log('canPlayAudio', canPlayAudio);
 
@@ -76,7 +79,7 @@ function Play() {
       });
 
       monkeysRef.current.addEventListener('ended', () => {
-        // monkeysRef.current.play();
+        monkeysRef.current.play();
       });
     }
   }, [canPlayAudio]);
@@ -84,25 +87,25 @@ function Play() {
   useEffect(() => {
     const handleInteraction = () => {
       setCanPlayAudio(true);
-      document.removeEventListener('click', handleInteractionReturn);
-      document.removeEventListener('keydown', handleInteractionReturn);
+      // document.removeEventListener('click', handleInteractionReturn);
+      // document.removeEventListener('keydown', handleInteractionReturn);
       document.removeEventListener('touchstart', handleInteractionReturn);
       console.log('An interaction has occurred!');
     };
     const handleInteractionReturn = () => {
-      setCanPlayAudio(false);
+      // setCanPlayAudio(false);
       console.log('An interaction has occurred!');
     };
 
     // Add event listener to document object for any user interaction
-    document.addEventListener('click', handleInteraction, { once: true });
-    document.addEventListener('keydown', handleInteraction, { once: true });
+    // document.addEventListener('click', handleInteraction, { once: true });
+    // document.addEventListener('keydown', handleInteraction, { once: true });
     document.addEventListener('touchstart', handleInteraction, { once: true });
 
     // Clean up event listener on unmount
     return () => {
-      document.removeEventListener('click', handleInteractionReturn);
-      document.removeEventListener('keydown', handleInteractionReturn);
+      // document.removeEventListener('click', handleInteractionReturn);
+      // document.removeEventListener('keydown', handleInteractionReturn);
       document.removeEventListener('touchstart', handleInteractionReturn);
     };
   }, []);
@@ -334,6 +337,20 @@ function Play() {
   const idColors: string[] = ['id-red', 'id-blue', 'id-yellow', 'id-green'];
 
   useEffect(() => {
+    bar();
+    bar();
+    bar();
+    bar();
+    bar();
+    bar();
+    console.log('showLoader', showLoader);
+    bar();
+    bar();
+    bar();
+    bar();
+  }, [showLoader]);
+
+  useEffect(() => {
     console.log('smashConfig', smashConfig);
     // setPlayChezState({ name: 'up', moment: moment() });
   }, [smashConfig]);
@@ -464,7 +481,9 @@ function Play() {
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
   const onClickStartStartButton = async () => {
-    if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+    // if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+    if (myPhaser?.current?.scene?.keys?.game) {
+      myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
     }
 
@@ -539,7 +558,8 @@ function Play() {
     let myMoment = moment();
     // let myDate = momentToDate(myMoment);
 
-    setShowLoaderIntervalFunction();
+    setShowLoader(true);
+    // setShowLoaderIntervalFunction();
 
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
@@ -554,9 +574,19 @@ function Play() {
     setSession(s);
   };
 
+  useEffect(() => {
+    switch (showLoader) {
+      case true:
+        setShowLoaderIntervalFunction();
+        break;
+      case false:
+        break;
+    }
+  }, [showLoader]);
+
   const setShowLoaderIntervalFunction = () => {
     monkeysRef.current.play();
-    setShowLoader(true);
+    // setShowLoader(true);
     const myInterval = setInterval(() => {
       console.log(
         'myPhaser.current?.scene?.keys?.game?.loaded',
@@ -924,6 +954,10 @@ function Play() {
     );
   };
 
+  const xxx = () => {
+    onClickStartStartButton();
+  };
+
   const onEventKeyboard = (event: any) => {
     let k = event.key;
 
@@ -1006,7 +1040,8 @@ function Play() {
       switch (k) {
         case 'Backspace':
           // onClickReStartEventHandler();
-          onClickStartStartButton();
+          xxx();
+          // onClickStartStartButton();
           break;
         case 'Escape':
           onClickBackEventHandler();
@@ -1645,7 +1680,14 @@ function Play() {
             )}
             {webState !== 'start' && (
               // <div className="link-tag" onClick={onClickReStartEventHandler}>
-              <div className="link-tag" onClick={onClickStartStartButton}>
+              <div
+                className="link-tag"
+                onClick={() => {
+                  xxx();
+
+                  // onClickStartStartButton();
+                }}
+              >
                 <span>ReStart</span>
               </div>
             )}
