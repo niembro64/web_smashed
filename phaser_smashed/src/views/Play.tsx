@@ -1746,8 +1746,7 @@ function Play() {
               <h1>Debug Options</h1>
               <div id="debug-col">
                 {Object.entries(debug).map(([key, value], index: number) => {
-                  const showInDebug: boolean = !!debugShow[key];
-                  if (showInDebug) {
+                  if (!!debugShow[key]) {
                     return null;
                   }
 
