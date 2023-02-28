@@ -96,7 +96,7 @@ export function filterPlayerTDark(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillPlayerTDark(player, game);
   } else {
     setTintPlayerTDark(player, game);
@@ -107,7 +107,7 @@ export function filterPlayerDark(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillPlayerDark(player, game);
   } else {
     setTintPlayerDark(player, game);
@@ -119,7 +119,7 @@ export function filterPlayerNormal(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillPlayerID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
     setTintPlayerNormal(player, game);
@@ -131,7 +131,7 @@ export function filterPlayerTRed(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillPlayerTRed(player, game);
   } else {
     setTintPlayerTRed(player, game);
@@ -142,7 +142,7 @@ export function filterPlayerRed(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillPlayerRed(player, game);
   } else {
     setTintPlayerRed(player, game);
@@ -154,7 +154,7 @@ export function filterPlayerID(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillPlayerID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
     setTintPlayerID(player, game.colorCircles[playerIndex].colorNumber);
@@ -238,7 +238,7 @@ export function filterAttackEnergyNormal(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharacterTinted) {
+  if (game.debug.CharsColored) {
     setFillAttackPhysicalID(player, game.colorCircles[playerIndex].colorNumber);
     setFillAttackEnergyID(player, game.colorCircles[playerIndex].colorNumber);
   } else {

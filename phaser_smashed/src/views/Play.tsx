@@ -376,7 +376,7 @@ function Play() {
       let ratioLower = 4 / (numCharacters - 2);
       let newCharacterId: number;
 
-      if (debug.AllowCharsChez) {
+      if (debug.UseChez) {
         newCharacterId = Math.floor(Math.random() * numCharacters);
       } else {
         if (Math.random() < ratioLower) {
@@ -666,7 +666,7 @@ function Play() {
   // };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debug.AllowCharsChez || webState === 'play') {
+    if (debug.UseChez || webState === 'play') {
       return;
     }
     if (charId === 4) {
@@ -737,7 +737,7 @@ function Play() {
     let newCharacterId = choice.characterId + 1;
 
     // player cannot directly select Chez or BlackChez
-    if (!debug.DevMode && !debug.AllowCharsChez) {
+    if (!debug.DevMode && !debug.UseChez) {
       while (newCharacterId === 4 || newCharacterId === 5) {
         newCharacterId++;
       }
@@ -747,7 +747,7 @@ function Play() {
       newCharacterId = 0;
     }
 
-    if (!debug.DevMode && !debug.AllowCharsExtended && newCharacterId > 5) {
+    if (!debug.DevMode && !debug.UseKoopas && newCharacterId > 5) {
       newCharacterId = 0;
     }
 
@@ -1394,7 +1394,54 @@ function Play() {
           </div>
           {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
           <div className="player-choices">
-            <div className="player-choices-left"></div>
+            <div className="player-choices-left">
+              {Object.entries(debug).map(([key, value], index: number) => {
+                if (!debugShow[key]) {
+                  return null;
+                }
+
+                return (
+                  <div
+                    id="optionStart"
+                    key={index}
+                    onClick={(e) => {
+                      blipSound();
+                      e.stopPropagation();
+                      if (typeof value === 'number') {
+                        setDebug((prevState) => ({
+                          ...prevState,
+                          [key]:
+                            value - 1 < 0
+                              ? getMaxFromKey(key)
+                              : // ? getMaxFromKey(key as keyof Debug)
+                                value - 1,
+                        }));
+                        console.log(index, key, value);
+                      }
+
+                      if (typeof value === 'boolean') {
+                        setDebug((prevState) => ({
+                          ...prevState,
+                          [key]: !value,
+                        }));
+                        console.log(index, key, value);
+                      }
+                    }}
+                  >
+                    <div className="debug-value">
+                      <p>
+                        {typeof value !== 'boolean'
+                          ? value
+                          : value
+                          ? emoji.greenCheck
+                          : emoji.redX}
+                      </p>
+                    </div>
+                    <p className="key">{key}</p>
+                  </div>
+                );
+              })}
+            </div>
             <div className="player-choices-right">
               {smashConfig.players.map((p, pIndex) => {
                 return (
@@ -1752,7 +1799,7 @@ function Play() {
 
                   return (
                     <div
-                      id="option"
+                      id="optionDebug"
                       key={index}
                       onClick={(e) => {
                         blipSound();

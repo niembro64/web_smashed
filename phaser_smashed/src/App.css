@@ -439,7 +439,7 @@ h2 {
   align-items: center;
   flex-wrap: wrap;
 }
-#option {
+#optionDebug {
   width: 24%;
   background-color: var(--gray-dark);
   padding: 0.7vw 0vw 0.5vw 0vw;
@@ -452,10 +452,31 @@ h2 {
   cursor: pointer;
   border: 2px solid black;
 }
-#option:hover {
+
+#optionDebug:hover {
   background-color: var(--gray-medium);
 }
-#option:active {
+#optionDebug:active {
+  background-color: var(--gray-light);
+}
+#optionStart {
+  width: 100%;
+  background-color: var(--gray-dark);
+  padding: 0.7vw 0vw 0.5vw 0vw;
+  margin: 0vw 0vw 0vw 0vw;
+  border-radius: var(--border-radius-small);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+#optionStart:hover {
+  background-color: var(--gray-medium);
+}
+#optionStart:active {
   background-color: var(--gray-light);
 }
 .debug-value {
@@ -631,7 +652,7 @@ h2 {
   padding-right: 1vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
   overflow: visible;
 }

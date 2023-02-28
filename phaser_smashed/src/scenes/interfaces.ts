@@ -12,7 +12,7 @@ export interface Debug {
   MusicActive: boolean;
   UpdateLoopsNumSkip: number;
   FrictionAirActive: boolean;
-  Camera: boolean;
+  UseCamera: boolean;
   CamerasVisible: boolean;
   CollidersPvP: boolean;
   CollidersPvAP: boolean;
@@ -23,7 +23,7 @@ export interface Debug {
   CollidersABvAP: boolean;
   AEWrapScreen: boolean;
   PlayerIdVisible: boolean;
-  CharacterTinted: boolean;
+  CharsColored: boolean;
   WallJumpsActive: boolean;
   DefaultDamage: boolean;
   DefaultHitback: boolean;
@@ -33,8 +33,8 @@ export interface Debug {
   ConsoleLogButtons: boolean;
   ConsoleLogConnected: boolean;
   LoadTimeExtra: boolean;
-  AllowCharsChez: boolean;
-  AllowCharsExtended: boolean;
+  UseChez: boolean;
+  UseKoopas: boolean;
   SlowMoExplosions: boolean;
   TypedLoadingText: boolean;
   CharOverride: boolean;
