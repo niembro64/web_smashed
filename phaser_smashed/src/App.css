@@ -1866,8 +1866,8 @@ th {
 }
 
 .td-right {
-  min-width: 100px;
-  font-size: 1vw;
+  min-width: 60px;
+  font-size: 0.8vw;
   /* font-size: 1.5vw;
   font-weight: bold; */
   text-align: right;
@@ -1875,11 +1875,15 @@ th {
   /* border: 1px solid white; */
   /* border-radius: var(--border-radius-small); */
   /* background-color: rgba(0, 0, 0, 0.5); */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
 }
 
 .td-left {
   min-width: 100px;
-  font-size: 1vw;
+  font-size: 0.8vw;
   /* font-size: 1.5vw;
   font-weight: bold; */
   text-align: left;
@@ -1889,9 +1893,18 @@ th {
   /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
-.td-odd {
+#td-odd {
   background-color: rgba(0, 0, 0, 0.5);
+  height: 3.5vw;
 }
-.td-even {
+#td-even {
   background-color: rgba(0, 0, 0, 0);
+  height: 3.5vw;
+}
+
+td > div:nth-child(2) {
+  margin-top: -0.5vw;
+  margin-right: 0.2vw;
+  font-size: 1.37vw;
+  /* font-family: 'Courier New', Courier, monospace; */
 }

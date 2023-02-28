@@ -304,15 +304,15 @@ function Play() {
 
   // always keep Chez and BlackChez at positions 4 and 5
   const smashConfigOptions: PlayerConfigOption[] = [
-    { characterId: 0, scale: 0.9, name: 'Mario', nameShort: 'MR' },
-    { characterId: 1, scale: 0.9, name: 'Link', nameShort: 'LK' },
-    { characterId: 2, scale: 1, name: 'Pikachu', nameShort: 'PK' },
-    { characterId: 3, scale: 0.7, name: 'Kirby', nameShort: 'KB' },
-    { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CZ' },
-    { characterId: 5, scale: 1.2, name: 'BlackChez', nameShort: 'BZ' },
-    { characterId: 6, scale: 0.6, name: 'GreenKoopa', nameShort: 'GK' },
-    { characterId: 7, scale: 0.6, name: 'RedKoopa', nameShort: 'RK' },
-    { characterId: 8, scale: 0.6, name: 'BlueKoopa', nameShort: 'BK' },
+    { characterId: 0, scale: 0.9, name: 'Mario', nameShort: 'MAR' },
+    { characterId: 1, scale: 0.9, name: 'Link', nameShort: 'LNK' },
+    { characterId: 2, scale: 1, name: 'Pikachu', nameShort: 'PKA' },
+    { characterId: 3, scale: 0.7, name: 'Kirby', nameShort: 'KRB' },
+    { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
+    { characterId: 5, scale: 1.2, name: 'BlackChez', nameShort: 'BCZ' },
+    { characterId: 6, scale: 0.6, name: 'GreenKoopa', nameShort: 'GKP' },
+    { characterId: 7, scale: 0.6, name: 'RedKoopa', nameShort: 'RKP' },
+    { characterId: 8, scale: 0.6, name: 'BlueKoopa', nameShort: 'BKP' },
   ];
 
   const randomizeCharacters = () => {
@@ -1936,6 +1936,7 @@ function Play() {
                             RECENT GAMES TIMEZONE:{tz}
                           </td>
                           {/* <th className="td-left">WHERE</th> */}
+                          <th className="td-right"> CONFIG</th>
                           <th className="td-right"> SHOTS</th>
                           <th className="td-right">DEATHS</th>
                           <th className="td-right">HITS</th>
@@ -1945,6 +1946,51 @@ function Play() {
                       <tbody>
                         {/* <p className="text-small">ID DATE</p> */}
                         {allSessions.map((s: SessionInfo, sIndex: number) => {
+                          let gameViewTop: string = '';
+                          let gameViewBottom: string = '';
+
+                          let sc: SmashConfig | null = null;
+                          try {
+                            sc = JSON.parse(s.smashConfig);
+                            console.log('smashConfig', sc);
+                          } catch (e) {
+                            console.log('error parsing smashConfigString', e);
+                          }
+
+                          if (sc !== null) {
+                            sc.players.forEach((sessionPlayer: any) => {
+                              gameViewTop +=
+                                smashConfigOptions[sessionPlayer.characterId]
+                                  .nameShort + ' ';
+                              console.log(
+                                'sessionPlayer.input',
+                                sessionPlayer.input
+                              );
+                              const twoSpaces =
+                                String.fromCharCode(32) +
+                                String.fromCharCode(32);
+                              switch (sessionPlayer.input) {
+                                case 0:
+                                  gameViewBottom += sessionPlayer.input + ' ';
+                                  break;
+                                case 1:
+                                  gameViewBottom += '' + emoji.gamepad + ' ';
+                                  // gameViewBottom += 'PD ';
+                                  break;
+                                case 2:
+                                  gameViewBottom +=
+                                    '' + emoji.keyboardWhite + ' ';
+                                  break;
+                                case 3:
+                                  gameViewBottom += '' + emoji.bot + ' ';
+                                  break;
+                                default:
+                                  gameViewBottom += '?? ';
+                                  break;
+                              }
+                            });
+                          }
+
                           const allSessionsLength: number = allSessions.length;
                           const totalDigits =
                             allSessionsLength.toString().length;
@@ -1994,12 +2040,21 @@ function Play() {
 
                           return (
                             <tr
-                              className={sIndex % 2 ? 'td-odd' : 'td-even'}
+                              id={sIndex % 2 ? 'td-odd' : 'td-even'}
                               key={sIndex}
                             >
                               <td className="td-left">
                                 {paddedIndex} {formattedDate} {s.country}{' '}
                                 {s.region} {s.city}
+                              </td>
+                              <td className="td-right">
+                                <div>{gameViewTop ? gameViewTop : ' '}</div>
+                                <div>
+                                  {gameViewBottom ? gameViewBottom : ' '}
+                                </div>
+                                {/* {totalShots < 10
+                                    ? '_' + totalShots
+                                    : totalShots} */}
                               </td>
                               <td className="td-right">
                                 {totalShots ? totalShots : ' '}

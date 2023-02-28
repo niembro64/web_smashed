@@ -456,15 +456,15 @@ export type CharacterName =
   | 'BlueKoopa';
 
 export type CharacterNameShort =
-  | 'MR'
-  | 'LK'
-  | 'PK'
-  | 'KB'
-  | 'CZ'
-  | 'BZ'
-  | 'GK'
-  | 'RK'
-  | 'BK';
+  | 'MAR'
+  | 'LNK'
+  | 'PKA'
+  | 'KRB'
+  | 'CHZ'
+  | 'BCZ'
+  | 'GKP'
+  | 'RKP'
+  | 'BKP';
 
 export interface SmashConfig {
   players: PlayerConfigSmall[];
@@ -602,6 +602,11 @@ export const emoji = {
   waiting: '⏳',
   bot: '🤖',
   dice: '🎲',
+  emptySpace: '⬛',
+  empty: 'ㅤ',
+  emptyWhite: 'ㅤ',
+  emptyBlack: 'ㅤ',
+  emptyNote: '🗅',
 };
 
 //🥃⭐🔫⚪​🍺​🍻​🥂​🍾​🥃
