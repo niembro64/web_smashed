@@ -1931,13 +1931,13 @@ function Play() {
                   <div className="scroller" ref={scrollerRef}>
                     <table>
                       <thead>
-                        <tr>
-                          <td className="td-left">
+                        <tr id="tr-header">
+                          <th className="td-left">
                             RECENT GAMES TIMEZONE:{tz}
-                          </td>
+                          </th>
                           {/* <th className="td-left">WHERE</th> */}
-                          <th className="td-right"> CONFIG</th>
-                          <th className="td-right"> SHOTS</th>
+                          <th className="td-left">CONFIG</th>
+                          <th className="td-right">SHOTS</th>
                           <th className="td-right">DEATHS</th>
                           <th className="td-right">HITS</th>
                           <th> </th>
@@ -2047,7 +2047,7 @@ function Play() {
                                 {paddedIndex} {formattedDate} {s.country}{' '}
                                 {s.region} {s.city}
                               </td>
-                              <td className="td-right">
+                              <td className="td-left">
                                 <div>{gameViewTop ? gameViewTop : ' '}</div>
                                 <div>
                                   {gameViewBottom ? gameViewBottom : ' '}
