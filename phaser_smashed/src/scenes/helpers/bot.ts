@@ -325,7 +325,8 @@ export function updateBot(
     // WALL JUMPING
     //////////////////////
     (t.left || t.right) &&
-    hasPlayerTouchedWallRecently(player)
+    hasPlayerTouchedWallRecently(player) &&
+    Math.random() > 0.01
   ) {
     p.Y = p.Y ? false : true;
   } else if (
@@ -335,7 +336,8 @@ export function updateBot(
     pVelocity.x < 50 &&
     pVelocity.x > -50 &&
     (d.left === 9 || d.right === 9) &&
-    t.down
+    t.down &&
+    Math.random() > 0.01
   ) {
     p.Y = !p.Y;
     // p.Y = true;
@@ -354,7 +356,7 @@ export function updateBot(
     //////////////////////
     !getIsPlayerInAir(player) &&
     getIsNearestAttackEnergyThisCloseAbove(player, playerIndex, game, 200) &&
-    Math.random() > 0.9
+    Math.random() > 0.01
   ) {
     p.A = !p.A;
   } else {
@@ -367,7 +369,8 @@ export function updateBot(
   if (
     !getSameHorizontalSlice(player, game) &&
     !getIsBotNearNearestPlayer(player, playerIndex, game, 200) &&
-    getIsBotFacingNearestPlayer(player, playerIndex, game)
+    getIsBotFacingNearestPlayer(player, playerIndex, game) &&
+    Math.random() > 0.01
   ) {
     p.X = true;
   } else {
@@ -379,9 +382,10 @@ export function updateBot(
   //////////////////////
   if (
     getIsBotNearNearestPlayer(player, playerIndex, game, 200) &&
-    getIsBotFacingNearestPlayer(player, playerIndex, game)
+    getIsBotFacingNearestPlayer(player, playerIndex, game) &&
+    Math.random() > 0.01
   ) {
-    if (Math.random() > 0.97) {
+    if (Math.random() > 0.9) {
       p.A = !p.A;
     }
   } else {
@@ -391,10 +395,10 @@ export function updateBot(
   //////////////////////
   // TOO FAR LEFT RIGHT
   //////////////////////
-  if (getIsBotTooFarLeft(player, game)) {
+  if (getIsBotTooFarLeft(player, game) && Math.random() > 0.01) {
     p.right = true;
     p.left = false;
-  } else if (getIsBotTooFarRight(player, game)) {
+  } else if (getIsBotTooFarRight(player, game) && Math.random() > 0.01) {
     p.left = true;
     p.right = false;
   }
@@ -402,7 +406,7 @@ export function updateBot(
   //////////////////////
   // TOO FAR UP
   //////////////////////
-  if (getIsBotTooFarUp(player, game)) {
+  if (getIsBotTooFarUp(player, game) && Math.random() > 0.01) {
     p.Y = false;
     p.down = true;
     p.up = false;
@@ -413,7 +417,12 @@ export function updateBot(
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
-  if (pVelocity.y > 0 && onLastJump && getIsBotInPitAreaLeft(player, game)) {
+  if (
+    pVelocity.y > 0 &&
+    onLastJump &&
+    getIsBotInPitAreaLeft(player, game) &&
+    Math.random() > 0.01
+  ) {
     p.left = true;
     p.right = false;
   }
@@ -421,7 +430,12 @@ export function updateBot(
   //////////////////////
   // RIGHT SIDE OF PIT
   //////////////////////
-  if (pVelocity.y > 0 && onLastJump && getIsBotInPitAreaRight(player, game)) {
+  if (
+    pVelocity.y > 0 &&
+    onLastJump &&
+    getIsBotInPitAreaRight(player, game) &&
+    Math.random() > 0.01
+  ) {
     p.right = true;
     p.left = false;
   }
