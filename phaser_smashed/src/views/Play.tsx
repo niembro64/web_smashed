@@ -37,6 +37,7 @@ import {
   WorkingController,
   PlayerConfigSmall,
   PlayChezState,
+  bar,
 } from '../scenes/interfaces';
 import { debugInit, debugMax } from '../debugOptions';
 import {
@@ -64,21 +65,6 @@ function Play() {
   const monkeys = new Audio(importedMonkeys);
   monkeys.volume = 0.05;
   const monkeysRef = useRef<HTMLAudioElement>(monkeys);
-
-  useEffect(() => {
-    console.log('canPlayAudio', canPlayAudio);
-
-    if (canPlayAudio) {
-      garageRef.current.play();
-      garageRef.current.addEventListener('ended', () => {
-        garageRef.current.play();
-      });
-
-      monkeysRef.current.addEventListener('ended', () => {
-        // monkeysRef.current.play();
-      });
-    }
-  }, [canPlayAudio]);
 
   useEffect(() => {
     const handleInteraction = () => {
@@ -176,6 +162,41 @@ function Play() {
     moment: moment(),
   });
 
+  const onClickEye = () => {
+    setOpenEye(!openEye);
+  };
+
+  useEffect(() => {
+    bar();
+    bar();
+    bar();
+    bar();
+    console.log('webState');
+    bar();
+    bar();
+    bar();
+    bar();
+  }, [webState]);
+
+  //////////////////////////////////////////////////////
+  // MUSIC /////////////////////////////////////////////
+  //////////////////////////////////////////////////////
+
+  useEffect(() => {
+    console.log('canPlayAudio', canPlayAudio);
+
+    if (canPlayAudio) {
+      garageRef.current.play();
+      garageRef.current.addEventListener('ended', () => {
+        garageRef.current.play();
+      });
+
+      monkeysRef.current.addEventListener('ended', () => {
+        monkeysRef.current.play();
+      });
+    }
+  }, [canPlayAudio]);
+
   useEffect(() => {
     const handleTranceEnded = (): void => {
       setFirstCharacterSlot(4);
@@ -207,10 +228,6 @@ function Play() {
     }
     setPlayChezStatePrev(JSON.parse(JSON.stringify(playChezState)));
   }, [playChezState]);
-
-  const onClickEye = () => {
-    setOpenEye(!openEye);
-  };
 
   useEffect(() => {
     console.log('webState', webState);
@@ -443,8 +460,19 @@ function Play() {
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
   const onClickStartStartButton = async () => {
-    if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+    const isRestart: boolean = myPhaser?.current?.scene?.keys?.game?.loaded
+      ? true
+      : false;
+    const isStart = !isRestart;
+
+    if (isRestart) {
       myPhaser.current.destroy(true);
+      // monkeysRef.current.play();
+    }
+    if (isStart) {
+      setWebState('play');
+      setPlayChezState({ name: 'up', moment: moment() });
+      garageRef.current.pause();
     }
 
     setShowControls(false);
@@ -454,9 +482,7 @@ function Play() {
     setShowHistory(false);
     setShowOptions(false);
 
-    setPlayChezState({ name: 'up', moment: moment() });
     startSound();
-    setWebState('play');
 
     let players = JSON.parse(JSON.stringify(smashConfig.players));
     // let newPlayers: {
@@ -518,7 +544,8 @@ function Play() {
     let myMoment = moment();
     // let myDate = momentToDate(myMoment);
 
-    setShowLoaderIntervalFunction();
+    // setShowLoaderIntervalFunction();
+    setShowLoader(true);
 
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
@@ -534,25 +561,52 @@ function Play() {
   };
 
   const setShowLoaderIntervalFunction = () => {
-    monkeysRef.current.play();
-    setShowLoader(true);
+    // bar();
+    // bar();
+    // bar();
+    // console.log('setShowLoaderIntervalFunction');
+    // bar();
+    // bar();
+    // bar();
+    // bar();
+    // monkeysRef.current.play();
+    // setShowLoader(true);
     const myInterval = setInterval(() => {
       console.log(
         'myPhaser.current?.scene?.keys?.game?.loaded',
         myPhaser?.current?.scene?.keys?.game?.loaded
       );
       if (myPhaser?.current?.scene?.keys?.game?.loaded) {
-        setTimeout(
-          () => {
-            setShowLoader(false);
-          },
-          debug.DevMode ? 0 : 1
-        );
+        setShowLoader(false);
         clearInterval(myInterval);
-        monkeysRef.current.pause();
+        // monkeysRef.current.pause();
       }
     }, 1);
   };
+
+  useEffect(() => {
+    switch (showLoader) {
+      case true:
+        setShowLoaderIntervalFunction();
+        // monkeysRef.current.play();
+        break;
+      case false:
+        // monkeysRef.current.pause();
+        break;
+    }
+  }, [showLoader]);
+
+  /// ALL MUSIC CONROLLER
+  useEffect(() => {
+    switch (webState) {
+      case 'start':
+        garageRef.current.play();
+        break;
+      case 'play':
+        garageRef.current.pause();
+        break;
+    }
+  }, [webState, showLoader]);
 
   // const onClickRotateInput = (index: number): void => {
   //   let newPlayers = [...smashConfig.players];
@@ -1191,7 +1245,7 @@ function Play() {
             </div>
           </div>
         )}
-      {webState !== 'start' && showLoader && (
+      {showLoader && (
         // {true && (
         <div className="loader">
           {quotesRandomNumber % 2 === 0 && (
