@@ -66,21 +66,6 @@ function Play() {
   const monkeysRef = useRef<HTMLAudioElement>(monkeys);
 
   useEffect(() => {
-    console.log('canPlayAudio', canPlayAudio);
-
-    if (canPlayAudio) {
-      garageRef.current.play();
-      garageRef.current.addEventListener('ended', () => {
-        garageRef.current.play();
-      });
-
-      monkeysRef.current.addEventListener('ended', () => {
-        // monkeysRef.current.play();
-      });
-    }
-  }, [canPlayAudio]);
-
-  useEffect(() => {
     const handleInteraction = () => {
       setCanPlayAudio(true);
       document.removeEventListener('click', handleInteractionReturn);
@@ -216,7 +201,7 @@ function Play() {
     console.log('webState', webState);
     switch (webState) {
       case 'start':
-        garageRef.current.play();
+        // garageRef.current.play();
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -227,7 +212,7 @@ function Play() {
         })();
         break;
       case 'play':
-        garageRef.current.pause();
+        // garageRef.current.pause();
         // monkeysRef.current.play();
         setTopBarDivExists(true);
         break;
@@ -533,8 +518,55 @@ function Play() {
     setSession(s);
   };
 
+  ///////////////////////////////////////
+  // MUSIC
+  ///////////////////////////////////////
+
+  useEffect(() => {
+    console.log('canPlayAudio', canPlayAudio);
+
+    if (canPlayAudio) {
+      garageRef.current.play();
+      garageRef.current.addEventListener('ended', () => {
+        garageRef.current.play();
+      });
+
+      monkeysRef.current.addEventListener('ended', () => {
+        monkeysRef.current.play();
+      });
+    }
+  }, [canPlayAudio]);
+
+  useEffect(() => {
+    if (!canPlayAudio) {
+      return;
+    }
+
+    if (showLoader) {
+      monkeysRef.current.play();
+      return;
+    }
+    if (!showLoader) {
+      monkeysRef.current.pause();
+    }
+  }, [canPlayAudio, showLoader]);
+
+  useEffect(() => {
+    if (!canPlayAudio) {
+      return;
+    }
+
+    if (webState === 'play' || showLoader) {
+      garageRef.current.pause();
+      return;
+    }
+    if (webState === 'start' && !showLoader) {
+      garageRef.current.play();
+    }
+  }, [canPlayAudio, webState, showLoader]);
+
   const setShowLoaderIntervalFunction = () => {
-    monkeysRef.current.play();
+    // monkeysRef.current.play();
     setShowLoader(true);
     const myInterval = setInterval(() => {
       console.log(
@@ -542,16 +574,13 @@ function Play() {
         myPhaser?.current?.scene?.keys?.game?.loaded
       );
       if (myPhaser?.current?.scene?.keys?.game?.loaded) {
-        setTimeout(
-          () => {
-            setShowLoader(false);
-          },
-          debug.DevMode ? 0 : 1
-        );
+        setTimeout(() => {
+          setShowLoader(false);
+        }, 10);
         clearInterval(myInterval);
-        monkeysRef.current.pause();
+        // monkeysRef.current.pause();
       }
-    }, 1);
+    }, 10);
   };
 
   // const onClickRotateInput = (index: number): void => {
