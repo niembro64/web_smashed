@@ -608,12 +608,39 @@ h2 {
   align-items: center;
   z-index: 1;
 }
+
 .player-choices {
   flex: 1;
   /* height: 95%; */
-  width: 80%;
-  max-width: 1100px;
+  width: 100%;
+  /* width: 80%;
+  max-width: 1100px; */
 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: visible;
+  border: 1px dashed lime;
+}
+.player-choices-left {
+  flex: 1;
+  height: 100%;
+  border: 1px dashed red;
+  padding-left: 2vw;
+  padding-right: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: visible;
+}
+.player-choices-right {
+  flex: 4;
+  height: 100%;
+  border: 1px dashed blue;
+  padding-left: 1vw;
+  padding-right: 2vw;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

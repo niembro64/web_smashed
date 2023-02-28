@@ -1394,190 +1394,195 @@ function Play() {
           </div>
           {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
           <div className="player-choices">
-            {smashConfig.players.map((p, pIndex) => {
-              return (
-                <div className="player-choice" key={pIndex}>
-                  {inputArray[pIndex] === 0 && (
-                    <div
-                      className="player-char-blank"
-                      onClick={() => {
-                        onClickRotateSelection(pIndex);
-                        setPlayChezState({ name: 'up', moment: moment() });
-                      }}
-                    >
-                      <div className="startImageWrapper">
-                        {(inputArray[pIndex] === 1 ||
-                          inputArray[pIndex] === 2 ||
-                          inputArray[pIndex] === 3) && (
-                          <img
+            <div className="player-choices-left"></div>
+            <div className="player-choices-right">
+              {smashConfig.players.map((p, pIndex) => {
+                return (
+                  <div className="player-choice" key={pIndex}>
+                    {inputArray[pIndex] === 0 && (
+                      <div
+                        className="player-char-blank"
+                        onClick={() => {
+                          onClickRotateSelection(pIndex);
+                          setPlayChezState({ name: 'up', moment: moment() });
+                        }}
+                      >
+                        <div className="startImageWrapper">
+                          {(inputArray[pIndex] === 1 ||
+                            inputArray[pIndex] === 2 ||
+                            inputArray[pIndex] === 3) && (
+                            <img
+                              className={
+                                'startImage' +
+                                (pIndex > 1 ? 'Inverse' : 'Normal')
+                              }
+                              src={
+                                'images/character_' +
+                                p.characterId.toString() +
+                                '_cropped.png'
+                              }
+                              // width={(55 * p.scale).toString() + '%'}
+                              width={
+                                (
+                                  55 * smashConfigOptions[p.characterId].scale
+                                ).toString() + '%'
+                              }
+                              alt="char"
+                            />
+                          )}
+                          {/* <p className="player-char-image-name">{p.name}</p> */}
+                          <p className="player-char-image-name">
+                            {smashConfigOptions[p.characterId].name}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    {(inputArray[pIndex] === 1 ||
+                      inputArray[pIndex] === 2 ||
+                      inputArray[pIndex] === 3) && (
+                      <div
+                        className="player-char"
+                        onClick={() => {
+                          onClickRotateSelection(pIndex);
+                          setPlayChezState({ name: 'up', moment: moment() });
+                        }}
+                      >
+                        <div className="startImageWrapper">
+                          <div
                             className={
-                              'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal')
+                              'id-circle ' +
+                              idColors[getNumActiveBeforeMe(pIndex)]
                             }
-                            src={
-                              'images/character_' +
-                              p.characterId.toString() +
-                              '_cropped.png'
-                            }
-                            // width={(55 * p.scale).toString() + '%'}
-                            width={
-                              (
-                                55 * smashConfigOptions[p.characterId].scale
-                              ).toString() + '%'
-                            }
-                            alt="char"
-                          />
+                          ></div>
+                          {(inputArray[pIndex] === 1 ||
+                            inputArray[pIndex] === 2 ||
+                            inputArray[pIndex] === 3) && (
+                            <img
+                              className={
+                                'startImage' +
+                                (pIndex > 1 ? 'Inverse' : 'Normal')
+                              }
+                              src={
+                                'images/character_' +
+                                p.characterId.toString() +
+                                '_cropped.png'
+                              }
+                              // width={(55 * p.scale).toString() + '%'}
+                              width={
+                                (
+                                  55 * smashConfigOptions[p.characterId].scale
+                                ).toString() + '%'
+                              }
+                              alt="char"
+                            />
+                          )}
+                          {/* <p className="player-char-image-name">{p.name}</p> */}
+                          <p className="player-char-image-name">
+                            {smashConfigOptions[p.characterId].name}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    {inputArray[pIndex] === 0 && (
+                      <div
+                        className="b-oscuro b-black"
+                        onClick={() => {
+                          onClickOscura(pIndex);
+                          // setPlayChezState({ name: 'up', moment: moment() });
+                          // onClickSetInputArrayElement(
+                          //   cPlayerIndex,
+                          //   inputArray[cPlayerIndex] + 1 > 2
+                          //     ? (0 as InputType)
+                          //     : ((inputArray[cPlayerIndex] + 1) as InputType)
+                          // );
+                        }}
+                      >
+                        <span>Off</span>
+                        <div className="button-input-emoji">
+                          {emoji.cloudWhite}
+                        </div>
+                      </div>
+                    )}
+                    {inputArray[pIndex] === 1 && (
+                      <div
+                        className="b-oscuro b-dark"
+                        onClick={() => {
+                          onClickOscura(pIndex);
+                          // setPlayChezState({ name: 'up', moment: moment() });
+                          // onClickSetInputArrayElement(
+                          //   cPlayerIndex,
+                          //   inputArray[cPlayerIndex] + 1 > 2
+                          //     ? (0 as InputType)
+                          //     : ((inputArray[cPlayerIndex] + 1) as InputType)
+                          // );
+                        }}
+                      >
+                        <span>Gamepad</span>
+                        <span id="input-sub">
+                          {getNumControllersExistLower(pIndex) + 1}
+                        </span>
+                        {pIndex < 2 && (
+                          <div className="button-input-emoji">
+                            {emoji.gamepad}
+                          </div>
                         )}
-                        {/* <p className="player-char-image-name">{p.name}</p> */}
-                        <p className="player-char-image-name">
-                          {smashConfigOptions[p.characterId].name}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  {(inputArray[pIndex] === 1 ||
-                    inputArray[pIndex] === 2 ||
-                    inputArray[pIndex] === 3) && (
-                    <div
-                      className="player-char"
-                      onClick={() => {
-                        onClickRotateSelection(pIndex);
-                        setPlayChezState({ name: 'up', moment: moment() });
-                      }}
-                    >
-                      <div className="startImageWrapper">
-                        <div
-                          className={
-                            'id-circle ' +
-                            idColors[getNumActiveBeforeMe(pIndex)]
-                          }
-                        ></div>
-                        {(inputArray[pIndex] === 1 ||
-                          inputArray[pIndex] === 2 ||
-                          inputArray[pIndex] === 3) && (
-                          <img
-                            className={
-                              'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal')
-                            }
-                            src={
-                              'images/character_' +
-                              p.characterId.toString() +
-                              '_cropped.png'
-                            }
-                            // width={(55 * p.scale).toString() + '%'}
-                            width={
-                              (
-                                55 * smashConfigOptions[p.characterId].scale
-                              ).toString() + '%'
-                            }
-                            alt="char"
-                          />
+                        {!(pIndex < 2) && (
+                          <div className="button-input-emoji">
+                            {emoji.gamepad}
+                          </div>
                         )}
-                        {/* <p className="player-char-image-name">{p.name}</p> */}
-                        <p className="player-char-image-name">
-                          {smashConfigOptions[p.characterId].name}
-                        </p>
                       </div>
-                    </div>
-                  )}
-                  {inputArray[pIndex] === 0 && (
-                    <div
-                      className="b-oscuro b-black"
-                      onClick={() => {
-                        onClickOscura(pIndex);
-                        // setPlayChezState({ name: 'up', moment: moment() });
-                        // onClickSetInputArrayElement(
-                        //   cPlayerIndex,
-                        //   inputArray[cPlayerIndex] + 1 > 2
-                        //     ? (0 as InputType)
-                        //     : ((inputArray[cPlayerIndex] + 1) as InputType)
-                        // );
-                      }}
-                    >
-                      <span>Off</span>
-                      <div className="button-input-emoji">
-                        {emoji.cloudWhite}
+                    )}
+                    {inputArray[pIndex] === 2 && (
+                      <div
+                        className="b-oscuro b-dark"
+                        onClick={() => {
+                          onClickOscura(pIndex);
+                          // setPlayChezState({ name: 'up', moment: moment() });
+                          // onClickSetInputArrayElement(
+                          //   cPlayerIndex,
+                          //   inputArray[cPlayerIndex] + 1 > 2
+                          //     ? (0 as InputType)
+                          //     : ((inputArray[cPlayerIndex] + 1) as InputType)
+                          // );
+                        }}
+                      >
+                        <span>Keyboard</span>
+                        {getDoesKeyboardExistLower(pIndex) && (
+                          <span id="input-sub">Arrows</span>
+                        )}
+                        {!getDoesKeyboardExistLower(pIndex) && (
+                          <span id="input-sub">WASD</span>
+                        )}
+                        {pIndex < 2 && (
+                          <div className="button-input-emoji">
+                            {emoji.keyboardWhite}
+                          </div>
+                        )}
+                        {!(pIndex < 2) && (
+                          <div className="button-input-emoji">
+                            {emoji.keyboardWhite}​
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
-                  {inputArray[pIndex] === 1 && (
-                    <div
-                      className="b-oscuro b-dark"
-                      onClick={() => {
-                        onClickOscura(pIndex);
-                        // setPlayChezState({ name: 'up', moment: moment() });
-                        // onClickSetInputArrayElement(
-                        //   cPlayerIndex,
-                        //   inputArray[cPlayerIndex] + 1 > 2
-                        //     ? (0 as InputType)
-                        //     : ((inputArray[cPlayerIndex] + 1) as InputType)
-                        // );
-                      }}
-                    >
-                      <span>Gamepad</span>
-                      <span id="input-sub">
-                        {getNumControllersExistLower(pIndex) + 1}
-                      </span>
-                      {pIndex < 2 && (
-                        <div className="button-input-emoji">
-                          {emoji.gamepad}
-                        </div>
-                      )}
-                      {!(pIndex < 2) && (
-                        <div className="button-input-emoji">
-                          {emoji.gamepad}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {inputArray[pIndex] === 2 && (
-                    <div
-                      className="b-oscuro b-dark"
-                      onClick={() => {
-                        onClickOscura(pIndex);
-                        // setPlayChezState({ name: 'up', moment: moment() });
-                        // onClickSetInputArrayElement(
-                        //   cPlayerIndex,
-                        //   inputArray[cPlayerIndex] + 1 > 2
-                        //     ? (0 as InputType)
-                        //     : ((inputArray[cPlayerIndex] + 1) as InputType)
-                        // );
-                      }}
-                    >
-                      <span>Keyboard</span>
-                      {getDoesKeyboardExistLower(pIndex) && (
-                        <span id="input-sub">Arrows</span>
-                      )}
-                      {!getDoesKeyboardExistLower(pIndex) && (
-                        <span id="input-sub">WASD</span>
-                      )}
-                      {pIndex < 2 && (
-                        <div className="button-input-emoji">
-                          {emoji.keyboardWhite}
-                        </div>
-                      )}
-                      {!(pIndex < 2) && (
-                        <div className="button-input-emoji">
-                          {emoji.keyboardWhite}​
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {inputArray[pIndex] === 3 && (
-                    <div
-                      className="b-oscuro b-dark"
-                      onClick={() => {
-                        onClickOscura(pIndex);
-                        // setPlayChezState({ name: 'up', moment: moment() });
-                      }}
-                    >
-                      <span>Bot</span>
-                      {/* <span id="input-sub">In Progress</span> */}
-                      <div className="button-input-emoji">{emoji.bot}</div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                    {inputArray[pIndex] === 3 && (
+                      <div
+                        className="b-oscuro b-dark"
+                        onClick={() => {
+                          onClickOscura(pIndex);
+                          // setPlayChezState({ name: 'up', moment: moment() });
+                        }}
+                      >
+                        <span>Bot</span>
+                        {/* <span id="input-sub">In Progress</span> */}
+                        <div className="button-input-emoji">{emoji.bot}</div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="bottom-zone">
             <div className="input-group">
@@ -1741,7 +1746,7 @@ function Play() {
               <h1>Debug Options</h1>
               <div id="debug-col">
                 {Object.entries(debug).map(([key, value], index: number) => {
-                  const showInDebug: boolean = !!debugShow[key] ;
+                  const showInDebug: boolean = !!debugShow[key];
                   if (showInDebug) {
                     return null;
                   }
@@ -1759,8 +1764,8 @@ function Play() {
                             [key]:
                               value - 1 < 0
                                 ? getMaxFromKey(key)
-                                // ? getMaxFromKey(key as keyof Debug)
-                                : value - 1,
+                                : // ? getMaxFromKey(key as keyof Debug)
+                                  value - 1,
                           }));
                           console.log(index, key, value);
                         }
