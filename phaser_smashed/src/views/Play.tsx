@@ -2055,7 +2055,7 @@ function Play() {
                     // className="link-tag btn btn-dark text-light"
                     href="http://niembro64.com/"
                   >
-                    <span className="text-white">niembro64.com</span>
+                    <span className="text-white small">niembro64.com</span>
                   </a>
                 </div>
                 <div className="horiz-item-right">
