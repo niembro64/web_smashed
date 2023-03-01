@@ -2108,7 +2108,14 @@ function Play() {
                   <tbody>
                     {/* <p className="text-small">ID DATE</p> */}
                     {allSessions.map((s: SessionInfo, sIndex: number) => {
-                      if (hideNiemoIp && s.ip === '69.124.166.109') {
+                      if (
+                        hideNiemoIp &&
+                        (s.ip === '69.124.166.109' ||
+                          s.ip === '' ||
+                          s.ip === 'null' ||
+                          s.ip === null ||
+                          s?.ip === null)
+                      ) {
                         return null;
                       }
                       let gameViewTop: string = '';
