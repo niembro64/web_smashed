@@ -2057,18 +2057,18 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-right">
-                    As referenced on the Rules-N64 sheet, (Chemon) Smashed was
-                    invented in Glen Carbon, Illinois (near St. Louis) some time
-                    in late 2009 by a group of college kids at the "Chemon"
-                    House. From 2013 to 2018, "The Young Boys" have been keeping
-                    it alive in St. Louis. It's normally played with the N64
-                    Smash Bros game on the N64, Wii, or Emulation, but this is
-                    my attempt at recreating it with the rules baked in. Since
-                    the inception, niembro64 has been actively persuing the
-                    fundamental polished essense of Smashed; both as an exercise
-                    of logic, and such that one day it could be realized as a
-                    fully functional, independent game. Assets & sounds that you
-                    don't immediately recognize are probably OC.
+                  As referenced on the Rules-N64 sheet, (Chemon) Smashed was
+                  invented in Glen Carbon, Illinois (near St. Louis) some time
+                  in late 2009 by a group of college kids at the "Chemon" House.
+                  From 2013 to 2018, "The Young Boys" have been keeping it alive
+                  in St. Louis. It's normally played with the N64 Smash Bros
+                  game on the N64, Wii, or Emulation, but this is my attempt at
+                  recreating it with the rules baked in. Since the inception,
+                  niembro64 has been actively persuing the fundamental polished
+                  essense of Smashed; both as an exercise of logic, and such
+                  that one day it could be realized as a fully functional,
+                  independent game. Assets & sounds that you don't immediately
+                  recognize are probably OC.
                   {/* <h4 id="recent-games">Recent Games z:{tz}</h4> */}
                 </div>
               </div>
@@ -2076,11 +2076,21 @@ function Play() {
                 <table>
                   <thead>
                     <tr id="tr-header">
-                      <td className="td-left">RECENT GAMES TZ:{tz}</td>
-                      <th className="td-left">PLAYER CONFIG</th>
-                      <th className="td-right">SHOTS</th>
-                      <th className="td-right">DEATHS</th>
-                      <th className="td-right">HITS</th>
+                      <td id="title" className="td-left">
+                        GAMES TZ:{tz}
+                      </td>
+                      <th id="title" className="td-left">
+                        CONFIG
+                      </th>
+                      <th id="title" className="td-right">
+                        SHOTS
+                      </th>
+                      <th id="title" className="td-right">
+                        DEATHS
+                      </th>
+                      <th id="title" className="td-right">
+                        HITS
+                      </th>
                       <th> </th>
                     </tr>
                   </thead>
@@ -2171,7 +2181,7 @@ function Play() {
                       }
                       return (
                         <tr id={sIndex % 2 ? 'td-odd' : 'td-even'} key={sIndex}>
-                          <td className="td-left">
+                          <td id="title" className="td-left">
                             {paddedIndex} {formattedDate} {s.country} {s.region}{' '}
                             {s.city}
                           </td>
