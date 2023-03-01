@@ -1942,9 +1942,26 @@ th {
   /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
-.td-odd {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.td-even {
+#td-odd {
   background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 3.5vw;
+}
+#td-even {
+  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 3.5vw;
+}
+
+td > div:nth-child(2) {
+  margin-top: -0.5vw;
+  margin-right: 0.2vw;
+  margin-left: 0.2vw;
+  font-size: 1.37vw;
+  /* font-family: 'Courier New', Courier, monospace; */
+}
+
+#tr-header {
+  height: 3.5vw;
+  background-color: rgb(0, 0, 0, 0);
 }
