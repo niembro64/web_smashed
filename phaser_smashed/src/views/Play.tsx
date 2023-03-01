@@ -2021,19 +2021,6 @@ function Play() {
               }}
             >
               <h1>About</h1>
-              <p>
-                As referenced on the Rules-N64 sheet, (Chemon) Smashed was
-                invented in Glen Carbon, Illinois (near St. Louis) some time in
-                late 2009 by a group of college kids at the "Chemon" House. From
-                2013 to 2018, "The Young Boys" have been keeping it alive in St.
-                Louis. It's normally played with the N64 Smash Bros game on the
-                N64, Wii, or Emulation, but this is my attempt at recreating it
-                with the rules baked in. Since the inception, niembro64 has been
-                actively persuing the fundamental polished essense of Smashed;
-                both as an exercise of logic, and such that one day it could be
-                realized as a fully functional, independent game. Assets &
-                sounds that you don't immediately recognize are probably OC.
-              </p>
               <div className="horiz">
                 <div className="horiz-item-left">
                   <ul>
@@ -2070,157 +2057,158 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-right">
+                    As referenced on the Rules-N64 sheet, (Chemon) Smashed was
+                    invented in Glen Carbon, Illinois (near St. Louis) some time
+                    in late 2009 by a group of college kids at the "Chemon"
+                    House. From 2013 to 2018, "The Young Boys" have been keeping
+                    it alive in St. Louis. It's normally played with the N64
+                    Smash Bros game on the N64, Wii, or Emulation, but this is
+                    my attempt at recreating it with the rules baked in. Since
+                    the inception, niembro64 has been actively persuing the
+                    fundamental polished essense of Smashed; both as an exercise
+                    of logic, and such that one day it could be realized as a
+                    fully functional, independent game. Assets & sounds that you
+                    don't immediately recognize are probably OC.
                   {/* <h4 id="recent-games">Recent Games z:{tz}</h4> */}
-                  <div className="scroller" ref={scrollerRef}>
-                    <table>
-                      <thead>
-                        <tr>
-                          <td className="td-left">
-                            RECENT GAMES TIMEZONE:{tz}
-                          </td>
-                          {/* <th className="td-left">WHERE</th> */}
-                          <th className="td-right"> SHOTS</th>
-                          <th className="td-right">DEATHS</th>
-                          <th className="td-right">HITS</th>
-                          <th> </th>
-                        </tr>
-                      </thead>
+                </div>
+              </div>
+              <div className="scroller" ref={scrollerRef}>
+                <table>
+                  <thead>
+                    <tr id="tr-header">
+                      <td className="td-left">RECENT GAMES TZ:{tz}</td>
+                      <th className="td-left">PLAYER CONFIG</th>
+                      <th className="td-right">SHOTS</th>
+                      <th className="td-right">DEATHS</th>
+                      <th className="td-right">HITS</th>
+                      <th> </th>
+                    </tr>
+                  </thead>
 
-                      <tbody>
-                        {/* <p className="text-small">ID DATE</p> */}
-                        {allSessions.map((s: SessionInfo, sIndex: number) => {
-                          let gameViewTop: string = '';
-                          let gameViewBottom: string = '';
-                          let sc: SmashConfig | null = null;
-                          try {
-                            sc = JSON.parse(s.smashConfig);
-                            console.log('smashConfig', sc);
-                          } catch (e) {
-                            console.log('error parsing smashConfigString', e);
-                          }
-                          if (sc !== null) {
-                            sc.players.forEach((sessionPlayer: any) => {
-                              gameViewTop +=
-                                smashConfigOptions[sessionPlayer.characterId]
-                                  .nameShort + ' ';
-                              console.log(
-                                'sessionPlayer.input',
-                                sessionPlayer.input
-                              );
-
-                              switch (sessionPlayer.input) {
-                                case 0:
-                                  gameViewBottom += sessionPlayer.input + ' ';
-                                  break;
-                                case 1:
-                                  gameViewBottom += '' + emoji.gamepad + ' ';
-                                  // gameViewBottom += 'PD ';
-                                  break;
-                                case 2:
-                                  gameViewBottom +=
-                                    '' + emoji.keyboardWhite + ' ';
-                                  break;
-                                case 3:
-                                  gameViewBottom += '' + emoji.bot + ' ';
-                                  break;
-                                default:
-                                  gameViewBottom += '?? ';
-                                  break;
-                              }
-                            });
-                          }
-                          const allSessionsLength: number = allSessions.length;
-                          const totalDigits =
-                            allSessionsLength.toString().length;
-                          const paddedIndex = (allSessionsLength - sIndex)
-                            .toString()
-                            .padStart(totalDigits, '\u00a0');
-                          const sessionMomentObject = momentStringToMoment(
-                            s.momentCreated
+                  <tbody>
+                    {/* <p className="text-small">ID DATE</p> */}
+                    {allSessions.map((s: SessionInfo, sIndex: number) => {
+                      let gameViewTop: string = '';
+                      let gameViewBottom: string = '';
+                      let sc: SmashConfig | null = null;
+                      try {
+                        sc = JSON.parse(s.smashConfig);
+                        console.log('smashConfig', sc);
+                      } catch (e) {
+                        console.log('error parsing smashConfigString', e);
+                      }
+                      if (sc !== null) {
+                        sc.players.forEach((sessionPlayer: any) => {
+                          gameViewTop +=
+                            smashConfigOptions[sessionPlayer.characterId]
+                              .nameShort + ' ';
+                          console.log(
+                            'sessionPlayer.input',
+                            sessionPlayer.input
                           );
-                          const mTZ = require('moment-timezone');
-                          const clientTimezone =
-                            Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
-                          const formattedDate = mTZ
-                            .tz(moment(sessionMomentObject), clientTimezone)
-                            .format('YYYY-MM-DD HH:mm');
-                          let totalShots: number = 0;
-                          if (
-                            s.matrixShotsUnto === null ||
-                            s.matrixShotsUnto === 'null'
-                          ) {
-                          } else {
-                            totalShots = sumNumbersIn2DArrayString(
-                              s.matrixShotsUnto
-                            );
+
+                          switch (sessionPlayer.input) {
+                            case 0:
+                              gameViewBottom += sessionPlayer.input + ' ';
+                              break;
+                            case 1:
+                              gameViewBottom += '' + emoji.gamepad + ' ';
+                              // gameViewBottom += 'PD ';
+                              break;
+                            case 2:
+                              gameViewBottom += '' + emoji.keyboardWhite + ' ';
+                              break;
+                            case 3:
+                              gameViewBottom += '' + emoji.bot + ' ';
+                              break;
+                            default:
+                              gameViewBottom += '?? ';
+                              break;
                           }
-                          let totalDeaths: number = 0;
-                          if (
-                            s.matrixDeathsUnto === null ||
-                            s.matrixDeathsUnto === 'null'
-                          ) {
-                          } else {
-                            totalDeaths = sumNumbersIn2DArrayString(
-                              s.matrixDeathsUnto
-                            );
-                          }
-                          let totalHits: number = 0;
-                          if (
-                            s.matrixHitsUnto === null ||
-                            s.matrixHitsUnto === 'null'
-                          ) {
-                          } else {
-                            totalHits = sumNumbersIn2DArrayString(
-                              s.matrixHitsUnto
-                            );
-                          }
-                          return (
-                            <tr
-                              id={sIndex % 2 ? 'td-odd' : 'td-even'}
-                              key={sIndex}
-                            >
-                              <td className="td-left">
-                                {paddedIndex} {formattedDate} {s.country}{' '}
-                                {s.region} {s.city}
-                              </td>
-                              <td className="td-left">
-                                <div>{gameViewTop ? gameViewTop : ' '}</div>
-                                <div>
-                                  {gameViewBottom ? gameViewBottom : ' '}
-                                </div>
-                                {/* {totalShots < 10
+                        });
+                      }
+                      const allSessionsLength: number = allSessions.length;
+                      const totalDigits = allSessionsLength.toString().length;
+                      const paddedIndex = (allSessionsLength - sIndex)
+                        .toString()
+                        .padStart(totalDigits, '\u00a0');
+                      const sessionMomentObject = momentStringToMoment(
+                        s.momentCreated
+                      );
+                      const mTZ = require('moment-timezone');
+                      const clientTimezone =
+                        Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+                      const formattedDate = mTZ
+                        .tz(moment(sessionMomentObject), clientTimezone)
+                        .format('YYYY-MM-DD HH:mm');
+                      let totalShots: number = 0;
+                      if (
+                        s.matrixShotsUnto === null ||
+                        s.matrixShotsUnto === 'null'
+                      ) {
+                      } else {
+                        totalShots = sumNumbersIn2DArrayString(
+                          s.matrixShotsUnto
+                        );
+                      }
+                      let totalDeaths: number = 0;
+                      if (
+                        s.matrixDeathsUnto === null ||
+                        s.matrixDeathsUnto === 'null'
+                      ) {
+                      } else {
+                        totalDeaths = sumNumbersIn2DArrayString(
+                          s.matrixDeathsUnto
+                        );
+                      }
+                      let totalHits: number = 0;
+                      if (
+                        s.matrixHitsUnto === null ||
+                        s.matrixHitsUnto === 'null'
+                      ) {
+                      } else {
+                        totalHits = sumNumbersIn2DArrayString(s.matrixHitsUnto);
+                      }
+                      return (
+                        <tr id={sIndex % 2 ? 'td-odd' : 'td-even'} key={sIndex}>
+                          <td className="td-left">
+                            {paddedIndex} {formattedDate} {s.country} {s.region}{' '}
+                            {s.city}
+                          </td>
+                          <td className="td-left">
+                            <div>{gameViewTop ? gameViewTop : ' '}</div>
+                            <div>{gameViewBottom ? gameViewBottom : ' '}</div>
+                            {/* {totalShots < 10
                                     ? '_' + totalShots
                                     : totalShots} */}
-                              </td>
-                              <td className="td-right">
-                                {totalShots ? totalShots : ' '}
-                                {/* {totalShots < 10
+                          </td>
+                          <td className="td-right">
+                            {totalShots ? totalShots : ' '}
+                            {/* {totalShots < 10
                                     ? '_' + totalShots
                                     : totalShots} */}
-                              </td>
-                              <td className="td-right">
-                                {totalDeaths ? totalDeaths : ' '}
-                                {/* {totalDeaths < 10
+                          </td>
+                          <td className="td-right">
+                            {totalDeaths ? totalDeaths : ' '}
+                            {/* {totalDeaths < 10
                                     ? '_' + totalDeaths
                                     : totalDeaths} */}
-                              </td>
-                              <td className="td-right">
-                                {totalHits ? totalHits : ' '}
-                                {/* {totalHits < 100
+                          </td>
+                          <td className="td-right">
+                            {totalHits ? totalHits : ' '}
+                            {/* {totalHits < 100
                                     ? '_' +
                                       (totalHits < 10
                                         ? '_' + totalHits
                                         : totalHits)
                                     : totalHits} */}
-                              </td>
-                              <td> </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                          </td>
+                          <td> </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
