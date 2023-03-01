@@ -1981,3 +1981,32 @@ td > div:nth-child(2) {
   height: 3.5vw;
   background-color: rgb(0, 0, 0, 0);
 }
+
+#show-all {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  padding: 1%;
+  border: 3px solid white;
+}
+
+.show-all-show {
+  background-color: black;
+}
+
+.show-all-show:hover {
+  background-color: var(--gray-medium);
+}
+.show-all-show:active {
+  background-color: var(--gray-light);
+}
+
+.show-all-hide {
+  background-color: rgb(119, 89, 94);
+}
+.show-all-hide:hover {
+  background-color: rgb(169, 126, 134);
+}
+.show-all-hide:active {
+  background-color: rgb(206, 151, 161);
+}

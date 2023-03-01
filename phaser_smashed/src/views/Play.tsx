@@ -69,6 +69,8 @@ function Play() {
 
   // const [hasRunOnce, setHasRunOnce] = useState<boolean>(false);
 
+  const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(false);
+
   useEffect(() => {
     console.log('canPlayAudio', canPlayAudio);
 
@@ -2072,11 +2074,23 @@ function Play() {
                   {/* <h4 id="recent-games">Recent Games z:{tz}</h4> */}
                 </div>
               </div>
+              <div
+                id="show-all"
+                className={hideNiemoIp ? ' show-all-hide' : ' show-all-show'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  blipSound();
+                  setHideNiemoIp(!hideNiemoIp);
+                }}
+              >
+                FILTER
+              </div>
               <div className="scroller" ref={scrollerRef}>
                 <table>
                   <thead>
                     <tr id="tr-header">
                       <td id="title" className="td-left">
+                        {' '}
                         GAMES TZ:{tz}
                       </td>
                       <th id="title" className="td-left">
@@ -2098,6 +2112,9 @@ function Play() {
                   <tbody>
                     {/* <p className="text-small">ID DATE</p> */}
                     {allSessions.map((s: SessionInfo, sIndex: number) => {
+                      if (hideNiemoIp && s.ip === '69.124.166.109') {
+                        return null;
+                      }
                       let gameViewTop: string = '';
                       let gameViewBottom: string = '';
                       let sc: SmashConfig | null = null;
