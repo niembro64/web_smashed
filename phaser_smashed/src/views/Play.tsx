@@ -213,15 +213,11 @@ function Play() {
     switch (playChezState.name) {
       case 'up':
         tranceRef.current.pause();
-        if (canPlayAudio) {
-          garageRef.current.play();
-        }
+        garageRef.current.play();
         tranceRef.current.removeEventListener('ended', handleTranceEnded);
         break;
       case 'down':
-        if (canPlayAudio) {
-          tranceRef.current.play();
-        }
+        tranceRef.current.play();
         garageRef.current.pause();
         tranceRef.current.addEventListener('ended', handleTranceEnded, {
           once: true,
