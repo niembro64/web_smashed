@@ -1659,7 +1659,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>K-WASD vs Bot</span>
+                <span>KvB</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1668,7 +1668,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>All Keyboards</span>
+                <span>2K</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1677,7 +1677,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>All Pads</span>
+                <span>4P</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1686,7 +1686,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>All Bots</span>
+                <span>4B</span>
               </div>
             </div>
             <div
