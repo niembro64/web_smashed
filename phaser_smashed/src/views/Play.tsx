@@ -377,11 +377,7 @@ function Play() {
     let ratioKoopas: number = numKoopas / numTotal;
 
     let baseUpperLimit: number = ratioBase;
-    let chezLowerLimit: number = baseUpperLimit;
-    let chezUpperLimit: number = chezLowerLimit + ratioChez;
-    let koopasLowerLimit: number = chezUpperLimit;
-    let koopasUpperLimit: number = koopasLowerLimit + ratioKoopas;
-    koopasUpperLimit = 1; // need to do this to avoid floating point errors
+    let chezUpperLimit: number = baseUpperLimit + ratioChez;
 
     let newPlayers: PlayerConfigSmall[] = [];
 
@@ -389,11 +385,11 @@ function Play() {
       let rand: number = Math.random();
       let newId: number | null = null;
       if (rand < baseUpperLimit) {
-        newId = Math.floor(Math.random() * 4);
+        newId = Math.floor(Math.random() * numBase);
       } else if (rand < chezUpperLimit || ratioKoopas === 0) {
-        newId = Math.floor(Math.random() * 2) + 4;
+        newId = Math.floor(Math.random() * numChez) + numBase;
       } else {
-        newId = Math.floor(Math.random() * 3) + 6;
+        newId = Math.floor(Math.random() * numKoopas) + numBase + numChez;
       }
 
       newPlayers.push({

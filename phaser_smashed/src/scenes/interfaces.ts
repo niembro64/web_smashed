@@ -441,7 +441,8 @@ export type CharacterId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 // 0: none
 // 1: pad
 // 2: keyboard
-// 3: bot
+// 3: bot | Rule-Based
+// 4: bot | Neural-Network
 //////////////////////////
 export type InputType = 0 | 1 | 2 | 3;
 
@@ -674,4 +675,38 @@ export type PlayChezStateName = 'up' | 'down' | 'chez';
 export interface PlayChezState {
   name: PlayChezStateName;
   moment: Moment;
+}
+
+export interface NNLayerInput {
+  playerX: number;
+  playerY: number;
+  playerVelocityX: number;
+  playerVelocityY: number;
+  playerAEX: number;
+  playerAEY: number;
+  playerAEVelocityX: number;
+  playerAEVelocityY: number;
+  enemyX: number;
+  enemyY: number;
+  enemyVelocityX: number;
+  enemyVelocityY: number;
+  enemyAEX: number;
+  enemyAEY: number;
+  enemyAEVelocityX: number;
+  enemyAEVelocityY: number;
+}
+
+export interface NNLayerOutput {
+  controllerUp: boolean;
+  controllerDown: boolean;
+  controllerLeft: boolean;
+  controllerRight: boolean;
+  controllerA: boolean;
+  controllerB: boolean;
+  controllerX: boolean;
+  controllerY: boolean;
+  controllerL: boolean;
+  controllerR: boolean;
+  controllerStart: boolean;
+  controllerSelect: boolean;
 }
