@@ -367,29 +367,45 @@ function Play() {
   ];
 
   const randomizeCharacters = () => {
-    let numCharacters = smashConfigOptions.length;
+    let numBase: number = 4;
+    let numChez: number = debug.UseChez ? 2 : 0;
+    let numKoopas: number = debug.UseKoopas ? 3 : 0;
+    let numTotal: number = numBase + numChez + numKoopas;
+
+    let ratioBase: number = numBase / numTotal;
+    let ratioChez: number = numChez / numTotal;
+    let ratioKoopas: number = numKoopas / numTotal;
+
+    let baseLowerLimit: number = 0;
+    let baseUpperLimit: number = ratioBase;
+    let chezLowerLimit: number = baseUpperLimit;
+    let chezUpperLimit: number = chezLowerLimit + ratioChez;
+    let koopasLowerLimit: number = chezUpperLimit;
+    let koopasUpperLimit: number = koopasLowerLimit + ratioKoopas;
+    koopasUpperLimit = 1; // need to do this to avoid floating point errors
 
     let newPlayers: PlayerConfigSmall[] = [];
-    for (let i = 0; i < smashConfig.players.length; i++) {
-      let ratioLower = 4 / (numCharacters - 2);
-      let newCharacterId: number;
 
-      if (debug.UseChez) {
-        newCharacterId = Math.floor(Math.random() * numCharacters);
-      } else {
-        if (Math.random() < ratioLower) {
-          newCharacterId = Math.floor(Math.random() * (numCharacters - 6)) + 6;
-        } else {
-          newCharacterId = Math.floor(Math.random() * 4);
-        }
+    for (let i = 0; i < 4; i++) {
+      let rand: number = Math.random();
+      let newId: number | null = null;
+      if (rand >= baseLowerLimit && rand < baseUpperLimit) {
+        newId = Math.floor(Math.random() * 4);
       }
-
-      let newPlayer: PlayerConfigSmall = {
-        characterId: newCharacterId as CharacterId,
-        input: smashConfig.players[i].input,
-      };
-      newPlayers.push(newPlayer);
+      if (rand >= chezLowerLimit && rand < chezUpperLimit) {
+        newId = Math.floor(Math.random() * 2) + 4;
+      }
+      if (rand >= koopasLowerLimit && rand < koopasUpperLimit) {
+        newId = Math.floor(Math.random() * 3) + 6;
+      }
+      if (newId !== null) {
+        newPlayers.push({
+          characterId: newId as CharacterId,
+          input: 0,
+        });
+      }
     }
+
     setSmashConfig({ players: newPlayers });
   };
   let config: Phaser.Types.Core.GameConfig = {
