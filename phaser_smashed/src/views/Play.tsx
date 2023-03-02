@@ -376,7 +376,6 @@ function Play() {
     let ratioChez: number = numChez / numTotal;
     let ratioKoopas: number = numKoopas / numTotal;
 
-    let baseLowerLimit: number = 0;
     let baseUpperLimit: number = ratioBase;
     let chezLowerLimit: number = baseUpperLimit;
     let chezUpperLimit: number = chezLowerLimit + ratioChez;
@@ -389,21 +388,18 @@ function Play() {
     for (let i = 0; i < 4; i++) {
       let rand: number = Math.random();
       let newId: number | null = null;
-      if (rand >= baseLowerLimit && rand < baseUpperLimit) {
+      if (rand < baseUpperLimit) {
         newId = Math.floor(Math.random() * 4);
-      }
-      if (rand >= chezLowerLimit && rand < chezUpperLimit) {
+      } else if (rand < chezUpperLimit || ratioKoopas === 0) {
         newId = Math.floor(Math.random() * 2) + 4;
-      }
-      if (rand >= koopasLowerLimit && rand < koopasUpperLimit) {
+      } else {
         newId = Math.floor(Math.random() * 3) + 6;
       }
-      if (newId !== null) {
-        newPlayers.push({
-          characterId: newId as CharacterId,
-          input: 0,
-        });
-      }
+
+      newPlayers.push({
+        characterId: newId as CharacterId,
+        input: 0,
+      });
     }
 
     setSmashConfig({ players: newPlayers });
