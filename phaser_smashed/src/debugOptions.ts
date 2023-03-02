@@ -32,7 +32,7 @@ export const debugInit: Debug = {
   ConsoleLogConnected: false,
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
-  UseKoopas: true,
+  UseKoopas: false,
   UseChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
