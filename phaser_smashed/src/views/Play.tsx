@@ -385,11 +385,11 @@ function Play() {
       let rand: number = Math.random();
       let newId: number | null = null;
       if (rand < baseUpperLimit) {
-        newId = Math.floor(Math.random() * numBase);
+        newId = Math.floor(rand * numBase);
       } else if (rand < chezUpperLimit || ratioKoopas === 0) {
-        newId = Math.floor(Math.random() * numChez) + numBase;
+        newId = Math.floor(rand * numChez) + numBase;
       } else {
-        newId = Math.floor(Math.random() * numKoopas) + numBase + numChez;
+        newId = Math.floor(rand * numKoopas) + numBase + numChez;
       }
 
       newPlayers.push({
@@ -1649,7 +1649,7 @@ function Play() {
                         }}
                       >
                         <span>Bot</span>
-                        {/* <span id="input-sub">In Progress</span> */}
+                        <span id="input-sub">Rule-Based</span>
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}
