@@ -50,9 +50,36 @@ import {
 } from './client';
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
-import { flattenDiagnosticMessageText } from 'typescript';
+import { NeuralNetwork } from 'brain.js';
 
 function Play() {
+  useEffect(() => {
+    console.log('Play.tsx useEffect');
+
+    (async () => {
+      const net = new NeuralNetwork();
+      await net.trainAsync([
+        { input: [0, 0], output: [0] },
+        { input: [0, 1], output: [1] },
+        { input: [1, 0], output: [1] },
+        { input: [1, 1], output: [0] },
+      ]);
+
+      bar();
+      bar();
+      bar();
+      bar();
+      const output = net.run([1, 0]); // [0.986]
+      console.log('output', output);
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+    })();
+  }, []);
+
   let myPhaser: any = useRef(null);
   // const { _id } = useParams();
 

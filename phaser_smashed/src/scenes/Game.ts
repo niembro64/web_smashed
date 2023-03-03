@@ -27,6 +27,7 @@ import {
 } from './interfaces';
 import { preload } from './preload';
 import { update } from './update';
+import brain from 'brain.js';
 
 export const SCREEN_DIMENSIONS = { WIDTH: 1920, HEIGHT: 1080 };
 
