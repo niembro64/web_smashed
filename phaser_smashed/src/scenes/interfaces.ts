@@ -677,7 +677,13 @@ export interface PlayChezState {
   moment: Moment;
 }
 
-export interface NNLayerInput {
+export interface NNObject {
+  input: NNInput;
+  output: NNOutput;
+}
+
+export interface NNInput {
+  playerAlive: number;
   playerX: number;
   playerY: number;
   playerVelocityX: number;
@@ -696,7 +702,7 @@ export interface NNLayerInput {
   enemyAEVelocityY: number;
 }
 
-export interface NNLayerOutput {
+export interface NNOutput {
   controllerUp: boolean;
   controllerDown: boolean;
   controllerLeft: boolean;
