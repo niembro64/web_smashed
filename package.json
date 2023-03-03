@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "brain.js": "^2.0.0-beta.18",
     "moment-timezone": "^0.5.40"
   }
 }
