@@ -1,6 +1,7 @@
 import { NeuralNetwork } from 'brain.js';
 import Game from './Game';
 import { nnConfig } from './helpers/nn';
+import { netJson } from './helpers/nnJson';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -49,6 +50,9 @@ export function preload(game: Game): void {
   }
 
   game.shotsLeftCurr = game.debug.NumShots;
+
+  game.net = new NeuralNetwork(nnConfig);
+  game.net = game.net.fromJSON(netJson);
 
   //////////////////////////////
   // Load Audio
