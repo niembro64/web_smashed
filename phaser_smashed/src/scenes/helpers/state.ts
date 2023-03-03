@@ -141,6 +141,8 @@ export function setGameState(game: Game, state: GameState): void {
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
+
+      NNTrain(game);
       break;
     default:
       console.log('BROKEN_____________________');
@@ -171,7 +173,7 @@ export function setGameState(game: Game, state: GameState): void {
 
   if (isDrinkingCurr && !isDrinkingPrev) {
     (async () => {
-      NNTrain(game);
+      // NNTrain(game);
 
       updateShotsOnPlayers(game);
       await axiosUpsertOne(

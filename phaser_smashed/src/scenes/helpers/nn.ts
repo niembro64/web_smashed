@@ -24,6 +24,10 @@ export const nnConfig = {
 // };
 
 export const NNTrain = (game: Game): void => {
+  if (!game.debug.NeuralNetworkTrain) {
+    return;
+  }
+
   game.net = new NeuralNetwork(nnConfig);
   game.net.train(game.nnObjects);
   let netJson = game.net.toJSON();
@@ -81,6 +85,10 @@ export const NNSetPlayer2Output = (game: Game): void => {
 };
 
 export const addPlayerOneNNObjects = (game: Game): void => {
+  if (!game.debug.NeuralNetworkTrain) {
+    return;
+  }
+
   let player = game.players[0];
   let enemy = game.players[1];
 
@@ -124,7 +132,7 @@ export const addPlayerOneNNObjects = (game: Game): void => {
 
   game.nnObjects.push(newNNObject);
 
-  console.log('game.nnObjects', game.nnObjects);
+  // console.log('game.nnObjects', game.nnObjects);
 };
 
 export const NNDownloadNNObjects = (game: Game): void => {

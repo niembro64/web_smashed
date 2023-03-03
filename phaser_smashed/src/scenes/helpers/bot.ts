@@ -211,7 +211,7 @@ export function updateBot(
     return;
   }
 
-  if (game.debug.BotNeuralNetwork) {
+  if (game.debug.NeuralNetworkBot) {
     NNSetPlayer2Output(game);
     return;
   }

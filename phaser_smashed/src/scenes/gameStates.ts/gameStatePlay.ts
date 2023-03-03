@@ -86,6 +86,6 @@ export function updateGameStatePlay(
   updatePadPreviousAndDebounced(game);
   updateResetAllHitboxesAttackEnergy(game);
 
-  // addPlayerOneNNObjects(game);
+  addPlayerOneNNObjects(game);
   // NNSetPlayer2Output(game);
 }
