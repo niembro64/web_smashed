@@ -76,8 +76,8 @@ export const NNSetPlayer2Output = (game: Game): void => {
   player.padCurr.start = false;
   // player.padCurr.start = output[10] > 0.5 ? true : false;
   player.padCurr.select = output[11] > 0.5 ? true : false;
-
-  console.log('padCurr', JSON.stringify(player.padCurr, null, 2));
+  console.log('output', JSON.stringify(output, null, 2));
+  // console.log('padCurr', JSON.stringify(player.padCurr, null, 2));
 };
 
 export const addPlayerOneNNObjects = (game: Game): void => {
