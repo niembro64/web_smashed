@@ -1,9 +1,7 @@
-import moment from 'moment';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import 'phaser';
 import Shake from 'phaser3-rex-plugins/plugins/shakeposition';
 import { create } from './create';
-import { momentToDate } from './helpers/time';
 import {
   Camera,
   CharacterId,
@@ -19,6 +17,7 @@ import {
   InputType,
   keyboard,
   Lava,
+  NNObject,
   Player,
   SmashConfig,
   SplashEndData,
@@ -27,7 +26,6 @@ import {
 } from './interfaces';
 import { preload } from './preload';
 import { update } from './update';
-import brain from 'brain.js';
 
 export const SCREEN_DIMENSIONS = { WIDTH: 1920, HEIGHT: 1080 };
 
@@ -41,6 +39,9 @@ export default class Game extends Phaser.Scene {
   // PULLING FROM PRELOAD
 
   sessionMoment: Moment = moment();
+  nnObjects: NNObject[] = [];
+  
+  net: any;
 
   ////////////////////////////////
   ////////// GAME CONSTANTS

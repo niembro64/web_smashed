@@ -1,4 +1,6 @@
+import { NeuralNetwork } from 'brain.js';
 import Game from './Game';
+import { nnConfig } from './helpers/nn';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,

@@ -51,32 +51,34 @@ import {
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import { NeuralNetwork } from 'brain.js';
+import { nnConfigBaby } from '../scenes/helpers/nn';
 
 function Play() {
   useEffect(() => {
-    console.log('Play.tsx useEffect');
+    console.log('1');
 
     (async () => {
-      const net = new NeuralNetwork();
-      await net.trainAsync([
+      console.log('2');
+      const net = new NeuralNetwork(nnConfigBaby);
+      console.log('3');
+      net.train([
         { input: [0, 0], output: [0] },
         { input: [0, 1], output: [1] },
         { input: [1, 0], output: [1] },
         { input: [1, 1], output: [0] },
       ]);
 
-      bar();
-      bar();
-      bar();
-      bar();
+      console.log('4');
       const output = net.run([1, 0]); // [0.986]
-      console.log('output', output);
+      bar();
+      bar();
+      bar();
+      console.log('output', JSON.stringify(output, null, 2));
       bar();
       bar();
       bar();
       bar();
-      bar();
-      bar();
+      console.log('5');
     })();
   }, []);
 
@@ -360,20 +362,6 @@ function Play() {
     return numActiveBeforeMe;
   };
   const idColors: string[] = ['id-red', 'id-blue', 'id-yellow', 'id-green'];
-
-  useEffect(() => {
-    bar();
-    bar();
-    bar();
-    bar();
-    bar();
-    bar();
-    console.log('showLoader', showLoader);
-    bar();
-    bar();
-    bar();
-    bar();
-  }, [showLoader]);
 
   useEffect(() => {
     console.log('smashConfig', smashConfig);

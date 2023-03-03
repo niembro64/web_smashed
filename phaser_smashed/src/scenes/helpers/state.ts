@@ -53,6 +53,7 @@ import {
   updateShotsOnPlayers,
 } from './text';
 import { axiosUpsertOne } from '../../views/client';
+import { NNTrain } from './nn';
 
 export function setGameState(game: Game, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;
@@ -170,6 +171,8 @@ export function setGameState(game: Game, state: GameState): void {
 
   if (isDrinkingCurr && !isDrinkingPrev) {
     (async () => {
+      NNTrain(game);
+
       updateShotsOnPlayers(game);
       await axiosUpsertOne(
         game.sessionMoment,

@@ -678,41 +678,45 @@ export interface PlayChezState {
 }
 
 export interface NNObject {
-  input: NNInput;
-  output: NNOutput;
+  input: number[];
+  output: number[];
 }
 
-export interface NNInput {
-  playerAlive: number;
-  playerX: number;
-  playerY: number;
-  playerVelocityX: number;
-  playerVelocityY: number;
-  playerAEX: number;
-  playerAEY: number;
-  playerAEVelocityX: number;
-  playerAEVelocityY: number;
-  enemyX: number;
-  enemyY: number;
-  enemyVelocityX: number;
-  enemyVelocityY: number;
-  enemyAEX: number;
-  enemyAEY: number;
-  enemyAEVelocityX: number;
-  enemyAEVelocityY: number;
-}
+// export interface NNInput {
+// flagCompleted: number;
+// playerAlive: number;
+// playerSick: number;
+// playerX: number;
+// playerY: number;
+// playerVelocityX: number;
+// playerVelocityY: number;
+// playerAEX: number;
+// playerAEY: number;
+// playerAEVelocityX: number;
+// playerAEVelocityY: number;
+// enemyX: number;
+// enemyY: number;
+// enemyVelocityX: number;
+// enemyVelocityY: number;
+// enemyAEX: number;
+// enemyAEY: number;
+// enemyAEVelocityX: number;
+// enemyAEVelocityY: number;
+// [key: string]: any;
+// }
 
-export interface NNOutput {
-  controllerUp: boolean;
-  controllerDown: boolean;
-  controllerLeft: boolean;
-  controllerRight: boolean;
-  controllerA: boolean;
-  controllerB: boolean;
-  controllerX: boolean;
-  controllerY: boolean;
-  controllerL: boolean;
-  controllerR: boolean;
-  controllerStart: boolean;
-  controllerSelect: boolean;
-}
+// export interface NNOutput {
+// controllerUp: number;
+// controllerDown: number;
+// controllerLeft: number;
+// controllerRight: number;
+// controllerA: number;
+// controllerB: number;
+// controllerX: number;
+// controllerY: number;
+// controllerL: number;
+// controllerR: number;
+// controllerStart: number;
+// controllerSelect: number;
+// [key: string]: any;
+// }

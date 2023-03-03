@@ -23,6 +23,7 @@ import {
   updateTable,
   updateWallTouchArray,
 } from '../helpers/movement';
+import { addPlayerOneNNObjects, NNSetPlayer2Output } from '../helpers/nn';
 import {
   updateAttackEnergyFrictionGroundMovement,
   updateAttackEnergyFrictionGroundRotation,
@@ -84,4 +85,7 @@ export function updateGameStatePlay(
   // AFTER PLAYERS
   updatePadPreviousAndDebounced(game);
   updateResetAllHitboxesAttackEnergy(game);
+
+  addPlayerOneNNObjects(game);
+  // NNSetPlayer2Output(game);
 }
