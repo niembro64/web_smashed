@@ -87,5 +87,5 @@ export function updateGameStatePlay(
   updateResetAllHitboxesAttackEnergy(game);
 
   // addPlayerOneNNObjects(game);
-  NNSetPlayer2Output(game);
+  // NNSetPlayer2Output(game);
 }
