@@ -402,6 +402,10 @@ export function updateBot(
     return;
   }
 
+  if (game.debug.NeuralNetworkTrain) {
+    return;
+  }
+
   let nearestP: Position = getNearestPlayerAliveXY(player, playerIndex, game);
 
   let botSprite = player.char.sprite;

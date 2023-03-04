@@ -141,9 +141,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
-      if (game.debug.NeuralNetworkTrain) {
-        NNTrain(game);
-      }
+      NNTrain(game);
       break;
     default:
       console.log('BROKEN_____________________');

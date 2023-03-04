@@ -42,7 +42,7 @@ export const debugInit: Debug = {
   BulletsFullScreen: false,
   TrophiesOnShots: false,
   TrophiesAlways: false,
-  NeuralNetworkBot: true,
+  NeuralNetworkBot: false,
   NeuralNetworkTrain: false,
 };
 
@@ -136,5 +136,5 @@ export const debugShow: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   NeuralNetworkBot: false,
-  NeuralNetworkTrain: false,
+  NeuralNetworkTrain: true,
 };

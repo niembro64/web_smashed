@@ -11,11 +11,11 @@ export const nnConfigBaby = {
   hiddenLayers: [3],
 };
 export const nnConfig = {
-  inputSize: 4,
+  inputSize: 6,
   outputSize: 11,
   learningRate: 0.1,
   activation: 'sigmoid',
-  hiddenLayers: [],
+  hiddenLayers: [10],
 };
 
 // export const NNCreate = (game: Game): void => {
@@ -42,28 +42,12 @@ export const NNGetOutput = (game: Game): number[] => {
     player.char.sprite.y - enemy.char.sprite.y,
     player.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
     player.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
+    player.char.sprite.body.touching.down ? 1 : 0,
+    player.char.sprite.body.touching.left ||
+    player.char.sprite.body.touching.right
+      ? 1
+      : 0,
   ];
-  // let input = [
-  //   game.flag.completedCurr ? 1 : 0,
-  //   player.state.name === 'player-state-alive' ? 1 : 0,
-  //   player.emitterDark.visible ? 1 : 0,
-  //   player.char.sprite.x,
-  //   player.char.sprite.y,
-  //   player.char.sprite.body.velocity.x,
-  //   player.char.sprite.body.velocity.y,
-  //   player.char.attackEnergy.sprite.x,
-  //   player.char.attackEnergy.sprite.y,
-  //   player.char.attackEnergy.sprite.body.velocity.x,
-  //   player.char.attackEnergy.sprite.body.velocity.y,
-  //   enemy.char.sprite.x,
-  //   enemy.char.sprite.y,
-  //   enemy.char.sprite.body.velocity.x,
-  //   enemy.char.sprite.body.velocity.y,
-  //   enemy.char.attackEnergy.sprite.x,
-  //   enemy.char.attackEnergy.sprite.y,
-  //   enemy.char.attackEnergy.sprite.body.velocity.x,
-  //   enemy.char.attackEnergy.sprite.body.velocity.y,
-  // ];
 
   let output = game.net.run(input);
   return output;
@@ -104,25 +88,14 @@ export const addPlayerOneNNObjects = (game: Game): void => {
 
   let newNNObject: NNObject = {
     input: [
-      // game.flag.completedCurr ? 1 : 0,
-      // p.state.name === 'player-state-alive' ? 1 : 0,
-      // p.emitterDark.visible ? 1 : 0,
       p.char.sprite.x - enemy.char.sprite.x,
       p.char.sprite.y - enemy.char.sprite.y,
       p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
       p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
-      // p.char.attackEnergy.sprite.x,
-      // p.char.attackEnergy.sprite.y,
-      // p.char.attackEnergy.sprite.body.velocity.x,
-      // p.char.attackEnergy.sprite.body.velocity.y,
-      // enemy.char.sprite.x,
-      // enemy.char.sprite.y,
-      // enemy.char.sprite.body.velocity.x,
-      // enemy.char.sprite.body.velocity.y,
-      // enemy.char.attackEnergy.sprite.x,
-      // enemy.char.attackEnergy.sprite.y,
-      // enemy.char.attackEnergy.sprite.body.velocity.x,
-      // enemy.char.attackEnergy.sprite.body.velocity.y,
+      p.char.sprite.body.touching.down ? 1 : 0,
+      p.char.sprite.body.touching.left || p.char.sprite.body.touching.right
+        ? 1
+        : 0,
     ],
     output: [
       p.padCurr.up ? 1 : 0,
@@ -139,6 +112,7 @@ export const addPlayerOneNNObjects = (game: Game): void => {
       p.padCurr.select ? 1 : 0,
     ],
   };
+  console.log('newNNObject', JSON.stringify(newNNObject, null, 2));
 
   game.nnObjects.push(newNNObject);
 
