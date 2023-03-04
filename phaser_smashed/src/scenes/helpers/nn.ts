@@ -11,7 +11,7 @@ export const nnConfigBaby = {
   hiddenLayers: [3],
 };
 export const nnConfig = {
-  inputSize: 19,
+  inputSize: 4,
   outputSize: 11,
   learningRate: 0.1,
   activation: 'sigmoid',
@@ -38,32 +38,42 @@ export const NNGetOutput = (game: Game): number[] => {
   let player = game.players[0];
   let enemy = game.players[1];
   let input = [
-    game.flag.completedCurr ? 1 : 0,
-    player.state.name === 'player-state-alive' ? 1 : 0,
-    player.emitterDark.visible ? 1 : 0,
-    player.char.sprite.x,
-    player.char.sprite.y,
-    player.char.sprite.body.velocity.x,
-    player.char.sprite.body.velocity.y,
-    player.char.attackEnergy.sprite.x,
-    player.char.attackEnergy.sprite.y,
-    player.char.attackEnergy.sprite.body.velocity.x,
-    player.char.attackEnergy.sprite.body.velocity.y,
-    enemy.char.sprite.x,
-    enemy.char.sprite.y,
-    enemy.char.sprite.body.velocity.x,
-    enemy.char.sprite.body.velocity.y,
-    enemy.char.attackEnergy.sprite.x,
-    enemy.char.attackEnergy.sprite.y,
-    enemy.char.attackEnergy.sprite.body.velocity.x,
-    enemy.char.attackEnergy.sprite.body.velocity.y,
+    player.char.sprite.x - enemy.char.sprite.x,
+    player.char.sprite.y - enemy.char.sprite.y,
+    player.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
+    player.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
   ];
+  // let input = [
+  //   game.flag.completedCurr ? 1 : 0,
+  //   player.state.name === 'player-state-alive' ? 1 : 0,
+  //   player.emitterDark.visible ? 1 : 0,
+  //   player.char.sprite.x,
+  //   player.char.sprite.y,
+  //   player.char.sprite.body.velocity.x,
+  //   player.char.sprite.body.velocity.y,
+  //   player.char.attackEnergy.sprite.x,
+  //   player.char.attackEnergy.sprite.y,
+  //   player.char.attackEnergy.sprite.body.velocity.x,
+  //   player.char.attackEnergy.sprite.body.velocity.y,
+  //   enemy.char.sprite.x,
+  //   enemy.char.sprite.y,
+  //   enemy.char.sprite.body.velocity.x,
+  //   enemy.char.sprite.body.velocity.y,
+  //   enemy.char.attackEnergy.sprite.x,
+  //   enemy.char.attackEnergy.sprite.y,
+  //   enemy.char.attackEnergy.sprite.body.velocity.x,
+  //   enemy.char.attackEnergy.sprite.body.velocity.y,
+  // ];
 
   let output = game.net.run(input);
   return output;
 };
 
 export const NNSetPlayer2Output = (game: Game): void => {
+  if (game.debug.NeuralNetworkTrain) {
+    return;
+  }
+
   let player = game.players[1];
   let output = NNGetOutput(game);
 
@@ -89,44 +99,44 @@ export const addPlayerOneNNObjects = (game: Game): void => {
     return;
   }
 
-  let player = game.players[0];
+  let p = game.players[0];
   let enemy = game.players[1];
 
   let newNNObject: NNObject = {
     input: [
-      game.flag.completedCurr ? 1 : 0,
-      player.state.name === 'player-state-alive' ? 1 : 0,
-      player.emitterDark.visible ? 1 : 0,
-      player.char.sprite.x,
-      player.char.sprite.y,
-      player.char.sprite.body.velocity.x,
-      player.char.sprite.body.velocity.y,
-      player.char.attackEnergy.sprite.x,
-      player.char.attackEnergy.sprite.y,
-      player.char.attackEnergy.sprite.body.velocity.x,
-      player.char.attackEnergy.sprite.body.velocity.y,
-      enemy.char.sprite.x,
-      enemy.char.sprite.y,
-      enemy.char.sprite.body.velocity.x,
-      enemy.char.sprite.body.velocity.y,
-      enemy.char.attackEnergy.sprite.x,
-      enemy.char.attackEnergy.sprite.y,
-      enemy.char.attackEnergy.sprite.body.velocity.x,
-      enemy.char.attackEnergy.sprite.body.velocity.y,
+      // game.flag.completedCurr ? 1 : 0,
+      // p.state.name === 'player-state-alive' ? 1 : 0,
+      // p.emitterDark.visible ? 1 : 0,
+      p.char.sprite.x - enemy.char.sprite.x,
+      p.char.sprite.y - enemy.char.sprite.y,
+      p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
+      p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
+      // p.char.attackEnergy.sprite.x,
+      // p.char.attackEnergy.sprite.y,
+      // p.char.attackEnergy.sprite.body.velocity.x,
+      // p.char.attackEnergy.sprite.body.velocity.y,
+      // enemy.char.sprite.x,
+      // enemy.char.sprite.y,
+      // enemy.char.sprite.body.velocity.x,
+      // enemy.char.sprite.body.velocity.y,
+      // enemy.char.attackEnergy.sprite.x,
+      // enemy.char.attackEnergy.sprite.y,
+      // enemy.char.attackEnergy.sprite.body.velocity.x,
+      // enemy.char.attackEnergy.sprite.body.velocity.y,
     ],
     output: [
-      player.padCurr.up ? 1 : 0,
-      player.padCurr.down ? 1 : 0,
-      player.padCurr.left ? 1 : 0,
-      player.padCurr.right ? 1 : 0,
-      player.padCurr.A ? 1 : 0,
-      player.padCurr.B ? 1 : 0,
-      player.padCurr.X ? 1 : 0,
-      player.padCurr.Y ? 1 : 0,
-      player.padCurr.L ? 1 : 0,
-      player.padCurr.R ? 1 : 0,
-      player.padCurr.start ? 1 : 0,
-      player.padCurr.select ? 1 : 0,
+      p.padCurr.up ? 1 : 0,
+      p.padCurr.down ? 1 : 0,
+      p.padCurr.left ? 1 : 0,
+      p.padCurr.right ? 1 : 0,
+      p.padCurr.A ? 1 : 0,
+      p.padCurr.B ? 1 : 0,
+      p.padCurr.X ? 1 : 0,
+      p.padCurr.Y ? 1 : 0,
+      p.padCurr.L ? 1 : 0,
+      p.padCurr.R ? 1 : 0,
+      p.padCurr.start ? 1 : 0,
+      p.padCurr.select ? 1 : 0,
     ],
   };
 

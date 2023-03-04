@@ -196,6 +196,192 @@ export function allPadToFalse(player: Player): void {
   };
 }
 
+export type DodgeDirection =
+  | 'up'
+  | 'down'
+  | 'left'
+  | 'right'
+  | 'up-left'
+  | 'up-right'
+  | 'down-left'
+  | 'down-right';
+
+export function getDodgeDirectionFromNormalizedVector(
+  x: number,
+  y: number
+): DodgeDirection {
+  const tolerance = 0.25;
+  if (y < -tolerance) {
+    if (x < -tolerance) {
+      return 'up-left';
+    } else if (x > tolerance) {
+      return 'up-right';
+    } else {
+      return 'up';
+    }
+  } else if (y > tolerance) {
+    if (x < -tolerance) {
+      return 'down-left';
+    } else if (x > tolerance) {
+      return 'down-right';
+    } else {
+      return 'down';
+    }
+  } else {
+    if (x < -tolerance) {
+      return 'left';
+    } else if (x > tolerance) {
+      return 'right';
+    } else {
+      return 'up'; // ideally not possible
+    }
+  }
+}
+
+export const getDodgeDirectionPlayerToAttackEnergy = (
+  p: Position,
+  a: Position
+): DodgeDirection => {
+  let v: xyVector = getNormalizedVector(p.x, p.y, a.x, a.y);
+  let direction: DodgeDirection = getDodgeDirectionFromNormalizedVector(
+    v.x,
+    v.y
+  );
+  return direction;
+};
+
+export const getIsNearestAttackEnergyThisClose = (
+  player: Player,
+  playerIndex: number,
+  game: Game,
+  distance: number
+): boolean => {
+  let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+  let dCalc: number = getDistance(
+    player.char.sprite.x,
+    player.char.sprite.y,
+    ae.x,
+    ae.y
+  );
+  return dCalc < distance;
+};
+export const getIsNearestAttackEnergyThisCloseAbove = (
+  player: Player,
+  playerIndex: number,
+  game: Game,
+  distance: number
+): boolean => {
+  let ae: Position = getNearestAttackEnergyXYAbove(player, playerIndex, game);
+  let dCalc: number = getDistance(
+    player.char.sprite.x,
+    player.char.sprite.y,
+    ae.x,
+    ae.y
+  );
+  return dCalc < distance;
+};
+
+export const updatePlayerDodgeInThisDirection = (
+  player: Player,
+  direction: DodgeDirection
+): void => {
+  let pc = player.padCurr;
+  pc.B = true;
+
+  switch (direction) {
+    case 'up':
+      pc.up = true;
+      pc.down = false;
+      pc.left = false;
+      pc.right = false;
+      break;
+    case 'down':
+      pc.down = true;
+      pc.up = false;
+      pc.left = false;
+      pc.right = false;
+      break;
+    case 'left':
+      pc.left = true;
+      pc.right = false;
+      pc.up = false;
+      pc.down = false;
+      break;
+    case 'right':
+      pc.right = true;
+      pc.left = false;
+      pc.up = false;
+      pc.down = false;
+      break;
+    case 'up-left':
+      pc.up = true;
+      pc.left = true;
+      pc.down = false;
+      pc.right = false;
+      break;
+    case 'up-right':
+      pc.up = true;
+      pc.right = true;
+      pc.down = false;
+      pc.left = false;
+      break;
+    case 'down-left':
+      pc.down = true;
+      pc.left = true;
+      pc.up = false;
+      pc.right = false;
+      break;
+    case 'down-right':
+      pc.down = true;
+      pc.right = true;
+      pc.up = false;
+      pc.left = false;
+      break;
+  }
+};
+
+export const updatePlayerDodgeIfAttackEnergyTooClose = (
+  player: Player,
+  playerIndex: number,
+  game: Game
+): void => {
+  const shortRange = SCREEN_DIMENSIONS.HEIGHT * 0.2;
+  const longRange = SCREEN_DIMENSIONS.HEIGHT * 0.5;
+  let pCurr = player.padCurr;
+
+  if (
+    pCurr.B &&
+    (getIsBotTooFarUp(player, game) ||
+      getIsBotTooFarLeft(player, game) ||
+      getIsBotTooFarRight(player, game))
+  ) {
+    player.padCurr.B = false;
+    return;
+  }
+
+  if (
+    pCurr.B &&
+    !player.char.upB.canUse &&
+    !getIsNearestAttackEnergyThisClose(player, playerIndex, game, longRange)
+  ) {
+    player.padCurr.B = false;
+  }
+
+  if (
+    !pCurr.B &&
+    getIsPlayerInAir(player) &&
+    getIsNearestAttackEnergyThisClose(player, playerIndex, game, shortRange)
+  ) {
+    let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+    let ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
+    let direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
+      ps,
+      ae
+    );
+    updatePlayerDodgeInThisDirection(player, direction);
+  }
+};
+
 export function updateBot(
   player: Player,
   playerIndex: number,
@@ -454,189 +640,3 @@ export function updateBot(
   //   p.Y = !p.Y;
   // }
 }
-
-export type DodgeDirection =
-  | 'up'
-  | 'down'
-  | 'left'
-  | 'right'
-  | 'up-left'
-  | 'up-right'
-  | 'down-left'
-  | 'down-right';
-
-export function getDodgeDirectionFromNormalizedVector(
-  x: number,
-  y: number
-): DodgeDirection {
-  const tolerance = 0.25;
-  if (y < -tolerance) {
-    if (x < -tolerance) {
-      return 'up-left';
-    } else if (x > tolerance) {
-      return 'up-right';
-    } else {
-      return 'up';
-    }
-  } else if (y > tolerance) {
-    if (x < -tolerance) {
-      return 'down-left';
-    } else if (x > tolerance) {
-      return 'down-right';
-    } else {
-      return 'down';
-    }
-  } else {
-    if (x < -tolerance) {
-      return 'left';
-    } else if (x > tolerance) {
-      return 'right';
-    } else {
-      return 'up'; // ideally not possible
-    }
-  }
-}
-
-export const getDodgeDirectionPlayerToAttackEnergy = (
-  p: Position,
-  a: Position
-): DodgeDirection => {
-  let v: xyVector = getNormalizedVector(p.x, p.y, a.x, a.y);
-  let direction: DodgeDirection = getDodgeDirectionFromNormalizedVector(
-    v.x,
-    v.y
-  );
-  return direction;
-};
-
-export const getIsNearestAttackEnergyThisClose = (
-  player: Player,
-  playerIndex: number,
-  game: Game,
-  distance: number
-): boolean => {
-  let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
-  let dCalc: number = getDistance(
-    player.char.sprite.x,
-    player.char.sprite.y,
-    ae.x,
-    ae.y
-  );
-  return dCalc < distance;
-};
-export const getIsNearestAttackEnergyThisCloseAbove = (
-  player: Player,
-  playerIndex: number,
-  game: Game,
-  distance: number
-): boolean => {
-  let ae: Position = getNearestAttackEnergyXYAbove(player, playerIndex, game);
-  let dCalc: number = getDistance(
-    player.char.sprite.x,
-    player.char.sprite.y,
-    ae.x,
-    ae.y
-  );
-  return dCalc < distance;
-};
-
-export const updatePlayerDodgeInThisDirection = (
-  player: Player,
-  direction: DodgeDirection
-): void => {
-  let pc = player.padCurr;
-  pc.B = true;
-
-  switch (direction) {
-    case 'up':
-      pc.up = true;
-      pc.down = false;
-      pc.left = false;
-      pc.right = false;
-      break;
-    case 'down':
-      pc.down = true;
-      pc.up = false;
-      pc.left = false;
-      pc.right = false;
-      break;
-    case 'left':
-      pc.left = true;
-      pc.right = false;
-      pc.up = false;
-      pc.down = false;
-      break;
-    case 'right':
-      pc.right = true;
-      pc.left = false;
-      pc.up = false;
-      pc.down = false;
-      break;
-    case 'up-left':
-      pc.up = true;
-      pc.left = true;
-      pc.down = false;
-      pc.right = false;
-      break;
-    case 'up-right':
-      pc.up = true;
-      pc.right = true;
-      pc.down = false;
-      pc.left = false;
-      break;
-    case 'down-left':
-      pc.down = true;
-      pc.left = true;
-      pc.up = false;
-      pc.right = false;
-      break;
-    case 'down-right':
-      pc.down = true;
-      pc.right = true;
-      pc.up = false;
-      pc.left = false;
-      break;
-  }
-};
-
-export const updatePlayerDodgeIfAttackEnergyTooClose = (
-  player: Player,
-  playerIndex: number,
-  game: Game
-): void => {
-  const shortRange = SCREEN_DIMENSIONS.HEIGHT * 0.2;
-  const longRange = SCREEN_DIMENSIONS.HEIGHT * 0.5;
-  let pCurr = player.padCurr;
-
-  if (
-    pCurr.B &&
-    (getIsBotTooFarUp(player, game) ||
-      getIsBotTooFarLeft(player, game) ||
-      getIsBotTooFarRight(player, game))
-  ) {
-    player.padCurr.B = false;
-    return;
-  }
-
-  if (
-    pCurr.B &&
-    !player.char.upB.canUse &&
-    !getIsNearestAttackEnergyThisClose(player, playerIndex, game, longRange)
-  ) {
-    player.padCurr.B = false;
-  }
-
-  if (
-    !pCurr.B &&
-    getIsPlayerInAir(player) &&
-    getIsNearestAttackEnergyThisClose(player, playerIndex, game, shortRange)
-  ) {
-    let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
-    let ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
-    let direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
-      ps,
-      ae
-    );
-    updatePlayerDodgeInThisDirection(player, direction);
-  }
-};
