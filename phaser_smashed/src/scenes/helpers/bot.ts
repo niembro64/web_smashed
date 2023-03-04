@@ -397,12 +397,8 @@ export function updateBot(
     return;
   }
 
-  if (game.debug.NeuralNetworkBot) {
+  if (game.debug.NeuralNetworkBot || !game.debug.NeuralNetworkTrain) {
     NNSetPlayer2Output(game);
-    return;
-  }
-
-  if (game.debug.NeuralNetworkTrain) {
     return;
   }
 
