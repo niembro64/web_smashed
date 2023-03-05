@@ -1,7 +1,6 @@
 import { NeuralNetwork } from 'brain.js';
 import Game from '../Game';
-import { NNObject } from '../interfaces';
-import { netJson } from './nnJson';
+import { NNObject, Player } from '../interfaces';
 
 export const nnConfigBaby = {
   inputSize: 2,
@@ -24,7 +23,7 @@ export const nnConfig = {
 // };
 
 export const NNTrain = (game: Game): void => {
-  if (!game.debug.NeuralNetworkTrain) {
+  if (!game.debug.NNTrainP1) {
     return;
   }
 
@@ -53,12 +52,15 @@ export const NNGetOutput = (game: Game): number[] => {
   return output;
 };
 
-export const NNSetPlayer2Output = (game: Game): void => {
-  if (game.debug.NeuralNetworkTrain) {
+export const NNSetPlayerPad = (
+  player: Player,
+  playerIndex: number,
+  game: Game
+): void => {
+  if (game.debug.NNTrainP1) {
     return;
   }
 
-  let player = game.players[1];
   let output = NNGetOutput(game);
 
   player.padCurr.up = output[0] > 0.5 ? true : false;
@@ -79,7 +81,7 @@ export const NNSetPlayer2Output = (game: Game): void => {
 };
 
 export const addPlayerOneNNObjects = (game: Game): void => {
-  if (!game.debug.NeuralNetworkTrain) {
+  if (!game.debug.NNTrainP1) {
     return;
   }
 

@@ -51,10 +51,10 @@ export function preload(game: Game): void {
 
   game.shotsLeftCurr = game.debug.NumShots;
 
-  if (!game.debug.NeuralNetworkTrain) {
+  // if (!game.debug.NeuralNetworkTrain) {
     game.net = new NeuralNetwork(nnConfig);
     game.net = game.net.fromJSON(netJson);
-  }
+  // }
 
   //////////////////////////////
   // Load Audio

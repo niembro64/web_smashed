@@ -23,7 +23,7 @@ import {
   updateTable,
   updateWallTouchArray,
 } from '../helpers/movement';
-import { addPlayerOneNNObjects, NNSetPlayer2Output } from '../helpers/nn';
+import { addPlayerOneNNObjects, NNSetPlayerPad } from '../helpers/nn';
 import {
   updateAttackEnergyFrictionGroundMovement,
   updateAttackEnergyFrictionGroundRotation,

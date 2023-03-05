@@ -9,7 +9,7 @@ import {
   getNearestPlayerAliveXY,
   hasPlayerTouchedWallRecently,
 } from './movement';
-import { NNSetPlayer2Output } from './nn';
+import { NNSetPlayerPad } from './nn';
 
 export function getIsBot(player: Player, game: Game): boolean {
   if (player.inputType === 3) {
@@ -397,8 +397,8 @@ export function updateBot(
     return;
   }
 
-  if (game.debug.NeuralNetworkBot || !game.debug.NeuralNetworkTrain) {
-    NNSetPlayer2Output(game);
+  if (player.inputType === 4) {
+    NNSetPlayerPad(player, playerIndex, game);
     return;
   }
 

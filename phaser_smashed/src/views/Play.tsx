@@ -561,7 +561,19 @@ function Play() {
             input: inputArray[inputIndex],
           });
           break;
+        case 4:
+          newPlayers.push({
+            // name: players[inputIndex].name,
+            // name: smashConfigOptions[players[inputIndex].characterId].name,
+            characterId: players[inputIndex].characterId,
+            // scale: players[inputIndex].scale,
+            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
+            input: inputArray[inputIndex],
+          });
+          break;
         default:
+          console.log("inputArray[inputIndex] didn't match any cases");
+          break;
       }
       // if (input.state) {
       //   newPlayers.push({
@@ -1676,7 +1688,7 @@ function Play() {
                         }}
                       >
                         <span>Bot</span>
-                        <span id="input-sub">Rule-Based</span>
+                        <span id="input-sub">Neural-Network</span>
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}

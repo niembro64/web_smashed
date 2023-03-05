@@ -43,8 +43,8 @@ export interface Debug {
   BulletsFullScreen: boolean;
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
-  NeuralNetworkBot: boolean;
-  NeuralNetworkTrain: boolean;
+  // NeuralNetworkBot: boolean;
+  NNTrainP1: boolean;
   [key: string]: any; // add index signature
 }
 

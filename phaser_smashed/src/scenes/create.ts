@@ -1143,7 +1143,7 @@ export function createPlayers(game: Game): void {
   });
 
   game.players.forEach((player, playerIndex) => {
-    // IF BOT
+    // IF RULE BOT
     if (player.inputType === 3) {
       player.padCurr.right = true;
       player.padCurr.left = false;
