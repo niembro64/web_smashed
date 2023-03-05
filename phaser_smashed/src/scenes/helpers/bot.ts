@@ -382,7 +382,7 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
   }
 };
 
-export function updateBot(
+export function updateBotRules(
   player: Player,
   playerIndex: number,
   game: Game
@@ -398,7 +398,7 @@ export function updateBot(
   }
 
   if (player.inputType === 4) {
-    console.log('playerIndex', playerIndex, 'inputType', player.inputType);
+    // console.log('playerIndex', playerIndex, 'inputType', player.inputType);
     NNSetPlayerPad(player, playerIndex, game);
     return;
   }

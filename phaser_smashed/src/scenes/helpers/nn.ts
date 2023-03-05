@@ -1,6 +1,7 @@
 import { NeuralNetwork } from 'brain.js';
 import Game from '../Game';
 import { NNObject, Player } from '../interfaces';
+import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 
 export const nnConfigBaby = {
   inputSize: 2,
@@ -35,15 +36,17 @@ export const NNTrain = (game: Game): void => {
 
 export const NNGetOutput = (
   player: Player,
-  playerIndex: number,
+  enemyX: number,
+  enemyY: number,
+  enemyAEX: number,
+  enemyAEY: number,
   game: Game
 ): number[] => {
-  let enemy = game.players[1];
   let input = [
-    player.char.sprite.x - enemy.char.sprite.x,
-    player.char.sprite.y - enemy.char.sprite.y,
-    player.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
-    player.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
+    player.char.sprite.x - enemyX,
+    player.char.sprite.y - enemyY,
+    player.char.sprite.body.velocity.x - enemyAEX,
+    player.char.sprite.body.velocity.y - enemyAEY,
     player.char.sprite.body.touching.down ? 1 : 0,
     player.char.sprite.body.touching.left ||
     player.char.sprite.body.touching.right
@@ -64,7 +67,17 @@ export const NNSetPlayerPad = (
     return;
   }
 
-  let output = NNGetOutput(player, playerIndex, game);
+  let enemy = getNearestPlayerAliveXY(player, playerIndex, game);
+  let enemyAE = getNearestAttackEnergyXY(player, playerIndex, game);
+
+  let output = NNGetOutput(
+    player,
+    enemy.x,
+    enemy.y,
+    enemyAE.x,
+    enemyAE.y,
+    game
+  );
 
   player.padCurr.up = output[0] > 0.5 ? true : false;
   player.padCurr.down = output[1] > 0.5 ? true : false;
@@ -79,7 +92,7 @@ export const NNSetPlayerPad = (
   player.padCurr.start = false;
   // player.padCurr.start = output[10] > 0.5 ? true : false;
   player.padCurr.select = output[11] > 0.5 ? true : false;
-  console.log('output', JSON.stringify(output, null, 2));
+  // console.log('output', JSON.stringify(output, null, 2));
   // console.log('padCurr', JSON.stringify(player.padCurr, null, 2));
 };
 
