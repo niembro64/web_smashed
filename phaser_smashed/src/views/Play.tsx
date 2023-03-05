@@ -38,6 +38,7 @@ import {
   PlayerConfigSmall,
   PlayChezState,
   bar,
+  inputTypeNum,
 } from '../scenes/interfaces';
 import { debugInit, debugMax, debugShow } from '../debugOptions';
 import {
@@ -660,7 +661,7 @@ function Play() {
     let newInputArray = [...inputArray];
     newInputArray[playerIndex] = i as InputType;
     setInputArray([...newInputArray]);
-    // console.log('newInputArray', newInputArray);
+    console.log('i', i, 'newInputArray', newInputArray);
   };
 
   const bamPlay = (): void => {
@@ -976,7 +977,7 @@ function Play() {
   const onClickOscura = (index: number) => {
     onClickSetInputArrayElement(
       index,
-      inputArray[index] + 1 > 3
+      inputArray[index] + 1 >= inputTypeNum
         ? (0 as InputType)
         : ((inputArray[index] + 1) as InputType)
     );
@@ -1497,28 +1498,27 @@ function Play() {
                         }}
                       >
                         <div className="startImageWrapper">
-                          {(inputArray[pIndex] === 1 ||
-                            inputArray[pIndex] === 2 ||
-                            inputArray[pIndex] === 3) && (
-                            <img
-                              className={
-                                'startImage' +
-                                (pIndex > 1 ? 'Inverse' : 'Normal')
-                              }
-                              src={
-                                'images/character_' +
-                                p.characterId.toString() +
-                                '_cropped.png'
-                              }
-                              // width={(55 * p.scale).toString() + '%'}
-                              width={
-                                (
-                                  55 * smashConfigOptions[p.characterId].scale
-                                ).toString() + '%'
-                              }
-                              alt="char"
-                            />
-                          )}
+                          {inputArray[pIndex] !== 0 &&
+                            inputArray[pIndex] < inputTypeNum && (
+                              <img
+                                className={
+                                  'startImage' +
+                                  (pIndex > 1 ? 'Inverse' : 'Normal')
+                                }
+                                src={
+                                  'images/character_' +
+                                  p.characterId.toString() +
+                                  '_cropped.png'
+                                }
+                                // width={(55 * p.scale).toString() + '%'}
+                                width={
+                                  (
+                                    55 * smashConfigOptions[p.characterId].scale
+                                  ).toString() + '%'
+                                }
+                                alt="char"
+                              />
+                            )}
                           {/* <p className="player-char-image-name">{p.name}</p> */}
                           <p className="player-char-image-name">
                             {smashConfigOptions[p.characterId].name}
@@ -1526,52 +1526,51 @@ function Play() {
                         </div>
                       </div>
                     )}
-                    {(inputArray[pIndex] === 1 ||
-                      inputArray[pIndex] === 2 ||
-                      inputArray[pIndex] === 3) && (
-                      <div
-                        className="player-char"
-                        onClick={() => {
-                          onClickRotateSelection(pIndex);
-                          setPlayChezState({ name: 'up', moment: moment() });
-                        }}
-                      >
-                        <div className="startImageWrapper">
-                          <div
-                            className={
-                              'id-circle ' +
-                              idColors[getNumActiveBeforeMe(pIndex)]
-                            }
-                          ></div>
-                          {(inputArray[pIndex] === 1 ||
-                            inputArray[pIndex] === 2 ||
-                            inputArray[pIndex] === 3) && (
-                            <img
+                    {inputArray[pIndex] !== 0 &&
+                      inputArray[pIndex] < inputTypeNum && (
+                        <div
+                          className="player-char"
+                          onClick={() => {
+                            onClickRotateSelection(pIndex);
+                            setPlayChezState({ name: 'up', moment: moment() });
+                          }}
+                        >
+                          <div className="startImageWrapper">
+                            <div
                               className={
-                                'startImage' +
-                                (pIndex > 1 ? 'Inverse' : 'Normal')
+                                'id-circle ' +
+                                idColors[getNumActiveBeforeMe(pIndex)]
                               }
-                              src={
-                                'images/character_' +
-                                p.characterId.toString() +
-                                '_cropped.png'
-                              }
-                              // width={(55 * p.scale).toString() + '%'}
-                              width={
-                                (
-                                  55 * smashConfigOptions[p.characterId].scale
-                                ).toString() + '%'
-                              }
-                              alt="char"
-                            />
-                          )}
-                          {/* <p className="player-char-image-name">{p.name}</p> */}
-                          <p className="player-char-image-name">
-                            {smashConfigOptions[p.characterId].name}
-                          </p>
+                            ></div>
+                            {inputArray[pIndex] !== 0 &&
+                              inputArray[pIndex] < inputTypeNum && (
+                                <img
+                                  className={
+                                    'startImage' +
+                                    (pIndex > 1 ? 'Inverse' : 'Normal')
+                                  }
+                                  src={
+                                    'images/character_' +
+                                    p.characterId.toString() +
+                                    '_cropped.png'
+                                  }
+                                  // width={(55 * p.scale).toString() + '%'}
+                                  width={
+                                    (
+                                      55 *
+                                      smashConfigOptions[p.characterId].scale
+                                    ).toString() + '%'
+                                  }
+                                  alt="char"
+                                />
+                              )}
+                            {/* <p className="player-char-image-name">{p.name}</p> */}
+                            <p className="player-char-image-name">
+                              {smashConfigOptions[p.characterId].name}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                     {inputArray[pIndex] === 0 && (
                       <div
                         className="b-oscuro b-black"
@@ -1656,6 +1655,19 @@ function Play() {
                       </div>
                     )}
                     {inputArray[pIndex] === 3 && (
+                      <div
+                        className="b-oscuro b-dark"
+                        onClick={() => {
+                          onClickOscura(pIndex);
+                          // setPlayChezState({ name: 'up', moment: moment() });
+                        }}
+                      >
+                        <span>Bot</span>
+                        <span id="input-sub">Rule-Based</span>
+                        <div className="button-input-emoji">{emoji.bot}</div>
+                      </div>
+                    )}
+                    {inputArray[pIndex] === 4 && (
                       <div
                         className="b-oscuro b-dark"
                         onClick={() => {
@@ -2172,6 +2184,9 @@ function Play() {
                               gameViewBottom += '' + emoji.keyboardWhite + ' ';
                               break;
                             case 3:
+                              gameViewBottom += '' + emoji.bot + ' ';
+                              break;
+                            case 4:
                               gameViewBottom += '' + emoji.bot + ' ';
                               break;
                             default:

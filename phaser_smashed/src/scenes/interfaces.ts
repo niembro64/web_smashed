@@ -446,7 +446,8 @@ export type CharacterId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 // 3: bot | Rule-Based
 // 4: bot | Neural-Network
 //////////////////////////
-export type InputType = 0 | 1 | 2 | 3;
+export type InputType = 0 | 1 | 2 | 3 | 4;
+export const inputTypeNum = 5;
 
 export type CharacterName =
   | 'Mario'
@@ -685,28 +686,28 @@ export interface NNObject {
 }
 
 export interface NNInput {
-// flagCompleted: number;
-// playerAlive: number;
-// playerSick: number;
-playerEnemyDX: number;
-playerEnemyDY: number;
-playerEnemeyDVX: number;
-playerEnemyDVY: number;
-[key: string]: any;
+  // flagCompleted: number;
+  // playerAlive: number;
+  // playerSick: number;
+  playerEnemyDX: number;
+  playerEnemyDY: number;
+  playerEnemeyDVX: number;
+  playerEnemyDVY: number;
+  [key: string]: any;
 }
 
 export interface NNOutput {
-controllerUp: number;
-controllerDown: number;
-controllerLeft: number;
-controllerRight: number;
-controllerA: number;
-controllerB: number;
-controllerX: number;
-controllerY: number;
-controllerL: number;
-controllerR: number;
-controllerStart: number;
-controllerSelect: number;
-[key: string]: any;
+  controllerUp: number;
+  controllerDown: number;
+  controllerLeft: number;
+  controllerRight: number;
+  controllerA: number;
+  controllerB: number;
+  controllerX: number;
+  controllerY: number;
+  controllerL: number;
+  controllerR: number;
+  controllerStart: number;
+  controllerSelect: number;
+  [key: string]: any;
 }
