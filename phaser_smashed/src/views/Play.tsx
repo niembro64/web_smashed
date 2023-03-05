@@ -1706,7 +1706,16 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>KvB</span>
+                <span>KBvBR</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([2, 0, 0, 4]);
+                  blipSound();
+                }}
+              >
+                <span>KBvBN</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1715,7 +1724,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>2K</span>
+                <span>KBs</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1724,7 +1733,7 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>4P</span>
+                <span>GPs</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1733,7 +1742,16 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>4B</span>
+                <span>BRs</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([4, 4, 4, 4]);
+                  blipSound();
+                }}
+              >
+                <span>BNs</span>
               </div>
             </div>
             <div
