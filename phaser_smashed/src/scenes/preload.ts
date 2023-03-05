@@ -52,8 +52,8 @@ export function preload(game: Game): void {
   game.shotsLeftCurr = game.debug.NumShots;
 
   // if (!game.debug.NeuralNetworkTrain) {
-    game.net = new NeuralNetwork(nnConfig);
-    game.net = game.net.fromJSON(netJson);
+  game.nnNet = new NeuralNetwork(nnConfig);
+  game.nnNet = game.nnNet.fromJSON(netJson);
   // }
 
   //////////////////////////////

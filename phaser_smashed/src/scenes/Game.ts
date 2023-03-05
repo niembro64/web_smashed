@@ -40,8 +40,8 @@ export default class Game extends Phaser.Scene {
 
   sessionMoment: Moment = moment();
   nnObjects: NNObject[] = [];
-  
-  net: any;
+  nnRatios: number[] = [];
+  nnNet: any;
 
   ////////////////////////////////
   ////////// GAME CONSTANTS

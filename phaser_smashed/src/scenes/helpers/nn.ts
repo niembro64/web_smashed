@@ -29,10 +29,37 @@ export const NNTrain = (game: Game): void => {
     return;
   }
 
-  game.net = new NeuralNetwork(nnConfig);
-  game.net.train(game.nnObjects);
-  let netJson = game.net.toJSON();
+  game.nnNet = new NeuralNetwork(nnConfig);
+  game.nnNet.train(game.nnObjects);
+  let netJson = game.nnNet.toJSON();
   console.log('netJson', JSON.stringify(netJson, null, 2));
+
+  let newOutRatios = NNGetOutputRatios(game);
+  console.log('newOutRatios', newOutRatios);
+
+};
+
+export const NNGetOutputRatios = (game: Game): number[] => {
+  let numObj: number = game.nnObjects.length;
+
+  let btnUsedNumber: number[] = [];
+  let btnUsedRatio: number[] = [];
+
+  for (let i = 0; i < numObj; i++) {
+    btnUsedNumber.push(0);
+  }
+
+  game.nnObjects.forEach((object: NNObject, objIndex) => {
+    object.output.forEach((button: number, btnIndex: number) => {
+      btnUsedNumber[btnIndex] += button;
+    });
+  });
+
+  btnUsedNumber.forEach((button: number, btnIndex: number) => {
+    btnUsedRatio.push(button / numObj);
+  });
+
+  return btnUsedRatio;
 };
 
 export const NNGetOutput = (
@@ -55,7 +82,7 @@ export const NNGetOutput = (
       : 0,
   ];
 
-  let output = game.net.run(input);
+  let output = game.nnNet.run(input);
   return output;
 };
 
