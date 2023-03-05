@@ -1,7 +1,8 @@
 import { NeuralNetwork } from 'brain.js';
 import Game from '../Game';
-import { NNObject, Player } from '../interfaces';
+import { NNObject, NNOutput, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
+import { NNJsonRatiosTrueOutput } from './nnJson';
 
 export const nnConfigBaby = {
   inputSize: 2,
@@ -24,7 +25,7 @@ export const nnConfig = {
 // };
 
 export const NNTrain = (game: Game): void => {
-  if (!game.debug.NNTrainP1) {
+  if (!game.debug.P1TrainNN) {
     return;
   }
 
@@ -63,7 +64,7 @@ export const NNSetPlayerPad = (
   playerIndex: number,
   game: Game
 ): void => {
-  if (game.debug.NNTrainP1) {
+  if (game.debug.P1TrainNN) {
     return;
   }
 
@@ -79,25 +80,27 @@ export const NNSetPlayerPad = (
     game
   );
 
-  player.padCurr.up = output[0] > 0.5 ? true : false;
-  player.padCurr.down = output[1] > 0.5 ? true : false;
-  player.padCurr.left = output[2] > 0.5 ? true : false;
-  player.padCurr.right = output[3] > 0.5 ? true : false;
-  player.padCurr.A = output[4] > 0.5 ? true : false;
-  player.padCurr.B = output[5] > 0.5 ? true : false;
-  player.padCurr.X = output[6] > 0.5 ? true : false;
-  player.padCurr.Y = output[7] > 0.5 ? true : false;
-  player.padCurr.L = output[8] > 0.5 ? true : false;
-  player.padCurr.R = output[9] > 0.5 ? true : false;
+  let r: NNOutput = NNJsonRatiosTrueOutput;
+
+  player.padCurr.up = output[0] > r.controllerUp ? true : false;
+  player.padCurr.down = output[1] > r.controllerDown ? true : false;
+  player.padCurr.left = output[2] > r.controllerLeft ? true : false;
+  player.padCurr.right = output[3] > r.controllerRight ? true : false;
+  player.padCurr.A = output[4] > r.controllerA ? true : false;
+  player.padCurr.B = output[5] > r.controllerB ? true : false;
+  player.padCurr.X = output[6] > r.controllerX ? true : false;
+  player.padCurr.Y = output[7] > r.controllerY ? true : false;
+  player.padCurr.L = output[8] > r.controllerL ? true : false;
+  player.padCurr.R = output[9] > r.controllerR ? true : false;
   player.padCurr.start = false;
-  // player.padCurr.start = output[10] > 0.5 ? true : false;
-  player.padCurr.select = output[11] > 0.5 ? true : false;
+  // player.padCurr.start = output[10] > r. ? true : false;
+  player.padCurr.select = output[11] > r.controllerSelect ? true : false;
   // console.log('output', JSON.stringify(output, null, 2));
   // console.log('padCurr', JSON.stringify(player.padCurr, null, 2));
 };
 
 export const addPlayerOneNNObjects = (game: Game): void => {
-  if (!game.debug.NNTrainP1) {
+  if (!game.debug.P1TrainNN) {
     return;
   }
 

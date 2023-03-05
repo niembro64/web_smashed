@@ -1,3 +1,5 @@
+import { NNInput, NNOutput } from '../interfaces';
+
 export const netJson = {
   type: 'NeuralNetwork',
   sizes: [6, 10, 12],
@@ -166,4 +168,28 @@ export const netJson = {
     beta2: 0.999,
     epsilon: 1e-8,
   },
+};
+
+export const NNJsonRatiosTrueInput: NNInput = {
+  playerEnemyDX: 0.5,
+  playerEnemyDY: 0.5,
+  playerEnemyDVX: 0.5,
+  playerEnemyDVY: 0.5,
+  playerTouchingDown: 0.5,
+  playerTouchingLR: 0.5,
+};
+
+export const NNJsonRatiosTrueOutput: NNOutput = {
+  controllerUp: 0.5,
+  controllerDown: 0.5,
+  controllerLeft: 0.5,
+  controllerRight: 0.5,
+  controllerA: 0.5,
+  controllerB: 0.5,
+  controllerX: 0.5,
+  controllerY: 0.5,
+  controllerL: 0.5,
+  controllerR: 0.5,
+  controllerStart: 0.5,
+  controllerSelect: 0.5,
 };

@@ -44,7 +44,7 @@ export interface Debug {
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
   // NeuralNetworkBot: boolean;
-  NNTrainP1: boolean;
+  P1TrainNN: boolean;
   [key: string]: any; // add index signature
 }
 
@@ -686,12 +686,9 @@ export interface NNObject {
 }
 
 export interface NNInput {
-  // flagCompleted: number;
-  // playerAlive: number;
-  // playerSick: number;
   playerEnemyDX: number;
   playerEnemyDY: number;
-  playerEnemeyDVX: number;
+  playerEnemyDVX: number;
   playerEnemyDVY: number;
   playerTouchingDown: number;
   playerTouchingLR: number;

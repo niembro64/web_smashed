@@ -43,7 +43,7 @@ export const debugInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   // NeuralNetworkBot: false,
-  NNTrainP1: false,
+  P1TrainNN: false,
 };
 
 export const debugMax: Debug = {
@@ -89,7 +89,7 @@ export const debugMax: Debug = {
   TrophiesOnShots: true,
   TrophiesAlways: true,
   // NeuralNetworkBot: true,
-  NNTrainP1: true,
+  P1TrainNN: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -136,5 +136,5 @@ export const debugShow: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   // NeuralNetworkBot: false,
-  NNTrainP1: true,
+  P1TrainNN: true,
 };
