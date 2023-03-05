@@ -7,6 +7,7 @@ import {
   setPhysicsAttackEnergyOn,
 } from './attacks';
 import { getIsBot, updateBotRules } from './bot';
+import { updateBotNN } from './botNN';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
@@ -48,7 +49,7 @@ export function updateGamePadsMaster(game: Game): void {
         updateBotRules(player, playerIndex, game);
         break;
       case 4:
-        updateBotRules(player, playerIndex, game);
+        updateBotNN(player, playerIndex, game);
         break;
       default:
         break;

@@ -397,12 +397,6 @@ export function updateBotRules(
     return;
   }
 
-  if (player.inputType === 4) {
-    // console.log('playerIndex', playerIndex, 'inputType', player.inputType);
-    NNSetPlayerPad(player, playerIndex, game);
-    return;
-  }
-
   let nearestP: Position = getNearestPlayerAliveXY(player, playerIndex, game);
 
   let botSprite = player.char.sprite;
@@ -632,12 +626,4 @@ export function updateBotRules(
     p.right = true;
     p.left = false;
   }
-
-  // //////////////////////
-  // // WAKE UP BOT
-  // //////////////////////
-  // if (!p.left && !p.right) {
-  //   p.right = true;
-  //   p.Y = !p.Y;
-  // }
 }
