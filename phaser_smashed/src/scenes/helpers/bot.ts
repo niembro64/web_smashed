@@ -398,6 +398,7 @@ export function updateBot(
   }
 
   if (player.inputType === 4) {
+    console.log('playerIndex', playerIndex, 'inputType', player.inputType);
     NNSetPlayerPad(player, playerIndex, game);
     return;
   }

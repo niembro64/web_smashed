@@ -47,6 +47,9 @@ export function updateGamePadsMaster(game: Game): void {
       case 3:
         updateBot(player, playerIndex, game);
         break;
+      case 4:
+        updateBot(player, playerIndex, game);
+        break;
       default:
         break;
     }

@@ -33,8 +33,11 @@ export const NNTrain = (game: Game): void => {
   console.log('netJson', JSON.stringify(netJson, null, 2));
 };
 
-export const NNGetOutput = (game: Game): number[] => {
-  let player = game.players[0];
+export const NNGetOutput = (
+  player: Player,
+  playerIndex: number,
+  game: Game
+): number[] => {
   let enemy = game.players[1];
   let input = [
     player.char.sprite.x - enemy.char.sprite.x,
@@ -61,7 +64,7 @@ export const NNSetPlayerPad = (
     return;
   }
 
-  let output = NNGetOutput(game);
+  let output = NNGetOutput(player, playerIndex, game);
 
   player.padCurr.up = output[0] > 0.5 ? true : false;
   player.padCurr.down = output[1] > 0.5 ? true : false;
