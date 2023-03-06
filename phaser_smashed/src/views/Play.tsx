@@ -52,8 +52,21 @@ import {
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import { NeuralNetwork, recurrent } from 'brain.js';
+import { downloadButton } from '../scenes/helpers/nn';
 
 function Play() {
+  const handleScoreChange = (event: any): void => {
+    // setState({ score: event.detail.score });
+    console.log('REACT HANDLE TRAIN STATS', event);
+  };
+  useEffect(() => {
+    window.addEventListener('nnTrainStats', handleScoreChange);
+
+    return () => {
+      window.removeEventListener('nnTrainStats', handleScoreChange);
+    };
+  }, []);
+
   useEffect(() => {
     const net = new recurrent.LSTM({
       inputSize: 3,
@@ -74,6 +87,9 @@ function Play() {
     });
 
     let output = net.run([5, 3, 1]);
+
+    let netJson = net.toJSON();
+    // downloadButton(netJson, 'baby');
 
     console.log('output', output);
   }, []);
@@ -1374,7 +1390,8 @@ function Play() {
           )} */}
         </div>
       )}
-      <div className="phaser-container" id="phaser-container"></div>
+      {/* <Game className="phaser-container" id="phaser-container"></Game> */}
+      <div className="phaser-container" id="phaser-container" onScoreChange={handleScoreChange}></div>
       {webState === 'start' && (
         <div className="start-class-div">
           {!debug.DevMode && <div className="black-hiding-div"></div>}

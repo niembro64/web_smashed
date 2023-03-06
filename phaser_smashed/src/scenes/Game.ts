@@ -30,6 +30,18 @@ import { update } from './update';
 export const SCREEN_DIMENSIONS = { WIDTH: 1920, HEIGHT: 1080 };
 
 export default class Game extends Phaser.Scene {
+  constructor() {
+    // super('game');
+    super('phaser-container');
+    this.stats = 0;
+  }
+
+  onScoreChange(event: any) {
+    console.log(`Score changed to ${event.score}`);
+  }
+
+  stats: any;
+
   ////////////////////////////////
   ////////// GAME DEBUG
   ////////////////////////////////
@@ -2457,9 +2469,9 @@ export default class Game extends Phaser.Scene {
     },
   ];
 
-  constructor() {
-    super('game');
-  }
+  // constructor() {
+  //   super('game');
+  // }
 
   preload() {
     preload(this);

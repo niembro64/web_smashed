@@ -5,8 +5,8 @@ import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
 export const nnConfigLTSMTimeStep = {
-  // inputSize: 8,
-  // outputSize: 12,
+  inputSize: 8,
+  outputSize: 12,
   // learningRate: 0.001,
   // activation: 'sigmoid',
   hiddenLayers: [12],
@@ -21,19 +21,23 @@ export const NNTrain = (game: Game): void => {
 
   // game.nnNet = new NeuralNetwork(nnConfig);
   // game.nnNet = new recurrent.RNN(nnConfig);
-  game.nnNet = new recurrent.LSTMTimeStep(nnConfigLTSMTimeStep);
-  let nnArray: number[][] = [];
-  game.nnObjects.forEach((object: NNObject, objIndex) => {
-    nnArray.push([...object.input, ...object.output]);
-  });
-  console.log('nnArray', nnArray);
+  game.nnNet = new recurrent.LSTM(nnConfigLTSMTimeStep);
+  // let nnArray: number[][] = [];
+  // game.nnObjects.forEach((object: NNObject, objIndex) => {
+  //   nnArray.push([...object.input, ...object.output]);
+  // });
+  // console.log('nnArray', nnArray);
 
-  game.nnNet.train(nnArray, {
+  game.nnNet.train(game.nnObjects, {
     // log: true,
     iterations: 200,
-    learningRate: 0.005,
-    // errorThresh: 0.03,
-    log: (stats: any) => console.log(stats),
+    // learningRate: 0.005,
+    errorThresh: 0.03,
+    logPeriod: 1,
+    log: (stats: any) => {
+      game.events.emit('nnTrainStats', stats);
+      console.log(stats);
+    },
     // callback: (res: any) => {
     //   console.log('game.nnObjects.length', game.nnObjects.length);
     //   console.log('res.iterations', res.iterations);
@@ -54,6 +58,7 @@ export const NNTrain = (game: Game): void => {
   console.log('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
   console.log('netJson', JSON.stringify(netJson, null, 2));
+  downloadButton(netJson, 'GameLTSMStateObject');
 
   let newOutRatios = NNGetOutputRatios(game);
   console.log('newOutRatios', newOutRatios);
@@ -220,19 +225,44 @@ export const addPlayerOneNNObjects = (game: Game): void => {
   // console.log('game.nnObjects', game.nnObjects);
 };
 
-export const NNDownloadNNObjects = (game: Game): void => {
-  let nnObjects = game.nnObjects;
-  let nnObjectsString = JSON.stringify(nnObjects, null, 2);
-  let blob = new Blob([nnObjectsString], { type: 'text/plain' });
-  let url = URL.createObjectURL(blob);
-  // Create an anchor tag with the download attribute
-  const downloadLink = document.createElement('a');
-  downloadLink.setAttribute('href', url);
-  downloadLink.setAttribute('download', 'example.txt');
+export const downloadButton = (objectToDownload: any, name: string): void => {
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.top = '50%';
+  container.style.left = '50%';
+  container.style.transform = 'translate(-50%, -50%)';
+  const topLevelElement = document.querySelector('body');
+  if (!topLevelElement) {
+    return;
+  }
+  topLevelElement.appendChild(container);
 
-  // Simulate a click on the anchor tag to trigger the download
-  downloadLink.click();
+  const button = document.createElement('button');
+  button.style.fontSize = '24px';
+  button.style.padding = '16px';
+  button.style.borderRadius = '8px';
+  button.style.backgroundColor = '#2196F3';
+  button.style.color = 'white';
+  button.style.zIndex = '2147483647';
+  button.textContent = 'Download Object';
+  container.appendChild(button);
 
-  // Clean up the URL object
-  URL.revokeObjectURL(url);
+  button.addEventListener('click', () => {
+    let objectString = JSON.stringify(objectToDownload, null, 2);
+    let blob = new Blob([objectString], { type: 'text/plain' });
+    let url = URL.createObjectURL(blob);
+    // Create an anchor tag with the download attribute
+    const downloadLink = document.createElement('a');
+    downloadLink.setAttribute('href', url);
+    downloadLink.setAttribute('download', name + '.txt');
+
+    // Simulate a click on the anchor tag to trigger the download
+    downloadLink.click();
+
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
+
+    // Remove the container element
+    document.body.removeChild(container);
+  });
 };
