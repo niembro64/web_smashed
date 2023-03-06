@@ -62,7 +62,11 @@ function Play() {
 
     let rnn = new recurrent.LSTMTimeStep();
 
-    rnn.train(trainingData, { log: (stats) => console.log(stats) });
+    rnn.train(trainingData, {
+      // iterations: 1000,
+      errorThresh: 0.01,
+      log: (stats) => console.log(stats),
+    });
 
     let output = rnn.run([1, 2, 3, 4]);
 

@@ -4,7 +4,7 @@ import { NNObject, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
-export const nnConfig = {
+export const nnConfigLTSMTimeStep = {
   // inputSize: 8,
   // outputSize: 12,
   // learningRate: 0.001,
@@ -21,12 +21,18 @@ export const NNTrain = (game: Game): void => {
 
   // game.nnNet = new NeuralNetwork(nnConfig);
   // game.nnNet = new recurrent.RNN(nnConfig);
-  game.nnNet = new recurrent.LSTM(nnConfig);
-  console.log('game.nnNet', game.nnNet);
-  game.nnNet.train(game.nnObjects, {
+  game.nnNet = new recurrent.LSTMTimeStep(nnConfigLTSMTimeStep);
+  let nnArray: number[][] = [];
+  game.nnObjects.forEach((object: NNObject, objIndex) => {
+    nnArray.push([...object.input, ...object.output]);
+  });
+  console.log('nnArray', nnArray);
+
+  game.nnNet.train(nnArray, {
     // log: true,
-    iterations: 100,
-    errorThresh: 0.05,
+    iterations: 200,
+    learningRate: 0.005,
+    // errorThresh: 0.03,
     log: (stats: any) => console.log(stats),
     // callback: (res: any) => {
     //   console.log('game.nnObjects.length', game.nnObjects.length);
@@ -39,6 +45,12 @@ export const NNTrain = (game: Game): void => {
     //   // );
     // },
   });
+
+  for (let i = 0; i < 10; i++) {
+    console.log(i, '----REAL', game.nnObjects[0].output);
+    console.log(i, '-TRAINED', game.nnNet.run(game.nnObjects[0].input));
+  }
+
   console.log('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
   console.log('netJson', JSON.stringify(netJson, null, 2));
@@ -103,6 +115,8 @@ export const NNGetOutput = (
   ];
 
   let output: number[] = game.nnNet.run(input);
+
+  console.log('output', output);
   return output;
 };
 
