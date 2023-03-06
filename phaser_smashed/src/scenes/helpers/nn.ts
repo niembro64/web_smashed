@@ -7,7 +7,7 @@ import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 export const nnConfig = {
   inputSize: 8,
   outputSize: 12,
-  learningRate: 0.1,
+  learningRate: 0.0001,
   activation: 'sigmoid',
   hiddenLayers: [24, 48, 24],
 };
