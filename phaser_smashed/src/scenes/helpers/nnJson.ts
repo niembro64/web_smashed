@@ -1,7 +1,7 @@
-import { NNInput, NNOutput } from '../interfaces';
+import { NNInput, NNOutput } from "../interfaces";
 
 export const netJson = {
-  type: 'NeuralNetwork',
+  type: "NeuralNetwork",
   sizes: [6, 10, 12],
   layers: [
     {
@@ -150,11 +150,11 @@ export const netJson = {
     outputSize: 11,
     binaryThresh: 0.5,
     learningRate: 0.1,
-    activation: 'sigmoid',
+    activation: "sigmoid",
     hiddenLayers: [10],
   },
   trainOpts: {
-    activation: 'sigmoid',
+    activation: "sigmoid",
     iterations: 20000,
     errorThresh: 0.005,
     log: false,
@@ -163,7 +163,7 @@ export const netJson = {
     learningRate: 0.1,
     momentum: 0.1,
     callbackPeriod: 10,
-    timeout: 'Infinity',
+    timeout: "Infinity",
     beta1: 0.9,
     beta2: 0.999,
     epsilon: 1e-8,
@@ -179,17 +179,23 @@ export const NNJsonRatiosTrueInput: NNInput = {
   playerTouchingLR: 0.5,
 };
 
-export const NNJsonRatiosTrueOutput: NNOutput = {
-  controllerUp: 0.5,
-  controllerDown: 0.5,
-  controllerLeft: 0.5,
-  controllerRight: 0.5,
-  controllerA: 0.5,
-  controllerB: 0.5,
-  controllerX: 0.5,
-  controllerY: 0.5,
-  controllerL: 0.5,
-  controllerR: 0.5,
-  controllerStart: 0.5,
-  controllerSelect: 0.5,
+export const NNJsonRatiosTrueOutputOBJ: NNOutput = {
+  controllerUp: 0.14520617252719453,
+  controllerDown: 0.00001,
+  controllerLeft: 0.3387300784214521,
+  controllerRight: 0.4414368833797116,
+  controllerA: 0.2557551226916266,
+  controllerB: 0.037945863900834806,
+  controllerX: 0.10220086010624842,
+  controllerY: 0.18214014672400708,
+  controllerL: 0.00001,
+  controllerR: 0.00001,
+  controllerStart: 0.00001,
+  controllerSelect: 0.00001,
 };
+
+export const NNJsonRatiosTrueOutputARRAY: number[] = [
+  0.14520617252719453, 0.000001, 0.3387300784214521, 0.4414368833797116,
+  0.2557551226916266, 0.037945863900834806, 0.10220086010624842,
+  0.18214014672400708,
+];

@@ -2,7 +2,7 @@ import { NeuralNetwork } from 'brain.js';
 import Game from '../Game';
 import { NNObject, NNOutput, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
-import { NNJsonRatiosTrueOutput } from './nnJson';
+import { NNJsonRatiosTrueOutputOBJ } from './nnJson';
 
 export const nnConfigBaby = {
   inputSize: 2,
@@ -108,7 +108,7 @@ export const NNSetPlayerPad = (
     game
   );
 
-  let r: NNOutput = NNJsonRatiosTrueOutput;
+  let r: NNOutput = NNJsonRatiosTrueOutputOBJ;
 
   player.padCurr.up = output[0] > r.controllerUp ? true : false;
   player.padCurr.down = output[1] > r.controllerDown ? true : false;
