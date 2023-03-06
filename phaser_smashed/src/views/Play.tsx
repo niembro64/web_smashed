@@ -51,9 +51,24 @@ import {
 } from './client';
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
-import { NeuralNetwork } from 'brain.js';
+import { NeuralNetwork, recurrent } from 'brain.js';
 
 function Play() {
+  useEffect(() => {
+    const trainingData = [
+      [1, 2, 3, 4, 5],
+      [5, 4, 3, 2, 1],
+    ];
+
+    let rnn = new recurrent.LSTMTimeStep();
+
+    rnn.train(trainingData, { log: (stats) => console.log(stats) });
+
+    let output = rnn.run([1, 2, 3, 4]);
+
+    console.log('output', output);
+  }, []);
+
   let myPhaser: any = useRef(null);
   // const { _id } = useParams();
 

@@ -5,10 +5,10 @@ import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
 export const nnConfig = {
-  inputSize: 8,
-  outputSize: 12,
-  learningRate: 0.001,
-  activation: 'sigmoid',
+  // inputSize: 8,
+  // outputSize: 12,
+  // learningRate: 0.001,
+  // activation: 'sigmoid',
   hiddenLayers: [12],
 };
 
@@ -19,20 +19,25 @@ export const NNTrain = (game: Game): void => {
 
   console.log('NNTrain');
 
-  game.nnNet = new NeuralNetwork(nnConfig);
+  // game.nnNet = new NeuralNetwork(nnConfig);
   // game.nnNet = new recurrent.RNN(nnConfig);
+  game.nnNet = new recurrent.LSTM(nnConfig);
   console.log('game.nnNet', game.nnNet);
   game.nnNet.train(game.nnObjects, {
     // log: true,
-    callback: (res: any) => {
-      console.log('game.nnObjects.length', game.nnObjects.length);
-      console.log('res.iterations', res.iterations);
-      console.log('res.error', res.error);
-      // console.log(
-      //   '%',
-      //   Math.floor((res.iterations * 100) / game.nnObjects.length)
-      // );
-    },
+    iterations: 100,
+    errorThresh: 0.05,
+    log: (stats: any) => console.log(stats),
+    // callback: (res: any) => {
+    //   console.log('game.nnObjects.length', game.nnObjects.length);
+    //   console.log('res.iterations', res.iterations);
+    //   console.log('res.error', res.error);
+    //   // console.log('res.time', res.time);
+    //   // console.log(
+    //   //   '%',
+    //   //   Math.floor((res.iterations * 100) / game.nnObjects.length)
+    //   // );
+    // },
   });
   console.log('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
