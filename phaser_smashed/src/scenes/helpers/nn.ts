@@ -41,11 +41,12 @@ export const NNTrain = (game: Game): void => {
 
 export const NNGetOutputRatios = (game: Game): number[] => {
   let numObj: number = game.nnObjects.length;
+  let numObjOuts: number = game.nnObjects[0].output.length;
 
   let btnUsedNumber: number[] = [];
   let btnUsedRatio: number[] = [];
 
-  for (let i = 0; i < numObj; i++) {
+  for (let i = 0; i < numObjOuts; i++) {
     btnUsedNumber.push(0);
   }
 
@@ -91,9 +92,9 @@ export const NNSetPlayerPad = (
   playerIndex: number,
   game: Game
 ): void => {
-  if (game.debug.P1TrainNN) {
-    return;
-  }
+  // if (game.debug.P1TrainNN) {
+  //   return;
+  // }
 
   let enemy = getNearestPlayerAliveXY(player, playerIndex, game);
   let enemyAE = getNearestAttackEnergyXY(player, playerIndex, game);
