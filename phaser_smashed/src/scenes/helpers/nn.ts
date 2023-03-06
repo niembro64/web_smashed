@@ -1,4 +1,4 @@
-import { NeuralNetwork } from 'brain.js';
+import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
 import Game from '../Game';
 import { NNObject, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
@@ -7,9 +7,9 @@ import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 export const nnConfig = {
   inputSize: 8,
   outputSize: 12,
-  learningRate: 0.0001,
+  learningRate: 0.001,
   activation: 'sigmoid',
-  hiddenLayers: [24, 48, 24],
+  hiddenLayers: [12],
 };
 
 export const NNTrain = (game: Game): void => {
@@ -17,8 +17,24 @@ export const NNTrain = (game: Game): void => {
     return;
   }
 
+  console.log('NNTrain');
+
   game.nnNet = new NeuralNetwork(nnConfig);
-  game.nnNet.train(game.nnObjects);
+  // game.nnNet = new recurrent.RNN(nnConfig);
+  console.log('game.nnNet', game.nnNet);
+  game.nnNet.train(game.nnObjects, {
+    // log: true,
+    callback: (res: any) => {
+      console.log('game.nnObjects.length', game.nnObjects.length);
+      console.log('res.iterations', res.iterations);
+      console.log('res.error', res.error);
+      // console.log(
+      //   '%',
+      //   Math.floor((res.iterations * 100) / game.nnObjects.length)
+      // );
+    },
+  });
+  console.log('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
   console.log('netJson', JSON.stringify(netJson, null, 2));
 
