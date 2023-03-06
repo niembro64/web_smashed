@@ -131,6 +131,13 @@ export const addPlayerOneNNObjects = (game: Game): void => {
     return;
   }
 
+  if (
+    game.players[0].state.name === 'player-state-dead' ||
+    game.players[0].state.name === 'player-state-start'
+  ) {
+    return;
+  }
+
   let p = game.players[0];
   let enemy = game.players[1];
 
