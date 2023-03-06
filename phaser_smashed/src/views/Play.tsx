@@ -55,20 +55,25 @@ import { NeuralNetwork, recurrent } from 'brain.js';
 
 function Play() {
   useEffect(() => {
-    const trainingData = [
-      [1, 2, 3, 4, 5],
-      [5, 4, 3, 2, 1],
-    ];
-
-    let rnn = new recurrent.LSTMTimeStep();
-
-    rnn.train(trainingData, {
-      // iterations: 1000,
-      errorThresh: 0.01,
-      log: (stats) => console.log(stats),
+    const net = new recurrent.LSTM({
+      inputSize: 3,
+      outputSize: 2,
     });
 
-    let output = rnn.run([1, 2, 3, 4]);
+    const trainingData = [
+      {
+        input: [5, 3, 1],
+        output: [1, 2],
+      },
+    ];
+
+    net.train(trainingData, {
+      iterations: 1000,
+      errorThresh: 0.001,
+      log: (error) => console.log(error),
+    });
+
+    let output = net.run([5, 3, 1]);
 
     console.log('output', output);
   }, []);
