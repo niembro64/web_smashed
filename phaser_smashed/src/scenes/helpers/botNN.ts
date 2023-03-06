@@ -1,26 +1,11 @@
 import Game from '../Game';
-import { Player, Position, Velocity, xyVector } from '../interfaces';
-import { getIsPlayerInAir } from './attacks';
+import { Player, Velocity } from '../interfaces';
 import {
-  allPadToFalse,
-  getIsBotFacingNearestPlayer,
-  getIsBotInPitAreaLeft,
-  getIsBotInPitAreaRight,
-  getIsBotNearNearestPlayer,
-  getIsBotTooFarLeft,
+  allPadToFalse, getIsBotInPitAreaLeft,
+  getIsBotInPitAreaRight, getIsBotTooFarLeft,
   getIsBotTooFarRight,
-  getIsBotTooFarUp,
-  getIsNearestAttackEnergyThisCloseAbove,
-  getSameHorizontalSlice,
-  getSameVerticalSlice,
-  updatePlayerDodgeIfAttackEnergyTooClose,
+  getIsBotTooFarUp
 } from './bot';
-import { getNormalizedVector } from './damage';
-import {
-  getDistance,
-  getNearestPlayerAliveXY,
-  hasPlayerTouchedWallRecently,
-} from './movement';
 import { NNSetPlayerPad } from './nn';
 
 export function updateBotNN(
@@ -40,37 +25,16 @@ export function updateBotNN(
 
   NNSetPlayerPad(player, playerIndex, game);
 
-  let helpNNBot = false;
+  let helpNNBot = true;
   if (!helpNNBot) {
     return;
   }
 
-  let nearestP: Position = getNearestPlayerAliveXY(player, playerIndex, game);
-
-  let botSprite = player.char.sprite;
-
-  let enemyVector: xyVector = getNormalizedVector(
-    botSprite.x,
-    botSprite.y,
-    nearestP.x,
-    nearestP.y
-  );
-
   let pVelocity: Velocity = player.char.sprite.body.velocity;
 
-  let d = player.padDebounced;
-  let t = player.char.sprite.body.touching;
   let jumps = player.char.jumps;
   let jumpIndex = player.char.jumpIndex;
-  let hasJump = player.char.jumps[jumpIndex] > 0.3;
   let onLastJump = jumpIndex === jumps.length - 1;
-
-  let nearestPDistance = getDistance(
-    botSprite.x,
-    botSprite.y,
-    nearestP.x,
-    nearestP.y
-  );
 
   //////////////////////
   // TOO FAR LEFT RIGHT

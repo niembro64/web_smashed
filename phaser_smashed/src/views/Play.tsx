@@ -52,37 +52,8 @@ import {
 import moment from 'moment';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import { NeuralNetwork } from 'brain.js';
-import { nnConfigBaby } from '../scenes/helpers/nn';
 
 function Play() {
-  // useEffect(() => {
-  //   console.log('1');
-
-  //   (async () => {
-  //     console.log('2');
-  //     const net = new NeuralNetwork(nnConfigBaby);
-  //     console.log('3');
-  //     net.train([
-  //       { input: [0, 0], output: [0] },
-  //       { input: [0, 1], output: [1] },
-  //       { input: [1, 0], output: [1] },
-  //       { input: [1, 1], output: [0] },
-  //     ]);
-
-  //     console.log('4');
-  //     const output = net.run([1, 0]); // [0.986]
-  //     bar();
-  //     bar();
-  //     bar();
-  //     console.log('output', JSON.stringify(output, null, 2));
-  //     bar();
-  //     bar();
-  //     bar();
-  //     bar();
-  //     console.log('5');
-  //   })();
-  // }, []);
-
   let myPhaser: any = useRef(null);
   // const { _id } = useParams();
 

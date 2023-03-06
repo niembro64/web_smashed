@@ -1,28 +1,16 @@
 import { NeuralNetwork } from 'brain.js';
 import Game from '../Game';
-import { NNObject, NNOutput, Player } from '../interfaces';
+import { NNObject, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
-import { NNJsonRatiosTrueOutputOBJ } from './nnJson';
+import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
-export const nnConfigBaby = {
-  inputSize: 2,
-  outputSize: 2,
-  learningRate: 0.1,
-  activation: 'sigmoid',
-  hiddenLayers: [3],
-};
 export const nnConfig = {
-  inputSize: 6,
-  outputSize: 11,
+  inputSize: 7,
+  outputSize: 12,
   learningRate: 0.1,
   activation: 'sigmoid',
-  hiddenLayers: [10],
+  hiddenLayers: [24, 48, 24],
 };
-
-// export const NNCreate = (game: Game): void => {
-//   game.net = new NeuralNetwork(nnConfig);
-//   game.net = game.net.fromJSON(netJson);
-// };
 
 export const NNTrain = (game: Game): void => {
   if (!game.debug.P1TrainNN) {
@@ -36,7 +24,6 @@ export const NNTrain = (game: Game): void => {
 
   let newOutRatios = NNGetOutputRatios(game);
   console.log('newOutRatios', newOutRatios);
-
 };
 
 export const NNGetOutputRatios = (game: Game): number[] => {
@@ -71,19 +58,17 @@ export const NNGetOutput = (
   enemyAEY: number,
   game: Game
 ): number[] => {
-  let input = [
+  let input: number[] = [
     player.char.sprite.x - enemyX,
     player.char.sprite.y - enemyY,
     player.char.sprite.body.velocity.x - enemyAEX,
     player.char.sprite.body.velocity.y - enemyAEY,
     player.char.sprite.body.touching.down ? 1 : 0,
-    player.char.sprite.body.touching.left ||
-    player.char.sprite.body.touching.right
-      ? 1
-      : 0,
+    player.char.sprite.body.touching.left ? 1 : 0,
+    player.char.sprite.body.touching.right ? 1 : 0,
   ];
 
-  let output = game.nnNet.run(input);
+  let output: number[] = game.nnNet.run(input);
   return output;
 };
 
@@ -108,23 +93,20 @@ export const NNSetPlayerPad = (
     game
   );
 
-  let r: NNOutput = NNJsonRatiosTrueOutputOBJ;
+  let r: number[] = NNJsonRatiosTrueOutputARRAY;
 
-  player.padCurr.up = output[0] > r.controllerUp ? true : false;
-  player.padCurr.down = output[1] > r.controllerDown ? true : false;
-  player.padCurr.left = output[2] > r.controllerLeft ? true : false;
-  player.padCurr.right = output[3] > r.controllerRight ? true : false;
-  player.padCurr.A = output[4] > r.controllerA ? true : false;
-  player.padCurr.B = output[5] > r.controllerB ? true : false;
-  player.padCurr.X = output[6] > r.controllerX ? true : false;
-  player.padCurr.Y = output[7] > r.controllerY ? true : false;
-  player.padCurr.L = output[8] > r.controllerL ? true : false;
-  player.padCurr.R = output[9] > r.controllerR ? true : false;
-  player.padCurr.start = false;
-  // player.padCurr.start = output[10] > r. ? true : false;
-  player.padCurr.select = output[11] > r.controllerSelect ? true : false;
-  // console.log('output', JSON.stringify(output, null, 2));
-  // console.log('padCurr', JSON.stringify(player.padCurr, null, 2));
+  player.padCurr.up = output[0] > 1 - r[0] ? true : false;
+  player.padCurr.down = output[1] > 1 - r[1] ? true : false;
+  player.padCurr.left = output[2] > 1 - r[2] ? true : false;
+  player.padCurr.right = output[3] > 1 - r[3] ? true : false;
+  player.padCurr.A = output[4] > 1 - r[4] ? true : false;
+  player.padCurr.B = output[5] > 1 - r[5] ? true : false;
+  player.padCurr.X = output[6] > 1 - r[6] ? true : false;
+  player.padCurr.Y = output[7] > 1 - r[7] ? true : false;
+  player.padCurr.L = output[8] > 1 - r[8] ? true : false;
+  player.padCurr.R = output[9] > 1 - r[9] ? true : false;
+  player.padCurr.start = output[10] > 1 - r[10] ? true : false;
+  player.padCurr.select = output[11] > 1 - r[11] ? true : false;
 };
 
 export const addPlayerOneNNObjects = (game: Game): void => {
@@ -142,9 +124,8 @@ export const addPlayerOneNNObjects = (game: Game): void => {
       p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
       p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
       p.char.sprite.body.touching.down ? 1 : 0,
-      p.char.sprite.body.touching.left || p.char.sprite.body.touching.right
-        ? 1
-        : 0,
+      p.char.sprite.body.touching.left ? 1 : 0,
+      p.char.sprite.body.touching.right ? 1 : 0,
     ],
     output: [
       p.padCurr.up ? 1 : 0,

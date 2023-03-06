@@ -691,7 +691,8 @@ export interface NNInput {
   playerEnemyDVX: number;
   playerEnemyDVY: number;
   playerTouchingDown: number;
-  playerTouchingLR: number;
+  playerTouchingLeft: number;
+  playerTouchingRight: number;
   [key: string]: any;
 }
 
