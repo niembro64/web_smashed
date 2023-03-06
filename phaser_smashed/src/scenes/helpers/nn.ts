@@ -5,7 +5,7 @@ import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
 export const nnConfig = {
-  inputSize: 7,
+  inputSize: 8,
   outputSize: 12,
   learningRate: 0.1,
   activation: 'sigmoid',
@@ -58,6 +58,18 @@ export const NNGetOutput = (
   enemyAEY: number,
   game: Game
 ): number[] => {
+  // is p facing enemy
+  let isPFacingEnemy: boolean = false;
+  if (player.char.sprite.x < enemyX) {
+    if (player.char.sprite.flipX) {
+      isPFacingEnemy = true;
+    }
+  } else {
+    if (!player.char.sprite.flipX) {
+      isPFacingEnemy = true;
+    }
+  }
+
   let input: number[] = [
     player.char.sprite.x - enemyX,
     player.char.sprite.y - enemyY,
@@ -66,6 +78,7 @@ export const NNGetOutput = (
     player.char.sprite.body.touching.down ? 1 : 0,
     player.char.sprite.body.touching.left ? 1 : 0,
     player.char.sprite.body.touching.right ? 1 : 0,
+    isPFacingEnemy ? 1 : 0,
   ];
 
   let output: number[] = game.nnNet.run(input);
@@ -114,8 +127,23 @@ export const addPlayerOneNNObjects = (game: Game): void => {
     return;
   }
 
+  if (game.gameState.nameCurr !== 'game-state-play') {
+    return;
+  }
+
   let p = game.players[0];
   let enemy = game.players[1];
+
+  let isPFacingEnemy: boolean = false;
+  if (p.char.sprite.x < enemy.char.sprite.x) {
+    if (p.char.sprite.flipX) {
+      isPFacingEnemy = true;
+    }
+  } else {
+    if (!p.char.sprite.flipX) {
+      isPFacingEnemy = true;
+    }
+  }
 
   let newNNObject: NNObject = {
     input: [
@@ -126,6 +154,7 @@ export const addPlayerOneNNObjects = (game: Game): void => {
       p.char.sprite.body.touching.down ? 1 : 0,
       p.char.sprite.body.touching.left ? 1 : 0,
       p.char.sprite.body.touching.right ? 1 : 0,
+      isPFacingEnemy ? 1 : 0,
     ],
     output: [
       p.padCurr.up ? 1 : 0,
