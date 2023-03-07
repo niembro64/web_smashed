@@ -41,8 +41,10 @@ export const updateFlagToucher = (game: Game): void => {
         ptStamps[pIndex].gameStamp = game.gameNanoseconds;
       }
     } else {
-      ptStamps[pIndex].touching = false;
-      ptStamps[pIndex].gameStamp = game.gameNanoseconds;
+      if (ptStamps[pIndex].touching) {
+        ptStamps[pIndex].touching = false;
+        ptStamps[pIndex].gameStamp = game.gameNanoseconds;
+      }
     }
   });
   let newToucherId: null | number = null;
@@ -55,9 +57,9 @@ export const updateFlagToucher = (game: Game): void => {
     }
   });
 
-  if (f.toucherPrev.id === newToucherId) {
-    return;
-  }
+  // if (f.toucherPrev.id === newToucherId) {
+  //   return;
+  // }
 
   f.toucherPrev.id = f.toucherCurr.id;
   f.toucherPrev.gameStamp = f.toucherCurr.gameStamp;
@@ -161,7 +163,7 @@ export const printFlagOwnerAndToucher = (game: Game): void => {
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
 
-  // console.log('t:', toucher, 'o:', owner);
+  console.log('t:', toucher, 'o:', owner);
 };
 
 export const updateFlagColor = (game: Game): void => {
