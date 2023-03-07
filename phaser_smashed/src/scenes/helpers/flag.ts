@@ -163,7 +163,7 @@ export const printFlagOwnerAndToucher = (game: Game): void => {
   let toucher = game.flag.toucherCurr.id;
   let owner = game.flag.ownerCurr.id;
 
-  console.log('t:', toucher, 'o:', owner);
+  // console.log('t:', toucher, 'o:', owner);
 };
 
 export const updateFlagColor = (game: Game): void => {
