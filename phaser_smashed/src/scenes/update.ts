@@ -103,8 +103,7 @@ export function update(game: Game, time: number, delta: number): void {
       ///////// screenclear & deads++ => play
       ////////////////////////////////
       if (
-        getIsScreenClear(game) &&
-        getHasNumDeadIncreased(game)
+        getIsScreenClear(game)
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
         setGameState(game, 'game-state-screen-clear');
@@ -114,9 +113,7 @@ export function update(game: Game, time: number, delta: number): void {
       ///////// firstblood & deads++ => play
       ////////////////////////////////
       if (
-        getIsFirstBlood(game) &&
-        getHasNumDeadIncreased(game) &&
-        game.players.length > 2
+        getIsFirstBlood(game) 
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
         setGameState(game, 'game-state-first-blood');

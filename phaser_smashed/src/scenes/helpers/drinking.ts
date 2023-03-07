@@ -1,6 +1,7 @@
 import { debug } from 'console';
 import Game from '../Game';
 import { Player } from '../interfaces';
+import { getHasNumDeadIncreased } from './state';
 
 export function getIsScreenClear(game: Game): boolean {
   // is there three people currently dead
@@ -12,7 +13,7 @@ export function getIsScreenClear(game: Game): boolean {
   }
 
   if (numPlayersDead === game.players.length - 1) {
-    return true;
+    return getHasNumDeadIncreased(game);
   }
 
   return false;
@@ -36,7 +37,7 @@ export function getIsFirstBlood(game: Game): boolean {
     getIsAnyPlayerCurrentlyDead(game)
     // && isAnyPlayerOffscreen(game)
   ) {
-    return true;
+    return getHasNumDeadIncreased(game) && game.players.length > 2;
   }
 
   return false;
