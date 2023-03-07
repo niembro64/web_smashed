@@ -3,6 +3,9 @@ import Game from '../Game';
 import { Player } from '../interfaces';
 
 export function getIsScreenClear(game: Game): boolean {
+  if (game.players.length < 2) {
+    return false;
+  }
   // is there three people currently dead
   let numPlayersDead: number = 0;
   for (let i = 0; i < game.players.length; i++) {
@@ -18,6 +21,9 @@ export function getIsScreenClear(game: Game): boolean {
   return false;
 }
 export function getIsFirstBlood(game: Game): boolean {
+  if (game.players.length < 3) {
+    return false;
+  }
   // is there only one player who has died
   let numPlayersDied = 0;
   let temp = 0;
