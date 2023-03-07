@@ -243,7 +243,7 @@ export function filterAttackEnergyNormal(
     setFillAttackEnergyID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
     setTintAttackEnergyNormal(player);
-    if (player.char.name === 'link') {
+    if (player.char.name === 'Link') {
       setTintAttackPhysicalNormal(player);
     } else {
       setFillAttackPhysicalID(

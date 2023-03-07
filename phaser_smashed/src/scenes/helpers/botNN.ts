@@ -1,10 +1,14 @@
 import Game from '../Game';
 import { Player, Velocity } from '../interfaces';
 import {
-  allPadToFalse, getIsBotInPitAreaLeft,
-  getIsBotInPitAreaRight, getIsBotTooFarLeft,
+  allPadToFalse,
+  getIsBotInPitAreaLeft,
+  getIsBotInPitAreaRight,
+  getIsBotTooFarCenterLeft,
+  getIsBotTooFarCenterRight,
+  getIsBotTooFarLeft,
   getIsBotTooFarRight,
-  getIsBotTooFarUp
+  getIsBotTooFarUp,
 } from './bot';
 import { NNSetPlayerPad } from './nn';
 
@@ -39,10 +43,10 @@ export function updateBotNN(
   //////////////////////
   // TOO FAR LEFT RIGHT
   //////////////////////
-  if (getIsBotTooFarLeft(player, game) && Math.random() > 0.01) {
+  if (getIsBotTooFarCenterLeft(player, game) && Math.random() > 0.01) {
     p.right = true;
     p.left = false;
-  } else if (getIsBotTooFarRight(player, game) && Math.random() > 0.01) {
+  } else if (getIsBotTooFarCenterRight(player, game) && Math.random() > 0.01) {
     p.left = true;
     p.right = false;
   }

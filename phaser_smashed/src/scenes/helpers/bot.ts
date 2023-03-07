@@ -113,6 +113,22 @@ export function getIsBotFacingNearestPlayer(
   return false;
 }
 
+export function getIsBotTooFarCenterLeft(player: Player, game: Game): boolean {
+  let bot = player.char.sprite;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.35;
+  if (bot.x < left) {
+    return true;
+  }
+  return false;
+}
+export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
+  let bot = player.char.sprite;
+  let right = SCREEN_DIMENSIONS.WIDTH * 0.65;
+  if (bot.x > right) {
+    return true;
+  }
+  return false;
+}
 export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
   let left = SCREEN_DIMENSIONS.WIDTH * 0.18;

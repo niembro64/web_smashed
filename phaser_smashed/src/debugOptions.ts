@@ -138,6 +138,6 @@ export const debugShow: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   // NeuralNetworkBot: false,
-  NNP1Train: true,
-  NNIsLSTM: true,
+  NNP1Train: false,
+  NNIsLSTM: false,
 };

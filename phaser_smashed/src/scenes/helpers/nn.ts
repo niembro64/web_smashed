@@ -1,5 +1,5 @@
 import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
-import Game from '../Game';
+import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { NNObject, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { nnConfigLSTM } from './nnJsonLSTM';
@@ -226,16 +226,24 @@ export const addPlayerOneNNObjects = (game: Game): void => {
 
   let newNNObject: NNObject = {
     input: [
-      p.padCurr.up ? 1 : 0,
-      p.padCurr.down ? 1 : 0,
-      p.padCurr.left ? 1 : 0,
-      p.padCurr.right ? 1 : 0,
-      p.padCurr.A ? 1 : 0,
-      p.padCurr.B ? 1 : 0,
-      p.padCurr.X ? 1 : 0,
-      p.padCurr.Y ? 1 : 0,
-      p.char.sprite.x - enemy.char.sprite.x,
-      p.char.sprite.y - enemy.char.sprite.y,
+      // p.padCurr.up ? 1 : 0,
+      // p.padCurr.down ? 1 : 0,
+      // p.padCurr.left ? 1 : 0,
+      // p.padCurr.right ? 1 : 0,
+      // p.padCurr.A ? 1 : 0,
+      // p.padCurr.B ? 1 : 0,
+      // p.padCurr.X ? 1 : 0,
+      // p.padCurr.Y ? 1 : 0,
+      p.padDebounced.up,
+      p.padDebounced.down,
+      p.padDebounced.left,
+      p.padDebounced.right,
+      p.padDebounced.A,
+      p.padDebounced.B,
+      p.padDebounced.X,
+      p.padDebounced.Y,
+      p.char.sprite.x - enemy.char.sprite.x / SCREEN_DIMENSIONS.WIDTH,
+      p.char.sprite.y - enemy.char.sprite.y / SCREEN_DIMENSIONS.HEIGHT,
       p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
       p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
       p.char.sprite.body.touching.down ? 1 : 0,
