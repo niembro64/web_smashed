@@ -43,7 +43,8 @@ export const debugInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   // NeuralNetworkBot: false,
-  P1TrainNN: false,
+  NNP1Train: false,
+  NNIsLSTM: false,
 };
 
 export const debugMax: Debug = {
@@ -89,7 +90,8 @@ export const debugMax: Debug = {
   TrophiesOnShots: true,
   TrophiesAlways: true,
   // NeuralNetworkBot: true,
-  P1TrainNN: true,
+  NNP1Train: true,
+  NNIsLSTM: false,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -101,7 +103,7 @@ export const debugShow: Debug = {
   MusicActive: false,
   MusicTrack: 1, // 012
   ReadySoundActive: false,
-  UseCamera: true,
+  UseCamera: false,
   CamerasVisible: false,
   CollidersPvP: false,
   CollidersPvAP: false,
@@ -136,5 +138,6 @@ export const debugShow: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   // NeuralNetworkBot: false,
-  P1TrainNN: true,
+  NNP1Train: true,
+  NNIsLSTM: true,
 };

@@ -1,7 +1,8 @@
 import Game from './Game';
-import { nnConfig } from './helpers/nn';
-import { netJson } from './helpers/nnJson';
+// import { nnConfigLSTM, nnConfigNN } from './helpers/nn';
+// import { netJsonNN } from './helpers/nnJson';
 import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
+import { nnConfigNN, nnJsonNN } from './helpers/nnJsonNN';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -51,10 +52,12 @@ export function preload(game: Game): void {
 
   game.shotsLeftCurr = game.debug.NumShots;
 
-
-  // game.nnNet = new NeuralNetwork(nnConfig);
-  // game.nnNet = new recurrent.RNN(nnConfig);
-  // game.nnNet = game.nnNet.fromJSON(netJson);
+  if (game.debug.NNIsLSTM) {
+  } else {
+    game.nnNet = new NeuralNetwork(nnConfigNN);
+    game.nnNet = game.nnNet.fromJSON(nnJsonNN);
+    // game.nnNet = new recurrent.RNN(nnConfigNN);
+  }
 
   //////////////////////////////
   // Load Audio

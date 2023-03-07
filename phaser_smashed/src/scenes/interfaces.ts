@@ -44,7 +44,8 @@ export interface Debug {
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
   // NeuralNetworkBot: boolean;
-  P1TrainNN: boolean;
+  NNP1Train: boolean;
+  NNIsLSTM: boolean;
   [key: string]: any; // add index signature
 }
 
