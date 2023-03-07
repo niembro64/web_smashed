@@ -67,8 +67,8 @@ export const updateFlagToucher = (game: Game): void => {
   f.toucherCurr.id = newToucherId;
   f.toucherCurr.gameStamp = toucherGameStamp;
 
-  console.log('toucher', f.toucherCurr.id);
-  console.log('toucherStamp', f.toucherCurr.gameStamp);
+  // console.log('toucher', f.toucherCurr.id);
+  // console.log('toucherStamp', f.toucherCurr.gameStamp);
 };
 
 export const updateFlagMovement = (game: Game): void => {

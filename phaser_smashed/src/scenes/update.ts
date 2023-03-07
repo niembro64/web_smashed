@@ -115,7 +115,8 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       if (
         getIsFirstBlood(game) &&
-        getHasNumDeadIncreased(game)
+        getHasNumDeadIncreased(game) &&
+        game.players.length > 2
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
         setGameState(game, 'game-state-first-blood');

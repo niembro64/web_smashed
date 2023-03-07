@@ -150,8 +150,8 @@ export const NNGetOutput = (
 
   let output: number[] = game.nnNet.run(input);
 
-  console.log('input', JSON.stringify(input, null, 2));
-  console.log('output', JSON.stringify(output, null, 2));
+  // console.log('input', JSON.stringify(input, null, 2));
+  // console.log('output', JSON.stringify(output, null, 2));
   return output;
 };
 
