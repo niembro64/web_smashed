@@ -5,14 +5,15 @@ import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
 export const nnConfig = {
-  // inputSize: 8,
-  // outputSize: 12,
+  inputSize: 8,
+  outputSize: 12,
   // learningRate: 0.001,
   // activation: 'sigmoid',
-  hiddenLayers: [12],
+  hiddenLayers: [9],
+  useGpu: true,
 };
 
-export const NNTrain = (game: Game): void => {
+export const NNTrain = async (game: Game): Promise<void> => {
   if (!game.debug.P1TrainNN) {
     return;
   }
@@ -23,10 +24,12 @@ export const NNTrain = (game: Game): void => {
   // game.nnNet = new recurrent.RNN(nnConfig);
   game.nnNet = new recurrent.LSTM(nnConfig);
   console.log('game.nnNet', game.nnNet);
-  game.nnNet.train(game.nnObjects, {
+  await game.nnNet.train(game.nnObjects, {
     // log: true,
     iterations: 100,
+    learningRate: 0.01,
     errorThresh: 0.05,
+    logPeriod: 1,
     log: (stats: any) => console.log(stats),
     // callback: (res: any) => {
     //   console.log('game.nnObjects.length', game.nnObjects.length);
