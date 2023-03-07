@@ -1612,12 +1612,12 @@ export default class Game extends Phaser.Scene {
         colorFilter: false,
         src: 'images/character_4_cropped.png',
         scaleCharSpriteReality: 1.8,
-        scaleCharSpriteImage: 0.1,
+        scaleCharSpriteImage: 0.7, // 0.1
         sprite: null,
-        srcSpriteSheet: '',
+        srcSpriteSheet: 'images/sprite_sheet_8.1_chez_4x.png',
         spriteSize: {
-          width: 16,
-          height: 16,
+          width: 24,
+          height: 28,
         },
         ssCurr: {
           name: 'idle',
@@ -1651,7 +1651,7 @@ export default class Game extends Phaser.Scene {
           },
           durationAttack: 200,
           durationCooldown: 300,
-          posFromCenter: { x: 70, y: -20 },
+          posFromCenter: { x: 60, y: -15 },
           damage: 100,
           hitback: { x: 0.2, y: 0 },
           srcImage: 'fist-gray',
@@ -1665,7 +1665,7 @@ export default class Game extends Phaser.Scene {
           state: 'released',
           timestampThrow: 0,
           durationCooldown: 1000,
-          posFromCenter: { x: 35, y: -50 },
+          posFromCenter: { x: 23, y: -41 },
           friction: {
             ground: 0.7,
             wallInvertRotation: true,
