@@ -880,6 +880,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 1,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_mario_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 16,
           height: 16,
@@ -1073,6 +1074,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 1,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_link_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 16,
           height: 16,
@@ -1249,6 +1251,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 1,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_pikachu_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 16,
           height: 14,
@@ -1424,6 +1427,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 1,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_kirby_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 13,
           height: 13,
@@ -1615,6 +1619,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 0.7, // 0.1
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_chez_4x.png',
+        runRate: 0.8,
         spriteSize: {
           width: 24,
           height: 28,
@@ -1787,12 +1792,13 @@ export default class Game extends Phaser.Scene {
         colorFilter: false,
         src: 'images/character_5_cropped.png',
         scaleCharSpriteReality: 3.1,
-        scaleCharSpriteImage: 1.2,
+        scaleCharSpriteImage: 2,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_blackchez_4x.png',
+        runRate: 0.4,
         spriteSize: {
-          width: 16,
-          height: 16,
+          width: 24,
+          height: 28,
         },
         ssCurr: {
           name: 'idle',
@@ -1965,6 +1971,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 0.7,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_greenkoopa_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 16,
           height: 16,
@@ -2140,6 +2147,7 @@ export default class Game extends Phaser.Scene {
         scaleCharSpriteImage: 0.7,
         sprite: null,
         srcSpriteSheet: 'images/sprite_sheet_8.1_redkoopa_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 16,
           height: 16,
@@ -2315,6 +2323,7 @@ export default class Game extends Phaser.Scene {
         sprite: null,
         zoom: 0.7,
         srcSpriteSheet: 'images/sprite_sheet_8.1_bluekoopa_4x.png',
+        runRate: 1,
         spriteSize: {
           width: 16,
           height: 16,

@@ -159,6 +159,7 @@ export interface Char {
   scaleCharSpriteReality: number;
   sprite: any | Phaser.GameObjects.Sprite;
   spriteSize: SpriteSize;
+  runRate: number;
   ssCurr: SpriteState;
   ssPrev: SpriteState;
   srcSpriteSheet: string;

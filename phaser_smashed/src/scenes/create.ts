@@ -1063,7 +1063,7 @@ export function createPlayers(game: Game): void {
             first: 1,
           }
         ),
-        frameRate: 20,
+        frameRate: 20 * player.char.runRate,
         repeat: -1,
       };
 
@@ -1105,7 +1105,7 @@ export function createPlayers(game: Game): void {
             first: 5,
           }
         ),
-        frameRate: 10,
+        frameRate: 10 * player.char.runRate,
         repeat: -1,
       };
 
