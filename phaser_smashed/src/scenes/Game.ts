@@ -1787,9 +1787,9 @@ export default class Game extends Phaser.Scene {
         colorFilter: false,
         src: 'images/character_5_cropped.png',
         scaleCharSpriteReality: 3.1,
-        scaleCharSpriteImage: 0.2,
+        scaleCharSpriteImage: 1.2,
         sprite: null,
-        srcSpriteSheet: '',
+        srcSpriteSheet: 'images/sprite_sheet_8.1_blackchez_4x.png',
         spriteSize: {
           width: 16,
           height: 16,
