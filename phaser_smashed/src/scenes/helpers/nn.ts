@@ -4,7 +4,14 @@ import { NNObject, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
 import { NNJsonRatiosTrueOutputARRAY } from './nnJson';
 
-export const nnConfigLTSMTimeStep = {
+export const nnConfigNN = {
+  inputSize: 8,
+  outputSize: 12,
+  // learningRate: 0.001,
+  // activation: 'sigmoid',
+  hiddenLayers: [12],
+};
+export const nnConfigLSTM = {
   inputSize: 8,
   outputSize: 12,
   // learningRate: 0.001,
@@ -19,36 +26,52 @@ export const NNTrain = (game: Game): void => {
 
   console.log('NNTrain');
 
-  // game.nnNet = new NeuralNetwork(nnConfig);
+  game.nnNet = new NeuralNetwork(nnConfigNN);
+  game.nnNet.train(game.nnObjects, {
+    iterations: 200,
+    learningRate: 0.001,
+    errorThresh: 0.01,
+    log: (data: any) => {
+      console.log('game.nnObjects.length', game.nnObjects.length);
+      console.log('data.iterations', data.iterations);
+      console.log('data.error', data.error);
+      console.log('data.time', data.time);
+      console.log(
+        '%',
+        Math.floor((data.iterations * 100) / game.nnObjects.length)
+      );
+    },
+  });
+
   // game.nnNet = new recurrent.RNN(nnConfig);
-  game.nnNet = new recurrent.LSTM(nnConfigLTSMTimeStep);
+  // game.nnNet = new recurrent.LSTM(nnConfigLSTM);
   // let nnArray: number[][] = [];
   // game.nnObjects.forEach((object: NNObject, objIndex) => {
   //   nnArray.push([...object.input, ...object.output]);
   // });
   // console.log('nnArray', nnArray);
 
-  game.nnNet.train(game.nnObjects, {
-    // log: true,
-    iterations: 200,
-    // learningRate: 0.005,
-    errorThresh: 0.03,
-    logPeriod: 1,
-    log: (stats: any) => {
-      game.events.emit('nnTrainStats', stats);
-      console.log(stats);
-    },
-    // callback: (res: any) => {
-    //   console.log('game.nnObjects.length', game.nnObjects.length);
-    //   console.log('res.iterations', res.iterations);
-    //   console.log('res.error', res.error);
-    //   // console.log('res.time', res.time);
-    //   // console.log(
-    //   //   '%',
-    //   //   Math.floor((res.iterations * 100) / game.nnObjects.length)
-    //   // );
-    // },
-  });
+  // game.nnNet.train(game.nnObjects, {
+  //   // log: true,
+  //   iterations: 200,
+  //   learningRate: 0.001,
+  //   errorThresh: 0.03,
+  //   logPeriod: 1,
+  //   log: (stats: any) => {
+  //     game.events.emit('nnTrainStats', stats);
+  //     console.log(stats);
+  //   },
+  //   // callback: (res: any) => {
+  //   //   console.log('game.nnObjects.length', game.nnObjects.length);
+  //   //   console.log('res.iterations', res.iterations);
+  //   //   console.log('res.error', res.error);
+  //   //   // console.log('res.time', res.time);
+  //   //   // console.log(
+  //   //   //   '%',
+  //   //   //   Math.floor((res.iterations * 100) / game.nnObjects.length)
+  //   //   // );
+  //   // },
+  // });
 
   for (let i = 0; i < 10; i++) {
     console.log(i, '----REAL', game.nnObjects[0].output);

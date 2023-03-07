@@ -1391,7 +1391,7 @@ function Play() {
         </div>
       )}
       {/* <Game className="phaser-container" id="phaser-container"></Game> */}
-      <div className="phaser-container" id="phaser-container" onScoreChange={handleScoreChange}></div>
+      <div className="phaser-container" id="phaser-container"></div>
       {webState === 'start' && (
         <div className="start-class-div">
           {!debug.DevMode && <div className="black-hiding-div"></div>}

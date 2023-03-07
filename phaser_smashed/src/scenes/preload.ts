@@ -1,4 +1,7 @@
+import { NeuralNetwork, recurrent } from 'brain.js';
 import Game from './Game';
+import { nnConfigLSTM } from './helpers/nn';
+import { netJsonNN } from './helpers/nnJson';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -50,9 +53,9 @@ export function preload(game: Game): void {
 
   // game.nnNet = new recurrent.LSTM(nnConfigLTSMTimeStep);
   // game.nnNet = game.nnNet.fromJSON(nnJsonLTSM);
-  // game.nnNet = new NeuralNetwork(nnConfig);
   // game.nnNet = new recurrent.RNN(nnConfig);
-  // game.nnNet = game.nnNet.fromJSON(netJson);
+  game.nnNet = new NeuralNetwork(nnConfigLSTM);
+  game.nnNet = game.nnNet.fromJSON(netJsonNN);
 
   //////////////////////////////
   // Load Audio
