@@ -608,6 +608,11 @@ export const emoji = {
   waiting: '⏳',
   bot: '🤖',
   dice: '🎲',
+  alien: '👽',
+  fire: '🔥',
+  spaceInvader: '👾',
+  bomb: '💣',
+  brain: '🧠',
 };
 
 //🥃⭐🔫⚪​🍺​🍻​🥂​🍾​🥃

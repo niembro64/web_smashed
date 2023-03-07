@@ -2204,7 +2204,7 @@ function Play() {
                               gameViewBottom += '' + emoji.bot + ' ';
                               break;
                             case 4:
-                              gameViewBottom += '' + emoji.bot + ' ';
+                              gameViewBottom += '' + emoji.brain + ' ';
                               break;
                             default:
                               gameViewBottom += '?? ';
