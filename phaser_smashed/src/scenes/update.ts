@@ -197,7 +197,9 @@ export function update(game: Game, time: number, delta: number): void {
       ///////// WHILE IN LOOP
       ////////////////////////////////
       // setPlayWiiMusicWaitShort(game);
-      playGarageRepeat(game);
+      setTimeout(() => {
+        playGarageRepeat(game);
+      }, 2500);
       break;
     case 'game-state-paused':
       playWiiMusic(game);
