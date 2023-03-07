@@ -127,8 +127,17 @@ export const NNGetOutput = (
       isPFacingEnemy = true;
     }
   }
+  let pCurr = player.padCurr;
 
   let input: number[] = [
+    pCurr.up ? 1 : 0,
+    pCurr.down ? 1 : 0,
+    pCurr.left ? 1 : 0,
+    pCurr.right ? 1 : 0,
+    pCurr.A ? 1 : 0,
+    pCurr.B ? 1 : 0,
+    pCurr.X ? 1 : 0,
+    pCurr.Y ? 1 : 0,
     player.char.sprite.x - enemyX,
     player.char.sprite.y - enemyY,
     player.char.sprite.body.velocity.x - enemyAEX,
@@ -177,10 +186,10 @@ export const NNSetPlayerPad = (
   player.padCurr.B = output[5] > 1 - r[5] ? true : false;
   player.padCurr.X = output[6] > 1 - r[6] ? true : false;
   player.padCurr.Y = output[7] > 1 - r[7] ? true : false;
-  player.padCurr.L = output[8] > 1 - r[8] ? true : false;
-  player.padCurr.R = output[9] > 1 - r[9] ? true : false;
-  player.padCurr.start = output[10] > 1 - r[10] ? true : false;
-  player.padCurr.select = output[11] > 1 - r[11] ? true : false;
+  // player.padCurr.L = output[8] > 1 - r[8] ? true : false;
+  // player.padCurr.R = output[9] > 1 - r[9] ? true : false;
+  // player.padCurr.start = output[10] > 1 - r[10] ? true : false;
+  // player.padCurr.select = output[11] > 1 - r[11] ? true : false;
 
   // console.log('output', JSON.stringify(output, null, 2));
 };
@@ -217,6 +226,14 @@ export const addPlayerOneNNObjects = (game: Game): void => {
 
   let newNNObject: NNObject = {
     input: [
+      p.padCurr.up ? 1 : 0,
+      p.padCurr.down ? 1 : 0,
+      p.padCurr.left ? 1 : 0,
+      p.padCurr.right ? 1 : 0,
+      p.padCurr.A ? 1 : 0,
+      p.padCurr.B ? 1 : 0,
+      p.padCurr.X ? 1 : 0,
+      p.padCurr.Y ? 1 : 0,
       p.char.sprite.x - enemy.char.sprite.x,
       p.char.sprite.y - enemy.char.sprite.y,
       p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
@@ -235,10 +252,10 @@ export const addPlayerOneNNObjects = (game: Game): void => {
       p.padCurr.B ? 1 : 0,
       p.padCurr.X ? 1 : 0,
       p.padCurr.Y ? 1 : 0,
-      p.padCurr.L ? 1 : 0,
-      p.padCurr.R ? 1 : 0,
-      p.padCurr.start ? 1 : 0,
-      p.padCurr.select ? 1 : 0,
+      // p.padCurr.L ? 1 : 0,
+      // p.padCurr.R ? 1 : 0,
+      // p.padCurr.start ? 1 : 0,
+      // p.padCurr.select ? 1 : 0,
     ],
   };
   console.log('newNNObject', JSON.stringify(newNNObject, null, 2));
