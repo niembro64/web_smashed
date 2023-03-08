@@ -45,7 +45,7 @@ export const debugInit: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  FullQualityReplay: false,
+  FullQualityReplay: true,
 };
 
 export const debugMax: Debug = {
@@ -128,7 +128,7 @@ export const mainOptionsDebugShow: Debug = {
   UpdateLoopsNumSkip: 0, // 012
   LoadTimeExtra: false,
   UseKoopas: true,
-  UseChez: false,
+  UseChez: true,
   SlowMoExplosions: false,
   TypedLoadingText: false,
   DevMode: false,

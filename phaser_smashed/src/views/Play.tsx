@@ -100,6 +100,10 @@ function Play() {
     };
 
     mediaRecorder.onstop = () => {
+      console.log('mediaRecorder.onstop', videoRef.current!.duration);
+      // if (videoRef.current!.duration < 2) {
+      //   return;
+      // }
       setIsReplayHidden(false);
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
