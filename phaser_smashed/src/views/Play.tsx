@@ -70,11 +70,12 @@ function Play() {
   //////////////
 
   const [isRecording, setIsRecording] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  let videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
 
   const startRecording = () => {
+    // videoRef.current!.src = '';
     setIsRecording(true);
 
     const canvas = myPhaser.current?.canvas;
@@ -141,16 +142,22 @@ function Play() {
         case 'game-state-start':
           break;
         case 'game-state-play':
+          startRecording();
           break;
         case 'game-state-paused':
+          stopRecording();
           break;
         case 'game-state-first-blood':
+          stopRecording();
           break;
         case 'game-state-screen-clear':
+          stopRecording();
           break;
         case 'game-state-captured-flag':
+          stopRecording();
           break;
         case 'game-state-finished':
+          stopRecording();
           break;
         default:
           console.log('BROKEN_____________________');
@@ -832,8 +839,6 @@ function Play() {
         return s.characterId === choice.characterId;
       })
     ).name;
-
-    // choice.scale = tempScale;
 
     setSmashConfig({ players: [...choices] });
   };
@@ -2410,34 +2415,39 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
-      <div className="dev-mode-div">
-        <button onClick={startRecording} disabled={isRecording}>
+      <div className="video-playback-container">
+        {/* <button onClick={startRecording} disabled={isRecording}>
           Start Recording
         </button>
         <button onClick={stopRecording} disabled={!isRecording}>
           Stop Recording
-        </button>
-        <video
-          ref={videoRef}
-          width={800}
-          height={600}
-          autoPlay
-          // loop
-          // style={{ filter: 'grayscale(50%)' }}
-          // style={{ filter: 'sepia(50%)' , 'contrast(4)' }}
-          // style={{ filter: 'grayscale(30%)' }}
-          // style={{ filter: 'contrast(4)' }}
-          onTimeUpdate={handleTimeUpdate}
-          style={{
-            filter: 'saturate(0.5)',
-            opacity: '100%',
-          }}
-          // style={{
-          //   filter: 'contrast(4) brightness(2) contrast(2) saturate(25%)',
-          //   opacity: '100%',
-          // }}
-          // style={{ filter: 'grayscale(50%)', opacity: '50%' }}
-        />
+        </button> */}
+
+        {!isRecording && (
+          <video
+            ref={videoRef}
+            // width={800}
+            // height={600}
+            // autoPlay
+            // loop
+            // style={{ filter: 'grayscale(50%)' }}
+            // style={{ filter: 'sepia(50%)' , 'contrast(4)' }}
+            // style={{ filter: 'grayscale(30%)' }}
+            // style={{ filter: 'contrast(4)' }}
+            controls={false}
+            onTimeUpdate={handleTimeUpdate}
+            className={'video-playback'}
+            // style={{
+            //   filter: 'saturate(0.5)',
+            //   opacity: '100%',
+            // }}
+            // style={{
+            //   filter: 'contrast(4) brightness(2) contrast(2) saturate(25%)',
+            //   opacity: '100%',
+            // }}
+            // style={{ filter: 'grayscale(50%)', opacity: '50%' }}
+          />
+        )}
       </div>
 
       {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
