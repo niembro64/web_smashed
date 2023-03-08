@@ -1,5 +1,5 @@
-import { Moment } from 'moment';
-import { Bullets } from './helpers/bullets';
+import { Moment } from "moment";
+import { Bullets } from "./helpers/bullets";
 
 export interface Debug {
   DevMode: boolean;
@@ -57,47 +57,47 @@ export interface CharacterMove {
 }
 
 export type ButtonName =
-  | 'See Other Projects'
-  | 'Back'
-  | 'ReStart'
-  | 'Controls'
-  | 'Controllers'
-  | 'Rules'
-  | 'Rules-N64'
-  | 'About'
-  | 'History'
-  | 'Options';
+  | "See Other Projects"
+  | "Back"
+  | "ReStart"
+  | "Controls"
+  | "Controllers"
+  | "Rules"
+  | "Rules-N64"
+  | "About"
+  | "History"
+  | "Options";
 
 export type GameState =
-  | 'game-state-start'
-  | 'game-state-play'
-  | 'game-state-paused'
-  | 'game-state-first-blood'
-  | 'game-state-screen-clear'
-  | 'game-state-captured-flag'
-  | 'game-state-finished';
+  | "game-state-start"
+  | "game-state-play"
+  | "game-state-paused"
+  | "game-state-first-blood"
+  | "game-state-screen-clear"
+  | "game-state-captured-flag"
+  | "game-state-finished";
 
 export type PlayerState =
-  | 'player-state-start'
-  | 'player-state-alive'
-  | 'player-state-dead'
-  | 'player-state-hurt';
+  | "player-state-start"
+  | "player-state-alive"
+  | "player-state-dead"
+  | "player-state-hurt";
 
 export type AttackState =
-  | 'attackphysical-state-on'
-  | 'attackphysical-state-cooldown'
-  | 'attackphysical-state-off';
+  | "attackphysical-state-on"
+  | "attackphysical-state-cooldown"
+  | "attackphysical-state-off";
 
 export type SplashName =
-  | 'splash-black'
-  | 'splash-none'
-  | 'splash-start'
-  | 'splash-paused'
-  | 'splash-first-blood'
-  | 'splash-screen-clear'
-  | 'splash-captured-flag'
-  | 'splash-cool-down'
-  | 'splash-finished';
+  | "splash-black"
+  | "splash-none"
+  | "splash-start"
+  | "splash-paused"
+  | "splash-first-blood"
+  | "splash-screen-clear"
+  | "splash-captured-flag"
+  | "splash-cool-down"
+  | "splash-finished";
 
 export interface Clock {
   minutes: number;
@@ -179,7 +179,7 @@ export interface Char {
   friction_ground: number;
   friction_air: number;
   wallTouchArray: boolean[];
-  lastDirectionTouched: 'up' | 'down' | 'left' | 'right' | null;
+  lastDirectionTouched: "up" | "down" | "left" | "right" | null;
   attackPhysical: AttackPhysical;
   attackEnergy: AttackEnergy;
   initializeCharPosition: InitializeCharPosition;
@@ -192,7 +192,7 @@ export interface SpriteState {
   timeStamp: number;
 }
 
-export type SpriteStateName = 'idle' | 'walk' | 'jumpUp' | 'jumpDown' | 'climb';
+export type SpriteStateName = "idle" | "walk" | "jumpUp" | "jumpDown" | "climb";
 
 export interface Shield {
   circle: ColorCircle;
@@ -356,7 +356,7 @@ export interface AttackPhysical {
 
 export interface AttackEnergy {
   sprite: any | Phaser.GameObjects.Sprite;
-  state: 'holding' | 'released';
+  state: "holding" | "released";
   timestampThrow: number;
   durationCooldown: number;
   posFromCenter: Position;
@@ -453,26 +453,26 @@ export type InputType = 0 | 1 | 2 | 3 | 4;
 export const inputTypeNum = 5;
 
 export type CharacterName =
-  | 'Mario'
-  | 'Link'
-  | 'Pikachu'
-  | 'Kirby'
-  | 'Chez'
-  | 'BlackChez'
-  | 'GreenKoopa'
-  | 'RedKoopa'
-  | 'BlueKoopa';
+  | "Mario"
+  | "Link"
+  | "Pikachu"
+  | "Kirby"
+  | "Chez"
+  | "BlackChez"
+  | "GreenKoopa"
+  | "RedKoopa"
+  | "BlueKoopa";
 
 export type CharacterNameShort =
-  | 'MAR'
-  | 'LNK'
-  | 'PKA'
-  | 'KRB'
-  | 'CHZ'
-  | 'BCZ'
-  | 'GKP'
-  | 'RKP'
-  | 'BKP';
+  | "MAR"
+  | "LNK"
+  | "PKA"
+  | "KRB"
+  | "CHZ"
+  | "BCZ"
+  | "GKP"
+  | "RKP"
+  | "BKP";
 
 export interface SmashConfig {
   players: PlayerConfigSmall[];
@@ -491,7 +491,7 @@ export interface PlayerConfig {
   input?: InputType;
 }
 
-export type WebState = 'start' | 'play';
+export type WebState = "start" | "play";
 
 export interface Quote {
   name: string;
@@ -522,7 +522,7 @@ export interface Box {
 }
 
 export interface Flag {
-  movement: 'none' | 'up' | 'down';
+  movement: "none" | "up" | "down";
   box: Box;
   poleTouchStamps: PoleTouchStamp[];
   completedCurr: boolean;
@@ -581,7 +581,7 @@ export interface ChompLink {
   sprite: any | Phaser.GameObjects.Sprite;
 }
 
-export type ChompFilterStateName = 'none' | 'hurt' | 'cooldown';
+export type ChompFilterStateName = "none" | "hurt" | "cooldown";
 
 export interface ChompFilterState {
   name: ChompFilterStateName;
@@ -589,42 +589,42 @@ export interface ChompFilterState {
 }
 
 export const emoji = {
-  keyboardBlack: '⌨',
-  keyboardWhite: '⌨️',
-  gamepad: '🎮',
-  greenCheck: '✔️',
-  caution: '🚧',
-  redX: '❌',
-  gear: '⚙️',
-  cloud: '☁',
-  cloudWhite: '☁️',
-  beer: '🍺',
-  star: '⭐',
-  skullAndCrossbones: '☠️',
-  skull: '💀',
-  punch: '👊',
-  brokenHeart: '💔',
-  back: '🔙',
-  forward: '🔜',
-  restart: '🔄',
-  waiting: '⏳',
-  bot: '🤖',
-  dice: '🎲',
-  alien: '👽',
-  fire: '🔥',
-  spaceInvader: '👾',
-  bomb: '💣',
-  brain: '🧠',
+  keyboardBlack: "⌨",
+  keyboardWhite: "⌨️",
+  gamepad: "🎮",
+  greenCheck: "✔️",
+  caution: "🚧",
+  redX: "❌",
+  gear: "⚙️",
+  cloud: "☁",
+  cloudWhite: "☁️",
+  beer: "🍺",
+  star: "⭐",
+  skullAndCrossbones: "☠️",
+  skull: "💀",
+  punch: "👊",
+  brokenHeart: "💔",
+  back: "🔙",
+  forward: "🔜",
+  restart: "🔄",
+  waiting: "⏳",
+  bot: "🤖",
+  dice: "🎲",
+  alien: "👽",
+  fire: "🔥",
+  spaceInvader: "👾",
+  bomb: "💣",
+  brain: "🧠",
 };
 
 //🥃⭐🔫⚪​🍺​🍻​🥂​🍾​🥃
 
-export type Keydown = 'a' | 's' | 'd' | 'f' | 'j' | 'k' | 'l' | ';' | 'x';
+export type Keydown = "a" | "s" | "d" | "f" | "j" | "k" | "l" | ";" | "x";
 
-export type PowerStateCharacterName = 'dark' | 'light' | 'none';
+export type PowerStateCharacterName = "dark" | "light" | "none";
 
-export type PowerStateChompName = 'dark' | 'none';
-export type PowerStateFlagName = 'light' | 'none';
+export type PowerStateChompName = "dark" | "none";
+export type PowerStateFlagName = "light" | "none";
 export interface PowerStateCharacter {
   name: PowerStateCharacterName;
   gameStamp: number;
@@ -678,10 +678,10 @@ export interface WorkingController {
 }
 
 export const bar = () => {
-  console.log('------------------');
+  console.log("------------------");
 };
 
-export type PlayChezStateName = 'up' | 'down' | 'chez';
+export type PlayChezStateName = "up" | "down" | "chez";
 
 export interface PlayChezState {
   name: PlayChezStateName;
@@ -693,17 +693,28 @@ export interface NNObject {
   output: number[];
 }
 
+// TO HELP KEEP TRACK
 export interface NNInput {
-  playerEnemyDX: number;
-  playerEnemyDY: number;
+  controllerUp: number;
+  controllerDown: number;
+  controllerLeft: number;
+  controllerRight: number;
+  controllerA: number;
+  controllerB: number;
+  controllerX: number;
+  controllerY: number;
+  playerEnemyDPX: number;
+  playerEnemyDPY: number;
   playerEnemyDVX: number;
   playerEnemyDVY: number;
   playerTouchingDown: number;
   playerTouchingLeft: number;
   playerTouchingRight: number;
+  playerFacingEnemy: number;
   [key: string]: any;
 }
 
+// TO HELP KEEP TRACK
 export interface NNOutput {
   controllerUp: number;
   controllerDown: number;
@@ -713,9 +724,5 @@ export interface NNOutput {
   controllerB: number;
   controllerX: number;
   controllerY: number;
-  controllerL: number;
-  controllerR: number;
-  controllerStart: number;
-  controllerSelect: number;
   [key: string]: any;
 }
