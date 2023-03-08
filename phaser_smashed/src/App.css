@@ -1752,22 +1752,35 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   color: white;
   font-size: 1.5vw;
   font-weight: bold;
   text-align: center;
-  padding: 2vw 3vw;
+  /* padding: 2vw 3vw; */
 
   /* border-radius: var(--border-radius-small); */
   pointer-events: none;
+  /* border: 10px dashed blue; */
+}
+
+.video-playback-super {
+  height: 100%;
+  width: 50%;
+  margin-right: 3%;
+  /* border: 1px dashed lime; */
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .video-playback {
-  width: auto;
-  height: 55%;
+  width: 100%;
+  /* height: 55%; */
   /* margin: 3px; */
-  margin-top: 3%;
+  margin-top: 5%;
   background-color: black;
   border-radius: 30px;
   border: 5px solid black;

@@ -2462,61 +2462,16 @@ function Play() {
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {isPhaserGameActive && !isRecording && (
         <div className="video-playback-container">
-          <p className="replay">INSTANT REPLAY</p>
-          {/* <a ref={dlLinkRef}>
-            <p
-              className="replay-download"
-              onClick={() => {
-                downloadVideo();
-              }}
-            >
-              Download
-            </p>
-          </a> */}
-          {/* <button onClick={startRecording} disabled={isRecording}>
-          Start Recording
-        </button>
-        <button onClick={stopRecording} disabled={!isRecording}>
-          Stop Recording
-        </button> */}
-
-          <video
-            ref={videoRef}
-            // width={800}
-            // height={600}
-            // autoPlay
-            // loop
-            // style={{ filter: 'grayscale(50%)' }}
-            // style={{ filter: 'sepia(50%)' , 'contrast(4)' }}
-            // style={{ filter: 'grayscale(30%)' }}
-            // style={{ filter: 'contrast(4)' }}
-            // controls={false}
-            onTimeUpdate={handleTimeUpdate}
-            className={'video-playback'}
-            // style={{
-            //   filter: 'saturate(0.5)',
-            //   opacity: '100%',
-            // }}
-            // style={{
-            //   filter: 'contrast(4) brightness(2) contrast(2) saturate(25%)',
-            //   opacity: '100%',
-            // }}
-            // style={{ filter: 'grayscale(50%)', opacity: '50%' }}
-          />
+          <div className="video-playback-super">
+            <p className="replay">INSTANT REPLAY</p>
+            <video
+              ref={videoRef}
+              onTimeUpdate={handleTimeUpdate}
+              className={'video-playback'}
+            />
+          </div>
         </div>
       )}
-
-      {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
-      {/* {canPlayAudio && (
-        <audio
-          src="../../public/sounds/deep.mp3"
-          autoPlay
-          loop
-          onEnded={() => {
-            console.log('AUDIO ENDED');
-          }}
-        />
-      )} */}
     </div>
   );
 }
