@@ -101,6 +101,20 @@ function Play() {
     }
   };
 
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (video === null) {
+      return;
+    }
+
+    let watchLength = 5;
+    let replayPoint = video.duration - watchLength;
+
+    if (video.currentTime === video.duration) {
+      video.currentTime = replayPoint > 0 ? replayPoint : 0;
+      video.play();
+    }
+  };
 
   //////////////
 
@@ -2339,7 +2353,27 @@ function Play() {
         <button onClick={stopRecording} disabled={!isRecording}>
           Stop Recording
         </button>
-        <video ref={videoRef} width={800} height={600} />
+        <video
+          ref={videoRef}
+          width={800}
+          height={600}
+          autoPlay
+          // loop
+          // style={{ filter: 'grayscale(50%)' }}
+          // style={{ filter: 'sepia(50%)' , 'contrast(4)' }}
+          // style={{ filter: 'grayscale(30%)' }}
+          // style={{ filter: 'contrast(4)' }}
+          onTimeUpdate={handleTimeUpdate}
+          style={{
+            filter: 'saturate(0.5)',
+            opacity: '100%',
+          }}
+          // style={{
+          //   filter: 'contrast(4) brightness(2) contrast(2) saturate(25%)',
+          //   opacity: '100%',
+          // }}
+          // style={{ filter: 'grayscale(50%)', opacity: '50%' }}
+        />
       </div>
 
       {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
