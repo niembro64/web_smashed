@@ -39,6 +39,7 @@ import {
   PlayChezState,
   bar,
   inputTypeNum,
+  GameStateWithTime,
 } from '../scenes/interfaces';
 import { debugInit, debugMax, debugShow } from '../debugOptions';
 import {
@@ -131,26 +132,29 @@ function Play() {
 
   useEffect(() => {
     const handlePowerUpCollected = (event: any) => {
-      const x = event.detail;
+      const gameStateReact: GameStateWithTime = event.detail;
       bar();
-      bar();
-      bar();
-      bar();
-      bar();
-      bar();
-      bar();
-      bar();
-      console.log('REACT PRINTING', x);
-      bar();
-      bar();
-      bar();
-      bar();
-      bar();
-      bar();
+      console.log('REACT PRINTING', gameStateReact);
       bar();
 
-      // Do something in React, e.g. update state
-      // setPowerUpCount((count) => count + 1);
+      switch (gameStateReact.nameCurr) {
+        case 'game-state-start':
+          break;
+        case 'game-state-play':
+          break;
+        case 'game-state-paused':
+          break;
+        case 'game-state-first-blood':
+          break;
+        case 'game-state-screen-clear':
+          break;
+        case 'game-state-captured-flag':
+          break;
+        case 'game-state-finished':
+          break;
+        default:
+          console.log('BROKEN_____________________');
+      }
     };
 
     window.addEventListener('gameState', handlePowerUpCollected);

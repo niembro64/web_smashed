@@ -69,7 +69,7 @@ export function setGameState(game: Game, state: GameState): void {
   let isDrinkingPrev = false;
 
   window.dispatchEvent(
-    new CustomEvent('gameState', { detail: game.gameState.nameCurr })
+    new CustomEvent('gameState', { detail: game.gameState })
   );
 
   switch (game.gameState.nameCurr) {
