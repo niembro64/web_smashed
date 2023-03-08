@@ -1836,7 +1836,7 @@ function Play() {
                       >
                         <span>Bot</span>
                         <span id="input-sub">Neural-Network</span>
-                        <div className="button-input-emoji">{emoji.bot}</div>
+                        <div className="button-input-emoji">{emoji.brain}</div>
                       </div>
                     )}
                   </div>
