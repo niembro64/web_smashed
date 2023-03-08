@@ -121,7 +121,9 @@ function Play() {
     const mediaRecorder = mediaRecorderRef.current;
 
     if (mediaRecorder) {
-      mediaRecorder.stop();
+      setTimeout(() => {
+        mediaRecorder.stop();
+      }, 500);
     }
   };
 

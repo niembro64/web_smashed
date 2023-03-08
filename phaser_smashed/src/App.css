@@ -1760,20 +1760,26 @@ h2 {
   padding: 2vw 3vw;
 
   /* border-radius: var(--border-radius-small); */
+  pointer-events: none;
 }
+
 .video-playback {
   width: auto;
-  height: 62%;
+  height: 55%;
   /* margin: 3px; */
+  margin-top: 3%;
   background-color: black;
   border-radius: 30px;
-  border: 10px solid black;
-  box-shadow: 0px 0px 30px 30px rgba(0, 0, 0);
+  border: 5px solid black;
+  box-shadow: 10px 10px 20px 10px rgba(0, 0, 0);
   /* filter: saturate(0.5); */
+  /* border: 1px dashed lime; */
+
+  pointer-events: none;
 }
 .replay {
   position: absolute;
-  top: 3%;
+  top: 10%;
   /* width: 100%;
   height: 100%; */
   /* background-color: rgba(0, 0, 0, 0.5); */
@@ -1783,7 +1789,7 @@ h2 {
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 1.5vw;
+  font-size: 1vw;
   /* font-weight: bold; */
   text-align: center;
   padding: 2vw 3vw;
