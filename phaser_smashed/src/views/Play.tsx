@@ -98,7 +98,12 @@ function Play() {
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
       videoRef.current!.src = url;
-      videoRef.current!.controls = true;
+      videoRef.current!.controls = false;
+      let playStart =
+        videoRef.current!.duration - 4 > 0 ? videoRef.current!.duration - 4 : 0;
+      videoRef.current!.currentTime = playStart;
+      // videoRef.current!.loop = true;
+      videoRef.current!.play();
     };
 
     mediaRecorderRef.current = mediaRecorder;
@@ -130,6 +135,22 @@ function Play() {
       video.play();
     }
   };
+
+  function downloadVideo(videoRef: React.RefObject<HTMLVideoElement>): void {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    const url = URL.createObjectURL(videoElement.src as unknown as Blob);
+    const link = document.createElement('a');
+    link.href = url;
+    let myMoment = moment();
+    let myMomentString = moment(myMoment).format('YYYY-MM-DD-HH-mm-ss');
+    link.download = 'Web-Smashed-' + myMomentString + '.mp4';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
 
   useEffect(() => {
     const handlePowerUpCollected = (event: any) => {
@@ -722,6 +743,8 @@ function Play() {
     }
   }, [showLoader]);
 
+  const [isPhaserGameActive, setIsPhaserGameActive] = useState<boolean>(false);
+
   const setShowLoaderIntervalFunction = () => {
     monkeysRef.current.play();
     // setShowLoader(true);
@@ -739,6 +762,7 @@ function Play() {
         );
         clearInterval(myInterval);
         monkeysRef.current.pause();
+        setIsPhaserGameActive(true);
       }
     }, 1);
   };
@@ -1021,6 +1045,7 @@ function Play() {
         setShowAbout(false);
         setShowHistory(false);
         setShowOptions(false);
+        setIsPhaserGameActive(false);
         break;
       case 'ReStart':
         setShowControls(false);
@@ -1029,6 +1054,7 @@ function Play() {
         setShowAbout(false);
         setShowHistory(false);
         setShowOptions(false);
+        setIsPhaserGameActive(false);
         break;
       case 'Controls':
         setShowControls(!showControls);
@@ -2415,15 +2441,16 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
-      <div className="video-playback-container">
-        {/* <button onClick={startRecording} disabled={isRecording}>
+      {isPhaserGameActive && !isRecording && (
+        <div className="video-playback-container">
+          <p className="replay">INSTANT REPLAY</p>
+          {/* <button onClick={startRecording} disabled={isRecording}>
           Start Recording
         </button>
         <button onClick={stopRecording} disabled={!isRecording}>
           Stop Recording
         </button> */}
 
-        {!isRecording && (
           <video
             ref={videoRef}
             // width={800}
@@ -2434,7 +2461,7 @@ function Play() {
             // style={{ filter: 'sepia(50%)' , 'contrast(4)' }}
             // style={{ filter: 'grayscale(30%)' }}
             // style={{ filter: 'contrast(4)' }}
-            controls={false}
+            // controls={false}
             onTimeUpdate={handleTimeUpdate}
             className={'video-playback'}
             // style={{
@@ -2447,8 +2474,8 @@ function Play() {
             // }}
             // style={{ filter: 'grayscale(50%)', opacity: '50%' }}
           />
-        )}
-      </div>
+        </div>
+      )}
 
       {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
       {/* {canPlayAudio && (
