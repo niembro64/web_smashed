@@ -73,7 +73,10 @@ function Play() {
     }
 
     const stream = canvas.captureStream();
-    const mediaRecorder = new MediaRecorder(stream);
+    const mediaRecorder = new MediaRecorder(stream, {
+      videoBitsPerSecond: 2000000,
+      // videoBitsPerSecond: 1000000,
+    });
 
     mediaRecorder.ondataavailable = (e) => {
       chunksRef.current.push(e.data);
