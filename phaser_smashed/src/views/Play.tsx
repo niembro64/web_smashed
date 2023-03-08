@@ -54,23 +54,55 @@ import { momentStringToMoment } from '../scenes/helpers/time';
 import { NeuralNetwork, recurrent } from 'brain.js';
 
 function Play() {
-  // useEffect(() => {
-  //   const trainingData = [
-  //     [1, 2, 3, 4, 5],
-  //     [5, 4, 3, 2, 1],
-  //   ];
-
-  //   let rnn = new recurrent.LSTMTimeStep();
-
-  //   rnn.train(trainingData, { log: (stats) => console.log(stats) });
-
-  //   let output = rnn.run([1, 2, 3, 4]);
-
-  //   console.log('output', output);
-  // }, []);
-
   let myPhaser: any = useRef(null);
-  // const { _id } = useParams();
+
+  //////////////
+
+  const [isRecording, setIsRecording] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+
+  const startRecording = () => {
+    setIsRecording(true);
+
+    const canvas = myPhaser.current?.canvas;
+
+    if (!canvas) {
+      return;
+    }
+
+    const stream = canvas.captureStream();
+    const mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = (e) => {
+      chunksRef.current.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      videoRef.current!.src = url;
+      videoRef.current!.controls = true;
+    };
+
+    mediaRecorderRef.current = mediaRecorder;
+    chunksRef.current = [];
+    mediaRecorderRef.current.start();
+  };
+
+  const stopRecording = () => {
+    setIsRecording(false);
+
+    const mediaRecorder = mediaRecorderRef.current;
+
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+    }
+  };
+
+
+  //////////////
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -2300,6 +2332,16 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
+      <div className="dev-mode-div">
+        <button onClick={startRecording} disabled={isRecording}>
+          Start Recording
+        </button>
+        <button onClick={stopRecording} disabled={!isRecording}>
+          Stop Recording
+        </button>
+        <video ref={videoRef} width={800} height={600} />
+      </div>
+
       {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
       {/* {canPlayAudio && (
         <audio
