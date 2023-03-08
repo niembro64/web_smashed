@@ -57,6 +57,16 @@ function Play() {
   let myPhaser: any = useRef(null);
 
   //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
 
   const [isRecording, setIsRecording] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -119,6 +129,53 @@ function Play() {
     }
   };
 
+  useEffect(() => {
+    const handlePowerUpCollected = (event: any) => {
+      const x = event.detail;
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      console.log('REACT PRINTING', x);
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+      bar();
+
+      // Do something in React, e.g. update state
+      // setPowerUpCount((count) => count + 1);
+    };
+
+    window.addEventListener('gameState', handlePowerUpCollected);
+
+    return () => {
+      window.removeEventListener('gameState', handlePowerUpCollected);
+    };
+  }, []);
+
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
+  //////////////
   //////////////
 
   const [session, setSession] = useState<SessionInfo | null>(null);

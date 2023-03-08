@@ -68,6 +68,10 @@ export function setGameState(game: Game, state: GameState): void {
   let isDrinkingCurr = false;
   let isDrinkingPrev = false;
 
+  window.dispatchEvent(
+    new CustomEvent('gameState', { detail: game.gameState.nameCurr })
+  );
+
   switch (game.gameState.nameCurr) {
     case 'game-state-start':
       break;
@@ -86,6 +90,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSoundStartPlay(game);
       setPhysicsPause(game);
       setSplashDataOn(game);
+
       break;
     case 'game-state-first-blood':
       setRuleSplashOn(game, 'splash-first-blood');
