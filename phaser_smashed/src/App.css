@@ -780,12 +780,12 @@ h2 {
   border: 0px solid;
 }
 .b-all-bots {
-  height: 70%;
+  height: 100%;
   /* flex: 0.2; */
   background-color: var(--gray-dark);
   border: 0px solid;
   /* border-radius: var(--border-radius-small); */
-  padding: 1vh 3vh 0.5vh 3vh;
+  padding: 0vw 1vw 0vw 1vw;
 
   color: rgba(255, 255, 255, 1);
   font-size: 1vw;
@@ -1719,6 +1719,11 @@ h2 {
 }
 .game-bar-time > p {
   margin-bottom: -2%;
+}
+.vs-span {
+  font-size: 1.5vw;
+  /* font-weight: bold; */
+  /* margin: 0 1%; */
 }
 
 .dev-mode-div {

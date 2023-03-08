@@ -1853,7 +1853,9 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>KBvBR</span>
+                <span className={'vs-span'}>
+                  {emoji.keyboardWhite + emoji.bot}
+                </span>
               </div>
               <div
                 className="b-all-bots"
@@ -1862,7 +1864,9 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>KBvBN</span>
+                <span className={'vs-span'}>
+                  {emoji.keyboardWhite + emoji.brain}
+                </span>
               </div>
               <div
                 className="b-all-bots"
@@ -1871,7 +1875,9 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>KBs</span>
+                <span className={'vs-span'}>
+                  {emoji.keyboardWhite + emoji.keyboardWhite}
+                </span>
               </div>
               <div
                 className="b-all-bots"
@@ -1880,7 +1886,12 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>GPs</span>
+                <span className={'vs-span'}>
+                  {emoji.gamepad + emoji.gamepad}
+                </span>
+                <span className={'vs-span'}>
+                  {emoji.gamepad + emoji.gamepad}
+                </span>
               </div>
               <div
                 className="b-all-bots"
@@ -1889,7 +1900,8 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>BRs</span>
+                <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
+                <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1898,7 +1910,8 @@ function Play() {
                   blipSound();
                 }}
               >
-                <span>BNs</span>
+                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
+                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
               </div>
             </div>
             <div
