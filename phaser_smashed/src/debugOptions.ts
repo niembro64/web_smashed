@@ -128,7 +128,7 @@ export const mainOptionsDebugShow: Debug = {
   UpdateLoopsNumSkip: 0, // 012
   LoadTimeExtra: false,
   UseKoopas: true,
-  UseChez: false,
+  UseChez: true,
   SlowMoExplosions: false,
   TypedLoadingText: false,
   DevMode: false,
