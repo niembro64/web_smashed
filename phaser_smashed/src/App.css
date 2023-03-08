@@ -1791,6 +1791,27 @@ h2 {
   /* border-radius: var(--border-radius-small); */
   pointer-events: none;
 }
+.replay-download {
+  position: absolute;
+  top: 6%;
+  /* width: 100%;
+  height: 100%; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1vw;
+  /* font-weight: bold; */
+  text-align: center;
+  padding: 2vw 3vw;
+
+  /* border-radius: var(--border-radius-small); */
+  /* pointer-events: none; */
+  cursor: pointer;
+}
 .keyboard-explainer-double {
   position: absolute;
   top: 20%;

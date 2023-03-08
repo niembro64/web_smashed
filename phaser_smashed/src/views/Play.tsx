@@ -41,7 +41,7 @@ import {
   inputTypeNum,
   GameStateWithTime,
 } from '../scenes/interfaces';
-import { debugInit, debugMax, debugShow } from '../debugOptions';
+import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import {
   ClientInformation,
   getAllAxios,
@@ -69,14 +69,14 @@ function Play() {
   //////////////
   //////////////
 
-  const [isRecording, setIsRecording] = useState(false);
+  const [isRecording, setIsReplayHidden] = useState(false);
   let videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
 
   const startRecording = () => {
     // videoRef.current!.src = '';
-    setIsRecording(true);
+    setIsReplayHidden(true);
 
     const canvas = myPhaser.current?.canvas;
 
@@ -85,16 +85,22 @@ function Play() {
     }
 
     const stream = canvas.captureStream();
-    const mediaRecorder = new MediaRecorder(stream, {
-      videoBitsPerSecond: 2000000,
-      // videoBitsPerSecond: 1000000,
-    });
+    const mediaRecorder = new MediaRecorder(
+      stream,
+      debug.FullQualityReplay
+        ? {}
+        : {
+            videoBitsPerSecond: 600000,
+            // videoBitsPerSecond: 1000000
+          }
+    );
 
     mediaRecorder.ondataavailable = (e) => {
       chunksRef.current.push(e.data);
     };
 
     mediaRecorder.onstop = () => {
+      setIsReplayHidden(false);
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
       videoRef.current!.src = url;
@@ -112,8 +118,6 @@ function Play() {
   };
 
   const stopRecording = () => {
-    setIsRecording(false);
-
     const mediaRecorder = mediaRecorderRef.current;
 
     if (mediaRecorder) {
@@ -136,21 +140,32 @@ function Play() {
     }
   };
 
-  function downloadVideo(videoRef: React.RefObject<HTMLVideoElement>): void {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
+  // let dlLinkRef = useRef<HTMLAnchorElement>(null);
 
-    const url = URL.createObjectURL(videoElement.src as unknown as Blob);
-    const link = document.createElement('a');
-    link.href = url;
-    let myMoment = moment();
-    let myMomentString = moment(myMoment).format('YYYY-MM-DD-HH-mm-ss');
-    link.download = 'Web-Smashed-' + myMomentString + '.mp4';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }
+  // function downloadVideo(): void {
+  //   const videoElement = videoRef.current;
+  //   const downloadElement = dlLinkRef.current;
+  //   if (!videoElement) return;
+
+  //   const url = URL.createObjectURL(videoElement.src as unknown as Blob);
+
+  //   if (!downloadElement) return;
+
+  //   downloadElement.href = url;
+  //   downloadElement.download =
+  //     'Web-Smashed-' + moment().format('YYYY-MM-DD-HH-mm-ss') + '.mp4';
+  //   downloadElement.click();
+  //   URL.revokeObjectURL(url);
+  // }
+  // // const link = document.createElement('a');
+  // // link.href = url;
+  // // let myMoment = moment();
+  // // let myMomentString = moment(myMoment).format('YYYY-MM-DD-HH-mm-ss');
+  // // link.download = 'Web-Smashed-' + myMomentString + '.mp4';
+  // // document.body.appendChild(link);
+  // // link.click();
+  // // document.body.removeChild(link);
+  // // URL.revokeObjectURL(url);
 
   useEffect(() => {
     const handlePowerUpCollected = (event: any) => {
@@ -159,7 +174,9 @@ function Play() {
       console.log('REACT PRINTING', gameStateReact);
       bar();
 
-      switch (gameStateReact.nameCurr) {
+      let s = gameStateReact.nameCurr;
+
+      switch (s) {
         case 'game-state-start':
           break;
         case 'game-state-play':
@@ -1558,7 +1575,7 @@ function Play() {
           <div className="player-choices">
             <div className="player-choices-left">
               {Object.entries(debug).map(([key, value], index: number) => {
-                if (!debugShow[key]) {
+                if (!mainOptionsDebugShow[key]) {
                   return null;
                 }
 
@@ -2005,7 +2022,7 @@ function Play() {
               <h1>Debug Options</h1>
               <div id="debug-col">
                 {Object.entries(debug).map(([key, value], index: number) => {
-                  if (!!debugShow[key]) {
+                  if (!!mainOptionsDebugShow[key]) {
                     return null;
                   }
 
@@ -2444,6 +2461,16 @@ function Play() {
       {isPhaserGameActive && !isRecording && (
         <div className="video-playback-container">
           <p className="replay">INSTANT REPLAY</p>
+          {/* <a ref={dlLinkRef}>
+            <p
+              className="replay-download"
+              onClick={() => {
+                downloadVideo();
+              }}
+            >
+              Download
+            </p>
+          </a> */}
           {/* <button onClick={startRecording} disabled={isRecording}>
           Start Recording
         </button>

@@ -45,6 +45,7 @@ export const debugInit: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
+  FullQualityReplay: false,
 };
 
 export const debugMax: Debug = {
@@ -92,10 +93,11 @@ export const debugMax: Debug = {
   // NeuralNetworkBot: true,
   NNP1Train: true,
   NNIsLSTM: false,
+  FullQualityReplay: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
-export const debugShow: Debug = {
+export const mainOptionsDebugShow: Debug = {
   Level: 0, //0123456
   ModeInfinity: false,
   NumShots: 1,
@@ -140,4 +142,5 @@ export const debugShow: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
+  FullQualityReplay: false,
 };
