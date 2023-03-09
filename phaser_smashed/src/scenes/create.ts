@@ -808,7 +808,7 @@ export function createEmitterChomp(game: Game): void {
   c.emitterDark = c.particles.createEmitter({
     speed: 1500,
     // scale: { start: 0.05, end: 0 },
-    scale: { start: 1 * 2.5, end: 1.5 },
+    scale: { start: 1 * 2.5 * 2, end: 1.5 * 2 },
     blendMode: 'SUBTRACT',
     // bounce: 1,
     // length: 100,
@@ -818,13 +818,17 @@ export function createEmitterChomp(game: Game): void {
 }
 
 export function createEmittersPlayers(game: Game): void {
+  const m = 1;
+  const n = 4;
+
   game.players.forEach((player, playerIndex) => {
     player.particles = game.add.particles('tail_' + playerIndex);
+    player.particlesShield = game.add.particles('shield_' + playerIndex);
 
     player.emitterLight = player.particles.createEmitter({
       speed: 10,
       // scale: { start: 0.05, end: 0 },
-      scale: { start: 1.5 * player.char.scaleCharSpriteReality, end: 0 },
+      scale: { start: 1.5 * player.char.scaleCharSpriteReality * m, end: 0 },
       blendMode: 'ADD',
       // bounce: 1,
       // length: 100,
@@ -832,35 +836,43 @@ export function createEmittersPlayers(game: Game): void {
     });
 
     player.emitterDark = player.particles.createEmitter({
-      speed: 1000,
+      // speed: 1000,
+      speed: { min: 100, max: 1000 },
       // scale: { start: 0.05, end: 0 },
-      scale: { start: 1 * player.char.scaleCharSpriteReality, end: 0.5 },
+      scale: {
+        start: 1 * player.char.scaleCharSpriteReality * m,
+        end: 0.5 * m,
+      },
       blendMode: 'SUBTRACT',
       // bounce: 1,
       // length: 100,
       lifespan: 40,
       // gravityY: 1000,
     });
+    // player.emitterDark.setRotation(0, 360);
 
     player.emitterPlayer = player.particles.createEmitter({
-      speed: 80,
+      // speed: 80,
+      speed: { min: 0, max: 80 },
       // scale: { start: 0.05, end: 0 },
-      scale: { start: 0.7 * player.char.scaleCharSpriteReality, end: 0 },
+      scale: { start: 0.7 * player.char.scaleCharSpriteReality * m, end: 0 },
       // blendMode: 'SUBTRACT',
       blendMode: 'ADD',
       // bounce: 1,
       // length: 100,
       gravityY: -500,
     });
+    // player.emitterPlayer.setRotation(0, 360);
 
-    player.emitterHurt = player.particles.createEmitter({
+    player.emitterHurt = player.particlesShield.createEmitter({
       speed: 0,
       // scale: { start: 0.05, end: 0 },
-      scale: { start: 0.3 * player.char.scaleCharSpriteReality, end: 0 },
+      scale: { start: 0.3 * player.char.scaleCharSpriteReality * n, end: 0 },
       // blendMode: 'SUBTRACT'3,
       // bounce: 1,
       // length: 100,
     });
+    // player.emitterHurt.setRotation(0, 360);
   });
 }
 

@@ -138,6 +138,7 @@ export interface Player {
   padPrev: GamepadData;
   padDebounced: PadStateDebounced;
   particles: any;
+  particlesShield: any;
   emitterLight: any;
   emitterDark: any;
   emitterPlayer: any;

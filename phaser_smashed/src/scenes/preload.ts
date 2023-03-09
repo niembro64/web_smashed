@@ -273,6 +273,7 @@ export function preload(game: Game): void {
 
   for (let i = 0; i < game.playerChoicesCharacterType.length; i++) {
     game.load.image('tail_' + i, 'images/white_trans.png');
+    game.load.image('shield_' + i, 'images/white_trans_2.png');
   }
 
   game.playerOptions.forEach((pOption, pOptionIndex) => {
