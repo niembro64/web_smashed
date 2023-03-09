@@ -111,6 +111,7 @@ export default class Game extends Phaser.Scene {
     ENERJA_TWO_SHOTS: '/enerja/two_shots.mp3',
     ENERJA_UGH: '/enerja/ugh.mp3',
     BGM_MII: 'mii.ogg',
+    BGM_MII_FIXED: 'wii_fixed.ogg',
     BGM_DREAM: 'kirby_dreamland.ogg',
     BGM_MONKEY: '/na/monkeys.ogg',
     BGM_ROYKSOP: '/na/macumba_loop.ogg',
