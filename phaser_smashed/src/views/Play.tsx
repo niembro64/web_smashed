@@ -2141,30 +2141,49 @@ function Play() {
                   <h1>Web Rules</h1>
                   <div
                     className="rules-outline-web"
-                    onClick={() => {
-                      captureScreenshot();
-                    }}
+                    // onClick={() => {
+                    //   captureScreenshot();
+                    // }}
                   >
                     <img
                       id="rules-web-gif"
                       src="images/smashed_x10_gif.gif"
                       alt="smash title"
                     />
-                    <p className="rules-web-since">Since 2022</p>
-                    <ul>
-                      <li>
-                        <p>
-                          1. If you died and no others have died yet, you take a
+                    <p className="rules-web-since rules-small rules-italic">
+                      ★ ★ ★ Since 2022 ★ ★ ★
+                    </p>
+                    <div className="rules-ul">
+                      <div className="rules-li">
+                        <div className="rules-big">First Blood</div>
+                        <p className="rules-small">
+                          If others have never died...
+                        </p>
+                        <p className="rules-small">And you just died...</p>
+                        <p className="rules-small">You take 1 shot.</p>
+                        {/* <p className="rules-small">
+                          If you died and no others have died yet, you take a
                           shot.
+                        </p> */}
+                      </div>
+                      <div className="rules-li">
+                        <div className="rules-big">Screen Clear</div>
+                        <p className="rules-small">
+                          If someone else just died...
                         </p>
-                        <p>
-                          2. If all are dead but you, they each take a shot.{' '}
+                        <p className="rules-small">
+                          And all are dead but you...
                         </p>
-                        <p>
-                          3. If you rase the flag, all others each take a shot.{' '}
+                        <p className="rules-small">They each take 1 shot.</p>
+                      </div>
+                      <div className="rules-li">
+                        <div className="rules-big">Capture The Flag</div>
+                        <p className="rules-small">If you rased the flag...</p>
+                        <p className="rules-small">
+                          All others each take a shot.
                         </p>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="rules-col">
@@ -2336,6 +2355,7 @@ function Play() {
                       if (
                         hideNiemoIp &&
                         (s.ip === '69.124.166.109' ||
+                          s.ip === '69.115.173.120' ||
                           s.ip === '' ||
                           s.ip === 'null' ||
                           s.ip === null ||
