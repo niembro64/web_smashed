@@ -104,7 +104,7 @@ function Play() {
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
       videoRef.current!.src = url;
-      videoRef.current!.controls = debug.ReplayControls;
+      // videoRef.current!.controls = debug.ReplayControls;
 
       // let playStart =
       //   videoRef.current!.duration - 4 > 0 ? videoRef.current!.duration - 4 : 0;
@@ -2557,6 +2557,7 @@ function Play() {
                   : 'video-playback video-playback-normal'
               }
               ref={videoRef}
+              // controls={debug.ReplayControls}
               onTimeUpdate={() => {
                 console.log('onTimeUpdate');
                 handleTimeUpdate();
