@@ -2160,7 +2160,9 @@ function Play() {
                           If others have never died...
                         </p>
                         <p className="rules-small">And you just died...</p>
-                        <p className="rules-small">You take 1 shot.</p>
+                        <p className="rules-small rules-end">
+                          You take 1 shot.
+                        </p>
                         {/* <p className="rules-small">
                           If you died and no others have died yet, you take a
                           shot.
@@ -2174,12 +2176,14 @@ function Play() {
                         <p className="rules-small">
                           And all are dead but you...
                         </p>
-                        <p className="rules-small">They each take 1 shot.</p>
+                        <p className="rules-small rules-end">
+                          They each take 1 shot.
+                        </p>
                       </div>
                       <div className="rules-li">
                         <div className="rules-big">Capture The Flag</div>
                         <p className="rules-small">If you rased the flag...</p>
-                        <p className="rules-small">
+                        <p className="rules-small rules-end">
                           All others each take a shot.
                         </p>
                       </div>
