@@ -11,7 +11,7 @@ export const debugInit: Debug = {
   MusicTrack: 3, // 012
   ReadySoundActive: false,
   UseCamera: true,
-  CamerasVisible: false,
+  CamerasVisible: true,
   CollidersPvP: false,
   CollidersPvAP: false,
   CollidersPvAE: false,

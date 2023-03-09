@@ -46,7 +46,7 @@ export function create(game: Game) {
   createScoreboardController(game);
   createScoreboardReady(game);
   createChomp(game);
-  createGun(game);
+  // createGun(game);
   createEmitterChompFollowChomp(game);
   createPlayers(game);
   createEmittersFollowPlayers(game);
@@ -2186,6 +2186,7 @@ export function createCameras(game: Game): void {
   if (!game.debug.CamerasVisible) {
     debugAlpha = 0;
   }
+
   game.cameraBox.char.sprite = game.physics.add
     .sprite(
       SCREEN_DIMENSIONS.WIDTH / 2,
@@ -2193,7 +2194,7 @@ export function createCameras(game: Game): void {
       'centerWhite'
     )
     .setScale(0.05)
-    .setAlpha(0);
+    .setAlpha(debugAlpha);
   game.cameraBox.char.sprite.setImmovable(true);
   game.cameraBox.char.sprite.body.allowGravity = false;
   // game.cameras.main.startFollow(game.cameraBox.char.sprite);
