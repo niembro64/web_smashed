@@ -45,7 +45,7 @@ export const debugInit: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  ReplayFullQuality: false,
+  ReplayFullQuality: true,
   ReplayControls: false,
   ReplayFastSlow: false,
 };
