@@ -87,7 +87,7 @@ function Play() {
     const stream = canvas.captureStream();
     const mediaRecorder = new MediaRecorder(
       stream,
-      debug.FullQualityReplay
+      debug.ReplayFullQuality
         ? {}
         : {
             videoBitsPerSecond: 600000,
@@ -104,10 +104,11 @@ function Play() {
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
       videoRef.current!.src = url;
-      videoRef.current!.controls = false;
-      let playStart =
-        videoRef.current!.duration - 4 > 0 ? videoRef.current!.duration - 4 : 0;
-      videoRef.current!.currentTime = playStart;
+      videoRef.current!.controls = debug.ReplayControls;
+
+      // let playStart =
+      //   videoRef.current!.duration - 4 > 0 ? videoRef.current!.duration - 4 : 0;
+      // videoRef.current!.currentTime = playStart;
       // videoRef.current!.loop = true;
       videoRef.current!.play();
     };
@@ -123,22 +124,69 @@ function Play() {
     if (mediaRecorder) {
       setTimeout(() => {
         mediaRecorder.stop();
-      }, 500);
+      }, 1000);
     }
   };
 
+  const [videoGray, setVideoGray] = useState(false);
+
   const handleTimeUpdate = () => {
     const video = videoRef.current;
-    if (video === null) {
+    if (video === null || video === undefined || video.duration === Infinity) {
+      videoRef.current!.playbackRate = 16;
+      setVideoGray(true);
       return;
     }
+    setVideoGray(false);
 
-    let watchLength = 5;
-    let replayPoint = video.duration - watchLength;
+    let s = 5;
+    let m = 2;
+    let duration = video.duration;
 
-    if (video.currentTime === video.duration) {
-      video.currentTime = replayPoint > 0 ? replayPoint : 0;
+    let pStart = duration - s > 0 ? duration - s : 0;
+    let pMid = duration - m > 0 ? duration - m : 0;
+    let pEnd = duration;
+    let current = video.currentTime;
+
+    console.log(
+      'currentTime',
+      current,
+      'duration',
+      duration,
+      'replayPointStart',
+      pStart
+    );
+    // if (current < pStart) {
+    //   video.pause();
+    //   current = pStart;
+    //   video.play();
+    //   return;
+    // }
+
+    if (debug.ReplayFastSlow) {
+      if (current >= pStart && current < pMid) {
+        // video.playbackRate = 2;
+        // video.play();
+        return;
+      }
+
+      if (current >= pMid && current < pEnd) {
+        video.playbackRate = 0.5;
+        // video.play();
+        return;
+      }
+    }
+
+    if (current >= pEnd) {
+      current = pStart;
+      video.currentTime = current;
+      if (debug.ReplayFastSlow) {
+        video.playbackRate = 2;
+      } else {
+        video.playbackRate = 1;
+      }
       video.play();
+      return;
     }
   };
 
@@ -2500,11 +2548,23 @@ function Play() {
       {isPhaserGameActive && !isRecording && (
         <div className="video-playback-container">
           <div className="video-playback-super">
-            <p className="replay">INSTANT REPLAY</p>
+            {videoGray && <p className="replay">FAST FORWARD</p>}
+            {!videoGray && <p className="replay">INSTANT REPLAY</p>}
             <video
+              className={
+                videoGray
+                  ? 'video-playback video-playback-gray'
+                  : 'video-playback video-playback-normal'
+              }
               ref={videoRef}
-              onTimeUpdate={handleTimeUpdate}
-              className={'video-playback'}
+              onTimeUpdate={() => {
+                console.log('onTimeUpdate');
+                handleTimeUpdate();
+              }}
+              onLoadedMetadata={() => {
+                console.log('onLoadedMetadata');
+                handleTimeUpdate();
+              }}
             />
           </div>
         </div>

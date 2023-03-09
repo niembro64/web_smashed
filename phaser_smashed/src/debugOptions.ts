@@ -11,7 +11,7 @@ export const debugInit: Debug = {
   MusicTrack: 3, // 012
   ReadySoundActive: false,
   UseCamera: true,
-  CamerasVisible: true,
+  CamerasVisible: false,
   CollidersPvP: false,
   CollidersPvAP: false,
   CollidersPvAE: false,
@@ -45,7 +45,9 @@ export const debugInit: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  FullQualityReplay: false,
+  ReplayFullQuality: false,
+  ReplayControls: false,
+  ReplayFastSlow: false,
 };
 
 export const debugMax: Debug = {
@@ -93,7 +95,9 @@ export const debugMax: Debug = {
   // NeuralNetworkBot: true,
   NNP1Train: true,
   NNIsLSTM: false,
-  FullQualityReplay: true,
+  ReplayFullQuality: true,
+  ReplayControls: true,
+  ReplayFastSlow: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -142,5 +146,7 @@ export const mainOptionsDebugShow: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  FullQualityReplay: false,
+  ReplayFullQuality: false,
+  ReplayControls: false,
+  ReplayFastSlow: false,
 };
