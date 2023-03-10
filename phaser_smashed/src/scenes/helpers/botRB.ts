@@ -476,6 +476,10 @@ export function updateBotRules(
           ? 0.99
           : game.flag.ownerCurr.id === null
           ? 0.2
+          : game.flag.ownerCurr.id === playerIndex
+          ? 0.02
+          : player.emitterDark.visible
+          ? 0
           : 0.5)
     ) {
       if (botSprite.x < game.flag.spriteFlagPole.x - botSprite.width * 0.1) {
@@ -504,7 +508,12 @@ export function updateBotRules(
     ///////////////////////
     if (
       !t.down &&
-      Math.random() > (game.flag.toucherCurr.id === null ? 0.99 : 0.9)
+      Math.random() >
+        (game.flag.toucherCurr.id === null
+          ? 0.99
+          : player.emitterDark.visible
+          ? 0
+          : 0.95)
     ) {
       if (botSprite.x < game.flag.spriteFlagPole.x - 300) {
         p.right = true;
@@ -537,7 +546,7 @@ export function updateBotRules(
     hasPlayerTouchedWallRecently(player) &&
     Math.random() > 0.01
   ) {
-    p.Y = p.Y ? false : true;
+    p.Y = !p.Y;
   } else if (
     //////////////////////
     // JUMPING OFF GROUND
@@ -558,7 +567,7 @@ export function updateBotRules(
     pVelocity.y > 0 &&
     Math.random() > 0.9
   ) {
-    p.Y = true;
+    p.Y = !p.Y;
   } else if (
     //////////////////////
     // JUMPING AWAY FROM AE
