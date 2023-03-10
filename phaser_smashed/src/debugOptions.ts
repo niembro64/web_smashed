@@ -3,7 +3,7 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   DevMode: false,
   DevZoom: 8,
-  Level: 6, //0123456
+  Level: 7, //0123456
   ModeInfinity: true,
   NumShots: 7, //7
   TimeMinutes: 7, //01234567
@@ -51,7 +51,7 @@ export const debugInit: Debug = {
 };
 
 export const debugMax: Debug = {
-  Level: 6, //0123456
+  Level: 7, //0123456
   ModeInfinity: true,
   NumShots: 15,
   TimeMinutes: 15, //01234567

@@ -56,7 +56,7 @@ import { Player } from './interfaces';
 import { updatePlayerDarknessEvents } from './helpers/powers';
 import { printKeyboard } from './helpers/keyboard';
 import { getIsFlagShots } from './helpers/flag';
-import { getDodgeDirectionPlayerToAttackEnergy } from './helpers/bot';
+import { getDodgeDirectionPlayerToAttackEnergy } from './helpers/botRB';
 
 export function setPreUpdate(game: Game): void {
   setMusicPlay(game);

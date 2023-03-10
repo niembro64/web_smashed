@@ -6,7 +6,7 @@ import {
   setPhysicsAttackEnergyOff,
   setPhysicsAttackEnergyOn,
 } from './attacks';
-import { getIsBot, updateBotRules } from './bot';
+import { getIsBot, updateBotRules } from './botRB';
 import { updateBotNN } from './botNN';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';

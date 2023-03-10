@@ -9,7 +9,7 @@ import {
   getIsBotTooFarLeft,
   getIsBotTooFarRight,
   getIsBotTooFarUp,
-} from './bot';
+} from './botRB';
 import { NNSetPlayerPad } from './nn';
 
 export function updateBotNN(
