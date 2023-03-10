@@ -131,7 +131,7 @@ export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.18;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.07;
   if (bot.x < left) {
     return true;
   }
@@ -469,28 +469,34 @@ export function updateBotRules(
     ///////////////////////
     // ON GROUND
     ///////////////////////
-    if (t.down && Math.random() > 0.1) {
-      if (botSprite.x < game.flag.spriteFlagPole.x - botSprite.width * 0.2) {
+    if (
+      t.down &&
+      Math.random() >
+        (game.flag.toucherCurr.id === null
+          ? 0.99
+          : game.flag.ownerCurr.id === null
+          ? 0.2
+          : 0.5)
+    ) {
+      if (botSprite.x < game.flag.spriteFlagPole.x - botSprite.width * 0.1) {
         p.right = true;
         p.left = false;
       } else if (
         botSprite.x >
-        game.flag.spriteFlagPole.x + botSprite.width * 0.4
+        game.flag.spriteFlagPole.x + botSprite.width * 0.2
       ) {
         p.left = true;
         p.right = false;
+      } else if (
+        !getIsBotFacingNearestPlayer(player, playerIndex, game) &&
+        getIsBotNearNearestPlayer(player, playerIndex, game, 200) &&
+        Math.random() > 0.99
+      ) {
+        p.right = !p.right;
+        p.left = !p.right;
       } else {
-        if (
-          !getIsBotFacingNearestPlayer(player, playerIndex, game) &&
-          getIsBotNearNearestPlayer(player, playerIndex, game, 200) &&
-          Math.random() > 0.99
-        ) {
-          p.right = !p.right;
-          p.left = !p.right;
-        } else {
-          p.right = false;
-          p.left = false;
-        }
+        p.right = false;
+        p.left = false;
       }
     }
     ///////////////////////
@@ -498,7 +504,7 @@ export function updateBotRules(
     ///////////////////////
     if (
       !t.down &&
-      Math.random() > (game.flag.toucherCurr.id === null ? 0.95 : 0.7)
+      Math.random() > (game.flag.toucherCurr.id === null ? 0.99 : 0.9)
     ) {
       if (botSprite.x < game.flag.spriteFlagPole.x - 300) {
         p.right = true;
