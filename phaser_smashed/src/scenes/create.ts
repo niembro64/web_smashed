@@ -1773,10 +1773,10 @@ export function createPlatforms7(game: Game): void {
   //   );
   // }
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 2; i++) {
     game.PLATFORMS.create(
       SCREEN_DIMENSIONS.WIDTH / 2,
-      SCREEN_DIMENSIONS.HEIGHT / 2 + i * game.ASSET_BRICK_HEIGHT + 3 * 34,
+      SCREEN_DIMENSIONS.HEIGHT / 2 - i * game.ASSET_BRICK_HEIGHT + 3 * 34,
       'platformHorizontal'
     );
   }
@@ -1867,7 +1867,7 @@ export function createPlatforms7(game: Game): void {
   //     'brick'
   //   );
   // }
-  for (let j = 0; j < 6; j++) {
+  for (let j = 0; j < 5; j++) {
     for (let i = 0; i < 2; i++) {
       game.PLATFORMS.create(
         1617 * game.SCREEN_SCALE.WIDTH - j * 33 - 33 * 8,
@@ -1899,6 +1899,13 @@ export function createPlatforms7(game: Game): void {
   //     'brick'
   //   );
   // }
+  for (let i = 0; i < 6; i++) {
+    game.PLATFORMS.create(
+      SCREEN_DIMENSIONS.WIDTH * 0.766,
+      SCREEN_DIMENSIONS.HEIGHT * 1.0122 + i * game.ASSET_BRICK_HEIGHT,
+      'platformHorizontal'
+    );
+  }
 }
 
 export function createTable(game: Game): void {
