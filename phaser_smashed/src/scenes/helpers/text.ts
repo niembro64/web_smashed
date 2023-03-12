@@ -207,53 +207,6 @@ export function updateShotsOnPlayers(game: Game) {
   });
 }
 
-// export function updateShotGlassTransparency(game: Game): void {
-//   game.players.forEach((player, playerIndex) => {
-//     switch (game.gameState.nameCurr) {
-//       case 'game-state-play':
-//         player.shotGlassImage.setAlpha(0);
-//         player.shotGlassNumber.setAlpha(0);
-//         break;
-//       case 'game-state-screen-clear':
-//         if (player.state.name === 'player-state-dead') {
-//           player.shotGlassImage.setAlpha(1);
-//           player.shotGlassNumber.setAlpha(1);
-//         } else {
-//           player.shotGlassImage.setAlpha(0);
-//           player.shotGlassNumber.setAlpha(0);
-//         }
-//         break;
-//       case 'game-state-first-blood':
-//         if (player.state.name === 'player-state-dead') {
-//           player.shotGlassImage.setAlpha(1);
-//           player.shotGlassNumber.setAlpha(1);
-//         } else {
-//           player.shotGlassImage.setAlpha(0);
-//           player.shotGlassNumber.setAlpha(0);
-//         }
-//         break;
-//       case 'game-state-captured-flag':
-//         if (game.flag.ownerCurr.id === playerIndex) {
-//           player.shotGlassImage.setAlpha(0);
-//           player.shotGlassNumber.setAlpha(0);
-//         } else {
-//           player.shotGlassImage.setAlpha(1);
-//           player.shotGlassNumber.setAlpha(1);
-//         }
-//         break;
-//       case 'game-state-finished':
-//         if (player.shotCountCurr === 0) {
-//           player.shotGlassImage.setAlpha(0);
-//           player.shotGlassNumber.setAlpha(0);
-//         } else {
-//           player.shotGlassImage.setAlpha(1);
-//           player.shotGlassNumber.setAlpha(1);
-//         }
-//         break;
-//     }
-//   });
-// }
-
 export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
   let players = game.players;
   let ecs = game.endCups;
@@ -387,9 +340,6 @@ export function updateGlassesNumberShots(
 
     player.shotGlassNumber.y = newY - 60;
 
-    // player.shotGlassNumber.setText(
-    //   (show ? player.shotCountCurr - player.shotCountPrev : ' ').toString()
-    // );
     player.shotGlassNumber.setText(player.shotCountCurr - player.shotCountPrev);
   });
 }

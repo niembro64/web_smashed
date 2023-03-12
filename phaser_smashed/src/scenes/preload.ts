@@ -198,7 +198,7 @@ export function preload(game: Game): void {
   // game.load.image('suburb', 'images/suburb.png');
 
   game.load.image('flag_joey', 'images/flagpole_JK2.png');
-  game.load.image('glass_full', 'images/niemo_shot_full.png');
+  game.load.image('glass_full', 'images/niemo_shot_full_t2.png');
   game.load.image('glass_empty', 'images/niemo_shot_empty.png');
 
   game.load.image('chomp_block', 'images/chomp_block.png');
