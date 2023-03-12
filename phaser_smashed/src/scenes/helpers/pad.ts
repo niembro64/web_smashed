@@ -602,11 +602,9 @@ export function updateAttackEnergy(player: Player, game: Game): void {
   ////////////////////////////////////////////////
 
   if (
-    !(
-      getIsAttackEnergyOffscreen(player.char.attackEnergy) ||
-      isAttackEnergyNearPlayer(player) ||
-      !getIsSpriteMoving(player.char.attackEnergy.sprite)
-    )
+    !getIsAttackEnergyOffscreen(player.char.attackEnergy) &&
+    !isAttackEnergyNearPlayer(player) &&
+     getIsSpriteMoving(player.char.attackEnergy.sprite)
   ) {
     return;
   }

@@ -221,20 +221,20 @@ export function setAttackPhysicalState(
         player.char.attackEnergy.ON_SCREEN_PREVENT_ATTACK_PHYSICAL &&
         !getIsAttackEnergyOffscreen(player.char.attackEnergy)
       ) {
-        player.char.attackEnergy.sprite.setActive(false).setVisible(false);
+        player.char.attackPhysical.sprite.setActive(false).setVisible(false);
         break;
       }
-      player.char.attackEnergy.sprite.setActive(true).setVisible(true);
+      player.char.attackPhysical.sprite.setActive(true).setVisible(true);
       attackPhysical.audio.play();
       break;
-      case 'attackphysical-state-cooldown':
-        setAttackPhysicalOffscreen(player, game);
-        player.char.attackEnergy.sprite.setActive(false).setVisible(false);
-        // attackPhysical.sprite.setActive(false).setVisible(false);
-        break;
-        case 'attackphysical-state-off':
-          player.char.attackEnergy.sprite.setActive(false).setVisible(false);
-          setAttackPhysicalOffscreen(player, game);
+    case 'attackphysical-state-cooldown':
+      setAttackPhysicalOffscreen(player, game);
+      player.char.attackPhysical.sprite.setActive(false).setVisible(false);
+      // attackPhysical.sprite.setActive(false).setVisible(false);
+      break;
+    case 'attackphysical-state-off':
+      player.char.attackPhysical.sprite.setActive(false).setVisible(false);
+      setAttackPhysicalOffscreen(player, game);
       // attackPhysical.sprite.setActive(false).setVisible(false);
       break;
   }
