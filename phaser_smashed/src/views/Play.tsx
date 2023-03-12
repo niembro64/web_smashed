@@ -55,70 +55,10 @@ import {
 function Play() {
   let myPhaser: any = useRef(null);
 
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-
   const [isRecording, setIsReplayHidden] = useState(false);
   let videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
-
-  const startRecording = () => {
-    // videoRef.current!.src = '';
-    setIsReplayHidden(true);
-
-    const canvas = myPhaser.current?.canvas;
-
-    if (!canvas) {
-      return;
-    }
-
-    const stream = canvas.captureStream();
-    const mediaRecorder = new MediaRecorder(
-      stream,
-      debug.ReplayFullQuality
-        ? {}
-        : {
-            videoBitsPerSecond: 600000,
-            // videoBitsPerSecond: 1000000
-          }
-    );
-
-    mediaRecorder.ondataavailable = (e) => {
-      chunksRef.current.push(e.data);
-    };
-
-    mediaRecorder.onstop = () => {
-      setIsReplayHidden(false);
-      const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      videoRef.current!.src = url;
-      videoRef.current!.play();
-    };
-
-    mediaRecorderRef.current = mediaRecorder;
-    chunksRef.current = [];
-    mediaRecorderRef.current.start();
-  };
-
-  const stopRecording = () => {
-    const mediaRecorder = mediaRecorderRef.current;
-
-    if (mediaRecorder) {
-      setTimeout(() => {
-        mediaRecorder.stop();
-      }, 1000);
-    }
-  };
 
   const [videoGray, setVideoGray] = useState(false);
 
@@ -177,6 +117,53 @@ function Play() {
   };
 
   useEffect(() => {
+    const startRecording = () => {
+      setIsReplayHidden(true);
+
+      const canvas = myPhaser.current?.canvas;
+
+      if (!canvas) {
+        return;
+      }
+
+      const stream = canvas.captureStream();
+      const mediaRecorder = new MediaRecorder(
+        stream,
+        debug.ReplayFullQuality
+          ? {}
+          : {
+              videoBitsPerSecond: 600000,
+              // videoBitsPerSecond: 1000000
+            }
+      );
+
+      mediaRecorder.ondataavailable = (e) => {
+        chunksRef.current.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        setIsReplayHidden(false);
+        const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        videoRef.current!.src = url;
+        videoRef.current!.play();
+      };
+
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
+      mediaRecorderRef.current.start();
+    };
+
+    const stopRecording = () => {
+      const mediaRecorder = mediaRecorderRef.current;
+
+      if (mediaRecorder) {
+        setTimeout(() => {
+          mediaRecorder.stop();
+        }, 1000);
+      }
+    };
+
     const handlePowerUpCollected = (event: any) => {
       const gameStateReact: GameStateWithTime = event.detail;
       bar();
@@ -216,7 +203,7 @@ function Play() {
     return () => {
       window.removeEventListener('gameState', handlePowerUpCollected);
     };
-  }, [startRecording]);
+  }, []);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -338,10 +325,6 @@ function Play() {
     name: 'up',
     moment: moment(),
   });
-  const [playChezStatePrev, setPlayChezStatePrev] = useState<PlayChezState>({
-    name: 'up',
-    moment: moment(),
-  });
 
   useEffect(() => {
     const handleTranceEnded = (): void => {
@@ -368,7 +351,6 @@ function Play() {
         garageRef.current.play();
         break;
     }
-    setPlayChezStatePrev(JSON.parse(JSON.stringify(playChezState)));
   }, [playChezState]);
 
   const onClickEye = () => {
@@ -1186,45 +1168,6 @@ function Play() {
   useEffect(() => {
     window.addEventListener<'keydown'>('keydown', cb, { once: true });
   }, [anyKeyWasPressed]);
-
-  // const onClickReStartEventHandler = () => {
-  //   if (myPhaser?.current?.scene?.keys?.game?.loaded) {
-  //     setShowControls(false);
-  //     setShowControllers(false);
-  //     setShowRulesN64(false);
-  //     setShowAbout(false);
-  //     setShowHistory(false);
-  //     setShowOptions(false);
-
-  //     startSound();
-  //     myPhaser.current.scene.keys.game.loaded = false;
-  //     onClickPlayNavButtons('ReStart');
-  //     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
-
-  //     let newSmashConfig = JSON.parse(
-  //       JSON.stringify(myPhaser.current?.scene?.keys?.game.smashConfig)
-  //     );
-  //     let newDebug = JSON.parse(
-  //       JSON.stringify(myPhaser.current?.scene?.keys?.game.debug)
-  //     );
-  //     clearInterval(intervalClock.current);
-  //     intervalClock.current = null;
-  //     componentPseudoLoad.current = true;
-  //     myPhaser.current.destroy(true);
-
-  //     if (!debug.LoadTimeExtra || debug.DevMode) {
-  //       setTimeoutQuotesLengthReStart = 0;
-  //     }
-  //     let myMoment = moment();
-  //     setTimeout(() => {
-  //       myPhaser.current = new Phaser.Game(config);
-  //       myPhaser.current.registry.set('parentContext', Play);
-  //       myPhaser.current.registry.set('smashConfig', newSmashConfig);
-  //       myPhaser.current.registry.set('debug', newDebug);
-  //       myPhaser.current.registry.set('myMoment', myMoment);
-  //     }, setTimeoutQuotesLengthReStart);
-  //   }
-  // };
 
   const getNumControllersExistLower = (myI: number): number => {
     let num: number = 0;
