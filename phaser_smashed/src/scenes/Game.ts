@@ -387,6 +387,17 @@ export default class Game extends Phaser.Scene {
     },
     {
       text: null,
+      name: 'splash-captured-flag',
+      word: 'MORTAL SHOT',
+      color: '#332200',
+      backgroundColor: '#FFaa00',
+      shadowColor: 'black',
+      size: '370px',
+      src: 'glass.png',
+      strokeThickness: 10,
+    },
+    {
+      text: null,
       name: 'splash-cool-down',
       word: 'COOLDOWN PERIOD',
       color: '#ffffff',
