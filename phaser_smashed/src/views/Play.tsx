@@ -891,6 +891,8 @@ function Play() {
     if (webState === 'play') {
       if (
         myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+          'game-state-start' &&
+        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
           'game-state-paused' &&
         myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
           'game-state-first-blood' &&
@@ -906,42 +908,6 @@ function Play() {
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (scrollerRef.current) {
-  //     const handleScroll = () => {
-  //       if (scrollerRef.current) {
-  //         print(scrollerRef.current.scrollTop);
-  //       }
-  //     };
-
-  //     scrollerRef.current.addEventListener('scroll', handleScroll);
-
-  //     return () => {
-  //       if (scrollerRef.current) {
-  //         scrollerRef.current.removeEventListener('scroll', handleScroll);
-  //       }
-  //     };
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (scrollerRef.current) {
-  //       print(
-  //         'scrollerRef.current.scrollHeight',
-  //         scrollerRef.current.scrollHeight,
-  //         'scrollerRef.current.clientHeight',
-  //         scrollerRef.current.clientHeight
-  //       );
-
-  //       // scrollerRef.current.scrollTop = -400;
-
-  //       scrollerRef.current.scrollTop = scrollerRef.current.scrollHeight;
-  //       // scrollerRef.current.scrollIntoView({ behavior: 'smooth' });
-  //     }
-  //   }, 300);
-  // }, [showAbout, scrollerRef]);
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
     blipSound();

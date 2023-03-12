@@ -50,7 +50,7 @@ import {
   playWiiMusic,
   playGarageRepeat,
 } from './helpers/sound';
-import { updateShotGlassTransparency, updateText } from './helpers/text';
+import { updateText } from './helpers/text';
 import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
 import { Player } from './interfaces';
 import { updatePlayerDarknessEvents } from './helpers/powers';
@@ -79,7 +79,7 @@ export function update(game: Game, time: number, delta: number): void {
   updateText(game);
   updateNumShotsLeft(game);
   updateNumCurrentlyDead(game);
-  updateShotGlassTransparency(game);
+  // updateShotGlassTransparency(game);
   updateGamePadsMaster(game);
   debugUpdatePrintAllControllerButtonsWhenActive(game);
   debugUpdateControllersPrintConnected(game);

@@ -207,47 +207,52 @@ export function updateShotsOnPlayers(game: Game) {
   });
 }
 
-export function updateShotGlassTransparency(game: Game): void {
-  game.players.forEach((player, playerIndex) => {
-    switch (game.gameState.nameCurr) {
-      case 'game-state-play':
-        player.shotGlassImage.setAlpha(0);
-        player.shotGlassNumber.setAlpha(0);
-        break;
-      case 'game-state-screen-clear':
-        if (player.state.name === 'player-state-dead') {
-          player.shotGlassImage.setAlpha(1);
-          player.shotGlassNumber.setAlpha(1);
-        } else {
-          player.shotGlassImage.setAlpha(0);
-          player.shotGlassNumber.setAlpha(0);
-        }
-        break;
-      case 'game-state-first-blood':
-        if (player.state.name === 'player-state-dead') {
-          player.shotGlassImage.setAlpha(1);
-          player.shotGlassNumber.setAlpha(1);
-        } else {
-          player.shotGlassImage.setAlpha(0);
-          player.shotGlassNumber.setAlpha(0);
-        }
-        break;
-      case 'game-state-captured-flag':
-        if (game.flag.ownerCurr.id === playerIndex) {
-          player.shotGlassImage.setAlpha(0);
-          player.shotGlassNumber.setAlpha(0);
-        } else {
-          player.shotGlassImage.setAlpha(1);
-          player.shotGlassNumber.setAlpha(1);
-        }
-        break;
-      case 'game-state-finished':
-        // player.shotGlassImage.setAlpha(1);
-        // player.shotGlassNumber.setAlpha(1);
-        break;
-    }
-  });
-}
+// export function updateShotGlassTransparency(game: Game): void {
+//   game.players.forEach((player, playerIndex) => {
+//     switch (game.gameState.nameCurr) {
+//       case 'game-state-play':
+//         player.shotGlassImage.setAlpha(0);
+//         player.shotGlassNumber.setAlpha(0);
+//         break;
+//       case 'game-state-screen-clear':
+//         if (player.state.name === 'player-state-dead') {
+//           player.shotGlassImage.setAlpha(1);
+//           player.shotGlassNumber.setAlpha(1);
+//         } else {
+//           player.shotGlassImage.setAlpha(0);
+//           player.shotGlassNumber.setAlpha(0);
+//         }
+//         break;
+//       case 'game-state-first-blood':
+//         if (player.state.name === 'player-state-dead') {
+//           player.shotGlassImage.setAlpha(1);
+//           player.shotGlassNumber.setAlpha(1);
+//         } else {
+//           player.shotGlassImage.setAlpha(0);
+//           player.shotGlassNumber.setAlpha(0);
+//         }
+//         break;
+//       case 'game-state-captured-flag':
+//         if (game.flag.ownerCurr.id === playerIndex) {
+//           player.shotGlassImage.setAlpha(0);
+//           player.shotGlassNumber.setAlpha(0);
+//         } else {
+//           player.shotGlassImage.setAlpha(1);
+//           player.shotGlassNumber.setAlpha(1);
+//         }
+//         break;
+//       case 'game-state-finished':
+//         if (player.shotCountCurr === 0) {
+//           player.shotGlassImage.setAlpha(0);
+//           player.shotGlassNumber.setAlpha(0);
+//         } else {
+//           player.shotGlassImage.setAlpha(1);
+//           player.shotGlassNumber.setAlpha(1);
+//         }
+//         break;
+//     }
+//   });
+// }
 
 export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
   let players = game.players;
@@ -314,8 +319,28 @@ export function updateShotGlasses(
   zoom: number,
   newY: number
 ): void {
+  if (game.gameState.nameCurr === 'game-state-play') {
+    game.players.forEach((player, playerIndex) => {
+      player.shotGlassImage.setAlpha(0);
+    });
+    return;
+  }
   // update shotGlassImage
   game.players.forEach((player, playerIndex) => {
+    let show: boolean = player.shotCountCurr - player.shotCountPrev > 0;
+
+    if (!show) {
+      player.shotGlassImage.setAlpha(0);
+      return;
+    }
+
+    if (player.shotCountCurr <= player.shotCountPrev) {
+      player.shotGlassImage.setAlpha(0);
+      return;
+    }
+
+    player.shotGlassImage.setAlpha(1);
+
     player.shotGlassImage.setScale(0.7 / zoom, 0.7 / zoom);
     player.shotGlassImage.x =
       game.cameraMover.char.sprite.x +
@@ -332,7 +357,27 @@ export function updateGlassesNumberShots(
   zoom: number,
   newY: number
 ): void {
+  if (game.gameState.nameCurr === 'game-state-play') {
+    game.players.forEach((player, playerIndex) => {
+      player.shotGlassNumber.setAlpha(0);
+    });
+    return;
+  }
+
   game.players.forEach((player, playerIndex) => {
+    let show: boolean = player.shotCountCurr - player.shotCountPrev > 0;
+    if (!show) {
+      player.shotGlassNumber.setAlpha(0);
+      return;
+    }
+
+    if (player.shotCountCurr <= player.shotCountPrev) {
+      player.shotGlassNumber.setAlpha(0);
+      return;
+    }
+
+    player.shotGlassNumber.setAlpha(1);
+
     player.shotGlassNumber.setScale(1 / zoom, 1 / zoom);
     player.shotGlassNumber.x =
       game.cameraMover.char.sprite.x +
@@ -342,12 +387,10 @@ export function updateGlassesNumberShots(
 
     player.shotGlassNumber.y = newY - 60;
 
-    player.shotGlassNumber.setText(
-      (player.shotCountCurr - player.shotCountPrev > 0
-        ? player.shotCountCurr - player.shotCountPrev
-        : ' '
-      ).toString()
-    );
+    // player.shotGlassNumber.setText(
+    //   (show ? player.shotCountCurr - player.shotCountPrev : ' ').toString()
+    // );
+    player.shotGlassNumber.setText(player.shotCountCurr - player.shotCountPrev);
   });
 }
 
