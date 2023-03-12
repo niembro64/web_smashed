@@ -388,29 +388,9 @@ function Play() {
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('start');
-  const [showLoader, setShowLoader] = useState<boolean>(false);
+  // const [showLoader, setShowLoader] = useState<boolean>(false);
   const [openEye, setOpenEye] = useState<boolean>(true);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (webState === 'start') {
-      if (garageRef.current.paused) {
-        garageRef.current.play();
-      }
-    }
-    if (webState === 'play') {
-      garageRef.current.pause();
-      if (showLoader) {
-        garageRef.current.pause();
-        if (monkeysRef.current.paused) {
-          monkeysRef.current.play();
-        }
-      } else {
-        garageRef.current.pause();
-        monkeysRef.current.pause();
-      }
-    }
-  }, [webState, showLoader]);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -456,10 +436,34 @@ function Play() {
   };
 
   useEffect(() => {
+    const setShowLoaderIntervalFunction = () => {
+      monkeysRef.current.play();
+      // setShowLoader(true);
+      const myInterval = setInterval(() => {
+        console.log(
+          'myPhaser.current?.scene?.keys?.game?.loaded',
+          myPhaser?.current?.scene?.keys?.game?.loaded
+        );
+        if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+          setTimeout(
+            () => {
+              // setShowLoader(false);
+              setWebState('play');
+            },
+            debug.DevMode ? 0 : 1
+          );
+          clearInterval(myInterval);
+          monkeysRef.current.pause();
+          setIsPhaserGameActive(true);
+        }
+      }, 1);
+    };
+
     console.log('webState', webState);
     switch (webState) {
       case 'start':
-        // garageRef.current.play();
+        garageRef.current.play();
+        monkeysRef.current.pause();
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -469,15 +473,20 @@ function Play() {
           setAllSessions(allSessions);
         })();
         break;
+      case 'loader':
+        garageRef.current.pause();
+        monkeysRef.current.play();
+        setShowLoaderIntervalFunction();
+        break;
       case 'play':
-        // garageRef.current.pause();
-        // monkeysRef.current.play();
+        garageRef.current.pause();
+        monkeysRef.current.pause();
         setTopBarDivExists(true);
         break;
       default:
         break;
     }
-  }, [webState]);
+  }, [debug.DevMode, webState]);
 
   const keyboardGroups: KeyboardGroup[][] = [
     [
@@ -710,7 +719,7 @@ function Play() {
 
     setPlayChezState({ name: 'up', moment: moment() });
     startSound();
-    setWebState('play');
+    // setWebState('loader');
 
     let players = JSON.parse(JSON.stringify(smashConfig.players));
     // let newPlayers: {
@@ -784,8 +793,8 @@ function Play() {
     let myMoment = moment();
     // let myDate = momentToDate(myMoment);
 
-    setShowLoader(true);
-    // setShowLoaderIntervalFunction();
+    // setShowLoader(true);
+    setWebState('loader');
 
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
@@ -801,38 +810,17 @@ function Play() {
   };
 
   useEffect(() => {
-    switch (showLoader) {
-      case true:
-        setShowLoaderIntervalFunction();
-        break;
-      case false:
-        break;
-    }
-  }, [showLoader]);
+    bar();
+    bar();
+    bar();
+    bar();
+    console.log('WEBSTATE CHANGED TO', webState);
+    bar();
+    bar();
+    bar();
+  }, [webState]);
 
   const [isPhaserGameActive, setIsPhaserGameActive] = useState<boolean>(false);
-
-  const setShowLoaderIntervalFunction = () => {
-    monkeysRef.current.play();
-    // setShowLoader(true);
-    const myInterval = setInterval(() => {
-      console.log(
-        'myPhaser.current?.scene?.keys?.game?.loaded',
-        myPhaser?.current?.scene?.keys?.game?.loaded
-      );
-      if (myPhaser?.current?.scene?.keys?.game?.loaded) {
-        setTimeout(
-          () => {
-            setShowLoader(false);
-          },
-          debug.DevMode ? 0 : 1
-        );
-        clearInterval(myInterval);
-        monkeysRef.current.pause();
-        setIsPhaserGameActive(true);
-      }
-    }, 1);
-  };
 
   // const onClickRotateInput = (index: number): void => {
   //   let newPlayers = [...smashConfig.players];
@@ -1306,7 +1294,6 @@ function Play() {
 
   //     startSound();
   //     myPhaser.current.scene.keys.game.loaded = false;
-  //     setShowLoaderIntervalFunction();
   //     onClickPlayNavButtons('ReStart');
   //     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
@@ -1402,7 +1389,7 @@ function Play() {
           break;
       }
     }
-  }, [webState, showLoader]);
+  }, [webState]);
 
   useEffect(() => {
     // setPlayChezState({ name: 'up', moment: moment() });
@@ -1507,7 +1494,7 @@ function Play() {
             </div>
           </div>
         )}
-      {webState !== 'start' && showLoader && (
+      {webState === 'loader' && (
         // {true && (
         <div className="loader">
           {quotesRandomNumber % 2 === 0 && (
