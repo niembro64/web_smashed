@@ -241,6 +241,6 @@ export function sumNumbersIn2DArrayString(s: string) {
 
 export const print = (...args: any[]): void => {
   if (process.env.NODE_ENV === 'development') {
-    print(...args);
+    console.log(...args);
   }
 };
