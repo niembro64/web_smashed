@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import Phaser from 'phaser';
-import Game from '../scenes/Game';
-import '../App.css';
 import '@fontsource/press-start-2p';
-import { setGameState } from '../scenes/helpers/state';
-import useSound from 'use-sound';
 import html2canvas from 'html2canvas';
+import Phaser from 'phaser';
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
+import { useEffect, useRef, useState } from 'react';
+import useSound from 'use-sound';
+import '../App.css';
+import Game from '../scenes/Game';
+import { setGameState } from '../scenes/helpers/state';
 // @ts-ignore
 import importedWoah from '../sounds/BlackBetty_Woah.mp3';
 // @ts-ignore
@@ -21,38 +21,36 @@ import importedBlipSound from '../sounds/game-start-liquid.wav';
 import importedGarage from '../sounds/garage.ogg';
 // @ts-ignore
 import importedMonkeys from '../sounds/monkeys.ogg';
-
-import {
-  CharacterId,
-  Debug,
-  PlayerConfig,
-  Quote,
-  WebState,
-  InputType,
-  SmashConfig,
-  ButtonName,
-  CharacterMove,
-  emoji,
-  KeyboardGroup,
-  WorkingController,
-  PlayerConfigSmall,
-  PlayChezState,
-  bar,
-  inputTypeNum,
-  GameStateWithTime,
-} from '../scenes/interfaces';
+import moment from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
+import { momentStringToMoment } from '../scenes/helpers/time';
 import {
-  ClientInformation,
-  getAllAxios,
-  fetchClientData,
+  bar,
+  ButtonName,
+  CharacterId,
+  CharacterMove,
+  Debug,
+  emoji,
+  GameStateWithTime,
+  InputType,
+  inputTypeNum,
+  KeyboardGroup,
+  PlayChezState,
+  PlayerConfig,
+  PlayerConfigSmall,
+  Quote,
+  SmashConfig,
+  WebState,
+  WorkingController,
+} from '../scenes/interfaces';
+import {
   axiosSaveOne,
+  ClientInformation,
+  fetchClientData,
+  getAllAxios,
   SessionInfo,
   sumNumbersIn2DArrayString,
 } from './client';
-import moment from 'moment';
-import { momentStringToMoment } from '../scenes/helpers/time';
-import { NeuralNetwork, recurrent } from 'brain.js';
 
 function Play() {
   let myPhaser: any = useRef(null);
@@ -104,12 +102,6 @@ function Play() {
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
       videoRef.current!.src = url;
-      // videoRef.current!.controls = debug.ReplayControls;
-
-      // let playStart =
-      //   videoRef.current!.duration - 4 > 0 ? videoRef.current!.duration - 4 : 0;
-      // videoRef.current!.currentTime = playStart;
-      // videoRef.current!.loop = true;
       videoRef.current!.play();
     };
 
@@ -156,12 +148,6 @@ function Play() {
       'replayPointStart',
       pStart
     );
-    // if (current < pStart) {
-    //   video.pause();
-    //   current = pStart;
-    //   video.play();
-    //   return;
-    // }
 
     if (debug.ReplayFastSlow) {
       if (current >= pStart && current < pMid) {
@@ -189,33 +175,6 @@ function Play() {
       return;
     }
   };
-
-  // let dlLinkRef = useRef<HTMLAnchorElement>(null);
-
-  // function downloadVideo(): void {
-  //   const videoElement = videoRef.current;
-  //   const downloadElement = dlLinkRef.current;
-  //   if (!videoElement) return;
-
-  //   const url = URL.createObjectURL(videoElement.src as unknown as Blob);
-
-  //   if (!downloadElement) return;
-
-  //   downloadElement.href = url;
-  //   downloadElement.download =
-  //     'Web-Smashed-' + moment().format('YYYY-MM-DD-HH-mm-ss') + '.mp4';
-  //   downloadElement.click();
-  //   URL.revokeObjectURL(url);
-  // }
-  // // const link = document.createElement('a');
-  // // link.href = url;
-  // // let myMoment = moment();
-  // // let myMomentString = moment(myMoment).format('YYYY-MM-DD-HH-mm-ss');
-  // // link.download = 'Web-Smashed-' + myMomentString + '.mp4';
-  // // document.body.appendChild(link);
-  // // link.click();
-  // // document.body.removeChild(link);
-  // // URL.revokeObjectURL(url);
 
   useEffect(() => {
     const handlePowerUpCollected = (event: any) => {
@@ -257,25 +216,7 @@ function Play() {
     return () => {
       window.removeEventListener('gameState', handlePowerUpCollected);
     };
-  }, []);
-
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
-  //////////////
+  }, [startRecording]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -388,7 +329,6 @@ function Play() {
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('start');
-  // const [showLoader, setShowLoader] = useState<boolean>(false);
   const [openEye, setOpenEye] = useState<boolean>(true);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
@@ -437,8 +377,6 @@ function Play() {
 
   useEffect(() => {
     const setShowLoaderIntervalFunction = () => {
-      monkeysRef.current.play();
-      // setShowLoader(true);
       const myInterval = setInterval(() => {
         console.log(
           'myPhaser.current?.scene?.keys?.game?.loaded',
@@ -447,14 +385,11 @@ function Play() {
         if (myPhaser?.current?.scene?.keys?.game?.loaded) {
           setTimeout(
             () => {
-              // setShowLoader(false);
               setWebState('play');
             },
             debug.DevMode ? 0 : 1
           );
           clearInterval(myInterval);
-          monkeysRef.current.pause();
-          setIsPhaserGameActive(true);
         }
       }, 1);
     };
@@ -820,19 +755,6 @@ function Play() {
     bar();
   }, [webState]);
 
-  const [isPhaserGameActive, setIsPhaserGameActive] = useState<boolean>(false);
-
-  // const onClickRotateInput = (index: number): void => {
-  //   let newPlayers = [...smashConfig.players];
-  //   newPlayers[index].inputIndex + 1 > inputTypeConfig.length - 1
-  //     ? (newPlayers[index].inputIndex = 0)
-  //     : newPlayers[index].inputIndex++;
-  //   newPlayers[index].inputType = inputTypeConfig[newPlayers[index].inputIndex];
-  //   newPlayers[index].inputEmoji =
-  //     inputEmojiConfig[newPlayers[index].inputIndex];
-  //   setSmashConfig({ players: [...newPlayers] });
-  // };
-
   const getNumKeyboardsInUse = (): number => {
     let numKeyboardsInUse = 0;
     inputArray.forEach((input) => {
@@ -865,22 +787,6 @@ function Play() {
   const woahPlay = (): void => {
     woah();
   };
-
-  let playNumber = useRef(0);
-
-  // const trancePlay = (): void => {
-  //   if (playNumber.current === 0) {
-  //     playNumber.current += 1;
-  //     trance.play();
-  //     trance.addEventListener(
-  //       'ended',
-  //       () => {
-  //         setFirstCharacterSlot(4);
-  //       },
-  //       { once: true }
-  //     );
-  //   }
-  // };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
     if (debug.UseChez || webState === 'play') {
@@ -1100,7 +1006,6 @@ function Play() {
         setShowAbout(false);
         setShowHistory(false);
         setShowOptions(false);
-        setIsPhaserGameActive(false);
         break;
       case 'ReStart':
         setShowControls(false);
@@ -1109,7 +1014,6 @@ function Play() {
         setShowAbout(false);
         setShowHistory(false);
         setShowOptions(false);
-        setIsPhaserGameActive(false);
         break;
       case 'Controls':
         setShowControls(!showControls);
@@ -2309,14 +2213,6 @@ function Play() {
                     <li>Phaser</li>
                     <li>React</li>
                     <li>Bootstrap</li>
-                    {/* <li
-                      onMouseDown={() => {
-                        console.log('MOUSE ENTER');
-                        setFirstCharacterSlot(5);
-                      }}
-                    >
-                      Press Start 2P
-                    </li> */}
                   </ul>
 
                   <img
@@ -2328,10 +2224,8 @@ function Play() {
                       setFirstCharacterSlot(5);
                     }}
                   />
-                  {/* <p>niembro64</p> */}
                   <a
                     className="btn btn-dark text-light"
-                    // className="link-tag btn btn-dark text-light"
                     href="http://niembro64.com/"
                   >
                     <span className="text-white small">niembro64.com</span>
@@ -2532,7 +2426,7 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
-      {isPhaserGameActive && !isRecording && (
+      {webState === 'play' && !isRecording && (
         <div className="video-playback-container">
           <div className="video-playback-super">
             {videoGray && <p className="replay">FAST FORWARD</p>}
