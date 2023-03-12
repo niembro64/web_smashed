@@ -1,5 +1,5 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
-import { AttackEnergy, Player } from '../interfaces';
+import { AttackEnergy, AttackPhysical, Player } from '../interfaces';
 import { setEmitterPlayerOnFalse } from './damage';
 import { getDistance } from './movement';
 
@@ -16,14 +16,7 @@ export function updateAirDodge(player: Player, game: Game): void {
     setEmitterPlayerOnFalse(player);
     return;
   }
-  // if (
-  //   !player.padCurr.up &&
-  //   !player.padCurr.down &&
-  //   !player.padCurr.left &&
-  //   !player.padCurr.right
-  // ) {
-  //   return;
-  // }
+
   let base = game.BASE_PLAYER_JUMP_ENERGY;
   let pBias = player.char.upB.speedMultiplier;
   let pCurr = player.padCurr;
@@ -149,7 +142,7 @@ export function setPhysicsBulletOn(player: Player, bulletIndex: number): void {
 export function updateAttackEnergyOffscreen(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     let ae = player.char.attackEnergy;
-    if (getIsAttackEnergyOffscreen(ae, game)) {
+    if (getIsAttackEnergyOffscreen(ae)) {
       ae.offscreenCurr = true;
     } else {
       ae.offscreenCurr = false;
@@ -160,14 +153,27 @@ export function updateAttackEnergyOffscreen(game: Game): void {
 }
 
 export function getIsAttackEnergyOffscreen(
-  attackEnergy: AttackEnergy,
-  game: Game
+  attackEnergy: AttackEnergy
 ): boolean {
   if (
     attackEnergy.sprite.y < 0 ||
     attackEnergy.sprite.y > SCREEN_DIMENSIONS.HEIGHT ||
     attackEnergy.sprite.x < 0 ||
     attackEnergy.sprite.x > SCREEN_DIMENSIONS.WIDTH
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export function getIsAttackPhysicalOffscreen(
+  attackPhysical: AttackPhysical
+): boolean {
+  if (
+    attackPhysical.sprite.y < 0 ||
+    attackPhysical.sprite.y > SCREEN_DIMENSIONS.HEIGHT ||
+    attackPhysical.sprite.x < 0 ||
+    attackPhysical.sprite.x > SCREEN_DIMENSIONS.WIDTH
   ) {
     return true;
   }
@@ -249,10 +255,7 @@ export function updatePhysicalAttackFollowsPlayer(
 
   // FOR LINK SWORD
   // DON"T ALLOW AP IF AE
-  if (
-    ae.ON_SCREEN_PREVENT_ATTACK_PHYSICAL &&
-    !getIsAttackEnergyOffscreen(ae, game)
-  ) {
+  if (ae.ON_SCREEN_PREVENT_ATTACK_PHYSICAL && !getIsAttackEnergyOffscreen(ae)) {
     return;
   }
 

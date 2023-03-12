@@ -603,7 +603,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
 
   if (
     !(
-      getIsAttackEnergyOffscreen(player.char.attackEnergy, game) ||
+      getIsAttackEnergyOffscreen(player.char.attackEnergy) ||
       isAttackEnergyNearPlayer(player) ||
       !getIsSpriteMoving(player.char.attackEnergy.sprite)
     )
@@ -852,92 +852,6 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
   // Buttons
   game.players.forEach((player, playerIndex) => {
     if (player.gamepad) {
-      if (playerIndex === 0) {
-        // print(playerIndex, player.gamepad);
-        // print(playerIndex, player.gamepad.axes);
-        // print(playerIndex, player.gamepad.buttons[0].pressed);
-        //
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._RCTop",
-        //   player.gamepad._RCTop
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._RCBottom",
-        //   player.gamepad._RCBottom
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._RCLeft",
-        //   player.gamepad._RCLeft
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._RCRight",
-        //   player.gamepad._RCRight
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._LCTop",
-        //   player.gamepad._LCTop
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._LCBottom",
-        //   player.gamepad._LCBottom
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._LCLeft",
-        //   player.gamepad._LCLeft
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._LCRight",
-        //   player.gamepad._LCRight
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._FBLeftBottom",
-        //   player.gamepad._FBLeftBottom
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._FBLeftTop",
-        //   player.gamepad._FBLeftTop
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._FBRightBottom",
-        //   player.gamepad._FBRightBottom
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._FBRightTop",
-        //   player.gamepad._FBRightTop
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._HAxisLeft",
-        //   player.gamepad._HAxisLeft
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._VAxisLeft",
-        //   player.gamepad._VAxisLeft
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._HAxisRight",
-        //   player.gamepad._HAxisRight
-        // );
-        // print(
-        //   playerIndex,
-        //   "player.gamepad._VAxisRight",
-        //   player.gamepad._VAxisRight
-        // );
-      }
       if (player.padCurr.B) {
         print(player.playerId, 'B');
       }
@@ -973,57 +887,6 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
       if (player.padCurr.R) {
         print(player.playerId, 'R');
       }
-
-      // if (player.gamepad.B) {
-      //   print(player.playerId, "B");
-      // }
-      // if (player.gamepad.A) {
-      //   print(player.playerId, "A");
-      // }
-      // if (player.gamepad.X) {
-      //   print(player.playerId, "X");
-      // }
-      // if (player.gamepad.Y) {
-      //   print(player.playerId, "Y");
-      //   // player.char.fast = 2;
-      // }
-
-      // //  D Pad
-      // if (player.gamepad.down) {
-      //   print(player.playerId, "down");
-      // }
-      // if (player.gamepad.up) {
-      //   print(player.playerId, "up");
-      // }
-      // if (player.gamepad.left) {
-      //   print(player.playerId, "left");
-      // }
-      // if (player.gamepad.right) {
-      //   print(player.playerId, "right");
-      // }
-
-      // // L R Buttons
-      // if (player.gamepad.L1) {
-      //   print(player.playerId, "L");
-      // }
-      // if (player.gamepad.R1) {
-      //   print(player.playerId, "R");
-      // }
-      // // L R Buttons
-      // if (player.gamepad.L12) {
-      //   print(player.playerId, "L2");
-      // }
-      // if (player.gamepad.R12) {
-      //   print(player.playerId, "R2");
-      // }
-
-      // for (let i = 0; i < player.gamepad.pad.buttons.length; i++) {
-      //   //   print(i);
-      //   print("ERIC", i, player.gamepad.pad.buttons[i].value);
-      // }
-      // print("ERIC", player.gamepad.pad.buttons[0].value);
-      // print(player.gamepad.pad.buttons[1].value);
-      // print(player.pad.gamepad.buttons[0].pressed);
     }
   });
 }

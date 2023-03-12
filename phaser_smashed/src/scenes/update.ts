@@ -79,10 +79,10 @@ export function update(game: Game, time: number, delta: number): void {
   updateText(game);
   updateNumShotsLeft(game);
   updateNumCurrentlyDead(game);
-  // updateShotGlassTransparency(game);
   updateGamePadsMaster(game);
   debugUpdatePrintAllControllerButtonsWhenActive(game);
   debugUpdateControllersPrintConnected(game);
+  // updateAllSpritesAlpha(game);
 
   switch (game.gameState.nameCurr) {
     case 'game-state-start':

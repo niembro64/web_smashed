@@ -1,7 +1,11 @@
 import { print } from '../../views/client';
 import Game from '../Game';
 import { Player, SpriteStateName } from '../interfaces';
-import { hasPlayerTouchedWallRecently } from './movement';
+import {
+  getIsAttackEnergyOffscreen,
+  getIsAttackPhysicalOffscreen,
+} from './attacks';
+import { getIsPlayerOffscreen, hasPlayerTouchedWallRecently } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 
 export function updateSpritesFlipX(game: Game): void {
@@ -442,3 +446,25 @@ export function updateSpriteState(
     }
   }
 }
+
+// export const updateAllSpritesAlpha = (game: Game): void => {
+//   game.players.forEach((player) => {
+//     if (getIsPlayerOffscreen(player, game)) {
+//       player.char.sprite.setActive(0);
+//     } else {
+//       player.char.sprite.setActive(1);
+//     }
+
+//     if (getIsAttackEnergyOffscreen(player.char.attackEnergy)) {
+//       player.char.attackPhysical.sprite.setActive(0);
+//     } else {
+//       player.char.attackPhysical.sprite.setActive(1);
+//     }
+
+//     if (getIsAttackPhysicalOffscreen(player.char.attackPhysical)) {
+//       player.char.attackPhysical.sprite.setActive(0);
+//     } else {
+//       player.char.attackPhysical.sprite.setActive(1);
+//     }
+//   });
+// };

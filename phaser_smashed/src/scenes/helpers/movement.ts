@@ -315,7 +315,7 @@ export function updateKeepObjectsFromFallingLikeCrazy(game: Game): void {
 export function updateAttackEnergyFollow(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     let ae = player.char.attackEnergy;
-    if (!getIsAttackEnergyOffscreen(ae, game)) {
+    if (!getIsAttackEnergyOffscreen(ae)) {
       if (
         ae.findAndFollowAcceleration.x !== 0 &&
         ae.findAndFollowAcceleration.y === 0
