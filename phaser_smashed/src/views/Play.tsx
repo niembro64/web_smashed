@@ -81,15 +81,6 @@ function Play() {
     let pEnd = duration;
     let current = video.currentTime;
 
-    print(
-      'currentTime',
-      current,
-      'duration',
-      duration,
-      'replayPointStart',
-      pStart
-    );
-
     if (debug.ReplayFastSlow) {
       if (current >= pStart && current < pMid) {
         // video.playbackRate = 2;
@@ -727,17 +718,6 @@ function Play() {
     setSession(s);
   };
 
-  useEffect(() => {
-    bar();
-    bar();
-    bar();
-    bar();
-    print('WEBSTATE CHANGED TO', webState);
-    bar();
-    bar();
-    bar();
-  }, [webState]);
-
   const getNumKeyboardsInUse = (): number => {
     let numKeyboardsInUse = 0;
     inputArray.forEach((input) => {
@@ -907,10 +887,7 @@ function Play() {
   ];
 
   const clickPauseParent = () => {
-    print(
-      'GAME STATE',
-      myPhaser.current?.scene?.keys?.game.gameState.nameCurr
-    );
+    print('GAME STATE', myPhaser.current?.scene?.keys?.game.gameState.nameCurr);
     if (webState === 'play') {
       if (
         myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
@@ -2254,10 +2231,7 @@ function Play() {
                           gameViewTop +=
                             smashConfigOptions[sessionPlayer.characterId]
                               .nameShort + ' ';
-                          print(
-                            'sessionPlayer.input',
-                            sessionPlayer.input
-                          );
+                          print('sessionPlayer.input', sessionPlayer.input);
 
                           switch (sessionPlayer.input) {
                             case 0:
