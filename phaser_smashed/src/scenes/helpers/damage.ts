@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { AttackEnergy, AttackPhysical, Player, xyVector } from '../interfaces';
 import {
@@ -330,7 +331,7 @@ export function getGameHitbackMultiplier(game: Game): number {
   let m = t / 60;
 
   h = Math.pow(1 + m * 0.1, 1.7);
-  // console.log('HBM', h);
+  // print('HBM', h);
 
   return h;
 }
@@ -339,8 +340,8 @@ export function updateSuicide(game: Game): void {
   const lengthOfSuicideHold = 5000;
 
   game.players.forEach((player, playerIndex) => {
-    // console.log('updateSuicide', playerIndex, player.LRStamp);
-    // console.log(
+    // print('updateSuicide', playerIndex, player.LRStamp);
+    // print(
     //   'currL',
     //   player.padCurr.L,
     //   'currR',
@@ -369,7 +370,7 @@ export function updateSuicide(game: Game): void {
 
     if (player.LRStamp === null && (player.padPrev.L || player.padPrev.R)) {
       player.LRStamp = game.gameNanoseconds;
-      console.log('LRStamp', player.LRStamp);
+      print('LRStamp', player.LRStamp);
     }
 
     if (
@@ -380,7 +381,7 @@ export function updateSuicide(game: Game): void {
         game
       )
     ) {
-      console.log('SUICIDE');
+      print('SUICIDE');
       player.char.sprite.y = -200;
       player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
     }

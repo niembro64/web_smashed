@@ -11,6 +11,7 @@ import { updateBotNN } from './botNN';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
+import { print } from '../../views/client';
 
 export function updateGamePadsMaster(game: Game): void {
   let numPlayers = game.players.length;
@@ -33,7 +34,7 @@ export function updateGamePadsMaster(game: Game): void {
       case 1:
         if (player?.gamepad) {
           if (player?.gamepad?.axes?.length === 4) {
-            console.log('CONTROLLER TYPE: PRO', player.gamepad);
+            print('CONTROLLER TYPE: PRO', player.gamepad);
             updatePadCurrControllerTypePro(player, game);
           } else if (player?.gamepad?.axes?.length) {
             updatePadCurrControllerTypeHat(player, game);
@@ -73,7 +74,7 @@ export function updatePadCurrControllerTypePro(
   player.padCurr.select = false;
 
   // for (let i = 0; i < player?.gamepad?.axes.length; i++) {
-  //   console.log(i, player?.gamepad?.axes[i]?.getValue());
+  //   print(i, player?.gamepad?.axes[i]?.getValue());
   // }
   let stickX = player?.gamepad?.axes[0]?.getValue();
   let stickY = player?.gamepad?.axes[1]?.getValue();
@@ -86,8 +87,8 @@ export function updatePadCurrControllerTypePro(
       player.padCurr.up = false;
       player.padCurr.down = false;
     }
-    // console.log('stickX', stickX);
-    // console.log('stickY', stickY);
+    // print('stickX', stickX);
+    // print('stickY', stickY);
     // if (stickX === -1 && stickY === -1) {
     //   player.padCurr.left = true;
     //   player.padCurr.right = !player.padCurr.left;
@@ -622,7 +623,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
   //   turnOffPhysicsAttackEnergy(player);
   //   playerGrabAttackEnergy(player);
   // }
-  // console.log('state', player.char.attackEnergy.state);
+  // print('state', player.char.attackEnergy.state);
 
   // STATE HOLD
   if (
@@ -633,7 +634,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
       game
     )
   ) {
-    // console.log('holding');
+    // print('holding');
     player.char.attackEnergy.state = 'holding';
     setPhysicsAttackEnergyOff(player);
     updatePlayerHoldAttackEnergy(player);
@@ -646,7 +647,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
       game
     )
   ) {
-    // console.log('released');
+    // print('released');
     game.SOUND_GUN.play();
     player.char.attackEnergy.timestampThrow = game.gameNanoseconds;
     player.char.attackEnergy.state = 'released';
@@ -691,7 +692,7 @@ export function updatePadPreviousAndDebounced(game: Game): void {
     let k = game.GAMEPAD_DEBOUNCE_NUMBER_CYCLES;
 
     // if (c.up !== p.up) {
-    //   console.log('c.up', c.up, 'p.up', p.up);
+    //   print('c.up', c.up, 'p.up', p.up);
     // }
     p.up = c.up;
     p.down = c.down;
@@ -779,8 +780,8 @@ export function debugUpdateControllersPrintConnected(game: Game): void {
     return;
   }
   game.players.forEach((player, playerIndex) => {
-    console.log('PLAYER', playerIndex, 'CONTROLLER', player?.gamepad);
-    console.log('PLAYER', playerIndex, 'CONTROLLER', player?.gamepad.id);
+    print('PLAYER', playerIndex, 'CONTROLLER', player?.gamepad);
+    print('PLAYER', playerIndex, 'CONTROLLER', player?.gamepad.id);
   });
 }
 
@@ -852,177 +853,177 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
   game.players.forEach((player, playerIndex) => {
     if (player.gamepad) {
       if (playerIndex === 0) {
-        // console.log(playerIndex, player.gamepad);
-        // console.log(playerIndex, player.gamepad.axes);
-        // console.log(playerIndex, player.gamepad.buttons[0].pressed);
+        // print(playerIndex, player.gamepad);
+        // print(playerIndex, player.gamepad.axes);
+        // print(playerIndex, player.gamepad.buttons[0].pressed);
         //
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._RCTop",
         //   player.gamepad._RCTop
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._RCBottom",
         //   player.gamepad._RCBottom
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._RCLeft",
         //   player.gamepad._RCLeft
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._RCRight",
         //   player.gamepad._RCRight
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._LCTop",
         //   player.gamepad._LCTop
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._LCBottom",
         //   player.gamepad._LCBottom
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._LCLeft",
         //   player.gamepad._LCLeft
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._LCRight",
         //   player.gamepad._LCRight
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._FBLeftBottom",
         //   player.gamepad._FBLeftBottom
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._FBLeftTop",
         //   player.gamepad._FBLeftTop
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._FBRightBottom",
         //   player.gamepad._FBRightBottom
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._FBRightTop",
         //   player.gamepad._FBRightTop
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._HAxisLeft",
         //   player.gamepad._HAxisLeft
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._VAxisLeft",
         //   player.gamepad._VAxisLeft
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._HAxisRight",
         //   player.gamepad._HAxisRight
         // );
-        // console.log(
+        // print(
         //   playerIndex,
         //   "player.gamepad._VAxisRight",
         //   player.gamepad._VAxisRight
         // );
       }
       if (player.padCurr.B) {
-        console.log(player.playerId, 'B');
+        print(player.playerId, 'B');
       }
       if (player.padCurr.A) {
-        console.log(player.playerId, 'A');
+        print(player.playerId, 'A');
       }
       if (player.padCurr.X) {
-        console.log(player.playerId, 'X');
+        print(player.playerId, 'X');
       }
       if (player.padCurr.Y) {
-        console.log(player.playerId, 'Y');
+        print(player.playerId, 'Y');
         // player.char.fast = 2;
       }
 
       //  D Pad
       if (player.padCurr.down) {
-        console.log(player.playerId, 'down');
+        print(player.playerId, 'down');
       }
       if (player.padCurr.up) {
-        console.log(player.playerId, 'up');
+        print(player.playerId, 'up');
       }
       if (player.padCurr.left) {
-        console.log(player.playerId, 'left');
+        print(player.playerId, 'left');
       }
       if (player.padCurr.right) {
-        console.log(player.playerId, 'right');
+        print(player.playerId, 'right');
       }
 
       // L R Buttons
       if (player.padCurr.L) {
-        console.log(player.playerId, 'L');
+        print(player.playerId, 'L');
       }
       if (player.padCurr.R) {
-        console.log(player.playerId, 'R');
+        print(player.playerId, 'R');
       }
 
       // if (player.gamepad.B) {
-      //   console.log(player.playerId, "B");
+      //   print(player.playerId, "B");
       // }
       // if (player.gamepad.A) {
-      //   console.log(player.playerId, "A");
+      //   print(player.playerId, "A");
       // }
       // if (player.gamepad.X) {
-      //   console.log(player.playerId, "X");
+      //   print(player.playerId, "X");
       // }
       // if (player.gamepad.Y) {
-      //   console.log(player.playerId, "Y");
+      //   print(player.playerId, "Y");
       //   // player.char.fast = 2;
       // }
 
       // //  D Pad
       // if (player.gamepad.down) {
-      //   console.log(player.playerId, "down");
+      //   print(player.playerId, "down");
       // }
       // if (player.gamepad.up) {
-      //   console.log(player.playerId, "up");
+      //   print(player.playerId, "up");
       // }
       // if (player.gamepad.left) {
-      //   console.log(player.playerId, "left");
+      //   print(player.playerId, "left");
       // }
       // if (player.gamepad.right) {
-      //   console.log(player.playerId, "right");
+      //   print(player.playerId, "right");
       // }
 
       // // L R Buttons
       // if (player.gamepad.L1) {
-      //   console.log(player.playerId, "L");
+      //   print(player.playerId, "L");
       // }
       // if (player.gamepad.R1) {
-      //   console.log(player.playerId, "R");
+      //   print(player.playerId, "R");
       // }
       // // L R Buttons
       // if (player.gamepad.L12) {
-      //   console.log(player.playerId, "L2");
+      //   print(player.playerId, "L2");
       // }
       // if (player.gamepad.R12) {
-      //   console.log(player.playerId, "R2");
+      //   print(player.playerId, "R2");
       // }
 
       // for (let i = 0; i < player.gamepad.pad.buttons.length; i++) {
-      //   //   console.log(i);
-      //   console.log("ERIC", i, player.gamepad.pad.buttons[i].value);
+      //   //   print(i);
+      //   print("ERIC", i, player.gamepad.pad.buttons[i].value);
       // }
-      // console.log("ERIC", player.gamepad.pad.buttons[0].value);
-      // console.log(player.gamepad.pad.buttons[1].value);
-      // console.log(player.pad.gamepad.buttons[0].pressed);
+      // print("ERIC", player.gamepad.pad.buttons[0].value);
+      // print(player.gamepad.pad.buttons[1].value);
+      // print(player.pad.gamepad.buttons[0].pressed);
     }
   });
 }

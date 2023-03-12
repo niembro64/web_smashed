@@ -48,6 +48,7 @@ import {
   ClientInformation,
   fetchClientData,
   getAllAxios,
+  print,
   SessionInfo,
   sumNumbersIn2DArrayString,
 } from './client';
@@ -80,7 +81,7 @@ function Play() {
     let pEnd = duration;
     let current = video.currentTime;
 
-    console.log(
+    print(
       'currentTime',
       current,
       'duration',
@@ -167,7 +168,7 @@ function Play() {
     const handlePowerUpCollected = (event: any) => {
       const gameStateReact: GameStateWithTime = event.detail;
       bar();
-      console.log('REACT PRINTING', gameStateReact);
+      print('REACT PRINTING', gameStateReact);
       bar();
 
       let s = gameStateReact.nameCurr;
@@ -194,7 +195,7 @@ function Play() {
           stopRecording();
           break;
         default:
-          console.log('BROKEN_____________________');
+          print('BROKEN_____________________');
       }
     };
 
@@ -221,7 +222,7 @@ function Play() {
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('canPlayAudio', canPlayAudio);
+    print('canPlayAudio', canPlayAudio);
 
     if (canPlayAudio) {
       garageRef.current.play();
@@ -241,11 +242,11 @@ function Play() {
       // document.removeEventListener('click', handleInteractionReturn);
       // document.removeEventListener('keydown', handleInteractionReturn);
       document.removeEventListener('touchstart', handleInteractionReturn);
-      console.log('An interaction has occurred!');
+      print('An interaction has occurred!');
     };
     const handleInteractionReturn = () => {
       // setCanPlayAudio(false);
-      console.log('An interaction has occurred!');
+      print('An interaction has occurred!');
     };
 
     // Add event listener to document object for any user interaction
@@ -262,21 +263,21 @@ function Play() {
   }, []);
 
   useEffect(() => {
-    console.log('sessionInfo', session);
+    print('sessionInfo', session);
   }, [session]);
 
   useEffect(() => {
     if (allSessions === null) {
       return;
     }
-    console.log('allSessions Updated');
-    // console.log('allSessions', allSessions);
+    print('allSessions Updated');
+    // print('allSessions', allSessions);
   }, [allSessions]);
 
   // const space: string = '&nbsp';
 
   function captureScreenshot() {
-    console.log('Capture Screenshot');
+    print('Capture Screenshot');
 
     // Select the element that you want to capture a screenshot of
     const element = document.querySelector('#top-level');
@@ -332,7 +333,7 @@ function Play() {
       setPlayChezState({ name: 'chez', moment: moment() });
     };
 
-    console.log('playChezState', playChezState.name);
+    print('playChezState', playChezState.name);
 
     switch (playChezState.name) {
       case 'up':
@@ -360,7 +361,7 @@ function Play() {
   useEffect(() => {
     const setShowLoaderIntervalFunction = () => {
       const myInterval = setInterval(() => {
-        console.log(
+        print(
           'myPhaser.current?.scene?.keys?.game?.loaded',
           myPhaser?.current?.scene?.keys?.game?.loaded
         );
@@ -376,7 +377,7 @@ function Play() {
       }, 1);
     };
 
-    console.log('webState', webState);
+    print('webState', webState);
     switch (webState) {
       case 'start':
         garageRef.current.play();
@@ -483,7 +484,7 @@ function Play() {
   const idColors: string[] = ['id-red', 'id-blue', 'id-yellow', 'id-green'];
 
   useEffect(() => {
-    console.log('smashConfig', smashConfig);
+    print('smashConfig', smashConfig);
     // setPlayChezState({ name: 'up', moment: moment() });
   }, [smashConfig]);
 
@@ -690,7 +691,7 @@ function Play() {
           });
           break;
         default:
-          console.log("inputArray[inputIndex] didn't match any cases");
+          print("inputArray[inputIndex] didn't match any cases");
           break;
       }
       // if (input.state) {
@@ -731,7 +732,7 @@ function Play() {
     bar();
     bar();
     bar();
-    console.log('WEBSTATE CHANGED TO', webState);
+    print('WEBSTATE CHANGED TO', webState);
     bar();
     bar();
     bar();
@@ -760,7 +761,7 @@ function Play() {
     let newInputArray = [...inputArray];
     newInputArray[playerIndex] = i as InputType;
     setInputArray([...newInputArray]);
-    console.log('i', i, 'newInputArray', newInputArray);
+    print('i', i, 'newInputArray', newInputArray);
   };
 
   const bamPlay = (): void => {
@@ -906,7 +907,7 @@ function Play() {
   ];
 
   const clickPauseParent = () => {
-    console.log(
+    print(
       'GAME STATE',
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr
     );
@@ -923,7 +924,7 @@ function Play() {
         myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
           'game-state-finished'
       ) {
-        console.log('CLICK AND PAUSING');
+        print('CLICK AND PAUSING');
         setGameState(myPhaser.current?.scene?.keys?.game, 'game-state-paused');
       }
     }
@@ -933,7 +934,7 @@ function Play() {
   //   if (scrollerRef.current) {
   //     const handleScroll = () => {
   //       if (scrollerRef.current) {
-  //         console.log(scrollerRef.current.scrollTop);
+  //         print(scrollerRef.current.scrollTop);
   //       }
   //     };
 
@@ -950,7 +951,7 @@ function Play() {
   // useEffect(() => {
   //   setTimeout(() => {
   //     if (scrollerRef.current) {
-  //       console.log(
+  //       print(
   //         'scrollerRef.current.scrollHeight',
   //         scrollerRef.current.scrollHeight,
   //         'scrollerRef.current.clientHeight',
@@ -1258,7 +1259,7 @@ function Play() {
   }, [p1KeysTouched, p2KeysTouched]);
 
   const getMaxFromKey = (key: string) => {
-    console.log('getInitFromKey', key);
+    print('getInitFromKey', key);
 
     let newVal = debugMax[key as keyof Debug];
     return newVal;
@@ -1479,7 +1480,7 @@ function Play() {
                               : // ? getMaxFromKey(key as keyof Debug)
                                 value - 1,
                         }));
-                        console.log(index, key, value);
+                        print(index, key, value);
                       }
 
                       if (typeof value === 'boolean') {
@@ -1487,7 +1488,7 @@ function Play() {
                           ...prevState,
                           [key]: !value,
                         }));
-                        console.log(index, key, value);
+                        print(index, key, value);
                       }
                     }}
                   >
@@ -1939,7 +1940,7 @@ function Play() {
                                 : // ? getMaxFromKey(key as keyof Debug)
                                   value - 1,
                           }));
-                          console.log(index, key, value);
+                          print(index, key, value);
                         }
 
                         if (typeof value === 'boolean') {
@@ -1947,7 +1948,7 @@ function Play() {
                             ...prevState,
                             [key]: !value,
                           }));
-                          console.log(index, key, value);
+                          print(index, key, value);
                         }
                       }}
                     >
@@ -2163,7 +2164,7 @@ function Play() {
                     src="./images/character_3_cropped.png"
                     alt="kirby"
                     onMouseDown={() => {
-                      console.log('MOUSE DOWN');
+                      print('MOUSE DOWN');
                       setFirstCharacterSlot(5);
                     }}
                   />
@@ -2244,16 +2245,16 @@ function Play() {
                       let sc: SmashConfig | null = null;
                       try {
                         sc = JSON.parse(s.smashConfig);
-                        console.log('smashConfig', sc);
+                        print('smashConfig', sc);
                       } catch (e) {
-                        console.log('error parsing smashConfigString', e);
+                        print('error parsing smashConfigString', e);
                       }
                       if (sc !== null) {
                         sc.players.forEach((sessionPlayer: any) => {
                           gameViewTop +=
                             smashConfigOptions[sessionPlayer.characterId]
                               .nameShort + ' ';
-                          console.log(
+                          print(
                             'sessionPlayer.input',
                             sessionPlayer.input
                           );
@@ -2383,11 +2384,11 @@ function Play() {
               ref={videoRef}
               // controls={debug.ReplayControls}
               onTimeUpdate={() => {
-                console.log('onTimeUpdate');
+                print('onTimeUpdate');
                 handleTimeUpdate();
               }}
               onLoadedMetadata={() => {
-                console.log('onLoadedMetadata');
+                print('onLoadedMetadata');
                 handleTimeUpdate();
               }}
             />

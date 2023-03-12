@@ -37,7 +37,7 @@ export const fetchClientData = async (): Promise<ClientInformation> => {
   let response = await fetch('https://ipapi.co/json/');
   let responseJSON = await response.json();
 
-  console.log('responseJSON', responseJSON);
+  print('responseJSON', responseJSON);
 
   let clientInformation: ClientInformation = {
     ip: responseJSON.ip,
@@ -53,7 +53,7 @@ export const fetchClientData = async (): Promise<ClientInformation> => {
     postal: responseJSON.postal,
   };
 
-  console.log('clientInformation', clientInformation);
+  print('clientInformation', clientInformation);
 
   return clientInformation;
 };
@@ -104,7 +104,7 @@ export const axiosSaveOne = async (
     matrixHitsUnto: 'null',
   };
 
-  console.log('sessionInfo', sessionInfo);
+  print('sessionInfo', sessionInfo);
 
   if (process.env.NODE_ENV === 'production') {
     // await axios.post('http://3.86.180.36:8000/api/smashed/create', sessionInfo);
@@ -121,7 +121,7 @@ export const axiosUpsertOne = async (
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<void> => {
-  console.log(
+  print(
     'about to call timestamp:',
     moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
   );
@@ -131,18 +131,18 @@ export const axiosUpsertOne = async (
     let apiString: string =
       '/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    console.log('apiString', apiString);
+    print('apiString', apiString);
     s = await axios.get(apiString);
   } else {
     let apiString: string =
       'http://localhost:8000/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    console.log('apiString', apiString);
+    print('apiString', apiString);
     s = await axios.get(apiString);
   }
 
-  console.log('axiosUpsertOne');
-  console.log('PREVIOUS SESSION PULLED', s);
+  print('axiosUpsertOne');
+  print('PREVIOUS SESSION PULLED', s);
 
   let si: SessionInfo = {
     smashConfig: s.smashConfig,
@@ -162,7 +162,7 @@ export const axiosUpsertOne = async (
     matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
     matrixHitsUnto: JSON.stringify(matrixHitsUnto),
   };
-  console.log('NEW SESSION', si);
+  print('NEW SESSION', si);
 
   // let sessionInfoReturn = {
   //   smashConfig: JSON.parse(si.smashConfig),
@@ -241,6 +241,6 @@ export function sumNumbersIn2DArrayString(s: string) {
 
 export const print = (...args: any[]): void => {
   if (process.env.NODE_ENV === 'development') {
-    console.log(...args);
+    print(...args);
   }
 };

@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game from '../Game';
 import {
   ChompFilterStateName,
@@ -52,7 +53,7 @@ export function setPlayerPowerState(
     return;
   }
 
-  // console.log(player.char.name, 'curr.name', curr.name, 'prev.name', prev.name);
+  // print(player.char.name, 'curr.name', curr.name, 'prev.name', prev.name);
 
   prev.name = curr.name;
   prev.gameStamp = curr.gameStamp;
@@ -129,15 +130,15 @@ export function setChompFilterState(
 
   switch (curr.name) {
     case 'none':
-      console.log('setChompFilterState none');
+      print('setChompFilterState none');
       game.chomp.sprite.clearTint();
       break;
     case 'cooldown':
-      console.log('setChompFilterState cooldown');
+      print('setChompFilterState cooldown');
       game.chomp.sprite.clearTint();
       break;
     case 'hurt':
-      console.log('setChompFilterState hurt');
+      print('setChompFilterState hurt');
       game.chomp.sprite.setTintFill(0xffffff);
 
       break;
@@ -155,7 +156,7 @@ export function updateChompFilterState(
   if (damage > 0 && curr.name === 'none') {
     setChompFilterState('hurt', game);
     c.damage += damage;
-    console.log('c.damage', c.damage);
+    print('c.damage', c.damage);
 
     let { x, y }: xyVector = getNormalizedVector(
       player.char.attackEnergy.sprite.x,
@@ -172,10 +173,10 @@ export function updateChompFilterState(
 
   switch (curr.name) {
     case 'none':
-      // console.log('updateChompFilterState none');
+      // print('updateChompFilterState none');
       break;
     case 'cooldown':
-      // console.log('updateChompFilterState cooldown');
+      // print('updateChompFilterState cooldown');
       if (
         getHasBeenGameDurationSinceMoment(
           game.flashCooldownMs,
@@ -187,7 +188,7 @@ export function updateChompFilterState(
       }
       break;
     case 'hurt':
-      // console.log('updateChompFilterState hurt');
+      // print('updateChompFilterState hurt');
       if (
         getHasBeenGameDurationSinceMoment(
           game.flashActiveMs,
@@ -271,7 +272,7 @@ export function getHasBeenGameDurationSinceMoment(
   moment: number,
   game: Game
 ): boolean {
-  // console.log(
+  // print(
   //   "duration",
   //   durationNano,
   //   "moment",
@@ -304,7 +305,7 @@ export function updatePlayerDarknessEvents(game: Game): void {
           ) *
             Math.pow(Math.random(), 0.4);
 
-        // console.log('amount', amount);
+        // print('amount', amount);
 
         addToMotionSlowdown(amount / baseAmount, game);
         playNextExplosion(s.x, s.y, game, amount);

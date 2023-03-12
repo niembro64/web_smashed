@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game from '../Game';
 import { Player, SpriteStateName } from '../interfaces';
 import { hasPlayerTouchedWallRecently } from './movement';
@@ -306,12 +307,12 @@ export function setFillAttackEnergyID(
   player.char?.attackEnergy?.sprite.setTintFill(circleColor);
   player.char?.attackEnergy?.sprite.setAlpha(1);
   let aebs = player.char.attackEnergy.attackBullets;
-  console.log('aebs.bullets', aebs);
+  print('aebs.bullets', aebs);
 
   // aebs?.bullets?.setFillBulletSprites();
   // if (aebs !== null && aebs.bullets !== null) {
   //   aebs.bullets.children.iterate((child: any) => {
-  //     console.log('bullet child', child);
+  //     print('bullet child', child);
   //     child.setTint('transparent');
   //     child.setTintFill(circleColor);
   //     child.setAlpha(1);

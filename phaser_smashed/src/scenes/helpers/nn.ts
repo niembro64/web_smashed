@@ -1,4 +1,5 @@
 import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
+import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { NNObject, Player } from '../interfaces';
 import { getNearestAttackEnergyXY, getNearestPlayerAliveXY } from './movement';
@@ -10,10 +11,10 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     return;
   }
 
-  console.log('NNTrain');
+  print('NNTrain');
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
-  console.log('game.nnNet', game.nnNet);
+  print('game.nnNet', game.nnNet);
   const maxIterations = 1000;
   game.nnNet.train(game.nnObjects, {
     // log: true,
@@ -22,29 +23,27 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     errorThresh: 0.005,
     logPeriod: 1,
     log: (stats: any) => {
-      // console.log(stats);
-      console.log(
-        Math.floor((stats.iterations / maxIterations) * 1000) * 0.1 + '%'
-      );
-      console.log('error', Math.floor(stats.error * 1000) * 0.1 + '%');
+      // print(stats);
+      print(Math.floor((stats.iterations / maxIterations) * 1000) * 0.1 + '%');
+      print('error', Math.floor(stats.error * 1000) * 0.1 + '%');
     },
     // callback: (res: any) => {
-    //   console.log('game.nnObjects.length', game.nnObjects.length);
-    //   console.log('res.iterations', res.iterations);
-    //   console.log('res.error', res.error);
-    //   // console.log('res.time', res.time);
-    //   // console.log(
+    //   print('game.nnObjects.length', game.nnObjects.length);
+    //   print('res.iterations', res.iterations);
+    //   print('res.error', res.error);
+    //   // print('res.time', res.time);
+    //   // print(
     //   //   '%',
     //   //   Math.floor((res.iterations * 100) / game.nnObjects.length)
     //   // );
     // },
   });
-  console.log('game.nnNet after train', game.nnNet);
+  print('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
-  console.log('netJson', JSON.stringify(netJson, null, 2));
+  print('netJson', JSON.stringify(netJson, null, 2));
 
   let newOutRatios = NNGetOutputRatios(game);
-  console.log('newOutRatios', newOutRatios);
+  print('newOutRatios', newOutRatios);
 };
 
 export const NNTrainLSTM = async (game: Game): Promise<void> => {
@@ -52,36 +51,36 @@ export const NNTrainLSTM = async (game: Game): Promise<void> => {
     return;
   }
 
-  console.log('NNTrain');
+  print('NNTrain');
 
   // game.nnNet = new NeuralNetwork(nnConfig);
   // game.nnNet = new recurrent.RNN(nnConfig);
   game.nnNet = new recurrent.LSTM(nnConfigLSTM);
-  console.log('game.nnNet', game.nnNet);
+  print('game.nnNet', game.nnNet);
   await game.nnNet.train(game.nnObjects, {
     // log: true,
     iterations: 100,
     learningRate: 0.01,
     errorThresh: 0.05,
     logPeriod: 1,
-    log: (stats: any) => console.log(stats),
+    log: (stats: any) => print(stats),
     // callback: (res: any) => {
-    //   console.log('game.nnObjects.length', game.nnObjects.length);
-    //   console.log('res.iterations', res.iterations);
-    //   console.log('res.error', res.error);
-    //   // console.log('res.time', res.time);
-    //   // console.log(
+    //   print('game.nnObjects.length', game.nnObjects.length);
+    //   print('res.iterations', res.iterations);
+    //   print('res.error', res.error);
+    //   // print('res.time', res.time);
+    //   // print(
     //   //   '%',
     //   //   Math.floor((res.iterations * 100) / game.nnObjects.length)
     //   // );
     // },
   });
-  console.log('game.nnNet after train', game.nnNet);
+  print('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
-  console.log('netJson', JSON.stringify(netJson, null, 2));
+  print('netJson', JSON.stringify(netJson, null, 2));
 
   let newOutRatios = NNGetOutputRatios(game);
-  console.log('newOutRatios', newOutRatios);
+  print('newOutRatios', newOutRatios);
 };
 
 export const NNGetOutputRatios = (game: Game): number[] => {
@@ -150,8 +149,8 @@ export const NNGetOutput = (
 
   let output: number[] = game.nnNet.run(input);
 
-  // console.log('input', JSON.stringify(input, null, 2));
-  // console.log('output', JSON.stringify(output, null, 2));
+  // print('input', JSON.stringify(input, null, 2));
+  // print('output', JSON.stringify(output, null, 2));
   return output;
 };
 
@@ -191,7 +190,7 @@ export const NNSetPlayerPad = (
   // player.padCurr.start = output[10] > 1 - r[10] ? true : false;
   // player.padCurr.select = output[11] > 1 - r[11] ? true : false;
 
-  // console.log('output', JSON.stringify(output, null, 2));
+  // print('output', JSON.stringify(output, null, 2));
 };
 
 export const addPlayerOneNNObjects = (game: Game): void => {
@@ -266,11 +265,11 @@ export const addPlayerOneNNObjects = (game: Game): void => {
       // p.padCurr.select ? 1 : 0,
     ],
   };
-  console.log('newNNObject', JSON.stringify(newNNObject, null, 2));
+  print('newNNObject', JSON.stringify(newNNObject, null, 2));
 
   game.nnObjects.push(newNNObject);
 
-  // console.log('game.nnObjects', game.nnObjects);
+  // print('game.nnObjects', game.nnObjects);
 };
 
 export const NNDownloadNNObjects = (game: Game): void => {

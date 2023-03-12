@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game from "../Game";
 import { Player } from "../interfaces";
 import { getLongEnoughTimeDuration } from "./state";
@@ -48,7 +49,7 @@ export function setPlayWiiMusicWaitShort(game: Game): void {
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
-  console.log(
+  print(
     "ENOUGH TIME",
     getLongEnoughTimeDuration(game.DURATION_GAME_PAUSE_MUSIC_SHORT, game)
   );
@@ -93,14 +94,14 @@ export function pauseReadySound(game: Game): void {
   }
 }
 export function playReadySoundPlayer(player: Player): void {
-  // console.log("PLAY READY SOUND ", player.playerId);
+  // print("PLAY READY SOUND ", player.playerId);
   if (!player.playerReadySound.isPlaying) {
     player.playerReadySound.play();
   }
 }
 
 export function pauseReadySoundPlayer(player: Player): void {
-  // console.log("PLAY READY SOUND ", player.playerId);
+  // print("PLAY READY SOUND ", player.playerId);
   if (player.playerReadySound.isPlaying) {
     player.playerReadySound.pause();
   }

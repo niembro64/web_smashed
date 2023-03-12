@@ -52,7 +52,7 @@ import {
   setSplashDataOn,
   updateShotsOnPlayers,
 } from './text';
-import { axiosUpsertOne } from '../../views/client';
+import { axiosUpsertOne, print } from '../../views/client';
 import { NNTrainLSTM, NNTrainNN } from './nn';
 
 export function setGameState(game: Game, state: GameState): void {
@@ -63,7 +63,7 @@ export function setGameState(game: Game, state: GameState): void {
   game.gameState.nameCurr = state;
   game.gameState.gameStampCurr = game.gameNanoseconds;
   game.gameState.timeStampCurr = game.timeNanoseconds;
-  console.log('GAME STATE', game.gameState.nameCurr);
+  print('GAME STATE', game.gameState.nameCurr);
 
   let isDrinkingCurr = false;
   let isDrinkingPrev = false;
@@ -154,7 +154,7 @@ export function setGameState(game: Game, state: GameState): void {
       }
       break;
     default:
-      console.log('BROKEN_____________________');
+      print('BROKEN_____________________');
   }
 
   switch (game.gameState.namePrev) {
@@ -177,7 +177,7 @@ export function setGameState(game: Game, state: GameState): void {
       isDrinkingPrev = true;
       break;
     default:
-      console.log('BROKEN_____________________');
+      print('BROKEN_____________________');
   }
 
   if (isDrinkingCurr && !isDrinkingPrev) {
@@ -206,7 +206,7 @@ export function setAttackPhysicalState(
   attackPhysical.state.gameStamp = game.gameNanoseconds;
   attackPhysical.state.timeStamp = game.timeNanoseconds;
 
-  // console.log(
+  // print(
   //   playerIndex,
   //   "ATTACK PHYSICAL STATE",
   //   attackPhysical.srcImage,
@@ -245,7 +245,7 @@ export function setPlayerState(
   player.state.name = state;
   player.state.gameStamp = game.gameNanoseconds;
   player.state.timeStamp = game.timeNanoseconds;
-  // console.log('PLAYER STATE', player.char.name, player.state);
+  // print('PLAYER STATE', player.char.name, player.state);
 
   switch (player.state.name) {
     case 'player-state-start':
