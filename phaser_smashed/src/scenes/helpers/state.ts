@@ -138,6 +138,17 @@ export function setGameState(game: Game, state: GameState): void {
       setAddShotsToMatrixFlagCaptured(game);
       setPlayerWinningPositions(game);
       break;
+    case 'game-state-mortal-shot':
+      setRuleSplashOn(game, 'splash-mortal-shot');
+      setMusicPause(game);
+      setSoundProfoundPlay(game);
+      setSoundFirstBloodPlay(game);
+      setSoundSquishPlay(game);
+      setPhysicsPause(game);
+      setSplashDataOn(game);
+      isDrinkingCurr = true;
+      setPlayerWinningPositions(game);
+      break;
     case 'game-state-finished':
       setPhysicsPause(game);
       setRuleSplashOn(game, 'splash-finished');

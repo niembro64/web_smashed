@@ -77,6 +77,7 @@ export type GameState =
   | 'game-state-first-blood'
   | 'game-state-screen-clear'
   | 'game-state-captured-flag'
+  | 'game-state-mortal-shot'
   | 'game-state-finished';
 
 export type PlayerState =
@@ -99,6 +100,7 @@ export type SplashName =
   | 'splash-screen-clear'
   | 'splash-captured-flag'
   | 'splash-cool-down'
+  | 'splash-mortal-shot'
   | 'splash-finished';
 
 export interface Clock {
