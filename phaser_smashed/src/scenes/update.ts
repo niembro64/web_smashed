@@ -57,12 +57,13 @@ import { updatePlayerDarknessEvents } from './helpers/powers';
 import { printKeyboard } from './helpers/keyboard';
 import { getIsFlagShots } from './helpers/flag';
 import { getDodgeDirectionPlayerToAttackEnergy } from './helpers/botRB';
+import { print } from '../views/client';
 
 export function setPreUpdate(game: Game): void {
   setMusicPlay(game);
   setGameState(game, 'game-state-play');
   game.loaded = true;
-  console.log('players', game.players);
+  print('players', game.players);
 }
 
 export function update(game: Game, time: number, delta: number): void {
@@ -337,7 +338,7 @@ export function updatePlayers(game: Game): void {
     }
   });
 
-  // console.log("game.input.gamepad.total", game.input.gamepad.total);
+  // print("game.input.gamepad.total", game.input.gamepad.total);
   // game.loaded = true;
 }
 

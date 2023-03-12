@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { print } from '../views/client';
 import { Bullets } from './helpers/bullets';
 
 export interface Debug {
@@ -681,7 +682,7 @@ export interface WorkingController {
 }
 
 export const bar = () => {
-  console.log('------------------');
+  print('------------------');
 };
 
 export type PlayChezStateName = 'up' | 'down' | 'chez';

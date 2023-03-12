@@ -3,6 +3,7 @@ import Game from './Game';
 // import { netJsonNN } from './helpers/nnJson';
 import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
 import { nnConfigNN, nnJsonNN } from './helpers/nnJsonNN';
+import { print } from '../views/client';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -20,10 +21,10 @@ export function preload(game: Game): void {
   // Pull Configs
   //////////////////////////////
   game.sessionMoment = game.game.registry.get('myMoment');
-  console.log('game.sessionMoment', game.sessionMoment);
+  print('game.sessionMoment', game.sessionMoment);
   game.smashConfig = game.game.registry.get('smashConfig');
   game.debug = game.game.registry.get('debug');
-  console.log('this.smashConfig', game.smashConfig);
+  print('this.smashConfig', game.smashConfig);
   if (game.smashConfig) {
     game.durationPlayerDead = game.smashConfig.players.length * 2000;
     game.playerChoicesCharacterType = [];

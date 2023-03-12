@@ -16,6 +16,7 @@ import {
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { Bullets } from './helpers/bullets';
+import { print } from '../views/client';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -217,7 +218,7 @@ export function createExplosions(game: Game): void {
     e.sprite.setTint(0x000000);
 
     // e.sprite.on('animationcomplete', () => {
-    //   console.log('animationcomplete');
+    //   p('animationcomplete');
     // });
 
     // add sounds to explosions
@@ -420,44 +421,39 @@ export function createPlatforms(game: Game): void {
   switch (game.debug.Level) {
     case 0:
       createPlatforms0(game);
-      console.log('createPlatforms', 0, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 0, 'game.debug.Level', game.debug.Level);
       break;
     case 1:
       createPlatforms1(game);
-      console.log('createPlatforms', 1, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 1, 'game.debug.Level', game.debug.Level);
       break;
     case 2:
       createPlatforms2(game);
-      console.log('createPlatforms', 2, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 2, 'game.debug.Level', game.debug.Level);
       break;
     case 3:
       createPlatforms3(game);
-      console.log('createPlatforms', 3, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 3, 'game.debug.Level', game.debug.Level);
       break;
     case 4:
       createPlatforms4(game);
-      console.log('createPlatforms', 4, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 4, 'game.debug.Level', game.debug.Level);
       break;
     case 5:
       createPlatforms5(game);
-      console.log('createPlatforms', 5, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 5, 'game.debug.Level', game.debug.Level);
       break;
     case 6:
       createPlatforms6(game);
-      console.log('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
       break;
     case 7:
       createPlatforms7(game);
-      console.log('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
       break;
     default:
       createPlatforms0(game);
-      console.log(
-        'createPlatforms',
-        'DEFAULT',
-        'game.debug.Level',
-        game.debug.Level
-      );
+      print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.Level);
       break;
   }
 }
@@ -555,7 +551,7 @@ export function createHitboxOverlap(game: Game): void {
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
         }
-        // console.log(
+        // p(
         //   "OVERLAP",
         //   "CHOMP",
         //   game.chomp.powerStateCurr.name,
@@ -579,7 +575,7 @@ export function createHitboxOverlap(game: Game): void {
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
         }
-        // console.log(
+        // p(
         //   "OVERLAP",
         //   "CHOMP",
         //   game.chomp.powerStateCurr.name,
@@ -601,7 +597,7 @@ export function createHitboxOverlap(game: Game): void {
           setChompPowerState('none', game);
           game.chomp.soundBBBambalam.play();
         }
-        // console.log(
+        // p(
         //   "OVERLAP",
         //   "CHOMP",
         //   game.chomp.powerStateCurr.name,
@@ -623,7 +619,7 @@ export function createHitboxOverlap(game: Game): void {
               game.chomp.darknessMoments.passed,
               game
             );
-            // console.log("hasBeen", hasBeen);
+            // p("hasBeen", hasBeen);
             if (player.char.powerStateCurr.name === 'dark' && hasBeen) {
               setPlayerPowerState('dark', pj, game);
               setPlayerPowerState('none', player, game);
@@ -632,7 +628,7 @@ export function createHitboxOverlap(game: Game): void {
               );
               game.chomp.soundBBWoah.play();
             }
-            // console.log(
+            // p(
             //   "OVERLAP",
             //   "PLAYER",
             //   player.char.powerStateCurr.name,
@@ -705,7 +701,7 @@ export function createHitboxOverlap(game: Game): void {
             .forEach((bullet, bi) => {
               // PLAYER BULLETS OVERLAP
               game.physics.add.overlap(player.char.sprite, bullet, function () {
-                // console.log('BULLET OVERLAP', bi);
+                // p('BULLET OVERLAP', bi);
 
                 if (game.debug.DefaultDamage) {
                   onHitHandlerBullets(
@@ -1250,7 +1246,7 @@ export function createAttackEnergies(game: Game): void {
     }
 
     // game.input.on('pointerdown', (pointer: any) => {
-    //   console.log('pointerdown');
+    //   p('pointerdown');
     //   if (ae.bullets) {
     //     // x: pointer.worldX,
     //     // y: pointer.worldY,
@@ -1346,7 +1342,7 @@ export function createCollidersPvAE(game: Game): void {
     });
   });
 
-  console.log('game.colliderPvAE', game.colliderPvAE);
+  print('game.colliderPvAE', game.colliderPvAE);
 }
 export function createCollidersAEvAE(game: Game): void {
   if (!game.debug.CollidersAEvAE) {

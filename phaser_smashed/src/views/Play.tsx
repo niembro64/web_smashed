@@ -132,7 +132,7 @@ function Play() {
         debug.ReplayFullQuality
           ? {}
           : {
-              videoBitsPerSecond: 600000,
+              videoBitsPerSecond: 1000000,
               // videoBitsPerSecond: 1000000
             }
       );

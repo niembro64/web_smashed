@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Debug, Player, Position, Velocity } from '../interfaces';
 import { getDistanceFromOrigin } from './math';
@@ -80,7 +81,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       this.initialPosition
     );
 
-    // console.log('distance', distance);
+    // print('distance', distance);
 
     if (this.debug?.BulletsFullScreen) {
       if (
@@ -152,7 +153,7 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
     let bulletSprites = this.getBulletSprites();
     for (let i = 0; i < bulletSprites.length; i++) {
       bulletSprites[i].setTintFill(0xff0000);
-      console.log('setFillBulletSprites', bulletSprites[i]);
+      print('setFillBulletSprites', bulletSprites[i]);
     }
   }
 
