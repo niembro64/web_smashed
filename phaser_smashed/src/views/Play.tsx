@@ -137,7 +137,8 @@ function Play() {
         setIsReplayHidden(false);
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
         const url = URL.createObjectURL(blob);
-        videoRef.current!.controls = debug.ReplayControls
+        videoRef.current!.controls = false;
+        // videoRef.current!.controls = debug.ReplayControls
         videoRef.current!.src = url;
         videoRef.current!.play();
       };
