@@ -176,7 +176,11 @@ export function filterPlayerWhite(
   playerIndex: number,
   game: Game
 ): void {
-  setFillPlayerWhite(player, game);
+  if (game.debug.CharsColored) {
+    setFillPlayerWhite(player, game);
+  } else {
+    setFillPlayerWhiteT(player, game);
+  }
 }
 
 export function filterPlayerID(
@@ -254,6 +258,11 @@ export function setFillPlayerWhite(player: Player, game: Game): void {
   player.char.sprite.setTint(0xffffff);
   player.char.sprite.setTintFill(0xffffff);
   player.char.sprite.setAlpha(1);
+}
+export function setFillPlayerWhiteT(player: Player, game: Game): void {
+  player.char.sprite.setTint(0xffffff);
+  player.char.sprite.setTintFill(0xffffff);
+  player.char.sprite.setAlpha(0.7);
 }
 
 // BLINK
