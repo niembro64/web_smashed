@@ -1845,7 +1845,7 @@ h2 {
   /* filter: saturate(0.5); */
   /* border: 1px dashed lime; */
 
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 .video-playback-normal {
   filter: grayscale(0%);
