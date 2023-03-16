@@ -34,7 +34,7 @@ export function updateSpriteFilter(
         if (
           Math.floor(
             (game.gameNanoseconds - player.state.gameStamp) /
-              game.DURATION_PLAYER_FILTER_FLICKER
+              game.DURATION_PLAYER_FILTER_FLICKER_SLOW
           ) %
             2 ===
           0
@@ -49,7 +49,7 @@ export function updateSpriteFilter(
         if (
           Math.floor(
             (game.gameNanoseconds - player.state.gameStamp) /
-              game.DURATION_PLAYER_FILTER_FLICKER
+              game.DURATION_PLAYER_FILTER_FLICKER_SLOW
           ) %
             2 ===
           0
@@ -66,7 +66,7 @@ export function updateSpriteFilter(
     if (
       Math.floor(
         (game.gameNanoseconds - player.state.gameStamp) /
-          game.DURATION_PLAYER_FILTER_FLICKER
+          game.DURATION_PLAYER_FILTER_FLICKER_SLOW
       ) %
         2 ===
       0
@@ -89,10 +89,22 @@ export function updateSpriteFilter(
     return;
   }
 
-  console.log("curr", player.char.damageCurr, "prev", player.char.damagePrev);
+  // console.log("curr", player.char.damageCurr, "prev", player.char.damagePrev);
   if (player.char.damageCurr < player.char.damagePrev) {
-    filterPlayerID(player, playerIndex, game);
-    return;
+    if (
+      Math.floor(
+        (game.gameNanoseconds - player.state.gameStamp) /
+          game.DURATION_PLAYER_FILTER_FLICKER_FAST
+      ) %
+        2 ===
+      0
+    ) {
+      filterPlayerWhite(player, playerIndex, game);
+      return;
+    } else {
+      filterPlayerNormal(player, playerIndex, game);
+      return;
+    }
   }
 
   filterPlayerNormal(player, playerIndex, game);
@@ -159,7 +171,11 @@ export function filterPlayerRed(
     setTintPlayerRed(player, game);
   }
 }
-export function filterPlayerWhite(player: Player, game: Game): void {
+export function filterPlayerWhite(
+  player: Player,
+  playerIndex: number,
+  game: Game
+): void {
   setFillPlayerWhite(player, game);
 }
 
