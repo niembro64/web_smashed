@@ -283,13 +283,13 @@ export function hitbackFly(
   player.char.sprite.body.setVelocityY(
     hitbacky * game.BASE_PLAYER_HITBACK.y +
       ((hitbacky > 0 ? 1 : -1) *
-        (game.BASE_PLAYER_HITBACK.y * player.char.damage * hbm)) /
+        (game.BASE_PLAYER_HITBACK.y * player.char.damageCurr * hbm)) /
         5
   );
   player.char.sprite.body.setVelocityX(
     hitbackx * game.BASE_PLAYER_HITBACK.x +
       ((hitbackx > 0 ? 1 : -1) *
-        (game.BASE_PLAYER_HITBACK.x * player.char.damage * hbm)) /
+        (game.BASE_PLAYER_HITBACK.x * player.char.damageCurr * hbm)) /
         5
   );
 }

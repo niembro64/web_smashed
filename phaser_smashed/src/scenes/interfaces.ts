@@ -158,7 +158,7 @@ export interface Player {
 export interface Char {
   name: string;
   // color: Color;
-  colorFilter: boolean;
+  colorFilterBlink: boolean;
   src: string;
   scaleCharSpriteImage: number;
   scaleCharSpriteReality: number;
@@ -177,7 +177,8 @@ export interface Char {
   jumpIndex: number;
   jumpFloat: number;
   upB: UpB;
-  damage: number;
+  damageCurr: number;
+  damagePrev: number;
   speed: number;
   fast: number;
   friction_ground: number;

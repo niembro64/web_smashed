@@ -47,7 +47,7 @@ export function onHitHandlerAttackPhysical(
 
   let vector = getNormalizedVectorAP(attackPhysical, player);
 
-  player.char.damage += damage;
+  player.char.damageCurr += damage;
 
   if (game.debug.DefaultHitback) {
     hitbackFly(
@@ -96,7 +96,7 @@ export function onHitHandlerAttackEnergy(
 
   let vector = getNormalizedVectorAP(attackEnergy, playerHit);
 
-  playerHit.char.damage += damage;
+  playerHit.char.damageCurr += damage;
 
   if (game.debug.DefaultHitback) {
     hitbackFly(
@@ -268,12 +268,12 @@ export function updatePlayerNumberKills(
 
 export function removeDamage(player: Player, damage: number): void {
   if (player.state.name === "player-state-alive") {
-    player.char.damage -= damage;
+    player.char.damageCurr -= damage;
   }
 }
 
 export function setResetDamage(player: Player): void {
-  player.char.damage = 0;
+  player.char.damageCurr = 0;
 }
 
 // export function addHit(player: Player, game: Game): void {
@@ -400,6 +400,13 @@ export function updateTableGiveHealth(game: Game): void {
     p = getNearestPlayerAlive(t.x, t.y, game).player;
     // pIndex = getNearestPlayerAlive(t.x, t.y, game).playerIndex;
 
-    p.char.damage = p.char.damage > 0 ? (p.char.damage -= 0.5) : p.char.damage;
+    p.char.damageCurr =
+      p.char.damageCurr > 0 ? (p.char.damageCurr -= 0.5) : p.char.damageCurr;
   }
+}
+
+export function updateDamagePrev(game: Game): void {
+  game.players.forEach((p, pIndex) => {
+    p.char.damagePrev = p.char.damageCurr;
+  });
 }

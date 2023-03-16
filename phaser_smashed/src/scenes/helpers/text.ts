@@ -356,8 +356,8 @@ export function updateDamageShotsText(
       .setText(
         Math.round(
           game.debug.HealthInverted
-            ? (100 / (100 + player.char.damage)) * 100
-            : player.char.damage
+            ? (100 / (100 + player.char.damageCurr)) * 100
+            : player.char.damageCurr
         ).toString() +
           game.TEXT_GAMEBAR_CHARS.damage +
           '  ' +

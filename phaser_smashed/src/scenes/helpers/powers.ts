@@ -312,7 +312,7 @@ export function updatePlayerDarknessEvents(game: Game): void {
         let { x, y } = getRandomUnitVector();
         // game.SOUND_HIT.play();
 
-        player.char.damage += amount / 200;
+        player.char.damageCurr += amount / 200;
         setPlayerState(player, playerIndex, 'player-state-hurt', game);
         b.setVelocityX(b.velocity.x + x * amount);
         b.setVelocityY(b.velocity.y + y * amount);

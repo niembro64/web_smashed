@@ -5,7 +5,12 @@ import {
 } from "../helpers/attacks";
 import { updateCamera } from "../helpers/camera";
 import { updateAtThreeShots, updateChomp } from "../helpers/chomp";
-import { updateDeathsAndKillsMatrices, updateSuicide, updateTableGiveHealth } from "../helpers/damage";
+import {
+  updateDamagePrev,
+  updateDeathsAndKillsMatrices,
+  updateSuicide,
+  updateTableGiveHealth,
+} from "../helpers/damage";
 import {
   printFlagOwnerAndToucher,
   updateFlagColor,
@@ -53,6 +58,7 @@ export function updateGameStatePlay(
   updateWallTouchArray(game);
   updateCamera(game);
   updateAllSpriteFilters(game);
+  updateDamagePrev(game);
   updateSpritesFlipX(game);
   updateAttackEnergyFrictionGroundRotation(game);
   updateAttackEnergyFrictionGroundMovement(game);
@@ -89,6 +95,7 @@ export function updateGameStatePlay(
   // AFTER PLAYERS
   updatePadPreviousAndDebounced(game);
   updateResetAllHitboxesAttackEnergy(game);
+  // updateDamagePrev(game);
 
   addPlayerOneNNObjectsStatic(game);
   // NNSetPlayer2Output(game);

@@ -1,69 +1,40 @@
-import Game from './Game';
+import { print } from "../views/client";
+import Game from "./Game";
+import { updateGameStatePlay } from "./gameStates.ts/gameStatePlay";
 import {
-  updateControllerMovement,
-  updateAttackEnergy,
-  getIsAllPlayersReady,
-  getIsAnyPlayerPausing,
-  updateGamePadsMaster,
-  debugUpdatePrintAllControllerButtonsWhenActive,
-  debugUpdateControllersPrintConnected,
-} from './helpers/pad';
-import {
-  updateJumpPhysical,
-  updateFrictionGroundX,
-  updateFrictionAirX,
-  updateFrictionAirY,
-  updateFrictionWallY,
-  updateLastDirectionTouched,
-  setRespawn,
-  getIsPlayerOffscreen,
-  updateJumpPhysicalOnWall,
-  updateJumpFloat,
-} from './helpers/movement';
-import {
-  setPlayerState,
-  getHasNumDeadIncreased,
-  getHasGameDurationPassedPlayer,
-  getIsPlayerHitAttackEnergy,
-  getLongEnoughTimeDuration,
-  updateNumCurrentlyDead,
-  updateTimeTime,
-  updateGameTime,
-  setGameState,
-  getHasGameDurationPassedAttack,
-  setAttackPhysicalState,
-} from './helpers/state';
-import {
-  updatePhysicalAttackFollowsPlayer,
-  updateAirDodge,
-} from './helpers/attacks';
+  updateAirDodge, updatePhysicalAttackFollowsPlayer
+} from "./helpers/attacks";
 import {
   getIsFirstBlood,
-  getIsScreenClear,
-  setAddShotsToMatrixFlagCaptured,
-  updateNumShotsLeft,
-} from './helpers/drinking';
+  getIsScreenClear, updateNumShotsLeft
+} from "./helpers/drinking";
+import { getIsFlagShots } from "./helpers/flag";
+import { printKeyboard } from "./helpers/keyboard";
 import {
-  setMusicPlay,
-  setPlayWiiMusicWaitShort,
-  setPlayWiiMusicWaitLong,
-  playWiiMusic,
-  playGarageRepeat,
-} from './helpers/sound';
-import { updateText } from './helpers/text';
-import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
-import { Player } from './interfaces';
-import { updatePlayerDarknessEvents } from './helpers/powers';
-import { printKeyboard } from './helpers/keyboard';
-import { getIsFlagShots } from './helpers/flag';
-import { getDodgeDirectionPlayerToAttackEnergy } from './helpers/botRB';
-import { print } from '../views/client';
+  getIsPlayerOffscreen, setRespawn, updateFrictionAirX,
+  updateFrictionAirY, updateFrictionGroundX, updateFrictionWallY, updateJumpFloat, updateJumpPhysical, updateJumpPhysicalOnWall, updateLastDirectionTouched
+} from "./helpers/movement";
+import {
+  debugUpdateControllersPrintConnected, debugUpdatePrintAllControllerButtonsWhenActive, getIsAllPlayersReady,
+  getIsAnyPlayerPausing, updateAttackEnergy, updateControllerMovement, updateGamePadsMaster
+} from "./helpers/pad";
+import { updatePlayerDarknessEvents } from "./helpers/powers";
+import {
+  playGarageRepeat, playWiiMusic, setMusicPlay, setPlayWiiMusicWaitLong
+} from "./helpers/sound";
+import {
+  getHasGameDurationPassedAttack, getHasGameDurationPassedPlayer, getHasNumDeadIncreased, getIsPlayerHitAttackEnergy,
+  getLongEnoughTimeDuration, setAttackPhysicalState, setGameState, setPlayerState, updateGameTime, updateNumCurrentlyDead,
+  updateTimeTime
+} from "./helpers/state";
+import { updateText } from "./helpers/text";
+import { Player } from "./interfaces";
 
 export function setPreUpdate(game: Game): void {
   setMusicPlay(game);
-  setGameState(game, 'game-state-play');
+  setGameState(game, "game-state-play");
   game.loaded = true;
-  print('players', game.players);
+  print("players", game.players);
 }
 
 export function update(game: Game, time: number, delta: number): void {
@@ -85,9 +56,9 @@ export function update(game: Game, time: number, delta: number): void {
   // updateAllSpritesAlpha(game);
 
   switch (game.gameState.nameCurr) {
-    case 'game-state-start':
+    case "game-state-start":
       break;
-    case 'game-state-play':
+    case "game-state-play":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -97,7 +68,7 @@ export function update(game: Game, time: number, delta: number): void {
       ///////// pausing => pause
       ////////////////////////////////
       if (getIsAnyPlayerPausing(game)) {
-        setGameState(game, 'game-state-paused');
+        setGameState(game, "game-state-paused");
       }
 
       ////////////////////////////////
@@ -108,7 +79,7 @@ export function update(game: Game, time: number, delta: number): void {
         getHasNumDeadIncreased(game)
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
-        setGameState(game, 'game-state-screen-clear');
+        setGameState(game, "game-state-screen-clear");
       }
 
       ////////////////////////////////
@@ -120,14 +91,14 @@ export function update(game: Game, time: number, delta: number): void {
         game.players.length > 2
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
-        setGameState(game, 'game-state-first-blood');
+        setGameState(game, "game-state-first-blood");
       }
 
       ////////////////////////////////
       ///////// flag up => flag shot
       ////////////////////////////////
       if (getIsFlagShots(game)) {
-        setGameState(game, 'game-state-captured-flag');
+        setGameState(game, "game-state-captured-flag");
       }
 
       ////////////////////////////////
@@ -137,14 +108,14 @@ export function update(game: Game, time: number, delta: number): void {
       ///////// time => finished
       ////////////////////////////////
       if (game.debug.ModeInfinity && game.shotsLeftCurr < 1) {
-        setGameState(game, 'game-state-finished');
+        setGameState(game, "game-state-finished");
       }
       if (!game.debug.ModeInfinity && game.gameSecondsClock < 1) {
-        setGameState(game, 'game-state-finished');
+        setGameState(game, "game-state-finished");
       }
 
       break;
-    case 'game-state-first-blood':
+    case "game-state-first-blood":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -157,11 +128,11 @@ export function update(game: Game, time: number, delta: number): void {
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
-        setGameState(game, 'game-state-play');
+        setGameState(game, "game-state-play");
       }
 
       break;
-    case 'game-state-screen-clear':
+    case "game-state-screen-clear":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -174,10 +145,10 @@ export function update(game: Game, time: number, delta: number): void {
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
-        setGameState(game, 'game-state-play');
+        setGameState(game, "game-state-play");
       }
       break;
-    case 'game-state-captured-flag':
+    case "game-state-captured-flag":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -190,10 +161,10 @@ export function update(game: Game, time: number, delta: number): void {
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
-        setGameState(game, 'game-state-play');
+        setGameState(game, "game-state-play");
       }
       break;
-    case 'game-state-finished':
+    case "game-state-finished":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -202,7 +173,7 @@ export function update(game: Game, time: number, delta: number): void {
         playGarageRepeat(game);
       }, 2500);
       break;
-    case 'game-state-paused':
+    case "game-state-paused":
       playWiiMusic(game);
 
       ////////////////////////////////
@@ -212,7 +183,7 @@ export function update(game: Game, time: number, delta: number): void {
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
-        setGameState(game, 'game-state-play');
+        setGameState(game, "game-state-play");
       }
       break;
     default:
@@ -225,9 +196,11 @@ export function update(game: Game, time: number, delta: number): void {
 }
 
 export function updatePlayers(game: Game): void {
+
+
   game.players.forEach((player, playerIndex) => {
     switch (player.state.name) {
-      case 'player-state-start':
+      case "player-state-start":
         ////////////////////////////////
         ///////// WHILE IN LOOP
         ////////////////////////////////
@@ -238,11 +211,11 @@ export function updatePlayers(game: Game): void {
         if (
           getHasGameDurationPassedPlayer(player, game.DURATION_GAME_START, game)
         ) {
-          setPlayerState(player, playerIndex, 'player-state-alive', game);
+          setPlayerState(player, playerIndex, "player-state-alive", game);
         }
 
         break;
-      case 'player-state-alive':
+      case "player-state-alive":
         ////////////////////////////////
         ///////// WHILE IN LOOP
         ////////////////////////////////
@@ -271,19 +244,19 @@ export function updatePlayers(game: Game): void {
         ///////// attackEnergy hit => hurt
         ////////////////////////////////
         if (getIsPlayerHitAttackEnergy(playerIndex, game)) {
-          setPlayerState(player, playerIndex, 'player-state-hurt', game);
+          setPlayerState(player, playerIndex, "player-state-hurt", game);
         }
 
         ////////////////////////////////
         ///////// offscreen => dead
         ////////////////////////////////
         if (getIsPlayerOffscreen(player, game)) {
-          setPlayerState(player, playerIndex, 'player-state-dead', game);
+          setPlayerState(player, playerIndex, "player-state-dead", game);
         }
 
         // resetMyHitByMatrix(player, playerIndex, game);
         break;
-      case 'player-state-hurt':
+      case "player-state-hurt":
         ////////////////////////////////
         ///////// WHILE IN LOOP
         ////////////////////////////////
@@ -307,18 +280,18 @@ export function updatePlayers(game: Game): void {
             game
           )
         ) {
-          setPlayerState(player, playerIndex, 'player-state-alive', game);
+          setPlayerState(player, playerIndex, "player-state-alive", game);
         }
 
         ////////////////////////////////
         ///////// offscreen => dead
         ////////////////////////////////
         if (getIsPlayerOffscreen(player, game)) {
-          setPlayerState(player, playerIndex, 'player-state-dead', game);
+          setPlayerState(player, playerIndex, "player-state-dead", game);
         }
 
         break;
-      case 'player-state-dead':
+      case "player-state-dead":
         ////////////////////////////////
         ///////// WHILE IN LOOP
         ////////////////////////////////
@@ -331,7 +304,7 @@ export function updatePlayers(game: Game): void {
         if (
           getHasGameDurationPassedPlayer(player, game.durationPlayerDead, game)
         ) {
-          setPlayerState(player, playerIndex, 'player-state-alive', game);
+          setPlayerState(player, playerIndex, "player-state-alive", game);
         }
 
         break;
@@ -350,7 +323,7 @@ export function updateAttackPhysicals(
   let ap = player.char.attackPhysical;
 
   switch (ap.state.name) {
-    case 'attackphysical-state-on':
+    case "attackphysical-state-on":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -364,12 +337,12 @@ export function updateAttackPhysicals(
           ap,
           player,
           playerIndex,
-          'attackphysical-state-cooldown',
+          "attackphysical-state-cooldown",
           game
         );
       }
       break;
-    case 'attackphysical-state-cooldown':
+    case "attackphysical-state-cooldown":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -382,12 +355,12 @@ export function updateAttackPhysicals(
           ap,
           player,
           playerIndex,
-          'attackphysical-state-off',
+          "attackphysical-state-off",
           game
         );
       }
       break;
-    case 'attackphysical-state-off':
+    case "attackphysical-state-off":
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
@@ -409,7 +382,7 @@ export function updateAttackPhysicals(
           ap,
           player,
           playerIndex,
-          'attackphysical-state-on',
+          "attackphysical-state-on",
           game
         );
       }
