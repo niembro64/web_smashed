@@ -5,12 +5,9 @@ import {
   getIsBotInPitAreaLeft,
   getIsBotInPitAreaRight,
   getIsBotTooFarCenterLeft,
-  getIsBotTooFarCenterRight,
-  getIsBotTooFarLeft,
-  getIsBotTooFarRight,
-  getIsBotTooFarUp,
+  getIsBotTooFarCenterRight, getIsBotTooFarUp
 } from './botRB';
-import { NNSetPlayerPad } from './nn';
+import { NNSetPlayerPadStatic } from './nn';
 
 export function updateBotNN(
   player: Player,
@@ -27,7 +24,7 @@ export function updateBotNN(
     return;
   }
 
-  NNSetPlayerPad(player, playerIndex, game);
+  NNSetPlayerPadStatic(player, playerIndex, game);
 
   let helpNNBot = true;
   if (!helpNNBot) {

@@ -1,15 +1,15 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
-import { Player, Position, Velocity, xyVector } from '../interfaces';
-import { getIsPlayerInAir } from './attacks';
-import { getNormalizedVector } from './damage';
+import Game, { SCREEN_DIMENSIONS } from "../Game";
+import { Player, Position, Velocity, xyVector } from "../interfaces";
+import { getIsPlayerInAir } from "./attacks";
+import { getNormalizedVector } from "./damage";
 import {
   getDistance,
   getNearestAttackEnergyXY,
   getNearestAttackEnergyXYAbove,
   getNearestPlayerAliveXY,
   hasPlayerTouchedWallRecently,
-} from './movement';
-import { NNSetPlayerPad } from './nn';
+} from "./movement";
+import { NNSetPlayerPadStatic } from "./nn";
 
 export function getIsBot(player: Player, game: Game): boolean {
   if (player.inputType === 3) {
@@ -164,32 +164,24 @@ export function getIsBotTooFarDown(player: Player, game: Game): boolean {
 
 export function getIsBotInPitAreaLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * (17 / 34);
-  let right = SCREEN_DIMENSIONS.WIDTH * (22 / 34);
-  let center = (left + right) / 2;
-  let up = SCREEN_DIMENSIONS.HEIGHT * (12 / 19);
-  if (bot.x > left && bot.x < center && bot.y > up) {
+  let p = game.pit;
+  if (bot.x > p.left && bot.x < p.middle && bot.y > p.top) {
     return true;
   }
   return false;
 }
 export function getIsBotInPitAreaRight(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * (17 / 34);
-  let right = SCREEN_DIMENSIONS.WIDTH * (22 / 34);
-  let center = (left + right) / 2;
-  let up = SCREEN_DIMENSIONS.HEIGHT * (12 / 19);
-  if (bot.x > center && bot.x < right && bot.y > up) {
+  let p = game.pit;
+  if (bot.x > p.middle && bot.x < p.right && bot.y > p.top) {
     return true;
   }
   return false;
 }
-export function getIsBotInPitArea(player: Player, game: Game): boolean {
+export function getIsBotInPitAreaBottom(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * (17 / 34);
-  let right = SCREEN_DIMENSIONS.WIDTH * (22 / 34);
-  let up = SCREEN_DIMENSIONS.HEIGHT * (12 / 19);
-  if (bot.x > left && bot.x < right && bot.y > up) {
+  let p = game.pit;
+  if (bot.x > p.left && bot.x < p.right && bot.y > p.lower) {
     return true;
   }
   return false;
@@ -213,14 +205,14 @@ export function allPadToFalse(player: Player): void {
 }
 
 export type DodgeDirection =
-  | 'up'
-  | 'down'
-  | 'left'
-  | 'right'
-  | 'up-left'
-  | 'up-right'
-  | 'down-left'
-  | 'down-right';
+  | "up"
+  | "down"
+  | "left"
+  | "right"
+  | "up-left"
+  | "up-right"
+  | "down-left"
+  | "down-right";
 
 export function getDodgeDirectionFromNormalizedVector(
   x: number,
@@ -229,27 +221,27 @@ export function getDodgeDirectionFromNormalizedVector(
   const tolerance = 0.25;
   if (y < -tolerance) {
     if (x < -tolerance) {
-      return 'up-left';
+      return "up-left";
     } else if (x > tolerance) {
-      return 'up-right';
+      return "up-right";
     } else {
-      return 'up';
+      return "up";
     }
   } else if (y > tolerance) {
     if (x < -tolerance) {
-      return 'down-left';
+      return "down-left";
     } else if (x > tolerance) {
-      return 'down-right';
+      return "down-right";
     } else {
-      return 'down';
+      return "down";
     }
   } else {
     if (x < -tolerance) {
-      return 'left';
+      return "left";
     } else if (x > tolerance) {
-      return 'right';
+      return "right";
     } else {
-      return 'up'; // ideally not possible
+      return "up"; // ideally not possible
     }
   }
 }
@@ -305,49 +297,49 @@ export const updatePlayerDodgeInThisDirection = (
   pc.B = true;
 
   switch (direction) {
-    case 'up':
+    case "up":
       pc.up = true;
       pc.down = false;
       pc.left = false;
       pc.right = false;
       break;
-    case 'down':
+    case "down":
       pc.down = true;
       pc.up = false;
       pc.left = false;
       pc.right = false;
       break;
-    case 'left':
+    case "left":
       pc.left = true;
       pc.right = false;
       pc.up = false;
       pc.down = false;
       break;
-    case 'right':
+    case "right":
       pc.right = true;
       pc.left = false;
       pc.up = false;
       pc.down = false;
       break;
-    case 'up-left':
+    case "up-left":
       pc.up = true;
       pc.left = true;
       pc.down = false;
       pc.right = false;
       break;
-    case 'up-right':
+    case "up-right":
       pc.up = true;
       pc.right = true;
       pc.down = false;
       pc.left = false;
       break;
-    case 'down-left':
+    case "down-left":
       pc.down = true;
       pc.left = true;
       pc.up = false;
       pc.right = false;
       break;
-    case 'down-right':
+    case "down-right":
       pc.down = true;
       pc.right = true;
       pc.up = false;
@@ -404,7 +396,7 @@ export function updateBotRules(
   game: Game
 ): void {
   let p = player.padCurr;
-  if (game.gameState.nameCurr !== 'game-state-play') {
+  if (game.gameState.nameCurr !== "game-state-play") {
     if (game.timeSeconds % 2 === 0) {
       allPadToFalse(player);
     } else {
@@ -522,22 +514,6 @@ export function updateBotRules(
     }
   }
 
-  //////////////////////
-  // MOVE TO FLAG | AIR
-  //////////////////////
-  // if (!game.flag.completedCurr && !t.down) {
-  //   if (botSprite.x < game.flag.spriteFlagPole.x - 200) {
-  //     p.right = true;
-  //     p.left = false;
-  //   } else if (botSprite.x > game.flag.spriteFlagPole.x + 200) {
-  //     p.left = true;
-  //     p.right = false;
-  //   } else {
-  //     p.right = false;
-  //     p.left = false;
-  //   }
-  // }
-
   if (
     //////////////////////
     // WALL JUMPING
@@ -633,7 +609,7 @@ export function updateBotRules(
   }
 
   //////////////////////
-  // LEFT SIDE OF PIT
+  // LEFT SIDE OF PIT AND FALLING
   //////////////////////
   if (
     pVelocity.y > 0 &&
@@ -646,7 +622,7 @@ export function updateBotRules(
   }
 
   //////////////////////
-  // RIGHT SIDE OF PIT
+  // RIGHT SIDE OF PIT AND FALLING
   //////////////////////
   if (
     pVelocity.y > 0 &&
@@ -656,5 +632,16 @@ export function updateBotRules(
   ) {
     p.right = true;
     p.left = false;
+  }
+
+  //////////////////////
+  // PIT AND TOUCHING DOWN
+  //////////////////////
+  if (
+    pVelocity.y > 0 &&
+    getIsBotInPitAreaBottom(player, game) &&
+    Math.random() > 0.01
+  ) {
+    p.Y = !p.Y;
   }
 }

@@ -107,7 +107,7 @@ export const NNGetOutputRatios = (game: Game): number[] => {
   return btnUsedRatio;
 };
 
-export const NNGetOutput = (
+export const NNGetOutputStatic = (
   player: Player,
   enemyX: number,
   enemyY: number,
@@ -154,7 +154,7 @@ export const NNGetOutput = (
   return output;
 };
 
-export const NNSetPlayerPad = (
+export const NNSetPlayerPadStatic = (
   player: Player,
   playerIndex: number,
   game: Game
@@ -166,7 +166,7 @@ export const NNSetPlayerPad = (
   let enemy = getNearestPlayerAliveXY(player, playerIndex, game);
   let enemyAE = getNearestAttackEnergyXY(player, playerIndex, game);
 
-  let output = NNGetOutput(
+  let output = NNGetOutputStatic(
     player,
     enemy.x,
     enemy.y,
@@ -193,7 +193,85 @@ export const NNSetPlayerPad = (
   // print('output', JSON.stringify(output, null, 2));
 };
 
-export const addPlayerOneNNObjects = (game: Game): void => {
+export const addPlayerOneNNObjectsStatic = (game: Game): void => {
+  if (!game.debug.NNP1Train) {
+    return;
+  }
+
+  if (game.gameState.nameCurr !== 'game-state-play') {
+    return;
+  }
+
+  if (
+    game.players[0].state.name === 'player-state-dead' ||
+    game.players[0].state.name === 'player-state-start'
+  ) {
+    return;
+  }
+
+  let p = game.players[0];
+  let enemy = game.players[1];
+
+  let isPFacingEnemy: boolean = false;
+  if (p.char.sprite.x < enemy.char.sprite.x) {
+    if (p.char.sprite.flipX) {
+      isPFacingEnemy = true;
+    }
+  } else {
+    if (!p.char.sprite.flipX) {
+      isPFacingEnemy = true;
+    }
+  }
+
+  let newNNObject: NNObject = {
+    input: [
+      // p.padCurr.up ? 1 : 0,
+      // p.padCurr.down ? 1 : 0,
+      // p.padCurr.left ? 1 : 0,
+      // p.padCurr.right ? 1 : 0,
+      // p.padCurr.A ? 1 : 0,
+      // p.padCurr.B ? 1 : 0,
+      // p.padCurr.X ? 1 : 0,
+      // p.padCurr.Y ? 1 : 0,
+      p.padDebounced.up,
+      p.padDebounced.down,
+      p.padDebounced.left,
+      p.padDebounced.right,
+      p.padDebounced.A,
+      p.padDebounced.B,
+      p.padDebounced.X,
+      p.padDebounced.Y,
+      p.char.sprite.x - enemy.char.sprite.x / SCREEN_DIMENSIONS.WIDTH,
+      p.char.sprite.y - enemy.char.sprite.y / SCREEN_DIMENSIONS.HEIGHT,
+      p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
+      p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
+      p.char.sprite.body.touching.down ? 1 : 0,
+      p.char.sprite.body.touching.left ? 1 : 0,
+      p.char.sprite.body.touching.right ? 1 : 0,
+      isPFacingEnemy ? 1 : 0,
+    ],
+    output: [
+      p.padCurr.up ? 1 : 0,
+      p.padCurr.down ? 1 : 0,
+      p.padCurr.left ? 1 : 0,
+      p.padCurr.right ? 1 : 0,
+      p.padCurr.A ? 1 : 0,
+      p.padCurr.B ? 1 : 0,
+      p.padCurr.X ? 1 : 0,
+      p.padCurr.Y ? 1 : 0,
+      // p.padCurr.L ? 1 : 0,
+      // p.padCurr.R ? 1 : 0,
+      // p.padCurr.start ? 1 : 0,
+      // p.padCurr.select ? 1 : 0,
+    ],
+  };
+  print('newNNObject', JSON.stringify(newNNObject, null, 2));
+
+  game.nnObjects.push(newNNObject);
+
+  // print('game.nnObjects', game.nnObjects);
+};
+export const addPlayerOneNNObjectsChange = (game: Game): void => {
   if (!game.debug.NNP1Train) {
     return;
   }
