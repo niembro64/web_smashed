@@ -2316,7 +2316,7 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
-      {webState === "play" && !isRecording && (
+      {debug.ReplayOn && webState === "play" && !isRecording && (
         <div className="video-playback-container">
           <div className="video-playback-super">
             {videoGray && <p className="replay">FAST FORWARD</p>}
