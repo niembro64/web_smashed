@@ -56,7 +56,9 @@ import {
 function Play() {
   let myPhaser: any = useRef(null);
 
-  const [isRecording, setIsReplayHidden] = useState(false);
+  const [debug, setDebug] = useState<Debug>(debugInit);
+
+  const [isReplayHidden, setIsReplayHidden] = useState(false);
   let videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -110,6 +112,7 @@ function Play() {
 
   useEffect(() => {
     if (!debug.ReplayOn) {
+      setIsReplayHidden(true);
       return;
     }
 
@@ -201,7 +204,7 @@ function Play() {
     return () => {
       window.removeEventListener("gameState", handlePowerUpCollected);
     };
-  }, []);
+  }, [debug.ReplayFullQuality, debug.ReplayOn]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -300,8 +303,6 @@ function Play() {
       link.click();
     });
   }
-
-  const [debug, setDebug] = useState<Debug>(debugInit);
 
   const trance = new Audio(importedTrance);
   trance.volume = 0.3;
@@ -2316,7 +2317,7 @@ function Play() {
         )}
       </div>
       {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
-      {debug.ReplayOn && webState === "play" && !isRecording && (
+      {webState === "play" && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">
             {videoGray && <p className="replay">FAST FORWARD</p>}
