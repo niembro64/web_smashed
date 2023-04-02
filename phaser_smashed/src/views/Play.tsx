@@ -562,6 +562,7 @@ function Play() {
     },
     scene: [Game],
   };
+  
   let setTimeoutQuotesLengthStart: number = 3000;
   let setTimeoutQuotesLengthReStart: number = 1500;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
