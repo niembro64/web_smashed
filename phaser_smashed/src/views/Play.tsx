@@ -556,7 +556,7 @@ function Play() {
     physics: {
       default: "arcade",
       arcade: {
-        gravity: { y: 3000 },
+        gravity: { y: 1500 }, // was 3000
         debug: debug.DevMode,
       },
     },
