@@ -25,6 +25,9 @@ export function preload(game: Game): void {
   game.smashConfig = game.game.registry.get('smashConfig');
   game.debug = game.game.registry.get('debug');
   print('this.smashConfig', game.smashConfig);
+  game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.GravityLight ? 0.6 : 1;
+  game.BASE_PLAYER_JUMP_WALL *= game.debug.GravityLight ? 0.6 : 1;
+  
   if (game.smashConfig) {
     game.durationPlayerDead = game.smashConfig.players.length * 2000;
     game.playerChoicesCharacterType = [];

@@ -51,6 +51,7 @@ export interface Debug {
   ReplayFullQuality: boolean;
   ReplayControls: boolean;
   ReplayFastSlow: boolean;
+  GravityLight: boolean;
   [key: string]: any; // add index signature
 }
 

@@ -49,6 +49,7 @@ export const debugInit: Debug = {
   ReplayFullQuality: false,
   ReplayControls: true,
   ReplayFastSlow: false,
+  GravityLight: false,
 };
 
 export const debugMax: Debug = {
@@ -100,6 +101,7 @@ export const debugMax: Debug = {
   ReplayFullQuality: true,
   ReplayControls: true,
   ReplayFastSlow: true,
+  GravityLight: false,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -152,4 +154,5 @@ export const mainOptionsDebugShow: Debug = {
   ReplayFullQuality: false,
   ReplayControls: false,
   ReplayFastSlow: false,
+  GravityLight: false,
 };
