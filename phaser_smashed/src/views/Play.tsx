@@ -1229,7 +1229,7 @@ function Play() {
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
-          <p className="third-loader-p">Loading can take a hot minute.</p>
+          <p className="third-loader-p">Loading can take a hot minute...</p>
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
