@@ -17,7 +17,6 @@
   --id-yellow: #fff100;
   --id-green: #16c60c;
   flex: 1;
-
 }
 
 * {
@@ -664,7 +663,7 @@ h2 {
 }
 
 .player-choices {
-  height: 70%;
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -1060,7 +1059,7 @@ h2 {
 
 .startTitle > img {
   width: 50vw;
-  max-width: 600px;
+  max-width: 500px;
   margin-bottom: 0vh;
   transition: 1s ease;
 }
@@ -1068,7 +1067,7 @@ h2 {
 .startTitle > h1 {
   margin: 0;
   padding: 0 0 0 0.6vw;
-  font-size: 6vw;
+  font-size: 5vw;
   animation: titleGrow 3s linear both;
 }
 
@@ -1138,7 +1137,7 @@ h2 {
 }
 .startTitleWrapper2 {
   height: 100%;
-  flex: 0.6;
+  flex: 0.4;
   overflow: visible;
   z-index: 4;
 }
