@@ -1,15 +1,15 @@
-import Game, { SCREEN_DIMENSIONS } from "../Game";
-import { Player, Position, Velocity, xyVector } from "../interfaces";
-import { getIsPlayerInAir } from "./attacks";
-import { getNormalizedVector } from "./damage";
+import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { Player, Position, Velocity, xyVector } from '../interfaces';
+import { getIsPlayerInAir } from './attacks';
+import { getNormalizedVector } from './damage';
 import {
   getDistance,
   getNearestAttackEnergyXY,
   getNearestAttackEnergyXYAbove,
   getNearestPlayerAliveXY,
   hasPlayerTouchedWallRecently,
-} from "./movement";
-import { NNSetPlayerPadStatic } from "./nn";
+} from './movement';
+import { NNSetPlayerPadStatic } from './nn';
 
 export function getIsBot(player: Player, game: Game): boolean {
   if (player.inputType === 3) {
@@ -113,6 +113,22 @@ export function getIsBotFacingNearestPlayer(
   return false;
 }
 
+export function getIsBotTooFarMiddleLeft(player: Player, game: Game): boolean {
+  let bot = player.char.sprite;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.49;
+  if (bot.x < left) {
+    return true;
+  }
+  return false;
+}
+export function getIsBotTooFarMiddleRight(player: Player, game: Game): boolean {
+  let bot = player.char.sprite;
+  let right = SCREEN_DIMENSIONS.WIDTH * 0.51;
+  if (bot.x > right) {
+    return true;
+  }
+  return false;
+}
 export function getIsBotTooFarCenterLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
   let left = SCREEN_DIMENSIONS.WIDTH * 0.35;
@@ -131,7 +147,7 @@ export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.07;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.3;
   if (bot.x < left) {
     return true;
   }
@@ -139,7 +155,7 @@ export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarRight(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let right = SCREEN_DIMENSIONS.WIDTH * 0.93;
+  let right = SCREEN_DIMENSIONS.WIDTH * 0.7;
   if (bot.x > right) {
     return true;
   }
@@ -205,14 +221,14 @@ export function allPadToFalse(player: Player): void {
 }
 
 export type DodgeDirection =
-  | "up"
-  | "down"
-  | "left"
-  | "right"
-  | "up-left"
-  | "up-right"
-  | "down-left"
-  | "down-right";
+  | 'up'
+  | 'down'
+  | 'left'
+  | 'right'
+  | 'up-left'
+  | 'up-right'
+  | 'down-left'
+  | 'down-right';
 
 export function getDodgeDirectionFromNormalizedVector(
   x: number,
@@ -221,27 +237,27 @@ export function getDodgeDirectionFromNormalizedVector(
   const tolerance = 0.25;
   if (y < -tolerance) {
     if (x < -tolerance) {
-      return "up-left";
+      return 'up-left';
     } else if (x > tolerance) {
-      return "up-right";
+      return 'up-right';
     } else {
-      return "up";
+      return 'up';
     }
   } else if (y > tolerance) {
     if (x < -tolerance) {
-      return "down-left";
+      return 'down-left';
     } else if (x > tolerance) {
-      return "down-right";
+      return 'down-right';
     } else {
-      return "down";
+      return 'down';
     }
   } else {
     if (x < -tolerance) {
-      return "left";
+      return 'left';
     } else if (x > tolerance) {
-      return "right";
+      return 'right';
     } else {
-      return "up"; // ideally not possible
+      return 'up'; // ideally not possible
     }
   }
 }
@@ -297,49 +313,49 @@ export const updatePlayerDodgeInThisDirection = (
   pc.B = true;
 
   switch (direction) {
-    case "up":
+    case 'up':
       pc.up = true;
       pc.down = false;
       pc.left = false;
       pc.right = false;
       break;
-    case "down":
+    case 'down':
       pc.down = true;
       pc.up = false;
       pc.left = false;
       pc.right = false;
       break;
-    case "left":
+    case 'left':
       pc.left = true;
       pc.right = false;
       pc.up = false;
       pc.down = false;
       break;
-    case "right":
+    case 'right':
       pc.right = true;
       pc.left = false;
       pc.up = false;
       pc.down = false;
       break;
-    case "up-left":
+    case 'up-left':
       pc.up = true;
       pc.left = true;
       pc.down = false;
       pc.right = false;
       break;
-    case "up-right":
+    case 'up-right':
       pc.up = true;
       pc.right = true;
       pc.down = false;
       pc.left = false;
       break;
-    case "down-left":
+    case 'down-left':
       pc.down = true;
       pc.left = true;
       pc.up = false;
       pc.right = false;
       break;
-    case "down-right":
+    case 'down-right':
       pc.down = true;
       pc.right = true;
       pc.up = false;
@@ -396,7 +412,7 @@ export function updateBotRules(
   game: Game
 ): void {
   let p = player.padCurr;
-  if (game.gameState.nameCurr !== "game-state-play") {
+  if (game.gameState.nameCurr !== 'game-state-play') {
     if (game.timeSeconds % 2 === 0) {
       allPadToFalse(player);
     } else {

@@ -5,7 +5,12 @@ import {
   getIsBotInPitAreaLeft,
   getIsBotInPitAreaRight,
   getIsBotTooFarCenterLeft,
-  getIsBotTooFarCenterRight, getIsBotTooFarUp
+  getIsBotTooFarCenterRight,
+  getIsBotTooFarLeft,
+  getIsBotTooFarMiddleLeft,
+  getIsBotTooFarMiddleRight,
+  getIsBotTooFarRight,
+  getIsBotTooFarUp,
 } from './botRB';
 import { NNSetPlayerPadStatic } from './nn';
 
@@ -38,12 +43,34 @@ export function updateBotNN(
   let onLastJump = jumpIndex === jumps.length - 1;
 
   //////////////////////
+  // TOO FAR LEFT RIGHT CENTER
+  //////////////////////
+
+  const r = 0.3;
+  if (game.gameSeconds % 2 === playerIndex % 2) {
+    if (getIsBotTooFarMiddleLeft(player, game) && Math.random() > r) {
+      p.right = true;
+      p.left = false;
+    } else if (getIsBotTooFarMiddleRight(player, game) && Math.random() > r) {
+      p.left = true;
+      p.right = false;
+    }
+
+    if (Math.random() > 0.9) {
+      p.Y = !p.Y;
+    }
+  } else {
+    if (Math.random() > r) {
+      p.X = true;
+    }
+  }
+  //////////////////////
   // TOO FAR LEFT RIGHT
   //////////////////////
-  if (getIsBotTooFarCenterLeft(player, game) && Math.random() > 0.01) {
+  if (getIsBotTooFarLeft(player, game)) {
     p.right = true;
     p.left = false;
-  } else if (getIsBotTooFarCenterRight(player, game) && Math.random() > 0.01) {
+  } else if (getIsBotTooFarRight(player, game)) {
     p.left = true;
     p.right = false;
   }
