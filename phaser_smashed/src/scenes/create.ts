@@ -17,6 +17,8 @@ import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { Bullets } from './helpers/bullets';
 import { print } from '../views/client';
+import { debugInit } from '../debugOptions';
+import { debug } from 'console';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -546,7 +548,9 @@ export function createHitboxOverlap(game: Game): void {
         updateChompFilterState(player, player.char.attackPhysical.damage, game);
         // setChompFilterState('hurt', game);
         if (!getDoesAnythingHaveDark(game)) {
-          game.chomp.emitterDark.visible = true;
+          if (debugInit.AllowEmitters) {
+            game.chomp.emitterDark.visible = true;
+          }
           setChompPowerState('dark', game);
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
@@ -570,7 +574,9 @@ export function createHitboxOverlap(game: Game): void {
       function () {
         updateChompFilterState(player, player.char.attackEnergy.damage, game);
         if (!getDoesAnythingHaveDark(game)) {
-          game.chomp.emitterDark.visible = true;
+          if (debugInit.AllowEmitters) {
+            game.chomp.emitterDark.visible = true;
+          }
           setChompPowerState('dark', game);
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
@@ -769,6 +775,10 @@ export function createKeyboards(game: Game): void {
 
   for (let i = 0; i < game.players.length; i++) {
     if (game.players[i].inputType === 2) {
+      if (!game.input.keyboard) {
+        return;
+      }
+
       game.players[i].keyboard = game.input.keyboard.addKeys(
         game.keyboardHandPositions[kIndex]
       );
@@ -786,6 +796,10 @@ export function createKeyboardsOld(game: Game): void {
 
   for (let i = 0; i < k; i++) {
     if (game?.players[i + d]) {
+      if (!game.input.keyboard) {
+        return;
+      }
+
       game.players[i + d].keyboard = game.input.keyboard.addKeys(
         game.keyboardHandPositions[i]
       );
@@ -802,8 +816,16 @@ export function setPlayersInitialPositions(game: Game): void {
   });
 }
 
+export const tails = [1000, 1001, 1002, 1003];
+export const shields = [2000, 2001, 2002, 2003];
+
 export function createEmitterChomp(game: Game): void {
+  if (!debugInit.AllowEmitters) {
+    return;
+  }
+
   let c = game.chomp;
+  // @ts-ignore
   c.particles = game.add.particles('tail_0');
   c.emitterDark = c.particles.createEmitter({
     speed: 1500,
@@ -818,12 +840,20 @@ export function createEmitterChomp(game: Game): void {
 }
 
 export function createEmittersPlayers(game: Game): void {
+  if (!debugInit.AllowEmitters) {
+    return;
+  }
+
   const m = 1;
   const n = 4;
 
   game.players.forEach((player, playerIndex) => {
+    // @ts-ignore
     player.particles = game.add.particles('tail_' + playerIndex);
+    // @ts-ignore
     player.particlesShield = game.add.particles('shield_' + playerIndex);
+    // player.particles = game.add.particles(tails[playerIndex]);
+    // player.particlesShield = game.add.particles(shields[playerIndex]);
 
     player.emitterLight = player.particles.createEmitter({
       speed: 10,
@@ -896,6 +926,10 @@ export function createColliderTableAttackEnergies(game: Game): void {
 }
 
 export function createEmitterChompFollowChomp(game: Game): void {
+  if (!debugInit.AllowEmitters) {
+    return;
+  }
+
   game.chomp.emitterDark
     .startFollow(game.chomp.block)
     .setAlpha(1)
@@ -907,6 +941,10 @@ export function createEmitterChompFollowChomp(game: Game): void {
 }
 
 export function createEmittersFollowPlayers(game: Game): void {
+  if (!debugInit.AllowEmitters) {
+    return;
+  }
+
   game.players.forEach((player, playerIndex) => {
     // player.emitterLight.setScale(player.char.scaleCharSpriteReality);
     // player.emitterDark.setScale(player.char.scaleCharSpriteReality);
@@ -1236,6 +1274,7 @@ export function createAttackEnergies(game: Game): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // turn off gravity for bullets
+      // @ts-ignore
       aebs.children.iterate((child: any) => {
         if (player.char.attackEnergy.gravity) {
           child.body.allowGravity = true;

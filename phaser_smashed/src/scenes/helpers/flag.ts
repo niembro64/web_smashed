@@ -118,7 +118,7 @@ export const updateFlagMovement = (game: Game): void => {
   // another player is toucher
   // go down
   if (toucher !== null && toucher !== owner) {
-    let v = game.players[toucher].emitterDark.visible
+    let v = game?.players[toucher]?.emitterDark?.visible
       ? game.flagSpeedDark
       : game.flagSpeed;
     f.spriteFlagMover.body.setVelocityY(v);

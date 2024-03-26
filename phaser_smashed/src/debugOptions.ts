@@ -1,6 +1,7 @@
 import { Debug } from "./scenes/interfaces";
 
 export const debugInit: Debug = {
+  AllowEmitters: false,
   DevMode: false,
   DevZoom: 8,
   Level: 7, //0123456
@@ -53,6 +54,7 @@ export const debugInit: Debug = {
 };
 
 export const debugMax: Debug = {
+  AllowEmitters: true,
   Level: 7, //0123456
   ModeInfinity: true,
   NumShots: 15,
@@ -104,8 +106,10 @@ export const debugMax: Debug = {
   GravityLight: false,
 };
 
+
 // TRUE means SHOWN ON MAIN PAGE
 export const mainOptionsDebugShow: Debug = {
+  AllowEmitters: false,
   Level: 0, //0123456
   ModeInfinity: false,
   NumShots: 1,

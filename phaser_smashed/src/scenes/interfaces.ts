@@ -3,6 +3,7 @@ import { print } from '../views/client';
 import { Bullets } from './helpers/bullets';
 
 export interface Debug {
+  AllowEmitters: boolean;
   DevMode: boolean;
   DevZoom: number;
   Level: number;

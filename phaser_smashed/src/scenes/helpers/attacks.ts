@@ -1,3 +1,4 @@
+import { debugInit } from '../../debugOptions';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { AttackEnergy, AttackPhysical, Player } from '../interfaces';
 import { setEmitterPlayerOnFalse } from './damage';
@@ -64,9 +65,11 @@ export function updateAirDodge(player: Player, game: Game): void {
     }
     // player.char.sprite.body.setVelocityY(game.BASE_PLAYER_JUMP_ENERGY);
     player.char.upB.canUse = false;
-    player.emitterPlayer.active = true;
+    if (debugInit.AllowEmitters) {
+      player.emitterPlayer.active = true;
+      player.emitterPlayer.on = true;
+    }
     // player.emitterPlayer.visible = true;
-    player.emitterPlayer.on = true;
     // player.emitterPlayer.setAlpha(1);
     // setTimeout(() => {
     //   player.emitterPlayer.on = false;
@@ -74,7 +77,9 @@ export function updateAirDodge(player: Player, game: Game): void {
   }
 
   if (!pCurr.B && !pPrev.B) {
-    player.emitterPlayer.on = false;
+    if (debugInit.AllowEmitters) {
+      player.emitterPlayer.on = false;
+    }
   }
   // if (player.char.sprite.body.velocity.y > 0) {
   //   player.emitterPlayer.on = false;
@@ -82,7 +87,7 @@ export function updateAirDodge(player: Player, game: Game): void {
 
   if (
     (pTouch.down || pTouch.left || pTouch.right) &&
-    !player.emitterPlayer.on
+    !player?.emitterPlayer?.on
   ) {
     player.char.upB.canUse = true;
     // player.emitterPlayer.on = false;
@@ -91,7 +96,7 @@ export function updateAirDodge(player: Player, game: Game): void {
 }
 
 export function updatePlayerGravityIfEmitterPlayer(player: Player): void {
-  if (player.emitterPlayer.on) {
+  if (player?.emitterPlayer?.on) {
     player.char.sprite.body.allowGravity = false;
   } else {
     player.char.sprite.body.allowGravity = true;
@@ -112,7 +117,7 @@ export function setPhysicsBulletOff(player: Player, bulletIndex: number): void {
   let b =
     player.char.attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
 
-  if (!b) {
+  if (!b?.body?.gameObject) {
     return;
   }
 
@@ -127,7 +132,7 @@ export function setPhysicsBulletOn(player: Player, bulletIndex: number): void {
   let b =
     player.char.attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
 
-  if (!b) {
+  if (!b?.body?.gameObject) {
     return;
   }
 
@@ -236,6 +241,10 @@ export function setBulletOffscreen(
     player.char.attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
 
   if (!b) {
+    return;
+  }
+
+  if (!b.body) {
     return;
   }
 

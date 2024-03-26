@@ -1,3 +1,4 @@
+import { debugInit } from '../../debugOptions';
 import { print } from '../../views/client';
 import Game from '../Game';
 import {
@@ -68,18 +69,25 @@ export function setPlayerPowerState(
       }
       // p.emitterDark.active = false;
       // p.emitterDark.on = false;
-      p.emitterDark.visible = false;
+      if (debugInit.AllowEmitters) {
+        p.emitterDark.visible = false;
+      }
       break;
     case 'dark':
       // p.emitterDark.active = true;
       // p.emitterDark.on = true;
-      p.emitterDark.visible = true;
+      if (debugInit.AllowEmitters) {
+        p.emitterDark.visible = true;
+      }
       game.chomp.darknessMoments.passed = game.gameNanoseconds;
       break;
     case 'light':
       // p.emitterDark.active = false;
       // p.emitterDark.on = false;
-      p.emitterDark.visible = false;
+      if (debugInit.AllowEmitters) {
+        p.emitterDark.visible = false;
+      }
+
       break;
   }
 }
@@ -224,7 +232,9 @@ export function setChompPowerState(
     case 'none':
       // c.emitterDark.active = false;
       // c.emitterDark.on = false;
-      c.emitterDark.visible = false;
+      if (debugInit.AllowEmitters) {
+        c.emitterDark.visible = false;
+      }
 
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_walking');
@@ -233,7 +243,9 @@ export function setChompPowerState(
     case 'dark':
       // c.emitterDark.active = true;
       // c.emitterDark.on = true;
-      c.emitterDark.visible = true;
+      if (debugInit.AllowEmitters) {
+        c.emitterDark.visible = true;
+      }
 
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_chomping');

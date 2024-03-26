@@ -108,9 +108,17 @@ export const axiosSaveOne = async (
 
   if (process.env.NODE_ENV === 'production') {
     // await axios.post('http://3.86.180.36:8000/api/smashed/create', sessionInfo);
-    await axios.post('/api/smashed/create', sessionInfo);
+    try {
+      await axios.post('/api/smashed/create', sessionInfo);
+    } catch (error) {
+      print('error', error);
+    }
   } else {
-    await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
+    try {
+      await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
+    } catch (error) {
+      print('error', error);
+    }
   }
   return sessionInfo;
 };
@@ -126,19 +134,46 @@ export const axiosUpsertOne = async (
     moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
   );
 
-  let s: SessionInfo;
+  let s: SessionInfo = {
+    smashConfig: '',
+    debug: '',
+    ip: '',
+    momentCreated: '',
+    city: '',
+    region: '',
+    country: '',
+    clientVisits: 0,
+    countryArea: 0,
+    latitude: 0,
+    longitude: 0,
+    network: '',
+    postal: '',
+    matrixShotsUnto: '',
+    matrixDeathsUnto: '',
+    matrixHitsUnto: '',
+  };
+
   if (process.env.NODE_ENV === 'production') {
     let apiString: string =
       '/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     print('apiString', apiString);
-    s = await axios.get(apiString);
+    try {
+      s = await axios.get(apiString);
+    } catch (error) {
+      print('error', error);
+    }
   } else {
     let apiString: string =
       'http://localhost:8000/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     print('apiString', apiString);
-    s = await axios.get(apiString);
+
+    try {
+      s = await axios.get(apiString);
+    } catch (error) {
+      print('error', error);
+    }
   }
 
   print('axiosUpsertOne');
@@ -203,12 +238,20 @@ export const axiosUpsertOne = async (
   // };
 
   if (process.env.NODE_ENV === 'production') {
-    await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
+    try {
+      await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
+    } catch (error) {
+      print('error', error);
+    }
   } else {
-    await axios.patch(
-      'http://localhost:8000/api/smashed/momentCreated/' + si.momentCreated,
-      si
-    );
+    try {
+      await axios.patch(
+        'http://localhost:8000/api/smashed/momentCreated/' + si.momentCreated,
+        si
+      );
+    } catch (error) {
+      print('error', error);
+    }
   }
 };
 
@@ -216,12 +259,21 @@ export const getAllAxios = async (): Promise<SessionInfo[]> => {
   let response;
   if (process.env.NODE_ENV === 'production') {
     // response = await axios.get('http://3.86.180.36:8000/api/smashed');
-    response = await axios.get('/api/smashed');
+
+    try {
+      response = await axios.get('/api/smashed');
+    } catch (error) {
+      print('error', error);
+    }
   } else {
-    response = await axios.get('http://localhost:8000/api/smashed');
+    try {
+      response = await axios.get('http://localhost:8000/api/smashed');
+    } catch (error) {
+      print('error', error);
+    }
   }
 
-  return response.data;
+  return response?.data;
 };
 
 export function sumNumbersIn2DArrayString(s: string) {

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import Phaser from "phaser";
-import Game from "../scenes/Game";
-import "../App.css";
-import { Link } from "react-router-dom";
-import Play from "./Play";
+import { useState } from 'react';
+import Phaser from 'phaser';
+import Game from '../scenes/Game';
+import '../App.css';
+import { Link } from 'react-router-dom';
+import Play from './Play';
 
 function Start() {
   const [sGame, setSGame] = useState();
@@ -22,7 +22,7 @@ function Start() {
     ],
   });
   const configFirst: Phaser.Types.Core.GameConfig = {
-    title: "Smashed",
+    title: 'Smashed',
     // bannerBackgroundColor: [],
     antialias: true,
     pixelArt: false,
@@ -40,7 +40,7 @@ function Start() {
       // autoRound: true,
     },
     type: Phaser.AUTO,
-    parent: "phaser-container",
+    parent: 'phaser-container',
     // #{numPlayers}
     // bannerTextColor: [
     //   "#00000055",
@@ -49,15 +49,15 @@ function Start() {
     //   "#00000055",
     //   "#00000055",
     // ],
-    backgroundColor: "#00000055",
+    backgroundColor: '#00000055',
     // backgroundColor: '#0077dd',
     input: {
       gamepad: true,
     },
     physics: {
-      default: "arcade",
+      default: 'arcade',
       arcade: {
-        gravity: { y: 3000 },
+        gravity: { y: 3000, x: 0 },
         debug: false,
         // debug: true,
       },
@@ -90,11 +90,11 @@ function Start() {
     let newSmashConfig = { players: [...newPlayers] };
 
     myGame = new Phaser.Game(configFirst);
-    myGame.registry.set("parentContext", Play);
+    myGame.registry.set('parentContext', Play);
     // newGame.registry.set("smashConfig", smashConfig);
-    myGame.registry.set("smashConfig", newSmashConfig);
+    myGame.registry.set('smashConfig', newSmashConfig);
     setSGame(myGame);
-    myGame.registry.set("smashGame", sGame);
+    myGame.registry.set('smashGame', sGame);
   };
 
   const onclickButtons = (playerIndex: number, flipState: boolean): void => {
@@ -132,9 +132,9 @@ function Start() {
                     <img
                       className="startImage"
                       src={
-                        "images/character_" +
+                        'images/character_' +
                         player.characterId.toString() +
-                        "_cropped.png"
+                        '_cropped.png'
                       }
                       alt="char"
                     />
@@ -165,7 +165,8 @@ function Start() {
           );
         })}
       </div>
-      <Link to={"/play"} className="playLink">
+      {/* @ts-ignore */}
+      <Link to={'/play'} className="playLink">
         <button className="btn btn-primary px-4" onClick={onStartHandler}>
           Start
         </button>

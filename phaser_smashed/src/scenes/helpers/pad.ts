@@ -12,10 +12,16 @@ import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 import { print } from '../../views/client';
+import { debugInit } from '../../debugOptions';
 
 export function updateGamePadsMaster(game: Game): void {
   let numPlayers = game.players.length;
   let padIndex = 0;
+
+  if (!game?.input?.gamepad) {
+    return;
+  }
+
   let numPads = game.input.gamepad.gamepads.length;
 
   for (let i = 0; i < numPlayers; i++) {
@@ -604,7 +610,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
   if (
     !getIsAttackEnergyOffscreen(player.char.attackEnergy) &&
     !isAttackEnergyNearPlayer(player) &&
-     getIsSpriteMoving(player.char.attackEnergy.sprite)
+    getIsSpriteMoving(player.char.attackEnergy.sprite)
   ) {
     return;
   }
@@ -794,7 +800,7 @@ export function updateControllerMovement(player: Player, game: Game): void {
       return;
     }
 
-    if (player.emitterPlayer.on) {
+    if (debugInit.AllowEmitters && player?.emitterPlayer?.on) {
       return;
     }
 

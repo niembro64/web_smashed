@@ -503,7 +503,7 @@ export function updateBotRules(
       Math.random() >
         (game.flag.toucherCurr.id === null
           ? 0.99
-          : player.emitterDark.visible
+          : player?.emitterDark?.visible
           ? 0
           : 0.95)
     ) {

@@ -43,6 +43,11 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
   fire(pos: Position, vel: Velocity, game: Game): void {
     this.initialPosition = { x: pos.x, y: pos.y };
     this.timeAlive = 0;
+
+    if (!this?.body) {
+      return;
+    }
+
     this.body.reset(pos.x, pos.y);
     this.floatVelocityY = this.Y_ADDER + this.Y_RANDOM * Math.random();
     // this.floatVelocityY = this.FLOAT_VELOCITY_Y * normalRandom(0.5, 0.2);
@@ -90,6 +95,10 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.y > this.screen.HEIGHT ||
         this.y < 0
       ) {
+        if (!this?.body) {
+          return;
+        }
+
         this.body.bounce.set(0);
         this.setActive(false);
         this.setVisible(false);
@@ -103,6 +112,9 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     // if (this.timeAlive > 500) {
     if (this.timeAlive > 5000 || distance > 350) {
+      if (!this?.body) {
+        return;
+      }
       // if (distance > 350) {
       this.body.bounce.set(0);
       this.setActive(false);

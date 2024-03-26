@@ -1,7 +1,8 @@
-import Game, { SCREEN_DIMENSIONS } from "../Game";
-import { Player } from "../interfaces";
-import { getIsAttackEnergyOffscreen } from "./attacks";
-import { getGameHitbackMultiplier, getNormalizedVector } from "./damage";
+import { debugInit } from '../../debugOptions';
+import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { Player } from '../interfaces';
+import { getIsAttackEnergyOffscreen } from './attacks';
+import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
 export function updateCirclesLocations(game: Game): void {
   if (!game.debug.PlayerIdVisible || game.debug.CharsColored) {
@@ -105,13 +106,13 @@ export function setRespawn(player: Player, game: Game): void {
 
 export function updateLastDirectionTouched(player: Player): void {
   if (player.char.sprite.body.touching.up) {
-    player.char.lastDirectionTouched = "up";
+    player.char.lastDirectionTouched = 'up';
   } else if (player.char.sprite.body.touching.down) {
-    player.char.lastDirectionTouched = "down";
+    player.char.lastDirectionTouched = 'down';
   } else if (player.char.sprite.body.touching.left) {
-    player.char.lastDirectionTouched = "left";
+    player.char.lastDirectionTouched = 'left';
   } else if (player.char.sprite.body.touching.right) {
-    player.char.lastDirectionTouched = "right";
+    player.char.lastDirectionTouched = 'right';
   }
 }
 
@@ -179,7 +180,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
     // // horizontal stuff WAS TOUCHING
     if (
       game.debug.WallJumpsActive &&
-      player.char.lastDirectionTouched === "left" &&
+      player.char.lastDirectionTouched === 'left' &&
       hasPlayerTouchedWallRecently(player)
     ) {
       player.char.sprite.body.setVelocityX(
@@ -192,7 +193,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
 
     if (
       game.debug.WallJumpsActive &&
-      player.char.lastDirectionTouched === "right" &&
+      player.char.lastDirectionTouched === 'right' &&
       hasPlayerTouchedWallRecently(player)
     ) {
       player.char.sprite.body.setVelocityX(
@@ -206,7 +207,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
 }
 
 export function updateJumpFloat(player: Player, game: Game): void {
-  if (player.emitterPlayer.on) {
+  if (debugInit.AllowEmitters && player?.emitterPlayer?.on) {
     return;
   }
   if (player.padCurr.Y && player.padPrev.Y) {
@@ -417,7 +418,7 @@ export function getNearestPlayerAliveXY(
   let ae = player.char.attackEnergy;
 
   game.players.forEach((player, playerIndex) => {
-    if (pIndex !== playerIndex && player.state.name === "player-state-alive") {
+    if (pIndex !== playerIndex && player.state.name === 'player-state-alive') {
       let otherPlayerX = player.char.sprite.x;
       let otherPlayerY = player.char.sprite.y;
       let myX = ae.sprite.x;
@@ -593,6 +594,11 @@ export function getIsSpriteMoving(
   sprite: Phaser.Physics.Arcade.Sprite
 ): boolean {
   const tolerance = 0.1;
+
+  if (!sprite?.body) {
+    return false;
+  }
+
   const isMoving = Math.abs(sprite.body.velocity.x) > tolerance;
   // console.log('isMoving', isMoving, 'velocity', sprite.body.velocity);
   return isMoving;

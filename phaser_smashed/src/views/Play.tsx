@@ -224,16 +224,18 @@ function Play() {
   useEffect(() => {
     print('canPlayAudio', canPlayAudio);
 
-    if (canPlayAudio) {
-      garageRef.current.play();
-      garageRef.current.addEventListener('ended', () => {
-        garageRef.current.play();
-      });
-
-      monkeysRef.current.addEventListener('ended', () => {
-        monkeysRef.current.play();
-      });
+    if (!canPlayAudio) {
+      return;
     }
+
+    garageRef.current.play();
+    garageRef.current.addEventListener('ended', () => {
+      garageRef.current.play();
+    });
+
+    monkeysRef.current.addEventListener('ended', () => {
+      monkeysRef.current.play();
+    });
   }, [canPlayAudio]);
 
   useEffect(() => {
@@ -303,6 +305,32 @@ function Play() {
     moment: moment(),
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const setFirstCharacterSlot = (charId: CharacterId): void => {
+    if (debugState.UseChez || webState === 'play') {
+      return;
+    }
+    if (charId === 4) {
+      bamPlay();
+      // onClickSetInputArrayElement(0, 2);
+      // onClickSetInputArrayElement(1, 0);
+      // onClickSetInputArrayElement(2, 0);
+      // onClickSetInputArrayElement(3, 0);
+      // onClickSetChez();
+      setInputArray([2, 0, 0, 0]);
+    }
+    if (charId === 5) {
+      woahPlay();
+      setInputArray([2, 0, 0, 0]);
+    }
+
+    let choices = [...smashConfig.players];
+    let choice = choices[0];
+    choice.characterId = charId;
+
+    setSmashConfig({ players: [...choices] });
+  };
+
   useEffect(() => {
     const handleTranceEnded = (): void => {
       setFirstCharacterSlot(4);
@@ -314,12 +342,17 @@ function Play() {
     switch (playChezState.name) {
       case 'up':
         tranceRef.current.pause();
-        garageRef.current.play();
+        if (canPlayAudio) {
+          garageRef.current.play();
+        }
         tranceRef.current.removeEventListener('ended', handleTranceEnded);
         break;
       case 'down':
         tranceRef.current.play();
-        garageRef.current.pause();
+
+        if (canPlayAudio) {
+          garageRef.current.pause();
+        }
         tranceRef.current.addEventListener('ended', handleTranceEnded, {
           once: true,
         });
@@ -356,7 +389,9 @@ function Play() {
     print('webState', webState);
     switch (webState) {
       case 'start':
-        garageRef.current.play();
+        if (canPlayAudio) {
+          garageRef.current.play();
+        }
         monkeysRef.current.pause();
         setTopBarDivExists(false);
         setTimeout(() => {
@@ -369,7 +404,9 @@ function Play() {
         break;
       case 'loader':
         garageRef.current.pause();
-        monkeysRef.current.play();
+        if (canPlayAudio) {
+          monkeysRef.current.play();
+        }
         setShowLoaderIntervalFunction();
         break;
       case 'play':
@@ -380,7 +417,7 @@ function Play() {
       default:
         break;
     }
-  }, [debugState.DevMode, webState]);
+  }, [debugState.DevMode, webState, canPlayAudio]);
 
   const keyboardGroups: KeyboardGroup[][] = [
     [
@@ -540,7 +577,7 @@ function Play() {
     physics: {
       default: 'arcade',
       arcade: {
-        gravity: { y: 3000 * (debugState.GravityLight ? 0.5 : 1) },
+        gravity: { y: 3000 * (debugState.GravityLight ? 0.5 : 1), x: 0 },
         debug: debugState.DevMode,
       },
     },
@@ -690,31 +727,6 @@ function Play() {
   };
   const woahPlay = (): void => {
     woah();
-  };
-
-  const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debugState.UseChez || webState === 'play') {
-      return;
-    }
-    if (charId === 4) {
-      bamPlay();
-      // onClickSetInputArrayElement(0, 2);
-      // onClickSetInputArrayElement(1, 0);
-      // onClickSetInputArrayElement(2, 0);
-      // onClickSetInputArrayElement(3, 0);
-      // onClickSetChez();
-      setInputArray([2, 0, 0, 0]);
-    }
-    if (charId === 5) {
-      woahPlay();
-      setInputArray([2, 0, 0, 0]);
-    }
-
-    let choices = [...smashConfig.players];
-    let choice = choices[0];
-    choice.characterId = charId;
-
-    setSmashConfig({ players: [...choices] });
   };
 
   function ensureTypeCharacterName<CharacterName>(
@@ -1229,7 +1241,7 @@ function Play() {
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
-          <p className="third-loader-p">Loading can take a hot minute.</p>
+          <p className="third-loader-p">Loading can take a hot minute...</p>
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
