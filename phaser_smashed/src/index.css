@@ -5,7 +5,7 @@
   color: white; */
   /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
   /* font-family: "Press Start 2P", cursive; */
-  font-family: "Press Start 2P";
+  font-family: 'Press Start 2P';
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -25,5 +25,5 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  font-family: "Press Start 2P";
+  font-family: 'Press Start 2P';
 }
