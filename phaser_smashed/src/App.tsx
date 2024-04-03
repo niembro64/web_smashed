@@ -3,7 +3,6 @@ import './App.css';
 // import "@fontsource/press-start-2p";
 
 import { Switch, Route } from 'react-router-dom';
-import Start from './views/Start';
 import Play from './views/Play';
 
 function App() {
@@ -44,9 +43,6 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/start">
-          <Start />
-        </Route>
         <Route exact path="/">
           <Play />
         </Route>

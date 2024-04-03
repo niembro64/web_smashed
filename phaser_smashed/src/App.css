@@ -5,6 +5,8 @@
   --gray-lighter: #555555;
   --gray-lightest: #888888;
   --green-active: hsl(100, 20%, 30%);
+  --magenta-active: hsl(300, 20%, 30%);
+  --orange-active: hsl(30, 20%, 30%);
   --blue-start: hsl(200, 70%, 10%);
   --blue-start-lighter: hsl(200, 70%, 20%);
   --border-radius-big: 7vw;
@@ -851,7 +853,8 @@ h2 {
 }
 
 .b-dark {
-  background-color: var(--gray-dark);
+  /* background-color: var(--gray-dark); */
+  background-color: var(--magenta-active);
   color: rgba(255, 255, 255, 1);
   transition: 0.5s ease;
 }
@@ -860,7 +863,7 @@ h2 {
   transition: 0.5s ease;
 }
 .b-dark:active {
-  background-color: var(--green-active);
+  background-color: var(--orange-active);
   transition: 0.5s ease;
 }
 
@@ -904,8 +907,9 @@ h2 {
   align-items: center;
 
   transform: rotate(-30deg);
-  filter: grayscale(1) contrast(1) brightness(100) invert(1) contrast(0.1)
-    brightness(0.5);
+  /* filter: grayscale(1) contrast(1) brightness(100) invert(1) contrast(0.1)
+    brightness(0.5); */
+  filter: contrast(1) brightness(1);
   z-index: 0;
   transition: var(--duration-hover) ease;
 }
@@ -923,7 +927,8 @@ h2 {
 }
 
 .b-oscuro:hover > .button-input-emoji {
-  filter: contrast(0.5) brightness(0.2);
+  /* filter: contrast(0.5) brightness(0.2); */
+  filter: contrast(0.5) brightness(0.4);
   animation: emoji-animation 0.3s ease-in-out both;
   transition: var(--duration-hover) ease;
 }
@@ -946,6 +951,24 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: rgba(255, 255, 255, 0);
+
+  margin: -5vh;
+
+  z-index: 1;
+}
+.b-oscuro:hover > span {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  /* margin-top: 2vh; */
+  font-size: 1.7vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
 
   margin: -5vh;
 
