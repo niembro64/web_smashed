@@ -315,7 +315,7 @@ function Play() {
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('start');
-  const [openEye, setOpenEye] = useState<boolean>(true);
+  const [openEye, setOpenEye] = useState<boolean>(false);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
