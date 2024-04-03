@@ -8,7 +8,7 @@ export const debugInit: Debug = {
   NumShots: 7, //7
   TimeMinutes: 7, //01234567
   MusicActive: true,
-  MusicTrack: 3, // 012
+  MusicTrack: 0, // 0123
   ReadySoundActive: false,
   UseCamera: true,
   CamerasVisible: false,
