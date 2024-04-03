@@ -53,8 +53,6 @@ export const NNTrainLSTM = async (game: Game): Promise<void> => {
 
   print('NNTrain');
 
-  // game.nnNet = new NeuralNetwork(nnConfig);
-  // game.nnNet = new recurrent.RNN(nnConfig);
   game.nnNet = new recurrent.LSTM(nnConfigLSTM);
   print('game.nnNet', game.nnNet);
   await game.nnNet.train(game.nnObjects, {
@@ -126,9 +124,9 @@ export const NNGetOutputStatic = (
       isPFacingEnemy = true;
     }
   }
-  let pCurr = player.padCurr;
+  const pCurr = player.padCurr;
 
-  let input: number[] = [
+  const input: number[] = [
     pCurr.up ? 1 : 0,
     pCurr.down ? 1 : 0,
     pCurr.left ? 1 : 0,
@@ -147,7 +145,7 @@ export const NNGetOutputStatic = (
     isPFacingEnemy ? 1 : 0,
   ];
 
-  let output: number[] = game.nnNet.run(input);
+  const output: number[] = game.nnNet.run(input);
 
   // print('input', JSON.stringify(input, null, 2));
   // print('output', JSON.stringify(output, null, 2));
@@ -163,10 +161,10 @@ export const NNSetPlayerPadStatic = (
   //   return;
   // }
 
-  let enemy = getNearestPlayerAliveXY(player, playerIndex, game);
-  let enemyAE = getNearestAttackEnergyXY(player, playerIndex, game);
+  const enemy = getNearestPlayerAliveXY(player, playerIndex, game);
+  const enemyAE = getNearestAttackEnergyXY(player, playerIndex, game);
 
-  let output = NNGetOutputStatic(
+  const output = NNGetOutputStatic(
     player,
     enemy.x,
     enemy.y,
@@ -175,7 +173,7 @@ export const NNSetPlayerPadStatic = (
     game
   );
 
-  let r: number[] = NNRatiosNN;
+  const r: number[] = NNRatiosNN;
 
   player.padCurr.up = output[0] > 1 - r[0] ? true : false;
   player.padCurr.down = output[1] > 1 - r[1] ? true : false;
@@ -209,8 +207,8 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
     return;
   }
 
-  let p = game.players[0];
-  let enemy = game.players[1];
+  const p = game.players[0];
+  const enemy = game.players[1];
 
   let isPFacingEnemy: boolean = false;
   if (p.char.sprite.x < enemy.char.sprite.x) {
@@ -223,85 +221,7 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
     }
   }
 
-  let newNNObject: NNObject = {
-    input: [
-      // p.padCurr.up ? 1 : 0,
-      // p.padCurr.down ? 1 : 0,
-      // p.padCurr.left ? 1 : 0,
-      // p.padCurr.right ? 1 : 0,
-      // p.padCurr.A ? 1 : 0,
-      // p.padCurr.B ? 1 : 0,
-      // p.padCurr.X ? 1 : 0,
-      // p.padCurr.Y ? 1 : 0,
-      p.padDebounced.up,
-      p.padDebounced.down,
-      p.padDebounced.left,
-      p.padDebounced.right,
-      p.padDebounced.A,
-      p.padDebounced.B,
-      p.padDebounced.X,
-      p.padDebounced.Y,
-      p.char.sprite.x - enemy.char.sprite.x / SCREEN_DIMENSIONS.WIDTH,
-      p.char.sprite.y - enemy.char.sprite.y / SCREEN_DIMENSIONS.HEIGHT,
-      p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
-      p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
-      p.char.sprite.body.touching.down ? 1 : 0,
-      p.char.sprite.body.touching.left ? 1 : 0,
-      p.char.sprite.body.touching.right ? 1 : 0,
-      isPFacingEnemy ? 1 : 0,
-    ],
-    output: [
-      p.padCurr.up ? 1 : 0,
-      p.padCurr.down ? 1 : 0,
-      p.padCurr.left ? 1 : 0,
-      p.padCurr.right ? 1 : 0,
-      p.padCurr.A ? 1 : 0,
-      p.padCurr.B ? 1 : 0,
-      p.padCurr.X ? 1 : 0,
-      p.padCurr.Y ? 1 : 0,
-      // p.padCurr.L ? 1 : 0,
-      // p.padCurr.R ? 1 : 0,
-      // p.padCurr.start ? 1 : 0,
-      // p.padCurr.select ? 1 : 0,
-    ],
-  };
-  print('newNNObject', JSON.stringify(newNNObject, null, 2));
-
-  game.nnObjects.push(newNNObject);
-
-  // print('game.nnObjects', game.nnObjects);
-};
-export const addPlayerOneNNObjectsChange = (game: Game): void => {
-  if (!game.debug.NNP1Train) {
-    return;
-  }
-
-  if (game.gameState.nameCurr !== 'game-state-play') {
-    return;
-  }
-
-  if (
-    game.players[0].state.name === 'player-state-dead' ||
-    game.players[0].state.name === 'player-state-start'
-  ) {
-    return;
-  }
-
-  let p = game.players[0];
-  let enemy = game.players[1];
-
-  let isPFacingEnemy: boolean = false;
-  if (p.char.sprite.x < enemy.char.sprite.x) {
-    if (p.char.sprite.flipX) {
-      isPFacingEnemy = true;
-    }
-  } else {
-    if (!p.char.sprite.flipX) {
-      isPFacingEnemy = true;
-    }
-  }
-
-  let newNNObject: NNObject = {
+  const newNNObject: NNObject = {
     input: [
       // p.padCurr.up ? 1 : 0,
       // p.padCurr.down ? 1 : 0,
@@ -351,10 +271,10 @@ export const addPlayerOneNNObjectsChange = (game: Game): void => {
 };
 
 export const NNDownloadNNObjects = (game: Game): void => {
-  let nnObjects = game.nnObjects;
-  let nnObjectsString = JSON.stringify(nnObjects, null, 2);
-  let blob = new Blob([nnObjectsString], { type: 'text/plain' });
-  let url = URL.createObjectURL(blob);
+  const nnObjects = game.nnObjects;
+  const nnObjectsString = JSON.stringify(nnObjects, null, 2);
+  const blob = new Blob([nnObjectsString], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
   // Create an anchor tag with the download attribute
   const downloadLink = document.createElement('a');
   downloadLink.setAttribute('href', url);

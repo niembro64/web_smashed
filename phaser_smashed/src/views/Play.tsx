@@ -478,22 +478,22 @@ function Play() {
   ];
 
   const randomizeCharacters = () => {
-    let numBase: number = 4;
-    let numChez: number = debugState.UseChez ? 2 : 0;
-    let numKoopas: number = debugState.UseKoopas ? 3 : 0;
-    let numTotal: number = numBase + numChez + numKoopas;
+    const numBase: number = 4;
+    const numChez: number = debugState.UseChez ? 2 : 0;
+    const numKoopas: number = debugState.UseKoopas ? 3 : 0;
+    const numTotal: number = numBase + numChez + numKoopas;
 
-    let ratioBase: number = numBase / numTotal;
-    let ratioChez: number = numChez / numTotal;
-    let ratioKoopas: number = numKoopas / numTotal;
+    const ratioBase: number = numBase / numTotal;
+    const ratioChez: number = numChez / numTotal;
+    const ratioKoopas: number = numKoopas / numTotal;
 
-    let baseUpperLimit: number = ratioBase;
-    let chezUpperLimit: number = baseUpperLimit + ratioChez;
+    const baseUpperLimit: number = ratioBase;
+    const chezUpperLimit: number = baseUpperLimit + ratioChez;
 
-    let newPlayers: PlayerConfigSmall[] = [];
+    const newPlayers: PlayerConfigSmall[] = [];
 
     for (let i = 0; i < 4; i++) {
-      let rand: number = Math.random();
+      const rand: number = Math.random();
       let newId: number | null = null;
       if (rand < baseUpperLimit) {
         newId = Math.floor(rand * numBase);
@@ -511,7 +511,7 @@ function Play() {
 
     setSmashConfig({ players: newPlayers });
   };
-  let config: Phaser.Types.Core.GameConfig = {
+  const config: Phaser.Types.Core.GameConfig = {
     plugins: {
       global: [
         {
@@ -523,7 +523,7 @@ function Play() {
     },
     transparent: true,
     title: 'Smashed',
-    antialias: true,
+    // antialias: true,
     pixelArt: false,
     scale: {
       mode: Phaser.Scale.FIT,
