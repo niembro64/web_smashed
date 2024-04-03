@@ -1,23 +1,21 @@
-import Game, { SCREEN_DIMENSIONS } from "../Game";
-import { Player, Position, Velocity, xyVector } from "../interfaces";
-import { getIsPlayerInAir } from "./attacks";
-import { getNormalizedVector } from "./damage";
+import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { Player, Position, Velocity, xyVector } from '../interfaces';
+import { getIsPlayerInAir } from './attacks';
+import { getNormalizedVector } from './damage';
 import {
   getDistance,
   getNearestAttackEnergyXY,
   getNearestAttackEnergyXYAbove,
   getNearestPlayerAliveXY,
   hasPlayerTouchedWallRecently,
-} from "./movement";
-import { NNSetPlayerPadStatic } from "./nn";
-
+} from './movement';
+import { NNSetPlayerPadStatic } from './nn';
 export function getIsBot(player: Player, game: Game): boolean {
   if (player.inputType === 3) {
     return true;
   }
   return false;
 }
-
 export function getIsBotNearNearestPlayer(
   player: Player,
   playerIndex: number,
@@ -28,67 +26,52 @@ export function getIsBotNearNearestPlayer(
     x: SCREEN_DIMENSIONS.WIDTH / 2,
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
-
   // game.players.forEach((player, playerIndex) => {
   nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
   // });
-
   let distance = Math.sqrt(
     Math.pow(player.char.sprite.x - nearestPlayerPosition.x, 2) +
       Math.pow(player.char.sprite.y - nearestPlayerPosition.y, 2)
   );
-
   if (distance < amount) {
     return true;
   }
-
   return false;
 }
-
 export function getSameHorizontalSlice(player: Player, game: Game): boolean {
   let nearestPlayerPosition: Position = {
     x: SCREEN_DIMENSIONS.WIDTH / 2,
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
-
   game.players.forEach((player, playerIndex) => {
     nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
   });
-
   let bot = player.char.sprite;
-
   if (
     nearestPlayerPosition.y > bot.Y + 120 &&
     nearestPlayerPosition.y < bot.Y - 50
   ) {
     return true;
   }
-
   return false;
 }
-
 export function getSameVerticalSlice(player: Player, game: Game): boolean {
   let nearestPlayerPosition: Position = {
     x: SCREEN_DIMENSIONS.WIDTH / 2,
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
-
   let bot = player.char.sprite;
-
   game.players.forEach((player, playerIndex) => {
     nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
   });
-
   if (
     nearestPlayerPosition.x > bot.x - 200 &&
     nearestPlayerPosition.x < bot.x + 200
   ) {
     return true;
   }
-
   return false;
 }
-
 export function getIsBotFacingNearestPlayer(
   player: Player,
   playerIndex: number,
@@ -98,21 +81,32 @@ export function getIsBotFacingNearestPlayer(
     x: SCREEN_DIMENSIONS.WIDTH / 2,
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
-
   let bot = player.char.sprite;
-
   nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
-
   if (
     (bot.x > nearestPlayerPosition.x && bot.flipX) ||
     (bot.x < nearestPlayerPosition.x && !bot.flipX)
   ) {
     return true;
   }
-
   return false;
 }
-
+export function getIsBotTooFarMiddleLeft(player: Player, game: Game): boolean {
+  let bot = player.char.sprite;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.49;
+  if (bot.x < left) {
+    return true;
+  }
+  return false;
+}
+export function getIsBotTooFarMiddleRight(player: Player, game: Game): boolean {
+  let bot = player.char.sprite;
+  let right = SCREEN_DIMENSIONS.WIDTH * 0.51;
+  if (bot.x > right) {
+    return true;
+  }
+  return false;
+}
 export function getIsBotTooFarCenterLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
   let left = SCREEN_DIMENSIONS.WIDTH * 0.35;
@@ -131,7 +125,7 @@ export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.07;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.3;
   if (bot.x < left) {
     return true;
   }
@@ -139,7 +133,7 @@ export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarRight(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let right = SCREEN_DIMENSIONS.WIDTH * 0.93;
+  let right = SCREEN_DIMENSIONS.WIDTH * 0.7;
   if (bot.x > right) {
     return true;
   }
@@ -161,7 +155,6 @@ export function getIsBotTooFarDown(player: Player, game: Game): boolean {
   }
   return false;
 }
-
 export function getIsBotInPitAreaLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
   let p = game.pit;
@@ -186,7 +179,6 @@ export function getIsBotInPitAreaBottom(player: Player, game: Game): boolean {
   }
   return false;
 }
-
 export function allPadToFalse(player: Player): void {
   player.padCurr = {
     up: false,
@@ -203,17 +195,15 @@ export function allPadToFalse(player: Player): void {
     select: false,
   };
 }
-
 export type DodgeDirection =
-  | "up"
-  | "down"
-  | "left"
-  | "right"
-  | "up-left"
-  | "up-right"
-  | "down-left"
-  | "down-right";
-
+  | 'up'
+  | 'down'
+  | 'left'
+  | 'right'
+  | 'up-left'
+  | 'up-right'
+  | 'down-left'
+  | 'down-right';
 export function getDodgeDirectionFromNormalizedVector(
   x: number,
   y: number
@@ -221,31 +211,30 @@ export function getDodgeDirectionFromNormalizedVector(
   const tolerance = 0.25;
   if (y < -tolerance) {
     if (x < -tolerance) {
-      return "up-left";
+      return 'up-left';
     } else if (x > tolerance) {
-      return "up-right";
+      return 'up-right';
     } else {
-      return "up";
+      return 'up';
     }
   } else if (y > tolerance) {
     if (x < -tolerance) {
-      return "down-left";
+      return 'down-left';
     } else if (x > tolerance) {
-      return "down-right";
+      return 'down-right';
     } else {
-      return "down";
+      return 'down';
     }
   } else {
     if (x < -tolerance) {
-      return "left";
+      return 'left';
     } else if (x > tolerance) {
-      return "right";
+      return 'right';
     } else {
-      return "up"; // ideally not possible
+      return 'up'; // ideally not possible
     }
   }
 }
-
 export const getDodgeDirectionPlayerToAttackEnergy = (
   p: Position,
   a: Position
@@ -257,7 +246,6 @@ export const getDodgeDirectionPlayerToAttackEnergy = (
   );
   return direction;
 };
-
 export const getIsNearestAttackEnergyThisClose = (
   player: Player,
   playerIndex: number,
@@ -288,58 +276,56 @@ export const getIsNearestAttackEnergyThisCloseAbove = (
   );
   return dCalc < distance;
 };
-
 export const updatePlayerDodgeInThisDirection = (
   player: Player,
   direction: DodgeDirection
 ): void => {
   let pc = player.padCurr;
   pc.B = true;
-
   switch (direction) {
-    case "up":
+    case 'up':
       pc.up = true;
       pc.down = false;
       pc.left = false;
       pc.right = false;
       break;
-    case "down":
+    case 'down':
       pc.down = true;
       pc.up = false;
       pc.left = false;
       pc.right = false;
       break;
-    case "left":
+    case 'left':
       pc.left = true;
       pc.right = false;
       pc.up = false;
       pc.down = false;
       break;
-    case "right":
+    case 'right':
       pc.right = true;
       pc.left = false;
       pc.up = false;
       pc.down = false;
       break;
-    case "up-left":
+    case 'up-left':
       pc.up = true;
       pc.left = true;
       pc.down = false;
       pc.right = false;
       break;
-    case "up-right":
+    case 'up-right':
       pc.up = true;
       pc.right = true;
       pc.down = false;
       pc.left = false;
       break;
-    case "down-left":
+    case 'down-left':
       pc.down = true;
       pc.left = true;
       pc.up = false;
       pc.right = false;
       break;
-    case "down-right":
+    case 'down-right':
       pc.down = true;
       pc.right = true;
       pc.up = false;
@@ -347,7 +333,6 @@ export const updatePlayerDodgeInThisDirection = (
       break;
   }
 };
-
 export const updatePlayerDodgeIfAttackEnergyTooClose = (
   player: Player,
   playerIndex: number,
@@ -356,7 +341,6 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
   const shortRange = SCREEN_DIMENSIONS.HEIGHT * 0.2;
   const longRange = SCREEN_DIMENSIONS.HEIGHT * 0.5;
   let pCurr = player.padCurr;
-
   if (
     pCurr.B &&
     (getIsBotTooFarUp(player, game) ||
@@ -366,7 +350,6 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
     player.padCurr.B = false;
     return;
   }
-
   if (
     pCurr.B &&
     !player.char.upB.canUse &&
@@ -374,7 +357,6 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
   ) {
     player.padCurr.B = false;
   }
-
   if (
     !pCurr.B &&
     getIsPlayerInAir(player) &&
@@ -389,14 +371,13 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
     updatePlayerDodgeInThisDirection(player, direction);
   }
 };
-
 export function updateBotRules(
   player: Player,
   playerIndex: number,
   game: Game
 ): void {
   let p = player.padCurr;
-  if (game.gameState.nameCurr !== "game-state-play") {
+  if (game.gameState.nameCurr !== 'game-state-play') {
     if (game.timeSeconds % 2 === 0) {
       allPadToFalse(player);
     } else {
@@ -404,42 +385,33 @@ export function updateBotRules(
     }
     return;
   }
-
   let nearestP: Position = getNearestPlayerAliveXY(player, playerIndex, game);
-
   let botSprite = player.char.sprite;
-
   let enemyVector: xyVector = getNormalizedVector(
     botSprite.x,
     botSprite.y,
     nearestP.x,
     nearestP.y
   );
-
   let pVelocity: Velocity = player.char.sprite.body.velocity;
-
   let d = player.padDebounced;
   let t = player.char.sprite.body.touching;
   let jumps = player.char.jumps;
   let jumpIndex = player.char.jumpIndex;
   let hasJump = player.char.jumps[jumpIndex] > 0.3;
   let onLastJump = jumpIndex === jumps.length - 1;
-
   let nearestPDistance = getDistance(
     botSprite.x,
     botSprite.y,
     nearestP.x,
     nearestP.y
   );
-
   // p.select = true;
   // p.L = true;
-
   //////////////////////
   // DODGING
   //////////////////////
   updatePlayerDodgeIfAttackEnergyTooClose(player, playerIndex, game);
-
   //////////////////////
   // MOVEMENT
   //////////////////////
@@ -453,7 +425,6 @@ export function updateBotRules(
       p.right = false;
     }
   }
-
   //////////////////////
   // MOVE TO FLAG | TOUCHING
   //////////////////////
@@ -513,7 +484,6 @@ export function updateBotRules(
       }
     }
   }
-
   if (
     //////////////////////
     // WALL JUMPING
@@ -556,7 +526,6 @@ export function updateBotRules(
   } else {
     p.Y = false;
   }
-
   //////////////////////
   // ENERGY ATTACK
   //////////////////////
@@ -570,7 +539,6 @@ export function updateBotRules(
   } else {
     p.X = false;
   }
-
   //////////////////////
   // PHYSICAL ATTACK
   //////////////////////
@@ -585,7 +553,6 @@ export function updateBotRules(
   } else {
     p.A = false;
   }
-
   //////////////////////
   // TOO FAR LEFT RIGHT
   //////////////////////
@@ -596,7 +563,6 @@ export function updateBotRules(
     p.left = true;
     p.right = false;
   }
-
   //////////////////////
   // TOO FAR UP
   //////////////////////
@@ -607,7 +573,6 @@ export function updateBotRules(
   } else {
     p.down = false;
   }
-
   //////////////////////
   // LEFT SIDE OF PIT AND FALLING
   //////////////////////
@@ -620,7 +585,6 @@ export function updateBotRules(
     p.left = true;
     p.right = false;
   }
-
   //////////////////////
   // RIGHT SIDE OF PIT AND FALLING
   //////////////////////
@@ -633,7 +597,6 @@ export function updateBotRules(
     p.right = true;
     p.left = false;
   }
-
   //////////////////////
   // PIT AND TOUCHING DOWN
   //////////////////////

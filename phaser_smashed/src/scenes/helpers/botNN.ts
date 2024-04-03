@@ -6,10 +6,13 @@ import {
   getIsBotInPitAreaRight,
   getIsBotTooFarCenterLeft,
   getIsBotTooFarCenterRight,
+  getIsBotTooFarLeft,
+  getIsBotTooFarMiddleLeft,
+  getIsBotTooFarMiddleRight,
+  getIsBotTooFarRight,
   getIsBotTooFarUp,
 } from './botRB';
 import { NNSetPlayerPadStatic } from './nn';
-
 export function updateBotNN(
   player: Player,
   playerIndex: number,
@@ -24,45 +27,45 @@ export function updateBotNN(
     }
     return;
   }
-
   NNSetPlayerPadStatic(player, playerIndex, game);
-
   let helpNNBot = true;
   if (!helpNNBot) {
     return;
   }
-
-  const pVelocity: Velocity = player.char.sprite.body.velocity;
-
-  const jumps = player.char.jumps;
-  const jumpIndex = player.char.jumpIndex;
-  const onLastJump = jumpIndex === jumps.length - 1;
-
-  let allow = false;
-
-  if (playerIndex % 2 === 0) {
-    allow = game.timeSeconds % 2 === 0;
+  let pVelocity: Velocity = player.char.sprite.body.velocity;
+  let jumps = player.char.jumps;
+  let jumpIndex = player.char.jumpIndex;
+  let onLastJump = jumpIndex === jumps.length - 1;
+  //////////////////////
+  // TOO FAR LEFT RIGHT CENTER
+  //////////////////////
+  const r = 0.3;
+  if (game.gameSeconds % 2 === playerIndex % 2) {
+    if (getIsBotTooFarMiddleLeft(player, game) && Math.random() > r) {
+      p.right = true;
+      p.left = false;
+    } else if (getIsBotTooFarMiddleRight(player, game) && Math.random() > r) {
+      p.left = true;
+      p.right = false;
+    }
+    if (Math.random() > 0.9) {
+      p.Y = !p.Y;
+    }
   } else {
-    allow = game.timeSeconds % 2 === 1;
+    if (Math.random() > r) {
+      p.X = true;
+    }
   }
-
   //////////////////////
   // TOO FAR LEFT RIGHT
   //////////////////////
-  if (getIsBotTooFarCenterLeft(player, game) && Math.random() > 0.5 && allow) {
+  if (getIsBotTooFarLeft(player, game)) {
     p.right = true;
     p.left = false;
-    p.Y = Math.random() > 0.5;
-  } else if (
-    getIsBotTooFarCenterRight(player, game) &&
-    Math.random() > 0.5 &&
-    allow
-  ) {
+  } else if (getIsBotTooFarRight(player, game)) {
     p.left = true;
     p.right = false;
-    p.Y = Math.random() > 0.5;
   }
-
   //////////////////////
   // TOO FAR UP
   //////////////////////
@@ -73,7 +76,6 @@ export function updateBotNN(
   } else {
     p.down = false;
   }
-
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
@@ -86,7 +88,6 @@ export function updateBotNN(
     p.left = true;
     p.right = false;
   }
-
   //////////////////////
   // RIGHT SIDE OF PIT
   //////////////////////
