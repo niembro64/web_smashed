@@ -629,7 +629,7 @@ function Play() {
       text: "It's safe to say we're not going to the bars tonite.",
     },
     {
-      name: 'Deen Davis Jr.',
+      name: 'DDj',
       text: '...yes you are.',
     },
     // { name: 'Chadams', text: 'AAAYYYUUUGGGGHHHH!!' },
@@ -643,7 +643,7 @@ function Play() {
     { name: 'Ginman', text: "Set it up... and we'll do it... again." },
     // { name: 'Gin', text: 'Shitty, shitty-fuckin-ass.' },
     {
-      name: 'Deen Davis Jr.',
+      name: 'DDj',
       text: 'I can fight you one-handed.',
     },
     // {
