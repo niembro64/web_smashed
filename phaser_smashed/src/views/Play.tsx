@@ -1678,6 +1678,17 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
+                  setInputArray([2, 0, 0, 2]);
+                  blipSound();
+                }}
+              >
+                <span className={'vs-span'}>
+                  {emoji.keyboardWhite + emoji.keyboardWhite}
+                </span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
                   setInputArray([2, 0, 0, 3]);
                   blipSound();
                 }}
@@ -1700,13 +1711,34 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([2, 0, 0, 2]);
+                  setInputArray([1, 0, 0, 1]);
                   blipSound();
                 }}
               >
                 <span className={'vs-span'}>
-                  {emoji.keyboardWhite + emoji.keyboardWhite}
+                  {emoji.gamepad + emoji.gamepad}
                 </span>
+              </div>
+
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([2, 0, 3, 4]);
+                  blipSound();
+                }}
+              >
+                <span className={'vs-span'}>{emoji.keyboardWhite}</span>
+                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([1, 0, 3, 4]);
+                  blipSound();
+                }}
+              >
+                <span className={'vs-span'}>{emoji.gamepad}</span>
+                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1741,6 +1773,16 @@ function Play() {
               >
                 <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
                 <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
+              </div>
+              <div
+                className="b-all-bots"
+                onClick={() => {
+                  setInputArray([3, 4, 3, 4]);
+                  blipSound();
+                }}
+              >
+                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
+                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
               </div>
             </div>
             <div
