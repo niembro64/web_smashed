@@ -682,8 +682,6 @@ h2 {
   justify-content: center;
   align-items: center;
   z-index: 1;
-
-  border: 1px dashed magenta;
 }
 
 .player-choices {
@@ -1035,7 +1033,6 @@ h2 {
 
 .startTitleWrapper {
   width: 100%;
-  border: 3px dashed green;
   flex: 0.6;
   overflow: visible;
   z-index: 4;
@@ -1058,7 +1055,6 @@ h2 {
   transform: translateY(30vh);
   filter: grayscale(1) brightness(3) brightness(0.2);
   z-index: 1;
-  border: 1px dashed red;
   min-width: 0; /* Allows shrinking below content's intrinsic size */
   min-height: 0; /* Allows the elements to shrink vertically */
 }
@@ -1066,7 +1062,6 @@ h2 {
 .startTitle > div {
   width: 100%;
   flex: 2;
-  border: 1px dashed orange;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1076,7 +1071,6 @@ h2 {
 }
 .startTitle > div > img {
   height: 100%;
-  border: 1px dashed green;
   object-fit: contain;
 }
 
@@ -1085,7 +1079,6 @@ h2 {
   width: 100%;
   font-size: 4vw;
   text-align: center;
-  border: 1px dashed blue;
   margin: 0;
 }
 
