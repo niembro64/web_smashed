@@ -71,6 +71,9 @@ function Play() {
 
   const [videoGray, setVideoGray] = useState(false);
 
+  const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
+    useState<Debug>(mainOptionsDebugShow);
+
   useEffect(() => {
     // Define a function to update state on interaction
     const handleUserInteraction = () => {
@@ -1450,7 +1453,7 @@ function Play() {
           <div className="player-choices">
             <div className="player-choices-left">
               {Object.entries(debug).map(([key, value], index: number) => {
-                if (!mainOptionsDebugShow[key]) {
+                if (!mainOptionsDebugShowState[key]) {
                   return null;
                 }
 
@@ -1458,7 +1461,22 @@ function Play() {
                   <div
                     id="optionStart"
                     key={index}
-                    onClick={(e) => {
+                    onClick={(e: React.MouseEvent) => {
+                      if (key === 'ModeInfinity') {
+                        const newMainOpotionsDebugShow: Debug = {
+                          ...mainOptionsDebugShowState,
+                        };
+                        if (debug.ModeInfinity) {
+                          newMainOpotionsDebugShow['TimeMinutes'] = 1;
+                          newMainOpotionsDebugShow['NumShots'] = 0;
+                        } else {
+                          newMainOpotionsDebugShow['TimeMinutes'] = 0;
+                          newMainOpotionsDebugShow['NumShots'] = 1;
+                        }
+
+                        setMainOptionsDebugShowState(newMainOpotionsDebugShow);
+                      }
+
                       blipSound();
                       e.stopPropagation();
                       if (typeof value === 'number') {
@@ -1484,7 +1502,6 @@ function Play() {
                   >
                     {key === 'MusicTrack' && (
                       <p className="key-start">
-                        {/* Music{' '} */}
                         🔊{' '}
                         {(() => {
                           switch (value) {
@@ -1503,17 +1520,19 @@ function Play() {
                       </p>
                     )}
                     {key !== 'MusicTrack' && (
-                      <div className="debug-value">
-                        <p>
-                          {typeof value !== 'boolean'
-                            ? value
-                            : value
-                            ? emoji.greenCheck
-                            : emoji.redX}
-                        </p>
-                      </div>
+                      <>
+                        <div className="debug-value">
+                          <p>
+                            {typeof value !== 'boolean'
+                              ? value
+                              : value
+                              ? emoji.greenCheck
+                              : emoji.redX}
+                          </p>
+                        </div>
+                        <p className="key-start">{key}</p>
+                      </>
                     )}
-                    {key !== 'MusicTrack' && <p className="key-start">{key}</p>}
                   </div>
                 );
               })}
@@ -1944,7 +1963,7 @@ function Play() {
               <h1>Debug Options</h1>
               <div id="debug-col">
                 {Object.entries(debug).map(([key, value], index: number) => {
-                  if (!!mainOptionsDebugShow[key]) {
+                  if (!!mainOptionsDebugShowState[key]) {
                     return null;
                   }
 

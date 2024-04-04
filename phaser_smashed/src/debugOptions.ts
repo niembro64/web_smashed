@@ -4,9 +4,9 @@ export const debugInit: Debug = {
   DevMode: false,
   DevZoom: 8,
   Level: 7, //0123456
-  ModeInfinity: true,
+  ModeInfinity: false,
   NumShots: 7, //7
-  TimeMinutes: 7, //01234567
+  TimeMinutes: 3, //01234567
   MusicActive: true,
   MusicTrack: 0, // 0123
   ReadySoundActive: false,
@@ -107,9 +107,9 @@ export const debugMax: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const mainOptionsDebugShow: Debug = {
   Level: 0, //0123456
-  ModeInfinity: false,
-  NumShots: 1,
-  TimeMinutes: 0, //01234567
+  ModeInfinity: true,
+  NumShots: 0,
+  TimeMinutes: 1, //01234567
   MusicActive: false,
   MusicTrack: 1, // 012
   ReadySoundActive: false,
