@@ -21,6 +21,10 @@ import importedBlipSound from '../sounds/game-start-liquid.wav';
 import importedGarage from '../sounds/garage.ogg';
 // @ts-ignore
 import importedMonkeys from '../sounds/monkeys.ogg';
+// @ts-ignore
+import importedMeleeReady from '../sounds/melee_ready.mp3';
+// @ts-ignore
+import importedMeleeGo from '../sounds/melee_go.mp3';
 import moment from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
@@ -64,12 +68,12 @@ function Play() {
   const chunksRef = useRef<Blob[]>([]);
 
   const [videoGray, setVideoGray] = useState(false);
-  const [smashedTextState, setSmashedTextState] = useState<string>('CLICK');
 
   useEffect(() => {
     // Define a function to update state on interaction
     const handleUserInteraction = () => {
       setWebState('start');
+
       // Optionally, remove event listeners if you only need the first interaction
       window.removeEventListener('click', handleUserInteraction);
       window.removeEventListener('keydown', handleUserInteraction);
@@ -230,7 +234,7 @@ function Play() {
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
-  const [canPlayAudio, setCanPlayAudio] = useState<boolean>(false);
+  // const [canPlayAudio, setCanPlayAudio] = useState<boolean>(false);
   const garage = new Audio(importedGarage);
   garage.volume = 0.05;
   const garageRef = useRef<HTMLAudioElement>(garage);
@@ -242,46 +246,46 @@ function Play() {
 
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(false);
 
-  useEffect(() => {
-    print('canPlayAudio', canPlayAudio);
+  // useEffect(() => {
+  //   print('canPlayAudio', canPlayAudio);
 
-    if (canPlayAudio) {
-      garageRef.current.play();
-      garageRef.current.addEventListener('ended', () => {
-        garageRef.current.play();
-      });
+  //   if (canPlayAudio) {
+  //     garageRef.current.play();
+  //     garageRef.current.addEventListener('ended', () => {
+  //       garageRef.current.play();
+  //     });
 
-      monkeysRef.current.addEventListener('ended', () => {
-        monkeysRef.current.play();
-      });
-    }
-  }, [canPlayAudio]);
+  //     monkeysRef.current.addEventListener('ended', () => {
+  //       monkeysRef.current.play();
+  //     });
+  //   }
+  // }, [canPlayAudio]);
 
-  useEffect(() => {
-    const handleInteraction = () => {
-      setCanPlayAudio(true);
-      // document.removeEventListener('click', handleInteractionReturn);
-      // document.removeEventListener('keydown', handleInteractionReturn);
-      document.removeEventListener('touchstart', handleInteractionReturn);
-      print('An interaction has occurred!');
-    };
-    const handleInteractionReturn = () => {
-      // setCanPlayAudio(false);
-      print('An interaction has occurred!');
-    };
+  // useEffect(() => {
+  //   const handleInteraction = () => {
+  //     setCanPlayAudio(true);
+  //     // document.removeEventListener('click', handleInteractionReturn);
+  //     // document.removeEventListener('keydown', handleInteractionReturn);
+  //     document.removeEventListener('touchstart', handleInteractionReturn);
+  //     print('An interaction has occurred!');
+  //   };
+  //   const handleInteractionReturn = () => {
+  //     // setCanPlayAudio(false);
+  //     print('An interaction has occurred!');
+  //   };
 
-    // Add event listener to document object for any user interaction
-    // document.addEventListener('click', handleInteraction, { once: true });
-    // document.addEventListener('keydown', handleInteraction, { once: true });
-    document.addEventListener('touchstart', handleInteraction, { once: true });
+  //   // Add event listener to document object for any user interaction
+  //   // document.addEventListener('click', handleInteraction, { once: true });
+  //   // document.addEventListener('keydown', handleInteraction, { once: true });
+  //   document.addEventListener('touchstart', handleInteraction, { once: true });
 
-    // Clean up event listener on unmount
-    return () => {
-      // document.removeEventListener('click', handleInteractionReturn);
-      // document.removeEventListener('keydown', handleInteractionReturn);
-      document.removeEventListener('touchstart', handleInteractionReturn);
-    };
-  }, []);
+  //   // Clean up event listener on unmount
+  //   return () => {
+  //     // document.removeEventListener('click', handleInteractionReturn);
+  //     // document.removeEventListener('keydown', handleInteractionReturn);
+  //     document.removeEventListener('touchstart', handleInteractionReturn);
+  //   };
+  // }, []);
 
   useEffect(() => {
     print('sessionInfo', session);
@@ -332,6 +336,8 @@ function Play() {
   tranceRef.current.volume = 0.3;
   const [woah] = useSound(importedWoah, { volume: 0.2 });
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
+  const [meleeReady] = useSound(importedMeleeReady, { volume: 0.2 });
+  const [meleeGo] = useSound(importedMeleeGo, { volume: 0.2 });
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
@@ -415,11 +421,14 @@ function Play() {
         })();
         break;
       case 'loader':
+        readyPlay();
+        startSound();
         garageRef.current.pause();
         monkeysRef.current.play();
         setShowLoaderIntervalFunction();
         break;
       case 'play':
+        goPlay();
         garageRef.current.pause();
         monkeysRef.current.pause();
         setTopBarDivExists(true);
@@ -659,7 +668,7 @@ function Play() {
     setShowOptions(false);
 
     setPlayChezState({ name: 'up', moment: moment() });
-    startSound();
+    // startSound();
     // setWebState('loader');
 
     let players = JSON.parse(JSON.stringify(smashConfig.players));
@@ -781,6 +790,12 @@ function Play() {
   };
   const woahPlay = (): void => {
     woah();
+  };
+  const readyPlay = (): void => {
+    meleeReady();
+  };
+  const goPlay = (): void => {
+    meleeGo();
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
