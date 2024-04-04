@@ -64,6 +64,7 @@ function Play() {
   const chunksRef = useRef<Blob[]>([]);
 
   const [videoGray, setVideoGray] = useState(false);
+  const [smashedTextState, setSmashedTextState] = useState<string>('CLICK');
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -314,7 +315,7 @@ function Play() {
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
-  const [webState, setWebState] = useState<WebState>('start');
+  const [webState, setWebState] = useState<WebState>('init');
   const [openEye, setOpenEye] = useState<boolean>(false);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
@@ -377,6 +378,9 @@ function Play() {
 
     print('webState', webState);
     switch (webState) {
+      case 'init':
+        print('init');
+        break;
       case 'start':
         garageRef.current.play();
         monkeysRef.current.pause();
@@ -1166,6 +1170,10 @@ function Play() {
   };
 
   useEffect(() => {
+    if (webState === 'init') {
+      setP1KeysTouched(true);
+      setP2KeysTouched(true);
+    }
     if (webState === 'start') {
       setP1KeysTouched(true);
       setP2KeysTouched(true);
@@ -1359,54 +1367,27 @@ function Play() {
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
-      {webState === 'start' && (
+      {(webState === 'start' || webState === 'init') && (
         <div className="start-class-div">
           {!debug.DevMode && <div className="black-hiding-div"></div>}
-          <div
-            className={
-              'startTitleWrapper2' +
-              (playChezState.name === 'down' ? ' startTitleWrapper2Active' : '')
-            }
-          >
+          <div className={'startTitleWrapper'}>
             <div
               className={
-                'startTitleWrapper1' +
-                (playChezState.name === 'down'
-                  ? ' startTitleWrapper1Active'
-                  : '')
+                'startTitle' + (webState === 'start' ? ' startTitleStart' : ' startTitleInit')
               }
+              onMouseDown={() => {
+                console.log('mouse down');
+                setWebState('start');
+              }}
+              onMouseUp={() => {
+                console.log('mouse up');
+              }}
             >
-              <div
-                className={
-                  'startTitle' +
-                  (playChezState.name === 'down' ? ' startTitleActive' : '')
-                }
-                onMouseDown={() => {
-                  if (playChezState.name === 'up') {
-                    let newPlayChezState: PlayChezState = {
-                      name: 'down',
-                      moment: moment(),
-                    };
-                    setPlayChezState(newPlayChezState);
-                  }
-                }}
-                onMouseUp={() => {
-                  if (playChezState.name === 'down') {
-                    let newPlayChezState: PlayChezState = {
-                      name: 'up',
-                      moment: moment(),
-                    };
-                    setPlayChezState(newPlayChezState);
-                  }
-                }}
-              >
-                <img src="images/smashed_x10_gif.gif" alt="smash title" />
-                {/* <img src="images/smashed-gif-cropped.gif" alt="smash title" /> */}
-                <h1>SMASHED</h1>
-              </div>
+              <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
+              <h1>{webState === 'init' ? 'CLICK' : 'SMASHED'}</h1>
             </div>
           </div>
-          {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
+
           <div className="player-choices">
             <div className="player-choices-left">
               {Object.entries(debug).map(([key, value], index: number) => {
@@ -1524,7 +1505,10 @@ function Play() {
                           className="player-char"
                           onClick={() => {
                             onClickRotateSelection(pIndex);
-                            setPlayChezState({ name: 'up', moment: moment() });
+                            setPlayChezState({
+                              name: 'up',
+                              moment: moment(),
+                            });
                           }}
                         >
                           <div className="startImageWrapper">

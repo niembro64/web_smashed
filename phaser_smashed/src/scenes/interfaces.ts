@@ -498,7 +498,7 @@ export interface PlayerConfig {
   input?: InputType;
 }
 
-export type WebState = 'start' | 'loader' | 'play';
+export type WebState = 'init' | 'start' | 'loader' | 'play';
 
 export interface Quote {
   name: string;

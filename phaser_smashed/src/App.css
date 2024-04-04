@@ -12,7 +12,7 @@
   --border-radius-big: 7vw;
   --border-radius-small: 1vw;
   --duration-hover: 0.2s;
-  --distance-hover-pos: 50px;
+  --distance-hover-pos: 18%;
   --distance-hover-neg: calc(-1 * var(--distance-hover-pos));
   --id-red: #e81224;
   --id-blue: #0078d7;
@@ -1035,46 +1035,43 @@ h2 {
   /* height: 70%; */
   flex: 1;
   /* width: 50vw; */
-  width: 50%;
-  min-width: 1000px;
-  margin-top: 0vh;
+  width: 50vw;
+  /* min-width: 1000px; */
+  /* margin-top: 0vh; */
   color: white;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  transition: 1s ease;
-  animation: titleInit 5s ease-out both;
-  overflow: visible;
+  /* transition: 1s ease; */
+  /* animation: titleInit 5s ease-out both; */
+  transform: translateY(30vh);
+  filter: grayscale(1) brightness(3) brightness(0.2);
 
   z-index: 1;
+}
+.startTitleInit {
+  /* transition: 1s ease; */
+  /* animation: titleInit 5s ease-out both; */
+  overflow: visible;
+}
+.startTitleStart {
+  transition: 1s ease;
+  animation: titleInit 2s ease-in-out both;
+  overflow: visible;
 }
 
 @keyframes titleInit {
   0% {
-    transform: translateY(30vh);
-    filter: grayscale(1) brightness(3) brightness(0);
+    /* transform: translateY(30vh); */
+    /* filter: grayscale(1) brightness(3) brightness(0); */
   }
-  50% {
-    transform: translateY(30vh);
-    filter: grayscale(1) brightness(3) brightness(0.1);
-  }
-  60% {
-    filter: grayscale(1) brightness(3) brightness(0.2);
-  }
-  70% {
-    filter: grayscale(1) brightness(3) brightness(0.7);
-    transform: translateY(3vh);
-  }
-  90% {
-    filter: grayscale(1) brightness(3) brightness(1);
-    transform: translateY(0vh);
-  }
+
   100% {
     transform: translateY(0vh);
     filter: grayscale(0) brightness(1);
-    transition: 0.2s ease;
+    /* transition: 0.2s ease; */
   }
 }
 
@@ -1103,123 +1100,25 @@ h2 {
 
 .startTitle > img {
   width: 50vw;
-  max-width: 500px;
+  /* max-width: 500px; */
   margin-bottom: 0vh;
   transition: 1s ease;
 }
 
 .startTitle > h1 {
   margin: 0;
-  padding: 0 0 0 0.6vw;
+  /* padding: 0 0 0 0.6vw; */
   font-size: 5vw;
-  animation: titleGrow 3s linear both;
+  /* animation: titleGrow 3s linear both; */
 }
 
-@keyframes titleGrow {
-  0% {
-    /* transform: scale(0.8); */
-    filter: brightness(0);
-  }
-  80% {
-    /* transform: scale(0.8); */
-    filter: brightness(0.5);
-  }
-  90% {
-    /* transform: scale(0.8); */
-    filter: brightness(0.5);
-  }
-  100% {
-    /* transform: scale(0.8); */
-    filter: brightness(1);
-  }
-}
-
-/* .startTitle:hover {
-  filter: grayscale(0) brightness(1);
-  transition: 0.2s ease;
-} */
-.startTitleActive {
-  /* height: 50%; */
-  transition: 0.1s ease;
-  animation: titleShake 0.07 infinite both;
-  /* animation-name: titleShake;
-  animation-duration: 0.07s;
-  animation-iteration-count: infinite; */
-}
-
-@keyframes titleShake {
-  0% {
-    filter: brightness(0.3) sepia(2) hue-rotate(0deg) brightness(2.2)
-      contrast(1.8);
-    transform: rotateZ(1deg);
-  }
-  50% {
-    filter: brightness(0.3) sepia(2) hue-rotate(180deg) brightness(2.2)
-      contrast(1.8);
-    transform: rotateZ(-1deg);
-  }
-  100% {
-    filter: brightness(0.3) sepia(2) hue-rotate(360deg) brightness(2.2)
-      contrast(1.8);
-    transform: rotateZ(1deg);
-  }
-}
-.startTitleWrapper1Active {
-  transition: 0.1s ease;
-  animation-name: wrapperAnimation1;
-  animation-duration: 0.09s;
-  animation-iteration-count: infinite;
-}
-
-.startTitleWrapper1 {
-  height: 100%;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-}
-.startTitleWrapper2 {
+.startTitleWrapper {
   height: 100%;
   flex: 0.4;
   overflow: visible;
   z-index: 4;
 }
-.startTitleWrapper2Active {
-  transition: 0.1s ease;
-  animation-name: wrapperAnimation2;
-  animation-duration: 0.03s;
-  animation-iteration-count: infinite;
-}
 
-@keyframes wrapperAnimation1 {
-  0% {
-    filter: hue-rotate(0deg);
-    transform: translateX(5px);
-  }
-  50% {
-    filter: hue-rotate(180deg);
-    transform: translateX(-5px);
-  }
-  100% {
-    filter: hue-rotate(360deg);
-    transform: translateX(5px);
-  }
-}
-@keyframes wrapperAnimation2 {
-  0% {
-    filter: hue-rotate(0deg);
-    transform: translateY(5px);
-  }
-  50% {
-    filter: hue-rotate(180deg);
-    transform: translateY(-5px);
-  }
-  100% {
-    filter: hue-rotate(360deg);
-    transform: translateY(5px);
-  }
-}
 .player-char-image-name {
   position: absolute;
   bottom: calc(var(--distance-hover-neg) - 10px);
@@ -1289,7 +1188,7 @@ h2 {
   justify-content: flex-end;
   align-items: center;
   transition: var(--duration-hover) ease;
-  transform: translateY(0px);
+  transform: translateY(0%);
   overflow: visible;
 }
 .player-char:hover > .startImageWrapper {
