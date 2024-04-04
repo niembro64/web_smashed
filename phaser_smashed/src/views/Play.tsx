@@ -1396,7 +1396,7 @@ function Play() {
               <div>
                 <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
               </div>
-              <h1>{webState === 'init' ? 'Click Me' : 'SMASHED BROS'}</h1>
+              <h1>{webState === 'init' ? 'CLICK ME!' : 'SMASHED BROS'}</h1>
             </div>
           </div>
 
