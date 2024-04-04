@@ -355,7 +355,6 @@ function Play() {
   //   moment: moment(),
   // });
 
-
   //////////////////////////////
   // KEEP FOR NOW
   //////////////////////////////
@@ -1485,15 +1484,16 @@ function Play() {
                   >
                     {key === 'MusicTrack' && (
                       <p className="key-start">
-                        Music{' '}
+                        {/* Music{' '} */}
+                        🔊{' '}
                         {(() => {
                           switch (value) {
                             case 0:
                               return 'Dreamland';
                             case 1:
-                              return 'NA-Monkey';
+                              return 'NiemoAudio 2';
                             case 2:
-                              return 'NA-Royksopp';
+                              return 'NiemoAudio';
                             case 3:
                               return '1200 Micro';
                             default:
