@@ -465,10 +465,10 @@ export type CharacterName =
   | 'Pikachu'
   | 'Kirby'
   | 'Chez'
-  | 'BlackChez'
-  | 'GreenKoopa'
-  | 'RedKoopa'
-  | 'BlueKoopa';
+  | 'Black Chez'
+  | 'G. Koopa'
+  | 'R. Koopa'
+  | 'B. Koopa';
 
 export type CharacterNameShort =
   | 'MAR'

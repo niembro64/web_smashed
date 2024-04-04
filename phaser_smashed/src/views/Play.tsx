@@ -60,7 +60,7 @@ import {
 } from './client';
 
 function Play() {
-  let myPhaser: any = useRef(null);
+  const myPhaser: any = useRef(null);
 
   const [debug, setDebug] = useState<Debug>(debugInit);
 
@@ -420,7 +420,7 @@ function Play() {
           setTopBarDivExists(true);
         }, 4000);
         (async () => {
-          let allSessions: SessionInfo[] = await getAllAxios();
+          const allSessions: SessionInfo[] = await getAllAxios();
           setAllSessions(allSessions);
         })();
         break;
@@ -494,11 +494,11 @@ function Play() {
         input: 0, // don't set this here
       },
       {
-        characterId: 6,
+        characterId: 7,
         input: 0, // don't set this here
       },
       {
-        characterId: 7,
+        characterId: 6,
         input: 0, // don't set this here
       },
       {
@@ -531,10 +531,10 @@ function Play() {
     { characterId: 2, scale: 1, name: 'Pikachu', nameShort: 'PKA' },
     { characterId: 3, scale: 0.7, name: 'Kirby', nameShort: 'KRB' },
     { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
-    { characterId: 5, scale: 1.2, name: 'BlackChez', nameShort: 'BCZ' },
-    { characterId: 6, scale: 0.6, name: 'GreenKoopa', nameShort: 'GKP' },
-    { characterId: 7, scale: 0.6, name: 'RedKoopa', nameShort: 'RKP' },
-    { characterId: 8, scale: 0.6, name: 'BlueKoopa', nameShort: 'BKP' },
+    { characterId: 5, scale: 1.2, name: 'Black Chez', nameShort: 'BCZ' },
+    { characterId: 6, scale: 0.6, name: 'G. Koopa', nameShort: 'GKP' },
+    { characterId: 7, scale: 0.6, name: 'R. Koopa', nameShort: 'RKP' },
+    { characterId: 8, scale: 0.6, name: 'B. Koopa', nameShort: 'BKP' },
   ];
 
   const randomizeCharacters = () => {
@@ -803,7 +803,7 @@ function Play() {
   };
   const choosePlay = (): void => {
     meleeChoose();
-  }
+  };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
     if (debug.UseChez || webState === 'play') {
@@ -869,8 +869,8 @@ function Play() {
 
   const onClickRotateSelection = (playerIndex: number): void => {
     blipSound();
-    let choices = [...smashConfig.players];
-    let choice = choices[playerIndex];
+    const choices = [...smashConfig.players];
+    const choice = choices[playerIndex];
 
     let newCharacterId = choice.characterId + 1;
 
@@ -1202,7 +1202,6 @@ function Play() {
       myPhaser.current.scene.keys.game.loaded = false;
     }
     onClickPlayNavButtons('Back');
-    setWebState('start');
     setNumClicks(numClicks + 1);
     clearInterval(intervalClock.current);
     intervalClock.current = null;
@@ -1210,6 +1209,11 @@ function Play() {
     myPhaser.current.destroy(true);
     // setP1KeysTouched(false);
     // setP2KeysTouched(false);
+    // setWebState('init');
+    // setTimeout(() => {
+    //   setWebState('start');
+    // }, 1);
+      setWebState('start');
   };
 
   useEffect(() => {
