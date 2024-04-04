@@ -350,37 +350,41 @@ function Play() {
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  const [playChezState, setPlayChezState] = useState<PlayChezState>({
-    name: 'up',
-    moment: moment(),
-  });
+  // const [playChezState, setPlayChezState] = useState<PlayChezState>({
+  //   name: 'up',
+  //   moment: moment(),
+  // });
 
-  useEffect(() => {
-    const handleTranceEnded = (): void => {
-      setFirstCharacterSlot(4);
-      setPlayChezState({ name: 'chez', moment: moment() });
-    };
 
-    print('playChezState', playChezState.name);
+  //////////////////////////////
+  // KEEP FOR NOW
+  //////////////////////////////
+  // useEffect(() => {
+  //   const handleTranceEnded = (): void => {
+  //     setFirstCharacterSlot(4);
+  //     setPlayChezState({ name: 'chez', moment: moment() });
+  //   };
 
-    switch (playChezState.name) {
-      case 'up':
-        tranceRef.current.pause();
-        garageRef.current.play();
-        tranceRef.current.removeEventListener('ended', handleTranceEnded);
-        break;
-      case 'down':
-        tranceRef.current.play();
-        garageRef.current.pause();
-        tranceRef.current.addEventListener('ended', handleTranceEnded, {
-          once: true,
-        });
-        break;
-      case 'chez':
-        garageRef.current.play();
-        break;
-    }
-  }, [playChezState]);
+  //   print('playChezState', playChezState.name);
+
+  //   switch (playChezState.name) {
+  //     case 'up':
+  //       tranceRef.current.pause();
+  //       garageRef.current.play();
+  //       tranceRef.current.removeEventListener('ended', handleTranceEnded);
+  //       break;
+  //     case 'down':
+  //       tranceRef.current.play();
+  //       garageRef.current.pause();
+  //       tranceRef.current.addEventListener('ended', handleTranceEnded, {
+  //         once: true,
+  //       });
+  //       break;
+  //     case 'chez':
+  //       garageRef.current.play();
+  //       break;
+  //   }
+  // }, [playChezState]);
 
   const onClickEye = () => {
     setOpenEye(!openEye);
@@ -671,7 +675,7 @@ function Play() {
     setShowHistory(false);
     setShowOptions(false);
 
-    setPlayChezState({ name: 'up', moment: moment() });
+    // setPlayChezState({ name: 'up', moment: moment() });
     // startSound();
     // setWebState('loader');
 
@@ -1523,7 +1527,7 @@ function Play() {
                         className="player-char-blank"
                         onClick={() => {
                           onClickRotateSelection(pIndex);
-                          setPlayChezState({ name: 'up', moment: moment() });
+                          // setPlayChezState({ name: 'up', moment: moment() });
                         }}
                       >
                         <div className="startImageWrapper">
@@ -1561,10 +1565,10 @@ function Play() {
                           className="player-char"
                           onClick={() => {
                             onClickRotateSelection(pIndex);
-                            setPlayChezState({
-                              name: 'up',
-                              moment: moment(),
-                            });
+                            // setPlayChezState({
+                            //   name: 'up',
+                            //   moment: moment(),
+                            // });
                           }}
                         >
                           <div className="startImageWrapper">
@@ -1825,7 +1829,7 @@ function Play() {
               onClick={() => {
                 randomizeCharacters();
                 blipSound();
-                setPlayChezState({ name: 'up', moment: moment() });
+                // setPlayChezState({ name: 'up', moment: moment() });
               }}
             >
               {emoji.dice}
