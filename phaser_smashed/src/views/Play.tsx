@@ -25,6 +25,8 @@ import importedMonkeys from '../sounds/monkeys.ogg';
 import importedMeleeReady from '../sounds/melee_ready.mp3';
 // @ts-ignore
 import importedMeleeGo from '../sounds/melee_go.mp3';
+// @ts-ignore
+import importedMeleeChoose from '../sounds/melee_choose.mp3';
 import moment from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
@@ -338,6 +340,7 @@ function Play() {
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
   const [meleeReady] = useSound(importedMeleeReady, { volume: 0.2 });
   const [meleeGo] = useSound(importedMeleeGo, { volume: 0.2 });
+  const [meleeChoose] = useSound(importedMeleeChoose, { volume: 0.2 });
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
@@ -408,6 +411,7 @@ function Play() {
         print('init');
         break;
       case 'start':
+        choosePlay();
         startSound();
         garageRef.current.play();
         monkeysRef.current.pause();
@@ -797,6 +801,9 @@ function Play() {
   const goPlay = (): void => {
     meleeGo();
   };
+  const choosePlay = (): void => {
+    meleeChoose();
+  }
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
     if (debug.UseChez || webState === 'play') {
