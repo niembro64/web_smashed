@@ -141,7 +141,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (!debug.ReplayOn) {
+    if (!debug.InstReplay) {
       setIsReplayHidden(true);
       return;
     }
@@ -234,7 +234,7 @@ function Play() {
     return () => {
       window.removeEventListener('gameState', handlePowerUpCollected);
     };
-  }, [debug.ReplayFullQuality, debug.ReplayOn]);
+  }, [debug.ReplayFullQuality, debug.InstReplay]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -1501,23 +1501,27 @@ function Play() {
                     }}
                   >
                     {key === 'MusicTrack' && (
-                      <p className="key-start">
-                        🔊{' '}
-                        {(() => {
-                          switch (value) {
-                            case 0:
-                              return 'Dreamland';
-                            case 1:
-                              return 'NiemoAudio 2';
-                            case 2:
-                              return 'NiemoAudio';
-                            case 3:
-                              return '1200 Micro';
-                            default:
-                              return 'Off';
-                          }
-                        })()}
-                      </p>
+                      <>
+                        <div className="debug-value">
+                          <p>🔊</p>
+                        </div>
+                        <p className="key-start">
+                          {(() => {
+                            switch (value) {
+                              case 0:
+                                return 'Dreamland';
+                              case 1:
+                                return 'NiemoAudio2';
+                              case 2:
+                                return 'NiemoAudio';
+                              case 3:
+                                return '1200 Micro';
+                              default:
+                                return 'Off';
+                            }
+                          })()}
+                        </p>
+                      </>
                     )}
                     {key !== 'MusicTrack' && (
                       <>

@@ -1,4 +1,4 @@
-import { Debug } from "./scenes/interfaces";
+import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
   DevMode: false,
@@ -45,7 +45,7 @@ export const debugInit: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  ReplayOn: true,
+  InstReplay: true,
   ReplayFullQuality: false,
   ReplayControls: true,
   ReplayFastSlow: false,
@@ -97,7 +97,7 @@ export const debugMax: Debug = {
   // NeuralNetworkBot: true,
   NNP1Train: true,
   NNIsLSTM: false,
-  ReplayOn: true,
+  InstReplay: true,
   ReplayFullQuality: true,
   ReplayControls: true,
   ReplayFastSlow: true,
@@ -128,15 +128,15 @@ export const mainOptionsDebugShow: Debug = {
   DefaultDamage: false,
   DefaultHitback: false,
   PlayerIdVisible: false,
-  CharsColored: true,
+  CharsColored: false,
   HealthInverted: false,
   MatricesAlways: false,
   ConsoleLogButtons: false,
   ConsoleLogConnected: false,
   UpdateLoopsNumSkip: 0, // 012
   LoadTimeExtra: false,
-  UseKoopas: true,
-  UseChez: true,
+  UseKoopas: false,
+  UseChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
   DevMode: false,
@@ -150,7 +150,7 @@ export const mainOptionsDebugShow: Debug = {
   // NeuralNetworkBot: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  ReplayOn: true,
+  InstReplay: true,
   ReplayFullQuality: false,
   ReplayControls: false,
   ReplayFastSlow: false,
