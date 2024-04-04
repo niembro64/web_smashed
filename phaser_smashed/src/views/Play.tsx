@@ -1213,7 +1213,7 @@ function Play() {
     // setTimeout(() => {
     //   setWebState('start');
     // }, 1);
-      setWebState('start');
+    setWebState('start');
   };
 
   useEffect(() => {
