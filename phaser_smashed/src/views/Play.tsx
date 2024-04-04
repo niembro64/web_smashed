@@ -1655,7 +1655,7 @@ function Play() {
                         }}
                       >
                         <span>Bot</span>
-                        <span id="input-sub">Rule-Based</span>
+                        {/* <span id="input-sub">Classical</span> */}
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}
@@ -1668,7 +1668,7 @@ function Play() {
                         }}
                       >
                         <span>Bot</span>
-                        <span id="input-sub">Neural-Network</span>
+                        <span id="input-sub">Neural Network</span>
                         <div className="button-input-emoji">{emoji.brain}</div>
                       </div>
                     )}

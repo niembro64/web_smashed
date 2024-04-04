@@ -45,7 +45,8 @@ body {
   display: flex;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -68,8 +69,10 @@ h2 {
   height: auto; /* Allows the height to adjust based on the width while maintaining aspect ratio */
   margin: auto; /* Centers the div in the viewport */
   position: absolute; /* Takes the div out of the normal document flow */
-  top: 0; bottom: 0; /* These settings, combined with left and right, center the div vertically */
-  left: 0; right: 0;
+  top: 0;
+  bottom: 0; /* These settings, combined with left and right, center the div vertically */
+  left: 0;
+  right: 0;
 }
 
 #phaser-container {
@@ -497,7 +500,7 @@ h2 {
 .debug-value > p {
   margin: 0;
   padding: 0;
-  font-size: 2vh;
+  font-size: 1.33vw;
   padding: 0vw 0vw 0.5vw 1vw;
   margin: 0vw 0vw 0vw 0vw;
 }
@@ -909,12 +912,12 @@ h2 {
 
 .b-oscuro > .button-input-emoji {
   position: absolute;
-  top: -120px;
-  left: -20px;
-  /* height: 10vh; */
-  width: 100%;
-  height: auto;
-  font-size: 25vh;
+  /* top: -6vw; */
+  /* left: -1vw; */
+  /* height: 10vw; */
+  /* width: 100%; */
+  /* height: auto; */
+  font-size: 12vw;
   margin: 0;
   padding: 0;
   /* overflow: hidden; */
@@ -924,7 +927,7 @@ h2 {
   justify-content: center;
   align-items: center;
 
-  transform: rotate(-30deg);
+  transform: rotate(-25deg);
   /* filter: grayscale(1) contrast(1) brightness(100) invert(1) contrast(0.1)
     brightness(0.5); */
   filter: contrast(1) brightness(1);
@@ -2035,7 +2038,7 @@ h2 {
 
 #dice {
   transform-origin: 50% 64%;
-  font-size: 400%;
+  font-size: 4vw;
   transform: rotate(0deg);
   filter: grayscale(1) contrast(3) brightness(0.5);
   background-color: transparent;
