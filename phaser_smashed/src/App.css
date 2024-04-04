@@ -912,54 +912,54 @@ h2 {
 
 .b-oscuro > .button-input-emoji {
   position: absolute;
-  /* top: -6vw; */
-  /* left: -1vw; */
-  /* height: 10vw; */
-  /* width: 100%; */
+  top: -6vw;
+  left: -0.5vw;
+  /* height: 100%; */
+  width: 100%;
   /* height: auto; */
   font-size: 12vw;
   margin: 0;
   padding: 0;
-  /* overflow: hidden; */
+  overflow: visible;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  transform: rotate(-25deg);
+  transform: rotate(-30deg);
   /* filter: grayscale(1) contrast(1) brightness(100) invert(1) contrast(0.1)
     brightness(0.5); */
   filter: contrast(1) brightness(1);
   z-index: 0;
-  transition: var(--duration-hover) ease;
+  /* transition: var(--duration-hover) ease-in-out; */
 }
 
 @keyframes emoji-animation {
   0% {
-    transform: translateX(0px) rotate(-30deg);
+    /* transform: rotate(-30deg); */
   }
   50% {
-    transform: translateX(-3px) rotate(-20deg);
+    /* transform: rotate(-25deg); */
   }
   100% {
-    transform: translateX(0px) rotate(-30deg);
+    /* transform: rotate(-30deg); */
   }
 }
 
 .b-oscuro:hover > .button-input-emoji {
   /* filter: contrast(0.5) brightness(0.2); */
-  filter: contrast(0.5) brightness(0.4);
-  animation: emoji-animation 0.3s ease-in-out both;
-  transition: var(--duration-hover) ease;
+  filter: contrast(0.5) brightness(0.2);
+  /* animation: emoji-animation 0.3s ease-in-out both; */
+  /* transition: var(--duration-hover) ease-in-out; */
 }
 .b-oscuro:active > .button-input-emoji {
   filter: contrast(0.5) brightness(0.4);
-  transition: var(--duration-hover) ease;
+  /* transition: var(--duration-hover) ease-in-out; */
 }
 .b-oscuro:active > span {
   color: rgba(255, 255, 255, 0);
-  transition: var(--duration-hover) ease;
+  transition: var(--duration-hover) ease-in-out;
 }
 .b-oscuro > span {
   position: relative;

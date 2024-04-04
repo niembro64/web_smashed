@@ -1614,13 +1614,6 @@ function Play() {
                         className="b-oscuro b-dark"
                         onClick={() => {
                           onClickOscura(pIndex);
-                          // setPlayChezState({ name: 'up', moment: moment() });
-                          // onClickSetInputArrayElement(
-                          //   cPlayerIndex,
-                          //   inputArray[cPlayerIndex] + 1 > 2
-                          //     ? (0 as InputType)
-                          //     : ((inputArray[cPlayerIndex] + 1) as InputType)
-                          // );
                         }}
                       >
                         <span>Keyboard</span>
@@ -1647,11 +1640,9 @@ function Play() {
                         className="b-oscuro b-dark"
                         onClick={() => {
                           onClickOscura(pIndex);
-                          // setPlayChezState({ name: 'up', moment: moment() });
                         }}
                       >
                         <span>Bot</span>
-                        {/* <span id="input-sub">Classical</span> */}
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}
@@ -1660,7 +1651,6 @@ function Play() {
                         className="b-oscuro b-dark"
                         onClick={() => {
                           onClickOscura(pIndex);
-                          // setPlayChezState({ name: 'up', moment: moment() });
                         }}
                       >
                         <span>Bot</span>
@@ -2138,12 +2128,7 @@ function Play() {
               <h1>About</h1>
               <div className="horiz">
                 <div className="horiz-item-left">
-                  <ul>
-                    <li>Tech Used:</li>
-                    <li>Phaser</li>
-                    <li>React</li>
-                    <li>Bootstrap</li>
-                  </ul>
+            
 
                   <img
                     className="kirbyNiembro"
@@ -2156,9 +2141,9 @@ function Play() {
                   />
                   <a
                     className="btn btn-dark text-light"
-                    href="http://niembro64.com/"
+                    href="https://niemo.io/"
                   >
-                    <span className="text-white small">niembro64.com</span>
+                    <span className="text-white small">niemo.io</span>
                   </a>
                 </div>
                 <div className="horiz-item-right">
