@@ -456,7 +456,7 @@ function Play() {
   const [smashConfig, setSmashConfig] = useState<SmashConfig>({
     players: [
       {
-        characterId: 0,
+        characterId: 3,
         input: 0, // don't set this here
       },
       {
@@ -504,30 +504,32 @@ function Play() {
   ];
 
   const randomizeCharacters = () => {
-    let numBase: number = 4;
-    let numChez: number = debug.UseChez ? 2 : 0;
-    let numKoopas: number = debug.UseKoopas ? 3 : 0;
-    let numTotal: number = numBase + numChez + numKoopas;
+    const numBase: number = 4;
+    const numChez: number = debug.UseChez ? 2 : 0;
+    const numKoopas: number = debug.UseKoopas ? 3 : 0;
+    const numTotal: number = numBase + numChez + numKoopas;
 
-    let ratioBase: number = numBase / numTotal;
-    let ratioChez: number = numChez / numTotal;
-    let ratioKoopas: number = numKoopas / numTotal;
+    const ratioBase: number = numBase / numTotal;
+    const ratioChez: number = numChez / numTotal;
 
-    let baseUpperLimit: number = ratioBase;
-    let chezUpperLimit: number = baseUpperLimit + ratioChez;
+    const baseUpperLimit: number = ratioBase;
+    const chezUpperLimit: number = baseUpperLimit + ratioChez;
 
-    let newPlayers: PlayerConfigSmall[] = [];
+    const newPlayers: PlayerConfigSmall[] = [];
 
     for (let i = 0; i < 4; i++) {
-      let rand: number = Math.random();
+      const rand: number = Math.random();
       let newId: number | null = null;
+
       if (rand < baseUpperLimit) {
-        newId = Math.floor(rand * numBase);
-      } else if (rand < chezUpperLimit || ratioKoopas === 0) {
-        newId = Math.floor(rand * numChez) + numBase;
+        newId = Math.floor(Math.random() * 4);
+      } else if (rand < chezUpperLimit) {
+        newId = 4 + Math.floor(Math.random() * 2);
       } else {
-        newId = Math.floor(rand * numKoopas) + numBase + numChez;
+        newId = 6 + Math.floor(Math.random() * 3);
       }
+
+    
 
       newPlayers.push({
         characterId: newId as CharacterId,
@@ -582,7 +584,7 @@ function Play() {
     { name: 'Eddie-Z', text: "He'll do it again, yeah!" },
     {
       name: 'TR3',
-      text: 'How am I supposed to make more than that... shit... happen?',
+      text: 'How am I supposed to make more than that... s***... happen?',
     },
     {
       name: 'DDj',

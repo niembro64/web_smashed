@@ -32,7 +32,7 @@ export const debugInit: Debug = {
   ConsoleLogConnected: false,
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
-  UseKoopas: false,
+  UseKoopas: true,
   UseChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
@@ -83,7 +83,7 @@ export const debugMax: Debug = {
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
   UseKoopas: true,
-  UseChez: false,
+  UseChez: true,
   SlowMoExplosions: true,
   TypedLoadingText: false,
   DevMode: true,
