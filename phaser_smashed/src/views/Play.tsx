@@ -584,7 +584,7 @@ function Play() {
     { name: 'Eddie-Z', text: "He'll do it again, yeah!" },
     {
       name: 'TR3',
-      text: 'How am I supposed to make more than that... s***... happen?',
+      text: 'How am I supposed to make more than that... $#!&... happen?',
     },
     {
       name: 'DDj',
