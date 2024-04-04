@@ -579,7 +579,7 @@ function Play() {
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
   const quotes: Quote[] = [
     { name: 'Breezy', text: 'The turtle will die.' },
-    { name: 'TR3', text: 'Smashed.' },
+    { name: 'TR3', text: 'SMASHED!!!' },
     { name: 'Chadams', text: 'Two shots... two shots.' },
     { name: 'Eddie-Z', text: "He'll do it again, yeah!" },
     {
@@ -591,7 +591,7 @@ function Play() {
       text: "It's safe to say we're not going to the bars tonite.",
     },
     {
-      name: 'DDj',
+      name: 'Deen Davis Jr.',
       text: '...yes you are.',
     },
     // { name: 'Chadams', text: 'AAAYYYUUUGGGGHHHH!!' },
@@ -600,14 +600,14 @@ function Play() {
     // { name: 'Chadams', text: 'Is there no one else?' },
     // { name: 'Deen Davis Jr.', text: 'VIDEOTAPE MA-SELF FUCKIN YOU UP!' },
     // { name: 'Breezy', text: 'Oh, is it? Oh cool. Ur soo cool.' },
-    // { name: 'Lau', text: "I'm sorry, I didn't know it was gonna happen." },
+    { name: 'Lau', text: "I'm sorry, I didn't know it was gonna happen." },
     // { name: "Gin", text: "Clean it up, and we'll do it again." },
-    // { name: 'Ginman', text: "Set it up... and we'll do it... again." },
+    { name: 'Ginman', text: "Set it up... and we'll do it... again." },
     // { name: 'Gin', text: 'Shitty, shitty-fuckin-ass.' },
-    // {
-    //   name: 'DDj',
-    //   text: 'I can fight you one-handed.',
-    // },
+    {
+      name: 'Deen Davis Jr.',
+      text: 'I can fight you one-handed.',
+    },
     // {
     //   name: 'DDj',
     //   text: 'I thought you put Spike in there.',
