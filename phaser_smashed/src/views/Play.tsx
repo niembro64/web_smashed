@@ -452,11 +452,11 @@ function Play() {
   // 2 -> keyboard
   // 3 -> bot Rules-Based
   // 4 -> bot Neural-Network
-  const [inputArray, setInputArray] = useState<InputType[]>([0, 4, 4, 4]);
+  const [inputArray, setInputArray] = useState<InputType[]>([3, 4, 4, 4]);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>({
     players: [
       {
-        characterId: 3,
+        characterId: 0,
         input: 0, // don't set this here
       },
       {
