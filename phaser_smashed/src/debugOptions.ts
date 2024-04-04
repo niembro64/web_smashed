@@ -6,7 +6,7 @@ export const debugInit: Debug = {
   Level: 7, //0123456
   ModeInfinity: false,
   NumShots: 7, //7
-  TimeMinutes: 3, //01234567
+  TimeMinutes: 2, //01234567
   MusicActive: true,
   MusicTrack: 0, // 0123
   ReadySoundActive: false,
