@@ -452,11 +452,15 @@ function Play() {
   // 2 -> keyboard
   // 3 -> bot Rules-Based
   // 4 -> bot Neural-Network
-  const [inputArray, setInputArray] = useState<InputType[]>([2, 0, 0, 3]);
+  const [inputArray, setInputArray] = useState<InputType[]>([2, 3, 2, 3]);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>({
     players: [
       {
         characterId: 0,
+        input: 0, // don't set this here
+      },
+      {
+        characterId: 1,
         input: 0, // don't set this here
       },
       {
@@ -465,10 +469,6 @@ function Play() {
       },
       {
         characterId: 3,
-        input: 0, // don't set this here
-      },
-      {
-        characterId: 1,
         input: 0, // don't set this here
       },
     ],
@@ -2128,8 +2128,6 @@ function Play() {
               <h1>About</h1>
               <div className="horiz">
                 <div className="horiz-item-left">
-            
-
                   <img
                     className="kirbyNiembro"
                     src="./images/character_3_cropped.png"
