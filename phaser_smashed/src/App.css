@@ -45,14 +45,31 @@ body {
   display: flex;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 h2 {
   margin-top: 2vh;
   margin-bottom: 1vh;
 }
 
-.over-div {
+/* .over-div {
   width: 100%;
   height: 100%;
+} */
+
+.over-div {
+  aspect-ratio: 16 / 9;
+  max-width: 100vw; /* Maximum width is 100% of the viewport width */
+  max-height: 100vh; /* Maximum height is 100% of the viewport height */
+  width: auto; /* Allows the width to adjust based on the height while maintaining aspect ratio */
+  height: auto; /* Allows the height to adjust based on the width while maintaining aspect ratio */
+  margin: auto; /* Centers the div in the viewport */
+  position: absolute; /* Takes the div out of the normal document flow */
+  top: 0; bottom: 0; /* These settings, combined with left and right, center the div vertically */
+  left: 0; right: 0;
 }
 
 #phaser-container {
@@ -762,7 +779,7 @@ h2 {
   margin-right: 2%;
 
   color: rgba(255, 255, 255, 1);
-  font-size: 4vh;
+  font-size: 2vw;
   transition: 0.5s ease;
   z-index: 0;
 
@@ -773,6 +790,7 @@ h2 {
 
   cursor: pointer;
 }
+
 .b-start:hover {
   transition: 0s ease;
   background-color: hsl(200, 70%, 15%);
