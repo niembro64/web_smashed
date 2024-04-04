@@ -1369,11 +1369,21 @@ function Play() {
       <div className="phaser-container" id="phaser-container"></div>
       {(webState === 'start' || webState === 'init') && (
         <div className="start-class-div">
-          {!debug.DevMode && <div className="black-hiding-div"></div>}
+          {!debug.DevMode && (
+            <div
+              className={
+                'black-hiding-div' +
+                (webState === 'init'
+                  ? ' black-hiding-div-init'
+                  : ' black-hiding-div-start')
+              }
+            />
+          )}
           <div className={'startTitleWrapper'}>
             <div
               className={
-                'startTitle' + (webState === 'start' ? ' startTitleStart' : ' startTitleInit')
+                'startTitle' +
+                (webState === 'start' ? ' startTitleStart' : ' startTitleInit')
               }
               onMouseDown={() => {
                 console.log('mouse down');
@@ -1383,8 +1393,10 @@ function Play() {
                 console.log('mouse up');
               }}
             >
-              <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
-              <h1>{webState === 'init' ? 'CLICK' : 'SMASHED'}</h1>
+              <div>
+                <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
+              </div>
+              <h1>{webState === 'init' ? 'Click Me' : 'SMASHED BROS'}</h1>
             </div>
           </div>
 
@@ -1749,8 +1761,6 @@ function Play() {
         </div>
       )}
       <div className="over-div">
-        {/* {!debug.DevMode && <div className="black-hiding-div"></div>} */}
-
         {topBarDivExists && (
           <div className={openEye ? 'top-bar-eye-open' : 'top-bar-eye-closed'}>
             {!openEye && (
