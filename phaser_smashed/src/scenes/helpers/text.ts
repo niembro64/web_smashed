@@ -159,7 +159,7 @@ export function updateClockTextUpper(
     game.scoreBoardTimeGame.setScale(1 / zoom, 1 / zoom);
     let shotsString: string = '';
 
-    for (let i = 0; i < game.debug.NumShots - game.shotsLeftCurr; i++) {
+    for (let i = 0; i < game.debug.Shots - game.shotsLeftCurr; i++) {
       shotsString += emoji.redX;
     }
 

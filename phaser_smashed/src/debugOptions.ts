@@ -5,8 +5,8 @@ export const debugInit: Debug = {
   DevZoom: 8,
   Level: 7, //0123456
   ModeInfinity: false,
-  NumShots: 7, //7
-  TimeMinutes: 2, //01234567
+  Shots: 7, //7
+  Minutes: 2, //01234567
   MusicActive: true,
   MusicTrack: 0, // 0123
   ReadySoundActive: false,
@@ -55,8 +55,8 @@ export const debugInit: Debug = {
 export const debugMax: Debug = {
   Level: 7, //0123456
   ModeInfinity: true,
-  NumShots: 15,
-  TimeMinutes: 15, //01234567
+  Shots: 15,
+  Minutes: 15, //01234567
   MusicActive: true,
   MusicTrack: 3, // 012
   ReadySoundActive: true,
@@ -108,8 +108,8 @@ export const debugMax: Debug = {
 export const mainOptionsDebugShow: Debug = {
   Level: 0, //0123456
   ModeInfinity: true,
-  NumShots: 0,
-  TimeMinutes: 1, //01234567
+  Shots: 0,
+  Minutes: 1, //01234567
   MusicActive: false,
   MusicTrack: 1, // 012
   ReadySoundActive: false,

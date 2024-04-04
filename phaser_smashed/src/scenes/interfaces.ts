@@ -7,8 +7,8 @@ export interface Debug {
   DevZoom: number;
   Level: number;
   ModeInfinity: boolean;
-  TimeMinutes: number;
-  NumShots: number;
+  Minutes: number;
+  Shots: number;
   MusicTrack: number;
   MusicActive: boolean;
   UpdateLoopsNumSkip: number;

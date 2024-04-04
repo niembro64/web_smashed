@@ -44,19 +44,17 @@ export function updateChompVelocity(game: Game): void {
     return;
   }
 
-  let randomX = Math.random() * r * 2 - r + x;
-  let randomY = getCircleYfromX(randomX, game);
+  const randomX = Math.random() * r * 2 - r + x;
+  const randomY = getCircleYfromX(randomX, game);
 
   // console.log('randomX: ', randomX, 'randomY: ', randomY);
 
-  let { x: xNew, y: yNew } = getNormalizedVector(
+  const { x: xNew, y: yNew } = getNormalizedVector(
     spriteX,
     spriteY,
     randomX,
     randomY
   );
-
-  // console.log('xNew: ', xNew, 'yNew: ', yNew, '');
 
   if (isChompInsideCircle(game)) {
     if (b.touching.down) {
@@ -72,14 +70,14 @@ export function updateChompVelocity(game: Game): void {
 }
 
 export function isChompInsideCircle(game: Game): boolean {
-  let c = game.chomp;
-  let x = c.sprite.x;
-  let y = c.sprite.y;
-  let originX = c.originX;
-  let originY = c.originY;
-  let radius = c.radius;
+  const c = game.chomp;
+  const x = c.sprite.x;
+  const y = c.sprite.y;
+  const originX = c.originX;
+  const originY = c.originY;
+  const radius = c.radius;
 
-  let distance = Math.sqrt(
+  const distance = Math.sqrt(
     (x - originX) * (x - originX) + (y - originY) * (y - originY)
   );
 
@@ -87,14 +85,12 @@ export function isChompInsideCircle(game: Game): boolean {
 }
 
 export function getCircleYfromX(x: number, game: Game): number {
-  let c = game.chomp;
-  let originX = c.originX;
-  let originY = c.originY;
-  let radius = c.radius;
-  let y;
-
-  // set y to the y value of the circle at x
-  y = Math.sqrt(radius * radius - (x - originX) * (x - originX)) + originY;
+  const c = game.chomp;
+  const originX = c.originX;
+  const originY = c.originY;
+  const radius = c.radius;
+  const y =
+    Math.sqrt(radius * radius - (x - originX) * (x - originX)) + originY;
 
   return y;
 }
@@ -106,8 +102,6 @@ export function updateChomp(game: Game): void {
 }
 
 export function updateAtThreeShots(game: Game): void {
-  let c = game.chomp;
-
   if (game.shotsLeftCurr === game.shotsLeftPrev) {
     return;
   }

@@ -1467,11 +1467,11 @@ function Play() {
                           ...mainOptionsDebugShowState,
                         };
                         if (debug.ModeInfinity) {
-                          newMainOpotionsDebugShow['TimeMinutes'] = 1;
-                          newMainOpotionsDebugShow['NumShots'] = 0;
+                          newMainOpotionsDebugShow['Minutes'] = 1;
+                          newMainOpotionsDebugShow['Shots'] = 0;
                         } else {
-                          newMainOpotionsDebugShow['TimeMinutes'] = 0;
-                          newMainOpotionsDebugShow['NumShots'] = 1;
+                          newMainOpotionsDebugShow['Minutes'] = 0;
+                          newMainOpotionsDebugShow['Shots'] = 1;
                         }
 
                         setMainOptionsDebugShowState(newMainOpotionsDebugShow);

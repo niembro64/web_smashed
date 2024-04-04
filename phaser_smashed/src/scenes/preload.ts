@@ -27,7 +27,7 @@ export function preload(game: Game): void {
   print('this.smashConfig', game.smashConfig);
   game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.GravityLight ? 0.6 : 1;
   game.BASE_PLAYER_JUMP_WALL *= game.debug.GravityLight ? 0.6 : 1;
-  
+
   if (game.smashConfig) {
     game.durationPlayerDead = game.smashConfig.players.length * 2000;
     game.playerChoicesCharacterType = [];
@@ -41,7 +41,7 @@ export function preload(game: Game): void {
       game.playerChoicesInputType.push(ensureTypeInput(player.input));
     });
   }
-  game.gameSecondsClock = game.debug.TimeMinutes * 60;
+  game.gameSecondsClock = game.debug.Minutes * 60;
   if (!game.debug.FrictionAirActive) {
     game.players.forEach((iPlayer, i) => {
       iPlayer.char.friction_air = 0;
@@ -54,7 +54,7 @@ export function preload(game: Game): void {
     hatPos += hatAdder * 2;
   }
 
-  game.shotsLeftCurr = game.debug.NumShots;
+  game.shotsLeftCurr = game.debug.Shots;
 
   if (game.debug.NNIsLSTM) {
   } else {
