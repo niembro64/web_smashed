@@ -1045,7 +1045,6 @@ h2 {
 }
 
 .startTitle {
-  width: 100%;
   color: white;
   flex: 1;
   display: flex;
@@ -1076,7 +1075,7 @@ h2 {
 
 .startTitle > h1 {
   flex: 1;
-  width: 100%;
+  /* width: 100%; */
   font-size: 4vw;
   text-align: center;
   margin: 0;
@@ -1084,6 +1083,14 @@ h2 {
 
 .startTitleInit {
   overflow: visible;
+}
+.startTitleInit > h1 {
+  overflow: visible;
+  cursor: pointer;
+}
+.startTitleInit > div > img {
+  overflow: visible;
+  cursor: pointer;
 }
 .startTitleStart {
   transition: 1s ease;

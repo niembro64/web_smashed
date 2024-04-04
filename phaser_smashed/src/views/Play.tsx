@@ -66,6 +66,26 @@ function Play() {
   const [videoGray, setVideoGray] = useState(false);
   const [smashedTextState, setSmashedTextState] = useState<string>('CLICK');
 
+  useEffect(() => {
+    // Define a function to update state on interaction
+    const handleUserInteraction = () => {
+      setWebState('start');
+      // Optionally, remove event listeners if you only need the first interaction
+      window.removeEventListener('click', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
+    };
+
+    // Add event listeners for various types of user interaction
+    window.addEventListener('click', handleUserInteraction);
+    window.addEventListener('keydown', handleUserInteraction);
+
+    // Cleanup function to remove event listeners
+    return () => {
+      window.removeEventListener('click', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, []);
+
   const handleTimeUpdate = () => {
     const video = videoRef.current;
     if (video === null || video === undefined || video.duration === Infinity) {
@@ -382,6 +402,7 @@ function Play() {
         print('init');
         break;
       case 'start':
+        startSound();
         garageRef.current.play();
         monkeysRef.current.pause();
         setTopBarDivExists(false);
@@ -528,8 +549,6 @@ function Play() {
       } else {
         newId = 6 + Math.floor(Math.random() * 3);
       }
-
-    
 
       newPlayers.push({
         characterId: newId as CharacterId,
@@ -1363,9 +1382,6 @@ function Play() {
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
-          {/* <p className="third-loader-p">Loading can take a few seconds.</p> */}
-          {/* {debug.TypedLoadingText && (
-          )} */}
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
@@ -1389,7 +1405,7 @@ function Play() {
               }
               onMouseDown={() => {
                 console.log('mouse down');
-                setWebState('start');
+                // setWebState('start');
               }}
               onMouseUp={() => {
                 console.log('mouse up');
