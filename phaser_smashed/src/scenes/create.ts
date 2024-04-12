@@ -215,7 +215,7 @@ export function createExplosions(game: Game): void {
     e.sprite.setOrigin(0.5, 0.5);
     e.sprite.setImmovable(true);
     e.sprite.setRotation((Math.PI / 4) * eIndex);
-    e.sprite.setTint(0x888888);
+    // e.sprite.setTint(0x888888);
     // e.sprite.setTint(0x000000);
 
     // e.sprite.on('animationcomplete', () => {

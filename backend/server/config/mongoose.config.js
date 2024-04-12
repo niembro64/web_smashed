@@ -1,8 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-// mongoose.connect("mongodb://localhost/assignment_exam", {
+// Update the connection string from "localhost" to "127.0.0.1"
 mongoose
-  .connect('mongodb://localhost/smashed', {
+  .connect('mongodb://127.0.0.1/smashed', {
+    // Use 127.0.0.1 instead of localhost
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

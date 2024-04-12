@@ -23,20 +23,10 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     errorThresh: 0.005,
     logPeriod: 1,
     log: (stats: any) => {
-      // print(stats);
+      print(stats);
       print(Math.floor((stats.iterations / maxIterations) * 1000) * 0.1 + '%');
       print('error', Math.floor(stats.error * 1000) * 0.1 + '%');
     },
-    // callback: (res: any) => {
-    //   print('game.nnObjects.length', game.nnObjects.length);
-    //   print('res.iterations', res.iterations);
-    //   print('res.error', res.error);
-    //   // print('res.time', res.time);
-    //   // print(
-    //   //   '%',
-    //   //   Math.floor((res.iterations * 100) / game.nnObjects.length)
-    //   // );
-    // },
   });
   print('game.nnNet after train', game.nnNet);
   let netJson = game.nnNet.toJSON();
