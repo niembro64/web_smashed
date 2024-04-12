@@ -43,7 +43,7 @@ export const debugInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   // NeuralNetworkBot: false,
-  NNP1Train: false,
+  NNP1Train: true,
   NNIsLSTM: false,
   InstReplay: true,
   ReplayFullQuality: false,

@@ -413,26 +413,26 @@ export function updateBotRules(
     }
     return;
   }
-  let nearestP: Position = getNearestPlayerAliveXYFromPlayer(
+  const nearestP: Position = getNearestPlayerAliveXYFromPlayer(
     player,
     playerIndex,
     game
   );
-  let botSprite = player.char.sprite;
-  let enemyVector: xyVector = getNormalizedVector(
+  const botSprite = player.char.sprite;
+  const enemyVector: xyVector = getNormalizedVector(
     botSprite.x,
     botSprite.y,
     nearestP.x,
     nearestP.y
   );
-  let pVelocity: Velocity = player.char.sprite.body.velocity;
-  let d = player.padDebounced;
-  let t = player.char.sprite.body.touching;
-  let jumps = player.char.jumps;
-  let jumpIndex = player.char.jumpIndex;
-  let hasJump = player.char.jumps[jumpIndex] > 0.3;
-  let onLastJump = jumpIndex === jumps.length - 1;
-  let nearestPDistance = getDistance(
+  const pVelocity: Velocity = player.char.sprite.body.velocity;
+  const d = player.padDebounced;
+  const t = player.char.sprite.body.touching;
+  const jumps = player.char.jumps;
+  const jumpIndex = player.char.jumpIndex;
+  const hasJump = player.char.jumps[jumpIndex] > 0.3;
+  const onLastJump = jumpIndex === jumps.length - 1;
+  const nearestPDistance = getDistance(
     botSprite.x,
     botSprite.y,
     nearestP.x,

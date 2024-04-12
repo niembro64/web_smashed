@@ -1,15 +1,14 @@
-import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
+import { NeuralNetwork, recurrent } from 'brain.js';
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import Game from '../Game';
 import { NNObject, Player } from '../interfaces';
 import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerAliveFromXY,
-  getNearestPlayerAliveXYFromPlayer,
 } from './movement';
 import { nnConfigLSTM } from './nnJsonLSTM';
-import { nnConfigNN, NNRatiosNN } from './nnJsonNN';
+import { NNRatiosNN, nnConfigNN } from './nnJsonNN';
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
   if (!game.debug.NNP1Train) {
@@ -20,11 +19,11 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
-  const maxIterations = 1000;
+  const maxIterations = 2000;
   game.nnNet.train(game.nnObjects, {
     // log: true,
     iterations: maxIterations,
-    learningRate: 0.01,
+    learningRate: 0.1,
     errorThresh: 0.005,
     logPeriod: 1,
     log: (stats: any) => {
@@ -286,3 +285,21 @@ export const NNDownloadNNObjects = (game: Game): void => {
   // Clean up the URL object
   URL.revokeObjectURL(url);
 };
+
+export const saveTextStringAsFileToBaseOfDirectory = (
+  text: string,
+  filename: string
+): void => {
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  // Create an anchor tag with the download attribute
+  const downloadLink = document.createElement('a');
+  downloadLink.setAttribute('href', url);
+  downloadLink.setAttribute('download', filename);
+
+  // Simulate a click on the anchor tag to trigger the download
+  downloadLink.click();
+
+  // Clean up the URL object
+  URL.revokeObjectURL(url);
+}

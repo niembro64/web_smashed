@@ -684,10 +684,10 @@ export function isSpriteOffscreen(
 
 export function updatePadPreviousAndDebounced(game: Game): void {
   game.players.forEach((player) => {
-    let c = player.padCurr;
-    let p = player.padPrev;
-    let d = player.padDebounced;
-    let k = game.GAMEPAD_DEBOUNCE_NUMBER_CYCLES;
+    const c = player.padCurr;
+    const p = player.padPrev;
+    const d = player.padDebounced;
+    const k = game.GAMEPAD_DEBOUNCE_NUMBER_CYCLES;
 
     // if (c.up !== p.up) {
     //   print('c.up', c.up, 'p.up', p.up);

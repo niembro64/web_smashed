@@ -36,36 +36,36 @@ export function updateBotNN(
   let jumps = player.char.jumps;
   let jumpIndex = player.char.jumpIndex;
   let onLastJump = jumpIndex === jumps.length - 1;
-  //////////////////////
-  // TOO FAR LEFT RIGHT CENTER
-  //////////////////////
-  const r = 0.3;
-  if (game.gameSeconds % 2 === playerIndex % 2) {
-    if (getIsBotTooFarMiddleLeft(player, game) && Math.random() > r) {
-      p.right = true;
-      p.left = false;
-    } else if (getIsBotTooFarMiddleRight(player, game) && Math.random() > r) {
-      p.left = true;
-      p.right = false;
-    }
-    if (Math.random() > 0.9) {
-      p.Y = !p.Y;
-    }
-  } else {
-    if (Math.random() > r) {
-      p.X = true;
-    }
-  }
-  //////////////////////
-  // TOO FAR LEFT RIGHT
-  //////////////////////
-  if (getIsBotTooFarLeft(player, game)) {
-    p.right = true;
-    p.left = false;
-  } else if (getIsBotTooFarRight(player, game)) {
-    p.left = true;
-    p.right = false;
-  }
+  // //////////////////////
+  // // TOO FAR LEFT RIGHT CENTER
+  // //////////////////////
+  // const r = 0.3;
+  // if (game.gameSeconds % 2 === playerIndex % 2) {
+  //   if (getIsBotTooFarMiddleLeft(player, game) && Math.random() > r) {
+  //     p.right = true;
+  //     p.left = false;
+  //   } else if (getIsBotTooFarMiddleRight(player, game) && Math.random() > r) {
+  //     p.left = true;
+  //     p.right = false;
+  //   }
+  //   if (Math.random() > 0.9) {
+  //     p.Y = !p.Y;
+  //   }
+  // } else {
+  //   if (Math.random() > r) {
+  //     p.X = true;
+  //   }
+  // }
+  // //////////////////////
+  // // TOO FAR LEFT RIGHT
+  // //////////////////////
+  // if (getIsBotTooFarLeft(player, game)) {
+  //   p.right = true;
+  //   p.left = false;
+  // } else if (getIsBotTooFarRight(player, game)) {
+  //   p.left = true;
+  //   p.right = false;
+  // }
   //////////////////////
   // TOO FAR UP
   //////////////////////
