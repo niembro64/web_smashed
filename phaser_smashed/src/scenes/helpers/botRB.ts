@@ -4,9 +4,9 @@ import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
 import {
   getDistance,
-  getNearestAttackEnergyXY,
-  getNearestAttackEnergyXYAbove,
-  getNearestPlayerAliveXY,
+  getNearestAttackEnergyXYFromPlayer,
+  getNearestAttackEnergyXYAboveFromPlayer,
+  getNearestPlayerAliveXYFromPlayer,
   hasPlayerTouchedWallRecently,
 } from './movement';
 import { NNSetPlayerPadStatic } from './nn';
@@ -27,7 +27,11 @@ export function getIsBotNearNearestPlayer(
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
   // game.players.forEach((player, playerIndex) => {
-  nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
+  nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
   // });
   let distance = Math.sqrt(
     Math.pow(player.char.sprite.x - nearestPlayerPosition.x, 2) +
@@ -44,7 +48,11 @@ export function getSameHorizontalSlice(player: Player, game: Game): boolean {
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
   game.players.forEach((player, playerIndex) => {
-    nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
+    nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
+      player,
+      playerIndex,
+      game
+    );
   });
   let bot = player.char.sprite;
   if (
@@ -62,7 +70,11 @@ export function getSameVerticalSlice(player: Player, game: Game): boolean {
   };
   let bot = player.char.sprite;
   game.players.forEach((player, playerIndex) => {
-    nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
+    nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
+      player,
+      playerIndex,
+      game
+    );
   });
   if (
     nearestPlayerPosition.x > bot.x - 200 &&
@@ -82,7 +94,11 @@ export function getIsBotFacingNearestPlayer(
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
   let bot = player.char.sprite;
-  nearestPlayerPosition = getNearestPlayerAliveXY(player, playerIndex, game);
+  nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
   if (
     (bot.x > nearestPlayerPosition.x && bot.flipX) ||
     (bot.x < nearestPlayerPosition.x && !bot.flipX)
@@ -252,7 +268,11 @@ export const getIsNearestAttackEnergyThisClose = (
   game: Game,
   distance: number
 ): boolean => {
-  let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+  let ae: Position = getNearestAttackEnergyXYFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
   let dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
@@ -267,7 +287,11 @@ export const getIsNearestAttackEnergyThisCloseAbove = (
   game: Game,
   distance: number
 ): boolean => {
-  let ae: Position = getNearestAttackEnergyXYAbove(player, playerIndex, game);
+  let ae: Position = getNearestAttackEnergyXYAboveFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
   let dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
@@ -362,7 +386,11 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
     getIsPlayerInAir(player) &&
     getIsNearestAttackEnergyThisClose(player, playerIndex, game, shortRange)
   ) {
-    let ae: Position = getNearestAttackEnergyXY(player, playerIndex, game);
+    let ae: Position = getNearestAttackEnergyXYFromPlayer(
+      player,
+      playerIndex,
+      game
+    );
     let ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
     let direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
       ps,
@@ -385,7 +413,11 @@ export function updateBotRules(
     }
     return;
   }
-  let nearestP: Position = getNearestPlayerAliveXY(player, playerIndex, game);
+  let nearestP: Position = getNearestPlayerAliveXYFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
   let botSprite = player.char.sprite;
   let enemyVector: xyVector = getNormalizedVector(
     botSprite.x,

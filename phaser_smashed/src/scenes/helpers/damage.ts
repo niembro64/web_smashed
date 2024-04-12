@@ -1,18 +1,18 @@
-import { print } from "../../views/client";
-import Game, { SCREEN_DIMENSIONS } from "../Game";
-import { AttackEnergy, AttackPhysical, Player, xyVector } from "../interfaces";
+import { print } from '../../views/client';
+import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { AttackEnergy, AttackPhysical, Player, xyVector } from '../interfaces';
 import {
   setAttackEnergyOffscreen,
   setBulletOffscreen,
   setPhysicsAttackEnergyOff,
-} from "./attacks";
+} from './attacks';
 import {
-  getNearestPlayerAlive,
-  getNearestPlayerAliveXY,
+  getNearestPlayerAliveFromXY,
+  getNearestPlayerAliveXYFromPlayer,
   hitbackFly,
-} from "./movement";
-import { getHasBeenGameDurationSinceMoment } from "./powers";
-import { setPlayerState } from "./state";
+} from './movement';
+import { getHasBeenGameDurationSinceMoment } from './powers';
+import { setPlayerState } from './state';
 
 export function onHitHandlerAttackPhysical(
   player: Player,
@@ -22,17 +22,17 @@ export function onHitHandlerAttackPhysical(
   damage: number,
   game: Game
 ): void {
-  if (player.state.name !== "player-state-alive") {
+  if (player.state.name !== 'player-state-alive') {
     return;
   }
 
   if (
-    game.players[j].char.attackPhysical.state.name !== "attackphysical-state-on"
+    game.players[j].char.attackPhysical.state.name !== 'attackphysical-state-on'
   ) {
     return;
   }
 
-  setPlayerState(player, playerIndex, "player-state-hurt", game);
+  setPlayerState(player, playerIndex, 'player-state-hurt', game);
 
   game.overlappingPlayerIAttackPhysicalJ[playerIndex][j] = true;
 
@@ -75,7 +75,7 @@ export function onHitHandlerAttackEnergy(
   damage: number,
   game: Game
 ): void {
-  if (playerHit.state.name !== "player-state-alive") {
+  if (playerHit.state.name !== 'player-state-alive') {
     return;
   }
 
@@ -147,8 +147,8 @@ export function onHitHandlerBullets(
   }
 
   if (
-    playerHit.state.name === "player-state-start" ||
-    playerHit.state.name === "player-state-dead"
+    playerHit.state.name === 'player-state-start' ||
+    playerHit.state.name === 'player-state-dead'
   ) {
     return;
   }
@@ -267,7 +267,7 @@ export function updatePlayerNumberKills(
 }
 
 export function removeDamage(player: Player, damage: number): void {
-  if (player.state.name === "player-state-alive") {
+  if (player.state.name === 'player-state-alive') {
     player.char.damageCurr -= damage;
   }
 }
@@ -363,7 +363,7 @@ export function updateSuicide(game: Game): void {
       player.padCurr.B ||
       player.padCurr.X ||
       player.padCurr.Y ||
-      player.state.name !== "player-state-alive" ||
+      player.state.name !== 'player-state-alive' ||
       !player.padCurr.L ||
       !player.padCurr.R
     ) {
@@ -373,7 +373,7 @@ export function updateSuicide(game: Game): void {
 
     if (player.LRStamp === null && (player.padPrev.L || player.padPrev.R)) {
       player.LRStamp = game.gameNanoseconds;
-      print("LRStamp", player.LRStamp);
+      print('LRStamp', player.LRStamp);
     }
 
     if (
@@ -384,7 +384,7 @@ export function updateSuicide(game: Game): void {
         game
       )
     ) {
-      print("SUICIDE");
+      print('SUICIDE');
       player.char.sprite.y = -200;
       player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
     }
@@ -397,7 +397,7 @@ export function updateTableGiveHealth(game: Game): void {
   // let pIndex: number | null = null;
 
   if (t.touching.up) {
-    p = getNearestPlayerAlive(t.x, t.y, game).player;
+    p = getNearestPlayerAliveFromXY(t.x, t.y, game).player;
     // pIndex = getNearestPlayerAlive(t.x, t.y, game).playerIndex;
 
     p.char.damageCurr =

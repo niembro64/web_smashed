@@ -1,7 +1,7 @@
-import Game, { SCREEN_DIMENSIONS } from "../Game";
-import { Player } from "../interfaces";
-import { getIsAttackEnergyOffscreen } from "./attacks";
-import { getGameHitbackMultiplier, getNormalizedVector } from "./damage";
+import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { Player } from '../interfaces';
+import { getIsAttackEnergyOffscreen } from './attacks';
+import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
 export function updateCirclesLocations(game: Game): void {
   if (!game.debug.PlayerIdVisible || game.debug.CharsColored) {
@@ -105,13 +105,13 @@ export function setRespawn(player: Player, game: Game): void {
 
 export function updateLastDirectionTouched(player: Player): void {
   if (player.char.sprite.body.touching.up) {
-    player.char.lastDirectionTouched = "up";
+    player.char.lastDirectionTouched = 'up';
   } else if (player.char.sprite.body.touching.down) {
-    player.char.lastDirectionTouched = "down";
+    player.char.lastDirectionTouched = 'down';
   } else if (player.char.sprite.body.touching.left) {
-    player.char.lastDirectionTouched = "left";
+    player.char.lastDirectionTouched = 'left';
   } else if (player.char.sprite.body.touching.right) {
-    player.char.lastDirectionTouched = "right";
+    player.char.lastDirectionTouched = 'right';
   }
 }
 
@@ -179,7 +179,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
     // // horizontal stuff WAS TOUCHING
     if (
       game.debug.WallJumpsActive &&
-      player.char.lastDirectionTouched === "left" &&
+      player.char.lastDirectionTouched === 'left' &&
       hasPlayerTouchedWallRecently(player)
     ) {
       player.char.sprite.body.setVelocityX(
@@ -192,7 +192,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
 
     if (
       game.debug.WallJumpsActive &&
-      player.char.lastDirectionTouched === "right" &&
+      player.char.lastDirectionTouched === 'right' &&
       hasPlayerTouchedWallRecently(player)
     ) {
       player.char.sprite.body.setVelocityX(
@@ -314,17 +314,14 @@ export function updateKeepObjectsFromFallingLikeCrazy(game: Game): void {
 
 export function updateAttackEnergyFollow(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    let ae = player.char.attackEnergy;
+    const ae = player.char.attackEnergy;
     if (!getIsAttackEnergyOffscreen(ae)) {
       if (
         ae.findAndFollowAcceleration.x !== 0 &&
         ae.findAndFollowAcceleration.y === 0
       ) {
-        let goHere: { x: number; y: number } = getNearestPlayerAliveXY(
-          player,
-          playerIndex,
-          game
-        );
+        const goHere: { x: number; y: number } =
+          getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
 
         if (goHere.x !== Infinity) {
           ae.sprite.body.setVelocityX(
@@ -338,19 +335,12 @@ export function updateAttackEnergyFollow(game: Game): void {
         ae.findAndFollowAcceleration.x !== 0 &&
         ae.findAndFollowAcceleration.y !== 0
       ) {
-        let goHere: { x: number; y: number } = getNearestPlayerAliveXY(
-          player,
-          playerIndex,
-          game
-        );
+        const goHere: { x: number; y: number } =
+          getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
 
         if (goHere.x !== Infinity && goHere.y !== Infinity) {
-          let goHereMultiplier: { x: number; y: number } = getNormalizedVector(
-            ae.sprite.x,
-            ae.sprite.y,
-            goHere.x,
-            goHere.y
-          );
+          const goHereMultiplier: { x: number; y: number } =
+            getNormalizedVector(ae.sprite.x, ae.sprite.y, goHere.x, goHere.y);
           ae.sprite.body.setVelocityX(
             ae.sprite.body.velocity.x * 0.98 +
               goHereMultiplier.x * 100 * ae.findAndFollowAcceleration.x
@@ -365,7 +355,7 @@ export function updateAttackEnergyFollow(game: Game): void {
   });
 }
 
-export function getNearestPlayerX(
+export function getNearestPlayerXFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
@@ -375,8 +365,8 @@ export function getNearestPlayerX(
   let diffX = Math.abs(goToX - myX);
   game.players.forEach((player, playerIndex) => {
     if (pIndex !== playerIndex) {
-      let otherPlayerX = player.char.sprite.x;
-      let newDiffX = Math.abs(otherPlayerX - myX);
+      const otherPlayerX = player.char.sprite.x;
+      const newDiffX = Math.abs(otherPlayerX - myX);
       if (newDiffX < diffX) {
         goToX = otherPlayerX;
         diffX = newDiffX;
@@ -386,7 +376,7 @@ export function getNearestPlayerX(
   return goToX;
 }
 
-export function getNearestPlayerY(
+export function getNearestPlayerYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
@@ -396,8 +386,8 @@ export function getNearestPlayerY(
   let diffY = Math.abs(goToY - myY);
   game.players.forEach((player, playerIndex) => {
     if (pIndex !== playerIndex) {
-      let otherPlayerY = player.char.sprite.y;
-      let newDiffY = Math.abs(otherPlayerY - myY);
+      const otherPlayerY = player.char.sprite.y;
+      const newDiffY = Math.abs(otherPlayerY - myY);
       if (newDiffY < diffY) {
         goToY = otherPlayerY;
         diffY = newDiffY;
@@ -407,7 +397,7 @@ export function getNearestPlayerY(
   return goToY;
 }
 
-export function getNearestPlayerAliveXY(
+export function getNearestPlayerAliveXYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
@@ -417,7 +407,7 @@ export function getNearestPlayerAliveXY(
   let ae = player.char.attackEnergy;
 
   game.players.forEach((player, playerIndex) => {
-    if (pIndex !== playerIndex && player.state.name === "player-state-alive") {
+    if (pIndex !== playerIndex && player.state.name === 'player-state-alive') {
       let otherPlayerX = player.char.sprite.x;
       let otherPlayerY = player.char.sprite.y;
       let myX = ae.sprite.x;
@@ -442,20 +432,20 @@ export function getNearestPlayerAliveXY(
   return { x: goToX, y: goToY };
 }
 
-export function getNearestPlayerAlive(
+export function getNearestPlayerAliveFromXY(
   x: number,
   y: number,
   game: Game
 ): { player: Player; playerIndex: number } {
+  const t = game.TABLE;
   let returnPlayer: Player = game.players[0];
   let returnPlayerIndex: number = 0;
-  let t = game.TABLE;
 
   let distance: number = Infinity;
 
   game.players.forEach((p, pIndex) => {
-    let s = p.char.sprite;
-    let newD: number = getDistance(t.x, t.y, s.x, s.y);
+    const s = p.char.sprite;
+    const newD: number = getDistance(t.x, t.y, s.x, s.y);
 
     if (newD < distance) {
       distance = newD;
@@ -467,7 +457,7 @@ export function getNearestPlayerAlive(
   return { player: returnPlayer, playerIndex: returnPlayerIndex };
 }
 
-export function getNearestAttackEnergyXY(
+export function getNearestAttackEnergyXYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
@@ -502,7 +492,39 @@ export function getNearestAttackEnergyXY(
   return { x: goToX, y: goToY };
 }
 
-export function getNearestAttackEnergyXYAbove(
+export function getNearestPlayerAliveFromPlayer(
+  player: Player,
+  pIndex: number,
+  game: Game
+): { player: Player; playerIndex: number } {
+  let currentEnemyX = Infinity;
+  let currentEnemyY = Infinity;
+  let enemyIndex = (pIndex + 1) % game.players.length;
+  let enemy = game.players[enemyIndex];
+
+  game.players.forEach((player, playerIndex) => {
+    if (pIndex !== playerIndex && player.state.name === 'player-state-alive') {
+      let newEnemyX = player.char.sprite.x;
+      let newEnemyY = player.char.sprite.y;
+      let myX = enemy.char.sprite.x;
+      let myY = enemy.char.sprite.y;
+      if (
+        getDistance(myX, myY, newEnemyX, newEnemyY) <
+        getDistance(myX, myY, currentEnemyX, currentEnemyY)
+      ) {
+        currentEnemyX = newEnemyX;
+        currentEnemyY = newEnemyY;
+
+        enemy = player;
+        enemyIndex = playerIndex;
+      }
+    }
+  });
+
+  return { player: enemy, playerIndex: enemyIndex };
+}
+
+export function getNearestAttackEnergyXYAboveFromPlayer(
   player: Player,
   pIndex: number,
   game: Game

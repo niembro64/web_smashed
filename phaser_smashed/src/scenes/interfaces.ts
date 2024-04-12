@@ -714,6 +714,8 @@ export interface NNInput {
   playerEnemyDPY: number;
   playerEnemyDVX: number;
   playerEnemyDVY: number;
+  playerEnemyAttackEnergyDPX: number;
+  playerEnemyAttackEnergyDPY: number;
   playerTouchingDown: number;
   playerTouchingLeft: number;
   playerTouchingRight: number;
