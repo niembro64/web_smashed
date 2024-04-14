@@ -2221,8 +2221,10 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-right">
-                  Smashed was invented in St. Louis in late 2009 at the Chemon
-                  House. Web Smashed attempts to distill the original.
+                  This game is a tribute to "Smashed Bros", a drinking game
+                  invented in St. Louis in late 2009 at the Chemon House. <br />
+                  <br />
+                  niemeyer.eric@gmail.com
                 </div>
                 <div className="horiz-item-left">
                   <img
