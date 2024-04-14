@@ -18,7 +18,9 @@ import importedStartSound from '../sounds/start.wav';
 // @ts-ignore
 import importedBlipSound from '../sounds/game-start-liquid.wav';
 // @ts-ignore
-import importedGarage from '../sounds/garage.ogg';
+// import importedGarage from '../sounds/garage.ogg';
+// @ts-ignore
+import importedSmallTalk from '../sounds/niemo_audio_small_talk.ogg';
 // @ts-ignore
 import importedMonkeys from '../sounds/monkeys.ogg';
 // @ts-ignore
@@ -240,9 +242,12 @@ function Play() {
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
   // const [canPlayAudio, setCanPlayAudio] = useState<boolean>(false);
-  const garage = new Audio(importedGarage);
-  garage.volume = 0.05;
-  const garageRef = useRef<HTMLAudioElement>(garage);
+  // const garage = new Audio(importedGarage);
+  // garage.volume = 0.05;
+  const smallTalk = new Audio(importedSmallTalk);
+  smallTalk.volume = 0.05;
+  const smallTalkRef = useRef<HTMLAudioElement>(smallTalk);
+  // const garageRef = useRef<HTMLAudioElement>(garage);
   const monkeys = new Audio(importedMonkeys);
   monkeys.volume = 0.05;
   const monkeysRef = useRef<HTMLAudioElement>(monkeys);
@@ -419,7 +424,7 @@ function Play() {
       case 'start':
         choosePlay();
         startSound();
-        garageRef.current.play();
+        smallTalkRef.current.play();
         monkeysRef.current.pause();
         setTopBarDivExists(false);
         setTimeout(() => {
@@ -433,13 +438,13 @@ function Play() {
       case 'loader':
         readyPlay();
         startSound();
-        garageRef.current.pause();
+        smallTalkRef.current.pause();
         monkeysRef.current.play();
         setShowLoaderIntervalFunction();
         break;
       case 'play':
         goPlay();
-        garageRef.current.pause();
+        smallTalkRef.current.pause();
         monkeysRef.current.pause();
         setTopBarDivExists(true);
         break;

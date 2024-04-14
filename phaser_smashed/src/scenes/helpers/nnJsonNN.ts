@@ -1,7 +1,7 @@
 export const nnConfigNN = {
   inputSize: 18,
   outputSize: 8,
-  hiddenLayers: [500],
+  hiddenLayers: [20, 20],
   useGpu: true,
 };
 
