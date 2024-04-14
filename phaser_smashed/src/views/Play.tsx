@@ -241,61 +241,15 @@ function Play() {
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
-  // const [canPlayAudio, setCanPlayAudio] = useState<boolean>(false);
-  // const garage = new Audio(importedGarage);
-  // garage.volume = 0.05;
   const smallTalk = new Audio(importedSmallTalk);
   smallTalk.volume = 0.05;
   const smallTalkRef = useRef<HTMLAudioElement>(smallTalk);
-  // const garageRef = useRef<HTMLAudioElement>(garage);
+
   const monkeys = new Audio(importedMonkeys);
   monkeys.volume = 0.05;
   const monkeysRef = useRef<HTMLAudioElement>(monkeys);
 
-  // const [hasRunOnce, setHasRunOnce] = useState<boolean>(false);
-
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   print('canPlayAudio', canPlayAudio);
-
-  //   if (canPlayAudio) {
-  //     garageRef.current.play();
-  //     garageRef.current.addEventListener('ended', () => {
-  //       garageRef.current.play();
-  //     });
-
-  //     monkeysRef.current.addEventListener('ended', () => {
-  //       monkeysRef.current.play();
-  //     });
-  //   }
-  // }, [canPlayAudio]);
-
-  // useEffect(() => {
-  //   const handleInteraction = () => {
-  //     setCanPlayAudio(true);
-  //     // document.removeEventListener('click', handleInteractionReturn);
-  //     // document.removeEventListener('keydown', handleInteractionReturn);
-  //     document.removeEventListener('touchstart', handleInteractionReturn);
-  //     print('An interaction has occurred!');
-  //   };
-  //   const handleInteractionReturn = () => {
-  //     // setCanPlayAudio(false);
-  //     print('An interaction has occurred!');
-  //   };
-
-  //   // Add event listener to document object for any user interaction
-  //   // document.addEventListener('click', handleInteraction, { once: true });
-  //   // document.addEventListener('keydown', handleInteraction, { once: true });
-  //   document.addEventListener('touchstart', handleInteraction, { once: true });
-
-  //   // Clean up event listener on unmount
-  //   return () => {
-  //     // document.removeEventListener('click', handleInteractionReturn);
-  //     // document.removeEventListener('keydown', handleInteractionReturn);
-  //     document.removeEventListener('touchstart', handleInteractionReturn);
-  //   };
-  // }, []);
 
   useEffect(() => {
     print('sessionInfo', session);
@@ -306,35 +260,24 @@ function Play() {
       return;
     }
     print('allSessions Updated');
-    // print('allSessions', allSessions);
   }, [allSessions]);
-
-  // const space: string = '&nbsp';
 
   function captureScreenshot() {
     print('Capture Screenshot');
 
-    // Select the element that you want to capture a screenshot of
     const element = document.querySelector('#top-level');
 
-    // Use html2canvas to capture a screenshot of the element
     html2canvas(element as HTMLElement).then((canvas) => {
-      // Get a data URL representing the image
       const dataUrl = canvas.toDataURL();
 
-      // Create an anchor element
       const link = document.createElement('a');
 
-      // Set the href of the anchor element to the data URL
       link.href = dataUrl;
-
-      // Set the download attribute of the anchor element
       let m = moment();
       let mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
       let fileName = `Smashed_Rules_${mFormatted}.png`;
       link.download = fileName;
 
-      // Click the anchor element to trigger the download
       link.click();
     });
   }
@@ -357,41 +300,6 @@ function Play() {
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
-
-  // const [playChezState, setPlayChezState] = useState<PlayChezState>({
-  //   name: 'up',
-  //   moment: moment(),
-  // });
-
-  //////////////////////////////
-  // KEEP FOR NOW
-  //////////////////////////////
-  // useEffect(() => {
-  //   const handleTranceEnded = (): void => {
-  //     setFirstCharacterSlot(4);
-  //     setPlayChezState({ name: 'chez', moment: moment() });
-  //   };
-
-  //   print('playChezState', playChezState.name);
-
-  //   switch (playChezState.name) {
-  //     case 'up':
-  //       tranceRef.current.pause();
-  //       garageRef.current.play();
-  //       tranceRef.current.removeEventListener('ended', handleTranceEnded);
-  //       break;
-  //     case 'down':
-  //       tranceRef.current.play();
-  //       garageRef.current.pause();
-  //       tranceRef.current.addEventListener('ended', handleTranceEnded, {
-  //         once: true,
-  //       });
-  //       break;
-  //     case 'chez':
-  //       garageRef.current.play();
-  //       break;
-  //   }
-  // }, [playChezState]);
 
   const onClickEye = () => {
     setOpenEye(!openEye);
@@ -497,7 +405,7 @@ function Play() {
   // 2 -> keyboard
   // 3 -> bot Rules-Based
   // 4 -> bot Neural-Network
-  const [inputArray, setInputArray] = useState<InputType[]>([3, 4, 4, 4]);
+  const [inputArray, setInputArray] = useState<InputType[]>([2, 3, 4, 4]);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>({
     players: [
       {
@@ -505,15 +413,15 @@ function Play() {
         input: 0, // don't set this here
       },
       {
-        characterId: 7,
-        input: 0, // don't set this here
-      },
-      {
-        characterId: 6,
+        characterId: 1,
         input: 0, // don't set this here
       },
       {
         characterId: 8,
+        input: 0, // don't set this here
+      },
+      {
+        characterId: 7,
         input: 0, // don't set this here
       },
     ],
