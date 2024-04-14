@@ -6,7 +6,7 @@ export const debugInit: Debug = {
   Level: 7, //0123456
   ModeInfinity: false,
   Shots: 7, //7
-  Minutes: 2, //01234567
+  Minutes: 1, //01234567
   MusicActive: true,
   MusicTrack: 0, // 0123
   ReadySoundActive: false,
@@ -42,10 +42,10 @@ export const debugInit: Debug = {
   BulletsFullScreen: false,
   TrophiesOnShots: false,
   TrophiesAlways: false,
-  // NeuralNetworkBot: false,
-  NNP1Train: true,
+  // NNP1Train: true,
+  NNP1Train: false,
   NNIsLSTM: false,
-  InstReplay: true,
+  InstReplay: false,
   ReplayFullQuality: false,
   ReplayControls: true,
   ReplayFastSlow: false,
