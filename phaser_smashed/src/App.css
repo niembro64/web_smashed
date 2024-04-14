@@ -280,7 +280,8 @@ h2 {
   margin-bottom: 2vh;
 }
 .horiz-item-right {
-  width: 80%;
+  width: 60%;
+  /* padding: 2% 10%; */
   /* height: 30vh; */
   height: 100%;
   /* margin-top: 2vh; */
@@ -290,10 +291,10 @@ h2 {
   justify-content: flex-start;
   align-items: flex-start;
 
-  font-size: 0.9vw;
+  font-size: 1.5vw;
 
   flex-wrap: wrap;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* overflow-x: hidden; */
 }
 .horiz-item-right::-webkit-scrollbar {
@@ -431,7 +432,12 @@ h2 {
 }
 
 .kirbyNiembro {
+  margin: 5%;
+}
+.NANiembro {
   margin: 1%;
+  /* width: 100%; */
+  height: 30%;
 }
 #debug-col {
   width: 100%;

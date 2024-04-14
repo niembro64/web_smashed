@@ -2221,19 +2221,25 @@ function Play() {
                   </a>
                 </div>
                 <div className="horiz-item-right">
-                  As referenced on the Rules-N64 sheet, (Chemon) Smashed was
-                  invented in Glen Carbon, Illinois (near St. Louis) some time
-                  in late 2009 by a group of college kids at the "Chemon" House.
-                  From 2013 to 2018, "The Young Boys" have been keeping it alive
-                  in St. Louis. It's normally played with the N64 Smash Bros
-                  game on the N64, Wii, or Emulation, but this is my attempt at
-                  recreating it with the rules baked in. Since the inception,
-                  niembro64 has been actively persuing the fundamental polished
-                  essense of Smashed; both as an exercise of logic, and such
-                  that one day it could be realized as a fully functional,
-                  independent game. Assets & sounds that you don't immediately
-                  recognize are probably OC.
-                  {/* <h4 id="recent-games">Recent Games z:{tz}</h4> */}
+                  Smashed was invented in St. Louis in late 2009 at the Chemon
+                  House. Web Smashed attempts to distill the original.
+                </div>
+                <div className="horiz-item-left">
+                  <img
+                    className="NANiembro"
+                    src="./images/NA.png"
+                    alt="Niemo Audio"
+                    onMouseDown={() => {
+                      print('MOUSE DOWN');
+                    }}
+                  />
+
+                  <a
+                    className="btn btn-dark text-light"
+                    href="https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv"
+                  >
+                    <span className="text-white small">music</span>
+                  </a>
                 </div>
               </div>
               <div
