@@ -47,6 +47,7 @@ export interface Debug {
   // NeuralNetworkBot: boolean;
   NNP1Train: boolean;
   NNIsLSTM: boolean;
+  NNHelpBot: boolean;
   InstReplay: boolean;
   ReplayFullQuality: boolean;
   ReplayControls: boolean;

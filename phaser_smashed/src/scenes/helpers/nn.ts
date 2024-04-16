@@ -164,14 +164,23 @@ export const NNSetPlayerPadStatic = (
 
   const r: number[] = NNRatiosNN;
 
-  player.padCurr.up = output[0] > 1 - r[0] ? true : false;
-  player.padCurr.down = output[1] > 1 - r[1] ? true : false;
-  player.padCurr.left = output[2] > 1 - r[2] ? true : false;
-  player.padCurr.right = output[3] > 1 - r[3] ? true : false;
-  player.padCurr.A = output[4] > 1 - r[4] ? true : false;
-  player.padCurr.B = output[5] > 1 - r[5] ? true : false;
-  player.padCurr.X = output[6] > 1 - r[6] ? true : false;
-  player.padCurr.Y = output[7] > 1 - r[7] ? true : false;
+  player.padCurr.up = output[0] > r[0] ? true : false;
+  player.padCurr.down = output[1] > r[1] ? true : false;
+  player.padCurr.left = output[2] > r[2] ? true : false;
+  player.padCurr.right = output[3] > r[3] ? true : false;
+  player.padCurr.A = output[4] > r[4] ? true : false;
+  player.padCurr.B = output[5] > r[5] ? true : false;
+  player.padCurr.X = output[6] > r[6] ? true : false;
+  player.padCurr.Y = output[7] > r[7] ? true : false;
+
+  // player.padCurr.up = output[0] > 1 - r[0] ? true : false;
+  // player.padCurr.down = output[1] > 1 - r[1] ? true : false;
+  // player.padCurr.left = output[2] > 1 - r[2] ? true : false;
+  // player.padCurr.right = output[3] > 1 - r[3] ? true : false;
+  // player.padCurr.A = output[4] > 1 - r[4] ? true : false;
+  // player.padCurr.B = output[5] > 1 - r[5] ? true : false;
+  // player.padCurr.X = output[6] > 1 - r[6] ? true : false;
+  // player.padCurr.Y = output[7] > 1 - r[7] ? true : false;
 };
 
 export const addPlayerOneNNObjectsStatic = (game: Game): void => {
@@ -302,4 +311,4 @@ export const saveTextStringAsFileToBaseOfDirectory = (
 
   // Clean up the URL object
   URL.revokeObjectURL(url);
-}
+};

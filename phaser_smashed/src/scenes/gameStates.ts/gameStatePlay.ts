@@ -1,23 +1,23 @@
-import Game from "../Game";
+import Game from '../Game';
 import {
   updateAttackEnergyOffscreen,
   updateRemoveAttackPhysicalsIfNotNearPlayer,
-} from "../helpers/attacks";
-import { updateCamera } from "../helpers/camera";
-import { updateAtThreeShots, updateChomp } from "../helpers/chomp";
+} from '../helpers/attacks';
+import { updateCamera } from '../helpers/camera';
+import { updateAtThreeShots, updateChomp } from '../helpers/chomp';
 import {
   updateDamagePrev,
   updateDeathsAndKillsMatrices,
   updateSuicide,
   updateTableGiveHealth,
-} from "../helpers/damage";
+} from '../helpers/damage';
 import {
   printFlagOwnerAndToucher,
   updateFlagColor,
   updateFlagMovement,
   updateFlagOwner,
   updateFlagToucher,
-} from "../helpers/flag";
+} from '../helpers/flag';
 import {
   updateAttackEnergyFlipXVel,
   updateAttackEnergyFollow,
@@ -27,26 +27,23 @@ import {
   updateKeepObjectsFromFallingLikeCrazy,
   updateTable,
   updateWallTouchArray,
-} from "../helpers/movement";
-import {
-  addPlayerOneNNObjectsStatic,
-  NNSetPlayerPadStatic,
-} from "../helpers/nn";
+} from '../helpers/movement';
+import { addPlayerOneNNObjectsStatic } from '../helpers/nn';
 import {
   updateAttackEnergyFrictionGroundMovement,
   updateAttackEnergyFrictionGroundRotation,
   updateAttackEnergyFrictionWall,
   updatePadPreviousAndDebounced,
-} from "../helpers/pad";
-import { updateChompFilterState } from "../helpers/powers";
+} from '../helpers/pad';
+import { updateChompFilterState } from '../helpers/powers';
 import {
   updateAllSpriteFilters,
   updateSpritesFlipX,
   updateSpritesheets,
-} from "../helpers/sprites";
-import { updateResetAllHitboxesAttackEnergy } from "../helpers/state";
-import { updateTimeSlowdown } from "../helpers/time";
-import { updatePlayers } from "../update";
+} from '../helpers/sprites';
+import { updateResetAllHitboxesAttackEnergy } from '../helpers/state';
+import { updateTimeSlowdown } from '../helpers/time';
+import { updatePlayers } from '../update';
 
 export function updateGameStatePlay(
   game: Game,

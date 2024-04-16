@@ -4,12 +4,11 @@ import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
 import {
   getDistance,
-  getNearestAttackEnergyXYFromPlayer,
   getNearestAttackEnergyXYAboveFromPlayer,
+  getNearestAttackEnergyXYFromPlayer,
   getNearestPlayerAliveXYFromPlayer,
   hasPlayerTouchedWallRecently,
 } from './movement';
-import { NNSetPlayerPadStatic } from './nn';
 export function getIsBot(player: Player, game: Game): boolean {
   if (player.inputType === 3) {
     return true;
@@ -141,7 +140,7 @@ export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.3;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.11;
   if (bot.x < left) {
     return true;
   }
@@ -149,7 +148,7 @@ export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
 }
 export function getIsBotTooFarRight(player: Player, game: Game): boolean {
   let bot = player.char.sprite;
-  let right = SCREEN_DIMENSIONS.WIDTH * 0.7;
+  let right = SCREEN_DIMENSIONS.WIDTH * 0.892;
   if (bot.x > right) {
     return true;
   }

@@ -28,32 +28,25 @@ export function updateBotNN(
     return;
   }
   NNSetPlayerPadStatic(player, playerIndex, game);
-  let helpNNBot = true;
-  if (!helpNNBot) {
+
+  if (!game.debug.NNHelpBot) {
     return;
   }
-  let pVelocity: Velocity = player.char.sprite.body.velocity;
-  let jumps = player.char.jumps;
-  let jumpIndex = player.char.jumpIndex;
-  let onLastJump = jumpIndex === jumps.length - 1;
+  const pVelocity: Velocity = player.char.sprite.body.velocity;
+  const jumps = player.char.jumps;
+  const jumpIndex = player.char.jumpIndex;
+  const onLastJump = jumpIndex === jumps.length - 1;
   // //////////////////////
   // // TOO FAR LEFT RIGHT CENTER
   // //////////////////////
-  const r = 0.3;
-  if (game.gameSeconds % 2 === playerIndex % 2) {
-    if (getIsBotTooFarMiddleLeft(player, game) && Math.random() > r) {
+  const r = 0.8;
+  if (game.gameSeconds % 2 === playerIndex % 2 && Math.random() > r) {
+    if (getIsBotTooFarMiddleLeft(player, game)) {
       p.right = true;
       p.left = false;
-    } else if (getIsBotTooFarMiddleRight(player, game) && Math.random() > r) {
+    } else if (getIsBotTooFarMiddleRight(player, game)) {
       p.left = true;
       p.right = false;
-    }
-    if (Math.random() > 0.97) {
-      p.Y = !p.Y;
-    }
-  } else {
-    if (Math.random() > r) {
-      p.X = true;
     }
   }
   //////////////////////
@@ -87,6 +80,7 @@ export function updateBotNN(
   ) {
     p.left = true;
     p.right = false;
+    p.X = !p.X;
   }
   //////////////////////
   // RIGHT SIDE OF PIT
@@ -99,12 +93,18 @@ export function updateBotNN(
   ) {
     p.right = true;
     p.left = false;
+    p.X = !p.X;
   }
 
   //////////////////////
   // IF BOT IS TOUCHING LEFT OR RIGHT, JUMP
   //////////////////////
-  if (player.char.sprite.body.touching.right || player.char.sprite.body.touching.left) {
-    p.Y = !p.Y;
+  if (
+    player.char.sprite.body.touching.right ||
+    player.char.sprite.body.touching.left
+  ) {
+    if (Math.random() > 0.8) {
+      p.Y = !p.Y;
+    }
   }
 }
