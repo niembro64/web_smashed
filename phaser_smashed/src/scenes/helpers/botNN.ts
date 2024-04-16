@@ -39,8 +39,11 @@ export function updateBotNN(
   // //////////////////////
   // // TOO FAR LEFT RIGHT CENTER
   // //////////////////////
-  const r = 0.8;
-  if (game.gameSeconds % 2 === playerIndex % 2 && Math.random() > r) {
+  const r = 0.01;
+  if (
+    Math.round(game.gameSeconds / 2) % 2 === playerIndex % 2 &&
+    Math.random() > r
+  ) {
     if (getIsBotTooFarMiddleLeft(player, game)) {
       p.right = true;
       p.left = false;
@@ -62,7 +65,7 @@ export function updateBotNN(
   //////////////////////
   // TOO FAR UP
   //////////////////////
-  if (getIsBotTooFarUp(player, game) && Math.random() > 0.01) {
+  if (getIsBotTooFarUp(player, game) && Math.random() > 0.1) {
     p.Y = false;
     p.down = true;
     p.up = false;
@@ -72,28 +75,22 @@ export function updateBotNN(
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
-  if (
-    pVelocity.y > 0 &&
-    // onLastJump &&
-    getIsBotInPitAreaLeft(player, game) &&
-    Math.random() > 0.01
-  ) {
+  if (pVelocity.y >= 0 && getIsBotInPitAreaLeft(player, game)) {
+    p.X = !p.X;
+  }
+  if (pVelocity.y >= 0 && onLastJump && getIsBotInPitAreaLeft(player, game)) {
     p.left = true;
     p.right = false;
-    p.X = !p.X;
   }
   //////////////////////
   // RIGHT SIDE OF PIT
   //////////////////////
-  if (
-    pVelocity.y > 0 &&
-    // onLastJump &&
-    getIsBotInPitAreaRight(player, game) &&
-    Math.random() > 0.01
-  ) {
+  if (pVelocity.y >= 0 && getIsBotInPitAreaRight(player, game)) {
+    p.X = !p.X;
+  }
+  if (pVelocity.y >= 0 && onLastJump && getIsBotInPitAreaRight(player, game)) {
     p.right = true;
     p.left = false;
-    p.X = !p.X;
   }
 
   //////////////////////
@@ -103,7 +100,7 @@ export function updateBotNN(
     player.char.sprite.body.touching.right ||
     player.char.sprite.body.touching.left
   ) {
-    if (Math.random() > 0.8) {
+    if (Math.random() > 0.3) {
       p.Y = !p.Y;
     }
   }
