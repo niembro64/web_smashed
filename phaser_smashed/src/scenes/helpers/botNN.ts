@@ -28,8 +28,14 @@ export function updateBotNN(
 
   NNSetPlayerPadStatic(player, playerIndex, game);
 
+  const pVelocity: Velocity = player.char.sprite.body.velocity;
+  const jumps = player.char.jumps;
+  const jumpIndex = player.char.jumpIndex;
+  const onLastJump = jumpIndex === jumps.length - 1;
+
   ////////////////////////////////
-  // EVERYTHING HERE HELPS OUT THE NN
+  // EVERYTHING HERE HELPS OUT
+  // THE NN TO NOT DO STUPID STUFF
   ////////////////////////////////
 
   if (game.debug.NNHelpScreen) {
@@ -74,11 +80,6 @@ export function updateBotNN(
       }
     }
   }
-
-  const pVelocity: Velocity = player.char.sprite.body.velocity;
-  const jumps = player.char.jumps;
-  const jumpIndex = player.char.jumpIndex;
-  const onLastJump = jumpIndex === jumps.length - 1;
 
   //////////////////////
   // LEFT SIDE OF PIT
