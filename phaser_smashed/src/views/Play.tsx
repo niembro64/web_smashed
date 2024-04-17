@@ -66,22 +66,22 @@ function Play() {
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
     useState<Debug>(mainOptionsDebugShow);
 
-  useEffect(() => {
-    const handleUserInteraction = () => {
-      setWebState('start');
+  // useEffect(() => {
+  //   const handleUserInteraction = () => {
+  //     setWebState('start');
 
-      window.removeEventListener('click', handleUserInteraction);
-      window.removeEventListener('keydown', handleUserInteraction);
-    };
+  //     window.removeEventListener('click', handleUserInteraction);
+  //     window.removeEventListener('keydown', handleUserInteraction);
+  //   };
 
-    window.addEventListener('click', handleUserInteraction);
-    window.addEventListener('keydown', handleUserInteraction);
+  //   window.addEventListener('click', handleUserInteraction);
+  //   window.addEventListener('keydown', handleUserInteraction);
 
-    return () => {
-      window.removeEventListener('click', handleUserInteraction);
-      window.removeEventListener('keydown', handleUserInteraction);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('click', handleUserInteraction);
+  //     window.removeEventListener('keydown', handleUserInteraction);
+  //   };
+  // }, []);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -1070,10 +1070,14 @@ function Play() {
                 console.log('mouse up');
               }}
             >
-              <div>
+              <div
+                onMouseDown={() => {
+                  setWebState('start');
+                }}
+              >
                 <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
               </div>
-              <h1>{webState === 'init' ? ' ? ' : 'SMASHED'}</h1>
+              <h1>{webState === 'init' ? '?' : 'SMASHED'}</h1>
             </div>
           </div>
 

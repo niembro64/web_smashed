@@ -1082,6 +1082,10 @@ h2 {
   transition: 0.3s ease-in-out;
   filter: grayscale(1) brightness(1);
 }
+.startTitleInit:active {
+  transition: 0.3s ease-in-out;
+  filter: grayscale(1) brightness(10);
+}
 .startTitleInit > h1 {
   overflow: visible;
   cursor: pointer;
@@ -1097,14 +1101,26 @@ h2 {
   animation: titleInitAnimation 2s ease-in-out both;
   overflow: visible;
 }
+.startTitleStart > h1 {
+  transition: 3s ease-in-out;
+  animation: titleInitAnimationLetters 3s ease-in-out both;
+}
 
 @keyframes titleInitAnimation {
   0% {
-    filter: grayscale(1) brightness(3) brightness(0.5);
+    filter: grayscale(1) brightness(1);
   }
   100% {
     transform: translateY(0vh);
     filter: grayscale(0) brightness(1);
+  }
+}
+@keyframes titleInitAnimationLetters {
+  0% {
+    filter: brightness(0);
+  }
+  100% {
+    filter: brightness(1);
   }
 }
 
