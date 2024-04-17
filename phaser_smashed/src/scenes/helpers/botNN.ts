@@ -16,7 +16,7 @@ export function updateBotNN(
   playerIndex: number,
   game: Game
 ): void {
-  let p = player.padCurr;
+  const p = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {
     if (game.timeSeconds % 2 === 0) {
       allPadToFalse(player);
