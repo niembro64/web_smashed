@@ -367,15 +367,21 @@ function Play() {
 
     for (let i = 0; i < 4; i++) {
       const rand: number = Math.random();
+      const oldId: number = smashConfig.players[i].characterId;
       let newId: number | null = null;
 
-      if (rand < baseUpperLimit) {
-        newId = Math.floor(Math.random() * 4);
-      } else if (rand < chezUpperLimit) {
-        newId = 4 + Math.floor(Math.random() * 2);
-      } else {
-        newId = 6 + Math.floor(Math.random() * 3);
-      }
+      // too lazy to do it right
+      do {
+        if (rand < baseUpperLimit) {
+          newId = Math.floor(Math.random() * 4);
+        } else if (rand < chezUpperLimit) {
+          newId = 4 + Math.floor(Math.random() * 2);
+        } else {
+          newId = 6 + Math.floor(Math.random() * 3);
+        }
+      } while (newId === oldId);
+
+      print('new', newId, 'old', oldId);
 
       newPlayers.push({
         characterId: newId as CharacterId,
@@ -383,7 +389,13 @@ function Play() {
       });
     }
 
-    setSmashConfig({ players: newPlayers });
+    const delay = 90;
+    newPlayers.forEach((player, index) => {
+      setTimeout(() => {
+        soundManager.blipSound();
+        setCharacterSlot(player.characterId, index);
+      }, index * delay);
+    });
   };
 
   const config: Phaser.Types.Core.GameConfig = {
@@ -568,6 +580,21 @@ function Play() {
 
     const choices = [...smashConfig.players];
     const choice = choices[0];
+    choice.characterId = charId;
+
+    setSmashConfig({ players: [...choices] });
+  };
+
+  const setCharacterSlot = (
+    charId: CharacterId,
+    positionIndex: number
+  ): void => {
+    if (webState === 'play') {
+      return;
+    }
+
+    const choices = [...smashConfig.players];
+    const choice = choices[positionIndex];
     choice.characterId = charId;
 
     setSmashConfig({ players: [...choices] });
@@ -1459,7 +1486,6 @@ function Play() {
               id="dice"
               onClick={() => {
                 randomizeCharacters();
-                soundManager.blipSound();
               }}
             >
               {emoji.dice}
