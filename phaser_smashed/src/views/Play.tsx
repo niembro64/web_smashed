@@ -1116,6 +1116,30 @@ function Play() {
     return exists;
   };
 
+  const getNumKeyboards = (): number => {
+    let numK: number = 0;
+
+    inputArray.forEach((ia: number, iaIndex: number) => {
+      if (ia === 2) {
+        numK++;
+      }
+    });
+
+    return numK;
+  };
+
+  const getNumGamepads = (): number => {
+    let numK: number = 0;
+
+    inputArray.forEach((ia: number, iaIndex: number) => {
+      if (ia === 1) {
+        numK++;
+      }
+    });
+
+    return numK;
+  };
+
   const onClickBackEventHandler = () => {
     if (myPhaser?.current?.scene?.keys?.game) {
       myPhaser.current.scene.keys.game.loaded = false;
@@ -1578,9 +1602,11 @@ function Play() {
                         }}
                       >
                         <span>Gamepad</span>
-                        <span id="input-sub">
-                          {getNumControllersExistLower(pIndex) + 1}
-                        </span>
+                        {getNumGamepads() > 1 && (
+                          <span id="input-sub">
+                            {getNumControllersExistLower(pIndex) + 1}
+                          </span>
+                        )}
                         {pIndex < 2 && (
                           <div className="button-input-emoji">
                             {emoji.gamepad}
@@ -1601,12 +1627,14 @@ function Play() {
                         }}
                       >
                         <span>Keyboard</span>
-                        {getDoesKeyboardExistLower(pIndex) && (
-                          <span id="input-sub">Arrows</span>
-                        )}
-                        {!getDoesKeyboardExistLower(pIndex) && (
-                          <span id="input-sub">WASD</span>
-                        )}
+                        {getNumKeyboards() > 1 &&
+                          getDoesKeyboardExistLower(pIndex) && (
+                            <span id="input-sub">Arrows</span>
+                          )}
+                        {getNumKeyboards() > 1 &&
+                          !getDoesKeyboardExistLower(pIndex) && (
+                            <span id="input-sub">WASD</span>
+                          )}
                         {pIndex < 2 && (
                           <div className="button-input-emoji">
                             {emoji.keyboardWhite}
