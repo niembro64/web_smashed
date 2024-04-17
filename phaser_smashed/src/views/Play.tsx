@@ -35,6 +35,7 @@ import {
   sumNumbersIn2DArrayString,
 } from './client';
 import {
+  blipDelay,
   characterMoves,
   idColors,
   inputArrayInit,
@@ -320,19 +321,49 @@ function Play() {
   const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
 
-  const getNumActiveBeforeMe = (index: number): number => {
-    let numActiveBeforeMe = 0;
-    for (let i = 0; i < index; i++) {
-      if (inputArray[i] !== 0) {
-        numActiveBeforeMe++;
-      }
+  const setInputArraySlot = (inputId: InputType, positionIndex: number) => {
+    if (webState === 'play') {
+      return;
     }
-    return numActiveBeforeMe;
+
+    const a: InputType[] = [...inputArray];
+    a[positionIndex] = inputId;
+    setInputArray([...a]);
+  };
+
+  const setInputArrayEffect = (newInputArray: InputType[]): void => {
+    for (let i = 0; i < newInputArray.length; i++) {
+      setTimeout(() => {
+        soundManager.blipSound();
+        const a: InputType[] = [...inputArray];
+
+        for (let j = 0; j <= i; j++) {
+          a[j] = newInputArray[j];
+        }
+
+        setInputArray([...a]);
+      }, i * blipDelay);
+    }
   };
 
   useEffect(() => {
-    print('smashConfig', smashConfig);
-  }, [smashConfig]);
+    print('inputArray', inputArray);
+  }, [inputArray]);
+
+  const setCharacterSlot = (
+    charId: CharacterId,
+    positionIndex: number
+  ): void => {
+    if (webState === 'play') {
+      return;
+    }
+
+    const choices = [...smashConfig.players];
+    const choice = choices[positionIndex];
+    choice.characterId = charId;
+
+    setSmashConfig({ players: [...choices] });
+  };
 
   const randomizeCharacters = () => {
     soundManager.dice();
@@ -373,14 +404,27 @@ function Play() {
       });
     }
 
-    const delay = 90;
     newPlayers.forEach((player, index) => {
       setTimeout(() => {
         soundManager.blipSound();
         setCharacterSlot(player.characterId, index);
-      }, index * delay);
+      }, index * blipDelay);
     });
   };
+
+  const getNumActiveBeforeMe = (index: number): number => {
+    let numActiveBeforeMe = 0;
+    for (let i = 0; i < index; i++) {
+      if (inputArray[i] !== 0) {
+        numActiveBeforeMe++;
+      }
+    }
+    return numActiveBeforeMe;
+  };
+
+  useEffect(() => {
+    print('smashConfig', smashConfig);
+  }, [smashConfig]);
 
   const config: Phaser.Types.Core.GameConfig = {
     plugins: {
@@ -529,7 +573,7 @@ function Play() {
     }
     const newInputArray = [...inputArray];
     newInputArray[playerIndex] = i as InputType;
-    setInputArray([...newInputArray]);
+    setInputArrayEffect([...newInputArray]);
     print('i', i, 'newInputArray', newInputArray);
   };
 
@@ -564,21 +608,6 @@ function Play() {
 
     const choices = [...smashConfig.players];
     const choice = choices[0];
-    choice.characterId = charId;
-
-    setSmashConfig({ players: [...choices] });
-  };
-
-  const setCharacterSlot = (
-    charId: CharacterId,
-    positionIndex: number
-  ): void => {
-    if (webState === 'play') {
-      return;
-    }
-
-    const choices = [...smashConfig.players];
-    const choice = choices[positionIndex];
     choice.characterId = charId;
 
     setSmashConfig({ players: [...choices] });
@@ -1358,8 +1387,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([2, 0, 0, 2]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([2, 0, 0, 2]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1369,8 +1397,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([2, 0, 0, 3]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([2, 0, 0, 3]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1380,8 +1407,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([2, 0, 0, 4]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([2, 0, 0, 4]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1391,8 +1417,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([1, 0, 0, 1]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([1, 0, 0, 1]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1403,8 +1428,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([2, 0, 3, 4]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([2, 0, 3, 4]);
                 }}
               >
                 <span className={'vs-span'}>{emoji.keyboardWhite}</span>
@@ -1413,8 +1437,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([1, 0, 3, 4]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([1, 0, 3, 4]);
                 }}
               >
                 <span className={'vs-span'}>{emoji.gamepad}</span>
@@ -1423,8 +1446,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([1, 1, 1, 1]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([1, 1, 1, 1]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1437,8 +1459,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([3, 3, 3, 3]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([3, 3, 3, 3]);
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
@@ -1447,8 +1468,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([4, 4, 4, 4]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([4, 4, 4, 4]);
                 }}
               >
                 <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
@@ -1457,8 +1477,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArray([3, 4, 3, 4]);
-                  soundManager.blipSound();
+                  setInputArrayEffect([3, 4, 3, 4]);
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>

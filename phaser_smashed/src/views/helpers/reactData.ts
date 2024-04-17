@@ -160,3 +160,5 @@ export   const characterMoves: CharacterMove[] = [
   { button: 'Paused + Any Button', move: 'Ready', status: emoji.greenCheck },
   { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
 ];
+
+export  const blipDelay = 200;
