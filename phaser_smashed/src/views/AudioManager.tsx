@@ -14,7 +14,7 @@ import importedMeleeGo from '../sounds/melee_go.mp3';
 // @ts-ignore
 import importedMeleeChoose from '../sounds/melee_choose.mp3';
 
-function AudioManager() {
+function SoundManager() {
   const [woah] = useSound(importedWoah, { volume: 0.2 });
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
   const [meleeReady] = useSound(importedMeleeReady, { volume: 0.2 });
@@ -33,4 +33,4 @@ function AudioManager() {
   };
 }
 
-export default AudioManager;
+export default SoundManager;

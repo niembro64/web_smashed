@@ -7,13 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import '../App.css';
 import Game from '../scenes/Game';
 import { setGameState } from '../scenes/helpers/state';
-// @ts-ignore
-import importedTrance from '../sounds/trance-loop.ogg';
-// @ts-ignore
-import importedSmallTalk from '../sounds/niemo_audio_small_talk.ogg';
-// @ts-ignore
-import importedMonkeys from '../sounds/monkeys.ogg';
-// @ts-ignore
 import moment, { Moment } from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
@@ -31,7 +24,7 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/interfaces';
-import AudioManager from './AudioManager';
+import SoundManager from './AudioManager';
 import {
   ClientInformation,
   SessionInfo,
@@ -53,13 +46,15 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactData';
+import MusicManager from './MusicManager';
 
 function Play() {
   const myPhaser: any = useRef(null);
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
-  const audioManager = AudioManager();
+  const soundManager = SoundManager();
+  const musicManager = MusicManager();
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -227,14 +222,6 @@ function Play() {
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
-  const smallTalk = new Audio(importedSmallTalk);
-  smallTalk.volume = 0.05;
-  const smallTalkRef = useRef<HTMLAudioElement>(smallTalk);
-
-  const monkeys = new Audio(importedMonkeys);
-  monkeys.volume = 0.05;
-  const monkeysRef = useRef<HTMLAudioElement>(monkeys);
-
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(false);
 
   useEffect(() => {
@@ -268,12 +255,6 @@ function Play() {
       link.click();
     });
   }
-
-  const trance = new Audio(importedTrance);
-  trance.volume = 0.3;
-
-  const tranceRef = useRef<HTMLAudioElement>(trance);
-  tranceRef.current.volume = 0.3;
 
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('init');
@@ -312,10 +293,10 @@ function Play() {
         break;
       case 'start':
         choosePlay();
-        audioManager.startSound();
+        soundManager.startSound();
 
-        smallTalkRef.current.play();
-        monkeysRef.current.pause();
+        musicManager.smallTalkRef.current.play();
+        musicManager.monkeysRef.current.pause();
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -327,15 +308,15 @@ function Play() {
         break;
       case 'loader':
         readyPlay();
-        audioManager.startSound();
-        smallTalkRef.current.pause();
-        monkeysRef.current.play();
+        soundManager.startSound();
+        musicManager.smallTalkRef.current.pause();
+        musicManager.monkeysRef.current.play();
         setShowLoaderIntervalFunction();
         break;
       case 'play':
         goPlay();
-        smallTalkRef.current.pause();
-        monkeysRef.current.pause();
+        musicManager.smallTalkRef.current.pause();
+        musicManager.monkeysRef.current.pause();
         setTopBarDivExists(true);
         break;
       default:
@@ -544,7 +525,7 @@ function Play() {
     playerIndex: number,
     newInput: InputType
   ): void => {
-    audioManager.blipSound();
+    soundManager.blipSound();
     let i = newInput;
     let k = getNumKeyboardsInUse();
     if (i === 2 && k >= 2) {
@@ -557,19 +538,19 @@ function Play() {
   };
 
   const bamPlay = (): void => {
-    audioManager.bam();
+    soundManager.bam();
   };
   const woahPlay = (): void => {
-    audioManager.woah();
+    soundManager.woah();
   };
   const readyPlay = (): void => {
-    audioManager.meleeReady();
+    soundManager.meleeReady();
   };
   const goPlay = (): void => {
-    audioManager.meleeGo();
+    soundManager.meleeGo();
   };
   const choosePlay = (): void => {
-    audioManager.meleeChoose();
+    soundManager.meleeChoose();
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
@@ -593,7 +574,7 @@ function Play() {
   };
 
   const onClickRotateSelection = (playerIndex: number): void => {
-    audioManager.blipSound();
+    soundManager.blipSound();
     const choices = [...smashConfig.players];
     const choice = choices[playerIndex];
     let newCharacterId = choice.characterId + 1;
@@ -648,7 +629,7 @@ function Play() {
   };
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
-    audioManager.blipSound();
+    soundManager.blipSound();
 
     setShowControls(false);
     setShowControllers(false);
@@ -659,7 +640,7 @@ function Play() {
   };
 
   const onClickPlayNavButtons = (buttonName: ButtonName) => {
-    audioManager.blipSound();
+    soundManager.blipSound();
     clickPauseParent();
 
     switch (buttonName) {
@@ -1122,7 +1103,7 @@ function Play() {
                         setMainOptionsDebugShowState(newMainOpotionsDebugShow);
                       }
 
-                      audioManager.blipSound();
+                      soundManager.blipSound();
                       e.stopPropagation();
                       if (typeof value === 'number') {
                         setDebugState((prevState) => ({
@@ -1362,7 +1343,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 0, 2]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1373,7 +1354,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 0, 3]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1384,7 +1365,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 0, 4]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1395,7 +1376,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([1, 0, 0, 1]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1407,7 +1388,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 3, 4]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.keyboardWhite}</span>
@@ -1417,7 +1398,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([1, 0, 3, 4]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.gamepad}</span>
@@ -1427,7 +1408,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([1, 1, 1, 1]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1441,7 +1422,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([3, 3, 3, 3]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
@@ -1451,7 +1432,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([4, 4, 4, 4]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
@@ -1461,7 +1442,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([3, 4, 3, 4]);
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
@@ -1473,7 +1454,7 @@ function Play() {
               id="dice"
               onClick={() => {
                 randomizeCharacters();
-                audioManager.blipSound();
+                soundManager.blipSound();
               }}
             >
               {emoji.dice}
@@ -1593,7 +1574,7 @@ function Play() {
                         id="optionDebug"
                         key={index}
                         onClick={(e) => {
-                          audioManager.blipSound();
+                          soundManager.blipSound();
                           e.stopPropagation();
                           if (typeof value === 'number') {
                             setDebugState((prevState) => ({
@@ -1842,7 +1823,7 @@ function Play() {
                 className={hideNiemoIp ? ' show-all-hide' : ' show-all-show'}
                 onClick={(e) => {
                   e.stopPropagation();
-                  audioManager.blipSound();
+                  soundManager.blipSound();
                   setHideNiemoIp(!hideNiemoIp);
                 }}
               >
