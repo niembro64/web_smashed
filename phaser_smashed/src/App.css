@@ -1089,6 +1089,7 @@ h2 {
 .startTitleInit > h1 {
   overflow: visible;
   cursor: pointer;
+  filter: brightness(0.5);
 }
 .startTitleInit > div > img {
   overflow: visible;

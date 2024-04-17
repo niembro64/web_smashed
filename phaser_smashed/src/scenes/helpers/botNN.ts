@@ -4,8 +4,6 @@ import {
   allPadToFalse,
   getIsBotInPitAreaLeft,
   getIsBotInPitAreaRight,
-  getIsBotTooFarCenterLeft,
-  getIsBotTooFarCenterRight,
   getIsBotTooFarLeft,
   getIsBotTooFarMiddleLeft,
   getIsBotTooFarMiddleRight,
@@ -27,11 +25,16 @@ export function updateBotNN(
     }
     return;
   }
+
   NNSetPlayerPadStatic(player, playerIndex, game);
 
+  ////////////////////////////////
+  // EVERYTHING HERE HELPS OUT THE NN
+  ////////////////////////////////
   if (!game.debug.NNHelpBot) {
     return;
   }
+
   const pVelocity: Velocity = player.char.sprite.body.velocity;
   const jumps = player.char.jumps;
   const jumpIndex = player.char.jumpIndex;

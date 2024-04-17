@@ -44,7 +44,6 @@ export interface Debug {
   BulletsFullScreen: boolean;
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
-  // NeuralNetworkBot: boolean;
   NNP1Train: boolean;
   NNIsLSTM: boolean;
   NNHelpBot: boolean;
