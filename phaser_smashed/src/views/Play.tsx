@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import Phaser from 'phaser';
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 import { useEffect, useRef, useState } from 'react';
-import useSound from 'use-sound';
+
 import '../App.css';
 import Game from '../scenes/Game';
 import { setGameState } from '../scenes/helpers/state';
@@ -19,8 +19,6 @@ import importedStartSound from '../sounds/start.wav';
 // @ts-ignore
 import importedBlipSound from '../sounds/game-start-liquid.wav';
 // @ts-ignore
-// import importedGarage from '../sounds/garage.ogg';
-// @ts-ignore
 import importedSmallTalk from '../sounds/niemo_audio_small_talk.ogg';
 // @ts-ignore
 import importedMonkeys from '../sounds/monkeys.ogg';
@@ -34,31 +32,26 @@ import moment, { Moment } from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
-  bar,
   ButtonName,
   CharacterId,
-  CharacterMove,
   Debug,
-  emoji,
   GameStateWithTime,
   InputType,
-  inputTypeNum,
   KeyboardGroup,
-  PlayChezState,
-  PlayerConfig,
   PlayerConfigSmall,
-  Quote,
   SmashConfig,
   WebState,
-  WorkingController,
+  bar,
+  emoji,
+  inputTypeNum,
 } from '../scenes/interfaces';
 import {
-  axiosSaveOne,
   ClientInformation,
+  SessionInfo,
+  axiosSaveOne,
   fetchClientData,
   getAllAxios,
   print,
-  SessionInfo,
   sumNumbersIn2DArrayString,
 } from './client';
 import {
@@ -73,11 +66,14 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactData';
+import AudioManager from './AudioManager';
 
 function Play() {
   const myPhaser: any = useRef(null);
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
+
+  const audioManager = AudioManager();
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -90,20 +86,16 @@ function Play() {
     useState<Debug>(mainOptionsDebugShow);
 
   useEffect(() => {
-    // Define a function to update state on interaction
     const handleUserInteraction = () => {
       setWebState('start');
 
-      // Optionally, remove event listeners if you only need the first interaction
       window.removeEventListener('click', handleUserInteraction);
       window.removeEventListener('keydown', handleUserInteraction);
     };
 
-    // Add event listeners for various types of user interaction
     window.addEventListener('click', handleUserInteraction);
     window.addEventListener('keydown', handleUserInteraction);
 
-    // Cleanup function to remove event listeners
     return () => {
       window.removeEventListener('click', handleUserInteraction);
       window.removeEventListener('keydown', handleUserInteraction);
@@ -297,13 +289,6 @@ function Play() {
   const tranceRef = useRef<HTMLAudioElement>(trance);
   tranceRef.current.volume = 0.3;
 
-  const [woah] = useSound(importedWoah, { volume: 0.2 });
-  const [bam] = useSound(importedBambalam, { volume: 0.2 });
-  const [meleeReady] = useSound(importedMeleeReady, { volume: 0.2 });
-  const [meleeGo] = useSound(importedMeleeGo, { volume: 0.2 });
-  const [meleeChoose] = useSound(importedMeleeChoose, { volume: 0.2 });
-  const [startSound] = useSound(importedStartSound, { volume: 0.4 });
-  const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
   const [numClicks, setNumClicks] = useState<number>(0);
   const [webState, setWebState] = useState<WebState>('init');
   const [openEye, setOpenEye] = useState<boolean>(false);
@@ -341,7 +326,8 @@ function Play() {
         break;
       case 'start':
         choosePlay();
-        startSound();
+        audioManager.startSound();
+
         smallTalkRef.current.play();
         monkeysRef.current.pause();
         setTopBarDivExists(false);
@@ -355,7 +341,7 @@ function Play() {
         break;
       case 'loader':
         readyPlay();
-        startSound();
+        audioManager.startSound();
         smallTalkRef.current.pause();
         monkeysRef.current.play();
         setShowLoaderIntervalFunction();
@@ -494,8 +480,6 @@ function Play() {
     setShowHistory(false);
     setShowOptions(false);
 
-   
-
     const players = JSON.parse(JSON.stringify(smashConfig.players));
 
     const newPlayers: PlayerConfigSmall[] = [];
@@ -574,7 +558,7 @@ function Play() {
     playerIndex: number,
     newInput: InputType
   ): void => {
-    blipSound();
+    audioManager.blipSound();
     let i = newInput;
     let k = getNumKeyboardsInUse();
     if (i === 2 && k >= 2) {
@@ -587,19 +571,19 @@ function Play() {
   };
 
   const bamPlay = (): void => {
-    bam();
+    audioManager.bam();
   };
   const woahPlay = (): void => {
-    woah();
+    audioManager.woah();
   };
   const readyPlay = (): void => {
-    meleeReady();
+    audioManager.meleeReady();
   };
   const goPlay = (): void => {
-    meleeGo();
+    audioManager.meleeGo();
   };
   const choosePlay = (): void => {
-    meleeChoose();
+    audioManager.meleeChoose();
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
@@ -623,7 +607,7 @@ function Play() {
   };
 
   const onClickRotateSelection = (playerIndex: number): void => {
-    blipSound();
+    audioManager.blipSound();
     const choices = [...smashConfig.players];
     const choice = choices[playerIndex];
     let newCharacterId = choice.characterId + 1;
@@ -678,7 +662,7 @@ function Play() {
   };
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
-    blipSound();
+    audioManager.blipSound();
 
     setShowControls(false);
     setShowControllers(false);
@@ -689,7 +673,7 @@ function Play() {
   };
 
   const onClickPlayNavButtons = (buttonName: ButtonName) => {
-    blipSound();
+    audioManager.blipSound();
     clickPauseParent();
 
     switch (buttonName) {
@@ -915,7 +899,7 @@ function Play() {
     intervalClock.current = null;
     componentPseudoLoad.current = true;
     myPhaser.current.destroy(true);
- 
+
     setWebState('start');
   };
 
@@ -1152,7 +1136,7 @@ function Play() {
                         setMainOptionsDebugShowState(newMainOpotionsDebugShow);
                       }
 
-                      blipSound();
+                      audioManager.blipSound();
                       e.stopPropagation();
                       if (typeof value === 'number') {
                         setDebugState((prevState) => ({
@@ -1392,7 +1376,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 0, 2]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1403,7 +1387,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 0, 3]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1414,7 +1398,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 0, 4]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1425,7 +1409,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([1, 0, 0, 1]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1437,7 +1421,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([2, 0, 3, 4]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.keyboardWhite}</span>
@@ -1447,7 +1431,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([1, 0, 3, 4]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.gamepad}</span>
@@ -1457,7 +1441,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([1, 1, 1, 1]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>
@@ -1471,7 +1455,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([3, 3, 3, 3]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
@@ -1481,7 +1465,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([4, 4, 4, 4]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
@@ -1491,7 +1475,7 @@ function Play() {
                 className="b-all-bots"
                 onClick={() => {
                   setInputArray([3, 4, 3, 4]);
-                  blipSound();
+                  audioManager.blipSound();
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
@@ -1503,7 +1487,7 @@ function Play() {
               id="dice"
               onClick={() => {
                 randomizeCharacters();
-                blipSound();
+                audioManager.blipSound();
               }}
             >
               {emoji.dice}
@@ -1623,7 +1607,7 @@ function Play() {
                         id="optionDebug"
                         key={index}
                         onClick={(e) => {
-                          blipSound();
+                          audioManager.blipSound();
                           e.stopPropagation();
                           if (typeof value === 'number') {
                             setDebugState((prevState) => ({
@@ -1872,7 +1856,7 @@ function Play() {
                 className={hideNiemoIp ? ' show-all-hide' : ' show-all-show'}
                 onClick={(e) => {
                   e.stopPropagation();
-                  blipSound();
+                  audioManager.blipSound();
                   setHideNiemoIp(!hideNiemoIp);
                 }}
               >
