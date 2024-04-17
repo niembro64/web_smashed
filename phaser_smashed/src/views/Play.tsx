@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import '@fontsource/press-start-2p';
 import html2canvas from 'html2canvas';
 import Phaser from 'phaser';
@@ -29,7 +30,7 @@ import importedMeleeReady from '../sounds/melee_ready.mp3';
 import importedMeleeGo from '../sounds/melee_go.mp3';
 // @ts-ignore
 import importedMeleeChoose from '../sounds/melee_choose.mp3';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
@@ -60,14 +61,26 @@ import {
   SessionInfo,
   sumNumbersIn2DArrayString,
 } from './client';
+import {
+  characterMoves,
+  idColors,
+  inputArrayInit,
+  keyboardGroups,
+  p1Keys,
+  p2Keys,
+  quotes,
+  smashConfigInit,
+  smashConfigOptions,
+  workingControllersAmazon,
+} from './helpers/reactData';
 
 function Play() {
   const myPhaser: any = useRef(null);
 
-  const [debug, setDebug] = useState<Debug>(debugInit);
+  const [debugState, setDebugState] = useState<Debug>(debugInit);
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
-  let videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
 
@@ -106,25 +119,22 @@ function Play() {
     }
     setVideoGray(false);
 
-    let s = 5;
-    let m = 2;
-    let duration = video.duration;
+    const s = 5;
+    const m = 2;
+    const duration = video.duration;
 
-    let pStart = duration - s > 0 ? duration - s : 0;
-    let pMid = duration - m > 0 ? duration - m : 0;
-    let pEnd = duration;
+    const pStart = duration - s > 0 ? duration - s : 0;
+    const pMid = duration - m > 0 ? duration - m : 0;
+    const pEnd = duration;
     let current = video.currentTime;
 
-    if (debug.ReplayFastSlow) {
+    if (debugState.ReplayFastSlow) {
       if (current >= pStart && current < pMid) {
-        // video.playbackRate = 2;
-        // video.play();
         return;
       }
 
       if (current >= pMid && current < pEnd) {
         video.playbackRate = 0.5;
-        // video.play();
         return;
       }
     }
@@ -132,7 +142,7 @@ function Play() {
     if (current >= pEnd) {
       current = pStart;
       video.currentTime = current;
-      if (debug.ReplayFastSlow) {
+      if (debugState.ReplayFastSlow) {
         video.playbackRate = 2;
       } else {
         video.playbackRate = 1;
@@ -143,7 +153,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (!debug.InstReplay) {
+    if (!debugState.ReplayOn) {
       setIsReplayHidden(true);
       return;
     }
@@ -160,11 +170,10 @@ function Play() {
       const stream = canvas.captureStream();
       const mediaRecorder = new MediaRecorder(
         stream,
-        debug.ReplayFullQuality
+        debugState.ReplayFullQuality
           ? {}
           : {
               videoBitsPerSecond: 1000000,
-              // videoBitsPerSecond: 1000000
             }
       );
 
@@ -177,7 +186,6 @@ function Play() {
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
         const url = URL.createObjectURL(blob);
         videoRef.current!.controls = false;
-        // videoRef.current!.controls = debug.ReplayControls
         videoRef.current!.src = url;
         videoRef.current!.play();
       };
@@ -203,7 +211,7 @@ function Play() {
       print('REACT PRINTING', gameStateReact);
       bar();
 
-      let s = gameStateReact.nameCurr;
+      const s = gameStateReact.nameCurr;
 
       switch (s) {
         case 'game-state-start':
@@ -236,7 +244,7 @@ function Play() {
     return () => {
       window.removeEventListener('gameState', handlePowerUpCollected);
     };
-  }, [debug.ReplayFullQuality, debug.InstReplay]);
+  }, [debugState.ReplayFullQuality, debugState.ReplayOn]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -273,9 +281,10 @@ function Play() {
       const link = document.createElement('a');
 
       link.href = dataUrl;
-      let m = moment();
-      let mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
-      let fileName = `Smashed_Rules_${mFormatted}.png`;
+
+      const m: Moment = moment();
+      const mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
+      const fileName = `Smashed_Rules_${mFormatted}.png`;
       link.download = fileName;
 
       link.click();
@@ -287,6 +296,7 @@ function Play() {
 
   const tranceRef = useRef<HTMLAudioElement>(trance);
   tranceRef.current.volume = 0.3;
+
   const [woah] = useSound(importedWoah, { volume: 0.2 });
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
   const [meleeReady] = useSound(importedMeleeReady, { volume: 0.2 });
@@ -317,7 +327,7 @@ function Play() {
             () => {
               setWebState('play');
             },
-            debug.DevMode ? 0 : 1
+            debugState.DevMode ? 0 : 1
           );
           clearInterval(myInterval);
         }
@@ -359,73 +369,20 @@ function Play() {
       default:
         break;
     }
-  }, [debug.DevMode, webState]);
+  }, [debugState.DevMode, webState]);
 
-  const keyboardGroups: KeyboardGroup[][] = [
-    [
-      { left: 'D-Pad:', right: 'W A S D' },
-      { left: 'A X B Y:', right: 'F G H Space' },
-      { left: 'L Select Start R:', right: 'R T Y U' },
-    ],
-    [
-      { left: 'D-Pad:', right: 'ArrowKeys' },
-      { left: 'A X B Y:', right: '4 5 6 Enter' },
-      { left: 'L Select Start R:', right: '7 8 9 +' },
-    ],
-  ];
-
-  const [workingControllers, setWorkingControllers] = useState<
-    WorkingController[]
-  >([
-    {
-      name: 'Wired SNES iNNEXT',
-      url: 'https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/',
-    },
-    {
-      name: 'Wired N64 KIWITATA',
-      url: 'https://www.amazon.com/gp/product/B08X677HR4/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',
-    },
-    {
-      name: 'Wired GameCube Mekela NGC',
-      url: 'https://www.amazon.com/Mekela-5-8-foot-classic-controller-Windows/dp/B07GSSXS84/ref=sr_1_5?crid=3N3MSRPF8INFK&keywords=Mekela+5.8+feet+Classic+USB+wired+NGC+Controller&qid=1673335159&sprefix=mekela+5.8+feet+classic+usb+wired+ngc+controller%2Caps%2C68&sr=8-5',
-    },
-    {
-      name: 'Wired Switch PowerA Nintendo',
-      url: 'https://www.amazon.com/gp/product/B07PDJ45BT/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',
-    },
-    {
-      name: 'Wireless Switch Pro Nintendo',
-      url: 'https://www.amazon.com/gp/product/B01NAWKYZ0/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',
-    },
-  ]);
-
+  ///////////////////////////////////////
+  ///////////////////////////////////////
   // set initial inputs in inputArray
   // 0 -> none
   // 1 -> gamepad
   // 2 -> keyboard
   // 3 -> bot Rules-Based
   // 4 -> bot Neural-Network
-  const [inputArray, setInputArray] = useState<InputType[]>([2, 3, 4, 4]);
-  const [smashConfig, setSmashConfig] = useState<SmashConfig>({
-    players: [
-      {
-        characterId: 0,
-        input: 0, // don't set this here
-      },
-      {
-        characterId: 1,
-        input: 0, // don't set this here
-      },
-      {
-        characterId: 8,
-        input: 0, // don't set this here
-      },
-      {
-        characterId: 7,
-        input: 0, // don't set this here
-      },
-    ],
-  });
+  ///////////////////////////////////////
+  ///////////////////////////////////////
+  const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
+  const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
 
   const getNumActiveBeforeMe = (index: number): number => {
     let numActiveBeforeMe = 0;
@@ -436,30 +393,15 @@ function Play() {
     }
     return numActiveBeforeMe;
   };
-  const idColors: string[] = ['id-red', 'id-blue', 'id-yellow', 'id-green'];
 
   useEffect(() => {
     print('smashConfig', smashConfig);
-    // setPlayChezState({ name: 'up', moment: moment() });
   }, [smashConfig]);
-
-  // always keep Chez and BlackChez at positions 4 and 5
-  const smashConfigOptions: PlayerConfig[] = [
-    { characterId: 0, scale: 0.9, name: 'Mario', nameShort: 'MAR' },
-    { characterId: 1, scale: 0.9, name: 'Link', nameShort: 'LNK' },
-    { characterId: 2, scale: 1, name: 'Pikachu', nameShort: 'PKA' },
-    { characterId: 3, scale: 0.7, name: 'Kirby', nameShort: 'KRB' },
-    { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
-    { characterId: 5, scale: 1.2, name: 'Black Chez', nameShort: 'BCZ' },
-    { characterId: 6, scale: 0.6, name: 'G. Koopa', nameShort: 'GKP' },
-    { characterId: 7, scale: 0.6, name: 'R. Koopa', nameShort: 'RKP' },
-    { characterId: 8, scale: 0.6, name: 'B. Koopa', nameShort: 'BKP' },
-  ];
 
   const randomizeCharacters = () => {
     const numBase: number = 4;
-    const numChez: number = debug.UseChez ? 2 : 0;
-    const numKoopas: number = debug.UseKoopas ? 3 : 0;
+    const numChez: number = debugState.UseChez ? 2 : 0;
+    const numKoopas: number = debugState.UseKoopas ? 3 : 0;
     const numTotal: number = numBase + numChez + numKoopas;
 
     const ratioBase: number = numBase / numTotal;
@@ -490,7 +432,8 @@ function Play() {
 
     setSmashConfig({ players: newPlayers });
   };
-  let config: Phaser.Types.Core.GameConfig = {
+
+  const config: Phaser.Types.Core.GameConfig = {
     plugins: {
       global: [
         {
@@ -519,56 +462,18 @@ function Play() {
     physics: {
       default: 'arcade',
       arcade: {
-        gravity: { y: 3000 * (debug.GravityLight ? 0.5 : 1) },
-        debug: debug.DevMode,
+        gravity: { y: 3000 * (debugState.GravityLight ? 0.5 : 1) },
+        debug: debugState.DevMode,
       },
     },
     scene: [Game],
   };
+
   let setTimeoutQuotesLengthStart: number = 3000;
-  let setTimeoutQuotesLengthReStart: number = 1500;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
-  const quotes: Quote[] = [
-    { name: 'Breezy', text: 'The turtle will die.' },
-    { name: 'TR3', text: 'SMASHED!!!' },
-    { name: 'Chadams', text: 'Two shots... two shots.' },
-    { name: 'Eddie-Z', text: "He'll do it again, yeah!" },
-    {
-      name: 'TR3',
-      text: 'How am I supposed to make more than that... $#!&... happen?',
-    },
-    {
-      name: 'DDj',
-      text: "It's safe to say we're not going to the bars tonite.",
-    },
-    {
-      name: 'DDj',
-      text: '...yes you are.',
-    },
-    // { name: 'Chadams', text: 'AAAYYYUUUGGGGHHHH!!' },
-    // { name: 'Chadams', text: 'Spike Enerjeaoah.' },
-    // { name: 'Chadams', text: "Stop breakin' shit." },
-    // { name: 'Chadams', text: 'Is there no one else?' },
-    // { name: 'Deen Davis Jr.', text: 'VIDEOTAPE MA-SELF FUCKIN YOU UP!' },
-    // { name: 'Breezy', text: 'Oh, is it? Oh cool. Ur soo cool.' },
-    { name: 'Lau', text: "I'm sorry, I didn't know it was gonna happen." },
-    // { name: "Gin", text: "Clean it up, and we'll do it again." },
-    { name: 'Ginman', text: "Set it up... and we'll do it... again." },
-    // { name: 'Gin', text: 'Shitty, shitty-fuckin-ass.' },
-    {
-      name: 'DDj',
-      text: 'I can fight you one-handed.',
-    },
-    // {
-    //   name: 'DDj',
-    //   text: 'I thought you put Spike in there.',
-    // },
-  ];
+
   const componentPseudoLoad = useRef(true);
   const intervalClock: any = useRef(null);
-
-  const p1Keys: string[] = ['w', 'a', 's', 'd'];
-  const p2Keys: string[] = ['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
 
   const [p1KeysTouched, setP1KeysTouched] = useState<boolean>(false);
   const [p2KeysTouched, setP2KeysTouched] = useState<boolean>(false);
@@ -577,7 +482,6 @@ function Play() {
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
   const onClickStartStartButton = async () => {
-    // if (myPhaser?.current?.scene?.keys?.game?.loaded) {
     if (myPhaser?.current?.scene?.keys?.game) {
       myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
@@ -590,58 +494,36 @@ function Play() {
     setShowHistory(false);
     setShowOptions(false);
 
-    // setPlayChezState({ name: 'up', moment: moment() });
-    // startSound();
-    // setWebState('loader');
+   
 
-    let players = JSON.parse(JSON.stringify(smashConfig.players));
-    // let newPlayers: {
-    //   name: CharacterName;
-    //   characterId: CharacterId;
-    //   scale: number;
-    // }[] = [];
-    let newPlayers: PlayerConfigSmall[] = [];
+    const players = JSON.parse(JSON.stringify(smashConfig.players));
+
+    const newPlayers: PlayerConfigSmall[] = [];
     inputArray.forEach((input, inputIndex) => {
       switch (input) {
         case 0:
           break;
         case 1:
           newPlayers.push({
-            // name: players[inputIndex].name,
-            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            // scale: players[inputIndex].scale,
-            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
         case 2:
           newPlayers.push({
-            // name: players[inputIndex].name
-            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            // scale: players[inputIndex].scale,
-            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
         case 3:
           newPlayers.push({
-            // name: players[inputIndex].name,
-            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            // scale: players[inputIndex].scale,
-            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
         case 4:
           newPlayers.push({
-            // name: players[inputIndex].name,
-            // name: smashConfigOptions[players[inputIndex].characterId].name,
             characterId: players[inputIndex].characterId,
-            // scale: players[inputIndex].scale,
-            // scale: smashConfigOptions[players[inputIndex].characterId].scale,
             input: inputArray[inputIndex],
           });
           break;
@@ -649,36 +531,32 @@ function Play() {
           print("inputArray[inputIndex] didn't match any cases");
           break;
       }
-      // if (input.state) {
-      //   newPlayers.push({
-      //     name: players[inputIndex].name as CharacterName,
-      //     characterId: players[inputIndex].characterId as CharacterId,
-      //     scale: players[inputIndex].scale,
-      //   });
-      // }
     });
-    let newSmashConfig: SmashConfig = { players: [...newPlayers] };
+    const newSmashConfig: SmashConfig = { players: [...newPlayers] };
     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
-    if (!debug.LoadTimeExtra || debug.DevMode) {
+    if (!debugState.LoadTimeExtra || debugState.DevMode) {
       setTimeoutQuotesLengthStart = 0;
     }
-    let myMoment = moment();
-    // let myDate = momentToDate(myMoment);
+    const myMoment = moment();
 
-    // setShowLoader(true);
     setWebState('loader');
 
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
-      myPhaser.current.registry.set('debug', debug);
+      myPhaser.current.registry.set('debug', debugState);
       myPhaser.current.registry.set('myMoment', myMoment);
     }, setTimeoutQuotesLengthStart);
 
-    let c: ClientInformation = await fetchClientData();
-    let s: SessionInfo = await axiosSaveOne(myMoment, c, newSmashConfig, debug);
+    const c: ClientInformation = await fetchClientData();
+    const s: SessionInfo = await axiosSaveOne(
+      myMoment,
+      c,
+      newSmashConfig,
+      debugState
+    );
     setSession(s);
   };
 
@@ -702,7 +580,7 @@ function Play() {
     if (i === 2 && k >= 2) {
       i++;
     }
-    let newInputArray = [...inputArray];
+    const newInputArray = [...inputArray];
     newInputArray[playerIndex] = i as InputType;
     setInputArray([...newInputArray]);
     print('i', i, 'newInputArray', newInputArray);
@@ -725,76 +603,32 @@ function Play() {
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debug.UseChez || webState === 'play') {
+    if (debugState.UseChez || webState === 'play') {
       return;
     }
     if (charId === 4) {
       bamPlay();
-      // onClickSetInputArrayElement(0, 2);
-      // onClickSetInputArrayElement(1, 0);
-      // onClickSetInputArrayElement(2, 0);
-      // onClickSetInputArrayElement(3, 0);
-      // onClickSetChez();
       setInputArray([2, 0, 0, 0]);
     }
     if (charId === 5) {
       woahPlay();
-      // onClickSetInputArrayElement(0, 2);
-      // onClickSetInputArrayElement(1, 0);
-      // onClickSetInputArrayElement(2, 0);
-      // onClickSetInputArrayElement(3, 0);
-      // onClickSetBlackChez();
       setInputArray([2, 0, 0, 0]);
     }
 
-    let choices = [...smashConfig.players];
-    let choice = choices[0];
+    const choices = [...smashConfig.players];
+    const choice = choices[0];
     choice.characterId = charId;
-    let tempScale = ensureTypeCharacterId(
-      smashConfigOptions.find((s, sIndex) => {
-        return s.characterId === choice.characterId;
-      })
-    ).scale;
-    let tempName = ensureTypeCharacterName(
-      smashConfigOptions.find((s) => {
-        return s.characterId === choice.characterId;
-      })
-    ).name;
 
     setSmashConfig({ players: [...choices] });
   };
-
-  function ensureTypeCharacterId<CharacterId>(
-    argument: CharacterId | undefined | null,
-    message: string = 'This value was promised to be there.'
-  ): CharacterId {
-    if (argument === undefined || argument === null) {
-      throw new TypeError(message);
-    }
-
-    return argument;
-  }
-
-  function ensureTypeCharacterName<CharacterName>(
-    argument: CharacterName | undefined | null,
-    message: string = 'This value was promised to be there.'
-  ): CharacterName {
-    if (argument === undefined || argument === null) {
-      throw new TypeError(message);
-    }
-
-    return argument;
-  }
 
   const onClickRotateSelection = (playerIndex: number): void => {
     blipSound();
     const choices = [...smashConfig.players];
     const choice = choices[playerIndex];
-
     let newCharacterId = choice.characterId + 1;
 
-    // player cannot directly select Chez or BlackChez
-    if (!debug.DevMode && !debug.UseChez) {
+    if (!debugState.DevMode && !debugState.UseChez) {
       while (newCharacterId === 4 || newCharacterId === 5) {
         newCharacterId++;
       }
@@ -804,30 +638,14 @@ function Play() {
       newCharacterId = 0;
     }
 
-    if (!debug.DevMode && !debug.UseKoopas && newCharacterId > 5) {
+    if (!debugState.DevMode && !debugState.UseKoopas && newCharacterId > 5) {
       newCharacterId = 0;
     }
 
     choice.characterId = newCharacterId as CharacterId;
 
-    let tempScale = smashConfigOptions.find((s, sIndex) => {
-      return s.characterId === choice.characterId;
-    })?.scale;
-    let tempName = ensureTypeCharacterName(
-      smashConfigOptions.find((s, sIndex) => {
-        return s.characterId === choice.characterId;
-      })
-    ).name;
-
-    // choice.scale = tempScale ? tempScale : 1;
-    // choice.name = tempName;
     setSmashConfig({ players: [...choices] });
   };
-
-  // ✔️🚧❌🚫🛑🔜📄📋⚙️🚪⛔⌚🕹️🎮☠️👾💣🔥​➡️​⌨️​⌨🧊🌑🌒🌙⭐🌞☁☁☁
-  // 🏴‍☠️🏳️🏁🏴
-  // 🔴🟠🟡🟢🔵🟣🟤⚫⚪
-  // ⌨🎮
 
   const [showRulesN64, setShowRulesN64] = useState(false);
   const [showControls, setShowControls] = useState(false);
@@ -835,29 +653,6 @@ function Play() {
   const [showAbout, setShowAbout] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-
-  const characterMoves: CharacterMove[] = [
-    { button: 'D-Pad', move: 'Move', status: emoji.greenCheck },
-    { button: 'Ground + X', move: 'Jump', status: emoji.greenCheck },
-    { button: 'Air + X', move: 'Double Jump', status: emoji.greenCheck },
-    { button: 'Air + D-Pad + A', move: 'Air Dodge', status: emoji.caution },
-    { button: 'B', move: 'Physical Attack', status: emoji.caution },
-    { button: 'Y', move: 'Energy Attack', status: emoji.greenCheck },
-    { button: 'Forward + B', move: 'Smash Attack', status: emoji.redX },
-    {
-      button: 'Air + Wall + Forward',
-      move: 'Wall Slide',
-      status: emoji.greenCheck,
-    },
-    {
-      button: 'L + R for 5 Seconds',
-      move: 'Suicide',
-      status: emoji.greenCheck,
-    },
-    { button: 'Start', move: 'Pause', status: emoji.greenCheck },
-    { button: 'Paused + Any Button', move: 'Ready', status: emoji.greenCheck },
-    { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
-  ];
 
   const clickPauseParent = () => {
     print('GAME STATE', myPhaser.current?.scene?.keys?.game.gameState.nameCurr);
@@ -981,12 +776,8 @@ function Play() {
     );
   };
 
-  const xxx = () => {
-    onClickStartStartButton();
-  };
-
   const onEventKeyboard = (event: any) => {
-    let k = event.key;
+    const k = event.key;
 
     if (webState === 'start') {
       let pIndex;
@@ -994,30 +785,6 @@ function Play() {
         case 'Enter':
           onClickStartStartButton();
           break;
-        // case 'a':
-        //   pIndex = 0;
-        //   if (inputArray[pIndex] !== 0) {
-        //     onClickRotateSelection(pIndex);
-        //   }
-        //   break;
-        // case 's':
-        //   pIndex = 1;
-        //   if (inputArray[pIndex] !== 0) {
-        //     onClickRotateSelection(pIndex);
-        //   }
-        //   break;
-        // case 'd':
-        //   pIndex = 2;
-        //   if (inputArray[pIndex] !== 0) {
-        //     onClickRotateSelection(pIndex);
-        //   }
-        //   break;
-        // case 'f':
-        //   pIndex = 3;
-        //   if (inputArray[pIndex] !== 0) {
-        //     onClickRotateSelection(pIndex);
-        //   }
-        //   break;
         case 'j':
           onClickOscura(0);
           break;
@@ -1066,9 +833,7 @@ function Play() {
       }
       switch (k) {
         case 'Backspace':
-          // onClickReStartEventHandler();
-          xxx();
-          // onClickStartStartButton();
+          onClickStartStartButton();
           break;
         case 'Escape':
           onClickBackEventHandler();
@@ -1100,7 +865,7 @@ function Play() {
 
   const [tz, setTz] = useState('');
   useEffect(() => {
-    const clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+    const clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setTz(clientTimezone);
   }, []);
 
@@ -1150,12 +915,7 @@ function Play() {
     intervalClock.current = null;
     componentPseudoLoad.current = true;
     myPhaser.current.destroy(true);
-    // setP1KeysTouched(false);
-    // setP2KeysTouched(false);
-    // setWebState('init');
-    // setTimeout(() => {
-    //   setWebState('start');
-    // }, 1);
+ 
     setWebState('start');
   };
 
@@ -1169,7 +929,7 @@ function Play() {
       setP2KeysTouched(true);
     }
     if (webState === 'play') {
-      let numKeyboards = getNumKeyboardsInUse();
+      const numKeyboards = getNumKeyboardsInUse();
       switch (numKeyboards) {
         case 0:
           setP1KeysTouched(true);
@@ -1188,7 +948,6 @@ function Play() {
   }, [webState]);
 
   useEffect(() => {
-    // setPlayChezState({ name: 'up', moment: moment() });
     let numK = 0;
     inputArray.forEach((input) => {
       if (input === 2) {
@@ -1209,17 +968,16 @@ function Play() {
   const getMaxFromKey = (key: string) => {
     print('getInitFromKey', key);
 
-    let newVal = debugMax[key as keyof Debug];
+    const newVal = debugMax[key as keyof Debug];
     return newVal;
   };
 
   const [text, setText] = useState('');
   const interval: any = useRef(null);
-  // const [quoteCss, setQuoteCss] = useState<boolean>(false);
 
   useEffect(
     function () {
-      if (!debug.TypedLoadingText) {
+      if (!debugState.TypedLoadingText) {
         return;
       }
 
@@ -1246,8 +1004,7 @@ function Play() {
 
   return (
     <div id="top-level" className="over-div">
-      {/* <div className="download-screenshot">Download Screenshot</div> */}
-      {!debug.DevMode &&
+      {!debugState.DevMode &&
         webState !== 'start' &&
         numKeyboards === 2 &&
         !bothKeysTouched && (
@@ -1273,7 +1030,7 @@ function Play() {
             )}
           </div>
         )}
-      {!debug.DevMode &&
+      {!debugState.DevMode &&
         webState !== 'start' &&
         numKeyboards === 1 &&
         !p1KeysTouched && (
@@ -1291,25 +1048,7 @@ function Play() {
           </div>
         )}
       {webState === 'loader' && (
-        // {true && (
         <div className="loader">
-          {/* {quotesRandomNumber % 2 === 0 && (
-            <div className="loader-inner">
-              <div className="loader-line-wrap">
-                <div className="loader-line"></div>
-              </div>
-              <div className="loader-line-wrap">
-                <div className="loader-line"></div>
-              </div>
-              <div className="loader-line-wrap">
-                <div className="loader-line"></div>
-              </div>
-              <div className="loader-line-wrap">
-                <div className="loader-line"></div>
-              </div>
-            </div>
-          )} */}
-          {/* {quotesRandomNumber % 2 !== 0 && ( */}
           <div className="spinnerShrink">
             <div className="spinnerOuterOuter">
               <div className="spinnerOuter">
@@ -1336,7 +1075,6 @@ function Play() {
               </div>
             </div>
           </div>
-          {/* )} */}
           <div className="loading-table-wrapper">
             <img
               className="loading-table"
@@ -1344,10 +1082,10 @@ function Play() {
               alt="table"
             />
           </div>
-          {debug.TypedLoadingText && (
+          {debugState.TypedLoadingText && (
             <p className={'.first-loader-p'}>{text}</p>
           )}
-          {!debug.TypedLoadingText && (
+          {!debugState.TypedLoadingText && (
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
@@ -1356,7 +1094,7 @@ function Play() {
       <div className="phaser-container" id="phaser-container"></div>
       {(webState === 'start' || webState === 'init') && (
         <div className="start-class-div">
-          {!debug.DevMode && (
+          {!debugState.DevMode && (
             <div
               className={
                 'black-hiding-div' +
@@ -1389,8 +1127,8 @@ function Play() {
 
           <div className="player-choices">
             <div className="player-choices-left">
-              {Object.entries(debug).map(([key, value], index: number) => {
-                if (!mainOptionsDebugShowState[key]) {
+              {Object.entries(debugState).map(([key, value], index: number) => {
+                if (!mainOptionsDebugShow[key]) {
                   return null;
                 }
 
@@ -1403,7 +1141,7 @@ function Play() {
                         const newMainOpotionsDebugShow: Debug = {
                           ...mainOptionsDebugShowState,
                         };
-                        if (debug.ModeInfinity) {
+                        if (debugState.ModeInfinity) {
                           newMainOpotionsDebugShow['Minutes'] = 1;
                           newMainOpotionsDebugShow['Shots'] = 0;
                         } else {
@@ -1417,19 +1155,15 @@ function Play() {
                       blipSound();
                       e.stopPropagation();
                       if (typeof value === 'number') {
-                        setDebug((prevState) => ({
+                        setDebugState((prevState) => ({
                           ...prevState,
-                          [key]:
-                            value - 1 < 0
-                              ? getMaxFromKey(key)
-                              : // ? getMaxFromKey(key as keyof Debug)
-                                value - 1,
+                          [key]: value - 1 < 0 ? getMaxFromKey(key) : value - 1,
                         }));
                         print(index, key, value);
                       }
 
                       if (typeof value === 'boolean') {
-                        setDebug((prevState) => ({
+                        setDebugState((prevState) => ({
                           ...prevState,
                           [key]: !value,
                         }));
@@ -1487,7 +1221,6 @@ function Play() {
                         className="player-char-blank"
                         onClick={() => {
                           onClickRotateSelection(pIndex);
-                          // setPlayChezState({ name: 'up', moment: moment() });
                         }}
                       >
                         <div className="startImageWrapper">
@@ -1503,7 +1236,6 @@ function Play() {
                                   p.characterId.toString() +
                                   '_cropped.png'
                                 }
-                                // width={(55 * p.scale).toString() + '%'}
                                 width={
                                   (
                                     55 * smashConfigOptions[p.characterId].scale
@@ -1512,7 +1244,6 @@ function Play() {
                                 alt="char"
                               />
                             )}
-                          {/* <p className="player-char-image-name">{p.name}</p> */}
                           <p className="player-char-image-name">
                             {smashConfigOptions[p.characterId].name}
                           </p>
@@ -1525,10 +1256,6 @@ function Play() {
                           className="player-char"
                           onClick={() => {
                             onClickRotateSelection(pIndex);
-                            // setPlayChezState({
-                            //   name: 'up',
-                            //   moment: moment(),
-                            // });
                           }}
                         >
                           <div className="startImageWrapper">
@@ -1550,7 +1277,6 @@ function Play() {
                                     p.characterId.toString() +
                                     '_cropped.png'
                                   }
-                                  // width={(55 * p.scale).toString() + '%'}
                                   width={
                                     (
                                       55 *
@@ -1560,7 +1286,6 @@ function Play() {
                                   alt="char"
                                 />
                               )}
-                            {/* <p className="player-char-image-name">{p.name}</p> */}
                             <p className="player-char-image-name">
                               {smashConfigOptions[p.characterId].name}
                             </p>
@@ -1572,13 +1297,6 @@ function Play() {
                         className="b-oscuro b-black"
                         onClick={() => {
                           onClickOscura(pIndex);
-                          // setPlayChezState({ name: 'up', moment: moment() });
-                          // onClickSetInputArrayElement(
-                          //   cPlayerIndex,
-                          //   inputArray[cPlayerIndex] + 1 > 2
-                          //     ? (0 as InputType)
-                          //     : ((inputArray[cPlayerIndex] + 1) as InputType)
-                          // );
                         }}
                       >
                         <span>Off</span>
@@ -1592,13 +1310,6 @@ function Play() {
                         className="b-oscuro b-dark"
                         onClick={() => {
                           onClickOscura(pIndex);
-                          // setPlayChezState({ name: 'up', moment: moment() });
-                          // onClickSetInputArrayElement(
-                          //   cPlayerIndex,
-                          //   inputArray[cPlayerIndex] + 1 > 2
-                          //     ? (0 as InputType)
-                          //     : ((inputArray[cPlayerIndex] + 1) as InputType)
-                          // );
                         }}
                       >
                         <span>Gamepad</span>
@@ -1793,7 +1504,6 @@ function Play() {
               onClick={() => {
                 randomizeCharacters();
                 blipSound();
-                // setPlayChezState({ name: 'up', moment: moment() });
               }}
             >
               {emoji.dice}
@@ -1812,7 +1522,6 @@ function Play() {
                 className="question-mark"
                 src="/images/eye-shut-trans.png"
                 alt="question mark"
-                // onClick={captureScreenshot}
                 onClick={onClickEye}
               />
             )}
@@ -1821,7 +1530,6 @@ function Play() {
                 className="question-mark"
                 src="/images/eye-open-trans.png"
                 alt="question mark"
-                // onClick={captureScreenshot}
                 onClick={onClickEye}
               />
             )}
@@ -1853,13 +1561,10 @@ function Play() {
               </div>
             )}
             {webState !== 'start' && (
-              // <div className="link-tag" onClick={onClickReStartEventHandler}>
               <div
                 className="link-tag"
                 onClick={() => {
-                  xxx();
-
-                  // onClickStartStartButton();
+                  onClickStartStartButton();
                 }}
               >
                 <span>ReStart</span>
@@ -1907,52 +1612,51 @@ function Play() {
             >
               <h1>Debug Options</h1>
               <div id="debug-col">
-                {Object.entries(debug).map(([key, value], index: number) => {
-                  if (!!mainOptionsDebugShowState[key]) {
-                    return null;
-                  }
+                {Object.entries(debugState).map(
+                  ([key, value], index: number) => {
+                    if (!!mainOptionsDebugShow[key]) {
+                      return null;
+                    }
 
-                  return (
-                    <div
-                      id="optionDebug"
-                      key={index}
-                      onClick={(e) => {
-                        blipSound();
-                        e.stopPropagation();
-                        if (typeof value === 'number') {
-                          setDebug((prevState) => ({
-                            ...prevState,
-                            [key]:
-                              value - 1 < 0
-                                ? getMaxFromKey(key)
-                                : // ? getMaxFromKey(key as keyof Debug)
-                                  value - 1,
-                          }));
-                          print(index, key, value);
-                        }
+                    return (
+                      <div
+                        id="optionDebug"
+                        key={index}
+                        onClick={(e) => {
+                          blipSound();
+                          e.stopPropagation();
+                          if (typeof value === 'number') {
+                            setDebugState((prevState) => ({
+                              ...prevState,
+                              [key]:
+                                value - 1 < 0 ? getMaxFromKey(key) : value - 1,
+                            }));
+                            print(index, key, value);
+                          }
 
-                        if (typeof value === 'boolean') {
-                          setDebug((prevState) => ({
-                            ...prevState,
-                            [key]: !value,
-                          }));
-                          print(index, key, value);
-                        }
-                      }}
-                    >
-                      <div className="debug-value">
-                        <p>
-                          {typeof value !== 'boolean'
-                            ? value
-                            : value
-                            ? emoji.greenCheck
-                            : emoji.redX}
-                        </p>
+                          if (typeof value === 'boolean') {
+                            setDebugState((prevState) => ({
+                              ...prevState,
+                              [key]: !value,
+                            }));
+                            print(index, key, value);
+                          }
+                        }}
+                      >
+                        <div className="debug-value">
+                          <p>
+                            {typeof value !== 'boolean'
+                              ? value
+                              : value
+                              ? emoji.greenCheck
+                              : emoji.redX}
+                          </p>
+                        </div>
+                        <p className="key">{key}</p>
                       </div>
-                      <p className="key">{key}</p>
-                    </div>
-                  );
-                })}
+                    );
+                  }
+                )}
               </div>
             </div>
           </div>
@@ -2010,12 +1714,7 @@ function Play() {
               <div className="rules-top">
                 <div className="rules-col">
                   <h1>Web Rules</h1>
-                  <div
-                    className="rules-outline-web"
-                    // onClick={() => {
-                    //   captureScreenshot();
-                    // }}
-                  >
+                  <div className="rules-outline-web">
                     <img
                       id="rules-web-gif"
                       src="images/smashed_x10_gif.gif"
@@ -2034,10 +1733,6 @@ function Play() {
                         <p className="rules-small rules-end">
                           You take 1 shot.
                         </p>
-                        {/* <p className="rules-small">
-                          If you died and no others have died yet, you take a
-                          shot.
-                        </p> */}
                       </div>
                       <div className="rules-li">
                         <div className="rules-big">Screen Clear</div>
@@ -2089,17 +1784,9 @@ function Play() {
               }}
             >
               <h1>GamePads</h1>
-              {/* className="link-tag btn btn-dark" */}
-              {/* <a
-                className="working-controller"
-                href="https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/"
-              >
-                <span>USB Extension Cord $13</span>
-              </a> */}
-              {/* These work: */}
               <div id="wcl">
                 <h2>GamePads Suggested: </h2>
-                {workingControllers.map((controller) => {
+                {workingControllersAmazon.map((controller) => {
                   return (
                     <a className="working-controller" href={controller.url}>
                       <span>
@@ -2216,7 +1903,6 @@ function Play() {
                   </thead>
 
                   <tbody>
-                    {/* <p className="text-small">ID DATE</p> */}
                     {allSessions.map((s: SessionInfo, sIndex: number) => {
                       if (
                         hideNiemoIp &&
@@ -2251,7 +1937,6 @@ function Play() {
                               break;
                             case 1:
                               gameViewBottom += '' + emoji.gamepad + ' ';
-                              // gameViewBottom += 'PD ';
                               break;
                             case 2:
                               gameViewBottom += '' + emoji.keyboardWhite + ' ';
@@ -2278,7 +1963,7 @@ function Play() {
                       );
                       const mTZ = require('moment-timezone');
                       const clientTimezone =
-                        Intl.DateTimeFormat().resolvedOptions().timeZone; // get client's local timezone
+                        Intl.DateTimeFormat().resolvedOptions().timeZone;
                       const formattedDate = mTZ
                         .tz(moment(sessionMomentObject), clientTimezone)
                         .format('YYYY-MM-DD HH:mm');
@@ -2319,30 +2004,15 @@ function Play() {
                           <td className="td-left">
                             <div>{gameViewTop ? gameViewTop : ' '}</div>
                             <div>{gameViewBottom ? gameViewBottom : ' '}</div>
-                            {/* {totalShots < 10
-                                    ? '_' + totalShots
-                                    : totalShots} */}
                           </td>
                           <td className="td-right">
                             {totalShots ? totalShots : ' '}
-                            {/* {totalShots < 10
-                                    ? '_' + totalShots
-                                    : totalShots} */}
                           </td>
                           <td className="td-right">
                             {totalDeaths ? totalDeaths : ' '}
-                            {/* {totalDeaths < 10
-                                    ? '_' + totalDeaths
-                                    : totalDeaths} */}
                           </td>
                           <td className="td-right">
                             {totalHits ? totalHits : ' '}
-                            {/* {totalHits < 100
-                                    ? '_' +
-                                      (totalHits < 10
-                                        ? '_' + totalHits
-                                        : totalHits)
-                                    : totalHits} */}
                           </td>
                           <td> </td>
                         </tr>
@@ -2355,7 +2025,7 @@ function Play() {
           </div>
         )}
       </div>
-      {debug.DevMode && <div className="dev-mode-div">Dev Mode</div>}
+      {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'play' && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">
@@ -2368,7 +2038,6 @@ function Play() {
                   : 'video-playback video-playback-normal'
               }
               ref={videoRef}
-              // controls={debug.ReplayControls}
               onTimeUpdate={() => {
                 print('onTimeUpdate');
                 handleTimeUpdate();
