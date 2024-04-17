@@ -631,6 +631,8 @@ function Play() {
   const onClickPlayNavBody = (buttonName: ButtonName) => {
     soundManager.blipSound();
 
+    print('Click NavBody: ', buttonName);
+
     setShowControls(false);
     setShowControllers(false);
     setShowRulesN64(false);
@@ -1055,15 +1057,14 @@ function Play() {
               }
             />
           )}
-          <div className={'startTitleWrapper'}>
+          <div className={'start-title-wrapper'}>
             <div
               className={
-                'startTitle' +
+                'start-title' +
                 (webState === 'start' ? ' startTitleStart' : ' startTitleInit')
               }
               onMouseDown={() => {
                 console.log('mouse down');
-                // setWebState('start');
               }}
               onMouseUp={() => {
                 console.log('mouse up');
@@ -1072,7 +1073,7 @@ function Play() {
               <div>
                 <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
               </div>
-              <h1>{webState === 'init' ? 'CLICK ME!' : 'SMASHED'}</h1>
+              <h1>{webState === 'init' ? '?' : 'SMASHED'}</h1>
             </div>
           </div>
 

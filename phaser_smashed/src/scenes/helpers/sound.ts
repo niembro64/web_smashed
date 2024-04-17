@@ -1,7 +1,7 @@
 import { print } from '../../views/client';
-import Game from "../Game";
-import { Player } from "../interfaces";
-import { getLongEnoughTimeDuration } from "./state";
+import Game from '../Game';
+import { Player } from '../interfaces';
+import { getLongEnoughTimeDuration } from './state';
 
 export function setSoundDiePlay(game: Game): void {
   game.SOUND_DIE.play();
@@ -50,7 +50,7 @@ export function setPlayWiiMusicWaitShort(game: Game): void {
     return;
   }
   print(
-    "ENOUGH TIME",
+    'ENOUGH TIME',
     getLongEnoughTimeDuration(game.DURATION_GAME_PAUSE_MUSIC_SHORT, game)
   );
   if (getLongEnoughTimeDuration(game.DURATION_GAME_PAUSE_MUSIC_SHORT, game)) {
@@ -70,15 +70,9 @@ export function setMusicPause(game: Game): void {
   game.SOUND_BGM.pause();
 }
 export function setMusicPlay(game: Game): void {
-  // if (game.SOUND_MII.isPlaying()) {
-  //   return;
-  // }
   game.SOUND_BGM.play();
 }
 export function setMusicResume(game: Game): void {
-  // if (game.SOUND_MII.isPlaying()) {
-  //   return;
-  // }
   game.SOUND_BGM.resume();
 }
 
@@ -94,14 +88,12 @@ export function pauseReadySound(game: Game): void {
   }
 }
 export function playReadySoundPlayer(player: Player): void {
-  // print("PLAY READY SOUND ", player.playerId);
   if (!player.playerReadySound.isPlaying) {
     player.playerReadySound.play();
   }
 }
 
 export function pauseReadySoundPlayer(player: Player): void {
-  // print("PLAY READY SOUND ", player.playerId);
   if (player.playerReadySound.isPlaying) {
     player.playerReadySound.pause();
   }

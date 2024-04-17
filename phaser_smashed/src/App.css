@@ -1023,7 +1023,7 @@ h2 {
   transition: var(--duration-hover) ease;
 }
 
-.startTitleWrapper {
+.start-title-wrapper {
   width: 100%;
   flex: 0.6;
   overflow: visible;
@@ -1036,7 +1036,7 @@ h2 {
   min-height: 0; /* Allows the elements to shrink vertically */
 }
 
-.startTitle {
+.start-title {
   color: white;
   flex: 1;
   display: flex;
@@ -1044,13 +1044,13 @@ h2 {
   justify-content: center;
   align-items: center;
   transform: translateY(30vh);
-  filter: grayscale(1) brightness(3) brightness(0.2);
+  filter: grayscale(1) brightness(3) brightness(0.5);
   z-index: 1;
   min-width: 0; /* Allows shrinking below content's intrinsic size */
   min-height: 0; /* Allows the elements to shrink vertically */
 }
 
-.startTitle > div {
+.start-title > div {
   width: 100%;
   flex: 2;
   display: flex;
@@ -1060,12 +1060,12 @@ h2 {
   min-width: 0; /* Allows shrinking below content's intrinsic size */
   min-height: 0; /* Allows the elements to shrink vertically */
 }
-.startTitle > div > img {
+.start-title > div > img {
   height: 100%;
   object-fit: contain;
 }
 
-.startTitle > h1 {
+.start-title > h1 {
   flex: 1;
   /* width: 100%; */
   font-size: 4vw;
@@ -1074,7 +1074,12 @@ h2 {
 }
 
 .startTitleInit {
+  transition: 1s ease-in-out;
   overflow: visible;
+}
+.startTitleInit:hover {
+  transition: 0.3s ease-in-out;
+  filter: grayscale(1) brightness(1);
 }
 .startTitleInit > h1 {
   overflow: visible;
@@ -1082,17 +1087,19 @@ h2 {
 }
 .startTitleInit > div > img {
   overflow: visible;
+}
+.startTitleInit > div {
+  width:  auto;
   cursor: pointer;
 }
 .startTitleStart {
-  /* transition: 1s ease; */
-  animation: titleInit 2s ease-in-out both;
+  animation: titleInitAnimation 2s ease-in-out both;
   overflow: visible;
 }
 
-@keyframes titleInit {
+@keyframes titleInitAnimation {
   0% {
-    filter: grayscale(1) brightness(3) brightness(0.2);
+    filter: grayscale(1) brightness(3) brightness(0.5);
   }
   100% {
     transform: translateY(0vh);

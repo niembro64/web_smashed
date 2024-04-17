@@ -6,11 +6,11 @@ import importedMonkeys from '../sounds/monkeys.ogg';
 
 function MusicManager() {
   const smallTalk = new Audio(importedSmallTalk);
-  smallTalk.volume = 0.05;
+  smallTalk.volume = 0.2;
   const smallTalkRef = useRef<HTMLAudioElement>(smallTalk);
 
   const monkeys = new Audio(importedMonkeys);
-  monkeys.volume = 0.05;
+  monkeys.volume = 0.3;
   const monkeysRef = useRef<HTMLAudioElement>(monkeys);
 
   return { smallTalkRef, monkeysRef };
