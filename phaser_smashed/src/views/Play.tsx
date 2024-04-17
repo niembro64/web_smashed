@@ -330,34 +330,56 @@ function Play() {
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
-const setInputArrayEffect = (newInputArray: InputType[]): void => {
-  // Play the initial blip sound
-  soundManager.blipSound();
 
-  // Set all elements to zero immediately
-  setInputArray(new Array(newInputArray.length).fill(0));
+  // const setInputArrayEffect = (newInputArray: InputType[]): void => {
+  //   soundManager.blipSound();
+  //   setInputArray([0, 0, 0, 0]);
+  //   setTimeout(() => {
+  //     for (let i = 0; i < newInputArray.length; i++) {
+  //       setTimeout(() => {
+  //         soundManager.blipSound();
+  //         const a: InputType[] = [...inputArray];
+  //         for (let j = 0; j <= i; j++) {
+  //           a[j] = newInputArray[j];
+  //         }
+  //         setInputArray([...a]);
+  //       }, i * blipDelay);
+  //     }
+  //   }, blipDelay);
+  // };
 
-  // Start a chain of updates
-  newInputArray.forEach((item, index) => {
-    setTimeout(() => {
-      // Play sound for each item
-      soundManager.blipSound();
+  // const setInputArrayEffect = (newInputArray: InputType[]): void => {
+  //   soundManager.blipSound();
+  //   newInputArray.forEach((item, index) => {
+  //     setTimeout(() => {
+  //       soundManager.blipSound();
+  //       setInputArray((prevArray) => {
+  //         const updatedArray = [...prevArray];
+  //         for (let j = 0; j <= index; j++) {
+  //           updatedArray[j] = newInputArray[j];
+  //         }
+  //         return updatedArray;
+  //       });
+  //     }, index * blipDelay);
+  //   });
+  // };
 
-      // Update the state by updating the array up to the current index
-      setInputArray((prevArray) => {
-        // Create a copy of the current array
-        const updatedArray = [...prevArray];
-
-        // Update elements from the start to the current index
-        for (let j = 0; j <= index; j++) {
-          updatedArray[j] = newInputArray[j];
-        }
-
-        return updatedArray;
-      });
-    }, (index + 1) * blipDelay); // Adjust delay to start after the initial reset and sound
-  });
-};
+  const setInputArrayEffect = (newInputArray: InputType[]): void => {
+    soundManager.blipSound();
+    setInputArray(new Array(newInputArray.length).fill(0));
+    newInputArray.forEach((item, index) => {
+      setTimeout(() => {
+        soundManager.blipSound();
+        setInputArray((prevArray) => {
+          const updatedArray = [...prevArray];
+          for (let j = 0; j <= index; j++) {
+            updatedArray[j] = newInputArray[j];
+          }
+          return updatedArray;
+        });
+      }, (index + 1) * blipDelay);
+    });
+  };
 
   useEffect(() => {
     print('inputArray', inputArray);
