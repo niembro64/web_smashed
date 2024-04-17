@@ -50,7 +50,7 @@ import {
   smashConfigInit,
   smashConfigOptions,
   workingControllersAmazon,
-} from './helpers/reactData';
+} from './helpers/reactHelpers';
 import MusicManager from './MusicManager';
 
 function Play() {
@@ -332,18 +332,23 @@ function Play() {
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
-    for (let i = 0; i < newInputArray.length; i++) {
+    soundManager.blipSound();
+
+    newInputArray.forEach((item, index) => {
       setTimeout(() => {
         soundManager.blipSound();
-        const a: InputType[] = [...inputArray];
 
-        for (let j = 0; j <= i; j++) {
-          a[j] = newInputArray[j];
-        }
+        setInputArray((prevArray) => {
+          const updatedArray = [...prevArray];
 
-        setInputArray([...a]);
-      }, i * blipDelay);
-    }
+          for (let j = 0; j <= index; j++) {
+            updatedArray[j] = newInputArray[j];
+          }
+
+          return updatedArray;
+        });
+      }, index * blipDelay);
+    });
   };
 
   useEffect(() => {
@@ -887,15 +892,15 @@ function Play() {
   };
 
   const getNumGamepads = (): number => {
-    let numK: number = 0;
+    let pads: number = 0;
 
-    inputArray.forEach((ia: number, iaIndex: number) => {
-      if (ia === 1) {
-        numK++;
+    for (let i = 0; i < inputArray.length; i++) {
+      if (inputArray[i] === 1) {
+        pads++;
       }
-    });
+    }
 
-    return numK;
+    return pads;
   };
 
   const onClickBackEventHandler = () => {
