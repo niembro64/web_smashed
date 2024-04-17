@@ -4,22 +4,15 @@ import importedWoah from '../sounds/BlackBetty_Woah.mp3';
 // @ts-ignore
 import importedBambalam from '../sounds/BlackBetty_Bambalam.mp3';
 // @ts-ignore
-import importedTrance from '../sounds/trance-loop.ogg';
-// @ts-ignore
 import importedStartSound from '../sounds/start.wav';
 // @ts-ignore
 import importedBlipSound from '../sounds/game-start-liquid.wav';
-// @ts-ignore
-import importedSmallTalk from '../sounds/niemo_audio_small_talk.ogg';
-// @ts-ignore
-import importedMonkeys from '../sounds/monkeys.ogg';
 // @ts-ignore
 import importedMeleeReady from '../sounds/melee_ready.mp3';
 // @ts-ignore
 import importedMeleeGo from '../sounds/melee_go.mp3';
 // @ts-ignore
 import importedMeleeChoose from '../sounds/melee_choose.mp3';
-// @ts-ignore
 
 function AudioManager() {
   const [woah] = useSound(importedWoah, { volume: 0.2 });

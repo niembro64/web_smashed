@@ -4,30 +4,16 @@ import html2canvas from 'html2canvas';
 import Phaser from 'phaser';
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 import { useEffect, useRef, useState } from 'react';
-
 import '../App.css';
 import Game from '../scenes/Game';
 import { setGameState } from '../scenes/helpers/state';
 // @ts-ignore
-import importedWoah from '../sounds/BlackBetty_Woah.mp3';
-// @ts-ignore
-import importedBambalam from '../sounds/BlackBetty_Bambalam.mp3';
-// @ts-ignore
 import importedTrance from '../sounds/trance-loop.ogg';
-// @ts-ignore
-import importedStartSound from '../sounds/start.wav';
-// @ts-ignore
-import importedBlipSound from '../sounds/game-start-liquid.wav';
 // @ts-ignore
 import importedSmallTalk from '../sounds/niemo_audio_small_talk.ogg';
 // @ts-ignore
 import importedMonkeys from '../sounds/monkeys.ogg';
 // @ts-ignore
-import importedMeleeReady from '../sounds/melee_ready.mp3';
-// @ts-ignore
-import importedMeleeGo from '../sounds/melee_go.mp3';
-// @ts-ignore
-import importedMeleeChoose from '../sounds/melee_choose.mp3';
 import moment, { Moment } from 'moment';
 import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
@@ -45,6 +31,7 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/interfaces';
+import AudioManager from './AudioManager';
 import {
   ClientInformation,
   SessionInfo,
@@ -66,7 +53,6 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactData';
-import AudioManager from './AudioManager';
 
 function Play() {
   const myPhaser: any = useRef(null);
