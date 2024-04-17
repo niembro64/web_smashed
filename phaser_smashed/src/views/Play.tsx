@@ -24,7 +24,7 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/interfaces';
-import SoundManager from './AudioManager';
+import SoundManager from './SoundManager';
 import {
   ClientInformation,
   SessionInfo,
@@ -65,23 +65,6 @@ function Play() {
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
     useState<Debug>(mainOptionsDebugShow);
-
-  // useEffect(() => {
-  //   const handleUserInteraction = () => {
-  //     setWebState('start');
-
-  //     window.removeEventListener('click', handleUserInteraction);
-  //     window.removeEventListener('keydown', handleUserInteraction);
-  //   };
-
-  //   window.addEventListener('click', handleUserInteraction);
-  //   window.addEventListener('keydown', handleUserInteraction);
-
-  //   return () => {
-  //     window.removeEventListener('click', handleUserInteraction);
-  //     window.removeEventListener('keydown', handleUserInteraction);
-  //   };
-  // }, []);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -352,6 +335,7 @@ function Play() {
   }, [smashConfig]);
 
   const randomizeCharacters = () => {
+    soundManager.dice();
     const numBase: number = 4;
     const numChez: number = debugState.UseChez ? 2 : 0;
     const numKoopas: number = debugState.UseKoopas ? 3 : 0;

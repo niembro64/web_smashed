@@ -13,6 +13,8 @@ import importedMeleeReady from '../sounds/melee_ready.mp3';
 import importedMeleeGo from '../sounds/melee_go.mp3';
 // @ts-ignore
 import importedMeleeChoose from '../sounds/melee_choose.mp3';
+// @ts-ignore
+import importedDice from '../sounds/dice_better.mp3';
 
 function SoundManager() {
   const [woah] = useSound(importedWoah, { volume: 0.2 });
@@ -22,6 +24,7 @@ function SoundManager() {
   const [meleeChoose] = useSound(importedMeleeChoose, { volume: 0.2 });
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
   const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
+  const [dice] = useSound(importedDice, { volume: 0.1 });
   return {
     woah,
     bam,
@@ -30,6 +33,7 @@ function SoundManager() {
     meleeGo,
     meleeChoose,
     blipSound,
+    dice,
   };
 }
 
