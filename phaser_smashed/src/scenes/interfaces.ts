@@ -46,7 +46,10 @@ export interface Debug {
   TrophiesAlways: boolean;
   NNP1Train: boolean;
   NNIsLSTM: boolean;
-  NNHelpBot: boolean;
+  NNHelpScreen: boolean;
+  NNHelpPit: boolean;
+  NNHelpWall: boolean;
+  NNHelpCenterize: boolean;
   InstReplay: boolean;
   ReplayFullQuality: boolean;
   ReplayControls: boolean;

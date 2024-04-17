@@ -8,7 +8,11 @@ import '../App.css';
 import Game from '../scenes/Game';
 import { setGameState } from '../scenes/helpers/state';
 import moment, { Moment } from 'moment';
-import { debugInit, debugMax, mainOptionsDebugShow } from '../debugOptions';
+import {
+  debugInit,
+  debugMax,
+  showOptionOnMainScreenInit,
+} from '../debugOptions';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
   ButtonName,
@@ -65,7 +69,7 @@ function Play() {
   const [videoGray, setVideoGray] = useState(false);
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
-    useState<Debug>(mainOptionsDebugShow);
+    useState<Debug>(showOptionOnMainScreenInit);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -252,6 +256,12 @@ function Play() {
   };
 
   useEffect(() => {
+    if (debugState.DevMode) {
+      setWebState('start');
+    }
+  }, []);
+
+  useEffect(() => {
     const setShowLoaderIntervalFunction = () => {
       const myInterval = setInterval(() => {
         print(
@@ -320,16 +330,6 @@ function Play() {
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
-
-  const setInputArraySlot = (inputId: InputType, positionIndex: number) => {
-    if (webState === 'play') {
-      return;
-    }
-
-    const a: InputType[] = [...inputArray];
-    a[positionIndex] = inputId;
-    setInputArray([...a]);
-  };
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     for (let i = 0; i < newInputArray.length; i++) {
@@ -1124,7 +1124,7 @@ function Play() {
           <div className="player-choices">
             <div className="player-choices-left">
               {Object.entries(debugState).map(([key, value], index: number) => {
-                if (!mainOptionsDebugShow[key]) {
+                if (!showOptionOnMainScreenInit[key]) {
                   return null;
                 }
 
@@ -1599,7 +1599,7 @@ function Play() {
               <div id="debug-col">
                 {Object.entries(debugState).map(
                   ([key, value], index: number) => {
-                    if (!!mainOptionsDebugShow[key]) {
+                    if (!!showOptionOnMainScreenInit[key]) {
                       return null;
                     }
 

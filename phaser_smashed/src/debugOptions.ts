@@ -1,7 +1,7 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
-  DevMode: false,
+  DevMode: true,
   DevZoom: 8,
   Level: 7, //0123456
   ModeInfinity: false,
@@ -44,7 +44,10 @@ export const debugInit: Debug = {
   TrophiesAlways: false,
   NNP1Train: false,
   NNIsLSTM: false,
-  NNHelpBot: true,
+  NNHelpScreen: false,
+  NNHelpCenterize: false,
+  NNHelpPit: false,
+  NNHelpWall: false,
   InstReplay: true,
   ReplayFullQuality: false,
   ReplayControls: true,
@@ -96,7 +99,10 @@ export const debugMax: Debug = {
   TrophiesAlways: true,
   NNP1Train: true,
   NNIsLSTM: false,
-  NNHelpBot: true,
+  NNHelpScreen: true, // 012
+  NNHelpCenterize: true,
+  NNHelpPit: true,
+  NNHelpWall: true,
   InstReplay: true,
   ReplayFullQuality: true,
   ReplayControls: true,
@@ -105,7 +111,7 @@ export const debugMax: Debug = {
 };
 
 // TRUE means SHOWN ON MAIN PAGE
-export const mainOptionsDebugShow: Debug = {
+export const showOptionOnMainScreenInit: Debug = {
   Level: 0, //0123456
   ModeInfinity: true,
   Shots: 0,
@@ -142,7 +148,10 @@ export const mainOptionsDebugShow: Debug = {
   DevMode: false,
   DevZoom: 0,
   CharOverride: false,
-  NNHelpBot: false,
+  NNHelpScreen: false,
+  NNHelpCenterize: false,
+  NNHelpPit: false,
+  NNHelpWall: false,
   CharOverrideId: 0,
   BulletsAllowGroups: false,
   BulletsFullScreen: false,
