@@ -335,19 +335,17 @@ function Play() {
     soundManager.blipSound();
     setInputArray((prevArray: InputType[]) => [0, 0, 0, 0]);
 
-    setTimeout(() => {
-      newInputArray.forEach((item, index) => {
-        setTimeout(() => {
-          soundManager.blipSound();
-          setInputArray((prevArray: InputType[]) => {
-            const updatedArray = [...prevArray];
-            for (let j = 0; j <= index; j++) {
-              updatedArray[j] = newInputArray[j];
-            }
-            return updatedArray;
-          });
-        }, (index + 1) * blipDelay);
-      }, blipDelay);
+    newInputArray.forEach((item, index) => {
+      setTimeout(() => {
+        soundManager.blipSound();
+        setInputArray((prevArray: InputType[]) => {
+          const updatedArray = [...prevArray];
+          for (let j = 0; j <= index; j++) {
+            updatedArray[j] = newInputArray[j];
+          }
+          return updatedArray;
+        });
+      }, (index + 1) * blipDelay);
     });
   };
 
@@ -372,49 +370,56 @@ function Play() {
 
   const randomizeCharacters = () => {
     soundManager.dice();
-    const numBase: number = 4;
-    const numChez: number = debugState.UseChez ? 2 : 0;
-    const numKoopas: number = debugState.UseKoopas ? 3 : 0;
-    const numTotal: number = numBase + numChez + numKoopas;
 
-    const ratioBase: number = numBase / numTotal;
-    const ratioChez: number = numChez / numTotal;
+    const savedInputArray = [...inputArray];
+    setInputArray((prevArray: InputType[]) => [0, 0, 0, 0]);
 
-    const baseUpperLimit: number = ratioBase;
-    const chezUpperLimit: number = baseUpperLimit + ratioChez;
+    setTimeout(() => {
+      setInputArray((prevArray: InputType[]) => savedInputArray);
+      const numBase: number = 4;
+      const numChez: number = debugState.UseChez ? 2 : 0;
+      const numKoopas: number = debugState.UseKoopas ? 3 : 0;
+      const numTotal: number = numBase + numChez + numKoopas;
 
-    const newPlayers: PlayerConfigSmall[] = [];
+      const ratioBase: number = numBase / numTotal;
+      const ratioChez: number = numChez / numTotal;
 
-    for (let i = 0; i < 4; i++) {
-      const rand: number = Math.random();
-      const oldId: number = smashConfig.players[i].characterId;
-      let newId: number | null = null;
+      const baseUpperLimit: number = ratioBase;
+      const chezUpperLimit: number = baseUpperLimit + ratioChez;
 
-      // too lazy to do it right
-      do {
-        if (rand < baseUpperLimit) {
-          newId = Math.floor(Math.random() * 4);
-        } else if (rand < chezUpperLimit) {
-          newId = 4 + Math.floor(Math.random() * 2);
-        } else {
-          newId = 6 + Math.floor(Math.random() * 3);
-        }
-      } while (newId === oldId);
+      const newPlayers: PlayerConfigSmall[] = [];
 
-      print('new', newId, 'old', oldId);
+      for (let i = 0; i < 4; i++) {
+        const rand: number = Math.random();
+        const oldId: number = smashConfig.players[i].characterId;
+        let newId: number | null = null;
 
-      newPlayers.push({
-        characterId: newId as CharacterId,
-        input: 0,
+        // too lazy to do it right
+        do {
+          if (rand < baseUpperLimit) {
+            newId = Math.floor(Math.random() * 4);
+          } else if (rand < chezUpperLimit) {
+            newId = 4 + Math.floor(Math.random() * 2);
+          } else {
+            newId = 6 + Math.floor(Math.random() * 3);
+          }
+        } while (newId === oldId);
+
+        print('new', newId, 'old', oldId);
+
+        newPlayers.push({
+          characterId: newId as CharacterId,
+          input: 0,
+        });
+      }
+
+      newPlayers.forEach((player, index) => {
+        setTimeout(() => {
+          soundManager.blipSound();
+          setCharacterSlot(player.characterId, index);
+        }, index * blipDelay);
       });
-    }
-
-    newPlayers.forEach((player, index) => {
-      setTimeout(() => {
-        soundManager.blipSound();
-        setCharacterSlot(player.characterId, index);
-      }, index * blipDelay);
-    });
+    }, blipDelay);
   };
 
   const getNumActiveBeforeMe = (index: number): number => {
