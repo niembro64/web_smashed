@@ -371,7 +371,6 @@ function Play() {
   const randomizeCharacters = () => {
     soundManager.dice();
 
-    setInputArray((prevArray: InputType[]) => savedInputArray);
     const numBase: number = 4;
     const numChez: number = debugState.UseChez ? 2 : 0;
     const numKoopas: number = debugState.UseKoopas ? 3 : 0;
