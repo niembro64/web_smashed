@@ -331,53 +331,22 @@ function Play() {
   const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
 
-  // const setInputArrayEffect = (newInputArray: InputType[]): void => {
-  //   soundManager.blipSound();
-  //   setInputArray([0, 0, 0, 0]);
-  //   setTimeout(() => {
-  //     for (let i = 0; i < newInputArray.length; i++) {
-  //       setTimeout(() => {
-  //         soundManager.blipSound();
-  //         const a: InputType[] = [...inputArray];
-  //         for (let j = 0; j <= i; j++) {
-  //           a[j] = newInputArray[j];
-  //         }
-  //         setInputArray([...a]);
-  //       }, i * blipDelay);
-  //     }
-  //   }, blipDelay);
-  // };
-
-  // const setInputArrayEffect = (newInputArray: InputType[]): void => {
-  //   soundManager.blipSound();
-  //   newInputArray.forEach((item, index) => {
-  //     setTimeout(() => {
-  //       soundManager.blipSound();
-  //       setInputArray((prevArray) => {
-  //         const updatedArray = [...prevArray];
-  //         for (let j = 0; j <= index; j++) {
-  //           updatedArray[j] = newInputArray[j];
-  //         }
-  //         return updatedArray;
-  //       });
-  //     }, index * blipDelay);
-  //   });
-  // };
-
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     soundManager.blipSound();
-    setInputArray(new Array(newInputArray.length).fill(0));
-    newInputArray.forEach((item, index) => {
-      setTimeout(() => {
-        soundManager.blipSound();
-        setInputArray((prevArray) => {
-          const updatedArray = [...prevArray];
-          for (let j = 0; j <= index; j++) {
-            updatedArray[j] = newInputArray[j];
-          }
-          return updatedArray;
-        });
-      }, (index + 1) * blipDelay);
+    setInputArray([0, 0, 0, 0]);
+    setTimeout(() => {
+      newInputArray.forEach((item, index) => {
+        setTimeout(() => {
+          soundManager.blipSound();
+          setInputArray((prevArray: InputType[]) => {
+            const updatedArray = [...prevArray];
+            for (let j = 0; j <= index; j++) {
+              updatedArray[j] = newInputArray[j];
+            }
+            return updatedArray;
+          });
+        }, index * blipDelay);
+      }, blipDelay);
     });
   };
 
