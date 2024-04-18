@@ -371,55 +371,50 @@ function Play() {
   const randomizeCharacters = () => {
     soundManager.dice();
 
-    const savedInputArray = [...inputArray];
-    setInputArray((prevArray: InputType[]) => [0, 0, 0, 0]);
+    setInputArray((prevArray: InputType[]) => savedInputArray);
+    const numBase: number = 4;
+    const numChez: number = debugState.UseChez ? 2 : 0;
+    const numKoopas: number = debugState.UseKoopas ? 3 : 0;
+    const numTotal: number = numBase + numChez + numKoopas;
 
-    setTimeout(() => {
-      setInputArray((prevArray: InputType[]) => savedInputArray);
-      const numBase: number = 4;
-      const numChez: number = debugState.UseChez ? 2 : 0;
-      const numKoopas: number = debugState.UseKoopas ? 3 : 0;
-      const numTotal: number = numBase + numChez + numKoopas;
+    const ratioBase: number = numBase / numTotal;
+    const ratioChez: number = numChez / numTotal;
 
-      const ratioBase: number = numBase / numTotal;
-      const ratioChez: number = numChez / numTotal;
+    const baseUpperLimit: number = ratioBase;
+    const chezUpperLimit: number = baseUpperLimit + ratioChez;
 
-      const baseUpperLimit: number = ratioBase;
-      const chezUpperLimit: number = baseUpperLimit + ratioChez;
+    const newPlayers: PlayerConfigSmall[] = [];
 
-      const newPlayers: PlayerConfigSmall[] = [];
+    for (let i = 0; i < 4; i++) {
+      const rand: number = Math.random();
+      const oldId: number = smashConfig.players[i].characterId;
+      let newId: number | null = null;
 
-      for (let i = 0; i < 4; i++) {
-        const rand: number = Math.random();
-        const oldId: number = smashConfig.players[i].characterId;
-        let newId: number | null = null;
+      // too lazy to do it right
+      do {
+        if (rand < baseUpperLimit) {
+          newId = Math.floor(Math.random() * 4);
+        } else if (rand < chezUpperLimit) {
+          newId = 4 + Math.floor(Math.random() * 2);
+        } else {
+          newId = 6 + Math.floor(Math.random() * 3);
+        }
+      } while (newId === oldId);
 
-        // too lazy to do it right
-        do {
-          if (rand < baseUpperLimit) {
-            newId = Math.floor(Math.random() * 4);
-          } else if (rand < chezUpperLimit) {
-            newId = 4 + Math.floor(Math.random() * 2);
-          } else {
-            newId = 6 + Math.floor(Math.random() * 3);
-          }
-        } while (newId === oldId);
+      print('new', newId, 'old', oldId);
 
-        print('new', newId, 'old', oldId);
-
-        newPlayers.push({
-          characterId: newId as CharacterId,
-          input: 0,
-        });
-      }
-
-      newPlayers.forEach((player, index) => {
-        setTimeout(() => {
-          soundManager.blipSound();
-          setCharacterSlot(player.characterId, index);
-        }, index * blipDelay);
+      newPlayers.push({
+        characterId: newId as CharacterId,
+        input: 0,
       });
-    }, blipDelay);
+    }
+
+    newPlayers.forEach((player, index) => {
+      setTimeout(() => {
+        soundManager.blipSound();
+        setCharacterSlot(player.characterId, index);
+      }, index * blipDelay);
+    });
   };
 
   const getNumActiveBeforeMe = (index: number): number => {
