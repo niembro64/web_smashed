@@ -577,7 +577,7 @@ function Play() {
     }
     const newInputArray = [...inputArray];
     newInputArray[playerIndex] = i as InputType;
-    setInputArrayEffect([...newInputArray]);
+    setInputArray([...newInputArray]);
     print('i', i, 'newInputArray', newInputArray);
   };
 
