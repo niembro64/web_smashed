@@ -333,7 +333,8 @@ function Play() {
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     soundManager.blipSound();
-    setInputArray([0, 0, 0, 0]);
+    setInputArray((prevArray: InputType[]) => [0, 0, 0, 0]);
+
     setTimeout(() => {
       newInputArray.forEach((item, index) => {
         setTimeout(() => {
@@ -345,7 +346,7 @@ function Play() {
             }
             return updatedArray;
           });
-        }, index * blipDelay);
+        }, (index + 1) * blipDelay);
       }, blipDelay);
     });
   };
