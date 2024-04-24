@@ -8,6 +8,8 @@ import {
   WorkingController,
   emoji,
 } from '../../scenes/interfaces';
+import Game from '../../scenes/Game';
+import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 
 // ✔️🚧❌🚫🛑🔜📄📋⚙️🚪⛔⌚🕹️🎮☠️👾💣🔥​➡️​⌨️​⌨🧊🌑🌒🌙⭐🌞☁☁☁
 // 🏴‍☠️🏳️🏁🏴
@@ -138,7 +140,7 @@ export const p2Keys: string[] = [
   'ArrowRight',
 ];
 
-export   const characterMoves: CharacterMove[] = [
+export const characterMoves: CharacterMove[] = [
   { button: 'D-Pad', move: 'Move', status: emoji.greenCheck },
   { button: 'Ground + X', move: 'Jump', status: emoji.greenCheck },
   { button: 'Air + X', move: 'Double Jump', status: emoji.greenCheck },
@@ -161,4 +163,44 @@ export   const characterMoves: CharacterMove[] = [
   { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
 ];
 
-export  const blipDelay = 200;
+export const blipDelay = 200;
+
+export const baseGravity = 3000;
+
+export const gravLightMultiplier = 0.5;
+
+export const configInit: Phaser.Types.Core.GameConfig = {
+  plugins: {
+    global: [
+      {
+        key: 'rexShakePosition',
+        plugin: ShakePositionPlugin,
+        start: true,
+      },
+    ],
+  },
+  transparent: true,
+  title: 'Smashed',
+  antialias: true,
+  pixelArt: false,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 1920,
+    height: 1080,
+  },
+  type: Phaser.AUTO,
+  parent: 'phaser-container',
+  backgroundColor: '#00000055',
+  input: {
+    gamepad: true,
+  },
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: false,
+    },
+  },
+  scene: [Game],
+};

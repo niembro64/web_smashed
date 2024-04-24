@@ -39,8 +39,11 @@ import {
   sumNumbersIn2DArrayString,
 } from './client';
 import {
+  baseGravity,
   blipDelay,
   characterMoves,
+  configInit,
+  gravLightMultiplier,
   idColors,
   inputArrayInit,
   keyboardGroups,
@@ -430,41 +433,26 @@ function Play() {
     print('smashConfig', smashConfig);
   }, [smashConfig]);
 
-  const config: Phaser.Types.Core.GameConfig = {
-    plugins: {
-      global: [
-        {
-          key: 'rexShakePosition',
-          plugin: ShakePositionPlugin,
-          start: true,
+  const [config, setConfig] =
+    useState<Phaser.Types.Core.GameConfig>(configInit);
+
+  useEffect(() => {
+    const newConfig: Phaser.Types.Core.GameConfig = {
+      ...config,
+      physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: {
+            y:
+              baseGravity * (debugState.GravityLight ? gravLightMultiplier : 1),
+          },
+          debug: debugState.DevMode,
         },
-      ],
-    },
-    transparent: true,
-    title: 'Smashed',
-    antialias: true,
-    pixelArt: false,
-    scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
-      width: 1920,
-      height: 1080,
-    },
-    type: Phaser.AUTO,
-    parent: 'phaser-container',
-    backgroundColor: '#00000055',
-    input: {
-      gamepad: true,
-    },
-    physics: {
-      default: 'arcade',
-      arcade: {
-        gravity: { y: 3000 * (debugState.GravityLight ? 0.5 : 1) },
-        debug: debugState.DevMode,
       },
-    },
-    scene: [Game],
-  };
+    };
+
+    setConfig(newConfig);
+  }, [debugState.DevMode, debugState.GravityLight]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
