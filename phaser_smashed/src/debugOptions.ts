@@ -51,7 +51,7 @@ export const debugInit: Debug = {
   NNHelpScreen: true,
   NNHelpCenterize: false,
   NNHelpPit: true,
-  NNHelpWall: false,
+  NNHelpWall: true,
   NNIsLSTM: false,
   NNP1Train: true,
 };

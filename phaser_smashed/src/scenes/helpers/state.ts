@@ -53,7 +53,7 @@ import {
   updateShotsOnPlayers,
 } from './text';
 import { axiosUpsertOne, print } from '../../views/client';
-import { NNTrainLSTM, NNTrainNN } from './nn';
+import { NNTrainLSTM, NNTrainNN, deleteLastNNObjects } from './nn';
 
 export function setGameState(game: Game, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;
@@ -261,6 +261,7 @@ export function setPlayerState(
       setBlinkFalse(player);
       break;
     case 'player-state-dead':
+      deleteLastNNObjects(player, playerIndex, 60, game);
       setFlagOwnerNullIfDead(player, game);
       setEmitterPlayerOnFalse(player);
       setEmitterHurtActiveFalse(player);
@@ -285,6 +286,7 @@ export function setPlayerState(
       setRespawn(player, game);
       break;
     case 'player-state-hurt':
+      deleteLastNNObjects(player, playerIndex, 60, game);
       setEmitterHurtActiveTrue(player);
       setEmitterHurtVisibleTrue(player);
       if (!getIsAttackEnergyOffscreen(player.char.attackEnergy)) {

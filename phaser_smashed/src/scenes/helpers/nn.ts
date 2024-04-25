@@ -194,15 +194,6 @@ export const NNSetPlayerPadStatic = (
   player.padCurr.B = nnOutput[5] > r[5];
   player.padCurr.X = nnOutput[6] > r[6];
   player.padCurr.Y = nnOutput[7] > r[7];
-
-  // player.padCurr.up = output[0] > 1 - r[0] ? true : false;
-  // player.padCurr.down = output[1] > 1 - r[1] ? true : false;
-  // player.padCurr.left = output[2] > 1 - r[2] ? true : false;
-  // player.padCurr.right = output[3] > 1 - r[3] ? true : false;
-  // player.padCurr.A = output[4] > 1 - r[4] ? true : false;
-  // player.padCurr.B = output[5] > 1 - r[5] ? true : false;
-  // player.padCurr.X = output[6] > 1 - r[6] ? true : false;
-  // player.padCurr.Y = output[7] > 1 - r[7] ? true : false;
 };
 
 export const addPlayerOneNNObjectsStatic = (game: Game): void => {
@@ -221,81 +212,81 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
     return;
   }
 
-  const p = game.players[0];
+  const player = game.players[0];
 
   const { player: enemy } = getNearestPlayerAliveFromXY(
-    p.char.sprite.body.position.x,
-    p.char.sprite.body.position.y,
+    player.char.sprite.body.position.x,
+    player.char.sprite.body.position.y,
     game
   );
 
   const { x: enemyAttackEnergyX, y: enemyAttackEnergyY } =
-    getNearestAttackEnergyXYFromPlayer(p, 0, game);
+    getNearestAttackEnergyXYFromPlayer(player, 0, game);
 
   let isPFacingEnemy: boolean = false;
-  if (p.char.sprite.x < enemy.char.sprite.x) {
-    if (p.char.sprite.flipX) {
+  if (player.char.sprite.x < enemy.char.sprite.x) {
+    if (player.char.sprite.flipX) {
       isPFacingEnemy = true;
     }
   } else {
-    if (!p.char.sprite.flipX) {
+    if (!player.char.sprite.flipX) {
       isPFacingEnemy = true;
     }
   }
 
   const newNNObject: NNObject = {
     input: [
-      p.padCurr.up ? 1 : 0,
-      p.padCurr.down ? 1 : 0,
-      p.padCurr.left ? 1 : 0,
-      p.padCurr.right ? 1 : 0,
-      p.padCurr.A ? 1 : 0,
-      p.padCurr.B ? 1 : 0,
-      p.padCurr.X ? 1 : 0,
-      p.padCurr.Y ? 1 : 0,
-      p.padDebounced.up,
-      p.padDebounced.down,
-      p.padDebounced.left,
-      p.padDebounced.right,
-      p.padDebounced.A,
-      p.padDebounced.B,
-      p.padDebounced.X,
-      p.padDebounced.Y,
+      player.padCurr.up ? 1 : 0,
+      player.padCurr.down ? 1 : 0,
+      player.padCurr.left ? 1 : 0,
+      player.padCurr.right ? 1 : 0,
+      player.padCurr.A ? 1 : 0,
+      player.padCurr.B ? 1 : 0,
+      player.padCurr.X ? 1 : 0,
+      player.padCurr.Y ? 1 : 0,
+      player.padDebounced.up,
+      player.padDebounced.down,
+      player.padDebounced.left,
+      player.padDebounced.right,
+      player.padDebounced.A,
+      player.padDebounced.B,
+      player.padDebounced.X,
+      player.padDebounced.Y,
 
       // DIFF SPRITE POSITIONS
-      p.char.sprite.x - enemy.char.sprite.x,
-      p.char.sprite.y - enemy.char.sprite.y,
+      player.char.sprite.x - enemy.char.sprite.x,
+      player.char.sprite.y - enemy.char.sprite.y,
 
       // DIFF SPRITE VELOCITIES
-      p.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
+      player.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
 
-      p.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
+      player.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
 
       // DIFF SPRITE AE POSITIONS
-      p.char.sprite.body.position.x - enemyAttackEnergyX,
-      p.char.sprite.body.position.y - enemyAttackEnergyY,
+      player.char.sprite.body.position.x - enemyAttackEnergyX,
+      player.char.sprite.body.position.y - enemyAttackEnergyY,
 
-      p.char.sprite.body.touching.down ? 1 : 0,
-      p.char.sprite.body.touching.left ? 1 : 0,
-      p.char.sprite.body.touching.right ? 1 : 0,
+      player.char.sprite.body.touching.down ? 1 : 0,
+      player.char.sprite.body.touching.left ? 1 : 0,
+      player.char.sprite.body.touching.right ? 1 : 0,
       isPFacingEnemy ? 1 : 0,
     ],
     output: [
-      p.padCurr.up ? 1 : 0,
-      p.padCurr.down ? 1 : 0,
-      p.padCurr.left ? 1 : 0,
-      p.padCurr.right ? 1 : 0,
-      p.padCurr.A ? 1 : 0,
-      p.padCurr.B ? 1 : 0,
-      p.padCurr.X ? 1 : 0,
-      p.padCurr.Y ? 1 : 0,
+      player.padCurr.up ? 1 : 0,
+      player.padCurr.down ? 1 : 0,
+      player.padCurr.left ? 1 : 0,
+      player.padCurr.right ? 1 : 0,
+      player.padCurr.A ? 1 : 0,
+      player.padCurr.B ? 1 : 0,
+      player.padCurr.X ? 1 : 0,
+      player.padCurr.Y ? 1 : 0,
       // p.padCurr.L ? 1 : 0,
       // p.padCurr.R ? 1 : 0,
       // p.padCurr.start ? 1 : 0,
       // p.padCurr.select ? 1 : 0,
     ],
   };
-  print('newNNObject', JSON.stringify(newNNObject, null, 2));
+  // print('newNNObject', JSON.stringify(newNNObject, null, 2));
 
   game.nnObjects.push(newNNObject);
 };
@@ -333,4 +324,35 @@ export const saveTextStringAsFileToBaseOfDirectory = (
 
   // Clean up the URL object
   URL.revokeObjectURL(url);
+};
+
+export const deleteLastNNObjects = (
+  player: Player,
+  playerIndex: number,
+  numToDelete: number,
+  game: Game
+): void => {
+  print('deleteLastNNObjects', numToDelete, game.nnObjects.length);
+
+  if (!game.debug.NNP1Train) {
+    // print('!game.debug.NNP1Train');
+    return;
+  }
+
+  if (playerIndex !== 0) {
+    // print('playerIndex !== 0');
+    return;
+  }
+  print('playerIndex', playerIndex);
+
+  if (numToDelete > game.nnObjects.length) {
+    print('numToDelete > game.nnObjects.length');
+    return;
+  }
+
+  print('deleting prev', game.nnObjects.length);
+
+  game.nnObjects = game.nnObjects.slice(0, game.nnObjects.length - numToDelete);
+
+  print('deleting post', game.nnObjects.length);
 };

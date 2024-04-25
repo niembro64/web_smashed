@@ -39,6 +39,7 @@ export default class Game extends Phaser.Scene {
   // PULLING FROM PRELOAD
 
   sessionMoment: Moment = moment();
+
   nnObjects: NNObject[] = [];
   nnRatios: number[] = [];
   nnNet: any;

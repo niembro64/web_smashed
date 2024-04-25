@@ -83,13 +83,12 @@ export function updateBotNN(
   //////////////////////
   // IF BOT IS TOUCHING LEFT OR RIGHT, JUMP
   //////////////////////
-
   if (game.debug.NNHelpWall) {
     if (
       player.char.sprite.body.touching.right ||
       player.char.sprite.body.touching.left
     ) {
-      if (Math.random() > 0.3) {
+      if (Math.random() > 0.9) {
         padCurr.Y = !padCurr.Y;
       }
     }
