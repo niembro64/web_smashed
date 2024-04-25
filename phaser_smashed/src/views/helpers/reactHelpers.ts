@@ -59,21 +59,21 @@ export const smashConfigInit: SmashConfig = {
       input: 0, // don't set this here
     },
     {
+      characterId: 1,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 2,
+      input: 0, // don't set this here
+    },
+    {
       characterId: 6,
-      input: 0, // don't set this here
-    },
-    {
-      characterId: 7,
-      input: 0, // don't set this here
-    },
-    {
-      characterId: 8,
       input: 0, // don't set this here
     },
   ],
 };
 
-export const inputArrayInit: InputType[] = [3, 4, 4, 4];
+export const inputArrayInit: InputType[] = [3, 3, 3, 3];
 
 export const idColors: string[] = [
   'id-red',
