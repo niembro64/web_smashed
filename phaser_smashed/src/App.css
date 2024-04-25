@@ -2078,11 +2078,15 @@ td > div:nth-child(2) {
 
 .neural-network-train-status {
   z-index: 4;
+  width: 90%;
+  height: 45%;
   position: absolute;
-  bottom: 50%;
+  bottom: 5%;
   left: 5%;
   padding: 1%;
   border: 3px solid white;
+  background-color: black;
+  border-radius: var(--border-radius-small);
 }
 
 .neural-network-train-status-text {

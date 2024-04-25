@@ -2077,7 +2077,7 @@ function Play() {
         )}
       </div>
 
-      {
+      {neuralNetworkTrainStatus.name !== 'init' && (
         <div className="neural-network-train-status">
           <div className="neural-network-train-status-text">
             <p>{neuralNetworkTrainStatus.name}</p>
@@ -2085,7 +2085,7 @@ function Play() {
             <p>{neuralNetworkTrainStatus.error}</p>
           </div>
         </div>
-      }
+      )}
 
       {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'web-state-game' && !isReplayHidden && (
