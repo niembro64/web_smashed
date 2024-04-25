@@ -32,7 +32,7 @@ export function onHitHandlerAttackPhysical(
 
   game.overlappingPlayerIAttackPhysicalJ[playerIndex][j] = true;
 
-  for (var bj = 0; bj < game.players.length; bj++) {
+  for (let bj = 0; bj < game.players.length; bj++) {
     if (bj === j) {
       game.wasLastHitByMatrix[playerIndex][bj] = true;
       game.numberHitByMatrix[playerIndex][j]++;
@@ -81,7 +81,7 @@ export function onHitHandlerAttackEnergy(
 
   game.overlappingPlayerIAttackEnergyJ[playerHitIndex][j] = true;
 
-  for (var bj = 0; bj < game.players.length; bj++) {
+  for (let bj = 0; bj < game.players.length; bj++) {
     if (bj === j) {
       game.wasLastHitByMatrix[playerHitIndex][bj] = true;
       game.numberHitByMatrix[playerHitIndex][j]++;
@@ -151,7 +151,7 @@ export function onHitHandlerBullets(
 
   // game.overlappingPlayerIAttackEnergyJ[playerIndex][j] = true;
 
-  for (var bj = 0; bj < game.players.length; bj++) {
+  for (let bj = 0; bj < game.players.length; bj++) {
     if (bj === j) {
       game.wasLastHitByMatrix[playerHitIndex][bj] = true;
     } else {

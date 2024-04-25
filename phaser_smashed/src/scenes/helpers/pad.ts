@@ -487,9 +487,9 @@ export function updatePlayerHoldAttackEnergy(player: Player): void {
 
 export function playerShootAttackEnergy(player: Player, game: Game): void {
   let ae = player.char.attackEnergy;
-  var vX =
+  const vX =
     player.char.sprite.body.velocity.x * player.char.attackEnergy.VEL.x * 0.5;
-  var vY = 0;
+  let vY = 0;
   if (ae.allowVelocityY) {
     vY = 300 * ae.VEL.y;
     vY += player.char.sprite.body.velocity.y * 0.5;
