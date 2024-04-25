@@ -20,21 +20,23 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
-  const maxIterations = 2000;
+  const maxIterations = 1000;
 
   const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
 
   game.nnNet.train(randomizedNnObjects, {
     iterations: maxIterations,
+    randomize: true,
     learningRate: 0.01,
     errorThresh: 0.005,
     callbackPeriod: 1,
     logPeriod: 1,
     log: (stats: any) => {
-      print(Math.floor((stats.iterations / maxIterations) * 1000) * 0.1 + '%');
-      print('error', Math.floor(stats.error * 1000) * 0.1 + '%');
+      print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
+      print('error', Math.floor(stats.error * 100) + '%');
     },
   });
+
   print('game.nnNet after train', game.nnNet);
   const netJson = game.nnNet.toJSON();
   print('netJson', JSON.stringify(netJson, null, 2));
