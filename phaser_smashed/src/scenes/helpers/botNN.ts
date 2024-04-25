@@ -88,7 +88,7 @@ export function updateBotNN(
       player.char.sprite.body.touching.right ||
       player.char.sprite.body.touching.left
     ) {
-      if (Math.random() > 0.9) {
+      if (Math.random() > 0.98) {
         padCurr.Y = !padCurr.Y;
       }
     }
