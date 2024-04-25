@@ -53,6 +53,7 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
+import { use } from 'matter';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -221,9 +222,34 @@ function Play() {
       error: 0,
     });
 
+  const [nnJson, setNnJson] = useState<string>('');
+  const [nnRatios, setNnRatios] = useState<number[]>([]);
+  const [nnProgress, setNnProgress] = useState<number>(0);
+  const [nnError, setNnError] = useState<number>(0);
+
   useEffect(() => {
     window.addEventListener('nn-train', (t) => {
-      setNeuralNetworkTrainStatus((prev) => {
+      // @ts-ignore
+      switch (t?.detail?.name) {
+        case 'netJson':
+          // @ts-ignore
+          setNnJson((x) => t?.detail?.value);
+          break;
+        case 'netRatios':
+          // @ts-ignore
+          setNnRatios((x) => t?.detail?.value);
+          break;
+        case 'netProgress':
+          // @ts-ignore
+          setNnProgress((x) => t?.detail?.value);
+          // @ts-ignore
+          setNnError((x) => t?.detail?.error);
+          break;
+        default:
+          break;
+      }
+
+      setNeuralNetworkTrainStatus((prev: NNTrainProgressObject) => {
         return {
           // @ts-ignore
           name: t?.detail?.name,
@@ -235,13 +261,21 @@ function Play() {
       });
     });
   }, []);
+
   useEffect(() => {
-    // @ts-ignore
-    print('nnTrainStatus.name', neuralNetworkTrainStatus.name);
-    // @ts-ignore
-    print('nnTrainStatus.value', neuralNetworkTrainStatus.value);
-    // @ts-ignore
-    print('nnTrainStatus.error', neuralNetworkTrainStatus.error);
+    print('nnJson', nnJson);
+    print('nnRatios', nnRatios);
+    print('nnProgress', nnProgress);
+    print('nnError', nnError);
+  }, [nnJson, nnRatios, nnProgress, nnError]);
+
+  useEffect(() => {
+    // // @ts-ignore
+    // print('nnTrainStatus.name', neuralNetworkTrainStatus.name);
+    // // @ts-ignore
+    // print('nnTrainStatus.value', neuralNetworkTrainStatus.value);
+    // // @ts-ignore
+    // print('nnTrainStatus.error', neuralNetworkTrainStatus.error);
   }, [neuralNetworkTrainStatus]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
@@ -2077,15 +2111,15 @@ function Play() {
         )}
       </div>
 
-      {neuralNetworkTrainStatus.name !== 'init' && (
+      {
         <div className="neural-network-train-status">
           <div className="neural-network-train-status-text">
-            <p>{neuralNetworkTrainStatus.name}</p>
-            <p>{neuralNetworkTrainStatus.value}</p>
-            <p>{neuralNetworkTrainStatus.error}</p>
+            <p>NN Training Progress</p>
+            <p>{nnProgress}</p>
+            <p>{nnError}</p>
           </div>
         </div>
-      )}
+      }
 
       {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'web-state-game' && !isReplayHidden && (

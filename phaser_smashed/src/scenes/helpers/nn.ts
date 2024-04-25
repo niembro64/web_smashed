@@ -51,7 +51,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
       window.dispatchEvent(
         new CustomEvent('nn-train', {
           detail: {
-            name: 'progress',
+            name: 'netProgress',
             value: percentDone,
             error: error,
           },
@@ -81,7 +81,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   window.dispatchEvent(
     new CustomEvent('nn-train', {
       detail: {
-        name: 'outputButtonRatios',
+        name: 'netRatios',
         value: JSON.stringify(outputButtonRatios, null, 2),
         error: null,
       },
