@@ -147,7 +147,7 @@ export function setGameState(game: Game, state: GameState): void {
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
 
-      game.events.emit('scoreUpdate', 55);
+      print('emitting');
 
       if (game.debug.NNIsLSTM) {
         NNTrainLSTM(game);

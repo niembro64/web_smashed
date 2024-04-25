@@ -2075,3 +2075,16 @@ td > div:nth-child(2) {
 .show-all-hide:active {
   background-color: rgb(206, 151, 161);
 }
+
+.neural-network-train-status {
+  z-index: 4;
+  position: absolute;
+  bottom: 50%;
+  left: 5%;
+  padding: 1%;
+  border: 3px solid white;
+}
+
+.neural-network-train-status-text {
+  font-size: 1.5vw;
+}

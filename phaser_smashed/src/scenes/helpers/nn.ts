@@ -16,6 +16,16 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     return;
   }
 
+  window.dispatchEvent(
+    new CustomEvent('nn-train', {
+      detail: {
+        name: 'start',
+        value: null,
+        error: null,
+      },
+    })
+  );
+
   print('NNTrain');
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
@@ -34,6 +44,20 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     logPeriod: 10,
     decayRate: 0.999,
     log: (stats: any) => {
+      const percentDone = stats.iterations / maxIterations;
+
+      const error = stats.error;
+
+      window.dispatchEvent(
+        new CustomEvent('nn-train', {
+          detail: {
+            name: 'progress',
+            value: percentDone,
+            error: error,
+          },
+        })
+      );
+
       print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
       print('error', Math.floor(stats.error * 100) + '%');
     },
@@ -41,10 +65,28 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
 
   print('game.nnNet after train', game.nnNet);
   const netJson = game.nnNet.toJSON();
-  print('netJson', JSON.stringify(netJson, null, 2));
+  // print('netJson', JSON.stringify(netJson, null, 2));
+  window.dispatchEvent(
+    new CustomEvent('nn-train', {
+      detail: {
+        name: 'netJson',
+        value: JSON.stringify(netJson, null, 2),
+        error: null,
+      },
+    })
+  );
 
-  const newOutRatios = NNGetOutputRatios(game);
-  print('newOutRatios', newOutRatios);
+  const outputButtonRatios = NNGetOutputRatios(game);
+  // print('outputButtonRatios', outputButtonRatios);
+  window.dispatchEvent(
+    new CustomEvent('nn-train', {
+      detail: {
+        name: 'outputButtonRatios',
+        value: JSON.stringify(outputButtonRatios, null, 2),
+        error: null,
+      },
+    })
+  );
 };
 
 export const NNTrainLSTM = async (game: Game): Promise<void> => {

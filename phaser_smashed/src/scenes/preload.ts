@@ -41,7 +41,7 @@ export function preload(game: Game): void {
       game.playerChoicesInputType.push(ensureTypeInput(player.input));
     });
   }
-  game.gameSecondsClock = game.debug.Minutes * 60;
+  game.gameSecondsClock = game.debug.Minutes * (game.debug.DevFast ? 5 : 60);
   if (!game.debug.FrictionAirActive) {
     game.players.forEach((iPlayer, i) => {
       iPlayer.char.friction_air = 0;

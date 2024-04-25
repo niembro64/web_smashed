@@ -4,6 +4,7 @@ import { Bullets } from './helpers/bullets';
 
 export interface Debug {
   DevMode: boolean;
+  DevFast: boolean;
   DevZoom: number;
   Level: number;
   ModeInfinity: boolean;

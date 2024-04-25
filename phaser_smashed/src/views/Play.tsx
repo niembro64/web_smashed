@@ -55,7 +55,7 @@ import {
 } from './helpers/reactHelpers';
 
 function Play() {
-  const myPhaser: any = useRef(null);
+  const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
@@ -208,6 +208,42 @@ function Play() {
     };
   }, [debugState.ReplayFullQuality, debugState.ReplayOn]);
 
+  type NNTrainProgressObject = {
+    name: string;
+    value: number;
+    error: number;
+  };
+
+  const [neuralNetworkTrainStatus, setNeuralNetworkTrainStatus] =
+    useState<NNTrainProgressObject>({
+      name: 'init',
+      value: 0,
+      error: 0,
+    });
+
+  useEffect(() => {
+    window.addEventListener('nn-train', (t) => {
+      setNeuralNetworkTrainStatus((prev) => {
+        return {
+          // @ts-ignore
+          name: t?.detail?.name,
+          // @ts-ignore
+          value: t?.detail?.value,
+          // @ts-ignore
+          error: t?.detail?.error,
+        };
+      });
+    });
+  }, []);
+  useEffect(() => {
+    // @ts-ignore
+    print('nnTrainStatus.name', neuralNetworkTrainStatus.name);
+    // @ts-ignore
+    print('nnTrainStatus.value', neuralNetworkTrainStatus.value);
+    // @ts-ignore
+    print('nnTrainStatus.error', neuralNetworkTrainStatus.error);
+  }, [neuralNetworkTrainStatus]);
+
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
@@ -255,13 +291,11 @@ function Play() {
       return;
     }
 
-    print('xxxxxxxxxxxxx', myPhaser.current);
-
-    myPhaser.current.events.on('scoreUpdate', (x: any) => {
-      print('xxxxxxxxxxxxxx', x);
-    });
-
     return () => {
+      if (!myPhaser || !myPhaser.current) {
+        return;
+      }
+
       myPhaser.current.events.off('scoreUpdate', (x: any) => {
         print('scoreUpdate', x);
       });
@@ -285,8 +319,10 @@ function Play() {
       const myInterval = setInterval(() => {
         print(
           'myPhaser.current?.scene?.keys?.game?.loaded',
+          // @ts-ignore
           myPhaser?.current?.scene?.keys?.game?.loaded
         );
+        // @ts-ignore
         if (myPhaser?.current?.scene?.keys?.game?.loaded) {
           setTimeout(
             () => {
@@ -486,6 +522,7 @@ function Play() {
 
   const onClickStartStartButton = async () => {
     if (myPhaser?.current?.scene?.keys?.game) {
+      // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
     }
@@ -544,6 +581,7 @@ function Play() {
     setWebState('web-state-load');
 
     setTimeout(() => {
+      // @ts-ignore
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Play);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
@@ -657,6 +695,7 @@ function Play() {
   const [showOptions, setShowOptions] = useState(false);
 
   const clickPauseParent = () => {
+    // @ts-ignore
     print('GAME STATE', myPhaser.current?.scene?.keys?.game.gameState.nameCurr);
     if (webState !== 'web-state-game') {
       print('webState !== play');
@@ -664,20 +703,27 @@ function Play() {
     }
 
     if (
+      // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-start' &&
+      // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-paused' &&
+      // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-first-blood' &&
+      // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-screen-clear' &&
+      // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-captured-flag' &&
+      // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-finished'
     ) {
       print('CLICK AND PAUSING');
+      // @ts-ignore
       setGameState(myPhaser.current?.scene?.keys?.game, 'game-state-paused');
     }
   };
@@ -914,6 +960,7 @@ function Play() {
 
   const onClickBackEventHandler = () => {
     if (myPhaser?.current?.scene?.keys?.game) {
+      // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
     }
     onClickPlayNavButtons('Back');
@@ -921,7 +968,10 @@ function Play() {
     clearInterval(intervalClock.current);
     intervalClock.current = null;
     componentPseudoLoad.current = true;
-    myPhaser.current.destroy(true);
+
+    if (myPhaser.current) {
+      myPhaser.current.destroy(true);
+    }
 
     setWebState('web-state-setup');
   };
@@ -2026,6 +2076,17 @@ function Play() {
           </div>
         )}
       </div>
+
+      {
+        <div className="neural-network-train-status">
+          <div className="neural-network-train-status-text">
+            <p>{neuralNetworkTrainStatus.name}</p>
+            <p>{neuralNetworkTrainStatus.value}</p>
+            <p>{neuralNetworkTrainStatus.error}</p>
+          </div>
+        </div>
+      }
+
       {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'web-state-game' && !isReplayHidden && (
         <div className="video-playback-container">
