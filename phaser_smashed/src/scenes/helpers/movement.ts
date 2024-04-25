@@ -1,5 +1,6 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Player } from '../interfaces';
+import { print } from '../../views/client';
 import { getIsAttackEnergyOffscreen } from './attacks';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
@@ -10,10 +11,6 @@ export function updateCirclesLocations(game: Game): void {
 
   game.colorCircles.forEach((circle, circleIndex) => {
     if (circleIndex < game.players.length) {
-      // circle.graphic.x = game.players[circleIndex].char.sprite.x;
-      // circle.graphic.y =
-      //   game.players[circleIndex].char.sprite.y - game.circleOffset;
-
       circle.graphic.setRadius((1 / game.cameras.main.zoom) * 10);
       circle.graphic.setPosition(
         game.players[circleIndex].char.sprite.x,
@@ -29,7 +26,6 @@ export function updateTable(game: Game): void {
   if (game.TABLE.body.touching.down) {
     game.TABLE.body.setVelocityX(game.TABLE.body.velocity.x * 0.95);
   }
-  // game.TABLE.velocityY = 0;
 }
 
 export function updateAttackEnergyWrapScreen(game: Game): void {
@@ -90,18 +86,6 @@ export function setRespawn(player: Player, game: Game): void {
   player.char.sprite.body.setVelocityX(0);
   player.char.sprite.body.setVelocityY(0);
 }
-
-// export function updateEnergyAttacksScreenWrap(game: Game): void {
-//   game.players.forEach((player, playerIndex) => {
-//     if (player.char.attackEnergy.sprite.y > SCREEN_DIMENSIONS.HEIGHT) {
-//       // player.char.attackEnergy.sprite.body.setVelocityX(0);
-//       // player.char.attackEnergy.sprite.body.setVelocityY(0);
-//       player.char.attackEnergy.sprite.x = SCREEN_DIMENSIONS.WIDTH / 2;
-//       player.char.attackEnergy.sprite.Y = SCREEN_DIMENSIONS.HEIGHT / 2;
-//       player.char.attackEnergy.sprite.body.allowGravity = false;
-//     }
-//   });
-// }
 
 export function updateLastDirectionTouched(player: Player): void {
   if (player.char.sprite.body.touching.up) {
@@ -402,34 +386,35 @@ export function getNearestPlayerAliveXYFromPlayer(
   pIndex: number,
   game: Game
 ): { x: number; y: number } {
-  let goToX = Infinity;
-  let goToY = Infinity;
-  let ae = player.char.attackEnergy;
+  let goToXCurr = Infinity;
+  let goToYCurr = Infinity;
+  const myX = player.char.sprite.body.position.x;
+  const myY = player.char.sprite.body.position.y;
 
-  game.players.forEach((player, playerIndex) => {
-    if (pIndex !== playerIndex && player.state.name === 'player-state-alive') {
-      let otherPlayerX = player.char.sprite.x;
-      let otherPlayerY = player.char.sprite.y;
-      let myX = ae.sprite.x;
-      let myY = ae.sprite.y;
-      if (
-        getDistance(myX, myY, otherPlayerX, otherPlayerY) <
-        getDistance(myX, myY, goToX, goToY)
-      ) {
-        goToX = otherPlayerX;
-        goToY = otherPlayerY;
+  for (let i = 0; i < game.players.length; i++) {
+    if (pIndex !== i && game.players[i].state.name === 'player-state-alive') {
+      const otherPlayerX = game.players[i].char.sprite.body.position.x;
+      const otherPlayerY = game.players[i].char.sprite.body.position.y;
+
+      const distanceOld = getDistance(myX, myY, goToXCurr, goToYCurr);
+
+      const distanceNew = getDistance(myX, myY, otherPlayerX, otherPlayerY);
+
+      if (distanceNew < distanceOld) {
+        goToXCurr = otherPlayerX;
+        goToYCurr = otherPlayerY;
       }
     }
-  });
-
-  if (goToX === Infinity) {
-    goToX = SCREEN_DIMENSIONS.WIDTH / 2;
-  }
-  if (goToY === Infinity) {
-    goToY = SCREEN_DIMENSIONS.HEIGHT / 2;
   }
 
-  return { x: goToX, y: goToY };
+  if (goToXCurr === Infinity) {
+    goToXCurr = SCREEN_DIMENSIONS.WIDTH / 2;
+  }
+  if (goToYCurr === Infinity) {
+    goToYCurr = SCREEN_DIMENSIONS.HEIGHT / 2;
+  }
+
+  return { x: goToXCurr, y: goToYCurr };
 }
 
 export function getNearestPlayerAliveFromXY(

@@ -1,18 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import '@fontsource/press-start-2p';
 import html2canvas from 'html2canvas';
+import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
-import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 import { useEffect, useRef, useState } from 'react';
 import '../App.css';
-import Game from '../scenes/Game';
-import { setGameState } from '../scenes/helpers/state';
-import moment, { Moment } from 'moment';
 import {
   debugInit,
   debugMax,
   showOptionOnMainScreenInit,
 } from '../debugOptions';
+import { setGameState } from '../scenes/helpers/state';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
   ButtonName,
@@ -28,6 +26,7 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/interfaces';
+import MusicManager from './MusicManager';
 import SoundManager from './SoundManager';
 import {
   ClientInformation,
@@ -54,7 +53,6 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
-import MusicManager from './MusicManager';
 
 function Play() {
   const myPhaser: any = useRef(null);

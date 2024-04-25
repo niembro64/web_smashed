@@ -25,17 +25,18 @@ export function getIsBotNearNearestPlayer(
     x: SCREEN_DIMENSIONS.WIDTH / 2,
     y: SCREEN_DIMENSIONS.HEIGHT / 2,
   };
-  // game.players.forEach((player, playerIndex) => {
+
   nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
     player,
     playerIndex,
     game
   );
-  // });
-  let distance = Math.sqrt(
+
+  const distance = Math.sqrt(
     Math.pow(player.char.sprite.x - nearestPlayerPosition.x, 2) +
       Math.pow(player.char.sprite.y - nearestPlayerPosition.y, 2)
   );
+
   if (distance < amount) {
     return true;
   }
@@ -163,32 +164,32 @@ export function getIsBotTooFarUp(player: Player, game: Game): boolean {
   return false;
 }
 export function getIsBotTooFarDown(player: Player, game: Game): boolean {
-  let bot = player.char.sprite;
-  let down = SCREEN_DIMENSIONS.HEIGHT * 0.9;
+  const bot = player.char.sprite;
+  const down = SCREEN_DIMENSIONS.HEIGHT * 0.9;
   if (bot.y > down) {
     return true;
   }
   return false;
 }
 export function getIsBotInPitAreaLeft(player: Player, game: Game): boolean {
-  let bot = player.char.sprite;
-  let p = game.pit;
-  if (bot.x > p.left && bot.x < p.middle && bot.y > p.top) {
+  const bot = player.char.sprite;
+  const pit = game.pit;
+  if (bot.x > pit.left && bot.x < pit.middle && bot.y > pit.top) {
     return true;
   }
   return false;
 }
 export function getIsBotInPitAreaRight(player: Player, game: Game): boolean {
-  let bot = player.char.sprite;
-  let p = game.pit;
-  if (bot.x > p.middle && bot.x < p.right && bot.y > p.top) {
+  const bot = player.char.sprite;
+  const pit = game.pit;
+  if (bot.x >= pit.middle && bot.x <= pit.right && bot.y >= pit.top) {
     return true;
   }
   return false;
 }
 export function getIsBotInPitAreaBottom(player: Player, game: Game): boolean {
-  let bot = player.char.sprite;
-  let p = game.pit;
+  const bot = player.char.sprite;
+  const p = game.pit;
   if (bot.x > p.left && bot.x < p.right && bot.y > p.lower) {
     return true;
   }
@@ -254,8 +255,8 @@ export const getDodgeDirectionPlayerToAttackEnergy = (
   p: Position,
   a: Position
 ): DodgeDirection => {
-  let v: xyVector = getNormalizedVector(p.x, p.y, a.x, a.y);
-  let direction: DodgeDirection = getDodgeDirectionFromNormalizedVector(
+  const v: xyVector = getNormalizedVector(p.x, p.y, a.x, a.y);
+  const direction: DodgeDirection = getDodgeDirectionFromNormalizedVector(
     v.x,
     v.y
   );
@@ -267,12 +268,12 @@ export const getIsNearestAttackEnergyThisClose = (
   game: Game,
   distance: number
 ): boolean => {
-  let ae: Position = getNearestAttackEnergyXYFromPlayer(
+  const ae: Position = getNearestAttackEnergyXYFromPlayer(
     player,
     playerIndex,
     game
   );
-  let dCalc: number = getDistance(
+  const dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
     ae.x,
@@ -286,12 +287,12 @@ export const getIsNearestAttackEnergyThisCloseAbove = (
   game: Game,
   distance: number
 ): boolean => {
-  let ae: Position = getNearestAttackEnergyXYAboveFromPlayer(
+  const ae: Position = getNearestAttackEnergyXYAboveFromPlayer(
     player,
     playerIndex,
     game
   );
-  let dCalc: number = getDistance(
+  const dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
     ae.x,
@@ -303,7 +304,7 @@ export const updatePlayerDodgeInThisDirection = (
   player: Player,
   direction: DodgeDirection
 ): void => {
-  let pc = player.padCurr;
+  const pc = player.padCurr;
   pc.B = true;
   switch (direction) {
     case 'up':
@@ -363,7 +364,7 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
 ): void => {
   const shortRange = SCREEN_DIMENSIONS.HEIGHT * 0.2;
   const longRange = SCREEN_DIMENSIONS.HEIGHT * 0.5;
-  let pCurr = player.padCurr;
+  const pCurr = player.padCurr;
   if (
     pCurr.B &&
     (getIsBotTooFarUp(player, game) ||
@@ -385,13 +386,13 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
     getIsPlayerInAir(player) &&
     getIsNearestAttackEnergyThisClose(player, playerIndex, game, shortRange)
   ) {
-    let ae: Position = getNearestAttackEnergyXYFromPlayer(
+    const ae: Position = getNearestAttackEnergyXYFromPlayer(
       player,
       playerIndex,
       game
     );
-    let ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
-    let direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
+    const ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
+    const direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
       ps,
       ae
     );
@@ -403,7 +404,7 @@ export function updateBotRules(
   playerIndex: number,
   game: Game
 ): void {
-  let p = player.padCurr;
+  const p = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {
     if (game.timeSeconds % 2 === 0) {
       allPadToFalse(player);
@@ -429,16 +430,8 @@ export function updateBotRules(
   const t = player.char.sprite.body.touching;
   const jumps = player.char.jumps;
   const jumpIndex = player.char.jumpIndex;
-  const hasJump = player.char.jumps[jumpIndex] > 0.3;
   const onLastJump = jumpIndex === jumps.length - 1;
-  const nearestPDistance = getDistance(
-    botSprite.x,
-    botSprite.y,
-    nearestP.x,
-    nearestP.y
-  );
-  // p.select = true;
-  // p.L = true;
+
   //////////////////////
   // DODGING
   //////////////////////
@@ -459,7 +452,7 @@ export function updateBotRules(
   //////////////////////
   // MOVE TO FLAG | TOUCHING
   //////////////////////
-  if (!game.flag.completedCurr) {
+  if (game.debug.BotKnowsFlag && !game.flag.completedCurr) {
     ///////////////////////
     // ON GROUND
     ///////////////////////

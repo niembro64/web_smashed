@@ -20,14 +20,16 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
   const maxIterations = 2000;
-  game.nnNet.train(game.nnObjects, {
-    // log: true,
+
+  const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
+
+  game.nnNet.train(randomizedNnObjects, {
     iterations: maxIterations,
-    learningRate: 0.1,
+    learningRate: 0.01,
     errorThresh: 0.005,
+    callbackPeriod: 1,
     logPeriod: 1,
     log: (stats: any) => {
-      // print(stats);
       print(Math.floor((stats.iterations / maxIterations) * 1000) * 0.1 + '%');
       print('error', Math.floor(stats.error * 1000) * 0.1 + '%');
     },
@@ -47,12 +49,9 @@ export const NNTrainLSTM = async (game: Game): Promise<void> => {
 
   print('NNTrain');
 
-  // game.nnNet = new NeuralNetwork(nnConfig);
-  // game.nnNet = new recurrent.RNN(nnConfig);
   game.nnNet = new recurrent.LSTM(nnConfigLSTM);
   print('game.nnNet', game.nnNet);
   await game.nnNet.train(game.nnObjects, {
-    // log: true,
     iterations: 100,
     learningRate: 0.01,
     errorThresh: 0.05,
@@ -126,8 +125,9 @@ export const NNGetOutputStatic = (
     }
   }
   const pCurr = player.padCurr;
+  const pDeb = player.padDebounced;
 
-  const input: number[] = [
+  const nnInput: number[] = [
     pCurr.up ? 1 : 0,
     pCurr.down ? 1 : 0,
     pCurr.left ? 1 : 0,
@@ -136,6 +136,14 @@ export const NNGetOutputStatic = (
     pCurr.B ? 1 : 0,
     pCurr.X ? 1 : 0,
     pCurr.Y ? 1 : 0,
+    pDeb.up,
+    pDeb.down,
+    pDeb.left,
+    pDeb.right,
+    pDeb.A,
+    pDeb.B,
+    pDeb.X,
+    pDeb.Y,
     player.char.sprite.body.position.x - enemyPositionX,
     player.char.sprite.body.position.y - enemyPositionY,
     player.char.sprite.body.velocity.x - enemyVelocyX,
@@ -148,11 +156,11 @@ export const NNGetOutputStatic = (
     isPFacingEnemy ? 1 : 0,
   ];
 
-  const output: number[] = game.nnNet.run(input);
+  const nnOutput: number[] = game.nnNet.run(nnInput);
 
   // print('input', JSON.stringify(input, null, 2));
   // print('output', JSON.stringify(output, null, 2));
-  return output;
+  return nnOutput;
 };
 
 export const NNSetPlayerPadStatic = (
@@ -160,18 +168,18 @@ export const NNSetPlayerPadStatic = (
   playerIndex: number,
   game: Game
 ): void => {
-  const output = NNGetOutputStatic(player, playerIndex, game);
+  const nnOutput = NNGetOutputStatic(player, playerIndex, game);
 
   const r: number[] = NNRatiosNN;
 
-  player.padCurr.up = output[0] > r[0] ? true : false;
-  player.padCurr.down = output[1] > r[1] ? true : false;
-  player.padCurr.left = output[2] > r[2] ? true : false;
-  player.padCurr.right = output[3] > r[3] ? true : false;
-  player.padCurr.A = output[4] > r[4] ? true : false;
-  player.padCurr.B = output[5] > r[5] ? true : false;
-  player.padCurr.X = output[6] > r[6] ? true : false;
-  player.padCurr.Y = output[7] > r[7] ? true : false;
+  player.padCurr.up = nnOutput[0] > r[0];
+  player.padCurr.down = nnOutput[1] > r[1];
+  player.padCurr.left = nnOutput[2] > r[2];
+  player.padCurr.right = nnOutput[3] > r[3];
+  player.padCurr.A = nnOutput[4] > r[4];
+  player.padCurr.B = nnOutput[5] > r[5];
+  player.padCurr.X = nnOutput[6] > r[6];
+  player.padCurr.Y = nnOutput[7] > r[7];
 
   // player.padCurr.up = output[0] > 1 - r[0] ? true : false;
   // player.padCurr.down = output[1] > 1 - r[1] ? true : false;
@@ -223,14 +231,14 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const newNNObject: NNObject = {
     input: [
-      // p.padCurr.up ? 1 : 0,
-      // p.padCurr.down ? 1 : 0,
-      // p.padCurr.left ? 1 : 0,
-      // p.padCurr.right ? 1 : 0,
-      // p.padCurr.A ? 1 : 0,
-      // p.padCurr.B ? 1 : 0,
-      // p.padCurr.X ? 1 : 0,
-      // p.padCurr.Y ? 1 : 0,
+      p.padCurr.up ? 1 : 0,
+      p.padCurr.down ? 1 : 0,
+      p.padCurr.left ? 1 : 0,
+      p.padCurr.right ? 1 : 0,
+      p.padCurr.A ? 1 : 0,
+      p.padCurr.B ? 1 : 0,
+      p.padCurr.X ? 1 : 0,
+      p.padCurr.Y ? 1 : 0,
       p.padDebounced.up,
       p.padDebounced.down,
       p.padDebounced.left,

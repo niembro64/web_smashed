@@ -47,10 +47,11 @@ export const debugInit: Debug = {
   ReplayControls: true,
   ReplayFastSlow: false,
   GravityLight: false,
+  BotKnowsFlag: false,
   NNHelpScreen: true,
-  NNHelpCenterize: true,
+  NNHelpCenterize: false,
   NNHelpPit: true,
-  NNHelpWall: true,
+  NNHelpWall: false,
   NNIsLSTM: false,
   NNP1Train: false,
 };
@@ -108,6 +109,7 @@ export const debugMax: Debug = {
   ReplayControls: true,
   ReplayFastSlow: true,
   GravityLight: false,
+  BotKnowsFlag: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -164,4 +166,5 @@ export const showOptionOnMainScreenInit: Debug = {
   ReplayControls: false,
   ReplayFastSlow: false,
   GravityLight: false,
+  BotKnowsFlag: false,
 };

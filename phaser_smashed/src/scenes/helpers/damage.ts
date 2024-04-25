@@ -6,11 +6,7 @@ import {
   setBulletOffscreen,
   setPhysicsAttackEnergyOff,
 } from './attacks';
-import {
-  getNearestPlayerAliveFromXY,
-  getNearestPlayerAliveXYFromPlayer,
-  hitbackFly,
-} from './movement';
+import { getNearestPlayerAliveFromXY, hitbackFly } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 import { setPlayerState } from './state';
 

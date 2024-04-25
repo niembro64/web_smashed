@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { InputType, Player } from '../interfaces';
 import {
@@ -6,12 +7,11 @@ import {
   setPhysicsAttackEnergyOff,
   setPhysicsAttackEnergyOn,
 } from './attacks';
-import { getIsBot, updateBotRules } from './botRB';
 import { updateBotNN } from './botNN';
+import { updateBotRules } from './botRB';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
-import { print } from '../../views/client';
 
 export function updateGamePadsMaster(game: Game): void {
   let numPlayers = game.players.length;
@@ -271,14 +271,14 @@ export function updatePadCurrControllerTypeButtons(
     player?.gamepad?.buttons[9]?.pressed !== undefined &&
     player?.gamepad?.buttons[9]?.pressed !== null
   ) {
-    player.padCurr.start = player.gamepad?.buttons[9]?.pressed ? true : false;
+    player.padCurr.start = !!player.gamepad?.buttons[9]?.pressed;
   }
   if (
     player?.gamepad?.buttons?.length &&
     player?.gamepad?.buttons[8]?.pressed !== undefined &&
     player?.gamepad?.buttons[8]?.pressed !== null
   ) {
-    player.padCurr.select = player.gamepad?.buttons[8]?.pressed ? true : false;
+    player.padCurr.select = !!player.gamepad?.buttons[8]?.pressed;
   }
 }
 
@@ -604,7 +604,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
   if (
     !getIsAttackEnergyOffscreen(player.char.attackEnergy) &&
     !isAttackEnergyNearPlayer(player) &&
-     getIsSpriteMoving(player.char.attackEnergy.sprite)
+    getIsSpriteMoving(player.char.attackEnergy.sprite)
   ) {
     return;
   }
@@ -784,60 +784,63 @@ export function debugUpdateControllersPrintConnected(game: Game): void {
 }
 
 export function updateControllerMovement(player: Player, game: Game): void {
-  if (player.gamepad) {
-    if (
-      !player.padCurr.left &&
-      !player.padCurr.right &&
-      !player.padCurr.up &&
-      !player.padCurr.down
-    ) {
-      return;
-    }
+  if (!player.gamepad) {
+    print('NO GAMEPAD');
+    return;
+  }
 
-    if (player.emitterPlayer.on) {
-      return;
-    }
+  if (
+    !player.padCurr.left &&
+    !player.padCurr.right &&
+    !player.padCurr.up &&
+    !player.padCurr.down
+  ) {
+    return;
+  }
 
-    if (player.padCurr.up) {
-      player.char.sprite.body.setVelocityY(
-        player.char.sprite.body.velocity.y +
-          -game.BASE_PLAYER_SPEED.y *
-            player.char.speed *
-            player.char.fast *
-            (1 - game.RATIO_ACCELERATION_VELOCITY)
-      );
-    }
-    if (player.padCurr.down) {
-      player.char.sprite.body.setVelocityY(
-        player.char.sprite.body.velocity.y +
-          game.BASE_PLAYER_SPEED.y *
-            player.char.speed *
-            player.char.fast *
-            (1 - game.RATIO_ACCELERATION_VELOCITY)
-      );
-    }
-    if (player.padCurr.left) {
-      player.char.sprite.body.setVelocityX(
-        player.char.sprite.body.velocity.x *
-          game.RATIO_ACCELERATION_VELOCITY *
-          Math.pow(1 - player.char.friction_air, 3) +
-          -game.BASE_PLAYER_SPEED.x *
-            player.char.speed *
-            player.char.fast *
-            (1 - game.RATIO_ACCELERATION_VELOCITY)
-      );
-    }
-    if (player.padCurr.right) {
-      player.char.sprite.body.setVelocityX(
-        player.char.sprite.body.velocity.x *
-          game.RATIO_ACCELERATION_VELOCITY *
-          Math.pow(1 - player.char.friction_air, 3) +
-          game.BASE_PLAYER_SPEED.x *
-            player.char.speed *
-            player.char.fast *
-            (1 - game.RATIO_ACCELERATION_VELOCITY)
-      );
-    }
+  if (player.emitterPlayer.on) {
+    return;
+  }
+
+  if (player.padCurr.up) {
+    player.char.sprite.body.setVelocityY(
+      player.char.sprite.body.velocity.y +
+        -game.BASE_PLAYER_SPEED.y *
+          player.char.speed *
+          player.char.fast *
+          (1 - game.RATIO_ACCELERATION_VELOCITY)
+    );
+  }
+  if (player.padCurr.down) {
+    player.char.sprite.body.setVelocityY(
+      player.char.sprite.body.velocity.y +
+        game.BASE_PLAYER_SPEED.y *
+          player.char.speed *
+          player.char.fast *
+          (1 - game.RATIO_ACCELERATION_VELOCITY)
+    );
+  }
+  if (player.padCurr.left) {
+    player.char.sprite.body.setVelocityX(
+      player.char.sprite.body.velocity.x *
+        game.RATIO_ACCELERATION_VELOCITY *
+        Math.pow(1 - player.char.friction_air, 3) +
+        -game.BASE_PLAYER_SPEED.x *
+          player.char.speed *
+          player.char.fast *
+          (1 - game.RATIO_ACCELERATION_VELOCITY)
+    );
+  }
+  if (player.padCurr.right) {
+    player.char.sprite.body.setVelocityX(
+      player.char.sprite.body.velocity.x *
+        game.RATIO_ACCELERATION_VELOCITY *
+        Math.pow(1 - player.char.friction_air, 3) +
+        game.BASE_PLAYER_SPEED.x *
+          player.char.speed *
+          player.char.fast *
+          (1 - game.RATIO_ACCELERATION_VELOCITY)
+    );
   }
 }
 
