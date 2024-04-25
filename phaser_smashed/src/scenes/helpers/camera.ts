@@ -6,10 +6,10 @@ export function updateCamera(game: Game): void {
     game.cameras.main.zoom = game.debug.DevZoom / 10;
     return;
   }
-  var cPlayer = getCameraPlayerStatus(game);
-  var cMover = getCameraMoverStatus(game);
-  var cBorder = getCameraBorderStatus(game);
-  var cBox = getCameraBoxStatus(game);
+  const cPlayer = getCameraPlayerStatus(game);
+  const cMover = getCameraMoverStatus(game);
+  const cBorder = getCameraBorderStatus(game);
+  const cBox = getCameraBoxStatus(game);
 
   game.cameraPlayers.char.sprite.x = cPlayer.x;
   game.cameraPlayers.char.sprite.y = cPlayer.y;
@@ -32,9 +32,9 @@ export function updateCamera(game: Game): void {
   game.cameraBox.char.sprite.y = cBox.y;
   game.cameraBox.char.zoom = game.cameraBox.char.zoom = cBox.zoom;
 
-  var newZoom = game.cameraPlayers.char.zoom;
-  // var newZoom = game.cameraPlayers.char.zoom * game.ZOOM_MULTIPLIER_X;
-  // var newZoom = Math.max(game.cameraPlayers.char.zoom, 1);
+  const newZoom = game.cameraPlayers.char.zoom;
+  // const newZoom = game.cameraPlayers.char.zoom * game.ZOOM_MULTIPLIER_X;
+  // const newZoom = Math.max(game.cameraPlayers.char.zoom, 1);
 
   game.cameras.main.startFollow(game.cameraMover.char.sprite);
 
@@ -47,7 +47,7 @@ export function updateCamera(game: Game): void {
       game.cameras.main.zoom * game.ZOOM_RATIO_FAST +
       newZoom * (1 - game.ZOOM_RATIO_FAST);
   }
-  // var newZoom = game.cameraPlayers.char.zoom;
+  // const newZoom = game.cameraPlayers.char.zoom;
 
   // if (game.cameras.main.zoom < newZoom) {
   //   game.cameras.main.zoom =
@@ -59,8 +59,8 @@ export function updateCamera(game: Game): void {
 }
 
 export function getBorderZoom(game: Game): number {
-  var curr_x: number = 0;
-  var curr_y: number = 0;
+  let curr_x: number = 0;
+  let curr_y: number = 0;
 
   if (game.cameraPlayers.char.sprite.x < SCREEN_DIMENSIONS.WIDTH / 2) {
     curr_x = game.BORDER_PADDING_X + game.cameraPlayers.char.sprite.x;
@@ -131,10 +131,10 @@ export function getPlayerZoom(game: Game): number {
 }
 
 export function getCameraBorderStatus(game: Game): Loc {
-  var x_low: number = Infinity;
-  var x_high: number = 0;
-  var y_low: number = Infinity;
-  var y_high: number = 0;
+  let x_low: number = Infinity;
+  let x_high: number = 0;
+  let y_low: number = Infinity;
+  let y_high: number = 0;
 
   game.players.forEach((player, playerIndex) => {
     x_low = player.char.sprite.x > x_low ? x_low : player.char.sprite.x;
@@ -151,10 +151,10 @@ export function getCameraBorderStatus(game: Game): Loc {
 }
 
 export function getCameraPlayerStatus(game: Game): Loc {
-  var x_low: number = Infinity;
-  var x_high: number = 0;
-  var y_low: number = Infinity;
-  var y_high: number = 0;
+  let x_low: number = Infinity;
+  let x_high: number = 0;
+  let y_low: number = Infinity;
+  let y_high: number = 0;
 
   game.players.forEach((player, playerIndex) => {
     x_low = player.char.sprite.x > x_low ? x_low : player.char.sprite.x;
@@ -188,20 +188,20 @@ export function getCameraPlayerStatus(game: Game): Loc {
 }
 
 export function getCameraMoverStatus(game: Game): Loc {
-  // var x_low: number = Infinity;
-  // var x_high: number = 0;
-  // var y_low: number = Infinity;
-  // var y_high: number = 0;
+  // const x_low: number = Infinity;
+  // const x_high: number = 0;
+  // const y_low: number = Infinity;
+  // const y_high: number = 0;
 
-  var spritePlayer = game.cameraPlayers.char.sprite;
-  // var spriteMover = game.cameraMover.char.sprite;
-  var spriteCenter = game.cameraCenter.char.sprite;
+  const spritePlayer = game.cameraPlayers.char.sprite;
+  // const spriteMover = game.cameraMover.char.sprite;
+  const spriteCenter = game.cameraCenter.char.sprite;
 
   game.cameraMoverZoomStatusKeeper =
     game.cameraMoverZoomStatusKeeper * game.ZOOM_RATIO_SLOW +
     Math.max(getPlayerZoom(game), 1) * (1 - game.ZOOM_RATIO_SLOW);
 
-  var percentCloseToCenter = Math.pow(1 / game.cameraMoverZoomStatusKeeper, 3);
+  const percentCloseToCenter = Math.pow(1 / game.cameraMoverZoomStatusKeeper, 3);
 
   let x =
     spritePlayer.x * (1 - percentCloseToCenter) +
@@ -218,10 +218,10 @@ export function getCameraMoverStatus(game: Game): Loc {
 }
 
 export function getCameraBoxStatus(game: Game): Loc {
-  var x_low: number = Infinity;
-  var x_high: number = 0;
-  var y_low: number = Infinity;
-  var y_high: number = 0;
+  let x_low: number = Infinity;
+  let x_high: number = 0;
+  let y_low: number = Infinity;
+  let y_high: number = 0;
 
   game.players.forEach((player, playerIndex) => {
     x_low = player.char.sprite.x > x_low ? x_low : player.char.sprite.x;
@@ -230,8 +230,8 @@ export function getCameraBoxStatus(game: Game): Loc {
     y_high = player.char.sprite.y < y_high ? y_high : player.char.sprite.y;
   });
 
-  var x = Math.max(SCREEN_DIMENSIONS.WIDTH / 4, (x_low + x_high) / 2);
-  var y = Math.max(SCREEN_DIMENSIONS.HEIGHT / 4, (y_low + y_high) / 2);
+  let x = Math.max(SCREEN_DIMENSIONS.WIDTH / 4, (x_low + x_high) / 2);
+  let y = Math.max(SCREEN_DIMENSIONS.HEIGHT / 4, (y_low + y_high) / 2);
 
   x = Math.min((SCREEN_DIMENSIONS.WIDTH / 4) * 3, x);
   y = Math.min((SCREEN_DIMENSIONS.HEIGHT / 4) * 3, y);

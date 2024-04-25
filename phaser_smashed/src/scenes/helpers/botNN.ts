@@ -45,9 +45,11 @@ export function updateBotNN(
     if (getIsBotTooFarLeft(player, game)) {
       p.right = true;
       p.left = false;
+      p.B = false;
     } else if (getIsBotTooFarRight(player, game)) {
       p.left = true;
       p.right = false;
+      p.B = false;
     }
 
     //////////////////////
@@ -57,8 +59,7 @@ export function updateBotNN(
       p.Y = false;
       p.down = true;
       p.up = false;
-    } else {
-      p.down = false;
+      p.B = false;
     }
   }
 

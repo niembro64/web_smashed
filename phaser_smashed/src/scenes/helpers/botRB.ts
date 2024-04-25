@@ -156,8 +156,8 @@ export function getIsBotTooFarRight(player: Player, game: Game): boolean {
   return false;
 }
 export function getIsBotTooFarUp(player: Player, game: Game): boolean {
-  let bot = player.char.sprite;
-  let up = SCREEN_DIMENSIONS.HEIGHT * 0.33;
+  const bot = player.char.sprite;
+  const up = SCREEN_DIMENSIONS.HEIGHT * 0.33;
   if (bot.y < up) {
     return true;
   }

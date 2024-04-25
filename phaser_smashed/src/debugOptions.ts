@@ -53,7 +53,7 @@ export const debugInit: Debug = {
   NNHelpPit: true,
   NNHelpWall: false,
   NNIsLSTM: false,
-  NNP1Train: false,
+  NNP1Train: true,
 };
 
 export const debugMax: Debug = {

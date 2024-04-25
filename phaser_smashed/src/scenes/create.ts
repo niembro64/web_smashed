@@ -185,7 +185,7 @@ export function createShake(game: Game): void {
 }
 
 export function createExplosions(game: Game): void {
-  var config = {
+  const config = {
     key: 'explsionanimation',
     frames: game.anims.generateFrameNumbers('explosion256', {
       start: 0,
@@ -265,7 +265,7 @@ export function createChomp(game: Game): void {
     game.physics.add.collider(c.links[i].sprite, game.PLATFORMS);
   }
 
-  var config_chomping = {
+  const config_chomping = {
     key: 'chompanimation_chomping',
     frames: game.anims.generateFrameNumbers('chomp', {
       start: 0,
@@ -277,7 +277,7 @@ export function createChomp(game: Game): void {
     yoyo: true,
   };
 
-  var config_walking = {
+  const config_walking = {
     key: 'chompanimation_walking',
     frames: game.anims.generateFrameNumbers('chomp', {
       start: 2,
@@ -967,7 +967,7 @@ export function createFirework(game: Game): void {
     'firework'
   );
 
-  var configFireworkActive = {
+  const configFireworkActive = {
     key: 'firework-active',
     frames: game.anims.generateFrameNumbers('firework', {
       start: 0,
@@ -979,7 +979,7 @@ export function createFirework(game: Game): void {
     repeat: 0,
     yoyo: false,
   };
-  var configFireworkPassive = {
+  const configFireworkPassive = {
     key: 'firework-passive',
     frames: game.anims.generateFrameNumbers('firework', {
       start: 0,
@@ -1013,7 +1013,7 @@ export function createLava(i: number, game: Game, posX: number): void {
 
   game.lavas[i].sprite = game.physics.add.sprite(posX, bottomOfMap, 'lava');
 
-  var config_lava = {
+  const config_lava = {
     key: 'lava_moving',
     frames: game.anims.generateFrameNumbers('lava', {
       start: 0,
@@ -1054,7 +1054,7 @@ export function createPlayers(game: Game): void {
         player.char.name + '_spritesheet'
       );
 
-      var config_idle = {
+      const config_idle = {
         key: player.char.name + '_idle',
         frames: game.anims.generateFrameNumbers(
           player.char.name + '_spritesheet',
@@ -1068,7 +1068,7 @@ export function createPlayers(game: Game): void {
         repeat: -1,
       };
 
-      var config_walk = {
+      const config_walk = {
         key: player.char.name + '_walk',
         frames: game.anims.generateFrameNumbers(
           player.char.name + '_spritesheet',
@@ -1082,7 +1082,7 @@ export function createPlayers(game: Game): void {
         repeat: -1,
       };
 
-      var config_jumpUp = {
+      const config_jumpUp = {
         key: player.char.name + '_jumpUp',
         frames: game.anims.generateFrameNumbers(
           player.char.name + '_spritesheet',
@@ -1096,7 +1096,7 @@ export function createPlayers(game: Game): void {
         repeat: -1,
       };
 
-      var config_jumpDown = {
+      const config_jumpDown = {
         key: player.char.name + '_jumpDown',
         frames: game.anims.generateFrameNumbers(
           player.char.name + '_spritesheet',
@@ -1110,7 +1110,7 @@ export function createPlayers(game: Game): void {
         repeat: -1,
       };
 
-      var config_climb = {
+      const config_climb = {
         key: player.char.name + '_climb',
         frames: game.anims.generateFrameNumbers(
           player.char.name + '_spritesheet',
@@ -2445,7 +2445,7 @@ export function createScoreboard(game: Game): void {
 }
 
 export function createCameras(game: Game): void {
-  var debugAlpha = 1;
+  let debugAlpha = 1;
   if (!game.debug.CamerasVisible) {
     debugAlpha = 0;
   }
