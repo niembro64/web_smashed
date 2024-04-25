@@ -163,7 +163,6 @@ export interface Player {
 
 export interface Char {
   name: string;
-  // color: Color;
   colorFilterBlink: boolean;
   src: string;
   scaleCharSpriteImage: number;

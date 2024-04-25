@@ -20,17 +20,19 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
-  const maxIterations = 1000;
+  const maxIterations = 2000;
 
   const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
 
-  game.nnNet.train(randomizedNnObjects, {
+  await game.nnNet.trainAsync(randomizedNnObjects, {
     iterations: maxIterations,
     randomize: true,
     learningRate: 0.01,
     errorThresh: 0.005,
+    timeout: Infinity,
     callbackPeriod: 1,
-    logPeriod: 1,
+    logPeriod: 10,
+    decayRate: 0.999,
     log: (stats: any) => {
       print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
       print('error', Math.floor(stats.error * 100) + '%');
@@ -54,13 +56,14 @@ export const NNTrainLSTM = async (game: Game): Promise<void> => {
 
   game.nnNet = new recurrent.LSTM(nnConfigLSTM);
   print('game.nnNet', game.nnNet);
-  await game.nnNet.train(game.nnObjects, {
+  await game.nnNet.trainAsync(game.nnObjects, {
     iterations: 100,
     learningRate: 0.01,
     errorThresh: 0.05,
     logPeriod: 1,
     log: (stats: any) => print(stats),
   });
+
   print('game.nnNet after train', game.nnNet);
   const netJson = game.nnNet.toJSON();
   print('netJson', JSON.stringify(netJson, null, 2));
@@ -142,7 +145,12 @@ export const NNGetOutputStatic = (
   const pDeb = player.padDebounced;
 
   const nnInput: number[] = [
+    // STATES
+    player.emitterPlayer.on ? 1 : 0,
+    player.char.powerStateCurr.name === 'none' ? 0 : 1,
     player.state.name === 'player-state-hurt' ? 1 : 0,
+
+    // BUTTONS
     pCurr.up ? 1 : 0,
     pCurr.down ? 1 : 0,
     pCurr.left ? 1 : 0,
@@ -160,20 +168,31 @@ export const NNGetOutputStatic = (
     pDeb.X,
     pDeb.Y,
 
+    // SPRITE POSITIONS
     player.char.sprite.body.position.x,
     player.char.sprite.body.position.y,
     player.char.sprite.body.velocity.x,
     player.char.sprite.body.velocity.y,
 
+    // DIFF SPRITE POSITIONS
     player.char.sprite.body.position.x - enemyPositionX,
     player.char.sprite.body.position.y - enemyPositionY,
+
+    // DIFF SPRITE VELOCITIES
     player.char.sprite.body.velocity.x - enemyVelocyX,
     player.char.sprite.body.velocity.y - enemyVelocyY,
+
+    // DIFF SPRITE AE POSITIONS
     player.char.sprite.body.position.x - enemyAEX,
     player.char.sprite.body.position.y - enemyAEY,
+
+    // TOUCHING
+    player.char.sprite.body.touching.up ? 1 : 0,
     player.char.sprite.body.touching.down ? 1 : 0,
     player.char.sprite.body.touching.left ? 1 : 0,
     player.char.sprite.body.touching.right ? 1 : 0,
+
+    // FACING
     isPFacingEnemy ? 1 : 0,
     player.char.sprite.flipX ? 1 : 0,
   ];
@@ -244,7 +263,12 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const newNNObject: NNObject = {
     input: [
+      // STATES
+      player.emitterPlayer.on ? 1 : 0,
+      player.char.powerStateCurr.name === 'none' ? 0 : 1,
       player.state.name === 'player-state-hurt' ? 1 : 0,
+
+      // BUTTONS
       player.padCurr.up ? 1 : 0,
       player.padCurr.down ? 1 : 0,
       player.padCurr.left ? 1 : 0,
@@ -280,9 +304,13 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.char.sprite.body.position.x - enemyAttackEnergyX,
       player.char.sprite.body.position.y - enemyAttackEnergyY,
 
+      // TOUCHING
+      player.char.sprite.body.touching.up ? 1 : 0,
       player.char.sprite.body.touching.down ? 1 : 0,
       player.char.sprite.body.touching.left ? 1 : 0,
       player.char.sprite.body.touching.right ? 1 : 0,
+
+      // FACING
       isPFacingEnemy ? 1 : 0,
       player.char.sprite.flipX ? 1 : 0,
     ],
