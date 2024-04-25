@@ -173,26 +173,36 @@ export function getIsBotTooFarDown(player: Player, game: Game): boolean {
 export function getIsBotInPitAreaLeft(player: Player, game: Game): boolean {
   const bot = player.char.sprite;
   const pit = game.pit;
-  if (bot.x > pit.left && bot.x < pit.middle && bot.y > pit.top) {
-    return true;
-  }
-  return false;
+  const isInPitArea = bot.x > pit.left && bot.x < pit.middle && bot.y > pit.top;
+
+  return isInPitArea;
 }
+
+export function getIsBotInPitArea(player: Player, game: Game): boolean {
+  const p = player.char.sprite;
+  const pit = game.pit;
+
+  const isInPitArea = p.x >= pit.left && p.x <= pit.right && p.y >= pit.top;
+
+  return isInPitArea;
+}
+
 export function getIsBotInPitAreaRight(player: Player, game: Game): boolean {
   const bot = player.char.sprite;
   const pit = game.pit;
-  if (bot.x >= pit.middle && bot.x <= pit.right && bot.y >= pit.top) {
-    return true;
-  }
-  return false;
+
+  const isInPitArea =
+    bot.x >= pit.middle && bot.x <= pit.right && bot.y >= pit.top;
+
+  return isInPitArea;
 }
 export function getIsBotInPitAreaBottom(player: Player, game: Game): boolean {
   const bot = player.char.sprite;
   const p = game.pit;
-  if (bot.x > p.left && bot.x < p.right && bot.y > p.lower) {
-    return true;
-  }
-  return false;
+
+  const isInPitArea = bot.x > p.left && bot.x < p.right && bot.y > p.lower;
+
+  return isInPitArea;
 }
 export function allPadToFalse(player: Player): void {
   player.padCurr = {
@@ -589,7 +599,7 @@ export function updateBotRules(
   //////////////////////
   // TOO FAR UP
   //////////////////////
-  if (getIsBotTooFarUp(player, game) && Math.random() > 0.01) {
+  if (getIsBotTooFarUp(player, game)) {
     p.Y = false;
     p.down = true;
     p.up = false;

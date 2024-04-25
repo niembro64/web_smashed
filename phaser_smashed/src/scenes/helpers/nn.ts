@@ -6,6 +6,7 @@ import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerAliveFromXY,
+  getNearestPlayerFromPlayer,
 } from './movement';
 import { nnConfigLSTM } from './nnJsonLSTM';
 import { NNRatiosNN, nnConfigNN } from './nnJsonNN';
@@ -95,11 +96,22 @@ export const NNGetOutputStatic = (
   playerIndex: number,
   game: Game
 ): number[] => {
-  const { player: enemy } = getNearestPlayerAliveFromPlayer(
+  const { player: enemyNearest } = getNearestPlayerFromPlayer(
     player,
     playerIndex,
     game
   );
+  const { player: enemyAlive } = getNearestPlayerAliveFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
+
+  let enemy = enemyAlive;
+
+  if (enemy === null) {
+    enemy = enemyNearest;
+  }
 
   const { x: enemyAEX, y: enemyAEY } = getNearestAttackEnergyXYFromPlayer(
     player,

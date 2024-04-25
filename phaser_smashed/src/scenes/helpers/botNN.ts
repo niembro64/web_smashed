@@ -2,6 +2,7 @@ import Game from '../Game';
 import { Player, Velocity } from '../interfaces';
 import {
   allPadToFalse,
+  getIsBotInPitArea,
   getIsBotInPitAreaLeft,
   getIsBotInPitAreaRight,
   getIsBotTooFarLeft,
@@ -17,12 +18,12 @@ export function updateBotNN(
   playerIndex: number,
   game: Game
 ): void {
-  const p = player.padCurr;
+  const padCurr = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {
     if (game.timeSeconds % 2 === 0) {
       allPadToFalse(player);
     } else {
-      p.L = true;
+      padCurr.L = true;
     }
     return;
   }
@@ -49,11 +50,11 @@ export function updateBotNN(
       Math.random() > r
     ) {
       if (getIsBotTooFarMiddleLeft(player, game)) {
-        p.right = true;
-        p.left = false;
+        padCurr.right = true;
+        padCurr.left = false;
       } else if (getIsBotTooFarMiddleRight(player, game)) {
-        p.left = true;
-        p.right = false;
+        padCurr.left = true;
+        padCurr.right = false;
       }
     }
   }
@@ -61,36 +62,22 @@ export function updateBotNN(
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
-  if (game.debug.NNHelpPit) {
-    if (pVelocity.y >= 0 && getIsBotInPitAreaLeft(player, game)) {
-      p.X = !p.X;
-      p.up = true;
-      p.down = false;
+  if (game.debug.NNHelpPit && getIsBotInPitArea(player, game)) {
+    if (pVelocity.y >= 0) {
+      padCurr.X = Math.random() > 0.5;
+
+      if (getIsBotInPitAreaLeft(player, game)) {
+        padCurr.left = true;
+        padCurr.right = false;
+      }
+      if (getIsBotInPitAreaRight(player, game)) {
+        padCurr.left = false;
+        padCurr.right = true;
+      }
     }
-    if (pVelocity.y >= 0 && onLastJump && getIsBotInPitAreaLeft(player, game)) {
-      p.left = true;
-      p.right = false;
-      p.up = true;
-      p.down = false;
-    }
-    //////////////////////
-    // RIGHT SIDE OF PIT
-    //////////////////////
-    if (pVelocity.y >= 0 && getIsBotInPitAreaRight(player, game)) {
-      p.X = !p.X;
-      p.up = true;
-      p.down = false;
-    }
-    if (
-      pVelocity.y >= 0 &&
-      onLastJump &&
-      getIsBotInPitAreaRight(player, game)
-    ) {
-      p.right = true;
-      p.left = false;
-      p.up = true;
-      p.down = false;
-    }
+
+    padCurr.up = true;
+    padCurr.down = false;
   }
 
   //////////////////////
@@ -103,7 +90,7 @@ export function updateBotNN(
       player.char.sprite.body.touching.left
     ) {
       if (Math.random() > 0.3) {
-        p.Y = !p.Y;
+        padCurr.Y = !padCurr.Y;
       }
     }
   }
@@ -116,17 +103,17 @@ export function updateBotNN(
     // TOO FAR LEFT RIGHT
     //////////////////////
     if (getIsBotTooFarLeft(player, game)) {
-      p.right = true;
-      p.left = false;
-      p.B = false;
-      p.X = false;
-      p.A = false;
+      padCurr.right = true;
+      padCurr.left = false;
+      padCurr.B = false;
+      padCurr.X = false;
+      padCurr.A = false;
     } else if (getIsBotTooFarRight(player, game)) {
-      p.left = true;
-      p.right = false;
-      p.B = false;
-      p.X = false;
-      p.A = false;
+      padCurr.left = true;
+      padCurr.right = false;
+      padCurr.B = false;
+      padCurr.X = false;
+      padCurr.A = false;
     }
 
     //////////////////////
@@ -135,17 +122,17 @@ export function updateBotNN(
     if (getIsBotTooFarUp(player, game)) {
       console.log('toofar high');
 
-      p.down = true;
-      p.up = false;
-      p.A = false;
-      p.B = false;
-      p.X = false;
-      p.Y = false;
+      padCurr.down = true;
+      padCurr.up = false;
+      padCurr.A = false;
+      padCurr.B = false;
+      padCurr.X = false;
+      padCurr.Y = false;
     }
   }
 
-  console.log('p.up', p.up);
-  console.log('p.down', p.down);
-  console.log('p.x', p.X);
-  console.log('p.y', p.Y);
+  // console.log('p.up', p.up);
+  // console.log('p.down', p.down);
+  // console.log('p.x', p.X);
+  // console.log('p.y', p.Y);
 }

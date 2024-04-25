@@ -481,18 +481,49 @@ export function getNearestPlayerAliveFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { player: Player; playerIndex: number } {
+): { player: Player | null; playerIndex: number | null } {
   let currentEnemyX = Infinity;
   let currentEnemyY = Infinity;
-  let enemyIndex = (pIndex + 1) % game.players.length;
-  let enemy = game.players[enemyIndex];
+  let enemyIndex: number | null = null;
+  let enemy: Player | null = null;
 
   game.players.forEach((player, playerIndex) => {
     if (pIndex !== playerIndex && player.state.name === 'player-state-alive') {
       let newEnemyX = player.char.sprite.x;
       let newEnemyY = player.char.sprite.y;
-      let myX = enemy.char.sprite.x;
-      let myY = enemy.char.sprite.y;
+      let myX = player.char.sprite.x;
+      let myY = player.char.sprite.y;
+      if (
+        getDistance(myX, myY, newEnemyX, newEnemyY) <
+        getDistance(myX, myY, currentEnemyX, currentEnemyY)
+      ) {
+        currentEnemyX = newEnemyX;
+        currentEnemyY = newEnemyY;
+
+        enemy = player;
+        enemyIndex = playerIndex;
+      }
+    }
+  });
+
+  return { player: enemy, playerIndex: enemyIndex };
+}
+export function getNearestPlayerFromPlayer(
+  player: Player,
+  pIndex: number,
+  game: Game
+): { player: Player; playerIndex: number } {
+  let currentEnemyX = Infinity;
+  let currentEnemyY = Infinity;
+  let enemyIndex: number = (pIndex + 1) % game.players.length;
+  let enemy: Player = game.players[enemyIndex];
+
+  game.players.forEach((player, playerIndex) => {
+    if (pIndex !== playerIndex) {
+      let newEnemyX = player.char.sprite.x;
+      let newEnemyY = player.char.sprite.y;
+      let myX = player.char.sprite.x;
+      let myY = player.char.sprite.y;
       if (
         getDistance(myX, myY, newEnemyX, newEnemyY) <
         getDistance(myX, myY, currentEnemyX, currentEnemyY)
