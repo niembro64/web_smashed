@@ -211,7 +211,7 @@ function Play() {
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
-  const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(false);
+  const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(true);
 
   useEffect(() => {
     print('sessionInfo', session);
@@ -246,9 +246,27 @@ function Play() {
   }
 
   const [numClicks, setNumClicks] = useState<number>(0);
-  const [webState, setWebState] = useState<WebState>('init');
+  const [webState, setWebState] = useState<WebState>('web-state-init');
   const [openEye, setOpenEye] = useState<boolean>(false);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!myPhaser || !myPhaser.current) {
+      return;
+    }
+
+    print('xxxxxxxxxxxxx', myPhaser.current);
+
+    myPhaser.current.events.on('scoreUpdate', (x: any) => {
+      print('xxxxxxxxxxxxxx', x);
+    });
+
+    return () => {
+      myPhaser.current.events.off('scoreUpdate', (x: any) => {
+        print('scoreUpdate', x);
+      });
+    };
+  }, [myPhaser, myPhaser.current]);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -258,7 +276,7 @@ function Play() {
 
   useEffect(() => {
     if (debugState.DevMode) {
-      setWebState('start');
+      setWebState('web-state-setup');
     }
   }, []);
 
@@ -272,7 +290,7 @@ function Play() {
         if (myPhaser?.current?.scene?.keys?.game?.loaded) {
           setTimeout(
             () => {
-              setWebState('play');
+              setWebState('web-state-game');
             },
             debugState.DevMode ? 0 : 1
           );
@@ -283,10 +301,10 @@ function Play() {
 
     print('webState', webState);
     switch (webState) {
-      case 'init':
+      case 'web-state-init':
         print('init');
         break;
-      case 'start':
+      case 'web-state-setup':
         choosePlay();
         soundManager.startSound();
 
@@ -301,19 +319,20 @@ function Play() {
           setAllSessions(allSessions);
         })();
         break;
-      case 'loader':
+      case 'web-state-load':
         readyPlay();
         soundManager.startSound();
         musicManager.smallTalkRef.current.pause();
         musicManager.monkeysRef.current.play();
         setShowLoaderIntervalFunction();
         break;
-      case 'play':
+      case 'web-state-game':
         goPlay();
         musicManager.smallTalkRef.current.pause();
         musicManager.monkeysRef.current.pause();
         setTopBarDivExists(true);
         break;
+
       default:
         break;
     }
@@ -358,7 +377,8 @@ function Play() {
     charId: CharacterId,
     positionIndex: number
   ): void => {
-    if (webState === 'play') {
+    if (webState !== 'web-state-setup') {
+      print('webState !== start');
       return;
     }
 
@@ -521,7 +541,7 @@ function Play() {
     }
     const myMoment = moment();
 
-    setWebState('loader');
+    setWebState('web-state-load');
 
     setTimeout(() => {
       myPhaser.current = new Phaser.Game(config);
@@ -584,7 +604,8 @@ function Play() {
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debugState.UseChez || webState === 'play') {
+    if (debugState.UseChez || webState !== 'web-state-setup') {
+      print('debugState.UseChez || webState !== start');
       return;
     }
     if (charId === 4) {
@@ -637,24 +658,27 @@ function Play() {
 
   const clickPauseParent = () => {
     print('GAME STATE', myPhaser.current?.scene?.keys?.game.gameState.nameCurr);
-    if (webState === 'play') {
-      if (
-        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-          'game-state-start' &&
-        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-          'game-state-paused' &&
-        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-          'game-state-first-blood' &&
-        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-          'game-state-screen-clear' &&
-        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-          'game-state-captured-flag' &&
-        myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-          'game-state-finished'
-      ) {
-        print('CLICK AND PAUSING');
-        setGameState(myPhaser.current?.scene?.keys?.game, 'game-state-paused');
-      }
+    if (webState !== 'web-state-game') {
+      print('webState !== play');
+      return;
+    }
+
+    if (
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+        'game-state-start' &&
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+        'game-state-paused' &&
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+        'game-state-first-blood' &&
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+        'game-state-screen-clear' &&
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+        'game-state-captured-flag' &&
+      myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
+        'game-state-finished'
+    ) {
+      print('CLICK AND PAUSING');
+      setGameState(myPhaser.current?.scene?.keys?.game, 'game-state-paused');
     }
   };
 
@@ -762,7 +786,7 @@ function Play() {
   const onEventKeyboard = (event: any) => {
     const k = event.key;
 
-    if (webState === 'start') {
+    if (webState === 'web-state-setup') {
       let pIndex;
       switch (k) {
         case 'Enter':
@@ -807,7 +831,7 @@ function Play() {
       }
     }
 
-    if (webState === 'play') {
+    if (webState === 'web-state-game') {
       if (p1Keys.includes(k)) {
         setP1KeysTouched(true);
       }
@@ -899,19 +923,19 @@ function Play() {
     componentPseudoLoad.current = true;
     myPhaser.current.destroy(true);
 
-    setWebState('start');
+    setWebState('web-state-setup');
   };
 
   useEffect(() => {
-    if (webState === 'init') {
+    if (webState === 'web-state-init') {
       setP1KeysTouched(true);
       setP2KeysTouched(true);
     }
-    if (webState === 'start') {
+    if (webState === 'web-state-setup') {
       setP1KeysTouched(true);
       setP2KeysTouched(true);
     }
-    if (webState === 'play') {
+    if (webState === 'web-state-game') {
       const numKeyboards = getNumKeyboardsInUse();
       switch (numKeyboards) {
         case 0:
@@ -988,7 +1012,7 @@ function Play() {
   return (
     <div id="top-level" className="over-div">
       {!debugState.DevMode &&
-        webState !== 'start' &&
+        webState !== 'web-state-setup' &&
         numKeyboards === 2 &&
         !bothKeysTouched && (
           <div
@@ -1014,7 +1038,7 @@ function Play() {
           </div>
         )}
       {!debugState.DevMode &&
-        webState !== 'start' &&
+        webState !== 'web-state-setup' &&
         numKeyboards === 1 &&
         !p1KeysTouched && (
           <div
@@ -1030,7 +1054,7 @@ function Play() {
             </div>
           </div>
         )}
-      {webState === 'loader' && (
+      {webState === 'web-state-load' && (
         <div className="loader">
           <div className="spinnerShrink">
             <div className="spinnerOuterOuter">
@@ -1075,13 +1099,13 @@ function Play() {
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
-      {(webState === 'start' || webState === 'init') && (
+      {(webState === 'web-state-setup' || webState === 'web-state-init') && (
         <div className="start-class-div">
           {!debugState.DevMode && (
             <div
               className={
                 'black-hiding-div' +
-                (webState === 'init'
+                (webState === 'web-state-init'
                   ? ' black-hiding-div-init'
                   : ' black-hiding-div-start')
               }
@@ -1091,7 +1115,9 @@ function Play() {
             <div
               className={
                 'start-title' +
-                (webState === 'start' ? ' startTitleStart' : ' startTitleInit')
+                (webState === 'web-state-setup'
+                  ? ' startTitleStart'
+                  : ' startTitleInit')
               }
               onMouseDown={() => {
                 console.log('mouse down');
@@ -1102,12 +1128,12 @@ function Play() {
             >
               <div
                 onMouseDown={() => {
-                  setWebState('start');
+                  setWebState('web-state-setup');
                 }}
               >
                 <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
               </div>
-              <h1>{webState === 'init' ? '?' : 'SMASHED'}</h1>
+              <h1>{webState === 'web-state-init' ? '?' : 'SMASHED'}</h1>
             </div>
           </div>
 
@@ -1508,7 +1534,7 @@ function Play() {
                 onClick={onClickEye}
               />
             )}
-            {webState === 'start' && (
+            {webState === 'web-state-setup' && (
               <div
                 className="link-tag"
                 onClick={() => {
@@ -1519,7 +1545,7 @@ function Play() {
                 {!showOptions && <span>Options</span>}
               </div>
             )}
-            {webState === 'start' && (
+            {webState === 'web-state-setup' && (
               <div
                 className="link-tag"
                 onClick={() => {
@@ -1530,12 +1556,12 @@ function Play() {
                 {!showControllers && <span>Pads</span>}
               </div>
             )}
-            {webState !== 'start' && (
+            {webState !== 'web-state-setup' && (
               <div className="link-tag" onClick={onClickBackEventHandler}>
                 <span>Back</span>
               </div>
             )}
-            {webState !== 'start' && (
+            {webState !== 'web-state-setup' && (
               <div
                 className="link-tag"
                 onClick={() => {
@@ -1564,7 +1590,7 @@ function Play() {
               {showRulesN64 && <span className="dark-span">Rules</span>}
               {!showRulesN64 && <span>Rules</span>}
             </div>
-            {webState === 'start' && (
+            {webState === 'web-state-setup' && (
               <div
                 className="link-tag"
                 onClick={() => {
@@ -2001,7 +2027,7 @@ function Play() {
         )}
       </div>
       {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
-      {webState === 'play' && !isReplayHidden && (
+      {webState === 'web-state-game' && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">
             {videoGray && <p className="replay">FAST FORWARD</p>}

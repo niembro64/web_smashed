@@ -121,7 +121,7 @@ export function setGameState(game: Game, state: GameState): void {
       game.flag.spriteFlagStationary.setAlpha(1);
       game.flag.spriteFlagChar.setAlpha(1);
 
-      let tint =
+      const tint =
         game.colorCircles[game.flag.ownerCurr.id ? game.flag.ownerCurr.id : 0]
           .colorNumber;
       game.flag.firework.setTint(tint);
@@ -147,11 +147,14 @@ export function setGameState(game: Game, state: GameState): void {
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
 
+      game.events.emit('scoreUpdate', 55);
+
       if (game.debug.NNIsLSTM) {
         NNTrainLSTM(game);
       } else {
         NNTrainNN(game);
       }
+
       break;
     default:
       print('BROKEN_____________________');

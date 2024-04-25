@@ -501,7 +501,11 @@ export interface PlayerConfig {
   input?: InputType;
 }
 
-export type WebState = 'init' | 'start' | 'loader' | 'play';
+export type WebState =
+  | 'web-state-init'
+  | 'web-state-setup'
+  | 'web-state-load'
+  | 'web-state-game';
 
 export interface Quote {
   name: string;
