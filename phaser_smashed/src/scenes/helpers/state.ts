@@ -261,7 +261,7 @@ export function setPlayerState(
       setBlinkFalse(player);
       break;
     case 'player-state-dead':
-      deleteLastNNObjects(player, playerIndex, 60, game);
+      deleteLastNNObjects(player, playerIndex, 40, game);
       setFlagOwnerNullIfDead(player, game);
       setEmitterPlayerOnFalse(player);
       setEmitterHurtActiveFalse(player);
@@ -286,7 +286,7 @@ export function setPlayerState(
       setRespawn(player, game);
       break;
     case 'player-state-hurt':
-      deleteLastNNObjects(player, playerIndex, 60, game);
+      deleteLastNNObjects(player, playerIndex, 40, game);
       setEmitterHurtActiveTrue(player);
       setEmitterHurtVisibleTrue(player);
       if (!getIsAttackEnergyOffscreen(player.char.attackEnergy)) {
@@ -302,18 +302,12 @@ export function setPlayerState(
 }
 
 export function getHasNumDeadIncreased(game: Game): boolean {
-  // if (game.numDead === game.numDeadPrev) {
   if (game.numDead <= game.numDeadPrev) {
     return false;
   }
   return true;
 }
-// export function hasNumDead(game: Game): boolean {
-//   if (game.numDead === game.numDeadPrev) {
-//     return false;
-//   }
-//   return true;
-// }
+
 export function updateNumCurrentlyDead(game: Game): void {
   game.numDeadPrev = game.numDead;
   game.numDead = 0;

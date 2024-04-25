@@ -142,6 +142,7 @@ export const NNGetOutputStatic = (
   const pDeb = player.padDebounced;
 
   const nnInput: number[] = [
+    player.state.name === 'player-state-hurt' ? 1 : 0,
     pCurr.up ? 1 : 0,
     pCurr.down ? 1 : 0,
     pCurr.left ? 1 : 0,
@@ -158,6 +159,12 @@ export const NNGetOutputStatic = (
     pDeb.B,
     pDeb.X,
     pDeb.Y,
+
+    player.char.sprite.body.position.x,
+    player.char.sprite.body.position.y,
+    player.char.sprite.body.velocity.x,
+    player.char.sprite.body.velocity.y,
+
     player.char.sprite.body.position.x - enemyPositionX,
     player.char.sprite.body.position.y - enemyPositionY,
     player.char.sprite.body.velocity.x - enemyVelocyX,
@@ -168,6 +175,7 @@ export const NNGetOutputStatic = (
     player.char.sprite.body.touching.left ? 1 : 0,
     player.char.sprite.body.touching.right ? 1 : 0,
     isPFacingEnemy ? 1 : 0,
+    player.char.sprite.flipX ? 1 : 0,
   ];
 
   const nnOutput: number[] = game.nnNet.run(nnInput);
@@ -212,7 +220,7 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
     return;
   }
 
-  const player = game.players[0];
+  const player: Player = game.players[0];
 
   const { player: enemy } = getNearestPlayerAliveFromXY(
     player.char.sprite.body.position.x,
@@ -236,6 +244,7 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const newNNObject: NNObject = {
     input: [
+      player.state.name === 'player-state-hurt' ? 1 : 0,
       player.padCurr.up ? 1 : 0,
       player.padCurr.down ? 1 : 0,
       player.padCurr.left ? 1 : 0,
@@ -253,13 +262,18 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.padDebounced.X,
       player.padDebounced.Y,
 
+      // SPRITE POSITIONS
+      player.char.sprite.body.position.x,
+      player.char.sprite.body.position.y,
+      player.char.sprite.body.velocity.x,
+      player.char.sprite.body.velocity.y,
+
       // DIFF SPRITE POSITIONS
       player.char.sprite.x - enemy.char.sprite.x,
       player.char.sprite.y - enemy.char.sprite.y,
 
       // DIFF SPRITE VELOCITIES
       player.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
-
       player.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
 
       // DIFF SPRITE AE POSITIONS
@@ -270,6 +284,7 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.char.sprite.body.touching.left ? 1 : 0,
       player.char.sprite.body.touching.right ? 1 : 0,
       isPFacingEnemy ? 1 : 0,
+      player.char.sprite.flipX ? 1 : 0,
     ],
     output: [
       player.padCurr.up ? 1 : 0,
@@ -280,13 +295,10 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.padCurr.B ? 1 : 0,
       player.padCurr.X ? 1 : 0,
       player.padCurr.Y ? 1 : 0,
-      // p.padCurr.L ? 1 : 0,
-      // p.padCurr.R ? 1 : 0,
-      // p.padCurr.start ? 1 : 0,
-      // p.padCurr.select ? 1 : 0,
     ],
   };
-  // print('newNNObject', JSON.stringify(newNNObject, null, 2));
+
+  print('newNNObject', JSON.stringify(newNNObject, null, 2));
 
   game.nnObjects.push(newNNObject);
 };
@@ -332,18 +344,13 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: Game
 ): void => {
-  print('deleteLastNNObjects', numToDelete, game.nnObjects.length);
-
   if (!game.debug.NNP1Train) {
-    // print('!game.debug.NNP1Train');
     return;
   }
 
   if (playerIndex !== 0) {
-    // print('playerIndex !== 0');
     return;
   }
-  print('playerIndex', playerIndex);
 
   if (numToDelete > game.nnObjects.length) {
     print('numToDelete > game.nnObjects.length');
