@@ -2,6 +2,7 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Player, Position, Velocity, xyVector } from '../interfaces';
 import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
+import { print } from '../../views/client';
 import {
   getDistance,
   getNearestAttackEnergyXYAboveFromPlayer,
@@ -158,10 +159,8 @@ export function getIsBotTooFarRight(player: Player, game: Game): boolean {
 export function getIsBotTooFarUp(player: Player, game: Game): boolean {
   const bot = player.char.sprite;
   const up = SCREEN_DIMENSIONS.HEIGHT * 0.33;
-  if (bot.y < up) {
-    return true;
-  }
-  return false;
+
+  return bot.y < up;
 }
 export function getIsBotTooFarDown(player: Player, game: Game): boolean {
   const bot = player.char.sprite;

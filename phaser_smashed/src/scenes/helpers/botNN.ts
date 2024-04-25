@@ -11,6 +11,7 @@ import {
   getIsBotTooFarUp,
 } from './botRB';
 import { NNSetPlayerPadStatic } from './nn';
+
 export function updateBotNN(
   player: Player,
   playerIndex: number,
@@ -38,31 +39,6 @@ export function updateBotNN(
   // THE NN TO NOT DO STUPID STUFF
   ////////////////////////////////
 
-  if (game.debug.NNHelpScreen) {
-    //////////////////////
-    // TOO FAR LEFT RIGHT
-    //////////////////////
-    if (getIsBotTooFarLeft(player, game)) {
-      p.right = true;
-      p.left = false;
-      p.B = false;
-    } else if (getIsBotTooFarRight(player, game)) {
-      p.left = true;
-      p.right = false;
-      p.B = false;
-    }
-
-    //////////////////////
-    // TOO FAR UP
-    //////////////////////
-    if (getIsBotTooFarUp(player, game) && Math.random() > 0.1) {
-      p.Y = false;
-      p.down = true;
-      p.up = false;
-      p.B = false;
-    }
-  }
-
   //////////////////////
   // TOO FAR LEFT RIGHT CENTER
   //////////////////////
@@ -88,16 +64,22 @@ export function updateBotNN(
   if (game.debug.NNHelpPit) {
     if (pVelocity.y >= 0 && getIsBotInPitAreaLeft(player, game)) {
       p.X = !p.X;
+      p.up = true;
+      p.down = false;
     }
     if (pVelocity.y >= 0 && onLastJump && getIsBotInPitAreaLeft(player, game)) {
       p.left = true;
       p.right = false;
+      p.up = true;
+      p.down = false;
     }
     //////////////////////
     // RIGHT SIDE OF PIT
     //////////////////////
     if (pVelocity.y >= 0 && getIsBotInPitAreaRight(player, game)) {
       p.X = !p.X;
+      p.up = true;
+      p.down = false;
     }
     if (
       pVelocity.y >= 0 &&
@@ -106,6 +88,8 @@ export function updateBotNN(
     ) {
       p.right = true;
       p.left = false;
+      p.up = true;
+      p.down = false;
     }
   }
 
@@ -123,4 +107,45 @@ export function updateBotNN(
       }
     }
   }
+
+  //////////////////////
+  // HELP SCREEN
+  //////////////////////
+  if (game.debug.NNHelpScreen) {
+    //////////////////////
+    // TOO FAR LEFT RIGHT
+    //////////////////////
+    if (getIsBotTooFarLeft(player, game)) {
+      p.right = true;
+      p.left = false;
+      p.B = false;
+      p.X = false;
+      p.A = false;
+    } else if (getIsBotTooFarRight(player, game)) {
+      p.left = true;
+      p.right = false;
+      p.B = false;
+      p.X = false;
+      p.A = false;
+    }
+
+    //////////////////////
+    // TOO FAR UP
+    //////////////////////
+    if (getIsBotTooFarUp(player, game)) {
+      console.log('toofar high');
+
+      p.down = true;
+      p.up = false;
+      p.A = false;
+      p.B = false;
+      p.X = false;
+      p.Y = false;
+    }
+  }
+
+  console.log('p.up', p.up);
+  console.log('p.down', p.down);
+  console.log('p.x', p.X);
+  console.log('p.y', p.Y);
 }
