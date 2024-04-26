@@ -238,7 +238,7 @@ function Play() {
   const [nnErrLP, setNnErrLP] = useState<number | null>(null);
 
   const numberToStringWithThreeDigitsAndOneDecimal = (n: number): string => {
-    return n.toFixed(1).padStart(5, '0');
+    return n.toFixed(0).padStart(3, '0');
   };
 
   const percentDoneBar = (n: number): string => {
@@ -2150,11 +2150,8 @@ function Play() {
           <span>Neural Network Training</span>
           <div className="neural-network-train-top">
             <span>
-              Progress %{' '}
-              {numberToStringWithThreeDigitsAndOneDecimal(
-                (nnProgress || 0) * 100
-              )}{' '}
-              {percentDoneBar(nnProgress || 0)}
+              Progress {percentDoneBar(nnProgress || 0)}{' '}
+              {Math.floor((nnProgress || 0) * 100)}%
             </span>
             <span> Error LP % {(nnErrLP || 0) * 100}</span>
             <span> ErrorRaw % {(nnError || 0) * 100}</span>
