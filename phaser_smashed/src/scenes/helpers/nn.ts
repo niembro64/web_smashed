@@ -11,6 +11,8 @@ import {
 import { nnConfigLSTM } from './nnJsonLSTM';
 import { NNRatiosNN, nnConfigNN } from './nnJsonNN';
 
+export const traininNumSteps: number = 50;
+
 export const NNTrainNN = async (game: Game): Promise<void> => {
   if (!game.debug.NNP1Train) {
     return;
@@ -40,8 +42,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     learningRate: 0.01,
     errorThresh: 0.005,
     timeout: Infinity,
-    callbackPeriod: 10,
-    logPeriod: 100,
+    callbackPeriod: Math.floor(maxIterations / traininNumSteps),
+    logPeriod: Math.floor(maxIterations / traininNumSteps),
     decayRate: 0.999,
     log: (stats: any) => {
       const percentDone = stats.iterations / maxIterations;

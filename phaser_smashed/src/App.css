@@ -758,13 +758,13 @@ h2 {
   height: 15%;
   width: 90%;
   margin-bottom: 2%;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-decoration: none;
 }
+
 .bottom-zone {
   width: 100%;
   flex: 0.2;
@@ -772,32 +772,44 @@ h2 {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  /* margin: 1vh 0% 1vh 0%; */
   padding: 1vh 0% 1vh 0%;
-  /* border: 1px dashed lime; */
 }
+
 .b-start {
   justify-self: flex-end;
   height: 100%;
-  /* flex: 0.2; */
   background-color: var(--blue-start);
   border: 0px solid;
   border-radius: var(--border-radius-small);
   padding: 0.5vh 5vh 0vh 5vh;
-  /* margin-left: 10%; */
   margin-right: 2%;
-
   color: rgba(255, 255, 255, 1);
   font-size: 2vw;
   transition: 0.5s ease;
   z-index: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
+}
+
+.b-start-inactive {
+  justify-self: flex-end;
+  height: 100%;
+  border: 0px solid;
+  border-radius: var(--border-radius-small);
+  padding: 0.5vh 5vh 0vh 5vh;
+  margin-right: 2%;
+  font-size: 2vw;
+  transition: 0.5s ease;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(93, 93, 93, 0.504);
+  color: rgba(198, 198, 198, 0.562);
 }
 
 .b-start:hover {

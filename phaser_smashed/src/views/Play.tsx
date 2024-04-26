@@ -54,6 +54,7 @@ import {
   workingControllersAmazon,
 } from './helpers/reactHelpers';
 import { use } from 'matter';
+import { traininNumSteps } from '../scenes/helpers/nn';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -235,6 +236,26 @@ function Play() {
   const [nnProgress, setNnProgress] = useState<number | null>(null);
   const [nnError, setNnError] = useState<number | null>(null);
   const [nnErrLP, setNnErrLP] = useState<number | null>(null);
+
+  const numberToStringWithThreeDigitsAndOneDecimal = (n: number): string => {
+    return n.toFixed(1).padStart(5, '0');
+  };
+
+  const percentDoneBar = (n: number): string => {
+    const incomplete = '─';
+    const complete = '█';
+
+    let str = '';
+    for (let i = 0; i < traininNumSteps; i++) {
+      if (i < n * traininNumSteps) {
+        str += complete;
+      } else {
+        str += incomplete;
+      }
+    }
+
+    return str;
+  };
 
   useEffect(() => {
     window.addEventListener('nn-train', (t) => {
@@ -2128,14 +2149,20 @@ function Play() {
         <div className="neural-network-train-status">
           <span>Neural Network Training</span>
           <div className="neural-network-train-top">
-            <span>Progress % {Math.floor((nnProgress || 0) * 100)}</span>
+            <span>
+              Progress %{' '}
+              {numberToStringWithThreeDigitsAndOneDecimal(
+                (nnProgress || 0) * 100
+              )}{' '}
+              {percentDoneBar(nnProgress || 0)}
+            </span>
             <span> Error LP % {(nnErrLP || 0) * 100}</span>
             <span> ErrorRaw % {(nnError || 0) * 100}</span>
           </div>
 
           <div className="neural-network-train-bottom">
             <div
-              className="b-start"
+              className={nnJson === null ? ' b-start-inactive' : 'b-start'}
               onClick={() => {
                 if (nnJson !== null && navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(nnJson);
@@ -2145,7 +2172,7 @@ function Play() {
               <span>Model Weights</span>
             </div>
             <div
-              className="b-start"
+              className={nnRatios === null ? ' b-start-inactive' : 'b-start'}
               onClick={() => {
                 if (nnRatios !== null && navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(nnRatios.toString());
