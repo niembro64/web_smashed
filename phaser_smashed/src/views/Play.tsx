@@ -222,15 +222,30 @@ function Play() {
       error: 0,
     });
 
-  const [nnJson, setNnJson] = useState<string>('');
-  const [nnRatios, setNnRatios] = useState<number[]>([]);
-  const [nnProgress, setNnProgress] = useState<number>(0);
-  const [nnError, setNnError] = useState<number>(0);
+  const setAllTrainingStatesToNull = () => {
+    setNnJson(null);
+    setNnRatios(null);
+    setNnProgress(null);
+    setNnError(null);
+    setNnErrLP(null);
+  };
+
+  const [nnJson, setNnJson] = useState<string | null>(null);
+  const [nnRatios, setNnRatios] = useState<number[] | null>(null);
+  const [nnProgress, setNnProgress] = useState<number | null>(null);
+  const [nnError, setNnError] = useState<number | null>(null);
+  const [nnErrLP, setNnErrLP] = useState<number | null>(null);
 
   useEffect(() => {
     window.addEventListener('nn-train', (t) => {
       // @ts-ignore
       switch (t?.detail?.name) {
+        case 'netStart':
+          // @ts-ignore
+          setNnProgress((x) => 0);
+          // @ts-ignore
+          setNnError((x) => 0);
+          break;
         case 'netJson':
           // @ts-ignore
           setNnJson((x) => t?.detail?.value);
@@ -263,20 +278,16 @@ function Play() {
   }, []);
 
   useEffect(() => {
-    print('nnJson', nnJson);
-    print('nnRatios', nnRatios);
-    print('nnProgress', nnProgress);
-    print('nnError', nnError);
-  }, [nnJson, nnRatios, nnProgress, nnError]);
+    if (nnError === null) {
+      return;
+    }
 
-  useEffect(() => {
-    // // @ts-ignore
-    // print('nnTrainStatus.name', neuralNetworkTrainStatus.name);
-    // // @ts-ignore
-    // print('nnTrainStatus.value', neuralNetworkTrainStatus.value);
-    // // @ts-ignore
-    // print('nnTrainStatus.error', neuralNetworkTrainStatus.error);
-  }, [neuralNetworkTrainStatus]);
+    const ratio = 0.98;
+
+    setNnErrLP((prev) => {
+      return (prev || 0) * ratio + nnError * (1 - ratio);
+    });
+  }, [nnError]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -380,6 +391,7 @@ function Play() {
 
         musicManager.smallTalkRef.current.play();
         musicManager.monkeysRef.current.pause();
+        setAllTrainingStatesToNull();
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -2111,15 +2123,40 @@ function Play() {
         )}
       </div>
 
-      {
+      {/* { */}
+      {nnProgress !== null && (
         <div className="neural-network-train-status">
-          <div className="neural-network-train-status-text">
-            <p>NN Training Progress</p>
-            <p>{nnProgress}</p>
-            <p>{nnError}</p>
+          <span>Neural Network Training</span>
+          <div className="neural-network-train-top">
+            <span>Progress % {Math.floor((nnProgress || 0) * 100)}</span>
+            <span> Error LP % {(nnErrLP || 0) * 100}</span>
+            <span> ErrorRaw % {(nnError || 0) * 100}</span>
+          </div>
+
+          <div className="neural-network-train-bottom">
+            <div
+              className="b-start"
+              onClick={() => {
+                if (nnJson !== null && navigator.clipboard !== undefined) {
+                  navigator.clipboard.writeText(nnJson);
+                }
+              }}
+            >
+              <span>Model Weights</span>
+            </div>
+            <div
+              className="b-start"
+              onClick={() => {
+                if (nnRatios !== null && navigator.clipboard !== undefined) {
+                  navigator.clipboard.writeText(nnRatios.toString());
+                }
+              }}
+            >
+              <span>Output Ratios</span>
+            </div>
           </div>
         </div>
-      }
+      )}
 
       {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'web-state-game' && !isReplayHidden && (

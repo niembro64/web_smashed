@@ -2087,8 +2087,36 @@ td > div:nth-child(2) {
   border: 3px solid white;
   background-color: black;
   border-radius: var(--border-radius-small);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.neural-network-train-status-text {
-  font-size: 1.5vw;
+.neural-network-train-status > span,
+.neural-network-train-top > span {
+  flex: 1;
+  font-size: x-large;
+}
+
+.neural-network-train-top {
+  width: 80%;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0%;
+  margin: 0%;
+}
+
+.neural-network-train-bottom {
+  width: 80%;
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0%;
+  margin: 0%;
 }

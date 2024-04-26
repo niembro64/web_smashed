@@ -19,7 +19,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   window.dispatchEvent(
     new CustomEvent('nn-train', {
       detail: {
-        name: 'start',
+        name: 'netStart',
         value: null,
         error: null,
       },
@@ -58,8 +58,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         })
       );
 
-      print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
-      print('error', Math.floor(stats.error * 100) + '%');
+      // print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
+      // print('error', Math.floor(stats.error * 100) + '%');
     },
   });
 
