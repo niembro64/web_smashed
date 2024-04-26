@@ -1,5 +1,5 @@
 export const nnConfigNN = {
-  hiddenLayers: [11, 7, 5, 5],
+  hiddenLayers: [11, 8, 8, 8],
   useGpu: true,
   // activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
   // leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'

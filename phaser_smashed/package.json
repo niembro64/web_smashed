@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.5",
     "@types/react-howler": "^5.2.0",
     "@types/react-router-dom": "^5.3.3"
   }
