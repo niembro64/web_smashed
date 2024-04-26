@@ -447,34 +447,66 @@ export function getNearestAttackEnergyXYFromPlayer(
   pIndex: number,
   game: Game
 ): { x: number; y: number } {
-  let goToX = Infinity;
-  let goToY = Infinity;
-  let ae = player.char.attackEnergy;
+  let currX = Infinity;
+  let currY = Infinity;
 
   game.players.forEach((player, playerIndex) => {
     if (pIndex !== playerIndex) {
-      let otherPlayerX = player.char.attackEnergy.sprite.x;
-      let otherPlayerY = player.char.attackEnergy.sprite.y;
-      let myX = ae.sprite.x;
-      let myY = ae.sprite.y;
+      const newX = player.char.attackEnergy.sprite.x;
+      const newY = player.char.attackEnergy.sprite.y;
+      const myX = player.char.sprite.x;
+      const myY = player.char.sprite.y;
       if (
-        getDistance(myX, myY, otherPlayerX, otherPlayerY) <
-        getDistance(myX, myY, goToX, goToY)
+        getDistance(myX, myY, newX, newY) < getDistance(myX, myY, currX, currY)
       ) {
-        goToX = otherPlayerX;
-        goToY = otherPlayerY;
+        currX = newX;
+        currY = newY;
       }
     }
   });
 
-  if (goToX === Infinity) {
-    goToX = SCREEN_DIMENSIONS.WIDTH / 2;
-  }
-  if (goToY === Infinity) {
-    goToY = SCREEN_DIMENSIONS.HEIGHT / 2;
-  }
+  // if (currX === Infinity) {
+  //   currX = SCREEN_DIMENSIONS.WIDTH / 2;
+  // }
+  // if (currY === Infinity) {
+  //   currY = SCREEN_DIMENSIONS.HEIGHT / 2;
+  // }
 
-  return { x: goToX, y: goToY };
+  return { x: currX, y: currY };
+}
+
+export function getNearestAttackPhysicalXYFromPlayer(
+  player: Player,
+  pIndex: number,
+  game: Game
+): { x: number; y: number } {
+  let currX = Infinity;
+  let currY = Infinity;
+
+  game.players.forEach((player, playerIndex) => {
+    if (pIndex !== playerIndex) {
+      const newX = player.char.attackEnergy.sprite.x;
+      const newY = player.char.attackEnergy.sprite.y;
+      const myX = player.char.sprite.x;
+      const myY = player.char.sprite.y;
+      if (
+        getDistance(myX, myY, newX, newY) <
+        getDistance(myX, myY, currX, currY)
+      ) {
+        currX = newX;
+        currY = newY;
+      }
+    }
+  });
+
+  // if (currX === Infinity) {
+  //   currX = SCREEN_DIMENSIONS.WIDTH / 2;
+  // }
+  // if (currY === Infinity) {
+  //   currY = SCREEN_DIMENSIONS.HEIGHT / 2;
+  // }
+
+  return { x: currX, y: currY };
 }
 
 export function getNearestPlayerAliveFromPlayer(

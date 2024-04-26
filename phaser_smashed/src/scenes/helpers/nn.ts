@@ -4,6 +4,7 @@ import Game from '../Game';
 import { NNObject, Player } from '../interfaces';
 import {
   getNearestAttackEnergyXYFromPlayer,
+  getNearestAttackPhysicalXYFromPlayer,
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerAliveFromXY,
   getNearestPlayerFromPlayer,
@@ -12,6 +13,7 @@ import { nnConfigLSTM } from './nnJsonLSTM';
 import { NNRatiosNN, nnConfigNN } from './nnJsonNN';
 
 export const traininNumSteps: number = 50;
+const maxIterations = 400;
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
   if (!game.debug.NNP1Train) {
@@ -32,7 +34,6 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
-  const maxIterations = 2000;
 
   const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
 
@@ -168,6 +169,12 @@ export const NNGetOutputStatic = (
     game
   );
 
+  const { x: enemyAPX, y: enemyAPY } = getNearestAttackPhysicalXYFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
+
   const enemyPositionX = enemy.char.sprite.x;
   const enemyPositionY = enemy.char.sprite.y;
 
@@ -229,6 +236,10 @@ export const NNGetOutputStatic = (
     // DIFF SPRITE AE POSITIONS
     player.char.sprite.body.position.x - enemyAEX,
     player.char.sprite.body.position.y - enemyAEY,
+
+    // DIFF SPRITE AP POSITIONS
+    player.char.sprite.body.position.x - enemyAPX,
+    player.char.sprite.body.position.y - enemyAPY,
 
     // TOUCHING
     player.char.sprite.body.touching.up ? 1 : 0,
@@ -293,6 +304,9 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const { x: enemyAttackEnergyX, y: enemyAttackEnergyY } =
     getNearestAttackEnergyXYFromPlayer(player, 0, game);
+  
+  const { x: enemyAttackPhysicalX, y: enemyAttackPhysicalY } =
+    getNearestAttackPhysicalXYFromPlayer(player, 0, game);
 
   let isPFacingEnemy: boolean = false;
   if (player.char.sprite.x < enemy.char.sprite.x) {
@@ -347,6 +361,10 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       // DIFF SPRITE AE POSITIONS
       player.char.sprite.body.position.x - enemyAttackEnergyX,
       player.char.sprite.body.position.y - enemyAttackEnergyY,
+
+      // DIFF SPRITE AP POSITIONS
+      player.char.sprite.body.position.x - enemyAttackPhysicalX,
+      player.char.sprite.body.position.y - enemyAttackPhysicalY,
 
       // TOUCHING
       player.char.sprite.body.touching.up ? 1 : 0,
