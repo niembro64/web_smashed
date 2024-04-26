@@ -56,7 +56,6 @@ export interface Debug {
   ReplayControls: boolean;
   ReplayFastSlow: boolean;
   GravityLight: boolean;
-  BotKnowsFlag: boolean;
   [key: string]: any; // add index signature
 }
 

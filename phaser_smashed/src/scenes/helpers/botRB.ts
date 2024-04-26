@@ -461,7 +461,10 @@ export function updateBotRules(
   //////////////////////
   // MOVE TO FLAG | TOUCHING
   //////////////////////
-  if (game.debug.BotKnowsFlag && !game.flag.completedCurr) {
+  if (
+    !(game.debug.NNP1Train && playerIndex === 0) &&
+    !game.flag.completedCurr
+  ) {
     ///////////////////////
     // ON GROUND
     ///////////////////////
