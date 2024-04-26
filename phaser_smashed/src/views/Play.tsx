@@ -285,7 +285,7 @@ function Play() {
     const ratio = 0.98;
 
     setNnErrLP((prev) => {
-      return (prev || 0) * ratio + nnError * (1 - ratio);
+      return (prev || nnError || 0) * ratio + nnError * (1 - ratio);
     });
   }, [nnError]);
 
@@ -391,7 +391,7 @@ function Play() {
 
         musicManager.smallTalkRef.current.play();
         musicManager.monkeysRef.current.pause();
-        setAllTrainingStatesToNull();
+
         setTopBarDivExists(false);
         setTimeout(() => {
           setTopBarDivExists(true);
@@ -572,6 +572,8 @@ function Play() {
       myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
     }
+
+    setAllTrainingStatesToNull();
 
     setShowControls(false);
     setShowControllers(false);
