@@ -1520,7 +1520,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([2, 0, 0, 2]);
+                  setInputArrayEffect([2, 2, 0, 0]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1530,7 +1530,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([2, 0, 0, 3]);
+                  setInputArrayEffect([2, 3, 0, 0]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1540,7 +1540,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([2, 0, 0, 4]);
+                  setInputArrayEffect([2, 4, 0, 0]);
                 }}
               >
                 <span className={'vs-span'}>
@@ -1550,7 +1550,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([1, 0, 0, 1]);
+                  setInputArrayEffect([1, 1, 0, 0]);
                 }}
               >
                 <span className={'vs-span'}>
