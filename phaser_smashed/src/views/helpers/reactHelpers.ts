@@ -73,7 +73,7 @@ export const smashConfigInit: SmashConfig = {
   ],
 };
 
-export const inputArrayInit: InputType[] = [2, 3, 3, 4];
+export const inputArrayInit: InputType[] = [3, 3, 4, 4];
 
 export const idColors: string[] = [
   'id-red',
