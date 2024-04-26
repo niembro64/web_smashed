@@ -1561,20 +1561,20 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([2, 0, 3, 4]);
+                  setInputArrayEffect([2, 3, 4, 4]);
                 }}
               >
-                <span className={'vs-span'}>{emoji.keyboardWhite}</span>
-                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
+                <span className={'vs-span'}>{emoji.keyboardWhite + emoji.bot}</span>
+                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
               </div>
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([1, 0, 3, 4]);
+                  setInputArrayEffect([1, 3, 4, 4]);
                 }}
               >
-                <span className={'vs-span'}>{emoji.gamepad}</span>
-                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
+                <span className={'vs-span'}>{emoji.gamepad + emoji.bot}</span>
+                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
               </div>
               <div
                 className="b-all-bots"
