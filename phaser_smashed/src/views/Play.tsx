@@ -392,10 +392,8 @@ function Play() {
         musicManager.smallTalkRef.current.play();
         musicManager.monkeysRef.current.pause();
 
-        setTopBarDivExists(false);
-        setTimeout(() => {
-          setTopBarDivExists(true);
-        }, 4000);
+        setTopBarDivExists(true);
+
         (async () => {
           const allSessions: SessionInfo[] = await getAllAxios();
           setAllSessions(allSessions);
