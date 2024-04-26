@@ -457,6 +457,10 @@ function Play() {
     setInputArray((prevArray: InputType[]) => [0, 0, 0, 0]);
 
     newInputArray.forEach((item, index) => {
+      if (item === 0) {
+        return;
+      }
+
       setTimeout(() => {
         soundManager.blipSound();
         setInputArray((prevArray: InputType[]) => {
@@ -1564,7 +1568,9 @@ function Play() {
                   setInputArrayEffect([2, 3, 4, 4]);
                 }}
               >
-                <span className={'vs-span'}>{emoji.keyboardWhite + emoji.bot}</span>
+                <span className={'vs-span'}>
+                  {emoji.keyboardWhite + emoji.bot}
+                </span>
                 <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
               </div>
               <div
