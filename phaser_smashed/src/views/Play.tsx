@@ -117,7 +117,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (!debugState.ReplayOn) {
+    if (!debugState.InstReplay) {
       setIsReplayHidden(true);
       return;
     }
@@ -323,7 +323,7 @@ function Play() {
     if (allSessions === null) {
       return;
     }
-    print('allSessions Updated');
+    // print('allSessions Updated');
   }, [allSessions]);
 
   function captureScreenshot() {

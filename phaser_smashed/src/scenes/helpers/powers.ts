@@ -156,7 +156,6 @@ export function updateChompFilterState(
   if (damage > 0 && curr.name === 'none') {
     setChompFilterState('hurt', game);
     c.damage += damage;
-    print('c.damage', c.damage);
 
     let { x, y }: xyVector = getNormalizedVector(
       player.char.attackEnergy.sprite.x,
