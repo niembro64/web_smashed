@@ -40,8 +40,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     learningRate: 0.01,
     errorThresh: 0.005,
     timeout: Infinity,
-    callbackPeriod: 1,
-    logPeriod: 10,
+    callbackPeriod: 10,
+    logPeriod: 100,
     decayRate: 0.999,
     log: (stats: any) => {
       const percentDone = stats.iterations / maxIterations;
@@ -58,8 +58,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         })
       );
 
-      // print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
-      // print('error', Math.floor(stats.error * 100) + '%');
+      print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
+      print('error', Math.floor(stats.error * 100) + '%');
     },
   });
 

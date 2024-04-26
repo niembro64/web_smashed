@@ -11,8 +11,6 @@ export const NNRatiosNN: number[] = [
   0.28813044358922424, 0.04446019850111404,
 ];
 
-
-
 export const nnJsonNN = {
   type: 'NeuralNetwork',
   sizes: [35, 11, 7, 5, 5, 8],
