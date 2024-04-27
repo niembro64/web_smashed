@@ -228,8 +228,8 @@ function Play() {
   };
 
   const percentDoneBar = (n: number): string => {
-    const incomplete = '─';
-    const complete = '█';
+    const incomplete = '-';
+    const complete = '=';
 
     let str = '';
     for (let i = 0; i < traininNumSteps; i++) {
