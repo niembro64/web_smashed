@@ -1016,9 +1016,9 @@ h2 {
 }
 #input-sub {
   position: relative;
-  margin-top: -5vh;
-  height: 100%;
-  width: 100%;
+  /* margin-top: -5vh; */
+  /* height: 100%;
+  width: 100%; */
   /* margin-top: 2vh; */
   font-size: 1vw;
 

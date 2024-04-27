@@ -89,10 +89,10 @@ export const smashConfigOptions: PlayerConfig[] = [
   { characterId: 2, scale: 1, name: 'Pikachu', nameShort: 'PKA' },
   { characterId: 3, scale: 0.7, name: 'Kirby', nameShort: 'KRB' },
   { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
-  { characterId: 5, scale: 1.2, name: 'BlackChez', nameShort: 'BCZ' },
-  { characterId: 6, scale: 0.6, name: 'GreenKoopa', nameShort: 'GKP' },
-  { characterId: 7, scale: 0.6, name: 'RedKoopa', nameShort: 'RKP' },
-  { characterId: 8, scale: 0.6, name: 'BlueKoopa', nameShort: 'BKP' },
+  { characterId: 5, scale: 1.2, name: 'B-Chez', nameShort: 'BCZ' },
+  { characterId: 6, scale: 0.6, name: 'G-Koopa', nameShort: 'GKP' },
+  { characterId: 7, scale: 0.6, name: 'R-Koopa', nameShort: 'RKP' },
+  { characterId: 8, scale: 0.6, name: 'B-Koopa', nameShort: 'BKP' },
 ];
 
 export const quotes: Quote[] = [
