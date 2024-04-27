@@ -2137,11 +2137,16 @@ function Play() {
                       }
                       return (
                         <tr id={sIndex % 2 ? 'td-odd' : 'td-even'} key={sIndex}>
-                          <td id="title" className="td-left">
-                            {s.country} {s.region} {s.city} {s.ip}
-                            {/* {paddedIndex} {formattedDate} {s.country} {s.region}{' '}
-                            {s.city} {s.ip} */}
+                          <td className="td-left">
+                            <div id="td-info">
+                              {paddedIndex} {formattedDate} {s.ip}
+                            </div>
+
+                            <div id="td-info">
+                              {s.country} {s.region} {s.city}
+                            </div>
                           </td>
+
                           <td className="td-left">
                             <div>{gameViewTop ? gameViewTop : ' '}</div>
                             <div>{gameViewBottom ? gameViewBottom : ' '}</div>

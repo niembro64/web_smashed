@@ -60,7 +60,6 @@ h2 {
   margin-bottom: 1vh;
 }
 
-
 .over-div {
   aspect-ratio: 16 / 9;
   max-width: 100vw; /* Maximum width is 100% of the viewport width */
@@ -2067,6 +2066,11 @@ th {
   /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
+#td-info {
+  font-size: small;
+  padding-bottom: 1%;
+}
+
 #td-odd {
   background-color: rgba(0, 0, 0, 0.8);
   height: 3.5vw;
@@ -2186,12 +2190,10 @@ td > div:nth-child(2) {
 }
 
 .mobile-warning > img {
-
   width: 80%;
   height: 100%;
   object-fit: contain;
 }
 .mobile-warning > span {
-
   padding-bottom: 3%;
 }
