@@ -378,6 +378,13 @@ export function setAnimationsOff(game: Game): void {
     if (player.char.sprite?.anims) {
       player.char.sprite.anims.pause();
     }
+    if (player.char.attackPhysical.sprite?.anims) {
+      player.char.attackPhysical.sprite?.anims.pause();
+    }
+
+    if (player.emitterPlayer.on) {
+      player.emitterPlayer.active = false;
+    }
   });
   if (game.chomp.sprite?.anims) {
     game.chomp.sprite.anims.pause();
@@ -394,6 +401,14 @@ export function setAnimationsOn(game: Game): void {
   game.players.forEach((player) => {
     if (player.char.sprite?.anims) {
       player.char.sprite.anims.resume();
+    }
+
+    if (player.char.attackPhysical.sprite?.anims) {
+      player.char.attackPhysical.sprite?.anims.resume();
+    }
+
+    if (player.emitterPlayer.on) {
+      player.emitterPlayer.active = true;
     }
   });
   if (game.chomp.sprite?.anims) {

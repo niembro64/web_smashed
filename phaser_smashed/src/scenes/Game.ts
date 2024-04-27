@@ -879,16 +879,9 @@ export default class Game extends Phaser.Scene {
       char: {
         name: 'Mario',
         initializeCharPosition: {
-          // lookingRight: true,
           x: -200,
           y: 100,
         },
-        // color: {
-        //   primary: '#e24800',
-        //   secondary: '#e24800',
-        //   dark: '#1c0900',
-        //   light: '#ffffff',
-        // },
         colorFilterBlink: false,
         src: 'images/character_0_cropped.png',
         scaleCharSpriteReality: 1,
@@ -911,7 +904,6 @@ export default class Game extends Phaser.Scene {
         zoom: 1,
         vel: { x: 0, y: 0 },
         pos: { x: 0, y: 0 },
-        // acc: { x: 0, y: 0 },
         jumps: [1, 0.8, 0],
         jumpPower: 1,
         jumpIndex: 0,
@@ -922,7 +914,6 @@ export default class Game extends Phaser.Scene {
         speed: 0.8,
         fast: 1,
         friction_ground: 0.5,
-        // friction_ground: 0.94,
         friction_air: 0.02, // .02
         wallTouchArray: [],
         lastDirectionTouched: null,
