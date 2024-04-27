@@ -1968,23 +1968,6 @@ function Play() {
             >
               <h1>About</h1>
               <div className="horiz">
-                <div className="horiz-item-left">
-                  <img
-                    className="kirbyNiembro"
-                    src="./images/character_3_cropped.png"
-                    alt="kirby"
-                    onMouseDown={() => {
-                      print('MOUSE DOWN');
-                      setFirstCharacterSlot(5);
-                    }}
-                  />
-                  <a
-                    className="btn btn-dark text-light"
-                    href="https://niemo.io/"
-                  >
-                    <span className="text-white small">niemo.io</span>
-                  </a>
-                </div>
                 <div className="horiz-item-right">
                   This game is a tribute to "Smashed Bros", a drinking game
                   invented in St. Louis in late 2009 at the Chemon House. <br />
@@ -1992,20 +1975,58 @@ function Play() {
                   niemeyer.eric@gmail.com
                 </div>
                 <div className="horiz-item-left">
-                  <img
-                    className="NANiembro"
-                    src="./images/NA.png"
-                    alt="Niemo Audio"
-                    onMouseDown={() => {
-                      print('MOUSE DOWN');
-                    }}
-                  />
-
+                  <div className="about-image-wrapper">
+                    <img
+                      className="about-image"
+                      src="./images/character_3_cropped.png"
+                      alt="kirby"
+                      onMouseDown={() => {
+                        print('MOUSE DOWN');
+                        setFirstCharacterSlot(5);
+                      }}
+                    />
+                  </div>
+                  <a
+                    className="btn btn-dark text-light"
+                    href="https://niemo.io/"
+                  >
+                    <span className="text-white small">Website</span>
+                  </a>
+                </div>
+                <div className="horiz-item-left">
+                  <div className="about-image-wrapper">
+                    <img
+                      className="about-image"
+                      src="./images/NA_new.png"
+                      alt="Niemo Audio"
+                      onMouseDown={() => {
+                        print('MOUSE DOWN');
+                      }}
+                    />
+                  </div>
                   <a
                     className="btn btn-dark text-light"
                     href="https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv"
                   >
-                    <span className="text-white small">music</span>
+                    <span className="text-white small">Music</span>
+                  </a>
+                </div>
+                <div className="horiz-item-left">
+                  <div className="about-image-wrapper">
+                    <img
+                      className="about-image"
+                      src="./images/blockcracked.png"
+                      alt="Niemo Audio"
+                      onMouseDown={() => {
+                        print('MOUSE DOWN');
+                      }}
+                    />
+                  </div>
+                  <a
+                    className="btn btn-dark text-light"
+                    href="https://resume.niemo.io/"
+                  >
+                    <span className="text-white small">Resume</span>
                   </a>
                 </div>
               </div>

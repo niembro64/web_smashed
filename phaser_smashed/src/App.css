@@ -243,8 +243,8 @@ h2 {
   flex-wrap: nowrap;
 }
 .horiz-item-left {
-  width: 20%;
-  height: 100%;
+  width: 15%;
+  height: 60%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -392,14 +392,23 @@ h2 {
   /* cursor: pointer; */
 }
 
-.kirbyNiembro {
-  margin: 5%;
+.about-image-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px dashed lime; */
+  margin-bottom: 5%;
 }
-.NANiembro {
-  margin: 1%;
-  /* width: 100%; */
-  height: 38%;
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
+
 #debug-col {
   width: 100%;
   height: 100%;
@@ -1820,7 +1829,7 @@ th {
   /* font-size: 0.8vw; */
 }
 #title {
-  font-size: 1.1vw;
+  font-size: 0.8vw;
 }
 
 .td-right {
@@ -1848,8 +1857,9 @@ th {
 }
 
 #td-info {
-  font-size: small;
-  padding-bottom: 1%;
+  font-size: 0.8vw;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
 }
 
 #td-odd {
