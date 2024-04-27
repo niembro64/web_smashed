@@ -1123,7 +1123,7 @@ function Play() {
             </div>
           </div>
         )}
-      {/* {true && ( */}
+
       {webState === 'web-state-load' && (
         <div className="loader">
           <div className="spinnerShrink">
