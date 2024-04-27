@@ -1983,7 +1983,7 @@ function Play() {
                 <div className="horiz-item-small">
                   <div className="about-image-wrapper">
                     <img
-                      className="about-image"
+                      className="about-image about-image-pixelated"
                       src="./images/character_3_cropped.png"
                       alt="kirby"
                       onMouseDown={() => {
@@ -2020,7 +2020,7 @@ function Play() {
                 <div className="horiz-item-small">
                   <div className="about-image-wrapper">
                     <img
-                      className="about-image"
+                      className="about-image about-image-pixelated"
                       src="./images/blockcracked.png"
                       alt="Niemo Audio"
                       onMouseDown={() => {
