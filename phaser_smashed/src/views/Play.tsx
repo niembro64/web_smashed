@@ -10,6 +10,7 @@ import {
   debugMax,
   showOptionOnMainScreenInit,
 } from '../debugOptions';
+import { traininNumSteps } from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
@@ -53,8 +54,6 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
-import { use } from 'matter';
-import { traininNumSteps } from '../scenes/helpers/nn';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -210,19 +209,6 @@ function Play() {
     };
   }, [debugState.ReplayFullQuality, debugState.ReplayOn]);
 
-  type NNTrainProgressObject = {
-    name: string;
-    value: number;
-    error: number;
-  };
-
-  const [neuralNetworkTrainStatus, setNeuralNetworkTrainStatus] =
-    useState<NNTrainProgressObject>({
-      name: 'init',
-      value: 0,
-      error: 0,
-    });
-
   const setAllTrainingStatesToNull = () => {
     setNnJson(null);
     setNnRatios(null);
@@ -284,17 +270,6 @@ function Play() {
         default:
           break;
       }
-
-      setNeuralNetworkTrainStatus((prev: NNTrainProgressObject) => {
-        return {
-          // @ts-ignore
-          name: t?.detail?.name,
-          // @ts-ignore
-          value: t?.detail?.value,
-          // @ts-ignore
-          error: t?.detail?.error,
-        };
-      });
     });
   }, []);
 

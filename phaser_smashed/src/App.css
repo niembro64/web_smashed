@@ -2110,15 +2110,16 @@ td > div:nth-child(2) {
 
 .neural-network-train-status {
   z-index: 4;
-  width: 90%;
-  height: 45%;
+  width: 100%;
+  height: 33%;
   position: absolute;
-  bottom: 5%;
-  left: 5%;
+  bottom: 0%;
+  left: 0%;
   padding: 1%;
-  border: 3px solid white;
+  /* border: 3px solid white; */
+  border-top: 5px solid white;
   background-color: black;
-  border-radius: var(--border-radius-small);
+  /* border-radius: var(--border-radius-small); */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2144,7 +2145,7 @@ td > div:nth-child(2) {
 
 .neural-network-train-bottom {
   width: 80%;
-  flex: 2;
+  flex: 1.2;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -2,7 +2,7 @@ import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
   DevMode: true,
-  DevFast: false,
+  DevFast: true,
   DevZoom: 8,
   Level: 8, //0123456
   ModeInfinity: false,
@@ -53,7 +53,7 @@ export const debugInit: Debug = {
   NNHelpPit: true,
   NNHelpWall: true,
   NNIsLSTM: false,
-  NNP1Train: false,
+  NNP1Train: true,
 };
 
 export const debugMax: Debug = {

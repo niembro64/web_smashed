@@ -742,3 +742,9 @@ export interface NNOutput {
   controllerY: number;
   [key: string]: any;
 }
+
+export type NNTrainProgressObject = {
+  name: string;
+  value: number;
+  error: number;
+};
