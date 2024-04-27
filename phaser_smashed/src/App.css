@@ -309,7 +309,7 @@ h2 {
   /* direction: rtl; */
   /* cursor: all-scroll; */
   padding: 1%;
-  border: 3px solid white;
+  /* border: 3px solid white; */
   background-color: #0a0a1a;
 }
 .scroller::-webkit-scrollbar {
@@ -1910,7 +1910,8 @@ td > div:nth-child(2) {
   bottom: 5%;
   left: 5%;
   padding: 1%;
-  border: 3px solid white;
+  border: 3px solid rgb(169, 126, 134);
+  border-radius: var(--border-radius-small);
 }
 
 .show-all-show {

@@ -2045,7 +2045,7 @@ function Play() {
                   setHideNiemoIp((x) => !hideNiemoIp);
                 }}
               >
-                FILTER
+                Filter
               </div>
               <div className="scroller" ref={scrollerRef}>
                 <table>
