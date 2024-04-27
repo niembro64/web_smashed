@@ -1181,10 +1181,10 @@ function Play() {
                     : ' startTitleInit')
                 }
                 onMouseDown={() => {
-                  console.log('mouse down');
+                  print('mouse down');
                 }}
                 onMouseUp={() => {
-                  console.log('mouse up');
+                  print('mouse up');
                 }}
               >
                 <div

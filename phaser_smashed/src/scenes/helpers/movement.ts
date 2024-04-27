@@ -490,8 +490,7 @@ export function getNearestAttackPhysicalXYFromPlayer(
       const myX = player.char.sprite.x;
       const myY = player.char.sprite.y;
       if (
-        getDistance(myX, myY, newX, newY) <
-        getDistance(myX, myY, currX, currY)
+        getDistance(myX, myY, newX, newY) < getDistance(myX, myY, currX, currY)
       ) {
         currX = newX;
         currY = newY;
@@ -619,8 +618,8 @@ export function getDistance(
 
 export function updateAttackEnergyFlipXVel(game: Game): void {
   for (let i = 0; i < game.players.length; i++) {
-    let ae = game.players[i].char.attackEnergy;
-    // console.log(ae.accX);
+    const ae = game.players[i].char.attackEnergy;
+
     if (ae.sprite.body.velocity.x > 0) {
       ae.sprite.flipX = false;
     }
@@ -631,8 +630,8 @@ export function updateAttackEnergyFlipXVel(game: Game): void {
 }
 export function updateAttackEnergyFlipXAcc(game: Game): void {
   for (let i = 0; i < game.players.length; i++) {
-    let ae = game.players[i].char.attackEnergy;
-    // console.log(ae.accX);
+    const ae = game.players[i].char.attackEnergy;
+
     if (ae.accX > 0) {
       ae.sprite.flipX = false;
     }
@@ -656,7 +655,6 @@ export function updateAttackEnergyVelPrev(game: Game): void {
     game.players[i].char.attackEnergy.velPrevY =
       game.players[i].char.attackEnergy.sprite.body.velocity.y;
   }
-  // console.log(game.players[0].char.attackEnergy.accX);
 }
 
 export function getIsSpriteMoving(
@@ -664,7 +662,7 @@ export function getIsSpriteMoving(
 ): boolean {
   const tolerance = 0.1;
   const isMoving = Math.abs(sprite.body.velocity.x) > tolerance;
-  // console.log('isMoving', isMoving, 'velocity', sprite.body.velocity);
+  // print('isMoving', isMoving, 'velocity', sprite.body.velocity);
   return isMoving;
 }
 

@@ -1,8 +1,8 @@
-import { print } from "../../views/client";
-import Game from "../Game";
-import { Player, SpriteStateName } from "../interfaces";
-import { hasPlayerTouchedWallRecently } from "./movement";
-import { getHasBeenGameDurationSinceMoment } from "./powers";
+import { print } from '../../views/client';
+import Game from '../Game';
+import { Player, SpriteStateName } from '../interfaces';
+import { hasPlayerTouchedWallRecently } from './movement';
+import { getHasBeenGameDurationSinceMoment } from './powers';
 
 export function updateSpritesFlipX(game: Game): void {
   game.players.forEach((player) => {
@@ -29,8 +29,8 @@ export function updateSpriteFilter(
   game: Game
 ): void {
   if (player.char.colorFilterBlink) {
-    if (player.state.name === "player-state-hurt") {
-      if (player.char.powerStateCurr.name === "dark") {
+    if (player.state.name === 'player-state-hurt') {
+      if (player.char.powerStateCurr.name === 'dark') {
         if (
           Math.floor(
             (game.gameNanoseconds - player.state.gameStamp) /
@@ -79,7 +79,7 @@ export function updateSpriteFilter(
     }
   }
 
-  if (player.char.powerStateCurr.name === "dark") {
+  if (player.char.powerStateCurr.name === 'dark') {
     filterPlayerDark(player, playerIndex, game);
     return;
   }
@@ -89,7 +89,6 @@ export function updateSpriteFilter(
     return;
   }
 
-  // console.log("curr", player.char.damageCurr, "prev", player.char.damagePrev);
   if (player.char.damageCurr < player.char.damagePrev) {
     if (
       Math.floor(
@@ -230,27 +229,27 @@ export function setTintPlayerTLight(player: Player, game: Game): void {
 
 // FILL
 export function setFillPlayerID(player: Player, circleColor: number): void {
-  player.char.sprite.setTint("transparent");
+  player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(circleColor);
   player.char.sprite.setAlpha(1);
 }
 export function setFillPlayerTDark(player: Player, game: Game): void {
-  player.char.sprite.setTint("transparent");
+  player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0x444444);
   player.char.sprite.setAlpha(0.8);
 }
 export function setFillPlayerDark(player: Player, game: Game): void {
-  player.char.sprite.setTint("transparent");
+  player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0x444444);
   player.char.sprite.setAlpha(1);
 }
 export function setFillPlayerRed(player: Player, game: Game): void {
-  player.char.sprite.setTint("transparent");
+  player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0xaa3333);
   player.char.sprite.setAlpha(1);
 }
 export function setFillPlayerTRed(player: Player, game: Game): void {
-  player.char.sprite.setTint("transparent");
+  player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0xaa3333);
   player.char.sprite.setAlpha(0.8);
 }
@@ -287,7 +286,7 @@ export function filterAttackEnergyNormal(
     setFillAttackEnergyID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
     setTintAttackEnergyNormal(player);
-    if (player.char.name === "Link") {
+    if (player.char.name === 'Link') {
       setTintAttackPhysicalNormal(player);
     } else {
       setFillAttackPhysicalID(
@@ -338,7 +337,7 @@ export function setFillAttackPhysicalID(
   player: Player,
   circleColor: number
 ): void {
-  player.char.attackPhysical.sprite.setTint("transparent");
+  player.char.attackPhysical.sprite.setTint('transparent');
   player.char.attackPhysical.sprite.setTintFill(circleColor);
   player.char.attackPhysical.sprite.setAlpha(1);
 }
@@ -346,11 +345,11 @@ export function setFillAttackEnergyID(
   player: Player,
   circleColor: number
 ): void {
-  player.char?.attackEnergy?.sprite.setTint("transparent");
+  player.char?.attackEnergy?.sprite.setTint('transparent');
   player.char?.attackEnergy?.sprite.setTintFill(circleColor);
   player.char?.attackEnergy?.sprite.setAlpha(1);
   let aebs = player.char.attackEnergy.attackBullets;
-  print("aebs.bullets", aebs);
+  print('aebs.bullets', aebs);
 
   // aebs?.bullets?.setFillBulletSprites();
   // if (aebs !== null && aebs.bullets !== null) {
@@ -407,7 +406,7 @@ export function updateSpritesheets(game: Game): void {
   const movingYThreshold = 40;
   // update player spritesheets
   game.players.forEach((player, playerIndex) => {
-    if (player.char.srcSpriteSheet !== "") {
+    if (player.char.srcSpriteSheet !== '') {
       let s = player.char.sprite;
 
       let tDown = s.body.touching.down;
@@ -421,13 +420,13 @@ export function updateSpritesheets(game: Game): void {
       let newSpriteStateName: SpriteStateName | null = null;
 
       if (tWall && !tDown && mDown) {
-        newSpriteStateName = "climb";
+        newSpriteStateName = 'climb';
       } else if (tDown) {
-        newSpriteStateName = mHoriz ? "walk" : "idle";
+        newSpriteStateName = mHoriz ? 'walk' : 'idle';
       } else if (mUp) {
-        newSpriteStateName = "jumpUp";
+        newSpriteStateName = 'jumpUp';
       } else if (mDown) {
-        newSpriteStateName = "jumpDown";
+        newSpriteStateName = 'jumpDown';
       }
 
       if (newSpriteStateName !== null) {
@@ -442,7 +441,7 @@ export function updateSpriteState(
   player: Player,
   game: Game
 ): void {
-  if (player.char.srcSpriteSheet !== "") {
+  if (player.char.srcSpriteSheet !== '') {
     if (newState === player.char.ssCurr.name) {
       return;
     }
@@ -467,20 +466,20 @@ export function updateSpriteState(
     let s = player.char.sprite;
 
     switch (curr) {
-      case "idle":
-        s.anims.play(n + "_idle", true);
+      case 'idle':
+        s.anims.play(n + '_idle', true);
         break;
-      case "walk":
-        s.anims.play(n + "_walk", true);
+      case 'walk':
+        s.anims.play(n + '_walk', true);
         break;
-      case "jumpUp":
-        s.anims.play(n + "_jumpUp", true);
+      case 'jumpUp':
+        s.anims.play(n + '_jumpUp', true);
         break;
-      case "jumpDown":
-        s.anims.play(n + "_jumpDown", true);
+      case 'jumpDown':
+        s.anims.play(n + '_jumpDown', true);
         break;
-      case "climb":
-        s.anims.play(n + "_climb", true);
+      case 'climb':
+        s.anims.play(n + '_climb', true);
         break;
     }
   }

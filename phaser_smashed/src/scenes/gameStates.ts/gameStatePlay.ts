@@ -12,7 +12,6 @@ import {
   updateTableGiveHealth,
 } from '../helpers/damage';
 import {
-  printFlagOwnerAndToucher,
   updateFlagColor,
   updateFlagMovement,
   updateFlagOwner,
@@ -80,7 +79,7 @@ export function updateGameStatePlay(
   updateFlagOwner(game);
   updateFlagMovement(game);
   updateFlagColor(game);
-  printFlagOwnerAndToucher(game);
+
   updateSuicide(game);
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);

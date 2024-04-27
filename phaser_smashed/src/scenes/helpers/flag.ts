@@ -57,18 +57,11 @@ export const updateFlagToucher = (game: Game): void => {
     }
   });
 
-  // if (f.toucherPrev.id === newToucherId) {
-  //   return;
-  // }
-
   f.toucherPrev.id = f.toucherCurr.id;
   f.toucherPrev.gameStamp = f.toucherCurr.gameStamp;
 
   f.toucherCurr.id = newToucherId;
   f.toucherCurr.gameStamp = toucherGameStamp;
-
-  // console.log('toucher', f.toucherCurr.id);
-  // console.log('toucherStamp', f.toucherCurr.gameStamp);
 };
 
 export const updateFlagMovement = (game: Game): void => {
@@ -155,17 +148,6 @@ export const updateFlagOwner = (game: Game): void => {
   }
 };
 
-export const printFlagOwnerAndToucher = (game: Game): void => {
-  if (game.flag.completedCurr) {
-    return;
-  }
-
-  let toucher = game.flag.toucherCurr.id;
-  let owner = game.flag.ownerCurr.id;
-
-  // console.log('t:', toucher, 'o:', owner);
-};
-
 export const updateFlagColor = (game: Game): void => {
   let f = game.flag;
   let fs = game.flag.spriteFlagMover;
@@ -173,17 +155,10 @@ export const updateFlagColor = (game: Game): void => {
   let owner = game.flag.ownerCurr.id;
 
   if (f.completedCurr && f.completedCurr && !f.completedPrev) {
-    // fs.setAlpha(0.5);
-    // game.POLE.setAlpha(0.5);
-    // fire.setScale(3);
-    // fire.setAlpha(1);
-    // fire.play('firework');
     return;
   }
 
   if (owner === null) {
-    // console.log('fs', fs);
-    // console.log('fb', fb);
     fs.setTint(0xffffff);
     fb.setTint(0xffffff);
     return;

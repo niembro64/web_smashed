@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game from '../Game';
 import { Player, Velocity } from '../interfaces';
 import {
@@ -119,7 +120,7 @@ export function updateBotNN(
     // TOO FAR UP
     //////////////////////
     if (getIsBotTooFarUp(player, game)) {
-      console.log('toofar high');
+      print('toofar high');
 
       padCurr.down = true;
       padCurr.up = false;
@@ -129,9 +130,4 @@ export function updateBotNN(
       padCurr.Y = false;
     }
   }
-
-  // console.log('p.up', p.up);
-  // console.log('p.down', p.down);
-  // console.log('p.x', p.X);
-  // console.log('p.y', p.Y);
 }

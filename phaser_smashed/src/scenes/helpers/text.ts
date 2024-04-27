@@ -166,9 +166,7 @@ export function updateClockTextUpper(
     for (let i = 0; i < game.shotsLeftCurr; i++) {
       shotsString += emoji.beer;
     }
-    // console.log(
-    //   'shotsLeft: ' + game.shotsLeft + ' shotsString: ' + shotsString + ''
-    // );
+
     game.scoreBoardTimeGame.setText(shotsString);
   } else {
     game.scoreBoardTimeGame.setScale(1 / zoom, 1 / zoom);
@@ -254,7 +252,7 @@ export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
 
   for (let i = 0; i < ecs.length; i++) {
     let p = players[i].endPlace;
-    // console.log('players[i].endPlace: ' + players[i].endPlace);
+
     ecs[p].sprite.setScale(0.682 / zoom, 0.682 / zoom);
 
     ecs[p].sprite.x =

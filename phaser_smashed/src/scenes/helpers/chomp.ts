@@ -33,7 +33,6 @@ export function updateChompVelocity(game: Game): void {
     (1 - getClosestDistance(game) / SCREEN_DIMENSIONS.WIDTH) * 0.9,
     15
   );
-  // console.log('c.percentFramesJump', c.percentFramesJump);
 
   if (
     Math.random() >
@@ -46,8 +45,6 @@ export function updateChompVelocity(game: Game): void {
 
   const randomX = Math.random() * r * 2 - r + x;
   const randomY = getCircleYfromX(randomX, game);
-
-  // console.log('randomX: ', randomX, 'randomY: ', randomY);
 
   const { x: xNew, y: yNew } = getNormalizedVector(
     spriteX,

@@ -212,9 +212,7 @@ export function getEndGame(game: Game): number[] {
     positionsEndGame.push({ id: index, input, shots, deaths, hits });
   });
 
-  // console.log(positionsEndGame);
   let z = getSortedPositionsEndGame(positionsEndGame);
-  // console.log(z);
 
   return z;
 }
