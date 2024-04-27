@@ -1912,24 +1912,31 @@ td > div:nth-child(2) {
   padding: 1%;
   border: 3px solid rgb(169, 126, 134);
   border-radius: var(--border-radius-small);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 1);
+  color: rgb(169, 126, 134);
+  cursor: pointer;
 }
 
 .show-all-show {
   background-color: black;
+
+  color: white;
 }
 
 .show-all-show:hover {
-  background-color: var(--gray-medium);
+  color: white;
+  background-color: rgb(36, 27, 29);
 }
 .show-all-show:active {
-  background-color: var(--gray-light);
+  background-color: rgb(27, 20, 21);
 }
 
 .show-all-hide {
-  background-color: rgb(119, 89, 94);
+  background-color: rgb(120, 92, 97);
+  color: white;
 }
 .show-all-hide:hover {
-  background-color: rgb(169, 126, 134);
+  background-color: rgb(119, 89, 94);
 }
 .show-all-hide:active {
   background-color: rgb(32, 28, 28);
