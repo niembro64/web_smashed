@@ -2051,9 +2051,9 @@ function Play() {
                         return null;
                       }
 
-                      if (hideNiemoIp && s.city === 'Stamford') {
-                        return null;
-                      }
+                      // if (hideNiemoIp && s.city === 'Stamford') {
+                      //   return null;
+                      // }
 
                       let gameViewTop: string = '';
                       let gameViewBottom: string = '';
@@ -2138,8 +2138,9 @@ function Play() {
                       return (
                         <tr id={sIndex % 2 ? 'td-odd' : 'td-even'} key={sIndex}>
                           <td id="title" className="td-left">
-                            {paddedIndex} {formattedDate} {s.country} {s.region}{' '}
-                            {s.city}
+                            {s.country} {s.region} {s.city} {s.ip}
+                            {/* {paddedIndex} {formattedDate} {s.country} {s.region}{' '}
+                            {s.city} {s.ip} */}
                           </td>
                           <td className="td-left">
                             <div>{gameViewTop ? gameViewTop : ' '}</div>
