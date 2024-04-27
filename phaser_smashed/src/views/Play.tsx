@@ -1213,7 +1213,7 @@ function Play() {
           <div className="player-choices">
             <div className="player-choices-left">
               {Object.entries(debugState).map(([key, value], index: number) => {
-                if (!showOptionOnMainScreenInit[key]) {
+                if (!mainOptionsDebugShowState[key]) {
                   return null;
                 }
 
@@ -1234,7 +1234,9 @@ function Play() {
                           newMainOpotionsDebugShow['Shots'] = 1;
                         }
 
-                        setMainOptionsDebugShowState(newMainOpotionsDebugShow);
+                        setMainOptionsDebugShowState(
+                          (x) => newMainOpotionsDebugShow
+                        );
                       }
 
                       soundManager.blipSound();
@@ -1754,7 +1756,7 @@ function Play() {
               <div id="debug-col">
                 {Object.entries(debugState).map(
                   ([key, value], index: number) => {
-                    if (!!showOptionOnMainScreenInit[key]) {
+                    if (!!mainOptionsDebugShowState[key]) {
                       return null;
                     }
 
