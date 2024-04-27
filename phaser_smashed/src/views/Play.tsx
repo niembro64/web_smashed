@@ -498,8 +498,8 @@ function Play() {
     soundManager.dice();
 
     const numBase: number = 4;
-    const numChez: number = debugState.UseChez ? 2 : 0;
-    const numKoopas: number = debugState.UseKoopas ? 3 : 0;
+    const numChez: number = debugState.AllowChez ? 2 : 0;
+    const numKoopas: number = debugState.AllowKoopas ? 3 : 0;
     const numTotal: number = numBase + numChez + numKoopas;
 
     const ratioBase: number = numBase / numTotal;
@@ -713,7 +713,7 @@ function Play() {
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debugState.UseChez || webState !== 'web-state-setup') {
+    if (debugState.AllowChez || webState !== 'web-state-setup') {
       print('debugState.UseChez || webState !== start');
       return;
     }
@@ -739,7 +739,7 @@ function Play() {
     const choice = choices[playerIndex];
     let newCharacterId = choice.characterId + 1;
 
-    if (!debugState.DevMode && !debugState.UseChez) {
+    if (!debugState.DevMode && !debugState.AllowChez) {
       while (newCharacterId === 4 || newCharacterId === 5) {
         newCharacterId++;
       }
@@ -749,7 +749,7 @@ function Play() {
       newCharacterId = 0;
     }
 
-    if (!debugState.DevMode && !debugState.UseKoopas && newCharacterId > 5) {
+    if (!debugState.DevMode && !debugState.AllowKoopas && newCharacterId > 5) {
       newCharacterId = 0;
     }
 
@@ -1232,31 +1232,36 @@ function Play() {
               }
             />
           )}
-          <div className={'start-title-wrapper'}>
-            <div
-              className={
-                'start-title' +
-                (webState === 'web-state-setup'
-                  ? ' startTitleStart'
-                  : ' startTitleInit')
-              }
-              onMouseDown={() => {
-                console.log('mouse down');
-              }}
-              onMouseUp={() => {
-                console.log('mouse up');
-              }}
-            >
+          {!debugState.DevMode && (
+            <div className={'start-title-wrapper'}>
               <div
+                className={
+                  'start-title' +
+                  (webState === 'web-state-setup'
+                    ? ' startTitleStart'
+                    : ' startTitleInit')
+                }
                 onMouseDown={() => {
-                  setWebState('web-state-setup');
+                  console.log('mouse down');
+                }}
+                onMouseUp={() => {
+                  console.log('mouse up');
                 }}
               >
-                <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
+                <div
+                  onMouseDown={() => {
+                    setWebState('web-state-setup');
+                  }}
+                >
+                  <img
+                    src="images/smashed_x10_gif.gif"
+                    alt="Smashed Title Gif"
+                  />
+                </div>
+                <h1>{webState === 'web-state-init' ? '?' : 'SMASHED'}</h1>
               </div>
-              <h1>{webState === 'web-state-init' ? '?' : 'SMASHED'}</h1>
             </div>
-          </div>
+          )}
 
           <div className="player-choices">
             <div className="player-choices-left">
@@ -1440,7 +1445,23 @@ function Play() {
                     )}
                     {inputArray[pIndex] === 1 && (
                       <div
-                        className="b-oscuro b-dark"
+                        className={
+                          'b-oscuro b-dark' +
+                          (() => {
+                            switch (pIndex) {
+                              case 0:
+                                return ' b-dark-red';
+                              case 1:
+                                return ' b-dark-blue';
+                              case 2:
+                                return ' b-dark-yellow';
+                              case 3:
+                                return ' b-dark-green';
+                              default:
+                                return '';
+                            }
+                          })()
+                        }
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1465,7 +1486,23 @@ function Play() {
                     )}
                     {inputArray[pIndex] === 2 && (
                       <div
-                        className="b-oscuro b-dark"
+                        className={
+                          'b-oscuro b-dark' +
+                          (() => {
+                            switch (pIndex) {
+                              case 0:
+                                return ' b-dark-red';
+                              case 1:
+                                return ' b-dark-blue';
+                              case 2:
+                                return ' b-dark-yellow';
+                              case 3:
+                                return ' b-dark-green';
+                              default:
+                                return '';
+                            }
+                          })()
+                        }
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1493,7 +1530,23 @@ function Play() {
                     )}
                     {inputArray[pIndex] === 3 && (
                       <div
-                        className="b-oscuro b-dark"
+                        className={
+                          'b-oscuro b-dark' +
+                          (() => {
+                            switch (pIndex) {
+                              case 0:
+                                return ' b-dark-red';
+                              case 1:
+                                return ' b-dark-blue';
+                              case 2:
+                                return ' b-dark-yellow';
+                              case 3:
+                                return ' b-dark-green';
+                              default:
+                                return '';
+                            }
+                          })()
+                        }
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1504,7 +1557,23 @@ function Play() {
                     )}
                     {inputArray[pIndex] === 4 && (
                       <div
-                        className="b-oscuro b-dark"
+                        className={
+                          'b-oscuro b-dark' +
+                          (() => {
+                            switch (pIndex) {
+                              case 0:
+                                return ' b-dark-red';
+                              case 1:
+                                return ' b-dark-blue';
+                              case 2:
+                                return ' b-dark-yellow';
+                              case 3:
+                                return ' b-dark-green';
+                              default:
+                                return '';
+                            }
+                          })()
+                        }
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}

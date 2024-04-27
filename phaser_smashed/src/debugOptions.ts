@@ -1,7 +1,7 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
-  DevMode: false,
+  DevMode: true,
   DevFast: false,
   DevZoom: 8,
   Level: 8, //0123456
@@ -33,8 +33,8 @@ export const debugInit: Debug = {
   ConsoleLogConnected: false,
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
-  UseKoopas: true,
-  UseChez: false,
+  AllowKoopas: true,
+  AllowChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
   CharOverride: false,
@@ -87,8 +87,8 @@ export const debugMax: Debug = {
   ConsoleLogConnected: false,
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
-  UseKoopas: true,
-  UseChez: true,
+  AllowKoopas: true,
+  AllowChez: true,
   SlowMoExplosions: true,
   TypedLoadingText: false,
   DevMode: true,
@@ -144,8 +144,8 @@ export const showOptionOnMainScreenInit: Debug = {
   ConsoleLogConnected: false,
   UpdateLoopsNumSkip: 0, // 012
   LoadTimeExtra: false,
-  UseKoopas: false,
-  UseChez: false,
+  AllowKoopas: false,
+  AllowChez: false,
   SlowMoExplosions: false,
   TypedLoadingText: false,
   DevMode: false,
