@@ -1,7 +1,7 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
-  DevMode: true,
+  DevMode: false,
   DevFast: true,
   DevZoom: 8,
   Level: 8, //0123456
@@ -52,8 +52,7 @@ export const debugInit: Debug = {
   NNHelpCenterize: false,
   NNHelpPit: true,
   NNHelpWall: true,
-  NNIsLSTM: false,
-  NNP1Train: true,
+  NNP1Train: false,
 };
 
 export const debugMax: Debug = {
@@ -100,7 +99,6 @@ export const debugMax: Debug = {
   TrophiesOnShots: true,
   TrophiesAlways: true,
   NNP1Train: true,
-  NNIsLSTM: false,
   NNHelpScreen: true, // 012
   NNHelpCenterize: true,
   NNHelpPit: true,
@@ -161,7 +159,6 @@ export const showOptionOnMainScreenInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   NNP1Train: false,
-  NNIsLSTM: false,
   InstReplay: true,
   ReplayFullQuality: false,
   ReplayControls: false,

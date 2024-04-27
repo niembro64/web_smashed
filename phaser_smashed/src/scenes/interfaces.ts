@@ -46,7 +46,6 @@ export interface Debug {
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
   NNP1Train: boolean;
-  NNIsLSTM: boolean;
   NNHelpScreen: boolean;
   NNHelpPit: boolean;
   NNHelpWall: boolean;

@@ -1,6 +1,4 @@
 import Game from './Game';
-// import { nnConfigLSTM, nnConfigNN } from './helpers/nn';
-// import { netJsonNN } from './helpers/nnJson';
 import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
 import { nnConfigNN, nnJsonNN } from './helpers/nnJsonNN';
 import { print } from '../views/client';
@@ -56,12 +54,8 @@ export function preload(game: Game): void {
 
   game.shotsLeftCurr = game.debug.Shots;
 
-  if (game.debug.NNIsLSTM) {
-  } else {
-    game.nnNet = new NeuralNetwork(nnConfigNN);
-    game.nnNet = game.nnNet.fromJSON(nnJsonNN);
-    // game.nnNet = new recurrent.RNN(nnConfigNN);
-  }
+  game.nnNet = new NeuralNetwork(nnConfigNN);
+  game.nnNet = game.nnNet.fromJSON(nnJsonNN);
 
   //////////////////////////////
   // Load Audio

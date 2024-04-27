@@ -9,7 +9,7 @@ import {
   getNearestPlayerAliveFromXY,
   getNearestPlayerFromPlayer,
 } from './movement';
-import { nnConfigLSTM } from './nnJsonLSTM';
+
 import { NNRatiosNN, nnConfigNN } from './nnJsonNN';
 
 export const traininNumSteps: number = 50;
@@ -90,31 +90,6 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
       },
     })
   );
-};
-
-export const NNTrainLSTM = async (game: Game): Promise<void> => {
-  if (!game.debug.NNP1Train) {
-    return;
-  }
-
-  print('NNTrain');
-
-  game.nnNet = new recurrent.LSTM(nnConfigLSTM);
-  print('game.nnNet', game.nnNet);
-  await game.nnNet.trainAsync(game.nnObjects, {
-    iterations: 100,
-    learningRate: 0.01,
-    errorThresh: 0.05,
-    logPeriod: 1,
-    log: (stats: any) => print(stats),
-  });
-
-  print('game.nnNet after train', game.nnNet);
-  const netJson = game.nnNet.toJSON();
-  print('netJson', JSON.stringify(netJson, null, 2));
-
-  const newOutRatios = NNGetOutputRatios(game);
-  print('newOutRatios', newOutRatios);
 };
 
 export const NNGetOutputRatios = (game: Game): number[] => {
@@ -304,7 +279,7 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const { x: enemyAttackEnergyX, y: enemyAttackEnergyY } =
     getNearestAttackEnergyXYFromPlayer(player, 0, game);
-  
+
   const { x: enemyAttackPhysicalX, y: enemyAttackPhysicalY } =
     getNearestAttackPhysicalXYFromPlayer(player, 0, game);
 

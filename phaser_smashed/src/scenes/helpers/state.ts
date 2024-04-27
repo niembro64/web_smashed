@@ -53,7 +53,7 @@ import {
   updateShotsOnPlayers,
 } from './text';
 import { axiosUpsertOne, print } from '../../views/client';
-import { NNTrainLSTM, NNTrainNN, deleteLastNNObjects } from './nn';
+import { NNTrainNN, deleteLastNNObjects } from './nn';
 
 export function setGameState(game: Game, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;
@@ -146,15 +146,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
-
-      print('emitting');
-
-      if (game.debug.NNIsLSTM) {
-        NNTrainLSTM(game);
-      } else {
-        NNTrainNN(game);
-      }
-
+      NNTrainNN(game);
       break;
     default:
       print('BROKEN_____________________');

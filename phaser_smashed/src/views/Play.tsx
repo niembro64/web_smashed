@@ -2213,6 +2213,8 @@ function Play() {
               onClick={() => {
                 if (nnJson !== null && navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(nnJson);
+
+                  soundManager.blipSound();
                 }
               }}
             >
@@ -2223,6 +2225,8 @@ function Play() {
               onClick={() => {
                 if (nnRatios !== null && navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(nnRatios.toString());
+
+                  soundManager.blipSound();
                 }
               }}
             >
