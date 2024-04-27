@@ -102,7 +102,7 @@ export const quotes: Quote[] = [
   { name: 'Eddie-Z', text: "He'll do it again, yeah!" },
   {
     name: 'TR3',
-    text: 'How am I supposed to make more than that... $#!&... happen?',
+    text: 'How am I supposed to make more than that... shit... happen?',
   },
   {
     name: 'DDj',

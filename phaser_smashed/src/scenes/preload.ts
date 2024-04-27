@@ -181,8 +181,9 @@ export function preload(game: Game): void {
   game.load.image('blank', 'images/blank.png');
   game.load.image('pole', 'images/pole.png');
 
+  // game.load.image('background', 'images/xp.jpg');
   game.load.image('background', 'images/darkxp.jpg');
-  game.load.image('background_outline', 'images/outline_blocks_07.png');
+  game.load.image('background_outline', 'images/outline_blocks_11.png');
   game.load.image('centerWhite', 'images/wx.png');
   game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');
@@ -198,7 +199,7 @@ export function preload(game: Game): void {
   game.load.image('glass_empty', 'images/niemo_shot_empty.png');
 
   game.load.image('chomp_block', 'images/chomp_block.png');
-  game.load.image('chomp_link', 'images/chomp_chain_trans.png');
+  game.load.image('chomp_link', 'images/chomp_chain_trans_lighter.png');
 
   for (let i = 0; i < 4; i++) {
     game.load.image(
@@ -239,10 +240,10 @@ export function preload(game: Game): void {
 
   game.load.spritesheet({
     key: 'chomp',
-    url: 'images/chompsheet4.png',
+    url: 'images/chompsheet5.png',
     frameConfig: {
-      frameWidth: 32,
-      frameHeight: 32,
+      frameWidth: 64,
+      frameHeight: 64,
       startFrame: 0,
       endFrame: 3,
       margin: 0,
