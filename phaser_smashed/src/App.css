@@ -1315,15 +1315,20 @@ h2 {
 }
 
 .loading-table-wrapper {
-  height: 10%;
+  flex: 0.3;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  /* border: 10px dashed red; */
 }
 .loading-table {
   position: relative;
+  height: 100%;
+  /* border: 10px dashed blue; */
   /* top: 60%; */
   /* left: 50%; */
   /* transform-origin: 50% 50%; */
@@ -1423,8 +1428,9 @@ h2 {
 }
 
 .first-loader-p {
+  /* flex: 0.2; */
   width: 30%;
-  margin: 3% 0% 0% 0%;
+  margin: 3% 0% 1.5% 0%;
   margin-left: -100%;
   margin-right: -100%;
   text-align: center;
@@ -1451,6 +1457,7 @@ h2 {
 }
 
 .second-loader-p {
+  flex: 1;
   margin: 0% 0% 0% 12%;
   font-size: 1.5vw;
 }
@@ -1507,9 +1514,16 @@ h2 {
 
 /* * ///////////////////////////////////////////////////////////////////////// */
 .spinnerShrink {
-  transform: scale(0.3);
+  /* transform: scale(0.3); */
+  flex: 1.5;
   overflow: visible;
-  margin-bottom: 1vh;
+  width: 100%;
+  /* margin-bottom: 1vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 10px dashed lime; */
 }
 .spinnerOuterOuter {
   position: relative;
