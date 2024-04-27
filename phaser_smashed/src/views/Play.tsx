@@ -1968,13 +1968,19 @@ function Play() {
             >
               <h1>About</h1>
               <div className="horiz">
-                <div className="horiz-item-right">
-                  This game is a tribute to "Smashed Bros", a drinking game
-                  invented in St. Louis in late 2009 at the Chemon House. <br />
-                  <br />
-                  niemeyer.eric@gmail.com
+                <div
+                  className="horiz-item-big"
+                  onClick={(x) => {
+                    x.stopPropagation();
+                  }}
+                >
+                  <p>
+                    This game is a tribute to "Smashed Bros", a drinking game
+                    invented in St. Louis in late 2009 at the Chemon House.
+                  </p>
+                  <p>niemeyer.eric@gmail.com</p>
                 </div>
-                <div className="horiz-item-left">
+                <div className="horiz-item-small">
                   <div className="about-image-wrapper">
                     <img
                       className="about-image"
@@ -1993,7 +1999,7 @@ function Play() {
                     <span className="text-white small">Website</span>
                   </a>
                 </div>
-                <div className="horiz-item-left">
+                <div className="horiz-item-small">
                   <div className="about-image-wrapper">
                     <img
                       className="about-image"
@@ -2011,7 +2017,7 @@ function Play() {
                     <span className="text-white small">Music</span>
                   </a>
                 </div>
-                <div className="horiz-item-left">
+                <div className="horiz-item-small">
                   <div className="about-image-wrapper">
                     <img
                       className="about-image"
