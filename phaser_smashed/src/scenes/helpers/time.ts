@@ -20,16 +20,6 @@ export function updateTimeSlowdown(game: Game): void {
   game.motionSlowdown = game.motionSlowdown * 0.95 + 0.05;
 }
 
-export function isAnyExplosionActive(game: Game): boolean {
-  let found = false;
-  game.chomp.darknessMoments.explosions.forEach((e, eIndex) => {
-    if (e.sprite.anims.isPlaying) {
-      found = true;
-    }
-  });
-  return found;
-}
-
 export function addToMotionSlowdown(amount: number, game: Game): void {
   game.motionSlowdown *= amount;
 }

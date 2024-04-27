@@ -662,17 +662,5 @@ export function getIsSpriteMoving(
 ): boolean {
   const tolerance = 0.1;
   const isMoving = Math.abs(sprite.body.velocity.x) > tolerance;
-  // print('isMoving', isMoving, 'velocity', sprite.body.velocity);
   return isMoving;
 }
-
-// export function getIsSpriteOnScreen(
-//   sprite: Phaser.Physics.Arcade.Sprite
-// ): boolean {
-//   return (
-//     sprite.x > 0 &&
-//     sprite.x < SCREEN_DIMENSIONS.WIDTH &&
-//     sprite.y > 0 &&
-//     sprite.y < SCREEN_DIMENSIONS.HEIGHT
-//   );
-// }

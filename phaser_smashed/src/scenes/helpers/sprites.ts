@@ -385,6 +385,9 @@ export function setAnimationsOff(game: Game): void {
   for (let i = 0; i < game.lavas.length; i++) {
     game.lavas[i].sprite.anims.pause();
   }
+  for (let i = 0; i < game.chomp.darknessMoments.explosions.length; i++) {
+    game.chomp.darknessMoments.explosions[i].sprite.anims.pause();
+  }
 }
 
 export function setAnimationsOn(game: Game): void {
@@ -398,6 +401,9 @@ export function setAnimationsOn(game: Game): void {
   }
   for (let i = 0; i < game.lavas.length; i++) {
     game.lavas[i].sprite.anims.resume();
+  }
+  for (let i = 0; i < game.chomp.darknessMoments.explosions.length; i++) {
+    game.chomp.darknessMoments.explosions[i].sprite.anims.resume();
   }
 }
 
