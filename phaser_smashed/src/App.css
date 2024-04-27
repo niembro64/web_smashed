@@ -735,11 +735,11 @@ h2 {
   overflow: visible;
 }
 .id-circle {
-  height: 3vh;
-  width: 3vh;
+  height: 2vw;
+  width: 2vw;
   border-radius: 50%;
   background-color: var(--gray-light);
-  margin-bottom: 2.5vh;
+  margin-bottom: 2vw;
 }
 .id-red {
   background-color: var(--id-red);
