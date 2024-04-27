@@ -2163,3 +2163,35 @@ td > div:nth-child(2) {
   padding: 0%;
   margin: 0%;
 }
+
+.mobile-warning {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3vw;
+  font-weight: bold;
+  text-align: center;
+  padding: 2vw 3vw;
+  border-radius: var(--border-radius-small);
+  pointer-events: none;
+}
+
+.mobile-warning > img {
+
+  width: 50%;
+  height: 100%;
+  object-fit: contain;
+}
+.mobile-warning > span {
+
+  padding-bottom: 3%;
+}
