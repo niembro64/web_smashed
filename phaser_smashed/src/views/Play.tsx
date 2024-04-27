@@ -1075,36 +1075,6 @@ function Play() {
     return newVal;
   };
 
-  const [text, setText] = useState('');
-  const interval: any = useRef(null);
-
-  useEffect(
-    function () {
-      if (!debugState.TypedLoadingText) {
-        return;
-      }
-
-      if (interval.current !== null) {
-        clearInterval(interval.current);
-      }
-
-      let tempIndex = 0;
-      let tempText = '';
-      interval.current = setInterval(function () {
-        tempText = quotes[quotesRandomNumber].text.substring(0, tempIndex + 1);
-        setText(tempText);
-
-        if (tempIndex === quotes[quotesRandomNumber].text.length - 1) {
-          clearInterval(interval.current);
-          interval.current = null;
-        }
-
-        tempIndex++;
-      }, 1700 / quotes[quotesRandomNumber].text.length);
-    },
-    [quotesRandomNumber, webState]
-  );
-
   return (
     <div id="top-level" className="over-div">
       {!debugState.DevMode &&
@@ -1185,9 +1155,7 @@ function Play() {
               alt="table"
             />
           </div>
-          {debugState.TypedLoadingText && (
-            <p className={'.first-loader-p'}>{text}</p>
-          )}
+
           {!debugState.TypedLoadingText && (
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
