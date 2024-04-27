@@ -118,7 +118,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (!debugState.InstReplay) {
+    if (debugState.InstReplayQual === 0) {
       setIsReplayHidden(true);
       return;
     }
@@ -135,11 +135,19 @@ function Play() {
       const stream = canvas.captureStream();
       const mediaRecorder = new MediaRecorder(
         stream,
-        debugState.ReplayFullQuality
-          ? {}
-          : {
+        debugState.InstReplayQual === 1
+          ? {
+              videoBitsPerSecond: 20000,
+            }
+          : debugState.InstReplayQual === 2
+          ? {
               videoBitsPerSecond: 100000,
             }
+          : debugState.InstReplayQual === 3
+          ? {
+              // FULL QUALITY
+            }
+          : {}
       );
 
       mediaRecorder.ondataavailable = (e) => {
@@ -209,7 +217,7 @@ function Play() {
     return () => {
       window.removeEventListener('gameState', handlePowerUpCollected);
     };
-  }, [debugState.ReplayFullQuality, debugState.ReplayOn]);
+  }, [debugState.ReplayOn]);
 
   const setAllTrainingStatesToNull = () => {
     setNnJson(null);

@@ -18,8 +18,8 @@
   --id-blue: #0078d7;
   --id-yellow: #fff100;
   --id-green: #16c60c;
-  --id-red-dark: #5c1016;
-  --id-blue-dark: #102f6c;
+  --id-red-dark: #6c2026;
+  --id-blue-dark: #203f7c;
   --id-yellow-dark: #6c6c00;
   --id-green-dark: #005c00;
   flex: 1;
@@ -1740,14 +1740,14 @@ h2 {
 }
 .replay {
   position: absolute;
-  bottom: 24%;
+  bottom: 22%;
   z-index: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 1.5vw;
+  font-size: 80%;
   text-align: center;
   padding: 10% 2% 1% 2%;
   pointer-events: none;
