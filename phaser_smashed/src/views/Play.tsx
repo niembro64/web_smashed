@@ -2036,10 +2036,12 @@ function Play() {
 
                   <tbody>
                     {allSessions.map((s: SessionInfo, sIndex: number) => {
+                      print(s.city, s.ip);
                       if (
                         hideNiemoIp &&
                         (s.ip === '69.124.166.109' ||
                           s.ip === '169.254.225.231' ||
+                          s.ip === '24.186.254.151' ||
                           s.ip === '24.186.254.151' ||
                           s.ip === '69.115.173.120' ||
                           s.ip === '' ||
@@ -2049,9 +2051,9 @@ function Play() {
                         return null;
                       }
 
-                      // if (hideNiemoIp && s.city === 'Stamford') {
-                      //   return null;
-                      // }
+                      if (hideNiemoIp && s.city === 'Stamford') {
+                        return null;
+                      }
 
                       let gameViewTop: string = '';
                       let gameViewBottom: string = '';
