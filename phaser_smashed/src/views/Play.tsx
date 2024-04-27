@@ -294,13 +294,6 @@ function Play() {
     print('sessionInfo', session);
   }, [session]);
 
-  useEffect(() => {
-    if (allSessions === null) {
-      return;
-    }
-    // print('allSessions Updated');
-  }, [allSessions]);
-
   function captureScreenshot() {
     print('Capture Screenshot');
 
@@ -2010,7 +2003,7 @@ function Play() {
                 onClick={(e) => {
                   e.stopPropagation();
                   soundManager.blipSound();
-                  setHideNiemoIp(!hideNiemoIp);
+                  setHideNiemoIp((x) => !hideNiemoIp);
                 }}
               >
                 FILTER
@@ -2044,14 +2037,20 @@ function Play() {
                       if (
                         hideNiemoIp &&
                         (s.ip === '69.124.166.109' ||
+                          s.ip === '169.254.225.231' ||
+                          s.ip === '24.186.254.151' ||
                           s.ip === '69.115.173.120' ||
                           s.ip === '' ||
                           s.ip === 'null' ||
-                          s.ip === null ||
                           s?.ip === null)
                       ) {
                         return null;
                       }
+
+                      // if (hideNiemoIp && s.city === 'Stamford') {
+                      //   return null;
+                      // }
+
                       let gameViewTop: string = '';
                       let gameViewBottom: string = '';
                       let sc: SmashConfig | null = null;
