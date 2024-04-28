@@ -1129,7 +1129,7 @@ function Play() {
           <div className="spinner-box">
             <div className="spinner-rotate-x">
               <div className="spinner-rotate-y">
-                <div className="spinner-rotate-z">
+                <div className="spinner">
                   <div className="cube_side">
                     <div className="cube_side_inside"></div>
                   </div>
