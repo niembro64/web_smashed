@@ -1,7 +1,8 @@
 import Game from './Game';
 import { NeuralNetwork, Recurrent, recurrent } from 'brain.js';
-import { nnConfigNN, nnJsonNN } from './helpers/nnJsonNN';
+import { nnJsonNN } from './helpers/nnJson';
 import { print } from '../views/client';
+import { nnConfigNN } from './helpers/nn';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,

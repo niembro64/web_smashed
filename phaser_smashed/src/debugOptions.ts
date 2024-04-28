@@ -1,13 +1,14 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
+  NNP1Train: true,
+  Minutes: 2, //01234567
   DevMode: false,
   DevFast: false,
   DevZoom: 8,
   Level: 8, //0123456
   ModeInfinity: false,
   Shots: 7, //7
-  Minutes: 1, //01234567
   MusicActive: true,
   MusicTrack: 0, // 0123
   ReadySoundActive: false,
@@ -51,7 +52,6 @@ export const debugInit: Debug = {
   NNHelpCenterize: false,
   NNHelpPit: true,
   NNHelpWall: true,
-  NNP1Train: false,
 };
 
 export const debugMax: Debug = {

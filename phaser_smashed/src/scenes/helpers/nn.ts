@@ -1,4 +1,4 @@
-import { NeuralNetwork, recurrent } from 'brain.js';
+import { NeuralNetwork } from 'brain.js';
 import { print } from '../../views/client';
 import Game from '../Game';
 import { NNObject, Player } from '../interfaces';
@@ -9,8 +9,12 @@ import {
   getNearestPlayerAliveFromXY,
   getNearestPlayerFromPlayer,
 } from './movement';
+import { NNRatiosNN } from './nnRatios';
 
-import { NNRatiosNN, nnConfigNN } from './nnJsonNN';
+export const nnConfigNN = {
+  hiddenLayers: [60, 60],
+  useGpu: true,
+};
 
 export const traininNumSteps: number = 50;
 const maxIterations = 400;
@@ -302,14 +306,14 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.state.name === 'player-state-hurt' ? 1 : 0,
 
       // BUTTONS
-      player.padPrev.up ? 1 : 0,
-      player.padPrev.down ? 1 : 0,
-      player.padPrev.left ? 1 : 0,
-      player.padPrev.right ? 1 : 0,
-      player.padPrev.A ? 1 : 0,
-      player.padPrev.B ? 1 : 0,
-      player.padPrev.X ? 1 : 0,
-      player.padPrev.Y ? 1 : 0,
+      player.padCurr.up ? 1 : 0,
+      player.padCurr.down ? 1 : 0,
+      player.padCurr.left ? 1 : 0,
+      player.padCurr.right ? 1 : 0,
+      player.padCurr.A ? 1 : 0,
+      player.padCurr.B ? 1 : 0,
+      player.padCurr.X ? 1 : 0,
+      player.padCurr.Y ? 1 : 0,
       player.padDebounced.up,
       player.padDebounced.down,
       player.padDebounced.left,
