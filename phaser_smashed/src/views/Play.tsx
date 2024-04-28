@@ -10,7 +10,7 @@ import {
   debugMax,
   showOptionOnMainScreenInit,
 } from '../debugOptions';
-import { traininNumSteps } from '../scenes/helpers/nn';
+import { nnNumTrainingBarTicks } from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
@@ -247,8 +247,8 @@ function Play() {
     const complete = '|';
 
     let str = '';
-    for (let i = 0; i < traininNumSteps; i++) {
-      if (i < n * traininNumSteps) {
+    for (let i = 0; i < nnNumTrainingBarTicks; i++) {
+      if (i < n * nnNumTrainingBarTicks) {
         str += complete;
       } else {
         str += incomplete;

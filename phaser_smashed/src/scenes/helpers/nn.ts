@@ -16,8 +16,7 @@ export const nnConfigNN = {
   useGpu: true,
 };
 
-export const traininNumSteps: number = 25;
-const maxIterations = 300;
+export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
   if (!game.debug.NNP1Train) {
@@ -40,6 +39,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   print('game.nnNet', game.nnNet);
 
   const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
+  const maxIterations = Math.max(10, Math.floor(1000 / game.nnObjects.length));
 
   await game.nnNet.trainAsync(randomizedNnObjects, {
     iterations: maxIterations,
@@ -48,7 +48,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     // learningRate: 0.00000000000000000000001,
     logPeriod: Math.min(
       500,
-      Math.max(5, Math.floor(maxIterations / (traininNumSteps * 10)))
+      Math.max(5, Math.floor(maxIterations / (nnNumTrainingBarTicks * 10)))
     ),
 
     log: (stats: any) => {
