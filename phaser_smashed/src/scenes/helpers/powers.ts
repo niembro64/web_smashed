@@ -45,9 +45,9 @@ export function setPlayerPowerState(
   player: Player,
   game: Game
 ): void {
-  let p = player;
-  let curr = p.char.powerStateCurr;
-  let prev = p.char.powerStatePrev;
+  const p = player;
+  const curr = p.char.powerStateCurr;
+  const prev = p.char.powerStatePrev;
 
   if (stateName === curr.name) {
     return;
@@ -85,7 +85,7 @@ export function setPlayerPowerState(
 }
 
 // export function updateHurtChomp(damage: number, game: Game): void {
-//   let c = game.chomp;
+//   const c = game.chomp;
 
 //   // if (
 //   //   c.filterStateCurr.name === 'hurt' &&
@@ -104,8 +104,8 @@ export function setChompFilterState(
   stateName: ChompFilterStateName,
   game: Game
 ): void {
-  let curr = game.chomp.filterStateCurr;
-  let prev = game.chomp.filterStatePrev;
+  const curr = game.chomp.filterStateCurr;
+  const prev = game.chomp.filterStatePrev;
 
   // if (stateName === curr.name) {
   //   return;
@@ -150,21 +150,21 @@ export function updateChompFilterState(
   damage: number,
   game: Game
 ): void {
-  let c = game.chomp;
-  let curr = c.filterStateCurr;
+  const c = game.chomp;
+  const curr = c.filterStateCurr;
 
   if (damage > 0 && curr.name === 'none') {
     setChompFilterState('hurt', game);
     c.damage += damage;
 
-    let { x, y }: xyVector = getNormalizedVector(
+    const { x, y }: xyVector = getNormalizedVector(
       player.char.attackEnergy.sprite.x,
       player.char.attackEnergy.sprite.y,
       c.sprite.x,
       c.sprite.y
     );
 
-    let b = c.sprite.body;
+    const b = c.sprite.body;
 
     b.setVelocityX(b.velocity.x + x * 500);
     b.setVelocityY(b.velocity.y + y * 500);
@@ -205,9 +205,9 @@ export function setChompPowerState(
   stateName: PowerStateChompName,
   game: Game
 ): void {
-  let c = game.chomp;
-  let curr = c.powerStateCurr;
-  let prev = c.powerStatePrev;
+  const c = game.chomp;
+  const curr = c.powerStateCurr;
+  const prev = c.powerStatePrev;
 
   if (stateName === curr.name) {
     return;
@@ -288,15 +288,15 @@ export function getHasBeenGameDurationSinceMoment(
 export function updatePlayerDarknessEvents(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.powerStateCurr.name === 'dark') {
-      let s = player.char.sprite;
-      let b = player.char.sprite.body;
-      let pj = game.chomp.darknessMoments.PERCENT_DARKNESS_JUMP;
+      const s = player.char.sprite;
+      const b = player.char.sprite.body;
+      const pj = game.chomp.darknessMoments.PERCENT_DARKNESS_JUMP;
 
       // player.char.damage += 1 / 120;
 
       if (Math.random() > 1 - pj) {
-        let baseAmount = 400;
-        let amount =
+        const baseAmount = 400;
+        const amount =
           baseAmount +
           Math.pow(
             game.gameNanoseconds - game.chomp.darknessMoments.chomp,
@@ -308,7 +308,7 @@ export function updatePlayerDarknessEvents(game: Game): void {
 
         addToMotionSlowdown(amount / baseAmount, game);
         playNextExplosion(s.x, s.y, game, amount);
-        let { x, y } = getRandomUnitVector();
+        const { x, y } = getRandomUnitVector();
         // game.SOUND_HIT.play();
 
         player.char.damageCurr += amount / 200;
@@ -329,9 +329,9 @@ export function playNextExplosion(
   game: Game,
   amount: number
 ): void {
-  let c = game.chomp;
-  let eIndex = c.darknessMoments.explosionsIndex;
-  let eArr = c.darknessMoments.explosions;
+  const c = game.chomp;
+  const eIndex = c.darknessMoments.explosionsIndex;
+  const eArr = c.darknessMoments.explosions;
 
   game.chomp.darknessMoments.explosionsIndex = (eIndex + 1) % eArr.length;
 
@@ -347,12 +347,12 @@ export function playNextExplosion(
 }
 
 export function getRandomUnitVector(): xyVector {
-  let xPositive = Math.random() > 0.5 ? 1 : -1;
-  let yPositive = Math.random() > 0.5 ? 1 : -1;
+  const xPositive = Math.random() > 0.5 ? 1 : -1;
+  const yPositive = Math.random() > 0.5 ? 1 : -1;
 
-  let randX = xPositive * Math.random();
+  const randX = xPositive * Math.random();
 
-  let randY = Math.sqrt(1 - randX * randX) * yPositive;
+  const randY = Math.sqrt(1 - randX * randX) * yPositive;
 
   return { x: randX, y: randY };
 }

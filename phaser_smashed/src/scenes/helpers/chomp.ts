@@ -43,18 +43,17 @@ export function updateChompVelocity(game: Game): void {
     return;
   }
 
-  const randomX = Math.random() * r * 2 - r + x;
-  const randomY = getCircleYfromX(randomX, game);
-
-  const { x: xNew, y: yNew } = getNormalizedVector(
-    spriteX,
-    spriteY,
-    randomX,
-    randomY
-  );
-
   if (isChompInsideCircle(game)) {
     if (b.touching.down) {
+      const randomX = Math.random() * r * 2 - r + x;
+      const randomY = getCircleYfromX(randomX, game);
+
+      const { x: xNew, y: yNew } = getNormalizedVector(
+        spriteX,
+        spriteY,
+        randomX,
+        randomY
+      );
       if (c.powerStateCurr.name === 'dark') {
         c.soundAttack.play();
         b.setVelocityY(-1 * Math.abs(yNew + 0.3) * 1000);
@@ -113,7 +112,6 @@ export function updateChompLinkPositions(game: Game): void {
   const c = game.chomp;
   const endX = c.sprite.x;
   const endY = c.sprite.y;
-  const b = c.sprite.body;
   const startX = c.block.x;
   const startY = c.block.y;
   const links = c.links;
