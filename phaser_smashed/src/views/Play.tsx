@@ -226,6 +226,8 @@ function Play() {
     setNnProgress(null);
     setNnErrorCurr(null);
     setNnErrInit(null);
+    setNnNumObj(null);
+    setNnNumIter(null);
   };
 
   const [nnJson, setNnJson] = useState<string | null>(null);
@@ -233,6 +235,8 @@ function Play() {
   const [nnProgress, setNnProgress] = useState<number | null>(null);
   const [nnErrorCurr, setNnErrorCurr] = useState<number | null>(null);
   const [nnErrInit, setNnErrInit] = useState<number | null>(null);
+  const [nnNumObj, setNnNumObj] = useState<number | null>(null);
+  const [nnNumIter, setNnNumIter] = useState<number | null>(null);
 
   const numberToStringWithThreeDigitsAndOneDecimal = (n: number): string => {
     return n.toFixed(0).padStart(3, '0');
@@ -269,6 +273,10 @@ function Play() {
           setNnProgress(0);
           // @ts-ignore
           setNnErrorCurr(0);
+          // @ts-ignore
+          setNnNumIter(t?.detail?.numIter);
+          // @ts-ignore
+          setNnNumObj(t?.detail?.numObj);
           break;
         case 'netJson':
           // @ts-ignore
@@ -2223,6 +2231,8 @@ function Play() {
             </span>
             <span> Error Init {nnErrInit || 0}</span>
             <span> Error Curr {nnErrorCurr || 0}</span>
+            <span> Num Iterat {nnNumIter || 0}</span>
+            <span> Num Object {nnNumObj || 0}</span>
           </div>
 
           <div className="neural-network-train-bottom">

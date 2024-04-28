@@ -23,36 +23,38 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     return;
   }
 
-  window.dispatchEvent(
-    new CustomEvent('nn-train', {
-      detail: {
-        name: 'netStart',
-        value: null,
-        error: null,
-      },
-    })
-  );
-
   print('NNTrain');
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
 
   const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
-  const maxIterations = Math.max(10, Math.floor(1000 / game.nnObjects.length));
+  const numObj: number = game.nnObjects.length;
+  const numIter = Math.floor(1000 * Math.exp(-numObj * 0.005) + 1);
 
+  window.dispatchEvent(
+    new CustomEvent('nn-train', {
+      detail: {
+        name: 'netStart',
+        value: null,
+        error: null,
+        numIter: numIter,
+        numObj: numObj,
+      },
+    })
+  );
   await game.nnNet.trainAsync(randomizedNnObjects, {
-    iterations: maxIterations,
+    iterations: numIter,
     randomize: true,
     learningRate: 0.0001,
     // learningRate: 0.00000000000000000000001,
     logPeriod: Math.min(
       500,
-      Math.max(5, Math.floor(maxIterations / (nnNumTrainingBarTicks * 10)))
+      Math.max(5, Math.floor(numIter / (nnNumTrainingBarTicks * 10)))
     ),
 
     log: (stats: any) => {
-      const percentDone = Math.min(1, stats.iterations / maxIterations);
+      const percentDone = Math.min(1, stats.iterations / numIter);
 
       const error = stats.error;
 
@@ -62,12 +64,11 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
             name: 'netProgress',
             value: percentDone,
             error: error,
+            numIter: numIter,
+            numObj: numObj,
           },
         })
       );
-
-      // print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
-      // print('error', stats.error * 100 + '%');
     },
   });
 
@@ -80,6 +81,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         name: 'netJson',
         value: JSON.stringify(netJson, null, 2),
         error: null,
+        numIter: numIter,
+        numObj: numObj,
       },
     })
   );
@@ -92,6 +95,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         name: 'netRatios',
         value: JSON.stringify(outputButtonRatios, null, 2),
         error: null,
+        numIter: numIter,
+        numObj: numObj,
       },
     })
   );
