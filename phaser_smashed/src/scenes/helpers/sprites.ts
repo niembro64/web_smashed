@@ -303,7 +303,7 @@ export function setTintAttackEnergyID(
 ): void {
   player.char.attackEnergy.sprite.setTint(circleColor);
   player.char.attackEnergy.sprite.setAlpha(1);
-  // let aebs = player.char.attackEnergy.attackBullets;
+  // const aebs = player.char.attackEnergy.attackBullets;
   // if (aebs !== null && aebs.bullets !== null) {
   //   aebs.bullets.children.iterate((child: any) => {
   //     child.setTint(circleColor);
@@ -325,7 +325,7 @@ export function setTintAttackPhysicalNormal(player: Player): void {
 export function setTintAttackEnergyNormal(player: Player): void {
   player.char.attackEnergy.sprite.setTint(0xffffff);
   player.char.attackEnergy.sprite.setAlpha(1);
-  // let aebs = player.char.attackEnergy.attackBullets;
+  // const aebs = player.char.attackEnergy.attackBullets;
   // if (aebs !== null && aebs.bullets !== null) {
   //   aebs.bullets.children.iterate((child: any) => {
   //     child.setTint(0xffffff);
@@ -348,30 +348,9 @@ export function setFillAttackEnergyID(
   player.char?.attackEnergy?.sprite.setTint('transparent');
   player.char?.attackEnergy?.sprite.setTintFill(circleColor);
   player.char?.attackEnergy?.sprite.setAlpha(1);
-  let aebs = player.char.attackEnergy.attackBullets;
+  const aebs = player.char.attackEnergy.attackBullets;
   print('aebs.bullets', aebs);
-
-  // aebs?.bullets?.setFillBulletSprites();
-  // if (aebs !== null && aebs.bullets !== null) {
-  //   aebs.bullets.children.iterate((child: any) => {
-  //     print('bullet child', child);
-  //     child.setTint('transparent');
-  //     child.setTintFill(circleColor);
-  //     child.setAlpha(1);
-  //   });
-  // }
 }
-
-// player.char.sprite.setBlendMode(Phaser.BlendModes.MULTIPLY);
-// player.char.sprite.setBlendMode(Phaser.BlendModes.SCREEN);
-// player.char.sprite.setBlendMode(Phaser.BlendModes.COLOR);
-// player.char.sprite.setBlendMode(Phaser.BlendModes.ADD);
-// player.char.sprite.setBlendMode(Phaser.BlendModes.LUMINOSITY);
-// player.char.sprite.brighten(0.3);
-
-/////////////////////
-// SPRITSHEETS
-/////////////////////
 
 export function setAnimationsOff(game: Game): void {
   game.players.forEach((player) => {
@@ -428,13 +407,13 @@ export function updateSpritesheets(game: Game): void {
   // update player spritesheets
   game.players.forEach((player, playerIndex) => {
     if (player.char.srcSpriteSheet !== '') {
-      let s = player.char.sprite;
+      const s = player.char.sprite;
 
-      let tDown = s.body.touching.down;
-      let tWall = s.body.touching.left || s.body.touching.right;
-      let mUp = s.body.velocity.y < -movingYThreshold;
-      let mDown = s.body.velocity.y > movingYThreshold;
-      let mHoriz =
+      const tDown = s.body.touching.down;
+      const tWall = s.body.touching.left || s.body.touching.right;
+      const mUp = s.body.velocity.y < -movingYThreshold;
+      const mDown = s.body.velocity.y > movingYThreshold;
+      const mHoriz =
         s.body.velocity.x > movingXThreshold ||
         s.body.velocity.x < -movingXThreshold;
 
@@ -482,9 +461,9 @@ export function updateSpriteState(
     player.char.ssCurr.name = newState;
     player.char.ssCurr.timeStamp = game.gameNanoseconds;
 
-    let curr = player.char.ssCurr.name;
-    let n = player.char.name;
-    let s = player.char.sprite;
+    const curr = player.char.ssCurr.name;
+    const n = player.char.name;
+    const s = player.char.sprite;
 
     switch (curr) {
       case 'idle':
