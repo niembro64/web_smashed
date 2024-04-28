@@ -54,6 +54,7 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
+import { debug } from 'console';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -118,7 +119,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.InstReplayQual === 0) {
+    if (debugState.InstReplayQual === 0 || debugState.NNP1Train) {
       setIsReplayHidden(true);
       return;
     }
