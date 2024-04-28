@@ -67,7 +67,7 @@ export const smashConfigInit: SmashConfig = {
       input: 0, // don't set this here
     },
     {
-      characterId: 6,
+      characterId: 7,
       input: 0, // don't set this here
     },
   ],
