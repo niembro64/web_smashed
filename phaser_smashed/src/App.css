@@ -1980,7 +1980,7 @@ td > div:nth-child(2) {
 .neural-network-train-status > span,
 .neural-network-train-top > span {
   flex: 1;
-  font-size: x-large;
+  font-size: 1.5vw;
 }
 
 .neural-network-train-top {

@@ -16,8 +16,8 @@ export const nnConfigNN = {
   useGpu: true,
 };
 
-export const traininNumSteps: number = 50;
-const maxIterations = 400;
+export const traininNumSteps: number = 25;
+const maxIterations = 100;
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
   if (!game.debug.NNP1Train) {
@@ -47,11 +47,12 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     learningRate: 0.01,
     errorThresh: 0.005,
     timeout: Infinity,
-    callbackPeriod: Math.floor(maxIterations / traininNumSteps),
+    // callbackPeriod: Math.floor(maxIterations / traininNumSteps),
     logPeriod: Math.floor(maxIterations / traininNumSteps),
-    decayRate: 0.999,
+    // logPeriod: 10,
+    decayRate: 0.8,
     log: (stats: any) => {
-      const percentDone = stats.iterations / maxIterations;
+      const percentDone = Math.min(1, stats.iterations / maxIterations);
 
       const error = stats.error;
 
@@ -66,7 +67,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
       );
 
       print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
-      print('error', Math.floor(stats.error * 100) + '%');
+      print('error', stats.error * 100 + '%');
     },
   });
 

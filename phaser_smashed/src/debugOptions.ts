@@ -1,10 +1,10 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
+  DevMode: true,
+  DevFast: true,
   NNP1Train: true,
-  Minutes: 2, //01234567
-  DevMode: false,
-  DevFast: false,
+  Minutes: 1, //01234567
   DevZoom: 8,
   Level: 8, //0123456
   ModeInfinity: false,

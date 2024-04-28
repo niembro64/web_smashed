@@ -223,23 +223,27 @@ function Play() {
     setNnJson(null);
     setNnRatios(null);
     setNnProgress(null);
-    setNnError(null);
-    setNnErrLP(null);
+    setNnErrorCurr(null);
+    setNnErrInit(null);
   };
 
   const [nnJson, setNnJson] = useState<string | null>(null);
   const [nnRatios, setNnRatios] = useState<number[] | null>(null);
   const [nnProgress, setNnProgress] = useState<number | null>(null);
-  const [nnError, setNnError] = useState<number | null>(null);
-  const [nnErrLP, setNnErrLP] = useState<number | null>(null);
+  const [nnErrorCurr, setNnErrorCurr] = useState<number | null>(null);
+  const [nnErrInit, setNnErrInit] = useState<number | null>(null);
 
   const numberToStringWithThreeDigitsAndOneDecimal = (n: number): string => {
     return n.toFixed(0).padStart(3, '0');
   };
 
+  const numberToStringWithTwoDigits = (n: number): string => {
+    return n.toFixed(0).padStart(2, '0');
+  };
+
   const percentDoneBar = (n: number): string => {
     const incomplete = '-';
-    const complete = '=';
+    const complete = '|';
 
     let str = '';
     for (let i = 0; i < traininNumSteps; i++) {
@@ -250,6 +254,8 @@ function Play() {
       }
     }
 
+    console.log('str', str);
+
     return str;
   };
 
@@ -259,23 +265,23 @@ function Play() {
       switch (t?.detail?.name) {
         case 'netStart':
           // @ts-ignore
-          setNnProgress((x) => 0);
+          setNnProgress(0);
           // @ts-ignore
-          setNnError((x) => 0);
+          setNnErrorCurr(0);
           break;
         case 'netJson':
           // @ts-ignore
-          setNnJson((x) => t?.detail?.value);
+          setNnJson(t?.detail?.value);
           break;
         case 'netRatios':
           // @ts-ignore
-          setNnRatios((x) => t?.detail?.value);
+          setNnRatios(t?.detail?.value);
           break;
         case 'netProgress':
           // @ts-ignore
-          setNnProgress((x) => t?.detail?.value);
+          setNnProgress(t?.detail?.value);
           // @ts-ignore
-          setNnError((x) => t?.detail?.error);
+          setNnErrorCurr(t?.detail?.error);
           break;
         default:
           break;
@@ -284,16 +290,12 @@ function Play() {
   }, []);
 
   useEffect(() => {
-    if (nnError === null) {
-      return;
+    if (!nnErrInit && nnErrorCurr) {
+      setNnErrInit((prev) => {
+        return nnErrorCurr;
+      });
     }
-
-    const ratio = 0.98;
-
-    setNnErrLP((prev) => {
-      return (prev || nnError || 0) * ratio + nnError * (1 - ratio);
-    });
-  }, [nnError]);
+  }, [nnErrorCurr, nnErrInit]);
 
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
@@ -1179,7 +1181,7 @@ function Play() {
               }
             />
           )}
-          {!debugState.DevMode && (
+          {true && (
             <div className={'start-title-wrapper'}>
               <div
                 className={
@@ -2215,11 +2217,11 @@ function Play() {
           <span>Neural Network Training</span>
           <div className="neural-network-train-top">
             <span>
-              Progress {percentDoneBar(nnProgress || 0)}{' '}
-              {Math.floor((nnProgress || 0) * 100)}%
+              {percentDoneBar(nnProgress)} {Math.floor((nnProgress || 0) * 100)}
+              %
             </span>
-            <span> Error LP % {(nnErrLP || 0) * 100}</span>
-            <span> ErrorRaw % {(nnError || 0) * 100}</span>
+            <span> Error Init {nnErrInit || 0}</span>
+            <span> Error Curr {nnErrorCurr || 0}</span>
           </div>
 
           <div className="neural-network-train-bottom">
