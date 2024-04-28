@@ -2,7 +2,7 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { getDistance, getNormalizedVector, getVector } from './damage';
 
 export function updateChompSpriteDirection(game: Game): void {
-  let c = game.chomp;
+  const c = game.chomp;
 
   if (c.sprite.body.velocity.x > 0) {
     c.sprite.flipX = false;
@@ -12,17 +12,17 @@ export function updateChompSpriteDirection(game: Game): void {
 }
 
 export function updateChompVelocity(game: Game): void {
-  let c = game.chomp;
-  let b = c.sprite.body;
-  let x = c.originX;
-  let y = c.originY;
-  let r = c.radius;
+  const c = game.chomp;
+  const b = c.sprite.body;
+  const x = c.originX;
+  const y = c.originY;
+  const r = c.radius;
 
-  let spriteX = c.sprite.x;
-  let spriteY = c.sprite.y;
+  const spriteX = c.sprite.x;
+  const spriteY = c.sprite.y;
 
   if (!isChompInsideCircle(game)) {
-    let { x: xNew, y: yNew } = getNormalizedVector(spriteX, spriteY, x, y);
+    const { x: xNew, y: yNew } = getNormalizedVector(spriteX, spriteY, x, y);
 
     b.setVelocityX(xNew * 100);
     b.setVelocityY(yNew * 200);
@@ -110,21 +110,21 @@ export function updateAtThreeShots(game: Game): void {
 }
 
 export function updateChompLinkPositions(game: Game): void {
-  let c = game.chomp;
-  let endX = c.sprite.x;
-  let endY = c.sprite.y;
-  let b = c.sprite.body;
-  let startX = c.block.x;
-  let startY = c.block.y;
-  let links = c.links;
-  let numLinks = links.length;
+  const c = game.chomp;
+  const endX = c.sprite.x;
+  const endY = c.sprite.y;
+  const b = c.sprite.body;
+  const startX = c.block.x;
+  const startY = c.block.y;
+  const links = c.links;
+  const numLinks = links.length;
 
-  let { x, y } = getVector(startX, startY, endX, endY);
+  const { x, y } = getVector(startX, startY, endX, endY);
 
   links.forEach((link, i) => {
-    let percent = i / numLinks;
-    let newX = startX + x * percent;
-    let newY = startY + y * percent;
+    const percent = i / numLinks;
+    const newX = startX + x * percent;
+    const newY = startY + y * percent;
 
     link.sprite.x = newX;
     link.sprite.y = newY;
@@ -132,16 +132,16 @@ export function updateChompLinkPositions(game: Game): void {
 }
 
 export function getClosestDistance(game: Game): number {
-  let c = game.chomp;
-  let b = c.sprite.body;
+  const c = game.chomp;
+  const b = c.sprite.body;
   let shortestDistance = Infinity;
 
   // find closest player
   game.players.forEach((player, playerIndex) => {
-    let playerX = player.char.sprite.body.x;
-    let playerY = player.char.sprite.body.y;
+    const playerX = player.char.sprite.body.x;
+    const playerY = player.char.sprite.body.y;
 
-    let distance = getDistance(b.x, b.y, playerX, playerY);
+    const distance = getDistance(b.x, b.y, playerX, playerY);
 
     if (distance < shortestDistance) {
       shortestDistance = distance;
