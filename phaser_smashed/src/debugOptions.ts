@@ -4,7 +4,7 @@ export const debugInit: Debug = {
   DevMode: true,
   DurSeconds: false,
   NNP1Train: true,
-  Minutes: 1, //01234567
+  Minutes: 5, //01234567
   DevZoom: 8,
   Level: 8, //0123456
   ModeInfinity: false,
@@ -114,7 +114,7 @@ export const showOptionOnMainScreenInit: Debug = {
   ModeInfinity: true,
   DurSeconds: true,
   Shots: 0,
-  Minutes: 5, //01234567
+  Minutes: 1, //01234567
   MusicActive: false,
   MusicTrack: 1, // 012
   ReadySoundActive: false,
