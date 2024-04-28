@@ -322,7 +322,11 @@ export function updatePlayers(game: Game): void {
         ///////// duration => alive
         ////////////////////////////////
         if (
-          getHasGameDurationPassedPlayer(player, game.durationPlayerDead, game)
+          getHasGameDurationPassedPlayer(
+            player,
+            game.debug.NNP1Train ? 0 : game.durationPlayerDead,
+            game
+          )
         ) {
           setPlayerState(player, playerIndex, 'player-state-alive', game);
         }

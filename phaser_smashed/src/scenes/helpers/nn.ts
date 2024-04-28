@@ -12,12 +12,12 @@ import {
 import { NNRatiosNN } from './nnRatios';
 
 export const nnConfigNN = {
-  hiddenLayers: [60, 60],
+  hiddenLayers: [30, 30, 30],
   useGpu: true,
 };
 
 export const traininNumSteps: number = 25;
-const maxIterations = 100;
+const maxIterations = 300;
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
   if (!game.debug.NNP1Train) {
@@ -44,13 +44,13 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   await game.nnNet.trainAsync(randomizedNnObjects, {
     iterations: maxIterations,
     randomize: true,
-    learningRate: 0.01,
-    errorThresh: 0.005,
-    timeout: Infinity,
-    // callbackPeriod: Math.floor(maxIterations / traininNumSteps),
-    logPeriod: Math.floor(maxIterations / traininNumSteps),
-    // logPeriod: 10,
-    decayRate: 0.8,
+    learningRate: 0.0001,
+    // learningRate: 0.00000000000000000000001,
+    logPeriod: Math.min(
+      500,
+      Math.max(5, Math.floor(maxIterations / (traininNumSteps * 10)))
+    ),
+
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / maxIterations);
 
@@ -66,8 +66,8 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         })
       );
 
-      print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
-      print('error', stats.error * 100 + '%');
+      // print(Math.floor((stats.iterations / maxIterations) * 100) + '%');
+      // print('error', stats.error * 100 + '%');
     },
   });
 

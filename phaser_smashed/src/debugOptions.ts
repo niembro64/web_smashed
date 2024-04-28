@@ -2,7 +2,7 @@ import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
   DevMode: true,
-  DevFast: true,
+  DevFast: false,
   NNP1Train: true,
   Minutes: 1, //01234567
   DevZoom: 8,

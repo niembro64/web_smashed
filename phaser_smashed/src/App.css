@@ -796,10 +796,12 @@ h2 {
 .b-start-inactive {
   justify-self: flex-end;
   height: 100%;
+  background-color: var(--blue-start);
   border: 0px solid;
   border-radius: var(--border-radius-small);
-  padding: 0.5vw 5vw 0vw 5vw;
+  padding: 0.5vw 3vw 0vw 3vw;
   margin-right: 2%;
+  color: rgba(255, 255, 255, 1);
   font-size: 2vw;
   transition: 0.5s ease;
   z-index: 0;
@@ -807,8 +809,8 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(93, 93, 93, 0.504);
-  color: rgba(198, 198, 198, 0.562);
+  background-color: rgba(93, 93, 93, 0);
+  color: rgba(198, 198, 198, 0.249);
 }
 
 .b-start:hover {
@@ -1999,7 +2001,7 @@ td > div:nth-child(2) {
   flex: 1.2;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 0%;
   margin: 0%;

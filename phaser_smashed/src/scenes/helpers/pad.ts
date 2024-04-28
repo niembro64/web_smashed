@@ -609,20 +609,6 @@ export function updateAttackEnergy(player: Player, game: Game): void {
     return;
   }
 
-  // GRAB
-  // if (
-  //   player.pad?.X &&
-  //   !player.padPrev.X &&
-  //   game.NanosecondsTime >
-  //     player.char.attackEnergy.timestampThrow +
-  //       player.char.attackEnergy.durationBetweenThrows
-  // ) {
-  //   player.char.attackEnergy.state = "held";
-  //   turnOffPhysicsAttackEnergy(player);
-  //   playerGrabAttackEnergy(player);
-  // }
-  // print('state', player.char.attackEnergy.state);
-
   // STATE HOLD
   if (
     player.padCurr.X &&
