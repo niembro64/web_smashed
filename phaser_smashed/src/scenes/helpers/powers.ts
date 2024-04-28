@@ -292,8 +292,6 @@ export function updatePlayerDarknessEvents(game: Game): void {
       const b = player.char.sprite.body;
       const pj = game.chomp.darknessMoments.PERCENT_DARKNESS_JUMP;
 
-      // player.char.damage += 1 / 120;
-
       if (Math.random() > 1 - pj) {
         const baseAmount = 400;
         const amount =
@@ -304,19 +302,15 @@ export function updatePlayerDarknessEvents(game: Game): void {
           ) *
             Math.pow(Math.random(), 0.4);
 
-        // print('amount', amount);
-
         addToMotionSlowdown(amount / baseAmount, game);
         playNextExplosion(s.x, s.y, game, amount);
         const { x, y } = getRandomUnitVector();
-        // game.SOUND_HIT.play();
 
         player.char.damageCurr += amount / 200;
         setPlayerState(player, playerIndex, 'player-state-hurt', game);
         b.setVelocityX(b.velocity.x + x * amount);
         b.setVelocityY(b.velocity.y + y * amount);
 
-        // game.cameras.main.shake(100, 0.01);
         game.shake?.shake(amount / 2, amount / 10);
       }
     }

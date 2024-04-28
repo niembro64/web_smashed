@@ -1126,10 +1126,10 @@ function Play() {
 
       {webState === 'web-state-load' && (
         <div className="loader">
-          <div className="spinnerShrink">
-            <div className="spinnerOuterOuter">
-              <div className="spinnerOuter">
-                <div className="spinner">
+          <div className="spinner-box">
+            <div className="spinner-rotate-x">
+              <div className="spinner-rotate-y">
+                <div className="spinner-rotate-z">
                   <div className="cube_side">
                     <div className="cube_side_inside"></div>
                   </div>
