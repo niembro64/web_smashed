@@ -1,16 +1,15 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
+  NNP1Train: true,
   DevMode: true,
   DurSeconds: false,
-  NNP1Train: true,
+  ModeInfinity: false,
   Minutes: 6, //01234567
+  Shots: 7, //7
   DevZoom: 8,
   Level: 8, //0123456
-  ModeInfinity: false,
-  Shots: 7, //7
   MusicActive: true,
-  MusicTrack: 0, // 0123
   ReadySoundActive: false,
   UseCamera: true,
   CamerasVisible: false,
@@ -44,7 +43,7 @@ export const debugInit: Debug = {
   BulletsFullScreen: false,
   TrophiesOnShots: false,
   TrophiesAlways: false,
-  InstReplayQual: 1,
+  InstReplay: 1,
   ReplayControls: true,
   ReplayFastSlow: false,
   GravityLight: false,
@@ -52,6 +51,7 @@ export const debugInit: Debug = {
   NNHelpCenterize: false,
   NNHelpPit: true,
   NNHelpWall: true,
+  MusicTrack: 0, // 0123
 };
 
 export const debugMax: Debug = {
@@ -102,7 +102,7 @@ export const debugMax: Debug = {
   NNHelpCenterize: true,
   NNHelpPit: true,
   NNHelpWall: true,
-  InstReplayQual: 3,
+  InstReplay: 3,
   ReplayControls: true,
   ReplayFastSlow: true,
   GravityLight: false,
@@ -110,13 +110,13 @@ export const debugMax: Debug = {
 
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
-  Level: 0, //0123456
+  NNP1Train: true,
+  Level: 1, //0123456
   ModeInfinity: true,
-  DurSeconds: false,
+  DurSeconds: true,
   Shots: 0,
   Minutes: 1, //01234567
   MusicActive: false,
-  MusicTrack: 1, // 012
   ReadySoundActive: false,
   UseCamera: false,
   CamerasVisible: false,
@@ -156,9 +156,9 @@ export const showOptionOnMainScreenInit: Debug = {
   BulletsFullScreen: false,
   TrophiesOnShots: false,
   TrophiesAlways: false,
-  NNP1Train: false,
-  InstReplayQual: 1,
+  InstReplay: 1,
   ReplayControls: false,
   ReplayFastSlow: false,
   GravityLight: false,
+  MusicTrack: 1, // 012
 };

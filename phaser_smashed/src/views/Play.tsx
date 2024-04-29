@@ -119,7 +119,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.InstReplayQual === 0 || debugState.NNP1Train) {
+    if (debugState.InstReplay === 0 || debugState.NNP1Train) {
       setIsReplayHidden(true);
       return;
     }
@@ -136,15 +136,15 @@ function Play() {
       const stream = canvas.captureStream();
       const mediaRecorder = new MediaRecorder(
         stream,
-        debugState.InstReplayQual === 1
+        debugState.InstReplay === 1
           ? {
               videoBitsPerSecond: 20000,
             }
-          : debugState.InstReplayQual === 2
+          : debugState.InstReplay === 2
           ? {
               videoBitsPerSecond: 100000,
             }
-          : debugState.InstReplayQual === 3
+          : debugState.InstReplay === 3
           ? {
               // FULL QUALITY
             }
@@ -2235,7 +2235,10 @@ function Play() {
             </span>
             <span> Error Init {nnErrInit || 0}</span>
             <span> Error Curr {nnErrorCurr || 0}</span>
-            <span> ITER {nnNumIter || 0} | OBJ {nnNumObj || 0}</span>
+            <span>
+              {' '}
+              ITER {nnNumIter || 0} | OBJ {nnNumObj || 0}
+            </span>
             {/* <span> Num Object {nnNumObj || 0}</span> */}
             {/* <span> Log Period {nnLogPeriod || 0}</span> */}
           </div>

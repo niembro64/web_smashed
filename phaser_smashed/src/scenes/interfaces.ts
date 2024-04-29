@@ -50,7 +50,7 @@ export interface Debug {
   NNHelpPit: boolean;
   NNHelpWall: boolean;
   NNHelpCenterize: boolean;
-  InstReplayQual: number;
+  InstReplay: number;
   ReplayControls: boolean;
   ReplayFastSlow: boolean;
   GravityLight: boolean;
