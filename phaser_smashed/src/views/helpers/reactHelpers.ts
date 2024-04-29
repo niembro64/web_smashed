@@ -11,10 +11,28 @@ import {
 import Game from '../../scenes/Game';
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 
-// ✔️🚧❌🚫🛑🔜📄📋⚙️🚪⛔⌚🕹️🎮☠️👾💣🔥​➡️​⌨️​⌨🧊🌑🌒🌙⭐🌞☁☁☁
-// 🏴‍☠️🏳️🏁🏴
-// 🔴🟠🟡🟢🔵🟣🟤⚫⚪
-// ⌨🎮
+export const inputArrayInit: InputType[] = [4, 4, 4, 4];
+
+export const smashConfigInit: SmashConfig = {
+  players: [
+    {
+      characterId: 0,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 1,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 2,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 3,
+      input: 0, // don't set this here
+    },
+  ],
+};
 
 export const workingControllersAmazon: WorkingController[] = [
   {
@@ -51,29 +69,6 @@ export const keyboardGroups: KeyboardGroup[][] = [
     { left: 'L Select Start R:', right: '7 8 9 +' },
   ],
 ];
-
-export const smashConfigInit: SmashConfig = {
-  players: [
-    {
-      characterId: 0,
-      input: 0, // don't set this here
-    },
-    {
-      characterId: 1,
-      input: 0, // don't set this here
-    },
-    {
-      characterId: 2,
-      input: 0, // don't set this here
-    },
-    {
-      characterId: 7,
-      input: 0, // don't set this here
-    },
-  ],
-};
-
-export const inputArrayInit: InputType[] = [3, 3, 4, 4];
 
 export const idColors: string[] = [
   'id-red',
@@ -204,3 +199,8 @@ export const configInit: Phaser.Types.Core.GameConfig = {
   },
   scene: [Game],
 };
+
+// ✔️🚧❌🚫🛑🔜📄📋⚙️🚪⛔⌚🕹️🎮☠️👾💣🔥​➡️​⌨️​⌨🧊🌑🌒🌙⭐🌞☁☁☁
+// 🏴‍☠️🏳️🏁🏴
+// 🔴🟠🟡🟢🔵🟣🟤⚫⚪
+// ⌨🎮
