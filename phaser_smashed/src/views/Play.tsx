@@ -548,7 +548,7 @@ function Play() {
     if (debugState.AutoStart && webState === 'web-state-setup') {
       setTimeout(() => {
         onClickStartStartButton();
-      }, 500);
+      }, 200);
     }
   }, [webState]);
 

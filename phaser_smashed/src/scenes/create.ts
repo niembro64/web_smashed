@@ -165,8 +165,8 @@ export function createPole(game: Game): void {
 
 export function createCannon(game: Game): void {
   game.cannon.sprite = game.physics.add.sprite(
-    SCREEN_DIMENSIONS.WIDTH * 0.2,
-    SCREEN_DIMENSIONS.HEIGHT * 0.2,
+    SCREEN_DIMENSIONS.WIDTH * 0.185,
+    SCREEN_DIMENSIONS.HEIGHT * 0.319,
     'cannon'
   );
   game.cannon.sprite.setScale(1);
