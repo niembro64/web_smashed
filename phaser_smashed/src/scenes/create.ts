@@ -202,13 +202,10 @@ export function createCannon(game: Game): void {
   // turn off gravity for bullets
   aebs.children.iterate((child: any) => {
     child.body.allowGravity = false;
+    child.body.setBounce(1);
+    child.body.setCollideWorldBounds(true);
+    child.body.onWorldBounds = true;
   });
-
-  // aebs.children.iterate((child: any) => {
-  //   child.body.enable = false;
-  // });
-
-  // game.cannon.attackBullets.bullets = aebs;
 }
 
 export function createShake(game: Game): void {

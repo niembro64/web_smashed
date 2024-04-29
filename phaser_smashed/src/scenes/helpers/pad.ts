@@ -863,7 +863,7 @@ export const updateCannonShooting = (game: Game) => {
     // print('firebullet');
     game.cannon.attackBullets.bullets.fireBullet(
       game.cannon.posInit,
-      { x: 10, y: 2 },
+      { x: (Math.random() - 0.5) * 200, y: (Math.random() - 0.5) * 200 },
       game
     );
   }
