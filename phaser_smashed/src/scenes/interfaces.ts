@@ -516,7 +516,7 @@ export interface Quote {
 export interface Cannon {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
-  bulletSprite: any | Phaser.GameObjects.Sprite;
+  srcImage: any | Phaser.GameObjects.Sprite;
   posInit: Position;
   rotation: AttackEnergyRotation;
 }

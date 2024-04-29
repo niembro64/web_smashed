@@ -154,7 +154,7 @@ export class BulletsCannon extends Phaser.Physics.Arcade.Group {
     super(game.physics.world, game);
     this.createMultiple({
       frameQuantity: game.cannon.attackBullets?.NUMBER_BULLETS || 10,
-      key: game.cannon.bulletSprite.srcImage,
+      key: game.cannon.srcImage,
       active: false,
       visible: false,
       classType: Bullet,

@@ -178,15 +178,6 @@ export function createCannon(game: Game): void {
   game.cannon.sprite.setOrigin(0.5, 0.5);
   game.cannon.sprite.setTint(0x555555);
 
-  game.cannon.bulletSprite = game.physics.add.sprite(
-    game.cannon.posInit.x,
-    game.cannon.posInit.y,
-    'bullet'
-  );
-
-  game.cannon.bulletSprite.setScale(0.1);
-  game.cannon.bulletSprite.setOrigin(0.5, 0.5);
-
   game.cannon.attackBullets.bullets = new BulletsCannon(game);
   let aebs = game.cannon.attackBullets.bullets;
 
@@ -213,9 +204,11 @@ export function createCannon(game: Game): void {
     child.body.allowGravity = false;
   });
 
-  aebs.children.iterate((child: any) => {
-    child.body.enable = false;
-  });
+  // aebs.children.iterate((child: any) => {
+  //   child.body.enable = false;
+  // });
+
+  // game.cannon.attackBullets.bullets = aebs;
 }
 
 export function createShake(game: Game): void {

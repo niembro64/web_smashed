@@ -814,10 +814,10 @@ export default class Game extends Phaser.Scene {
 
   cannon: Cannon = {
     sprite: null,
-    bulletSprite: null,
+    srcImage: 'bullet',
     rotation: {
       initial: 0.25,
-    speed: 400,
+      speed: 400,
     },
     attackBullets: {
       bullets: null,
