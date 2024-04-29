@@ -1290,7 +1290,7 @@ h2 {
 }
 
 .loading-table-wrapper {
-  flex: 0.3;
+flex: 0.3;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1305,7 +1305,7 @@ h2 {
 }
 
 .first-loader-p {
-  width: 55%;
+  width: 50%;
   margin: 3% 0% 1.5% 0%;
   text-align: center;
   font-size: 1.5vw;
