@@ -171,12 +171,12 @@ export function createCannon(game: Game): void {
     'cannon'
   );
 
-  game.cannon.sprite.setScale(0.2);
+  game.cannon.sprite.setScale(1);
   game.cannon.sprite.setImmovable(true);
   game.cannon.sprite.body.allowGravity = false;
   game.cannon.sprite.setImmovable(false);
   game.cannon.sprite.setOrigin(0.5, 0.5);
-  game.cannon.sprite.setTint(0x555555);
+  // game.cannon.sprite.setTint(0x555555);
 
   game.cannon.attackBullets.bullets = new BulletsCannon(game);
   let aebs = game.cannon.attackBullets.bullets;
