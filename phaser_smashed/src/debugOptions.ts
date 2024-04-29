@@ -1,10 +1,10 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
-  DevMode: true,
+  DevMode: false,
   DurSeconds: false,
-  NNP1Train: true,
-  Minutes: 5, //01234567
+  NNP1Train: false,
+  Minutes: 1, //01234567
   DevZoom: 8,
   Level: 8, //0123456
   ModeInfinity: false,
@@ -112,7 +112,7 @@ export const debugMax: Debug = {
 export const showOptionOnMainScreenInit: Debug = {
   Level: 0, //0123456
   ModeInfinity: true,
-  DurSeconds: true,
+  DurSeconds: false,
   Shots: 0,
   Minutes: 1, //01234567
   MusicActive: false,

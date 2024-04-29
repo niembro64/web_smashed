@@ -228,6 +228,7 @@ function Play() {
     setNnErrInit(null);
     setNnNumObj(null);
     setNnNumIter(null);
+    setNnLogPeriod(null);
   };
 
   const [nnJson, setNnJson] = useState<string | null>(null);
@@ -237,6 +238,7 @@ function Play() {
   const [nnErrInit, setNnErrInit] = useState<number | null>(null);
   const [nnNumObj, setNnNumObj] = useState<number | null>(null);
   const [nnNumIter, setNnNumIter] = useState<number | null>(null);
+  const [nnLogPeriod, setNnLogPeriod] = useState<number | null>(null);
 
   const numberToStringWithThreeDigitsAndOneDecimal = (n: number): string => {
     return n.toFixed(0).padStart(3, '0');
@@ -277,6 +279,8 @@ function Play() {
           setNnNumIter(t?.detail?.numIter);
           // @ts-ignore
           setNnNumObj(t?.detail?.numObj);
+          // @ts-ignore
+          setNnLogPeriod(t?.detail?.logPeriod);
           break;
         case 'netJson':
           // @ts-ignore
@@ -2221,7 +2225,7 @@ function Play() {
       </div>
 
       {/* { */}
-      {nnProgress !== null && (
+      {webState === 'web-state-game' && nnProgress !== null && (
         <div className="neural-network-train-status">
           <span>Neural Network Training</span>
           <div className="neural-network-train-top">
@@ -2231,8 +2235,9 @@ function Play() {
             </span>
             <span> Error Init {nnErrInit || 0}</span>
             <span> Error Curr {nnErrorCurr || 0}</span>
-            <span> Num Iterat {nnNumIter || 0}</span>
-            <span> Num Object {nnNumObj || 0}</span>
+            <span> ITER {nnNumIter || 0} | OBJ {nnNumObj || 0}</span>
+            {/* <span> Num Object {nnNumObj || 0}</span> */}
+            {/* <span> Log Period {nnLogPeriod || 0}</span> */}
           </div>
 
           <div className="neural-network-train-bottom">

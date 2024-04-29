@@ -10,9 +10,11 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
+import { random } from 'brain.js/dist/layer';
+import { log } from 'console';
 
 export const nnConfigNN = {
-  hiddenLayers: [30, 30, 30],
+  hiddenLayers: [60, 60],
   useGpu: true,
 };
 
@@ -28,9 +30,28 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   game.nnNet = new NeuralNetwork(nnConfigNN);
   print('game.nnNet', game.nnNet);
 
-  const randomizedNnObjects = game.nnObjects.sort(() => Math.random());
-  const numObj: number = game.nnObjects.length;
-  const numIter = Math.floor(1000 * Math.exp(-numObj * 0.005) + 1);
+  let randomizedNnObjects: NNObject[] = game.nnObjects.sort(() =>
+    Math.random()
+  );
+
+  if (game.debug.DurSeconds) {
+    // duplicate training date 60 times
+
+    const newArray: NNObject[] = [];
+
+    for (let i = 0; i < 60; i++) {
+      newArray.push(...randomizedNnObjects);
+    }
+
+    randomizedNnObjects = newArray;
+  }
+
+  print('randomizedNnObjects', randomizedNnObjects);
+
+  const numObj: number = randomizedNnObjects.length;
+
+  const numIter = Math.floor(100 * Math.exp(-numObj * 0.0001) + 10);
+  const logPeriod = 1;
 
   window.dispatchEvent(
     new CustomEvent('nn-train', {
@@ -40,6 +61,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         error: null,
         numIter: numIter,
         numObj: numObj,
+        logPeriod: logPeriod,
       },
     })
   );
@@ -47,12 +69,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     iterations: numIter,
     randomize: true,
     learningRate: 0.0001,
-    // learningRate: 0.00000000000000000000001,
-    logPeriod: Math.min(
-      500,
-      Math.max(5, Math.floor(numIter / (nnNumTrainingBarTicks * 10)))
-    ),
-
+    logPeriod: logPeriod,
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / numIter);
 
@@ -66,6 +83,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
             error: error,
             numIter: numIter,
             numObj: numObj,
+            logPeriod: logPeriod,
           },
         })
       );
@@ -83,6 +101,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         error: null,
         numIter: numIter,
         numObj: numObj,
+        logPeriod: logPeriod,
       },
     })
   );
@@ -97,6 +116,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
         error: null,
         numIter: numIter,
         numObj: numObj,
+        logPeriod: logPeriod,
       },
     })
   );
