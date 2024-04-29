@@ -3,10 +3,10 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   AutoStart: false,
   NNP1Train: false,
-  DevMode: true,
+  DevMode: false,
   DurSeconds: false,
   ModeInfinity: false,
-  Minutes: 6, //01234567
+  Minutes: 1, //01234567
   Shots: 7, //7
   DevZoom: 8,
   Level: 8, //0123456
@@ -45,7 +45,7 @@ export const debugInit: Debug = {
   BulletsFullScreen: false,
   TrophiesOnShots: false,
   TrophiesAlways: false,
-  InstReplay: 1,
+  InstReplay: 0,
   ReplayControls: true,
   ChompVelocities: false,
   ReplayFastSlow: false,
@@ -116,10 +116,10 @@ export const debugMax: Debug = {
 
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
-  NNP1Train: true,
+  NNP1Train: false,
   Level: 1, //0123456
   ModeInfinity: true,
-  DurSeconds: true,
+  DurSeconds: false,
   Shots: 0,
   Minutes: 1, //01234567
   MusicActive: false,

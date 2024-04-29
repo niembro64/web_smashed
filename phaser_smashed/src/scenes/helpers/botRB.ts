@@ -471,12 +471,14 @@ export function updateBotRules(
     if (
       t.down &&
       Math.random() >
-        (game.flag.toucherCurr.id === null
-          ? 0.99
+        (player.emitterDark.visible
+          ? 0
+          : game.flag.toucherCurr.id === null
+          ? 0.5
           : game.flag.ownerCurr.id === null
-          ? 0.2
+          ? 0.1
           : game.flag.ownerCurr.id === playerIndex
-          ? 0.02
+          ? 0.001
           : player.emitterDark.visible
           ? 0
           : 0.5)
@@ -508,11 +510,17 @@ export function updateBotRules(
     if (
       !t.down &&
       Math.random() >
-        (game.flag.toucherCurr.id === null
-          ? 0.99
+        (player.emitterDark.visible
+          ? 0
+          : game.flag.toucherCurr.id === null
+          ? 0.5
+          : game.flag.ownerCurr.id === null
+          ? 0.1
+          : game.flag.ownerCurr.id === playerIndex
+          ? 0.001
           : player.emitterDark.visible
           ? 0
-          : 0.95)
+          : 0.5)
     ) {
       if (botSprite.x < game.flag.spriteFlagPole.x - 300) {
         p.right = true;
