@@ -30,6 +30,7 @@ export function create(game: Game) {
   createSplashRuleFinished(game); // MAYBE
   createExplosions(game);
   createFirework(game);
+  createCannon(game);
   createPole(game);
   createFlag(game);
   createEmitterChomp(game);
@@ -46,7 +47,7 @@ export function create(game: Game) {
   createScoreboardController(game);
   createScoreboardReady(game);
   createChomp(game);
-  createCannon(game);
+
   createEmitterChompFollowChomp(game);
   createPlayers(game);
   createEmittersFollowPlayers(game);
@@ -169,11 +170,14 @@ export function createCannon(game: Game): void {
     SCREEN_DIMENSIONS.HEIGHT * 0.319,
     'cannon'
   );
-  game.cannon.sprite.setScale(1);
+  game.cannon.sprite.setScale(0.2);
   game.cannon.sprite.setImmovable(true);
   game.cannon.sprite.body.allowGravity = false;
   game.cannon.sprite.setImmovable(false);
   game.cannon.sprite.setOrigin(0.5, 0.5);
+
+  // make darker
+  game.cannon.sprite.setTint(0x555555);
 }
 
 export function createShake(game: Game): void {
