@@ -41,7 +41,7 @@ export function onHitHandlerAttackPhysical(
     }
   }
 
-  let vector = getNormalizedVectorAP(attackPhysical, player);
+  const vector = getNormalizedVectorAP(attackPhysical, player);
 
   player.char.damageCurr += damage;
 
@@ -90,7 +90,7 @@ export function onHitHandlerAttackEnergy(
     }
   }
 
-  let vector = getNormalizedVectorAP(attackEnergy, playerHit);
+  const vector = getNormalizedVectorAP(attackEnergy, playerHit);
 
   playerHit.char.damageCurr += damage;
 
@@ -132,7 +132,7 @@ export function onHitHandlerBullets(
     return;
   }
 
-  let b = attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
+  const b = attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
 
   if (!b) {
     return;
@@ -159,22 +159,22 @@ export function onHitHandlerBullets(
     }
   }
 
-  // let vector = getNormalizedVector(
+  // const vector = getNormalizedVector(
   //   b.body.gameObject.x,
   //   b.body.gameObject.y,
   //   playerHit.char.sprite.x,
   //   playerHit.char.sprite.y
   // );
 
-  let vector = {
+  const vector = {
     x: b.body.gameObject.body.velocity.x,
     y: b.body.gameObject.body.velocity.y,
   };
 
-  // player.char.damage += damage;
+  playerHit.char.damageCurr += damage;
 
-  let pHit = playerHit.char.sprite;
-  let ae = pj.char.attackEnergy;
+  const pHit = playerHit.char.sprite;
+  const ae = pj.char.attackEnergy;
 
   pHit.setVelocityX(pHit.body.velocity.x + vector.x * 3 * ae.hitback.x);
   pHit.setVelocityY(pHit.body.velocity.y + vector.y * 2 * ae.hitback.y - 25);
@@ -279,9 +279,9 @@ export function getNormalizedVectorAP(
   attack: AttackEnergy | AttackPhysical,
   player: Player
 ): xyVector {
-  let newX = player.char.sprite.x - attack.sprite.x;
-  let newY = player.char.sprite.y - attack.sprite.y;
-  let newRatio = Math.sqrt(newX * newX + newY * newY);
+  const newX = player.char.sprite.x - attack.sprite.x;
+  const newY = player.char.sprite.y - attack.sprite.y;
+  const newRatio = Math.sqrt(newX * newX + newY * newY);
 
   return { x: newX / newRatio, y: newY / newRatio };
 }
@@ -292,9 +292,9 @@ export function getNormalizedVector(
   endX: number,
   endY: number
 ): xyVector {
-  let newX = endX - startX;
-  let newY = endY - startY;
-  let newRatio = Math.sqrt(newX * newX + newY * newY);
+  const newX = endX - startX;
+  const newY = endY - startY;
+  const newRatio = Math.sqrt(newX * newX + newY * newY);
 
   return { x: newX / newRatio, y: newY / newRatio };
 }
@@ -305,8 +305,8 @@ export function getVector(
   endX: number,
   endY: number
 ): xyVector {
-  let newX = endX - startX;
-  let newY = endY - startY;
+  const newX = endX - startX;
+  const newY = endY - startY;
 
   return { x: newX, y: newY };
 }
@@ -317,17 +317,17 @@ export function getDistance(
   endX: number,
   endY: number
 ): number {
-  let newX = endX - startX;
-  let newY = endY - startY;
-  let newRatio = Math.sqrt(newX * newX + newY * newY);
+  const newX = endX - startX;
+  const newY = endY - startY;
+  const newRatio = Math.sqrt(newX * newX + newY * newY);
 
   return newRatio;
 }
 
 export function getGameHitbackMultiplier(game: Game): number {
-  let t = game.gameNanoseconds * 0.001;
+  const t = game.gameNanoseconds * 0.001;
   let h: number = 0;
-  let m = t / 60;
+  const m = t / 60;
 
   h = Math.pow(1 + m * 0.1, 1.7);
   // print('HBM', h);
@@ -388,9 +388,9 @@ export function updateSuicide(game: Game): void {
 }
 
 export function updateTableGiveHealth(game: Game): void {
-  let t = game.TABLE.body;
+  const t = game.TABLE.body;
   let p: Player | null = null;
-  // let pIndex: number | null = null;
+  // const pIndex: number | null = null;
 
   if (t.touching.up) {
     p = getNearestPlayerAliveFromXY(t.x, t.y, game).player;

@@ -1423,16 +1423,9 @@ export default class Game extends Phaser.Scene {
       char: {
         name: 'Kirby',
         initializeCharPosition: {
-          // lookingRight: false,
           x: 200,
           y: 100,
         },
-        // color: {
-        //   primary: '#ff88ae',
-        //   secondary: '#e24800',
-        //   dark: '#1c0900',
-        //   light: '#ffffff',
-        // },
         colorFilterBlink: false,
         src: 'images/character_3_cropped.png',
         scaleCharSpriteReality: 1,
@@ -1486,7 +1479,7 @@ export default class Game extends Phaser.Scene {
           audio: null,
         },
         attackEnergy: {
-          diesOnHitbox: false,
+          diesOnHitbox: true,
           sprite: null,
           state: 'released',
           timestampThrow: 0,
@@ -1509,7 +1502,7 @@ export default class Game extends Phaser.Scene {
           bounceX: 1,
           gravity: false,
           bouncePlatforms: true,
-          damage: 15,
+          damage: 1,
           hitback: { x: 0.1, y: 0.2 },
           scale: 1.3,
           mass: 10,

@@ -118,9 +118,6 @@ export function setPhysicsBulletOff(player: Player, bulletIndex: number): void {
 
   b.body.gameObject.body.enable = false;
   b.body.gameObject.body.allowGravity = false;
-
-  // player.char.attackEnergy.sprite.body.enable = false;
-  // player.char.attackEnergy.sprite.body.allowGravity = false;
 }
 
 export function setPhysicsBulletOn(player: Player, bulletIndex: number): void {
@@ -133,10 +130,6 @@ export function setPhysicsBulletOn(player: Player, bulletIndex: number): void {
 
   b.body.gameObject.body.enable = true;
   b.body.gameObject.body.allowGravity = player.char.attackEnergy.gravity;
-
-  // player.char.attackEnergy.sprite.body.enable = true;
-  // player.char.attackEnergy.sprite.body.allowGravity =
-  //   player.char.attackEnergy.gravity;
 }
 
 export function updateAttackEnergyOffscreen(game: Game): void {

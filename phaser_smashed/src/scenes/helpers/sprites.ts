@@ -325,13 +325,6 @@ export function setTintAttackPhysicalNormal(player: Player): void {
 export function setTintAttackEnergyNormal(player: Player): void {
   player.char.attackEnergy.sprite.setTint(0xffffff);
   player.char.attackEnergy.sprite.setAlpha(1);
-  // const aebs = player.char.attackEnergy.attackBullets;
-  // if (aebs !== null && aebs.bullets !== null) {
-  //   aebs.bullets.children.iterate((child: any) => {
-  //     child.setTint(0xffffff);
-  //     child.setAlpha(1);
-  //   });
-  // }
 }
 export function setFillAttackPhysicalID(
   player: Player,
