@@ -864,7 +864,7 @@ export const updateCannonShooting = (game: Game) => {
     //   return;
     // }
 
-    if (game.chomp.powerStateCurr.name === 'dark') {
+    if (game.flag.completedCurr) {
       game.cannon.attackBullets.bullets.fireBullet(
         game.cannon.posInit,
         { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },

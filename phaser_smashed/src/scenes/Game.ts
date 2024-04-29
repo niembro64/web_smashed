@@ -978,7 +978,7 @@ export default class Game extends Phaser.Scene {
           bouncePlatforms: true,
           damage: 10,
           hitback: { x: 0.01, y: -0.01 },
-          scale: 2,
+          scale: 1,
           mass: 0.5,
           allowVelocityY: true,
           rotation: {

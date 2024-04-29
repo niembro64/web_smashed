@@ -159,7 +159,7 @@ export function preload(game: Game): void {
   // Load Images
   //////////////////////////////
 
-  game.load.image('bullet', 'images/fireball.png');
+  game.load.image('bullet', 'images/fireball_2x.png');
   game.load.image('cannon', 'images/fire_flower_5x_t.png');
   game.load.image('fist-gray', 'images/fist-gray.png');
   game.load.image('fist-black', 'images/fist-black.png');
@@ -169,7 +169,7 @@ export function preload(game: Game): void {
   game.load.image('mirror', 'images/mirror.png');
 
   game.load.image('blockcracked', 'images/blockcracked.png');
-  game.load.image('fireball', 'images/fireball.png');
+  game.load.image('fireball', 'images/fireball_2x.png');
   // game.load.image('flagpole', 'images/flagpole.png');
   game.load.image('greenshell', 'images/greenshell.png');
   game.load.image('redshell', 'images/redshell.png');
