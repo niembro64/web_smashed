@@ -37,7 +37,7 @@ export interface Debug {
   LoadTimeExtra: boolean;
   AllowChez: boolean;
   AllowKoopas: boolean;
-  SlowMoExplosions: boolean;
+  ChompSlowMo: boolean;
   TypedLoadingText: boolean;
   CharOverride: boolean;
   CharOverrideId: CharacterId;
@@ -50,6 +50,8 @@ export interface Debug {
   NNHelpPit: boolean;
   NNHelpWall: boolean;
   NNHelpCenterize: boolean;
+  ChompExplosions: boolean;
+  ChompVelocities: boolean;
   InstReplay: number;
   ReplayControls: boolean;
   ReplayFastSlow: boolean;

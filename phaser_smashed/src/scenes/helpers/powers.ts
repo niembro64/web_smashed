@@ -11,35 +11,6 @@ import { getNormalizedVector } from './damage';
 import { setPlayerState } from './state';
 import { addToMotionSlowdown } from './time';
 
-// export function setPowerDarkToPlayer(
-//   player: Player,
-//   playerIndex: number,
-//   game: Game
-// ): void {
-//   game.chomp.emitterDark.active = false;
-//   // game.chomp.emitterDark.on = false;
-
-//   game.players.forEach((pj, pjIndex) => {
-//     if (pjIndex === playerIndex) {
-//       pj.emitterDark.active = true;
-//       // pj.emitterDark.on = true;
-//     } else {
-//       pj.emitterDark.active = false;
-//       // pj.emitterDark.on = false;
-//     }
-//   });
-// }
-
-// export function setPowerDarkToChomp(game: Game): void {
-//   game.chomp.emitterDark.active = true;
-//   game.chomp.emitterDark.on = true;
-
-//   game.players.forEach((p, pIndex) => {
-//     p.emitterDark.active = false;
-//     p.emitterDark.on = false;
-//   });
-// }
-
 export function setPlayerPowerState(
   stateName: PowerStateCharacterName,
   player: Player,
@@ -53,8 +24,6 @@ export function setPlayerPowerState(
     return;
   }
 
-  // print(player.char.name, 'curr.name', curr.name, 'prev.name', prev.name);
-
   prev.name = curr.name;
   prev.gameStamp = curr.gameStamp;
 
@@ -66,39 +35,17 @@ export function setPlayerPowerState(
       if (!getDoesAnyPlayerHaveDark(game)) {
         setChompPowerState('dark', game);
       }
-      // p.emitterDark.active = false;
-      // p.emitterDark.on = false;
       p.emitterDark.visible = false;
       break;
     case 'dark':
-      // p.emitterDark.active = true;
-      // p.emitterDark.on = true;
       p.emitterDark.visible = true;
       game.chomp.darknessMoments.passed = game.gameNanoseconds;
       break;
     case 'light':
-      // p.emitterDark.active = false;
-      // p.emitterDark.on = false;
       p.emitterDark.visible = false;
       break;
   }
 }
-
-// export function updateHurtChomp(damage: number, game: Game): void {
-//   const c = game.chomp;
-
-//   // if (
-//   //   c.filterStateCurr.name === 'hurt' &&
-//   //   !getHasBeenGameDurationSinceMoment(
-//   //     game.flashCooldownMs,
-//   //     c.filterStateCurr.gameStamp,
-//   //     game
-//   //   )
-//   // ) {
-//   //   return;
-//   // }
-//   setChompFilterState('hurt', game);
-// }
 
 export function setChompFilterState(
   stateName: ChompFilterStateName,
@@ -106,21 +53,6 @@ export function setChompFilterState(
 ): void {
   const curr = game.chomp.filterStateCurr;
   const prev = game.chomp.filterStatePrev;
-
-  // if (stateName === curr.name) {
-  //   return;
-  // }
-
-  // if (
-  //   stateName === 'hurt' &&
-  //   !getHasBeenGameDurationSinceMoment(
-  //     game.flashCooldownMs,
-  //     curr.gameStamp,
-  //     game
-  //   )
-  // ) {
-  //   return;
-  // }
 
   prev.name = curr.name;
   prev.gameStamp = curr.gameStamp;
@@ -172,10 +104,8 @@ export function updateChompFilterState(
 
   switch (curr.name) {
     case 'none':
-      // print('updateChompFilterState none');
       break;
     case 'cooldown':
-      // print('updateChompFilterState cooldown');
       if (
         getHasBeenGameDurationSinceMoment(
           game.flashCooldownMs,
@@ -187,7 +117,6 @@ export function updateChompFilterState(
       }
       break;
     case 'hurt':
-      // print('updateChompFilterState hurt');
       if (
         getHasBeenGameDurationSinceMoment(
           game.flashActiveMs,
@@ -221,8 +150,6 @@ export function setChompPowerState(
 
   switch (curr.name) {
     case 'none':
-      // c.emitterDark.active = false;
-      // c.emitterDark.on = false;
       c.emitterDark.visible = false;
 
       c.darknessMoments.chomp = game.gameNanoseconds;
@@ -230,8 +157,6 @@ export function setChompPowerState(
 
       break;
     case 'dark':
-      // c.emitterDark.active = true;
-      // c.emitterDark.on = true;
       c.emitterDark.visible = true;
 
       c.darknessMoments.chomp = game.gameNanoseconds;
@@ -271,14 +196,6 @@ export function getHasBeenGameDurationSinceMoment(
   moment: number,
   game: Game
 ): boolean {
-  // print(
-  //   "duration",
-  //   durationNano,
-  //   "moment",
-  //   moment,
-  //   "gameTime",
-  //   game.gameNanoseconds
-  // );
   if (game.gameNanoseconds > moment + durationNano) {
     return true;
   }
@@ -303,15 +220,23 @@ export function updatePlayerDarknessEvents(game: Game): void {
             Math.pow(Math.random(), 0.4);
 
         addToMotionSlowdown(amount / baseAmount, game);
-        playNextExplosion(s.x, s.y, game, amount);
+
+        if (game.debug.ChompExplosions) {
+          playNextExplosion(s.x, s.y, game, amount);
+        }
         const { x, y } = getRandomUnitVector();
 
         player.char.damageCurr += amount / 200;
         setPlayerState(player, playerIndex, 'player-state-hurt', game);
-        b.setVelocityX(b.velocity.x + x * amount);
-        b.setVelocityY(b.velocity.y + y * amount);
 
-        game.shake?.shake(amount / 2, amount / 10);
+        if (game.debug.ChompVelocities) {
+          b.setVelocityX(b.velocity.x + x * amount);
+          b.setVelocityY(b.velocity.y + y * amount);
+        }
+
+        if (game.debug.ChompExplosions) {
+          game.shake?.shake(amount / 2, amount / 10);
+        }
       }
     }
   });
