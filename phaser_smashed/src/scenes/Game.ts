@@ -804,10 +804,6 @@ export default class Game extends Phaser.Scene {
         { sprite: null, sound: null },
         { sprite: null, sound: null },
         { sprite: null, sound: null },
-        // { sprite: null, sound: null },
-        // { sprite: null, sound: null },
-        // { sprite: null, sound: null },
-        // { sprite: null, sound: null },
       ],
     },
   };
@@ -821,7 +817,7 @@ export default class Game extends Phaser.Scene {
     },
     attackBullets: {
       bullets: null,
-      NUMBER_BULLETS: 10,
+      NUMBER_BULLETS: 16,
       soundB1: null,
       soundB2: null,
       soundP1: null,
@@ -837,7 +833,7 @@ export default class Game extends Phaser.Scene {
     },
     posInit: {
       x: SCREEN_DIMENSIONS.WIDTH * 0.185,
-      y: SCREEN_DIMENSIONS.HEIGHT * 0.35,
+      y: SCREEN_DIMENSIONS.HEIGHT * 0.332,
     },
   };
 

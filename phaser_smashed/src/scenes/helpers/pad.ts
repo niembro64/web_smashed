@@ -860,11 +860,19 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
 
 export const updateCannonShooting = (game: Game) => {
   if (game.cannon.attackBullets !== null) {
-    // print('firebullet');
-    game.cannon.attackBullets.bullets.fireBullet(
-      game.cannon.posInit,
-      { x: (Math.random() - 0.5) * 200, y: (Math.random() - 0.5) * 200 },
-      game
-    );
+    // if (Math.random() > 0.05) {
+    //   return;
+    // }
+
+    if (game.chomp.powerStateCurr.name === 'dark') {
+      game.cannon.attackBullets.bullets.fireBullet(
+        game.cannon.posInit,
+        { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
+        game
+      );
+      game.cannon.sprite.setTint(0xffffff);
+    } else {
+      game.cannon.sprite.setTint(0x553344);
+    }
   }
 };

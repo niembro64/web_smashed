@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
-import { Cannon, Debug, Player, Position, Velocity } from '../interfaces';
+import { Debug, Player, Position, Velocity } from '../interfaces';
 import { getDistanceFromOrigin } from './math';
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
@@ -9,7 +9,9 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.setRotation(rotation);
     this.screen = SCREEN_DIMENSIONS;
     this.debug = game.debug;
+    this.key = key;
   }
+  key: string = '';
 
   screen: any = null;
   debug: Debug | null = null;
@@ -64,7 +66,10 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    if (this.timeAlive > 5000 || distance > 350) {
+    const keyDistance = this.key === 'bullet' ? 500 : 350;
+    const keyDuration = this.key === 'bullet' ? 5000 : 3000;
+
+    if (this.timeAlive > keyDuration || distance > keyDistance) {
       this.body.bounce.set(0);
       this.setActive(false);
       this.setVisible(false);
@@ -158,7 +163,8 @@ export class BulletsCannon extends Phaser.Physics.Arcade.Group {
       active: false,
       visible: false,
       classType: Bullet,
-      setRotation: game.cannon.rotation,
+      setRotation: { initial: Math.random() * 100, speed: Math.random() * 100 },
+      // setRotation: game.cannon.rotation,
     });
   }
 

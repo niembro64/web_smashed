@@ -160,7 +160,7 @@ export function preload(game: Game): void {
   //////////////////////////////
 
   game.load.image('bullet', 'images/fireball.png');
-  game.load.image('cannon', 'images/fire_flower_5x.png');
+  game.load.image('cannon', 'images/fire_flower_5x_t.png');
   game.load.image('fist-gray', 'images/fist-gray.png');
   game.load.image('fist-black', 'images/fist-black.png');
   game.load.image('fist-white', 'images/fist.png');

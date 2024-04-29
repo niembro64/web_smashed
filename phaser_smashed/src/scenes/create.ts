@@ -28,9 +28,9 @@ export function create(game: Game) {
   createLavas(game);
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
+  createCannon(game);
   createExplosions(game);
   createFirework(game);
-  createCannon(game);
   createPole(game);
   createFlag(game);
   createEmitterChomp(game);
@@ -61,6 +61,7 @@ export function create(game: Game) {
   createCollidersPvAE(game);
   createCollidersAEvAE(game);
   createCollidersAEvAP(game);
+  createCollidersCannon(game);
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
@@ -171,7 +172,7 @@ export function createCannon(game: Game): void {
     'cannon'
   );
 
-  game.cannon.sprite.setScale(1);
+  game.cannon.sprite.setScale(0.85);
   game.cannon.sprite.setImmovable(true);
   game.cannon.sprite.body.allowGravity = false;
   game.cannon.sprite.setImmovable(false);
@@ -179,6 +180,9 @@ export function createCannon(game: Game): void {
   // game.cannon.sprite.setTint(0x555555);
 
   game.cannon.attackBullets.bullets = new BulletsCannon(game);
+}
+
+export function createCollidersCannon(game: Game): void {
   let aebs = game.cannon.attackBullets.bullets;
 
   game.physics.add.collider(aebs, game.PLATFORMS);
@@ -186,15 +190,9 @@ export function createCannon(game: Game): void {
   for (let i = 0; i < game.players.length; i++) {
     game.physics.add.collider(aebs, game.players[i].char.sprite);
 
-    if (game.debug.CollidersABvAE) {
-      game.physics.add.collider(aebs, game.players[i].char.attackEnergy.sprite);
-    }
-    if (game.debug.CollidersABvAP) {
-      game.physics.add.collider(
-        aebs,
-        game.players[i].char.attackPhysical.sprite
-      );
-    }
+    game.physics.add.collider(aebs, game.players[i].char.attackEnergy.sprite);
+
+    game.physics.add.collider(aebs, game.players[i].char.attackPhysical.sprite);
   }
 
   game.physics.add.collider(aebs, game.chomp.sprite);
@@ -202,9 +200,11 @@ export function createCannon(game: Game): void {
   // turn off gravity for bullets
   aebs.children.iterate((child: any) => {
     child.body.allowGravity = false;
-    child.body.setBounce(1);
-    child.body.setCollideWorldBounds(true);
-    child.body.onWorldBounds = true;
+    // child.body.setGravityY(10);
+    // child.Body.setBounce(0.5);
+    // child.body.setCollideWorldBounds(true);
+    // child.body.setVelocityX(0);
+    // child.body.setVelocityY(0);
   });
 }
 
