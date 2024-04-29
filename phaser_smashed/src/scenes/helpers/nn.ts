@@ -10,8 +10,6 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
-import { random } from 'brain.js/dist/layer';
-import { log } from 'console';
 
 export const nnConfigNN = {
   hiddenLayers: [60, 60],
