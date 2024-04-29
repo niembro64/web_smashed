@@ -32,6 +32,7 @@ import {
   updateAttackEnergyFrictionGroundMovement,
   updateAttackEnergyFrictionGroundRotation,
   updateAttackEnergyFrictionWall,
+  updateCannonShooting,
   updatePadPreviousAndDebounced,
 } from '../helpers/pad';
 import { updateChompFilterState } from '../helpers/powers';
@@ -67,6 +68,7 @@ export function updateGameStatePlay(
   updateKeepObjectsFromFallingLikeCrazy(game);
   updateCirclesLocations(game);
   updateChomp(game);
+  updateCannonShooting(game);
   updateTable(game);
   updateSpritesheets(game);
   updateTimeSlowdown(game);

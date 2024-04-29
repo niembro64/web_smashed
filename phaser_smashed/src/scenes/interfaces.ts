@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 import { print } from '../views/client';
-import { Bullets } from './helpers/bullets';
+import { BulletsPlayer } from './helpers/bullets';
 
 export interface Debug {
   DevMode: boolean;
@@ -399,7 +399,7 @@ export interface AttackEnergy {
 }
 
 export interface AttackBullets {
-  bullets: Bullets | null;
+  bullets: BulletsPlayer | null;
   NUMBER_BULLETS: number;
   soundB1: any;
   soundB2: any;
@@ -516,7 +516,9 @@ export interface Quote {
 export interface Cannon {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
+  bulletSprite: any | Phaser.GameObjects.Sprite;
   posInit: Position;
+  rotation: AttackEnergyRotation;
 }
 
 export interface Owner {

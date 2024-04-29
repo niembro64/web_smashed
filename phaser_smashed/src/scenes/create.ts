@@ -15,7 +15,7 @@ import {
 } from './helpers/powers';
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
-import { Bullets } from './helpers/bullets';
+import { BulletsCannon, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
 
 export function create(game: Game) {
@@ -166,18 +166,56 @@ export function createPole(game: Game): void {
 
 export function createCannon(game: Game): void {
   game.cannon.sprite = game.physics.add.sprite(
-    SCREEN_DIMENSIONS.WIDTH * 0.185,
-    SCREEN_DIMENSIONS.HEIGHT * 0.319,
+    game.cannon.posInit.x,
+    game.cannon.posInit.y,
     'cannon'
   );
+
   game.cannon.sprite.setScale(0.2);
   game.cannon.sprite.setImmovable(true);
   game.cannon.sprite.body.allowGravity = false;
   game.cannon.sprite.setImmovable(false);
   game.cannon.sprite.setOrigin(0.5, 0.5);
-
-  // make darker
   game.cannon.sprite.setTint(0x555555);
+
+  game.cannon.bulletSprite = game.physics.add.sprite(
+    game.cannon.posInit.x,
+    game.cannon.posInit.y,
+    'bullet'
+  );
+
+  game.cannon.bulletSprite.setScale(0.1);
+  game.cannon.bulletSprite.setOrigin(0.5, 0.5);
+
+  game.cannon.attackBullets.bullets = new BulletsCannon(game);
+  let aebs = game.cannon.attackBullets.bullets;
+
+  game.physics.add.collider(aebs, game.PLATFORMS);
+
+  for (let i = 0; i < game.players.length; i++) {
+    game.physics.add.collider(aebs, game.players[i].char.sprite);
+
+    if (game.debug.CollidersABvAE) {
+      game.physics.add.collider(aebs, game.players[i].char.attackEnergy.sprite);
+    }
+    if (game.debug.CollidersABvAP) {
+      game.physics.add.collider(
+        aebs,
+        game.players[i].char.attackPhysical.sprite
+      );
+    }
+  }
+
+  game.physics.add.collider(aebs, game.chomp.sprite);
+
+  // turn off gravity for bullets
+  aebs.children.iterate((child: any) => {
+    child.body.allowGravity = false;
+  });
+
+  aebs.children.iterate((child: any) => {
+    child.body.enable = false;
+  });
 }
 
 export function createShake(game: Game): void {
@@ -561,13 +599,6 @@ export function createHitboxOverlap(game: Game): void {
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
         }
-        // p(
-        //   "OVERLAP",
-        //   "CHOMP",
-        //   game.chomp.powerStateCurr.name,
-        //   "PLAYER",
-        //   player.char.powerStateCurr.name
-        // );
       }
     );
   });
@@ -585,13 +616,6 @@ export function createHitboxOverlap(game: Game): void {
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
         }
-        // p(
-        //   "OVERLAP",
-        //   "CHOMP",
-        //   game.chomp.powerStateCurr.name,
-        //   "PLAYER",
-        //   player.char.powerStateCurr.name
-        // );
       }
     );
   });
@@ -607,13 +631,6 @@ export function createHitboxOverlap(game: Game): void {
           setChompPowerState('none', game);
           game.chomp.soundBBBambalam.play();
         }
-        // p(
-        //   "OVERLAP",
-        //   "CHOMP",
-        //   game.chomp.powerStateCurr.name,
-        //   "PLAYER",
-        //   player.char.powerStateCurr.name
-        // );
       }
     );
 
@@ -629,7 +646,7 @@ export function createHitboxOverlap(game: Game): void {
               game.chomp.darknessMoments.passed,
               game
             );
-            // p("hasBeen", hasBeen);
+
             if (player.char.powerStateCurr.name === 'dark' && hasBeen) {
               setPlayerPowerState('dark', pj, game);
               setPlayerPowerState('none', player, game);
@@ -638,13 +655,6 @@ export function createHitboxOverlap(game: Game): void {
               );
               game.chomp.soundBBWoah.play();
             }
-            // p(
-            //   "OVERLAP",
-            //   "PLAYER",
-            //   player.char.powerStateCurr.name,
-            //   "PJ",
-            //   pj.char.powerStateCurr.name
-            // );
           }
         );
 
@@ -740,34 +750,6 @@ export function createHitboxOverlap(game: Game): void {
                 );
               });
             });
-
-          // game.physics.add.overlap(
-          //   player.char.sprite,
-          //   pj.char.attackEnergy.bullets.sprite,
-          //   function () {
-          //     if (game.debug.DefaultDamage) {
-          //       onHitHandlerBullets(
-          //         player,
-          //         playerIndex,
-          //         pj.char.attackEnergy,
-          //         pj.char.attackEnergy.bullets,
-          //         j,
-          //         game.DEFAULT_ATTACK_DAMAGE,
-          //         game
-          //       );
-          //       return;
-          //     }
-          //     onHitHandlerBullets(
-          //       player,
-          //       playerIndex,
-          //       pj.char.attackEnergy,
-          //       pj.char.attackEnergy.bullets,
-          //       j,
-          //       pj.char.attackEnergy.damage,
-          //       game
-          //     );
-          //   }
-          // );
         }
       }
     });
@@ -1213,7 +1195,7 @@ export function createAttackEnergies(game: Game): void {
   game.players.forEach((player, playerIndex) => {
     let ae = player.char.attackEnergy;
     if (game.debug.BulletsAllowGroups && ae.attackBullets) {
-      ae.attackBullets.bullets = new Bullets(game, player);
+      ae.attackBullets.bullets = new BulletsPlayer(game, player);
       let aebs = ae.attackBullets.bullets;
       let x = ae.attackBullets;
       ae.attackBullets.soundB1 = game.sound.add(x.sB1, {
@@ -1254,40 +1236,6 @@ export function createAttackEnergies(game: Game): void {
         }
       });
     }
-
-    // game.input.on('pointerdown', (pointer: any) => {
-    //   p('pointerdown');
-    //   if (ae.bullets) {
-    //     // x: pointer.worldX,
-    //     // y: pointer.worldY,
-    //     ae.bullets.soundBullets.rate = Math.random() * 0.2 + 1.5;
-    //     ae.bullets.soundBullets.play();
-
-    //     let posStart: Position = {
-    //       x: player.char.sprite.x,
-    //       y: player.char.sprite.y,
-    //     };
-
-    //     let posEnd: Position = {
-    //       x: pointer.worldX,
-    //       y: pointer.worldY,
-    //     };
-
-    //     let vector = getNormalizedVector(
-    //       posStart.x,
-    //       posStart.y,
-    //       posEnd.x,
-    //       posEnd.y
-    //     );
-
-    //     let vectorMult = {
-    //       x: vector.x * 2000,
-    //       y: vector.y * 2000,
-    //     };
-
-    //     ae.bullets.sprite.fireBullet(posStart, vectorMult);
-    //   }
-    // });
   });
 }
 

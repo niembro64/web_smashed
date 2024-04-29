@@ -814,6 +814,11 @@ export default class Game extends Phaser.Scene {
 
   cannon: Cannon = {
     sprite: null,
+    bulletSprite: null,
+    rotation: {
+      initial: 0.25,
+    speed: 400,
+    },
     attackBullets: {
       bullets: null,
       NUMBER_BULLETS: 10,
@@ -830,7 +835,10 @@ export default class Game extends Phaser.Scene {
       sP2: 'pop2',
       vP2: 0.03,
     },
-    posInit: { x: 0, y: 0 },
+    posInit: {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.185,
+      y: SCREEN_DIMENSIONS.HEIGHT * 0.319,
+    },
   };
 
   flagSpeedDark = 70;

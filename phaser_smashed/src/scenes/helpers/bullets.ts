@@ -1,30 +1,12 @@
 import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
-import { Debug, Player, Position, Velocity } from '../interfaces';
+import { Cannon, Debug, Player, Position, Velocity } from '../interfaces';
 import { getDistanceFromOrigin } from './math';
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(game: Game, x: number, y: number, key: string, rotation: number) {
     super(game, x, y, key);
-
-    // let ae = player.char.attackEnergy;
-    // this.setScale(0.3);
-    // this.setScale(ae.scale);
     this.setRotation(rotation);
-
-    // game.physics.add.collider(this, game.PLATFORMS);
-
-    // for (let i = 0; i < game.players.length; i++) {
-    //   game.physics.add.collider(this, game.players[i].char.sprite);
-    //   game.physics.add.collider(this, game.players[i].char.attackEnergy.sprite);
-    //   game.physics.add.collider(
-    //     this,
-    //     game.players[i].char.attackPhysical.sprite
-    //   );
-    // }
-
-    // game.physics.add.collider(this, game.chomp.sprite);
-    // game.physics.add.collider(this, game.TABLE);
     this.screen = SCREEN_DIMENSIONS;
     this.debug = game.debug;
   }
@@ -45,7 +27,6 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.timeAlive = 0;
     this.body.reset(pos.x, pos.y);
     this.floatVelocityY = this.Y_ADDER + this.Y_RANDOM * Math.random();
-    // this.floatVelocityY = this.FLOAT_VELOCITY_Y * normalRandom(0.5, 0.2);
 
     this.body.bounce.set(1);
     this.setActive(true);
@@ -59,29 +40,11 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(time, delta);
 
     this.timeAlive += delta;
-    // this.setScale((500 - this.timeAlive) / 500);
-
-    // if (
-    //   this.y <= 0 ||
-    //   this.y >= sd.HEIGHT ||
-    //   this.x <= 0 ||
-    //   this.x >= sd.WIDTH
-    // ) {
-    //   this.body.bounce.set(0);
-    //   this.setActive(false);
-    //   this.setVisible(false);
-    //   this.x = -100;
-    //   this.y = -100;
-    //   this.setVelocityX(0);
-    //   this.setVelocityY(0);
-    // }
 
     let distance = getDistanceFromOrigin(
       { x: this.x, y: this.y },
       this.initialPosition
     );
-
-    // print('distance', distance);
 
     if (this.debug?.BulletsFullScreen) {
       if (
@@ -101,9 +64,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    // if (this.timeAlive > 500) {
     if (this.timeAlive > 5000 || distance > 350) {
-      // if (distance > 350) {
       this.body.bounce.set(0);
       this.setActive(false);
       this.setVisible(false);
@@ -115,7 +76,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
   }
 }
 
-export class Bullets extends Phaser.Physics.Arcade.Group {
+export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
   constructor(game: Game, player: Player) {
     super(game.physics.world, game);
 
@@ -129,20 +90,6 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
       classType: Bullet,
       setRotation: ae.rotation,
     });
-
-    // game.physics.add.collider(this, game.PLATFORMS);
-
-    // for (let i = 0; i < game.players.length; i++) {
-    //   game.physics.add.collider(this, game.players[i].char.sprite);
-    //   game.physics.add.collider(this, game.players[i].char.attackEnergy.sprite);
-    //   game.physics.add.collider(
-    //     this,
-    //     game.players[i].char.attackPhysical.sprite
-    //   );
-    // }
-
-    // game.physics.add.collider(this, game.chomp.sprite);
-    // game.physics.add.collider(this, game.TABLE);
   }
 
   getBulletSprites(): Phaser.Physics.Arcade.Sprite[] {
@@ -180,11 +127,6 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
 
     let bullet = this.getFirstDead(false);
     if (bullet) {
-      // bullet.bouncePlatforms = true;
-      // bullet.bounceWorldBounds = false;
-      // bullet.bounceX = 1;
-      // bullet.bounceY = 1;
-
       bullet.fire(pos, vel, game);
       if (pbs?.soundB1) {
         if (Math.random() > 0.5) {
@@ -203,6 +145,56 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
           pbs.soundP2.play();
         }
       }
+    }
+  }
+}
+
+export class BulletsCannon extends Phaser.Physics.Arcade.Group {
+  constructor(game: Game) {
+    super(game.physics.world, game);
+    this.createMultiple({
+      frameQuantity: game.cannon.attackBullets?.NUMBER_BULLETS || 10,
+      key: game.cannon.bulletSprite.srcImage,
+      active: false,
+      visible: false,
+      classType: Bullet,
+      setRotation: game.cannon.rotation,
+    });
+  }
+
+  getBulletSprites(): Phaser.Physics.Arcade.Sprite[] {
+    return this.children.entries as Phaser.Physics.Arcade.Sprite[];
+  }
+
+  setFillBulletSprites(): void {
+    let bulletSprites = this.getBulletSprites();
+    for (let i = 0; i < bulletSprites.length; i++) {
+      bulletSprites[i].setTintFill(0xff0000);
+      print('setFillBulletSprites', bulletSprites[i]);
+    }
+  }
+
+  numSkip = 0;
+
+  fireBullet(
+    pos: Position,
+    vel: Velocity,
+    firstFire: boolean,
+    game: Game
+  ): void {
+    if (firstFire) {
+      this.numSkip = 0;
+    }
+    if (this.numSkip !== 0) {
+      this.numSkip--;
+      return;
+    }
+
+    this.numSkip = 3;
+
+    let bullet = this.getFirstDead(false);
+    if (bullet) {
+      bullet.fire(pos, vel, game);
     }
   }
 }

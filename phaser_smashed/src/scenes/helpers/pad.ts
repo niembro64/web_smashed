@@ -857,3 +857,14 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
     }
   });
 }
+
+export const updateCannonShooting = (game: Game) => {
+  if (game.cannon.attackBullets !== null) {
+    // print('firebullet');
+    game.cannon.attackBullets.bullets.fireBullet(
+      game.cannon.posInit,
+      { x: 10, y: 2 },
+      game
+    );
+  }
+};
