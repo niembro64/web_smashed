@@ -12,7 +12,7 @@ import {
 import { NNRatiosNN } from './nnRatios';
 
 export const nnConfigNN = {
-  hiddenLayers: [60, 60],
+  hiddenLayers: [40, 40],
   useGpu: true,
 };
 
@@ -196,6 +196,7 @@ export const NNGetOutputStatic = (
     }
   }
   const pCurr = player.padCurr;
+  const pPrev = player.padPrev;
   const pDeb = player.padDebounced;
 
   const nnInput: number[] = [
@@ -213,6 +214,14 @@ export const NNGetOutputStatic = (
     pCurr.B ? 1 : 0,
     pCurr.X ? 1 : 0,
     pCurr.Y ? 1 : 0,
+    pPrev.up ? 1 : 0,
+    pPrev.down ? 1 : 0,
+    pPrev.left ? 1 : 0,
+    pPrev.right ? 1 : 0,
+    pPrev.A ? 1 : 0,
+    pPrev.B ? 1 : 0,
+    pPrev.X ? 1 : 0,
+    pPrev.Y ? 1 : 0,
     pDeb.up,
     pDeb.down,
     pDeb.left,
@@ -338,6 +347,14 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.padCurr.B ? 1 : 0,
       player.padCurr.X ? 1 : 0,
       player.padCurr.Y ? 1 : 0,
+      player.padPrev.up ? 1 : 0,
+      player.padPrev.down ? 1 : 0,
+      player.padPrev.left ? 1 : 0,
+      player.padPrev.right ? 1 : 0,
+      player.padPrev.A ? 1 : 0,
+      player.padPrev.B ? 1 : 0,
+      player.padPrev.X ? 1 : 0,
+      player.padPrev.Y ? 1 : 0,
       player.padDebounced.up,
       player.padDebounced.down,
       player.padDebounced.left,
