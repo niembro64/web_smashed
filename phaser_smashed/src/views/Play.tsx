@@ -544,6 +544,13 @@ function Play() {
     }
     return numActiveBeforeMe;
   };
+  useEffect(() => {
+    if (debugState.AutoStart && webState === 'web-state-setup') {
+      setTimeout(() => {
+        onClickStartStartButton();
+      }, 500);
+    }
+  }, [webState]);
 
   useEffect(() => {
     print('smashConfig', smashConfig);

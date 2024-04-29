@@ -13,7 +13,7 @@ import {
   EndCup,
   Flag,
   GameStateWithTime,
-  Gun,
+  Cannon,
   InputType,
   keyboard,
   Lava,
@@ -812,7 +812,7 @@ export default class Game extends Phaser.Scene {
     },
   };
 
-  gun: Gun = {
+  cannon: Cannon = {
     sprite: null,
     attackBullets: null,
     posInit: { x: 0, y: 0 },

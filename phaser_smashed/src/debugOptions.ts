@@ -1,6 +1,7 @@
 import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
+  AutoStart: true,
   NNP1Train: true,
   DevMode: true,
   DurSeconds: false,
@@ -61,6 +62,7 @@ export const debugMax: Debug = {
   DurSeconds: true,
   ModeInfinity: true,
   Shots: 15,
+  AutoStart: true,
   Minutes: 15, //01234567
   MusicActive: true,
   MusicTrack: 3, // 012
@@ -121,6 +123,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Shots: 0,
   Minutes: 1, //01234567
   MusicActive: false,
+  AutoStart: false,
   ReadySoundActive: false,
   UseCamera: false,
   CamerasVisible: false,

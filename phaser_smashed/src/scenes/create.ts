@@ -46,6 +46,7 @@ export function create(game: Game) {
   createScoreboardController(game);
   createScoreboardReady(game);
   createChomp(game);
+  createCannon(game);
   createEmitterChompFollowChomp(game);
   createPlayers(game);
   createEmittersFollowPlayers(game);
@@ -162,15 +163,17 @@ export function createPole(game: Game): void {
   game.flag.spriteFlagPole.setOrigin(0.5, 0.5);
 }
 
-export function createGun(game: Game): void {
-  let ggs = game.gun.sprite;
-  ggs = game.physics.add.sprite(
-    SCREEN_DIMENSIONS.WIDTH * 0.8,
-    SCREEN_DIMENSIONS.HEIGHT * 0.3,
-    'centerWhite'
+export function createCannon(game: Game): void {
+  game.cannon.sprite = game.physics.add.sprite(
+    SCREEN_DIMENSIONS.WIDTH * 0.2,
+    SCREEN_DIMENSIONS.HEIGHT * 0.2,
+    'cannon'
   );
-  ggs.setImmovable(true).setBounce(0).setOrigin(0.5, 1).setScale(0.1);
-  ggs.allowGravity = false;
+  game.cannon.sprite.setScale(1);
+  game.cannon.sprite.setImmovable(true);
+  game.cannon.sprite.body.allowGravity = false;
+  game.cannon.sprite.setImmovable(false);
+  game.cannon.sprite.setOrigin(0.5, 0.5);
 }
 
 export function createShake(game: Game): void {

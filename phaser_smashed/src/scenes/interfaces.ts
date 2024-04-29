@@ -32,6 +32,7 @@ export interface Debug {
   ReadySoundActive: boolean;
   HealthInverted: boolean;
   MatricesAlways: boolean;
+  AutoStart: boolean;
   ConsoleLogButtons: boolean;
   ConsoleLogConnected: boolean;
   LoadTimeExtra: boolean;
@@ -512,7 +513,7 @@ export interface Quote {
   text: string;
 }
 
-export interface Gun {
+export interface Cannon {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
   posInit: Position;
