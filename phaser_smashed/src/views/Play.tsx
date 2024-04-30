@@ -583,14 +583,13 @@ function Play() {
       setPrevent(false);
       return;
     }
-    setDebugState((prev) => {
-      const x = { ...prev };
 
-      if (!prev.DevMode) {
-        x.Minutes = 7;
-      }
-      return x;
-    });
+    if (debugState.NNP1Train) {
+      const debugStateCopy = { ...debugState };
+
+      debugStateCopy.Minutes = 7;
+      setDebugState(debugStateCopy);
+    }
   }, [debugState.NNP1Train]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
