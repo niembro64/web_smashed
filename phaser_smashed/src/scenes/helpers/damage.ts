@@ -1,9 +1,16 @@
 import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
-import { AttackEnergy, AttackPhysical, Player, xyVector } from '../interfaces';
+import {
+  AttackEnergy,
+  AttackPhysical,
+  FireFlower,
+  Player,
+  xyVector,
+} from '../interfaces';
 import {
   setAttackEnergyOffscreen,
   setBulletOffscreen,
+  setFireBallOffscreen,
   setPhysicsAttackEnergyOff,
 } from './attacks';
 import { getNearestPlayerAliveFromXY, hitbackFly } from './movement';
@@ -117,6 +124,62 @@ export function onHitHandlerAttackEnergy(
   }
 }
 
+export function onHitHandlerFireBall(
+  playerHit: Player,
+  playerHitIndex: number,
+  bullet: Phaser.GameObjects.GameObject,
+  bulletIndex: number,
+  j: number,
+  damage: number,
+  game: Game
+): void {
+  if (playerHit.emitterPlayer.on) {
+    return;
+  }
+
+  const b = game.fireFlower.attackBullets?.bullets?.getChildren()[bulletIndex];
+
+  if (!b) {
+    return;
+  }
+
+  if (bullet === null) {
+    return;
+  }
+
+  if (
+    playerHit.state.name === 'player-state-start' ||
+    playerHit.state.name === 'player-state-dead'
+  ) {
+    return;
+  }
+
+  for (let bj = 0; bj < game.players.length; bj++) {
+    if (bj === j) {
+      game.wasLastHitByMatrix[playerHitIndex][bj] = true;
+    } else {
+      game.wasLastHitByMatrix[playerHitIndex][bj] = false;
+    }
+  }
+
+  const vector = {
+    x: b.body.gameObject.body.velocity.x,
+    y: b.body.gameObject.body.velocity.y,
+  };
+
+  playerHit.char.damageCurr += damage;
+
+  const pHit = playerHit.char.sprite;
+  // const ae = pj.char.attackEnergy;
+
+  pHit.setVelocityX(pHit.body.velocity.x + vector.x * 3 * game.fireFlower.hitback.x);
+  pHit.setVelocityY(pHit.body.velocity.y + vector.y * 2 * game.fireFlower.hitback.y - 25);
+
+  if (game.fireFlower.diesOnHitbox) {
+    setFireBallOffscreen(bulletIndex, game);
+  }
+}
+
 export function onHitHandlerBullets(
   playerHit: Player,
   playerHitIndex: number,
@@ -149,8 +212,6 @@ export function onHitHandlerBullets(
     return;
   }
 
-  // game.overlappingPlayerIAttackEnergyJ[playerIndex][j] = true;
-
   for (let bj = 0; bj < game.players.length; bj++) {
     if (bj === j) {
       game.wasLastHitByMatrix[playerHitIndex][bj] = true;
@@ -158,13 +219,6 @@ export function onHitHandlerBullets(
       game.wasLastHitByMatrix[playerHitIndex][bj] = false;
     }
   }
-
-  // const vector = getNormalizedVector(
-  //   b.body.gameObject.x,
-  //   b.body.gameObject.y,
-  //   playerHit.char.sprite.x,
-  //   playerHit.char.sprite.y
-  // );
 
   const vector = {
     x: b.body.gameObject.body.velocity.x,
@@ -181,7 +235,6 @@ export function onHitHandlerBullets(
 
   if (attackEnergy.diesOnHitbox) {
     setBulletOffscreen(bulletIndex, pj, j, game);
-    // setPhysicsAttackEnergyOff(game.players[j]);
   }
 }
 

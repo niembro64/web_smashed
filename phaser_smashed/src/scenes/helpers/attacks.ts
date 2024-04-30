@@ -238,6 +238,19 @@ export function setBulletOffscreen(
   b.body.velocity.y = 0;
 }
 
+export function setFireBallOffscreen(bulletIndex: number, game: Game): void {
+  let b = game.fireFlower.attackBullets?.bullets?.getChildren()[bulletIndex];
+
+  if (!b) {
+    return;
+  }
+
+  b.body.position.y = -1000;
+  b.body.position.x = -1000;
+  b.body.velocity.x = 0;
+  b.body.velocity.y = 0;
+}
+
 export function updatePhysicalAttackFollowsPlayer(
   player: Player,
   game: Game

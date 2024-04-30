@@ -58,11 +58,7 @@ export const updateFireFlowerShooting = (game: Game) => {
       { x: v.x * 1000 + randX, y: v.y * 1000 + randY },
       game
     );
-    // game.fireFlower.attackBullets.bullets.fireBullet(
-    //   game.fireFlower.posInit,
-    //   { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
-    //   game
-    // );
+
     setPlaySoundFireBall(game);
   } else {
     const white = 0xffffff;

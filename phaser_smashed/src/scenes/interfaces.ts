@@ -518,6 +518,9 @@ export interface Quote {
 export interface FireFlower {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
+  damage: number;
+  hitback: Hitback;
+  diesOnHitbox: boolean;
   fireBallSounds: any[];
   fireBallSoundsIndexCurr: number;
   srcImage: any | Phaser.GameObjects.Sprite;

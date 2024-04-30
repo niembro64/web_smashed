@@ -5,6 +5,7 @@ import {
   onHitHandlerAttackEnergy,
   onHitHandlerAttackPhysical,
   onHitHandlerBullets,
+  onHitHandlerFireBall,
 } from './helpers/damage';
 import {
   getDoesAnythingHaveDark,
@@ -140,7 +141,7 @@ export function createFlag(game: Game): void {
     volume: 0.5,
   });
   f.soundFlagMusicBox = game.sound.add('flag_music_box', {
-    volume: 0.2,
+    volume: 0.35,
   });
 }
 
@@ -717,6 +718,25 @@ export function createHitboxOverlap(game: Game): void {
               });
             });
         }
+
+        // fireflower bullets
+        game.fireFlower.attackBullets !== null &&
+          game.fireFlower.attackBullets.bullets !== null &&
+          game.fireFlower.attackBullets.bullets
+            .getChildren()
+            .forEach((bullet: any, bi: number) => {
+              game.physics.add.overlap(player.char.sprite, bullet, function () {
+                onHitHandlerFireBall(
+                  player,
+                  playerIndex,
+                  bullet,
+                  bi,
+                  j,
+                  game.DEFAULT_ATTACK_DAMAGE,
+                  game
+                );
+              });
+            });
       }
     });
   });
