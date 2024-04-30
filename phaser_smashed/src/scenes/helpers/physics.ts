@@ -17,12 +17,14 @@ export function setPhysicsPause(game: Game): void {
   });
   game.chomp.emitterDark.active = false;
   setAnimationsOff(game);
+
   if (game.chomp.soundSheep.isPlaying) {
     setMusicChompSheepPause(game);
     game.chomp.afterPauseResumeSoundSheep = true;
   } else {
     game.chomp.afterPauseResumeSoundSheep = false;
   }
+
   if (game.flag.afterPauseResumeMusicFlagMusicBox) {
     setMusicBoxPause(game);
     game.flag.afterPauseResumeMusicFlagMusicBox = true;
@@ -39,9 +41,9 @@ export function setPhysicsResume(game: Game): void {
   game.chomp.emitterDark.active = true;
   setAnimationsOn(game);
   if (game.chomp.afterPauseResumeSoundSheep) {
-    setMusicChompSheepPlay(game);
+    setMusicChompSheepResume(game);
   }
   if (game.flag.afterPauseResumeMusicFlagMusicBox) {
-    setMusicBoxPlay(game);
+    setMusicBoxResume(game);
   }
 }
