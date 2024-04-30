@@ -1,6 +1,21 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { getDistance, getNormalizedVector, getVector } from './damage';
 
+export function updateChomp(game: Game): void {
+  updateChompSpriteDirection(game);
+  updateChompVelocity(game);
+  updateChompLinkPositions(game);
+}
+
+export function updateAtThreeShots(game: Game): void {
+  if (game.shotsLeftCurr === game.shotsLeftPrev) {
+    return;
+  }
+
+  if (game.shotsLeftCurr === 3) {
+  }
+}
+
 export function updateChompSpriteDirection(game: Game): void {
   const c = game.chomp;
 
@@ -89,23 +104,6 @@ export function getCircleYfromX(x: number, game: Game): number {
     Math.sqrt(radius * radius - (x - originX) * (x - originX)) + originY;
 
   return y;
-}
-
-export function updateChomp(game: Game): void {
-  updateChompSpriteDirection(game);
-  updateChompVelocity(game);
-  updateChompLinkPositions(game);
-}
-
-export function updateAtThreeShots(game: Game): void {
-  if (game.shotsLeftCurr === game.shotsLeftPrev) {
-    return;
-  }
-
-  if (game.shotsLeftCurr === 3) {
-    // c.emitterDark.visible = true;
-    // setChompPowerState('dark', game);
-  }
 }
 
 export function updateChompLinkPositions(game: Game): void {

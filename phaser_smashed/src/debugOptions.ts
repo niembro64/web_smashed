@@ -120,7 +120,7 @@ export const debugMax: Debug = {
 
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
-  NNP1Train: false,
+  NNP1Train: true,
   Level: 1, //0123456
   ModeInfinity: true,
   DurSeconds: false,

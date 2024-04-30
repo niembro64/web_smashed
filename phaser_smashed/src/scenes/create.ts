@@ -558,6 +558,10 @@ export function createHitboxOverlap(game: Game): void {
       player.char.attackPhysical.sprite,
       game.chomp.sprite,
       function () {
+        if (game.debug.NNP1Train) {
+          return;
+        }
+
         updateChompFilterState(player, player.char.attackPhysical.damage, game);
 
         if (!getDoesAnythingHaveDark(game)) {
