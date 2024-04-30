@@ -554,7 +554,7 @@ export interface Flag {
   spriteFlagStationary: any | Phaser.GameObjects.Sprite;
   spriteFlagChar: any | Phaser.GameObjects.Sprite;
   spriteFlagPole: any | Phaser.GameObjects.Sprite;
-  yPosition: number; // 0 to 1
+  yPositionInit: number; // 0 to 1
   soundFlagCapture: any;
   soundFlagComplete: any;
   soundFlagMusicBox: any;

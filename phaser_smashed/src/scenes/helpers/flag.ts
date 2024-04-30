@@ -1,6 +1,12 @@
 import Game from '../Game';
 import { Player } from '../interfaces';
-import { setMusicBoxPause, setMusicBoxPlay, setBGMusicPause, setBGMusicResume, setMusicBoxResume } from './sound';
+import {
+  setMusicBoxPause,
+  setMusicBoxPlay,
+  setBGMusicPause,
+  setBGMusicResume,
+  setMusicBoxResume,
+} from './sound';
 
 export const getIsInPole = (x: number, y: number, game: Game): boolean => {
   const f = game.flag;
@@ -77,7 +83,6 @@ export const updateFlagMovement = (game: Game): void => {
   f.completedPrev = f.completedCurr;
 
   if (f.completedCurr) {
-    // f.soundFlagComplete.play();
     f.spriteFlagMover.body.setVelocityY(0);
     return;
   }

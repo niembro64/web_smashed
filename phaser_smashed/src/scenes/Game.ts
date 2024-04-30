@@ -185,7 +185,6 @@ export default class Game extends Phaser.Scene {
   motionSlowdown: number = 1;
 
   // TIME
-  // timeScale: any = this.time.timeScale;
   scoreBoardTimeGame: any;
   scoreBoardTimeTime: any;
   timeNanoseconds: number = 0;
@@ -865,7 +864,7 @@ export default class Game extends Phaser.Scene {
     spriteFlagChar: null,
     spriteFlagPole: null,
     afterPauseResumeMusicFlagMusicBox: false,
-    yPosition: 0,
+    yPositionInit: 0.5,
     soundFlagCapture: null,
     soundFlagMusicBox: null,
     soundFlagComplete: null,

@@ -70,10 +70,10 @@ export function create(game: Game) {
 }
 
 export function createFlag(game: Game): void {
-  let f = game.flag;
+  const f = game.flag;
 
-  let h = 0.382;
-  let horizOffset = 57 - game.ASSET_BRICK_WIDTH * 4;
+  const h = 0.382;
+  const horizOffset = 57 - game.ASSET_BRICK_WIDTH * 4;
 
   f.spriteFlagMover = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
@@ -179,13 +179,12 @@ export function createFireFlower(game: Game): void {
   game.fireFlower.sprite.body.allowGravity = false;
   game.fireFlower.sprite.setImmovable(false);
   game.fireFlower.sprite.setOrigin(0.5, 0.5);
-  // game.cannon.sprite.setTint(0x555555);
 
   game.fireFlower.attackBullets.bullets = new BulletsCannon(game);
 }
 
 export function createCollidersFireFlower(game: Game): void {
-  let aebs = game.fireFlower.attackBullets.bullets;
+  const aebs = game.fireFlower.attackBullets.bullets;
 
   game.physics.add.collider(aebs, game.PLATFORMS);
 
@@ -235,8 +234,8 @@ export function createExplosions(game: Game): void {
 
   game.anims.create(config);
 
-  let c = game.chomp;
-  let eArray = c.darknessMoments.explosions;
+  const c = game.chomp;
+  const eArray = c.darknessMoments.explosions;
 
   eArray.forEach((e, eIndex) => {
     e.sprite = game.physics.add.sprite(
@@ -268,8 +267,8 @@ export function createExplosions(game: Game): void {
 }
 
 export function createChomp(game: Game): void {
-  let c = game.chomp;
-  let b = c.block;
+  const c = game.chomp;
+  const b = c.block;
 
   c.soundAttack = game.sound.add('chainChompAttack', {
     volume: game.debug.DevMode ? 0 : 0.2,
@@ -340,13 +339,7 @@ export function createChomp(game: Game): void {
   c.sprite.setMass(c.MASS);
   c.sprite.play('chompanimation_walking');
 
-  // setChompFilterState('none', game);
-
   game.physics.add.collider(c.sprite, game.PLATFORMS);
-  // game.players.forEach((player, playerIndex) => {
-  //   game.physics.add.collider(c.sprite, player.char.sprite);
-  //   game.physics.add.collider(c.sprite, player.char.attackEnergy.sprite);
-  // });
 }
 
 export function createPreCreate(game: Game): void {
@@ -364,8 +357,8 @@ export function createPreCreate(game: Game): void {
 }
 
 export function createEndDataMatrices(game: Game): void {
-  let numSplashes: number = game.splashesEndData.length;
-  // let splashSizeTitleDefault = "40px";
+  const numSplashes: number = game.splashesEndData.length;
+  // const splashSizeTitleDefault = "40px";
   let splashSize = '';
   game.splashesEndData.forEach((splash, splashIndex) => {
     for (let i = 0; i < game.players.length; i++) {
@@ -633,7 +626,7 @@ export function createHitboxOverlap(game: Game): void {
           player.char.sprite,
           pj.char.sprite,
           function () {
-            let hasBeen = getHasBeenGameDurationSinceMoment(
+            const hasBeen = getHasBeenGameDurationSinceMoment(
               2000,
               game.chomp.darknessMoments.passed,
               game
@@ -787,7 +780,7 @@ export function setPlayersInitialPositions(game: Game): void {
 }
 
 export function createEmitterChomp(game: Game): void {
-  let c = game.chomp;
+  const c = game.chomp;
   c.particles = game.add.particles('tail_0');
   c.emitterDark = c.particles.createEmitter({
     speed: 1500,
@@ -940,8 +933,8 @@ export function createLavas(game: Game): void {
 }
 
 export function createFirework(game: Game): void {
-  // let f = game.flag;
-  // let fire = f.firework;
+  // const f = game.flag;
+  // const fire = f.firework;
   game.flag.firework = game.physics.add.sprite(
     SCREEN_DIMENSIONS.WIDTH * 0.86,
     SCREEN_DIMENSIONS.HEIGHT * 0.47,
@@ -1166,7 +1159,7 @@ export function createAttackPhysicals(game: Game): void {
 }
 export function createAttackEnergies(game: Game): void {
   game.players.forEach((player, playerIndex) => {
-    let ae = player.char.attackEnergy;
+    const ae = player.char.attackEnergy;
     ae.sprite = game.physics.add
       .sprite(-300, -300, ae.srcImage)
       .setMass(ae.mass)
@@ -1185,11 +1178,11 @@ export function createAttackEnergies(game: Game): void {
   });
 
   game.players.forEach((player, playerIndex) => {
-    let ae = player.char.attackEnergy;
+    const ae = player.char.attackEnergy;
     if (game.debug.BulletsAllowGroups && ae.attackBullets) {
       ae.attackBullets.bullets = new BulletsPlayer(game, player);
-      let aebs = ae.attackBullets.bullets;
-      let x = ae.attackBullets;
+      const aebs = ae.attackBullets.bullets;
+      const x = ae.attackBullets;
       ae.attackBullets.soundB1 = game.sound.add(x.sB1, {
         volume: x.vB1,
       });
@@ -1515,22 +1508,6 @@ export function createPlatforms4(game: Game): void {
 export function createPlatforms5(game: Game): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
-  // for (let i = 0; i < 3; i++) {
-  //   game.PLATFORMS.create(
-  //     1920 * game.SCREEN_SCALE.WIDTH * game.ASSET_BRICK_WIDTH,
-  //     1080 * game.SCREEN_SCALE.HEIGHT * i,
-  //     "platformVertical"
-  //   );
-  // }
-
-  // for (let i = 0; i < 25; i++) {
-  //   game.PLATFORMS.create(
-  //     1700 * game.SCREEN_SCALE.WIDTH,
-  //     (1080 / 1.5) * game.SCREEN_SCALE.HEIGHT + game.ASSET_BRICK_HEIGHT * i,
-  //     "platformShort"
-  //   );
-  // }
-
   for (let i = 0; i < 2; i++) {
     game.PLATFORMS.create(
       SCREEN_DIMENSIONS.WIDTH / 2,
@@ -1566,22 +1543,6 @@ export function createPlatforms5(game: Game): void {
 
 export function createPlatforms6(game: Game): void {
   game.PLATFORMS = game.physics.add.staticGroup();
-
-  // for (let i = 0; i < 3; i++) {
-  //   game.PLATFORMS.create(
-  //     1920 * game.SCREEN_SCALE.WIDTH * game.ASSET_BRICK_WIDTH,
-  //     1080 * game.SCREEN_SCALE.HEIGHT * i,
-  //     "platformVertical"
-  //   );
-  // }
-
-  // for (let i = 0; i < 25; i++) {
-  //   game.PLATFORMS.create(
-  //     1700 * game.SCREEN_SCALE.WIDTH,
-  //     (1080 / 1.5) * game.SCREEN_SCALE.HEIGHT + game.ASSET_BRICK_HEIGHT * i,
-  //     "platformShort"
-  //   );
-  // }
 
   for (let i = 0; i < 1; i++) {
     game.PLATFORMS.create(
@@ -1658,15 +1619,7 @@ export function createPlatforms6(game: Game): void {
       );
     }
   }
-  // for (let j = 0; j < 14; j++) {
-  //   game.PLATFORMS.create(
-  //     1617 * game.SCREEN_SCALE.WIDTH - 33 * 7,
-  //     (686 - 68 + game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT -
-  //       j * 34 +
-  //       34 * 4,
-  //     'brick'
-  //   );
-  // }
+
   for (let j = 0; j < 6; j++) {
     for (let i = 0; i < 2; i++) {
       game.PLATFORMS.create(
@@ -1678,27 +1631,6 @@ export function createPlatforms6(game: Game): void {
       );
     }
   }
-  // for (let i = 0; i < 3; i++) {
-  //   game.PLATFORMS.create(
-  //     (1617 - 33) * game.SCREEN_SCALE.WIDTH,
-  //     (686 - 34 + i * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
-  // for (let i = 0; i < 3; i++) {
-  //   game.PLATFORMS.create(
-  //     (1617 - 66) * game.SCREEN_SCALE.WIDTH,
-  //     (686 - 0 + i * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
-  // for (let i = 0; i < 50; i++) {
-  //   game.PLATFORMS.create(
-  //     (1617 - 33 * i) * game.SCREEN_SCALE.WIDTH,
-  //     (686 + 34 * 1 * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
 }
 
 export function createPlatforms7(game: Game): void {
@@ -1759,14 +1691,6 @@ export function createPlatforms7(game: Game): void {
       'platformVertical'
     );
   }
-
-  // for (let i = 0; i < 5; i++) {
-  //   game.PLATFORMS.create(
-  //     1617 * game.SCREEN_SCALE.WIDTH,
-  //     (686 + i * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
   for (let j = 0; j < 20; j++) {
     for (let i = 0; i < 9; i++) {
       game.PLATFORMS.create(
@@ -1789,15 +1713,7 @@ export function createPlatforms7(game: Game): void {
       );
     }
   }
-  // for (let j = 0; j < 14; j++) {
-  //   game.PLATFORMS.create(
-  //     1617 * game.SCREEN_SCALE.WIDTH - 33 * 7,
-  //     (686 - 68 + game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT -
-  //       j * 34 +
-  //       34 * 4,
-  //     'brick'
-  //   );
-  // }
+
   for (let j = 0; j < 5; j++) {
     for (let i = 0; i < 2; i++) {
       game.PLATFORMS.create(
@@ -1809,27 +1725,7 @@ export function createPlatforms7(game: Game): void {
       );
     }
   }
-  // for (let i = 0; i < 3; i++) {
-  //   game.PLATFORMS.create(
-  //     (1617 - 33) * game.SCREEN_SCALE.WIDTH,
-  //     (686 - 34 + i * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
-  // for (let i = 0; i < 3; i++) {
-  //   game.PLATFORMS.create(
-  //     (1617 - 66) * game.SCREEN_SCALE.WIDTH,
-  //     (686 - 0 + i * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
-  // for (let i = 0; i < 50; i++) {
-  //   game.PLATFORMS.create(
-  //     (1617 - 33 * i) * game.SCREEN_SCALE.WIDTH,
-  //     (686 + 34 * 1 * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT,
-  //     'brick'
-  //   );
-  // }
+
   for (let i = 0; i < 6; i++) {
     game.PLATFORMS.create(
       SCREEN_DIMENSIONS.WIDTH * 0.766,
@@ -2060,7 +1956,7 @@ export function createSplashRuleFinished(game: Game): void {
   });
 }
 export function createSplashBlack(game: Game): void {
-  let splash = game.splashRules[0];
+  const splash = game.splashRules[0];
   splash.text = game.add
     .text(
       SCREEN_DIMENSIONS.WIDTH / 2,
