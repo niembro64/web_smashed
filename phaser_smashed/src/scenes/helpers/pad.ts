@@ -864,7 +864,7 @@ export const updateFireFlowerShooting = (game: Game) => {
     if (game.debug.FireflowerOnInit || game.flag.completedCurr) {
       game.fireFlower.sprite.setTint(0xffffff);
 
-      if (game.updateIndex % game.fireFlower.numUpdateCyclesToWait !== 0) {
+      if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {
         return;
       }
 

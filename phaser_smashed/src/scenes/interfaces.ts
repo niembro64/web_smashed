@@ -522,7 +522,7 @@ export interface FireFlower {
   srcImage: any | Phaser.GameObjects.Sprite;
   posInit: Position;
   rotation: AttackEnergyRotation;
-  numUpdateCyclesToWait: number;
+  numUpdateIndexesToWait: number;
 }
 
 export interface Owner {

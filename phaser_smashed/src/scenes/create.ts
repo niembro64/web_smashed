@@ -175,7 +175,7 @@ export function createFireFlower(game: Game): void {
   for (let i = 0; i < game.fireFlower.attackBullets.NUMBER_BULLETS; i++) {
     game.fireFlower.fireBallSounds.push(
       game.sound.add('fire_ball_sound', {
-        volume: 0.07,
+        volume: 0.03,
       })
     );
   }
