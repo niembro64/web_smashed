@@ -29,9 +29,12 @@ export const updateFireFlowerShooting = (game: Game) => {
         enemy.char.sprite.body.position.y
       );
 
+      const randY = (Math.random() - 0.5) * 1000;
+      const randX = (Math.random() - 0.5) * 1000;
+
       game.fireFlower.attackBullets.bullets.fireBullet(
         game.fireFlower.posInit,
-        { x: v.x * 1000, y: v.y * 1000 },
+        { x: v.x * 1000 + randX, y: v.y * 1000 + randY },
         game
       );
       // game.fireFlower.attackBullets.bullets.fireBullet(
