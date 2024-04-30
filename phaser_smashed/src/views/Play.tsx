@@ -577,6 +577,22 @@ function Play() {
     setConfig(newConfig);
   }, [debugState.DevMode, debugState.GravityLight]);
 
+  const [prevent, setPrevent] = useState<boolean>(true);
+  useEffect(() => {
+    if (prevent) {
+      setPrevent(false);
+      return;
+    }
+    setDebugState((prev) => {
+      const x = { ...prev };
+
+      if (!prev.DevMode) {
+        x.Minutes = 7;
+      }
+      return x;
+    });
+  }, [debugState.NNP1Train]);
+
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
 
