@@ -54,7 +54,6 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
-import { debug } from 'console';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -592,8 +591,32 @@ function Play() {
       return;
     }
     const debugStateCopy = { ...debugState };
+    const inputArrayNew: InputType[] = [3, 3, 3, 3];
+
+    const smashConfigNew: SmashConfig = {
+      players: [
+        {
+          characterId: 0,
+          input: 0, // don't set this here
+        },
+        {
+          characterId: 1,
+          input: 0, // don't set this here
+        },
+        {
+          characterId: 2,
+          input: 0, // don't set this here
+        },
+        {
+          characterId: 7,
+          input: 0, // don't set this here
+        },
+      ],
+    };
 
     debugStateCopy.Minutes = 7;
+    setSmashConfig(smashConfigNew);
+    setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
   }, [debugState?.NNP1Train]);
 
