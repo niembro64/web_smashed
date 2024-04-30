@@ -25,7 +25,7 @@ export function setPhysicsPause(game: Game): void {
     game.chomp.afterPauseResumeSoundSheep = false;
   }
 
-  if (game.flag.afterPauseResumeMusicFlagMusicBox) {
+  if (game.flag.soundFlagMusicBox.isPlaying) {
     setMusicBoxPause(game);
     game.flag.afterPauseResumeMusicFlagMusicBox = true;
   } else {
