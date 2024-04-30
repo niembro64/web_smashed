@@ -56,7 +56,7 @@ export const debugInit: Debug = {
   NNHelpPit: true,
   NNHelpWall: true,
   MusicTrack: 0, // 0123
-  FireflowerOnInit: true,
+  FireflowerOnInit: false,
 };
 
 export const debugMax: Debug = {
