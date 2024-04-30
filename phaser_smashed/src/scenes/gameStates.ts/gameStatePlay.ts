@@ -11,6 +11,7 @@ import {
   updateSuicide,
   updateTableGiveHealth,
 } from '../helpers/damage';
+import { updateFireFlowerShooting } from '../helpers/fireFlower';
 import {
   updateFlagColor,
   updateFlagMovement,
@@ -32,7 +33,6 @@ import {
   updateAttackEnergyFrictionGroundMovement,
   updateAttackEnergyFrictionGroundRotation,
   updateAttackEnergyFrictionWall,
-  updateFireFlowerShooting,
   updatePadPreviousAndDebounced,
 } from '../helpers/pad';
 import { updateChompFilterState } from '../helpers/powers';
