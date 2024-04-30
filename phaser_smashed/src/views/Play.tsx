@@ -903,6 +903,14 @@ function Play() {
   const onEventKeyboard = (event: any) => {
     const k = event.key;
 
+    if (webState === 'web-state-init') {
+      switch (k) {
+        case 'Enter':
+          setWebState('web-state-setup');
+          break;
+      }
+    }
+
     if (webState === 'web-state-setup') {
       let pIndex;
       switch (k) {
