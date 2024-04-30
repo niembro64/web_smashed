@@ -10,6 +10,10 @@ export const updateFireFlowerShooting = (game: Game) => {
         return;
       }
 
+      if (game.gameSeconds % 2 === 0) {
+        return;
+      }
+
       game.fireFlower.attackBullets.bullets.fireBullet(
         game.fireFlower.posInit,
         { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
