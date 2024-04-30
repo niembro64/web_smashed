@@ -539,6 +539,8 @@ export interface Box {
 }
 
 export interface Flag {
+  flagSpeedDark: number;
+  flagSpeed: number;
   movement: 'none' | 'up' | 'down';
   box: Box;
   poleTouchStamps: PoleTouchStamp[];

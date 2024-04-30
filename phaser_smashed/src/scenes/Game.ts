@@ -838,9 +838,9 @@ export default class Game extends Phaser.Scene {
     },
   };
 
-  flagSpeedDark = 160;
-  flagSpeed = 80;
   flag: Flag = {
+    flagSpeedDark: 160,
+    flagSpeed: 80,
     movement: 'none',
     box: {
       top: SCREEN_DIMENSIONS.HEIGHT * 0.382,
