@@ -166,24 +166,24 @@ export function createPole(game: Game): void {
 }
 
 export function createCannon(game: Game): void {
-  game.cannon.sprite = game.physics.add.sprite(
-    game.cannon.posInit.x,
-    game.cannon.posInit.y,
+  game.fireFlower.sprite = game.physics.add.sprite(
+    game.fireFlower.posInit.x,
+    game.fireFlower.posInit.y,
     'cannon'
   );
 
-  game.cannon.sprite.setScale(0.85);
-  game.cannon.sprite.setImmovable(true);
-  game.cannon.sprite.body.allowGravity = false;
-  game.cannon.sprite.setImmovable(false);
-  game.cannon.sprite.setOrigin(0.5, 0.5);
+  game.fireFlower.sprite.setScale(0.85);
+  game.fireFlower.sprite.setImmovable(true);
+  game.fireFlower.sprite.body.allowGravity = false;
+  game.fireFlower.sprite.setImmovable(false);
+  game.fireFlower.sprite.setOrigin(0.5, 0.5);
   // game.cannon.sprite.setTint(0x555555);
 
-  game.cannon.attackBullets.bullets = new BulletsCannon(game);
+  game.fireFlower.attackBullets.bullets = new BulletsCannon(game);
 }
 
 export function createCollidersCannon(game: Game): void {
-  let aebs = game.cannon.attackBullets.bullets;
+  let aebs = game.fireFlower.attackBullets.bullets;
 
   game.physics.add.collider(aebs, game.PLATFORMS);
 

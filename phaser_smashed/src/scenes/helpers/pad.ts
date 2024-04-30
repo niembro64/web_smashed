@@ -859,20 +859,20 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
 }
 
 export const updateCannonShooting = (game: Game) => {
-  if (game.cannon.attackBullets !== null) {
+  if (game.fireFlower.attackBullets !== null) {
     // if (Math.random() > 0.05) {
     //   return;
     // }
 
     if (game.flag.completedCurr) {
-      game.cannon.attackBullets.bullets.fireBullet(
-        game.cannon.posInit,
+      game.fireFlower.attackBullets.bullets.fireBullet(
+        game.fireFlower.posInit,
         { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
         game
       );
-      game.cannon.sprite.setTint(0xffffff);
+      game.fireFlower.sprite.setTint(0xffffff);
     } else {
-      game.cannon.sprite.setTint(0x553344);
+      game.fireFlower.sprite.setTint(0x553344);
     }
   }
 };

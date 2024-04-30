@@ -13,7 +13,7 @@ import {
   EndCup,
   Flag,
   GameStateWithTime,
-  Cannon,
+  FireFlower,
   InputType,
   keyboard,
   Lava,
@@ -808,7 +808,7 @@ export default class Game extends Phaser.Scene {
     },
   };
 
-  cannon: Cannon = {
+  fireFlower: FireFlower = {
     sprite: null,
     srcImage: 'bullet',
     rotation: {
@@ -1488,7 +1488,6 @@ export default class Game extends Phaser.Scene {
           timestampThrow: 0,
           durationCooldown: 1000,
           posFromCenter: { x: 40, y: -20 },
-          // posFromCenter: { x: 15, y: -30 },
           friction: {
             ground: 1,
             wallInvertRotation: false,

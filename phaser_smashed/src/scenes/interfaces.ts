@@ -513,7 +513,7 @@ export interface Quote {
   text: string;
 }
 
-export interface Cannon {
+export interface FireFlower {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
   srcImage: any | Phaser.GameObjects.Sprite;
