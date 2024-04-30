@@ -558,6 +558,7 @@ export interface Flag {
   soundFlagCapture: any;
   soundFlagComplete: any;
   soundFlagMusicBox: any;
+  afterPauseResumeMusicFlagMusicBox: boolean;
   firework: any;
 }
 
@@ -578,6 +579,7 @@ export interface Chomp {
   soundAttack: any;
   soundHurt: any;
   soundSheep: any;
+  afterPauseResumeSoundSheep: boolean;
   soundBBWoah: any;
   soundBBBambalam: any;
   powerStateCurr: PowerStateChomp;

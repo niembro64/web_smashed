@@ -8,6 +8,7 @@ import {
   xyVector,
 } from '../interfaces';
 import { getNormalizedVector } from './damage';
+import { setMusicChompSheepPause, setMusicChompSheepPlay, setMusicChompSheepResume } from './sound';
 import { setPlayerState } from './state';
 import { addToMotionSlowdown } from './time';
 
@@ -155,10 +156,11 @@ export function setChompPowerState(
 
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_walking');
-
+      setMusicChompSheepPause(game);
       break;
     case 'dark':
       c.emitterDark.visible = true;
+      setMusicChompSheepResume(game);
 
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_chomping');

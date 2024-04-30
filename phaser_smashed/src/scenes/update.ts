@@ -40,6 +40,8 @@ import {
   setBGMusicSpeedNormal,
   setMusicBoxPause,
   setMusicBoxPlay,
+  setMusicChompSheepPause,
+  setMusicChompSheepPlay,
   setPlayWiiMusicWaitLong,
 } from './helpers/sound';
 import {
@@ -66,6 +68,8 @@ export function setPreUpdate(game: Game): void {
   setBGMusicSpeedNormal(game);
   setMusicBoxPlay(game);
   setMusicBoxPause(game);
+  setMusicChompSheepPlay(game);
+  setMusicChompSheepPause(game);
 }
 
 export function update(game: Game, time: number, delta: number): void {

@@ -142,6 +142,13 @@ export function setMusicChompSheepPause(game: Game): void {
 
   game.chomp.soundSheep.pause();
 }
+export function setMusicChompSheepResume(game: Game): void {
+  if (game.chomp.soundSheep.isPlaying) {
+    return;
+  }
+
+  game.chomp.soundSheep.resume();
+}
 export function setMusicChompSheepStop(game: Game): void {
   if (!game.chomp.soundSheep.isPlaying) {
     return;
