@@ -187,7 +187,7 @@ export function createCollidersFireFlower(game: Game): void {
   game.physics.add.collider(aebs, game.PLATFORMS);
 
   for (let i = 0; i < game.players.length; i++) {
-    game.physics.add.collider(aebs, game.players[i].char.sprite);
+    // game.physics.add.collider(aebs, game.players[i].char.sprite);
     game.physics.add.collider(aebs, game.players[i].char.attackEnergy.sprite);
     game.physics.add.collider(aebs, game.players[i].char.attackPhysical.sprite);
   }
@@ -1216,6 +1216,11 @@ export function createAttackEnergies(game: Game): void {
 
       game.physics.add.collider(aebs, game.chomp.sprite);
       game.physics.add.collider(aebs, game.TABLE);
+
+      // colliders with fireballs (fireflower bullets)
+      for (let i = 0; i < game.fireFlower.attackBullets.bullets.getChildren().length; i++) {
+        game.physics.add.collider(aebs, game.fireFlower.attackBullets.bullets.getChildren()[i]);
+      }
 
       // turn off gravity for bullets
       aebs.children.iterate((child: any) => {

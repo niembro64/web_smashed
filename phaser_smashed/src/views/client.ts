@@ -1,6 +1,5 @@
 import axios from 'axios';
 import moment, { Moment } from 'moment';
-import { momentStringToMoment, momentToDate } from '../scenes/helpers/time';
 import { Debug, SmashConfig } from '../scenes/interfaces';
 
 export interface ClientInformation {
