@@ -73,6 +73,8 @@ export function setPreUpdate(game: Game): void {
 }
 
 export function update(game: Game, time: number, delta: number): void {
+  game.updateIndex++;
+
   if (game.debug.UpdateLoopsNumSkip > 0) {
     game.debug.UpdateLoopsNumSkip--;
     return;

@@ -187,8 +187,10 @@ export function setPauseAllReadySounds(game: Game): void {
 }
 
 export function setPlaySoundFireBall(game: Game): void {
-  if (game.fireFlower.soundFireBall.isPlaying) {
-    return;
-  }
-  game.fireFlower.soundFireBall.play();
+  const i = game.fireFlower.fireBallSoundsIndexCurr;
+
+  game.fireFlower.fireBallSounds[i].play();
+
+  game.fireFlower.fireBallSoundsIndexCurr =
+    (i + 1) % game.fireFlower.attackBullets.NUMBER_BULLETS;
 }

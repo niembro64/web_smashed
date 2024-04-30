@@ -2,7 +2,6 @@ import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Debug, Player, Position, Velocity } from '../interfaces';
 import { getDistanceFromOrigin } from './math';
-import { setPlaySoundFireBall } from './sound';
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(game: Game, x: number, y: number, key: string, rotation: number) {

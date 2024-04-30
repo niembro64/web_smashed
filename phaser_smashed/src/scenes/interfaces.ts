@@ -517,10 +517,12 @@ export interface Quote {
 export interface FireFlower {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
-  soundFireBall: any;
+  fireBallSounds: any[];
+  fireBallSoundsIndexCurr: number;
   srcImage: any | Phaser.GameObjects.Sprite;
   posInit: Position;
   rotation: AttackEnergyRotation;
+  numUpdateCyclesToWait: number;
 }
 
 export interface Owner {

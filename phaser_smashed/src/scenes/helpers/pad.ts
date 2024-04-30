@@ -862,13 +862,18 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
 export const updateFireFlowerShooting = (game: Game) => {
   if (game.fireFlower.attackBullets !== null) {
     if (game.debug.FireflowerOnInit || game.flag.completedCurr) {
+      game.fireFlower.sprite.setTint(0xffffff);
+
+      if (game.updateIndex % game.fireFlower.numUpdateCyclesToWait !== 0) {
+        return;
+      }
+
       game.fireFlower.attackBullets.bullets.fireBullet(
         game.fireFlower.posInit,
         { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
         game
       );
       setPlaySoundFireBall(game);
-      game.fireFlower.sprite.setTint(0xffffff);
     } else {
       const white = 0xffffff;
       const darkBlockTopEdge = 0x836c64;

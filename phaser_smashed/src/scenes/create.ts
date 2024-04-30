@@ -172,9 +172,13 @@ export function createFireFlower(game: Game): void {
 
   game.fireFlower.attackBullets.bullets = new BulletsFireFlower(game);
 
-  game.fireFlower.soundFireBall = game.sound.add('fire_ball_sound', {
-    volume: 0.07,
-  });
+  for (let i = 0; i < game.fireFlower.attackBullets.NUMBER_BULLETS; i++) {
+    game.fireFlower.fireBallSounds.push(
+      game.sound.add('fire_ball_sound', {
+        volume: 0.07,
+      })
+    );
+  }
 }
 
 export function createCollidersFireFlower(game: Game): void {
