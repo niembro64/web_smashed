@@ -1227,7 +1227,13 @@ function Play() {
                     alt="Smashed Title Gif"
                   />
                 </div>
-                <h1>{webState === 'web-state-init' ? '?' : 'SMASHED'}</h1>
+                <h1
+                  onMouseDown={() => {
+                    setWebState('web-state-setup');
+                  }}
+                >
+                  {webState === 'web-state-init' ? 'START' : 'SMASHED'}
+                </h1>
               </div>
             </div>
           )}
