@@ -1,4 +1,6 @@
 import Game from '../Game';
+import { getNormalizedVector } from './damage';
+import { getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
 export const updateFireFlowerShooting = (game: Game) => {
@@ -14,11 +16,29 @@ export const updateFireFlowerShooting = (game: Game) => {
         return;
       }
 
-      game.fireFlower.attackBullets.bullets.fireBullet(
-        game.fireFlower.posInit,
-        { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
+      const { player: enemy } = getNearestPlayerAliveFromXY(
+        game.fireFlower.posInit.x,
+        game.fireFlower.posInit.y,
         game
       );
+
+      const v: { x: number; y: number } = getNormalizedVector(
+        game.fireFlower.posInit.x,
+        game.fireFlower.posInit.y,
+        enemy.char.sprite.body.position.x,
+        enemy.char.sprite.body.position.y
+      );
+
+      game.fireFlower.attackBullets.bullets.fireBullet(
+        game.fireFlower.posInit,
+        { x: v.x * 1000, y: v.y * 1000 },
+        game
+      );
+      // game.fireFlower.attackBullets.bullets.fireBullet(
+      //   game.fireFlower.posInit,
+      //   { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
+      //   game
+      // );
       setPlaySoundFireBall(game);
     } else {
       const white = 0xffffff;

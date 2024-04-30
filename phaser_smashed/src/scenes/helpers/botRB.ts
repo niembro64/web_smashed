@@ -2,7 +2,6 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Player, Position, Velocity, xyVector } from '../interfaces';
 import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
-import { print } from '../../views/client';
 import {
   getDistance,
   getNearestAttackEnergyXYAboveFromPlayer,
