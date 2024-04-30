@@ -579,18 +579,23 @@ function Play() {
 
   const [prevent, setPrevent] = useState<boolean>(true);
   useEffect(() => {
+    if (!debugState) {
+      return;
+    }
+
     if (prevent) {
       setPrevent(false);
       return;
     }
 
-    if (debugState.NNP1Train) {
-      const debugStateCopy = { ...debugState };
-
-      debugStateCopy.Minutes = 7;
-      setDebugState(debugStateCopy);
+    if (!debugState?.NNP1Train) {
+      return;
     }
-  }, [debugState.NNP1Train]);
+    const debugStateCopy = { ...debugState };
+
+    debugStateCopy.Minutes = 7;
+    setDebugState(debugStateCopy);
+  }, [debugState?.NNP1Train]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);

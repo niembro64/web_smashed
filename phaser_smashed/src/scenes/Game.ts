@@ -832,7 +832,7 @@ export default class Game extends Phaser.Scene {
     fireBallSoundsIndexCurr: 0,
     attackBullets: {
       bullets: null,
-      NUMBER_BULLETS: this.debug.NNP1Train ? 1 : 20,
+      NUMBER_BULLETS: 20,
       soundB1: null,
       soundB2: null,
       soundP1: null,
