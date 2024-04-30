@@ -272,6 +272,10 @@ export function createChomp(game: Game): void {
     volume: game.debug.DevMode ? 0 : 0.2,
   });
 
+  c.soundHurt = game.sound.add('chainChompHurt', {
+    volume: game.debug.DevMode ? 0 : 0.2,
+  });
+
   c.soundBBBambalam = game.sound.add('bb_bam', {
     volume: game.debug.DevMode ? 0 : 0.4,
   });
@@ -581,7 +585,7 @@ export function createHitboxOverlap(game: Game): void {
       game.chomp.sprite,
       function () {
         updateChompFilterState(player, player.char.attackPhysical.damage, game);
-        // setChompFilterState('hurt', game);
+
         if (!getDoesAnythingHaveDark(game)) {
           game.chomp.emitterDark.visible = true;
           setChompPowerState('dark', game);

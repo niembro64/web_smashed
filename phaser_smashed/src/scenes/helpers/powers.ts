@@ -70,6 +70,7 @@ export function setChompFilterState(
       game.chomp.sprite.clearTint();
       break;
     case 'hurt':
+      game.chomp.soundHurt.play();
       print('setChompFilterState hurt');
       game.chomp.sprite.setTintFill(0xffffff);
 

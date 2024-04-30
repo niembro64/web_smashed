@@ -580,6 +580,7 @@ export interface Chomp {
   links: ChompLink[];
   block: ChompBlock;
   soundAttack: any;
+  soundHurt: any;
   soundBBWoah: any;
   soundBBBambalam: any;
   powerStateCurr: PowerStateChomp;

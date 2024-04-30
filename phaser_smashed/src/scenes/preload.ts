@@ -83,6 +83,10 @@ export function preload(game: Game): void {
     'chainChompAttack',
     pathSounds + game.FILE_SOUNDS.CHAIN_CHOMP_ATTACK
   );
+  game.load.audio(
+    'chainChompHurt',
+    pathSounds + game.FILE_SOUNDS.CHAIN_CHOMP_HURT
+  );
   game.load.audio('ping', pathSounds + game.FILE_SOUNDS.PING);
   game.load.audio('ping2', pathSounds + game.FILE_SOUNDS.PING2);
   game.load.audio('pop', pathSounds + game.FILE_SOUNDS.POP);
