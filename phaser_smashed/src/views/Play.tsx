@@ -1240,7 +1240,7 @@ function Play() {
                     setWebState('web-state-setup');
                   }}
                 >
-                  {webState === 'web-state-init' ? 'START' : 'SMASHED'}
+                  {webState === 'web-state-init' ? 'ENTER' : 'SMASHED'}
                 </h1>
               </div>
             </div>
