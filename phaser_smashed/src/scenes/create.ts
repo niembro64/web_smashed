@@ -193,7 +193,7 @@ export function createCollidersFireFlower(game: Game): void {
 
   game.physics.add.collider(aebs, game.chomp.sprite);
   aebs.children.iterate((child: any) => {
-    child.body.allowGravity = false;
+    // child.body.allowGravity = false;
   });
 }
 
