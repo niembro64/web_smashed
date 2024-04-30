@@ -422,25 +422,26 @@ export function getNearestPlayerAliveFromXY(
   y: number,
   game: Game
 ): { player: Player; playerIndex: number } {
-  const t = game.TABLE;
-  let returnPlayer: Player = game.players[0];
+  const players = game.players;
+  let returnPlayer: Player = players[0];
   let returnPlayerIndex: number = 0;
 
   let distance: number = Infinity;
 
-  game.players.forEach((p, pIndex) => {
-    const s = p.char.sprite;
-    const newD: number = getDistance(t.x, t.y, s.x, s.y);
+  players.forEach((player, index) => {
+    const sprite = player.char.sprite;
+    const newD: number = getDistance(x, y, sprite.x, sprite.y);
 
     if (newD < distance) {
       distance = newD;
-      returnPlayerIndex = pIndex;
-      returnPlayer = p;
+      returnPlayerIndex = index;
+      returnPlayer = player;
     }
   });
 
   return { player: returnPlayer, playerIndex: returnPlayerIndex };
 }
+
 
 export function getNearestAttackEnergyXYFromPlayer(
   player: Player,

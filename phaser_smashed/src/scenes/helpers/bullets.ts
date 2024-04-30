@@ -66,10 +66,11 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    const keyDistance = this.key === 'bulletFireBall' ? 1800 : 350;
-    const keyDuration = this.key === 'bulletFireBall' ? 1000 : 3000;
+    const keyDistance = this.key === 'bulletFireBall' ? 600 : 350;
+    // const keyDuration = this.key === 'bulletFireBall' ? 1000 : 3000;
 
-    if (this.timeAlive > keyDuration || distance > keyDistance) {
+    // if (this.timeAlive > keyDuration || distance > keyDistance) {
+    if (distance > keyDistance) {
       this.body.bounce.set(0);
       this.setActive(false);
       this.setVisible(false);

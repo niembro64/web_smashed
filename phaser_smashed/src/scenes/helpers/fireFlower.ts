@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game from '../Game';
 import { getNormalizedVector } from './damage';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
@@ -24,16 +25,21 @@ export const updateFireFlowerShooting = (game: Game) => {
       game.fireFlower.posInit.y,
       game
     );
-    if (
-      getDistance(
-        game.fireFlower.posInit.x,
-        game.fireFlower.posInit.y,
-        enemy.char.sprite.body.position.x,
-        enemy.char.sprite.body.position.y
-      ) > game.fireFlower.shootingDistanceThreshold
-    ) {
+
+    // print('enemy', enemy.char.sprite.body.position.x, enemy.char.sprite.body.position.y);
+    const distance = getDistance(
+      game.fireFlower.posInit.x,
+      game.fireFlower.posInit.y,
+      enemy.char.sprite.body.position.x,
+      enemy.char.sprite.body.position.y
+    );
+
+    // print('distance', distance, game.fireFlower.shootingDistanceThreshold);
+    if (distance > game.fireFlower.shootingDistanceThreshold) {
+      print(enemy.char.name, 'TOO FAR');
       return;
     }
+    print(enemy.char.name, 'GOOD DISTANCE');
 
     const v: { x: number; y: number } = getNormalizedVector(
       game.fireFlower.posInit.x,
