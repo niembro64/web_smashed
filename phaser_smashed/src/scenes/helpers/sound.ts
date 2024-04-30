@@ -30,6 +30,10 @@ export function setSoundStartPlay(game: Game): void {
   }
 }
 export function setPauseWiiMusic(game: Game): void {
+  if (!game.SOUND_PAUSED.isPlaying) {
+    return;
+  }
+
   game.SOUND_PAUSED.pause();
 }
 
@@ -66,14 +70,84 @@ export function setPlayWiiMusicWaitLong(game: Game): void {
     game.SOUND_PAUSED.play();
   }
 }
-export function setMusicPause(game: Game): void {
+export function setBGMusicPause(game: Game): void {
+  if (!game.SOUND_BGM.isPlaying) {
+    return;
+  }
+
   game.SOUND_BGM.pause();
 }
-export function setMusicPlay(game: Game): void {
+export function setBGMusicPlay(game: Game): void {
+  if (game.SOUND_BGM.isPlaying) {
+    return;
+  }
+
   game.SOUND_BGM.play();
 }
-export function setMusicResume(game: Game): void {
+export function setBGMusicResume(game: Game): void {
+  if (game.SOUND_BGM.isPlaying) {
+    return;
+  }
   game.SOUND_BGM.resume();
+}
+export function setBGMusicSpeedFaster(game: Game): void {
+  game.SOUND_BGM.setRate(increaseSemitones(1, 2));
+}
+export function setBGMusicSpeedNormal(game: Game): void {
+  game.SOUND_BGM.setRate(1);
+}
+function increaseSemitones(frequency: number, semitones: number): number {
+  return frequency * Math.pow(2, semitones / 12);
+}
+
+export function setMusicBoxPlay(game: Game): void {
+  if (game.flag.soundFlagMusicBox.isPlaying) {
+    return;
+  }
+  game.flag.soundFlagMusicBox.play();
+}
+export function setMusicBoxResume(game: Game): void {
+  if (game.flag.soundFlagMusicBox.isPlaying) {
+    return;
+  }
+
+  game.flag.soundFlagMusicBox.resume();
+}
+export function setMusicBoxPause(game: Game): void {
+  if (!game.flag.soundFlagMusicBox.isPlaying) {
+    return;
+  }
+
+  game.flag.soundFlagMusicBox.pause();
+}
+export function setMusicBoxStop(game: Game): void {
+  if (!game.flag.soundFlagMusicBox.isPlaying) {
+    return;
+  }
+
+  game.flag.soundFlagMusicBox.stop();
+}
+
+export function setMusicChompSheepPlay(game: Game): void {
+  if (game.chomp.soundSheep.isPlaying) {
+    return;
+  }
+
+  game.chomp.soundSheep.play();
+}
+export function setMusicChompSheepPause(game: Game): void {
+  if (!game.chomp.soundSheep.isPlaying) {
+    return;
+  }
+
+  game.chomp.soundSheep.pause();
+}
+export function setMusicChompSheepStop(game: Game): void {
+  if (!game.chomp.soundSheep.isPlaying) {
+    return;
+  }
+
+  game.chomp.soundSheep.stop();
 }
 
 export function playReadySound(game: Game): void {

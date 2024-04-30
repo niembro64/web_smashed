@@ -87,6 +87,10 @@ export function preload(game: Game): void {
     'chainChompHurt',
     pathSounds + game.FILE_SOUNDS.CHAIN_CHOMP_HURT
   );
+  game.load.audio(
+    'chainChompSheep',
+    pathSounds + game.FILE_SOUNDS.CHAIN_CHOMP_SHEEP
+  );
   game.load.audio('ping', pathSounds + game.FILE_SOUNDS.PING);
   game.load.audio('ping2', pathSounds + game.FILE_SOUNDS.PING2);
   game.load.audio('pop', pathSounds + game.FILE_SOUNDS.POP);
@@ -123,6 +127,10 @@ export function preload(game: Game): void {
   game.load.audio('bb_woah', pathSounds + game.FILE_SOUNDS.BLACK_BETTY_WOAH);
   game.load.audio('flag_capture', pathSounds + game.FILE_SOUNDS.FLAG_CAPTURE);
   game.load.audio('flag_complete', pathSounds + game.FILE_SOUNDS.FLAG_COMPLETE);
+  game.load.audio(
+    'flag_music_box',
+    pathSounds + game.FILE_SOUNDS.FLAG_MUSIC_BOX
+  );
 
   switch (game.debug.MusicTrack) {
     case 0:

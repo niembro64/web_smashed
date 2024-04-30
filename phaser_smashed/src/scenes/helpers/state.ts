@@ -33,8 +33,8 @@ import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
 import { setPhysicsPause, setPhysicsResume } from './physics';
 import { setPlayerPowerState } from './powers';
 import {
-  setMusicPause,
-  setMusicResume,
+  setBGMusicPause,
+  setBGMusicResume,
   setPauseAllReadySounds,
   setPauseWiiMusic,
   setSoundDiePlay,
@@ -79,14 +79,14 @@ export function setGameState(game: Game, state: GameState): void {
       setRuleSplashOn(game, 'splash-none');
       setPauseWiiMusic(game);
       setPauseAllReadySounds(game);
-      setMusicResume(game);
+      setBGMusicResume(game);
       setSoundStartPlay(game);
       setPhysicsResume(game);
       setSplashDataOff(game);
       break;
     case 'game-state-paused':
       setRuleSplashOn(game, 'splash-paused');
-      setMusicPause(game);
+      setBGMusicPause(game);
       setSoundStartPlay(game);
       setPhysicsPause(game);
       setSplashDataOn(game);
@@ -94,7 +94,7 @@ export function setGameState(game: Game, state: GameState): void {
       break;
     case 'game-state-first-blood':
       setRuleSplashOn(game, 'splash-first-blood');
-      setMusicPause(game);
+      setBGMusicPause(game);
       setSoundProfoundPlay(game);
       setSoundFirstBloodPlay(game);
       setSoundSquishPlay(game);
@@ -105,7 +105,7 @@ export function setGameState(game: Game, state: GameState): void {
       break;
     case 'game-state-screen-clear':
       setRuleSplashOn(game, 'splash-screen-clear');
-      setMusicPause(game);
+      setBGMusicPause(game);
       setSoundEnerjaPlay(game);
       setSoundSquishPlay(game);
       setPhysicsPause(game);
@@ -127,7 +127,7 @@ export function setGameState(game: Game, state: GameState): void {
       game.flag.firework.setTint(tint);
       game.flag.firework.play('firework-active');
       setRuleSplashOn(game, 'splash-captured-flag');
-      setMusicPause(game);
+      setBGMusicPause(game);
       // setSoundEnerjaPlay(game);
       // setSoundSquishPlay(game);
       game.flag.soundFlagComplete.play();
@@ -141,7 +141,7 @@ export function setGameState(game: Game, state: GameState): void {
     case 'game-state-finished':
       setPhysicsPause(game);
       setRuleSplashOn(game, 'splash-finished');
-      setMusicPause(game);
+      setBGMusicPause(game);
       setSoundFinishPlay(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;

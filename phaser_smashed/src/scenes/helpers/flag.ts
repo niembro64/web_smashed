@@ -1,33 +1,34 @@
 import Game from '../Game';
 import { Player } from '../interfaces';
+import { setMusicBoxPause, setMusicBoxPlay, setBGMusicPause, setBGMusicResume, setMusicBoxResume } from './sound';
 
 export const getIsInPole = (x: number, y: number, game: Game): boolean => {
-  let f = game.flag;
+  const f = game.flag;
   if (f.completedCurr) {
     return false;
   }
 
-  let pole = game.flag.spriteFlagPole;
+  const pole = game.flag.spriteFlagPole;
 
-  let xMin = pole.x - pole.width / 2;
-  let xMax = pole.x + pole.width / 2;
-  let yMin = pole.y - pole.height / 2;
-  let yMax = pole.y + pole.height / 2;
+  const xMin = pole.x - pole.width / 2;
+  const xMax = pole.x + pole.width / 2;
+  const yMin = pole.y - pole.height / 2;
+  const yMax = pole.y + pole.height / 2;
 
   return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
 };
 
 export const updateFlagToucher = (game: Game): void => {
-  let f = game.flag;
+  const f = game.flag;
 
   if (f.completedCurr) {
     return;
   }
 
-  let ptStamps = f.poleTouchStamps;
+  const ptStamps = f.poleTouchStamps;
 
   game.players.forEach((player, pIndex) => {
-    let pTouchingDown = player.char.sprite.body.touching.down;
+    const pTouchingDown = player.char.sprite.body.touching.down;
 
     // currently touching if
     // in flag area
@@ -37,14 +38,16 @@ export const updateFlagToucher = (game: Game): void => {
       getIsInPole(player.char.sprite.x, player.char.sprite.y, game)
     ) {
       if (!ptStamps[pIndex].touching) {
+        setBGMusicPause(game);
+        setMusicBoxResume(game);
         ptStamps[pIndex].touching = true;
         ptStamps[pIndex].gameStamp = game.gameNanoseconds;
       }
-    } else {
-      if (ptStamps[pIndex].touching) {
-        ptStamps[pIndex].touching = false;
-        ptStamps[pIndex].gameStamp = game.gameNanoseconds;
-      }
+    } else if (ptStamps[pIndex].touching) {
+      setBGMusicResume(game);
+      setMusicBoxPause(game);
+      ptStamps[pIndex].touching = false;
+      ptStamps[pIndex].gameStamp = game.gameNanoseconds;
     }
   });
   let newToucherId: null | number = null;
@@ -65,7 +68,7 @@ export const updateFlagToucher = (game: Game): void => {
 };
 
 export const updateFlagMovement = (game: Game): void => {
-  let f = game.flag;
+  const f = game.flag;
 
   if (f.completedPrev) {
     return;
@@ -79,14 +82,16 @@ export const updateFlagMovement = (game: Game): void => {
     return;
   }
 
-  let toucher = game.flag.toucherCurr.id;
-  let owner = game.flag.ownerCurr.id;
+  const toucher = game.flag.toucherCurr.id;
+  const owner = game.flag.ownerCurr.id;
 
   if (owner !== null && f.spriteFlagMover.y < f.box.top) {
     f.completedCurr = true;
 
+    setBGMusicResume(game);
+    setMusicBoxPause(game);
+
     if (f.completedCurr && !f.completedPrev) {
-      // f.soundFlagComplete.play();
       f.spriteFlagMover.body.setVelocityY(0);
     }
   }
@@ -101,7 +106,7 @@ export const updateFlagMovement = (game: Game): void => {
   // owner is toucher
   // go up
   if (toucher !== null && toucher === owner) {
-    let v = game.players[toucher].emitterDark.visible
+    const v = game.players[toucher].emitterDark.visible
       ? -game.flag.flagSpeedDark
       : -game.flag.flagSpeed;
     f.spriteFlagMover.body.setVelocityY(v);
@@ -111,7 +116,7 @@ export const updateFlagMovement = (game: Game): void => {
   // another player is toucher
   // go down
   if (toucher !== null && toucher !== owner) {
-    let v = game.players[toucher].emitterDark.visible
+    const v = game.players[toucher].emitterDark.visible
       ? game.flag.flagSpeedDark
       : game.flag.flagSpeed;
     f.spriteFlagMover.body.setVelocityY(v);
@@ -119,15 +124,15 @@ export const updateFlagMovement = (game: Game): void => {
 };
 
 export const updateFlagOwner = (game: Game): void => {
-  let f = game.flag;
+  const f = game.flag;
 
   if (f.completedCurr) {
     return;
   }
 
-  let toucher = game.flag.toucherCurr.id;
-  let owner = game.flag.ownerCurr.id;
-  let fs = game.flag.spriteFlagMover;
+  const toucher = game.flag.toucherCurr.id;
+  const owner = game.flag.ownerCurr.id;
+  const fs = game.flag.spriteFlagMover;
 
   // do nothing
   // if no one is touching the flat
@@ -149,10 +154,10 @@ export const updateFlagOwner = (game: Game): void => {
 };
 
 export const updateFlagColor = (game: Game): void => {
-  let f = game.flag;
-  let fs = game.flag.spriteFlagMover;
-  let fb = game.flag.spriteFlagStationary;
-  let owner = game.flag.ownerCurr.id;
+  const f = game.flag;
+  const fs = game.flag.spriteFlagMover;
+  const fb = game.flag.spriteFlagStationary;
+  const owner = game.flag.ownerCurr.id;
 
   if (f.completedCurr && f.completedCurr && !f.completedPrev) {
     return;
@@ -164,11 +169,11 @@ export const updateFlagColor = (game: Game): void => {
     return;
   }
 
-  let color = game.colorCircles[owner].colorNumber;
+  const color = game.colorCircles[owner].colorNumber;
   fs.setTint(color);
   fb.setTint(color);
 
-  let player = game.players[owner];
+  const player = game.players[owner];
 
   if (player.char.srcSpriteSheet !== '') {
     f.spriteFlagChar.setTexture(player.char.name + '_spritesheet', 0);
@@ -186,8 +191,8 @@ export const setFlagOwnerNullIfDead = (player: Player, game: Game): void => {
     return;
   }
 
-  let f = game.flag;
-  let owner = f.ownerCurr.id;
+  const f = game.flag;
+  const owner = f.ownerCurr.id;
 
   if (owner === null) {
     return;

@@ -121,6 +121,7 @@ export default class Game extends Phaser.Scene {
     BGM_GARAGE_REPEAT: '/garage-repeat.ogg',
     CHAIN_CHOMP_ATTACK: '/chain_chomp_sound.wav',
     CHAIN_CHOMP_HURT: '/ChompHurt.mp3',
+    CHAIN_CHOMP_SHEEP: 'sheep.mp3',
     BOOM_SHORT_01: '/boom_short_01.wav',
     BOOM_SHORT_02: '/boom_short_02.wav',
     BLACK_BETTY_BAMBALAM: '/BlackBetty_Bambalam_Reverb01.mp3',
@@ -131,6 +132,7 @@ export default class Game extends Phaser.Scene {
     POP2: '/pop2.wav',
     FLAG_CAPTURE: 'trumpet-short.wav',
     FLAG_COMPLETE: 'trumpet-medium.wav',
+    FLAG_MUSIC_BOX: 'music_box.mp3',
   };
 
   SOUND_INTRO: any;
@@ -789,6 +791,7 @@ export default class Game extends Phaser.Scene {
     },
     soundAttack: null,
     soundHurt: null,
+    soundSheep: null,
     soundBBWoah: null,
     soundBBBambalam: null,
     powerStateCurr: { name: 'none', gameStamp: 0 },
@@ -860,16 +863,10 @@ export default class Game extends Phaser.Scene {
     spriteFlagChar: null,
     spriteFlagPole: null,
     yPosition: 0,
-    // soundFlagUp: null,
-    // soundFlagDown: null,
     soundFlagCapture: null,
+    soundFlagMusicBox: null,
     soundFlagComplete: null,
     firework: null,
-    // powerStateCurr: { name: 'light', gameStamp: 0 },
-    // powerStatePrev: { name: 'none', gameStamp: 0 },
-    // emitterLight: null,
-    // particles: null,
-    // bullets: null,
   };
 
   endCups: EndCup[] = [];

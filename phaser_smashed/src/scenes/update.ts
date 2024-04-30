@@ -36,7 +36,10 @@ import { updatePlayerDarknessEvents } from './helpers/powers';
 import {
   playGarageRepeat,
   playWiiMusic,
-  setMusicPlay,
+  setBGMusicPlay,
+  setBGMusicSpeedNormal,
+  setMusicBoxPause,
+  setMusicBoxPlay,
   setPlayWiiMusicWaitLong,
 } from './helpers/sound';
 import {
@@ -56,10 +59,13 @@ import { updateText } from './helpers/text';
 import { Player } from './interfaces';
 
 export function setPreUpdate(game: Game): void {
-  setMusicPlay(game);
+  setBGMusicPlay(game);
   setGameState(game, 'game-state-play');
   game.loaded = true;
   print('players', game.players);
+  setBGMusicSpeedNormal(game);
+  setMusicBoxPlay(game);
+  setMusicBoxPause(game);
 }
 
 export function update(game: Game, time: number, delta: number): void {

@@ -149,6 +149,9 @@ export function createFlag(game: Game): void {
   f.soundFlagComplete = game.sound.add('flag_complete', {
     volume: 0.5,
   });
+  f.soundFlagMusicBox = game.sound.add('flag_music_box', {
+    volume: 0.05,
+  });
 }
 
 export function createPole(game: Game): void {
@@ -276,6 +279,10 @@ export function createChomp(game: Game): void {
     volume: game.debug.DevMode ? 0 : 0.2,
   });
 
+  c.soundSheep = game.sound.add('chainChompSheep', {
+    volume: game.debug.DevMode ? 0 : 0.2,
+  });
+
   c.soundBBBambalam = game.sound.add('bb_bam', {
     volume: game.debug.DevMode ? 0 : 0.4,
   });
@@ -283,14 +290,6 @@ export function createChomp(game: Game): void {
   c.soundBBWoah = game.sound.add('bb_woah', {
     volume: game.debug.DevMode ? 0 : 0.25,
   });
-
-  // b.sprite = game.physics.add.sprite(b.x, b.y, 'chomp_block');
-  // b.sprite.setScale(1);
-  // b.sprite.body.allowGravity = false;
-  // b.sprite.setBounce(0);
-  // b.sprite.setOrigin(0.5, 1);
-  // b.sprite.setImmovable(true);
-  // game.physics.add.collider(c.block.sprite, game.PLATFORMS);
 
   for (let i = 0; i < c.NUM_LINKS; i++) {
     c.links.push({ sprite: null });
