@@ -1,5 +1,7 @@
 import Game from '../Game';
 import {
+  setBGMusicPause,
+  setBGMusicResume,
   setMusicBoxPause,
   setMusicBoxPlay,
   setMusicBoxResume,
@@ -31,6 +33,13 @@ export function setPhysicsPause(game: Game): void {
   } else {
     game.flag.afterPauseResumeMusicFlagMusicBox = false;
   }
+
+  if (game.SOUND_BGM.isPlaying) {
+    game.afterPauseResumeMusicBGM = true;
+    setBGMusicPause(game);
+  } else {
+    game.afterPauseResumeMusicBGM = false;
+  }
 }
 export function setPhysicsResume(game: Game): void {
   game.physics.resume();
@@ -45,5 +54,8 @@ export function setPhysicsResume(game: Game): void {
   }
   if (game.flag.afterPauseResumeMusicFlagMusicBox) {
     setMusicBoxResume(game);
+  }
+  if (game.afterPauseResumeMusicBGM) {
+    setBGMusicResume(game);
   }
 }

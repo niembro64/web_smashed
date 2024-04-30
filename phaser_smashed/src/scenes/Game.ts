@@ -166,6 +166,7 @@ export default class Game extends Phaser.Scene {
   ENERJA_UGH: any;
   SOUND_PAUSED: any;
   SOUND_BGM: any;
+  afterPauseResumeMusicBGM: boolean = false;
   SOUND_GARAGE_REPEAT: any;
 
   ////////////////////////////////
