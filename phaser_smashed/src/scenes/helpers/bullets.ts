@@ -2,6 +2,7 @@ import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Debug, Player, Position, Velocity } from '../interfaces';
 import { getDistanceFromOrigin } from './math';
+import { setPlaySoundFireBall } from './sound';
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(game: Game, x: number, y: number, key: string, rotation: number) {
@@ -66,8 +67,8 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    const keyDistance = this.key === 'bullet' ? 500 : 350;
-    const keyDuration = this.key === 'bullet' ? 5000 : 3000;
+    const keyDistance = this.key === 'bulletFireBall' ? 500 : 350;
+    const keyDuration = this.key === 'bulletFireBall' ? 5000 : 3000;
 
     if (this.timeAlive > keyDuration || distance > keyDistance) {
       this.body.bounce.set(0);
@@ -154,7 +155,7 @@ export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
   }
 }
 
-export class BulletsCannon extends Phaser.Physics.Arcade.Group {
+export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
   constructor(game: Game) {
     super(game.physics.world, game);
     this.createMultiple({

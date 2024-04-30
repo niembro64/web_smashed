@@ -79,6 +79,7 @@ export function preload(game: Game): void {
   game.load.audio('readyRepeat1', pathSounds + game.FILE_SOUNDS.W1);
   game.load.audio('readyRepeat2', pathSounds + game.FILE_SOUNDS.W2);
   game.load.audio('readyRepeat3', pathSounds + game.FILE_SOUNDS.W3);
+  game.load.audio('fire_ball_sound', pathSounds + game.FILE_SOUNDS.FIRE_BALL);
   game.load.audio(
     'chainChompAttack',
     pathSounds + game.FILE_SOUNDS.CHAIN_CHOMP_ATTACK
@@ -153,7 +154,7 @@ export function preload(game: Game): void {
   //////////////////////////////
   // Load Images
   //////////////////////////////
-  game.load.image('bullet', 'images/fireball_2x.png');
+  game.load.image('bulletFireBall', 'images/fireball_2x.png');
   game.load.image('cannon', 'images/fire_flower_5x_t.png');
   game.load.image('fist-gray', 'images/fist-gray.png');
   game.load.image('fist-black', 'images/fist-black.png');

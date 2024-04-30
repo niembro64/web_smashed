@@ -133,6 +133,7 @@ export default class Game extends Phaser.Scene {
     FLAG_CAPTURE: 'trumpet-short.wav',
     FLAG_COMPLETE: 'trumpet-medium.wav',
     FLAG_MUSIC_BOX: 'music_box.mp3',
+    FIRE_BALL: 'smb_fireball.wav',
   };
 
   SOUND_INTRO: any;
@@ -815,11 +816,12 @@ export default class Game extends Phaser.Scene {
 
   fireFlower: FireFlower = {
     sprite: null,
-    srcImage: 'bullet',
+    srcImage: 'bulletFireBall',
     rotation: {
       initial: 0.25,
       speed: 400,
     },
+    soundFireBall: null,
     attackBullets: {
       bullets: null,
       NUMBER_BULLETS: 16,

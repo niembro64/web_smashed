@@ -57,6 +57,7 @@ export interface Debug {
   ReplayControls: boolean;
   ReplayFastSlow: boolean;
   GravityLight: boolean;
+  FireflowerOnInit: boolean;
   [key: string]: any; // add index signature
 }
 
@@ -516,6 +517,7 @@ export interface Quote {
 export interface FireFlower {
   sprite: any | Phaser.GameObjects.Sprite;
   attackBullets: any | AttackBullets;
+  soundFireBall: any;
   srcImage: any | Phaser.GameObjects.Sprite;
   posInit: Position;
   rotation: AttackEnergyRotation;

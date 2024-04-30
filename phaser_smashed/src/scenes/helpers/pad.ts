@@ -12,6 +12,7 @@ import { updateBotRules } from './botRB';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
+import { setPlaySoundFireBall } from './sound';
 
 export function updateGamePadsMaster(game: Game): void {
   let numPlayers = game.players.length;
@@ -858,14 +859,15 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
   });
 }
 
-export const updateCannonShooting = (game: Game) => {
+export const updateFireFlowerShooting = (game: Game) => {
   if (game.fireFlower.attackBullets !== null) {
-    if (game.flag.completedCurr) {
+    if (game.debug.FireflowerOnInit || game.flag.completedCurr) {
       game.fireFlower.attackBullets.bullets.fireBullet(
         game.fireFlower.posInit,
         { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
         game
       );
+      setPlaySoundFireBall(game);
       game.fireFlower.sprite.setTint(0xffffff);
     } else {
       const white = 0xffffff;
@@ -885,17 +887,17 @@ export const updateCannonShooting = (game: Game) => {
 };
 
 export const hexColorSubtraction = (color1: number, color2: number): number => {
-  let r1 = (color1 >> 16) & 0xff;
-  let g1 = (color1 >> 8) & 0xff;
-  let b1 = color1 & 0xff;
+  const r1 = (color1 >> 16) & 0xff;
+  const g1 = (color1 >> 8) & 0xff;
+  const b1 = color1 & 0xff;
 
-  let r2 = (color2 >> 16) & 0xff;
-  let g2 = (color2 >> 8) & 0xff;
-  let b2 = color2 & 0xff;
+  const r2 = (color2 >> 16) & 0xff;
+  const g2 = (color2 >> 8) & 0xff;
+  const b2 = color2 & 0xff;
 
-  let r = r1 - r2;
-  let g = g1 - g2;
-  let b = b1 - b2;
+  const r = r1 - r2;
+  const g = g1 - g2;
+  const b = b1 - b2;
 
   return (r << 16) + (g << 8) + b;
 };

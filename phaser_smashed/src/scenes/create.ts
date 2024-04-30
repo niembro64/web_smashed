@@ -15,7 +15,7 @@ import {
 } from './helpers/powers';
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
-import { BulletsCannon, BulletsPlayer } from './helpers/bullets';
+import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
 
 export function create(game: Game) {
@@ -170,7 +170,11 @@ export function createFireFlower(game: Game): void {
   game.fireFlower.sprite.setImmovable(false);
   game.fireFlower.sprite.setOrigin(0.5, 0.5);
 
-  game.fireFlower.attackBullets.bullets = new BulletsCannon(game);
+  game.fireFlower.attackBullets.bullets = new BulletsFireFlower(game);
+
+  game.fireFlower.soundFireBall = game.sound.add('fire_ball_sound', {
+    volume: 0.07,
+  });
 }
 
 export function createCollidersFireFlower(game: Game): void {

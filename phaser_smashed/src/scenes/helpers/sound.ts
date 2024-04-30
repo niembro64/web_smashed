@@ -185,3 +185,10 @@ export function setPauseAllReadySounds(game: Game): void {
     pauseReadySoundPlayer(player);
   });
 }
+
+export function setPlaySoundFireBall(game: Game): void {
+  if (game.fireFlower.soundFireBall.isPlaying) {
+    return;
+  }
+  game.fireFlower.soundFireBall.play();
+}
