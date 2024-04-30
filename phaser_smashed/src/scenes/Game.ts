@@ -838,7 +838,7 @@ export default class Game extends Phaser.Scene {
     },
     posInit: {
       x: SCREEN_DIMENSIONS.WIDTH * 0.185,
-      y: SCREEN_DIMENSIONS.HEIGHT * 0.3347,
+      y: SCREEN_DIMENSIONS.HEIGHT * 0.335,
     },
   };
 
