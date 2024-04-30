@@ -61,7 +61,6 @@ export function preload(game: Game): void {
   //////////////////////////////
   // Load Audio
   //////////////////////////////
-
   let pathSounds = 'sounds/';
   game.load.audio('intro', pathSounds + game.FILE_SOUNDS.INTRO);
   game.load.audio('gun', pathSounds + game.FILE_SOUNDS.GUN);
@@ -88,23 +87,6 @@ export function preload(game: Game): void {
   game.load.audio('ping2', pathSounds + game.FILE_SOUNDS.PING2);
   game.load.audio('pop', pathSounds + game.FILE_SOUNDS.POP);
   game.load.audio('pop2', pathSounds + game.FILE_SOUNDS.POP2);
-  // this.load.audio(
-  //   "readyRepeat0",
-  //   pathSounds + this.FILE_SOUNDS.READY_REPEAT0
-  // );
-  // this.load.audio(
-  //   "readyRepeat1",
-  //   pathSounds + this.FILE_SOUNDS.READY_REPEAT1
-  // );
-  // this.load.audio(
-  //   "readyRepeat2",
-  //   pathSounds + this.FILE_SOUNDS.READY_REPEAT2
-  // );
-  // this.load.audio(
-  //   "readyRepeat3",
-  //   pathSounds + this.FILE_SOUNDS.READY_REPEAT3
-  // );
-
   game.load.audio('enerja_ah', pathSounds + game.FILE_SOUNDS.ENERJA_AH);
   game.load.audio(
     'enerja_again',
@@ -126,39 +108,39 @@ export function preload(game: Game): void {
     pathSounds + game.FILE_SOUNDS.ENERJA_TWO_SHOTS
   );
   game.load.audio('enerja_ugh', pathSounds + game.FILE_SOUNDS.ENERJA_UGH);
-
-  // game.load.audio('mii', pathSounds + game.FILE_SOUNDS.BGM_MII);
   game.load.audio('mii', pathSounds + game.FILE_SOUNDS.BGM_MII_FIXED);
   game.load.audio(
     'garage_repeat',
     pathSounds + game.FILE_SOUNDS.BGM_GARAGE_REPEAT
   );
-  if (game.debug.MusicTrack === 0) {
-    game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DREAM);
-  }
-  if (game.debug.MusicTrack === 1) {
-    game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_MONKEY);
-  }
-  if (game.debug.MusicTrack === 2) {
-    game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_ROYKSOP);
-  }
-  if (game.debug.MusicTrack === 3) {
-    game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DMT);
-  }
-
   game.load.audio('boom_short_01', pathSounds + game.FILE_SOUNDS.BOOM_SHORT_01);
   game.load.audio('boom_short_02', pathSounds + game.FILE_SOUNDS.BOOM_SHORT_02);
-
   game.load.audio('bb_bam', pathSounds + game.FILE_SOUNDS.BLACK_BETTY_BAMBALAM);
   game.load.audio('bb_woah', pathSounds + game.FILE_SOUNDS.BLACK_BETTY_WOAH);
-
   game.load.audio('flag_capture', pathSounds + game.FILE_SOUNDS.FLAG_CAPTURE);
   game.load.audio('flag_complete', pathSounds + game.FILE_SOUNDS.FLAG_COMPLETE);
+
+  switch (game.debug.MusicTrack) {
+    case 0:
+      game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DREAM);
+      break;
+    case 1:
+      game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_MONKEY);
+      break;
+    case 2:
+      game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_ROYKSOP);
+      break;
+    case 3:
+      game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DMT);
+      break;
+    default:
+      game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DREAM);
+      break;
+  }
 
   //////////////////////////////
   // Load Images
   //////////////////////////////
-
   game.load.image('bullet', 'images/fireball_2x.png');
   game.load.image('cannon', 'images/fire_flower_5x_t.png');
   game.load.image('fist-gray', 'images/fist-gray.png');
@@ -167,10 +149,8 @@ export function preload(game: Game): void {
   game.load.image('flame', 'images/flame_small.png');
   game.load.image('laser', 'images/laser.png');
   game.load.image('mirror', 'images/mirror.png');
-
   game.load.image('blockcracked', 'images/blockcracked.png');
   game.load.image('fireball', 'images/fireball_2x.png');
-  // game.load.image('flagpole', 'images/flagpole.png');
   game.load.image('greenshell', 'images/greenshell.png');
   game.load.image('redshell', 'images/redshell.png');
   game.load.image('blueshell', 'images/blueshell_wing.png');
@@ -178,13 +158,10 @@ export function preload(game: Game): void {
   game.load.image('hammer', 'images/ham.png');
   game.load.image('blackHammer', 'images/blackHammer.png');
   game.load.image('sword', 'images/sword_right.png');
-
   game.load.image('table', 'images/table.png');
   game.load.image('flag', 'images/qflag3.png');
   game.load.image('blank', 'images/blank.png');
   game.load.image('pole', 'images/pole.png');
-
-  // game.load.image('background', 'images/xp.jpg');
   game.load.image('background', 'images/darkxp.jpg');
   game.load.image('background_outline', 'images/outline_blocks_11.png');
   game.load.image('centerWhite', 'images/wx.png');
@@ -195,12 +172,9 @@ export function preload(game: Game): void {
   game.load.image('platformShort', 'images/brickhorizshorter.bmp');
   game.load.image('platformVertical', 'images/brickvert.bmp');
   game.load.image('brick', 'images/blockcracked.png');
-  // game.load.image('suburb', 'images/suburb.png');
-
   game.load.image('flag_joey', 'images/flagpole_JK2.png');
   game.load.image('glass_full', 'images/niemo_shot_full_t2.png');
   game.load.image('glass_empty', 'images/niemo_shot_empty.png');
-
   game.load.image('chomp_block', 'images/chomp_block.png');
   game.load.image('chomp_link', 'images/chomp_chain_trans_lighter.png');
 
@@ -214,7 +188,6 @@ export function preload(game: Game): void {
   //////////////////////////////
   //  LOAD SPRITESHEETS
   //////////////////////////////
-
   game.load.spritesheet({
     key: 'firework',
     url: 'images/firework-horiz-spritesheet-white.png',
