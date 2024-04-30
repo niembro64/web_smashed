@@ -18,6 +18,7 @@ export interface Debug {
   CamerasVisible: boolean;
   CollidersPvP: boolean;
   CollidersPvAP: boolean;
+  ShowHelperKeyboard: boolean;
   CollidersPvAE: boolean;
   CollidersAEvAE: boolean;
   CollidersAEvAP: boolean;

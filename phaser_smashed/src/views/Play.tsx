@@ -1111,6 +1111,7 @@ function Play() {
   return (
     <div id="top-level" className="over-div">
       {!debugState.DevMode &&
+        debugState.ShowHelperKeyboard &&
         webState !== 'web-state-setup' &&
         numKeyboards === 2 &&
         !bothKeysTouched && (
@@ -1137,6 +1138,7 @@ function Play() {
           </div>
         )}
       {!debugState.DevMode &&
+        debugState.ShowHelperKeyboard &&
         webState !== 'web-state-setup' &&
         numKeyboards === 1 &&
         !p1KeysTouched && (
