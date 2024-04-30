@@ -1,64 +1,73 @@
 import Game from '../Game';
 import { getNormalizedVector } from './damage';
-import { getNearestPlayerAliveFromXY } from './movement';
+import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
 export const updateFireFlowerShooting = (game: Game) => {
-  if (game.fireFlower.attackBullets !== null) {
-    if (game.debug.FireflowerOnInit || game.flag.completedCurr) {
-      game.fireFlower.sprite.setTint(0xffffff);
+  if (game.debug.NNP1Train || game.fireFlower.attackBullets === null) {
+    return;
+  }
 
-      if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {
-        return;
-      }
+  if (game.debug.FireflowerOnInit || game.flag.completedCurr) {
+    game.fireFlower.sprite.setTint(0xffffff);
 
-      if (game.gameSeconds % 2 === 0) {
-        return;
-      }
+    if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {
+      return;
+    }
 
-      const { player: enemy } = getNearestPlayerAliveFromXY(
-        game.fireFlower.posInit.x,
-        game.fireFlower.posInit.y,
-        game
-      );
+    // if (game.gameSeconds % 2 === 0) {
+    //   return;
+    // }
 
-      const v: { x: number; y: number } = getNormalizedVector(
+    const { player: enemy } = getNearestPlayerAliveFromXY(
+      game.fireFlower.posInit.x,
+      game.fireFlower.posInit.y,
+      game
+    );
+    if (
+      getDistance(
         game.fireFlower.posInit.x,
         game.fireFlower.posInit.y,
         enemy.char.sprite.body.position.x,
         enemy.char.sprite.body.position.y
-      );
-
-      const randMult = 300;
-
-      const randY = (Math.random() - 0.5) * randMult;
-      const randX = (Math.random() - 0.5) * randMult;
-
-      game.fireFlower.attackBullets.bullets.fireBullet(
-        game.fireFlower.posInit,
-        { x: v.x * 1000 + randX, y: v.y * 1000 + randY },
-        game
-      );
-      // game.fireFlower.attackBullets.bullets.fireBullet(
-      //   game.fireFlower.posInit,
-      //   { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
-      //   game
-      // );
-      setPlaySoundFireBall(game);
-    } else {
-      const white = 0xffffff;
-      const darkBlockTopEdge = 0x836c64;
-      const whiteBlockTopEdge = 0xf3c6b5;
-
-      const diffBlocks = hexColorSubtraction(
-        whiteBlockTopEdge,
-        darkBlockTopEdge
-      );
-
-      const diffWhites = hexColorSubtraction(white, diffBlocks);
-
-      game.fireFlower.sprite.setTint(diffWhites);
+      ) > game.fireFlower.shootingDistanceThreshold
+    ) {
+      return;
     }
+
+    const v: { x: number; y: number } = getNormalizedVector(
+      game.fireFlower.posInit.x,
+      game.fireFlower.posInit.y,
+      enemy.char.sprite.body.position.x,
+      enemy.char.sprite.body.position.y
+    );
+
+    const randMult = 300;
+
+    const randY = (Math.random() - 0.5) * randMult;
+    const randX = (Math.random() - 0.5) * randMult;
+
+    game.fireFlower.attackBullets.bullets.fireBullet(
+      game.fireFlower.posInit,
+      { x: v.x * 1000 + randX, y: v.y * 1000 + randY },
+      game
+    );
+    // game.fireFlower.attackBullets.bullets.fireBullet(
+    //   game.fireFlower.posInit,
+    //   { x: (Math.random() - 0.5) * 1000, y: -Math.random() * 1000 + 100 },
+    //   game
+    // );
+    setPlaySoundFireBall(game);
+  } else {
+    const white = 0xffffff;
+    const darkBlockTopEdge = 0x836c64;
+    const whiteBlockTopEdge = 0xf3c6b5;
+
+    const diffBlocks = hexColorSubtraction(whiteBlockTopEdge, darkBlockTopEdge);
+
+    const diffWhites = hexColorSubtraction(white, diffBlocks);
+
+    game.fireFlower.sprite.setTint(diffWhites);
   }
 };
 

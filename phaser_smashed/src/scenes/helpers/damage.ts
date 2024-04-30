@@ -285,6 +285,37 @@ export function getNormalizedVectorAP(
 
   return { x: newX / newRatio, y: newY / newRatio };
 }
+// not working yet
+export function getLaunchVector(
+  v0: number, // Initial velocity
+  x0: number, // Initial x-position of the cannon
+  y0: number, // Initial y-position of the cannon
+  x: number, // x-position of the target
+  y: number, // y-position of the target
+  g: number = 9.81 // Acceleration due to gravity (m/s^2)
+): { x: number; y: number } {
+  const precision = 0.01; // Precision of the angle in radians
+  let bestAngle = 0;
+  let minDistance = Infinity;
+
+  for (let angle = 0; angle < Math.PI / 2; angle += precision) {
+    const time = (x - x0) / (v0 * Math.cos(angle));
+    const calculatedY =
+      y0 + v0 * Math.sin(angle) * time - 0.5 * g * time * time;
+
+    const distance = Math.abs(calculatedY - y);
+    if (distance < minDistance) {
+      minDistance = distance;
+      bestAngle = angle;
+    }
+  }
+
+  return {
+    // angleDegrees: bestAngle * (180 / Math.PI), // Convert radians to degrees for output
+    x: Math.cos(bestAngle), // Cosine of the angle
+    y: Math.sin(bestAngle), // Sine of the angle
+  };
+}
 
 export function getNormalizedVector(
   startX: number,

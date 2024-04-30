@@ -523,6 +523,7 @@ export interface FireFlower {
   srcImage: any | Phaser.GameObjects.Sprite;
   posInit: Position;
   rotation: AttackEnergyRotation;
+  shootingDistanceThreshold: number;
   numUpdateIndexesToWait: number;
 }
 
