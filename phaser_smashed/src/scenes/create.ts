@@ -28,7 +28,7 @@ export function create(game: Game) {
   createLavas(game);
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
-  createCannon(game);
+  createFireFlower(game);
   createExplosions(game);
   createFirework(game);
   createPole(game);
@@ -47,7 +47,6 @@ export function create(game: Game) {
   createScoreboardController(game);
   createScoreboardReady(game);
   createChomp(game);
-
   createEmitterChompFollowChomp(game);
   createPlayers(game);
   createEmittersFollowPlayers(game);
@@ -61,7 +60,7 @@ export function create(game: Game) {
   createCollidersPvAE(game);
   createCollidersAEvAE(game);
   createCollidersAEvAP(game);
-  createCollidersCannon(game);
+  createCollidersFireFlower(game);
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
@@ -165,7 +164,7 @@ export function createPole(game: Game): void {
   game.flag.spriteFlagPole.setOrigin(0.5, 0.5);
 }
 
-export function createCannon(game: Game): void {
+export function createFireFlower(game: Game): void {
   game.fireFlower.sprite = game.physics.add.sprite(
     game.fireFlower.posInit.x,
     game.fireFlower.posInit.y,
@@ -182,7 +181,7 @@ export function createCannon(game: Game): void {
   game.fireFlower.attackBullets.bullets = new BulletsCannon(game);
 }
 
-export function createCollidersCannon(game: Game): void {
+export function createCollidersFireFlower(game: Game): void {
   let aebs = game.fireFlower.attackBullets.bullets;
 
   game.physics.add.collider(aebs, game.PLATFORMS);
