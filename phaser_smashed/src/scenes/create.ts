@@ -150,7 +150,7 @@ export function createFlag(game: Game): void {
     volume: 0.5,
   });
   f.soundFlagMusicBox = game.sound.add('flag_music_box', {
-    volume: 0.05,
+    volume: 0.1,
   });
 }
 
