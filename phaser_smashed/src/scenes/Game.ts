@@ -838,17 +838,21 @@ export default class Game extends Phaser.Scene {
     },
     posInit: {
       x: SCREEN_DIMENSIONS.WIDTH * 0.185,
-      y: SCREEN_DIMENSIONS.HEIGHT * 0.332,
+      y: SCREEN_DIMENSIONS.HEIGHT * 0.3347,
     },
   };
 
+  flagBoxTop: number = 0.382 * SCREEN_DIMENSIONS.HEIGHT;
+  flagBoxBottom: number = 0.561 * SCREEN_DIMENSIONS.HEIGHT;
+  flagBoxHeight: number = this.flagBoxBottom - this.flagBoxTop;
   flag: Flag = {
     flagSpeedDark: 160,
     flagSpeed: 80,
     movement: 'none',
+    yPositionInit: (this.flagBoxBottom + this.flagBoxTop) / 2,
     box: {
-      top: SCREEN_DIMENSIONS.HEIGHT * 0.382,
-      bottom: SCREEN_DIMENSIONS.HEIGHT * 0.561,
+      top: this.flagBoxTop,
+      bottom: this.flagBoxBottom,
       left: SCREEN_DIMENSIONS.WIDTH * 0.8,
       right: SCREEN_DIMENSIONS.WIDTH * 0.9,
     },
@@ -864,7 +868,6 @@ export default class Game extends Phaser.Scene {
     spriteFlagChar: null,
     spriteFlagPole: null,
     afterPauseResumeMusicFlagMusicBox: false,
-    yPositionInit: 0.5,
     soundFlagCapture: null,
     soundFlagMusicBox: null,
     soundFlagComplete: null,

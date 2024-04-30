@@ -72,13 +72,13 @@ export function create(game: Game) {
 export function createFlag(game: Game): void {
   const f = game.flag;
 
-  const h = 0.382;
+  const flagAtTopOfPole = 0.382;
   const horizOffset = 57 - game.ASSET_BRICK_WIDTH * 4;
 
   f.spriteFlagMover = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
       horizOffset,
-    SCREEN_DIMENSIONS.HEIGHT * h,
+    f.yPositionInit,
     'flag'
   );
   f.spriteFlagMover.setBounce(0);
@@ -89,7 +89,7 @@ export function createFlag(game: Game): void {
   f.spriteFlagStationary = game.physics.add.sprite(
     (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
       horizOffset,
-    SCREEN_DIMENSIONS.HEIGHT * h,
+    f.box.top,
     'blank'
   );
   f.spriteFlagStationary.setBounce(0);
@@ -106,7 +106,7 @@ export function createFlag(game: Game): void {
       f.spriteFlagChar = game.physics.add.sprite(
         (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
           horizOffset,
-        SCREEN_DIMENSIONS.HEIGHT * h,
+        SCREEN_DIMENSIONS.HEIGHT * flagAtTopOfPole,
         game.playerOptions[game.smashConfig.players[0].characterId].char.name +
           '_spritesheet',
         0
@@ -115,28 +115,18 @@ export function createFlag(game: Game): void {
       f.spriteFlagChar = game.physics.add.sprite(
         (1920 - 100 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH +
           horizOffset,
-        SCREEN_DIMENSIONS.HEIGHT * h,
+        SCREEN_DIMENSIONS.HEIGHT * flagAtTopOfPole,
         game.playerOptions[game.smashConfig.players[0].characterId].char.name
       );
     }
   }
   f.spriteFlagChar.setBounce(0);
-  // f.spriteFlagChar.setScale(
-  //   0.65 / f.spriteFlagChar.displayWidth,
-  //   0.65 / f.spriteFlagChar.displayHeight
-  // );
-  // f.spriteFlagChar.displayWidth = 0.1 * game.SCREEN_SCALE.WIDTH;
-  // f.spriteFlagChar.scaleY = f.spriteFlagChar.scaleX;
   f.spriteFlagChar.displayWidth = 60;
   f.spriteFlagChar.scaleY = f.spriteFlagChar.scaleX;
-  // f.spriteFlagChar.setScale(0.65);
-
   f.spriteFlagChar.setImmovable(true);
   f.spriteFlagChar.body.allowGravity = false;
-  // f.spriteFlagChar.setTintFill(0x000000);
   f.spriteFlagChar.setTintFill(0xffffff);
   f.spriteFlagChar.setAlpha(0);
-  // f.spriteFlagChar.setTint(0x555555);
 
   f.poleTouchStamps = [];
   game.players.forEach((player, playerIndex) => {
@@ -185,27 +175,17 @@ export function createFireFlower(game: Game): void {
 
 export function createCollidersFireFlower(game: Game): void {
   const aebs = game.fireFlower.attackBullets.bullets;
-
   game.physics.add.collider(aebs, game.PLATFORMS);
 
   for (let i = 0; i < game.players.length; i++) {
     game.physics.add.collider(aebs, game.players[i].char.sprite);
-
     game.physics.add.collider(aebs, game.players[i].char.attackEnergy.sprite);
-
     game.physics.add.collider(aebs, game.players[i].char.attackPhysical.sprite);
   }
 
   game.physics.add.collider(aebs, game.chomp.sprite);
-
-  // turn off gravity for bullets
   aebs.children.iterate((child: any) => {
     child.body.allowGravity = false;
-    // child.body.setGravityY(10);
-    // child.Body.setBounce(0.5);
-    // child.body.setCollideWorldBounds(true);
-    // child.body.setVelocityX(0);
-    // child.body.setVelocityY(0);
   });
 }
 
@@ -249,13 +229,6 @@ export function createExplosions(game: Game): void {
     e.sprite.setOrigin(0.5, 0.5);
     e.sprite.setImmovable(true);
     e.sprite.setRotation((Math.PI / 4) * eIndex);
-    // e.sprite.setTint(0x888888);
-    // e.sprite.setTint(0x000000);
-
-    // e.sprite.on('animationcomplete', () => {
-    //   p('animationcomplete');
-    // });
-
     // add sounds to explosions
     e.sound = game.sound.add(
       eIndex % 2 === 0 ? 'boom_short_01' : 'boom_short_02',
@@ -2034,13 +2007,6 @@ export function createScoreboardShotGlass(game: Game): void {
         'cup' + (i + 1).toString()
       )
       .setOrigin(0.5, 0.5);
-
-    // player.endGameTrophy.setTint(
-    //   0xffffff,
-    //   0xffffff,
-    //   game.colorCircles[playerIndex].colorNumber,
-    //   game.colorCircles[playerIndex].colorNumber
-    // );
   });
 
   game.players.forEach((player, playerIndex) => {

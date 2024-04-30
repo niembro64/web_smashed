@@ -860,10 +860,6 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
 
 export const updateCannonShooting = (game: Game) => {
   if (game.fireFlower.attackBullets !== null) {
-    // if (Math.random() > 0.05) {
-    //   return;
-    // }
-
     if (game.flag.completedCurr) {
       game.fireFlower.attackBullets.bullets.fireBullet(
         game.fireFlower.posInit,
@@ -872,7 +868,34 @@ export const updateCannonShooting = (game: Game) => {
       );
       game.fireFlower.sprite.setTint(0xffffff);
     } else {
-      game.fireFlower.sprite.setTint(0x553344);
+      const white = 0xffffff;
+      const darkBlockTopEdge = 0x836c64;
+      const whiteBlockTopEdge = 0xf3c6b5;
+
+      const diffBlocks = hexColorSubtraction(
+        whiteBlockTopEdge,
+        darkBlockTopEdge
+      );
+
+      const diffWhites = hexColorSubtraction(white, diffBlocks);
+
+      game.fireFlower.sprite.setTint(diffWhites);
     }
   }
+};
+
+export const hexColorSubtraction = (color1: number, color2: number): number => {
+  let r1 = (color1 >> 16) & 0xff;
+  let g1 = (color1 >> 8) & 0xff;
+  let b1 = color1 & 0xff;
+
+  let r2 = (color2 >> 16) & 0xff;
+  let g2 = (color2 >> 8) & 0xff;
+  let b2 = color2 & 0xff;
+
+  let r = r1 - r2;
+  let g = g1 - g2;
+  let b = b1 - b2;
+
+  return (r << 16) + (g << 8) + b;
 };
