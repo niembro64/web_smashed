@@ -61,6 +61,8 @@ export interface Debug {
   FFlowerRapFire: boolean;
   FFlowerOnInit: boolean;
   FFlowerFullScrn: boolean;
+  FFlowerGravity: boolean;
+  FFlowerBounceWall: boolean;
   [key: string]: any; // add index signature
 }
 

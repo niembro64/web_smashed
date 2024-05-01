@@ -202,17 +202,18 @@ export function createCollidersFireFlower(game: Game): void {
 
   game.physics.add.collider(aebs, game.chomp.sprite);
   aebs.children.iterate((child: any) => {
-    // child.body.allowGravity = false;
+    child.body.allowGravity = game.debug.FFlowerGravity;
 
     game.physics.add.collider(child, game.PLATFORMS);
     game.physics.add.collider(child, game.chomp.sprite);
     game.physics.add.collider(child, game.TABLE);
 
     // bounce off of game world boundary
-    child.setCollideWorldBounds(false, false, false, false);
-
-    // collide with player
-
+    // child.setCollideWorldBounds(false, false, false, false);
+    if (game.debug.FFlowerBounceWall) {
+      // bounce off world boundary
+      child.setCollideWorldBounds(true, 1, 1);
+    }
   });
 
   // collide with table

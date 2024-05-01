@@ -57,8 +57,10 @@ export const debugInit: Debug = {
   NNHelpWall: true,
   MusicTrack: 0, // 0123
   FFlowerOnInit: true,
-  FFlowerRapFire: false,
-  FFlowerFullScrn: false,
+  FFlowerRapFire: true,
+  FFlowerFullScrn: true,
+  FFlowerGravity: true,
+  FFlowerBounceWall: true,
 };
 
 export const debugMax: Debug = {
@@ -120,6 +122,8 @@ export const debugMax: Debug = {
   FFlowerRapFire: true,
   FFlowerOnInit: true,
   FFlowerFullScrn: true,
+  FFlowerGravity: true,
+  FFlowerBounceWall: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -182,4 +186,6 @@ export const showOptionOnMainScreenInit: Debug = {
   FFlowerOnInit: false,
   FFlowerRapFire: false,
   FFlowerFullScrn: false,
+  FFlowerGravity: false,
+  FFlowerBounceWall: false,
 };
