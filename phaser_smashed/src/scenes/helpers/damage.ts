@@ -170,10 +170,17 @@ export function onHitHandlerFireBall(
   playerHit.char.damageCurr += damage;
 
   const pHit = playerHit.char.sprite;
-  // const ae = pj.char.attackEnergy;
 
-  pHit.setVelocityX(pHit.body.velocity.x + vector.x * 3 * game.fireFlower.hitback.x);
-  pHit.setVelocityY(pHit.body.velocity.y + vector.y * 2 * game.fireFlower.hitback.y - 25);
+  const mult = 0.0002;
+
+  pHit.setVelocityX(
+    pHit.body.velocity.x +
+      vector.x * game.fireFlower.hitback.x * playerHit.char.damageCurr * mult
+  );
+  pHit.setVelocityY(
+    pHit.body.velocity.y +
+      vector.y * game.fireFlower.hitback.y * playerHit.char.damageCurr * mult
+  );
 
   if (game.fireFlower.diesOnHitbox) {
     setFireBallOffscreen(bulletIndex, game);

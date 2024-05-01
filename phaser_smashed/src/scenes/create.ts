@@ -736,7 +736,7 @@ export function createHitboxOverlap(game: Game): void {
                   bullet,
                   bi,
                   j,
-                  game.DEFAULT_ATTACK_DAMAGE,
+                  game.fireFlower.damage,
                   game
                 );
               });
@@ -1218,8 +1218,15 @@ export function createAttackEnergies(game: Game): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      for (let i = 0; i < game.fireFlower.attackBullets.bullets.getChildren().length; i++) {
-        game.physics.add.collider(aebs, game.fireFlower.attackBullets.bullets.getChildren()[i]);
+      for (
+        let i = 0;
+        i < game.fireFlower.attackBullets.bullets.getChildren().length;
+        i++
+      ) {
+        game.physics.add.collider(
+          aebs,
+          game.fireFlower.attackBullets.bullets.getChildren()[i]
+        );
       }
 
       // turn off gravity for bullets
@@ -2200,11 +2207,8 @@ export function createScoreboard(game: Game): void {
     SCREEN_DIMENSIONS.HEIGHT / 2 + 100,
     '',
     {
-      // font: "Arial 100px",
       fontSize: '20px',
-      // fontFamily: "'Courier New'",
       fontFamily: game.FONT_DEFAULT_VIDEOGAME,
-      // fontFamily: "'Press Start 2P'",
       color: 'white',
       stroke: 'black',
       strokeThickness: 1,
@@ -2306,7 +2310,6 @@ export function createCameras(game: Game): void {
     .setAlpha(debugAlpha);
   game.cameraBox.char.sprite.setImmovable(true);
   game.cameraBox.char.sprite.body.allowGravity = false;
-  // game.cameras.main.startFollow(game.cameraBox.char.sprite);
 
   game.cameraPlayers.char.sprite = game.physics.add
     .sprite(
@@ -2319,8 +2322,6 @@ export function createCameras(game: Game): void {
     .setAlpha(debugAlpha);
   game.cameraPlayers.char.sprite.setImmovable(true);
   game.cameraPlayers.char.sprite.body.allowGravity = false;
-  // game.cameras.main.startFollow(game.cameraPlayers.char.sprite);
-
   game.cameraPlayersHalfway.char.sprite = game.physics.add
     .sprite(
       SCREEN_DIMENSIONS.WIDTH / 2,
@@ -2332,7 +2333,6 @@ export function createCameras(game: Game): void {
     .setAlpha(debugAlpha);
   game.cameraPlayersHalfway.char.sprite.setImmovable(true);
   game.cameraPlayersHalfway.char.sprite.body.allowGravity = false;
-  // game.cameras.main.startFollow(game.cameraPlayersHalfway.char.sprite);
 
   game.cameraCenter.char.sprite = game.physics.add
     .sprite(
@@ -2345,7 +2345,6 @@ export function createCameras(game: Game): void {
     .setAlpha(debugAlpha);
   game.cameraCenter.char.sprite.setImmovable(true);
   game.cameraCenter.char.sprite.body.allowGravity = false;
-  // game.cameras.main.startFollow(game.cameraCenterBoy.char.sprite);
 
   game.cameraMover.char.sprite = game.physics.add
     .sprite(
@@ -2358,25 +2357,4 @@ export function createCameras(game: Game): void {
     .setRotation(Math.PI / 4);
   game.cameraMover.char.sprite.setImmovable(true);
   game.cameraMover.char.sprite.body.allowGravity = false;
-  // game.cameras.main.startFollow(game.cameraMover.char.sprite);
-
-  // game.cameraSlow.char.sprite = game.physics.add
-  //   .sprite(200, 200, "center")
-  //   .setScale(0.05);
-  // game.cameraSlow.char.sprite.setImmovable(true);
-  // game.cameraSlow.char.sprite.body.allowGravity = false;
-  // game.cameras.main.startFollow(game.center_80.char.sprite);
-
-  // for (let i = 0; i < 11; i++) {
-  //   game.center_10.helperState.push({ x: 800, y: 300, zoom: 0.3 });
-  // }
-  // for (let i = 0; i < 79; i++) {
-  //   game.center_80.helperState.push({ x: 800, y: 300, zoom: 0.3 });
-  // }
-  // game.cameras.main.setBounds(
-  //   0,
-  //   0,
-  //   SCREEN_DIMENSIONS.WIDTH,
-  //   SCREEN_DIMENSIONS.HEIGHT
-  // );
 }
