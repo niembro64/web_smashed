@@ -36,6 +36,9 @@ export function createPlatforms(game: Game): void {
     case 8:
       createPlatforms8(game);
       break;
+    case 9:
+      createPlatforms9(game);
+      break;
     default:
       createPlatforms0(game);
       print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.Level);
@@ -585,7 +588,7 @@ export function createPlatforms9(game: Game): void {
       (1207 + 33 * 5) * game.SCREEN_SCALE.WIDTH +
         i * game.ASSET_BRICK_WIDTH +
         13,
-      (710 - 5 * 34) * game.SCREEN_SCALE.HEIGHT + 3 * 34,
+      (717.8 - 5 * 34) * game.SCREEN_SCALE.HEIGHT + 3 * 34,
       'platformVertical'
     );
   }

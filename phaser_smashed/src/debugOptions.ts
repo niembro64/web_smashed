@@ -9,7 +9,7 @@ export const debugInit: Debug = {
   Minutes: 1, //01234567
   Shots: 7, //7
   DevZoom: 8,
-  Level: 8, //0123456
+  Level: 9, //0123456
   MusicActive: true,
   ReadySoundActive: false,
   UseCamera: true,
