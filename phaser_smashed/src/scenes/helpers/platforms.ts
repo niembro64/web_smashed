@@ -583,12 +583,23 @@ export function createPlatforms9(game: Game): void {
     }
   }
 
+  for (let i = 0; i < 1; i++) {
+    game.PLATFORMS.create(
+      (1207 + 33 * 5) * game.SCREEN_SCALE.WIDTH +
+        i * game.ASSET_BRICK_WIDTH +
+        13,
+      (718.2 - 5 * 34) * game.SCREEN_SCALE.HEIGHT + 3 * 34,
+      'platformVertical'
+    );
+  }
   for (let i = 0; i < 2; i++) {
     game.PLATFORMS.create(
       (1207 + 33 * 5) * game.SCREEN_SCALE.WIDTH +
         i * game.ASSET_BRICK_WIDTH +
         13,
-      (717.8 - 5 * 34) * game.SCREEN_SCALE.HEIGHT + 3 * 34,
+      (718.2 - 5 * 34) * game.SCREEN_SCALE.HEIGHT +
+        3 * 34 -
+        game.ASSET_BRICK_HEIGHT,
       'platformVertical'
     );
   }
