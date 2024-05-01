@@ -526,12 +526,26 @@ function Play() {
       });
     }
 
-    newPlayers.forEach((player, index) => {
+    // newPlayers.forEach((player, index) => {
+    //   setTimeout(() => {
+    //     soundManager.blipSound();
+    //     setCharacterSlot(player.characterId, index);
+    //   }, index * blipDelay);
+    // });
+
+    let blipIndex = 0;
+    for (let i = 0; i < 4; i++) {
+      if (inputArray[i] === 0) {
+        continue;
+      }
+
       setTimeout(() => {
         soundManager.blipSound();
-        setCharacterSlot(player.characterId, index);
-      }, index * blipDelay);
-    });
+        setCharacterSlot(newPlayers[i].characterId, i);
+      }, blipIndex * blipDelay);
+
+      blipIndex += 1;
+    }
   };
 
   const getNumActiveBeforeMe = (index: number): number => {
@@ -1664,22 +1678,24 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([2, 3, 4, 4]);
+                  setInputArrayEffect([2, 2, 3, 4]);
                 }}
               >
                 <span className={'vs-span'}>
-                  {emoji.keyboardWhite + emoji.bot}
+                  {emoji.keyboardWhite + emoji.keyboardWhite}
                 </span>
-                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
+                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
               </div>
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([1, 3, 4, 4]);
+                  setInputArrayEffect([1, 1, 3, 4]);
                 }}
               >
-                <span className={'vs-span'}>{emoji.gamepad + emoji.bot}</span>
-                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
+                <span className={'vs-span'}>
+                  {emoji.gamepad + emoji.gamepad}
+                </span>
+                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
               </div>
               <div
                 className="b-all-bots"
@@ -1715,7 +1731,7 @@ function Play() {
               <div
                 className="b-all-bots"
                 onClick={() => {
-                  setInputArrayEffect([3, 4, 3, 4]);
+                  setInputArrayEffect([3, 3, 4, 4]);
                 }}
               >
                 <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
