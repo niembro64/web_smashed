@@ -132,9 +132,8 @@ export function setMusicChompSheepPlay(game: Game): void {
   if (game.chomp.soundSheep.isPlaying) {
     return;
   }
-  const newRate = increaseSemitones(1, 5);
-
-  game.chomp.soundSheep.setRate(newRate);
+  // const newRate = increaseSemitones(1, 5);
+  // game.chomp.soundSheep.setRate(newRate);
   game.chomp.soundSheep.play();
 }
 export function setMusicChompSheepPause(game: Game): void {
