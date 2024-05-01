@@ -153,21 +153,19 @@ export function setChompPowerState(
   switch (curr.name) {
     case 'none':
       c.emitterDark.visible = false;
-
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_walking');
-      setMusicChompSheepPause(game);
       break;
     case 'dark':
       c.emitterDark.visible = true;
-      setMusicChompSheepResume(game);
-
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_chomping');
       game.chomp.soundBBWoah.setRate(1);
       break;
   }
 }
+
+
 
 export function getDoesAnyPlayerHaveDark(game: Game): boolean {
   let found = false;

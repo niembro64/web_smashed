@@ -295,7 +295,7 @@ export function createChomp(game: Game): void {
   });
 
   c.soundSheep = game.sound.add('chainChompSheep', {
-    volume: game.debug.DevMode ? 0 : 0.08,
+    volume: game.debug.DevMode ? 0 : 0.34,
   });
 
   c.soundBBBambalam = game.sound.add('bb_bam', {

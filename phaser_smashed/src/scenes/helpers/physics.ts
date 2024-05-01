@@ -3,10 +3,8 @@ import {
   setBGMusicPause,
   setBGMusicResume,
   setMusicBoxPause,
-  setMusicBoxPlay,
   setMusicBoxResume,
   setMusicChompSheepPause,
-  setMusicChompSheepPlay,
   setMusicChompSheepResume,
 } from './sound';
 import { setAnimationsOff, setAnimationsOn } from './sprites';
