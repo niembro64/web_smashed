@@ -1285,7 +1285,7 @@ function Play() {
                     setWebState('web-state-setup');
                   }}
                 >
-                  {webState === 'web-state-init' ? 'ENTER' : 'SMASHED'}
+                  {webState === 'web-state-init' ? 'INSERT COIN' : 'SMASHED'}
                 </h1>
               </div>
             </div>
