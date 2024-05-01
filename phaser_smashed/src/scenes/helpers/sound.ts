@@ -75,30 +75,30 @@ export function setPlayWiiMusicWaitLong(game: Game): void {
   }
 }
 export function setBGMusicPause(game: Game): void {
-  if (!game.SOUND_BGM.isPlaying) {
+  if (!game.soundBGM.isPlaying) {
     return;
   }
 
-  game.SOUND_BGM.pause();
+  game.soundBGM.pause();
 }
 export function setBGMusicPlay(game: Game): void {
-  if (game.SOUND_BGM.isPlaying) {
+  if (game.soundBGM.isPlaying) {
     return;
   }
 
-  game.SOUND_BGM.play();
+  game.soundBGM.play();
 }
 export function setBGMusicResume(game: Game): void {
-  if (game.SOUND_BGM.isPlaying) {
+  if (game.soundBGM.isPlaying) {
     return;
   }
-  game.SOUND_BGM.resume();
+  game.soundBGM.resume();
 }
 export function setBGMusicSpeedSlower(game: Game): void {
-  game.SOUND_BGM.setRate(increaseSemitones(1, -7));
+  game.soundBGM.setRate(increaseSemitones(1, -7));
 }
 export function setBGMusicSpeedNormal(game: Game): void {
-  game.SOUND_BGM.setRate(1);
+  game.soundBGM.setRate(1);
 }
 
 export function setMusicBoxPlay(game: Game): void {
@@ -198,26 +198,29 @@ export function setPlaySoundFireBall(game: Game): void {
 }
 
 export function setPlaySoundPowerup(game: Game): void {
-  if (game.AUDIO_TABLE.isPlaying) {
+  if (game.soundPowerup.isPlaying) {
     return;
   }
-  game.AUDIO_TABLE.play();
+
+  const newRate = increaseSemitones(1, 5);
+  game.soundPowerup.setRate(newRate);
+  game.soundPowerup.play();
 }
 export function setStopSoundPowerup(game: Game): void {
-  if (!game.AUDIO_TABLE.isPlaying) {
+  if (!game.soundPowerup.isPlaying) {
     return;
   }
-  game.AUDIO_TABLE.stop();
+  game.soundPowerup.stop();
 }
 export function setResumeSoundPowerup(game: Game): void {
-  if (game.AUDIO_TABLE.isPlaying) {
+  if (game.soundPowerup.isPlaying) {
     return;
   }
-  game.AUDIO_TABLE.resume();
+  game.soundPowerup.resume();
 }
 export function setPauseSoundPowerup(game: Game): void {
-  if (!game.AUDIO_TABLE.isPlaying) {
+  if (!game.soundPowerup.isPlaying) {
     return;
   }
-  game.AUDIO_TABLE.pause();
+  game.soundPowerup.pause();
 }

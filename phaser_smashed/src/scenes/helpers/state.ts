@@ -30,7 +30,7 @@ import {
 } from './drinking';
 import { setFlagOwnerNullIfDead } from './flag';
 import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
-import { setPhysicsPause, setPhysicsResume } from './physics';
+import { setPhysicsAndMusicPause, setPhysicsAndMusicResume } from './physics';
 import { setPlayerPowerState } from './powers';
 import {
   setBGMusicPause,
@@ -80,13 +80,13 @@ export function setGameState(game: Game, state: GameState): void {
       setPauseWiiMusic(game);
       setPauseAllReadySounds(game);
       setSoundStartPlay(game);
-      setPhysicsResume(game);
+      setPhysicsAndMusicResume(game);
       setSplashDataOff(game);
       break;
     case 'game-state-paused':
       setRuleSplashOn(game, 'splash-paused');
       setSoundStartPlay(game);
-      setPhysicsPause(game);
+      setPhysicsAndMusicPause(game);
       setSplashDataOn(game);
 
       break;
@@ -95,7 +95,7 @@ export function setGameState(game: Game, state: GameState): void {
       setSoundProfoundPlay(game);
       setSoundFirstBloodPlay(game);
       setSoundSquishPlay(game);
-      setPhysicsPause(game);
+      setPhysicsAndMusicPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
@@ -104,7 +104,7 @@ export function setGameState(game: Game, state: GameState): void {
       setRuleSplashOn(game, 'splash-screen-clear');
       setSoundEnerjaPlay(game);
       setSoundSquishPlay(game);
-      setPhysicsPause(game);
+      setPhysicsAndMusicPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
@@ -125,14 +125,14 @@ export function setGameState(game: Game, state: GameState): void {
       setRuleSplashOn(game, 'splash-captured-flag');
       game.flag.soundFlagComplete.play();
       game.ENERJA_UGH.play();
-      setPhysicsPause(game);
+      setPhysicsAndMusicPause(game);
       setSplashDataOn(game);
       isDrinkingCurr = true;
       setAddShotsToMatrixFlagCaptured(game);
       setPlayerWinningPositions(game);
       break;
     case 'game-state-finished':
-      setPhysicsPause(game);
+      setPhysicsAndMusicPause(game);
       setRuleSplashOn(game, 'splash-finished');
       setSoundFinishPlay(game);
       setSplashDataOn(game);

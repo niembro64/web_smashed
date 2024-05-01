@@ -485,15 +485,19 @@ export function updateTableGiveHealth(game: Game): void {
   const p: Player = getNearestPlayerAliveFromXY(t.x, t.y, game).player;
   if (
     t.touching.up &&
-    p.char.sprite.body.touching.down &&
+    // p.char.sprite.body.touching.down &&
     p.char.damageCurr !== 0
   ) {
-    p.char.damageCurr =
-      p.char.damageCurr > 0 ? (p.char.damageCurr -= 0.5) : p.char.damageCurr;
-
-    setResumeSoundPowerup(game);
+    p.char.damageCurr = Math.max(0, p.char.damageCurr - 0.5);
+    if (!game.powerupActive) {
+      setResumeSoundPowerup(game);
+      game.powerupActive = true;
+    }
   } else {
-    setPauseSoundPowerup(game);
+    if (game.powerupActive) {
+      setPauseSoundPowerup(game);
+      game.powerupActive = false;
+    }
   }
 }
 

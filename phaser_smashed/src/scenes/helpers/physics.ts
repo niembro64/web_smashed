@@ -6,10 +6,12 @@ import {
   setMusicBoxResume,
   setMusicChompSheepPause,
   setMusicChompSheepResume,
+  setPauseSoundPowerup,
+  setResumeSoundPowerup,
 } from './sound';
 import { setAnimationsOff, setAnimationsOn } from './sprites';
 
-export function setPhysicsPause(game: Game): void {
+export function setPhysicsAndMusicPause(game: Game): void {
   game.physics.pause();
   game.players.forEach((player, playerIndex) => {
     player.emitterPlayer.active = false;
@@ -32,14 +34,22 @@ export function setPhysicsPause(game: Game): void {
     game.flag.afterPauseResumeMusicFlagMusicBox = false;
   }
 
-  if (game.SOUND_BGM.isPlaying) {
+  if (game.soundBGM.isPlaying) {
     game.afterPauseResumeMusicBGM = true;
     setBGMusicPause(game);
   } else {
     game.afterPauseResumeMusicBGM = false;
   }
+
+  if (game.soundPowerup.isPlaying) {
+    game.afterPauseResumePowerup = true;
+    setPauseSoundPowerup(game);
+  } else {
+    game.afterPauseResumePowerup = false;
+  }
 }
-export function setPhysicsResume(game: Game): void {
+
+export function setPhysicsAndMusicResume(game: Game): void {
   game.physics.resume();
   game.players.forEach((player, playerIndex) => {
     player.emitterPlayer.active = true;
@@ -55,5 +65,8 @@ export function setPhysicsResume(game: Game): void {
   }
   if (game.afterPauseResumeMusicBGM) {
     setBGMusicResume(game);
+  }
+  if (game.afterPauseResumePowerup) {
+    setResumeSoundPowerup(game);
   }
 }

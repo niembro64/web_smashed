@@ -551,13 +551,13 @@ export function createSoundsGame(game: Game): void {
     loop: true,
   });
   game.SOUND_PAUSED = game.sound.add('mii', { volume: 0.1, loop: true });
-  game.SOUND_BGM = game.sound.add('bgm', {
+  game.soundBGM = game.sound.add('bgm', {
     volume: game.debug.MusicTrack === 3 ? 0.15 : 0.2,
     loop: true,
   });
 
   if (!game.debug.MusicActive) {
-    game.SOUND_BGM.volume = 0;
+    game.soundBGM.volume = 0;
   }
 
   if (!game.debug.ReadySoundActive) {
@@ -1913,6 +1913,7 @@ export function createTable(game: Game): void {
   game.TABLE.setMass(2);
   // game.TABLE.setCollideWorldBounds(true);
   game.TABLE.setBounce(0.5);
+  game.TABLE.setOrigin(0.5, 0);
   // game.TABLE.setImmovable(true);
 
   // game.physics.add.collider(game.TABLE, game.PLATFORMS);
@@ -1920,7 +1921,7 @@ export function createTable(game: Game): void {
   // game.TABLE.setImmovable(true);
   // game.TABLE.body.allowGravity = false;
 
-  game.AUDIO_TABLE = game.sound.add('powerup', { volume: 0.5, loop: true });
+  game.soundPowerup = game.sound.add('powerup', { volume: 0.5, loop: true });
 }
 
 export function createColliderTablePlatforms(game: Game): void {

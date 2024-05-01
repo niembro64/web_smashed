@@ -71,7 +71,9 @@ export default class Game extends Phaser.Scene {
   BACKGROUND: any | Phaser.GameObjects.Sprite;
   BACKGROUND_OUTLINE: any | Phaser.GameObjects.Sprite;
   TABLE: any | Phaser.GameObjects.Sprite;
-  AUDIO_TABLE: any = null;
+  powerupActive: boolean = false;
+  soundPowerup: any = null;
+  afterPauseResumePowerup: boolean = false;
   // spritePole: any | Phaser.GameObjects.Sprite;
   ZOOM_MULTIPLIER_X = 0.95;
   ZOOM_MULTIPLIER_Y = 0.7;
@@ -135,7 +137,7 @@ export default class Game extends Phaser.Scene {
     FLAG_COMPLETE: 'trumpet-medium.wav',
     FLAG_MUSIC_BOX: 'music_box.mp3',
     FIRE_BALL: 'niemo_fireball.wav',
-    POWERUP: 'powerup.mp3',
+    POWERUP: 'powerup.wav',
   };
 
   SOUND_INTRO: any;
@@ -168,7 +170,7 @@ export default class Game extends Phaser.Scene {
   ENERJA_TWO_SHOTS: any;
   ENERJA_UGH: any;
   SOUND_PAUSED: any;
-  SOUND_BGM: any;
+  soundBGM: any;
   afterPauseResumeMusicBGM: boolean = false;
   SOUND_GARAGE_REPEAT: any;
 
