@@ -155,6 +155,8 @@ export function preload(game: Game): void {
   //////////////////////////////
   // Load Images
   //////////////////////////////
+  game.load.image('bullet_bill_cannon', 'images/bullet_bill_cannon.png');
+  game.load.image('bullet_bill_bullet', 'images/bullet_bill_bullet.png');
   game.load.image('bulletFireBall', 'images/fireball_2x.png');
   game.load.image('cannon', 'images/fire_flower_5x_t.png');
   game.load.image('fist-gray', 'images/fist-gray.png');
