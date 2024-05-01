@@ -822,8 +822,9 @@ export default class Game extends Phaser.Scene {
   updateIndex: number = 0;
 
   bbXInit: number = SCREEN_DIMENSIONS.WIDTH * 0.7208;
-  bbScale: number = 0.25;
-  bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.429;
+  bbScale: number = 0.36;
+  // bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.429;
+  bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.4175;
   bbYInitBullet: number = this.bbYInitCannon - this.bbScale * 18;
 
   bulletBillCombo: BulletBillCombo = {

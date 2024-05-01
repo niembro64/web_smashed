@@ -19,17 +19,7 @@ import { setPreUpdate } from './update';
 import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
 import { getFireFlowerDarkerColor } from './helpers/fireFlower';
-import {
-  createPlatforms0,
-  createPlatforms1,
-  createPlatforms2,
-  createPlatforms3,
-  createPlatforms4,
-  createPlatforms5,
-  createPlatforms6,
-  createPlatforms7,
-  createPlatforms8,
-} from './helpers/platforms';
+import { createPlatforms } from './helpers/platforms';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -488,51 +478,6 @@ export function createDataMatrices(game: Game): void {
       game.numberKilledByMatrix[i].push(0);
       game.numberShotsTakenByMeMatrix[i].push(0);
     }
-  }
-}
-
-export function createPlatforms(game: Game): void {
-  switch (game.debug.Level) {
-    case 0:
-      createPlatforms0(game);
-      print('createPlatforms', 0, 'game.debug.Level', game.debug.Level);
-      break;
-    case 1:
-      createPlatforms1(game);
-      print('createPlatforms', 1, 'game.debug.Level', game.debug.Level);
-      break;
-    case 2:
-      createPlatforms2(game);
-      print('createPlatforms', 2, 'game.debug.Level', game.debug.Level);
-      break;
-    case 3:
-      createPlatforms3(game);
-      print('createPlatforms', 3, 'game.debug.Level', game.debug.Level);
-      break;
-    case 4:
-      createPlatforms4(game);
-      print('createPlatforms', 4, 'game.debug.Level', game.debug.Level);
-      break;
-    case 5:
-      createPlatforms5(game);
-      print('createPlatforms', 5, 'game.debug.Level', game.debug.Level);
-      break;
-    case 6:
-      createPlatforms6(game);
-      print('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
-      break;
-    case 7:
-      createPlatforms7(game);
-      print('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
-      break;
-    case 8:
-      createPlatforms8(game);
-      print('createPlatforms', 6, 'game.debug.Level', game.debug.Level);
-      break;
-    default:
-      createPlatforms0(game);
-      print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.Level);
-      break;
   }
 }
 
