@@ -166,7 +166,7 @@ export function createFireFlower(game: Game): void {
   );
 
   game.fireFlower.numUpdateIndexesToWait = game.debug.FlowerRapidFire
-    ? 4
+    ? 5
     : game.fireFlower.numUpdateIndexesToWait;
 
   game.fireFlower.damage = game.debug.FlowerRapidFire

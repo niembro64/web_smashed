@@ -58,10 +58,10 @@ export const debugInit: Debug = {
   MusicTrack: 0, // 0123
   FlowerOnInit: true,
   FlowerRapidFire: true,
-  FlowerFullScrn: true,
-  FlowerGravity: true,
-  FlowerBounceWall: true,
-  Flower1000Balls: true,
+  FlowerFullScrn: false,
+  FlowerGravity: false,
+  FlowerBounceWall: false,
+  Flower1000Balls: false,
 };
 
 export const debugMax: Debug = {
