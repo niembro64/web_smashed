@@ -526,13 +526,6 @@ function Play() {
       });
     }
 
-    // newPlayers.forEach((player, index) => {
-    //   setTimeout(() => {
-    //     soundManager.blipSound();
-    //     setCharacterSlot(player.characterId, index);
-    //   }, index * blipDelay);
-    // });
-
     let blipIndex = 0;
     for (let i = 0; i < 4; i++) {
       if (inputArray[i] === 0) {
