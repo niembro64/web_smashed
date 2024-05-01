@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game from '../Game';
+import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { getNormalizedVector } from './damage';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
@@ -9,7 +9,7 @@ export const updateFireFlowerShooting = (game: Game) => {
     return;
   }
 
-  if (game.debug.FFlowerOnInit || game.flag.completedCurr) {
+  if (game.debug.FlowerOnInit || game.flag.completedCurr) {
     game.fireFlower.sprite.setTint(0xffffff);
 
     if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {
@@ -35,7 +35,12 @@ export const updateFireFlowerShooting = (game: Game) => {
     );
 
     // print('distance', distance, game.fireFlower.shootingDistanceThreshold);
-    if (distance > game.fireFlower.shootingDistanceThreshold) {
+    if (
+      distance >
+      (game.debug.FlowerFullScrn
+        ? SCREEN_DIMENSIONS.WIDTH
+        : game.fireFlower.shootingDistanceThreshold)
+    ) {
       print(enemy.char.name, 'TOO FAR');
       return;
     }

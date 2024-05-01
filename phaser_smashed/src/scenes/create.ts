@@ -165,11 +165,11 @@ export function createFireFlower(game: Game): void {
     'cannon'
   );
 
-  game.fireFlower.numUpdateIndexesToWait = game.debug.FFlowerRapFire
+  game.fireFlower.numUpdateIndexesToWait = game.debug.FlowerRapidFire
     ? 4
     : game.fireFlower.numUpdateIndexesToWait;
 
-  game.fireFlower.damage = game.debug.FFlowerRapFire
+  game.fireFlower.damage = game.debug.FlowerRapidFire
     ? game.fireFlower.damage / 4
     : game.fireFlower.damage;
 
@@ -181,7 +181,7 @@ export function createFireFlower(game: Game): void {
 
   game.fireFlower.attackBullets.bullets = new BulletsFireFlower(game);
 
-  for (let i = 0; i < game.fireFlower.attackBullets.NUMBER_BULLETS; i++) {
+  for (let i = 0; i < 6; i++) {
     game.fireFlower.fireBallSounds.push(
       game.sound.add('fire_ball_sound', {
         volume: 0.03,
@@ -202,7 +202,7 @@ export function createCollidersFireFlower(game: Game): void {
 
   game.physics.add.collider(aebs, game.chomp.sprite);
   aebs.children.iterate((child: any) => {
-    child.body.allowGravity = game.debug.FFlowerGravity;
+    child.body.allowGravity = game.debug.FlowerGravity;
 
     game.physics.add.collider(child, game.PLATFORMS);
     game.physics.add.collider(child, game.chomp.sprite);
@@ -210,7 +210,7 @@ export function createCollidersFireFlower(game: Game): void {
 
     // bounce off of game world boundary
     // child.setCollideWorldBounds(false, false, false, false);
-    if (game.debug.FFlowerBounceWall) {
+    if (game.debug.FlowerBounceWall) {
       // bounce off world boundary
       child.setCollideWorldBounds(true, 1, 1);
     }

@@ -56,11 +56,12 @@ export const debugInit: Debug = {
   NNHelpPit: true,
   NNHelpWall: true,
   MusicTrack: 0, // 0123
-  FFlowerOnInit: true,
-  FFlowerRapFire: true,
-  FFlowerFullScrn: true,
-  FFlowerGravity: true,
-  FFlowerBounceWall: true,
+  FlowerOnInit: true,
+  FlowerRapidFire: true,
+  FlowerFullScrn: true,
+  FlowerGravity: true,
+  FlowerBounceWall: true,
+  Flower1000Balls: true,
 };
 
 export const debugMax: Debug = {
@@ -119,11 +120,12 @@ export const debugMax: Debug = {
   ChompExplosions: true,
   ReplayFastSlow: true,
   GravityLight: false,
-  FFlowerRapFire: true,
-  FFlowerOnInit: true,
-  FFlowerFullScrn: true,
-  FFlowerGravity: true,
-  FFlowerBounceWall: true,
+  FlowerRapidFire: true,
+  FlowerOnInit: true,
+  FlowerFullScrn: true,
+  FlowerGravity: true,
+  FlowerBounceWall: true,
+  Flower1000Balls: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -183,9 +185,10 @@ export const showOptionOnMainScreenInit: Debug = {
   ReplayFastSlow: false,
   GravityLight: false,
   MusicTrack: 1, // 012
-  FFlowerOnInit: false,
-  FFlowerRapFire: false,
-  FFlowerFullScrn: false,
-  FFlowerGravity: false,
-  FFlowerBounceWall: false,
+  FlowerOnInit: false,
+  FlowerRapidFire: false,
+  FlowerFullScrn: false,
+  FlowerGravity: false,
+  FlowerBounceWall: false,
+  Flower1000Balls: false,
 };

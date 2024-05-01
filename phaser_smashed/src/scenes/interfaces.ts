@@ -58,11 +58,12 @@ export interface Debug {
   ReplayControls: boolean;
   ReplayFastSlow: boolean;
   GravityLight: boolean;
-  FFlowerRapFire: boolean;
-  FFlowerOnInit: boolean;
-  FFlowerFullScrn: boolean;
-  FFlowerGravity: boolean;
-  FFlowerBounceWall: boolean;
+  FlowerRapidFire: boolean;
+  FlowerOnInit: boolean;
+  FlowerFullScrn: boolean;
+  FlowerGravity: boolean;
+  FlowerBounceWall: boolean;
+  Flower1000Balls: boolean;
   [key: string]: any; // add index signature
 }
 

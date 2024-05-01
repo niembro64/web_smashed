@@ -10,11 +10,11 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.screen = SCREEN_DIMENSIONS;
     this.debug = game.debug;
     this.key = key;
-    this.goFullScreen = game.debug?.FFlowerFullScrn || false;
+    this.bouncingFullScreen = game.debug?.FlowerFullScrn || false;
     this.shootingDistanceThreshold = game.fireFlower.shootingDistanceThreshold;
   }
   shootingDistanceThreshold: number = 0;
-  goFullScreen: boolean = false;
+  bouncingFullScreen: boolean = false;
   key: string = '';
 
   screen: any = null;
@@ -52,27 +52,27 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       this.initialPosition
     );
 
-    if (this.debug?.BulletsFullScreen) {
-      if (
-        this.x > this.screen.WIDTH ||
-        this.x < 0 ||
-        this.y > this.screen.HEIGHT ||
-        this.y < 0
-      ) {
-        this.body.bounce.set(0);
-        this.setActive(false);
-        this.setVisible(false);
-        this.x = -100;
-        this.y = -100;
-        this.setVelocityX(0);
-        this.setVelocityY(0);
-      }
-      return;
-    }
+    // if (this.debug?.BulletsFullScreen) {
+    //   if (
+    //     this.x > this.screen.WIDTH ||
+    //     this.x < 0 ||
+    //     this.y > this.screen.HEIGHT ||
+    //     this.y < 0
+    //   ) {
+    //     this.body.bounce.set(0);
+    //     this.setActive(false);
+    //     this.setVisible(false);
+    //     this.x = -100;
+    //     this.y = -100;
+    //     this.setVelocityX(0);
+    //     this.setVelocityY(0);
+    //   }
+    //   return;
+    // }
 
     const keyDistance =
       this.key === 'bulletFireBall'
-        ? this.goFullScreen
+        ? this.bouncingFullScreen
           ? this.screen.WIDTH
           : this.shootingDistanceThreshold
         : 350;
@@ -95,10 +95,10 @@ export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
   constructor(game: Game, player: Player) {
     super(game.physics.world, game);
 
-    let ae = player.char.attackEnergy;
+    const ae = player.char.attackEnergy;
 
     this.createMultiple({
-      frameQuantity: ae.attackBullets?.NUMBER_BULLETS || 10,
+      frameQuantity: ae.attackBullets?.NUMBER_BULLETS || 1,
       key: ae.srcImage,
       active: false,
       visible: false,
@@ -167,8 +167,13 @@ export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
 export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
   constructor(game: Game) {
     super(game.physics.world, game);
+
+    const numBullets = game.debug.Flower1000Balls
+      ? 1000
+      : game.fireFlower.attackBullets?.NUMBER_BULLETS || 0;
+
     this.createMultiple({
-      frameQuantity: game.fireFlower.attackBullets?.NUMBER_BULLETS || 0,
+      frameQuantity: numBullets,
       key: game.fireFlower.srcImage,
       active: false,
       visible: false,
