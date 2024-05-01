@@ -82,16 +82,20 @@ export const updateFireFlowerShooting = (game: Game) => {
 
     setPlaySoundFireBall(game);
   } else {
-    const white = 0xffffff;
-    const darkBlockTopEdge = 0x836c64;
-    const whiteBlockTopEdge = 0xf3c6b5;
-
-    const diffBlocks = hexColorSubtraction(whiteBlockTopEdge, darkBlockTopEdge);
-
-    const diffWhites = hexColorSubtraction(white, diffBlocks);
-
-    game.fireFlower.sprite.setTint(diffWhites);
+    game.fireFlower.sprite.setTint(getFireFlowerDarkerColor());
   }
+};
+
+export const getFireFlowerDarkerColor = (): number => {
+  const white = 0xffffff;
+  const darkBlockTopEdge = 0x836c64;
+  const whiteBlockTopEdge = 0xf3c6b5;
+
+  const diffBlocks = hexColorSubtraction(whiteBlockTopEdge, darkBlockTopEdge);
+
+  const diffWhites = hexColorSubtraction(white, diffBlocks);
+
+  return diffWhites;
 };
 
 export const hexColorSubtraction = (color1: number, color2: number): number => {

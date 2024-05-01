@@ -18,6 +18,7 @@ import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
+import { getFireFlowerDarkerColor } from './helpers/fireFlower';
 
 export function create(game: Game) {
   createPreCreate(game);
@@ -181,6 +182,7 @@ export function createFireFlower(game: Game): void {
   ff.sprite.body.allowGravity = false;
   ff.sprite.setImmovable(false);
   ff.sprite.setOrigin(0.5, 0.5);
+  ff.sprite.setTint(getFireFlowerDarkerColor());
 
   ff.attackBullets.bullets = new BulletsFireFlower(game);
 
