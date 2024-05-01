@@ -823,24 +823,26 @@ export default class Game extends Phaser.Scene {
 
   bulletBillCombo: BulletBillCombo = {
     bullet: {
+      scale: 1,
       sprite: null,
       sound: null,
       damage: 100,
       hitback: { x: 10, y: 10 },
       diesOnHitbox: false,
-      srcImage: 'bulletBillBullet',
+      srcImage: 'bullet_bill_bullet',
       posInit: {
-        x: SCREEN_DIMENSIONS.WIDTH * 0.18573,
-        y: SCREEN_DIMENSIONS.HEIGHT * 0.3356,
+        x: SCREEN_DIMENSIONS.WIDTH * 0.4,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.5,
       },
     },
     cannon: {
+      scale: 1,
       sprite: null,
       sound: null,
-      srcImage: 'bulletBillCannon',
+      srcImage: 'bullet_bill_cannon',
       posInit: {
-        x: SCREEN_DIMENSIONS.WIDTH * 0.18573,
-        y: SCREEN_DIMENSIONS.HEIGHT * 0.3356,
+        x: SCREEN_DIMENSIONS.WIDTH * 0.5,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.5,
       },
     },
     shootingDistanceThreshold: 500,

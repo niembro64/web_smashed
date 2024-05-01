@@ -42,6 +42,7 @@ export function create(game: Game) {
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createFireFlower(game);
+  createBulletBill(game);
   createExplosions(game);
   createFirework(game);
   createPole(game);
@@ -1407,6 +1408,33 @@ export function createCollidersAEvAP(game: Game): void {
       }
     });
   });
+}
+
+export function createBulletBill(game: Game): void {
+  const bb = game.bulletBillCombo;
+
+  bb.cannon.sprite = game.physics.add.sprite(
+    bb.cannon.posInit.x,
+    bb.cannon.posInit.y,
+    bb.cannon.srcImage
+  );
+
+  bb.cannon.sprite.setScale(bb.cannon.scale);
+  bb.cannon.sprite.setImmovable(true);
+  bb.cannon.sprite.body.allowGravity = false;
+  bb.cannon.sprite.setOrigin(0.5, 0.5);
+
+  bb.bullet.sprite = game.physics.add.sprite(
+    bb.bullet.posInit.x,
+    bb.bullet.posInit.y,
+    bb.bullet.srcImage
+  );
+
+  bb.bullet.sprite.setScale(bb.bullet.scale);
+  bb.bullet.sprite.setImmovable(true);
+  bb.bullet.sprite.body.allowGravity = false;
+  bb.bullet.sprite.setOrigin(0.5, 0.5);
+  
 }
 
 export function createBackground(game: Game): void {

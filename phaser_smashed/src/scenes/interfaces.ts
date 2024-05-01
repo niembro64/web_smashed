@@ -536,6 +536,7 @@ export interface FireFlower {
 }
 
 export type BulletBillBullet = {
+  scale: number;
   sprite: any;
   sound: any;
   damage: number;
@@ -546,6 +547,7 @@ export type BulletBillBullet = {
 };
 
 export type BulletBillCannon = {
+  scale: number;
   sprite: any;
   sound: any;
   srcImage: any;
