@@ -308,11 +308,13 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const player: Player = game.players[0];
 
-  const { player: enemy } = getNearestPlayerAliveFromXY(
+  const e = getNearestPlayerAliveFromXY(
     player.char.sprite.body.position.x,
     player.char.sprite.body.position.y,
     game
   );
+
+  const enemy: Player | null = e?.player || null;
 
   const { x: enemyAttackEnergyX, y: enemyAttackEnergyY } =
     getNearestAttackEnergyXYFromPlayer(player, 0, game);
@@ -321,13 +323,15 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
     getNearestAttackPhysicalXYFromPlayer(player, 0, game);
 
   let isPFacingEnemy: boolean = false;
-  if (player.char.sprite.x < enemy.char.sprite.x) {
-    if (player.char.sprite.flipX) {
-      isPFacingEnemy = true;
-    }
-  } else {
-    if (!player.char.sprite.flipX) {
-      isPFacingEnemy = true;
+  if (enemy !== null) {
+    if (player.char.sprite.x < enemy.char.sprite.x) {
+      if (player.char.sprite.flipX) {
+        isPFacingEnemy = true;
+      }
+    } else {
+      if (!player.char.sprite.flipX) {
+        isPFacingEnemy = true;
+      }
     }
   }
 
@@ -371,12 +375,18 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
       player.char.sprite.body.velocity.y,
 
       // DIFF SPRITE POSITIONS
-      player.char.sprite.x - enemy.char.sprite.x,
-      player.char.sprite.y - enemy.char.sprite.y,
+      enemy === null ? 0 : player.char.sprite.x - enemy.char.sprite.x,
+      enemy === null ? 0 : player.char.sprite.y - enemy.char.sprite.y,
 
       // DIFF SPRITE VELOCITIES
-      player.char.sprite.body.velocity.x - enemy.char.sprite.body.velocity.x,
-      player.char.sprite.body.velocity.y - enemy.char.sprite.body.velocity.y,
+      enemy === null
+        ? 0
+        : player.char.sprite.body.velocity.x -
+          enemy.char.sprite.body.velocity.x,
+      enemy === null
+        ? 0
+        : player.char.sprite.body.velocity.y -
+          enemy.char.sprite.body.velocity.y,
 
       // DIFF SPRITE AE POSITIONS
       player.char.sprite.body.position.x - enemyAttackEnergyX,

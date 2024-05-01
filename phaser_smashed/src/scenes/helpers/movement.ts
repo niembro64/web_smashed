@@ -24,7 +24,7 @@ export function updateCirclesLocations(game: Game): void {
 
 export function updateTable(game: Game): void {
   if (game.TABLE.body.touching.down) {
-    game.TABLE.body.setVelocityX(game.TABLE.body.velocity.x * 0.95);
+    game.TABLE.body.setVelocityX(game.TABLE.body.velocity.x * 0.9);
   }
 }
 
@@ -304,10 +304,10 @@ export function updateAttackEnergyFollow(game: Game): void {
         ae.findAndFollowAcceleration.x !== 0 &&
         ae.findAndFollowAcceleration.y === 0
       ) {
-        const goHere: { x: number; y: number } =
+        const goHere: { x: number; y: number } | null =
           getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
 
-        if (goHere.x !== Infinity) {
+        if (goHere !== null) {
           ae.sprite.body.setVelocityX(
             ae.sprite.body.velocity.x * 0.98 +
               (goHere.x < ae.sprite.x ? -1 : 1) *
@@ -319,10 +319,10 @@ export function updateAttackEnergyFollow(game: Game): void {
         ae.findAndFollowAcceleration.x !== 0 &&
         ae.findAndFollowAcceleration.y !== 0
       ) {
-        const goHere: { x: number; y: number } =
+        const goHere: { x: number; y: number } | null =
           getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
 
-        if (goHere.x !== Infinity && goHere.y !== Infinity) {
+        if (goHere !== null) {
           const goHereMultiplier: { x: number; y: number } =
             getNormalizedVector(ae.sprite.x, ae.sprite.y, goHere.x, goHere.y);
           ae.sprite.body.setVelocityX(
@@ -343,7 +343,7 @@ export function getNearestPlayerXFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): number {
+): number | null {
   let goToX = Infinity;
   let myX = player.char.attackEnergy.sprite.x;
   let diffX = Math.abs(goToX - myX);
@@ -357,6 +357,11 @@ export function getNearestPlayerXFromPlayer(
       }
     }
   });
+
+  if (goToX === Infinity) {
+    return null;
+  }
+
   return goToX;
 }
 
@@ -364,7 +369,7 @@ export function getNearestPlayerYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): number {
+): number | null {
   let goToY = Infinity;
   let myY = player.char.attackEnergy.sprite.y;
   let diffY = Math.abs(goToY - myY);
@@ -378,6 +383,11 @@ export function getNearestPlayerYFromPlayer(
       }
     }
   });
+
+  if (goToY === Infinity) {
+    return null;
+  }
+
   return goToY;
 }
 
@@ -385,7 +395,7 @@ export function getNearestPlayerAliveXYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { x: number; y: number } {
+): { x: number; y: number } | null {
   let goToXCurr = Infinity;
   let goToYCurr = Infinity;
   const myX = player.char.sprite.body.position.x;
@@ -407,11 +417,8 @@ export function getNearestPlayerAliveXYFromPlayer(
     }
   }
 
-  if (goToXCurr === Infinity) {
-    goToXCurr = SCREEN_DIMENSIONS.WIDTH / 2;
-  }
-  if (goToYCurr === Infinity) {
-    goToYCurr = SCREEN_DIMENSIONS.HEIGHT / 2;
+  if (goToXCurr === Infinity || goToYCurr === Infinity) {
+    return null;
   }
 
   return { x: goToXCurr, y: goToYCurr };
@@ -421,33 +428,35 @@ export function getNearestPlayerAliveFromXY(
   x: number,
   y: number,
   game: Game
-): { player: Player; playerIndex: number } {
-  const players = game.players;
-  let returnPlayer: Player = players[0];
-  let returnPlayerIndex: number = 0;
+): { player: Player; playerIndex: number } | null {
+  const players = game.players.filter(
+    (player) => player.state.name === 'player-state-alive'
+  ); // Assuming isAlive is a boolean property
+  if (players.length === 0) return null; // If there are no alive players, return null
 
-  let distance: number = Infinity;
+  let nearestPlayer: Player = players[0];
+  let nearestPlayerIndex: number = 0;
+  let shortestDistance: number = Infinity;
 
   players.forEach((player, index) => {
     const sprite = player.char.sprite;
-    const newD: number = getDistance(x, y, sprite.x, sprite.y);
+    const newDistance: number = getDistance(x, y, sprite.x, sprite.y);
 
-    if (newD < distance) {
-      distance = newD;
-      returnPlayerIndex = index;
-      returnPlayer = player;
+    if (newDistance < shortestDistance) {
+      shortestDistance = newDistance;
+      nearestPlayerIndex = index;
+      nearestPlayer = player;
     }
   });
 
-  return { player: returnPlayer, playerIndex: returnPlayerIndex };
+  return { player: nearestPlayer, playerIndex: nearestPlayerIndex };
 }
-
 
 export function getNearestAttackEnergyXYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { x: number; y: number } {
+): { x: number; y: number } | null {
   let currX = Infinity;
   let currY = Infinity;
 
@@ -466,12 +475,9 @@ export function getNearestAttackEnergyXYFromPlayer(
     }
   });
 
-  // if (currX === Infinity) {
-  //   currX = SCREEN_DIMENSIONS.WIDTH / 2;
-  // }
-  // if (currY === Infinity) {
-  //   currY = SCREEN_DIMENSIONS.HEIGHT / 2;
-  // }
+  if (currX === Infinity || currY === Infinity) {
+    return null;
+  }
 
   return { x: currX, y: currY };
 }
@@ -480,7 +486,7 @@ export function getNearestAttackPhysicalXYFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { x: number; y: number } {
+): { x: number; y: number } | null {
   let currX = Infinity;
   let currY = Infinity;
 
@@ -499,12 +505,9 @@ export function getNearestAttackPhysicalXYFromPlayer(
     }
   });
 
-  // if (currX === Infinity) {
-  //   currX = SCREEN_DIMENSIONS.WIDTH / 2;
-  // }
-  // if (currY === Infinity) {
-  //   currY = SCREEN_DIMENSIONS.HEIGHT / 2;
-  // }
+  if (currX === Infinity || currY === Infinity) {
+    return null;
+  }
 
   return { x: currX, y: currY };
 }
@@ -513,7 +516,7 @@ export function getNearestPlayerAliveFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { player: Player | null; playerIndex: number | null } {
+): { player: Player; playerIndex: number } | null {
   let currentEnemyX = Infinity;
   let currentEnemyY = Infinity;
   let enemyIndex: number | null = null;
@@ -538,13 +541,17 @@ export function getNearestPlayerAliveFromPlayer(
     }
   });
 
+  if (enemy === null || enemyIndex === null) {
+    return null;
+  }
+
   return { player: enemy, playerIndex: enemyIndex };
 }
 export function getNearestPlayerFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { player: Player; playerIndex: number } {
+): { player: Player; playerIndex: number } | null {
   let currentEnemyX = Infinity;
   let currentEnemyY = Infinity;
   let enemyIndex: number = (pIndex + 1) % game.players.length;
@@ -569,6 +576,10 @@ export function getNearestPlayerFromPlayer(
     }
   });
 
+  if (enemy === null) {
+    return null;
+  }
+
   return { player: enemy, playerIndex: enemyIndex };
 }
 
@@ -576,7 +587,7 @@ export function getNearestAttackEnergyXYAboveFromPlayer(
   player: Player,
   pIndex: number,
   game: Game
-): { x: number; y: number } {
+): { x: number; y: number } | null {
   let goToX = Infinity;
   let goToY = Infinity;
   let ae = player.char.attackEnergy;
@@ -598,11 +609,8 @@ export function getNearestAttackEnergyXYAboveFromPlayer(
     }
   });
 
-  if (goToX === Infinity) {
-    goToX = SCREEN_DIMENSIONS.WIDTH / 2;
-  }
-  if (goToY === Infinity) {
-    goToY = SCREEN_DIMENSIONS.HEIGHT / 2;
+  if (goToX === Infinity || goToY === Infinity) {
+    return null;
   }
 
   return { x: goToX, y: goToY };

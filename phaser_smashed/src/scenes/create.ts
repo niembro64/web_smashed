@@ -1913,7 +1913,7 @@ export function createTable(game: Game): void {
   game.TABLE.setMass(2);
   // game.TABLE.setCollideWorldBounds(true);
   game.TABLE.setBounce(0.5);
-  game.TABLE.setOrigin(0.5, 0);
+  game.TABLE.setOrigin(0.5, 0.5);
   // game.TABLE.setImmovable(true);
 
   // game.physics.add.collider(game.TABLE, game.PLATFORMS);

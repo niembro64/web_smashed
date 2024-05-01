@@ -482,13 +482,19 @@ export function updateSuicide(game: Game): void {
 export function updateTableGiveHealth(game: Game): void {
   const t = game.TABLE.body;
 
-  const p: Player = getNearestPlayerAliveFromXY(t.x, t.y, game).player;
+  const p = getNearestPlayerAliveFromXY(t.x, t.y, game);
+  if (p === null) {
+    setPauseSoundPowerup(game);
+    game.powerupActive = false;
+    return;
+  }
+
   if (
     t.touching.up &&
     // p.char.sprite.body.touching.down &&
-    p.char.damageCurr !== 0
+    p.player.char.damageCurr !== 0
   ) {
-    p.char.damageCurr = Math.max(0, p.char.damageCurr - 0.5);
+    p.player.char.damageCurr = Math.max(0, p.player.char.damageCurr - 0.5);
     if (!game.powerupActive) {
       setResumeSoundPowerup(game);
       game.powerupActive = true;
