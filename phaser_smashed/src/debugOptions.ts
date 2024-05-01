@@ -47,7 +47,6 @@ export const debugInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   InstReplay: 0,
-  ReplayControls: true,
   ChompVelocities: false,
   ReplayFastSlow: false,
   GravityLight: false,
@@ -116,7 +115,6 @@ export const debugMax: Debug = {
   NNHelpPit: true,
   NNHelpWall: true,
   InstReplay: 3,
-  ReplayControls: true,
   ChompExplosions: true,
   ReplayFastSlow: true,
   GravityLight: false,
@@ -181,7 +179,6 @@ export const showOptionOnMainScreenInit: Debug = {
   ChompExplosions: false,
   TrophiesAlways: false,
   InstReplay: 1,
-  ReplayControls: false,
   ReplayFastSlow: false,
   GravityLight: false,
   MusicTrack: 1, // 012

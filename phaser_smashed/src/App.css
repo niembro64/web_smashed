@@ -9,7 +9,7 @@
   --orange-active: hsl(30, 20%, 30%);
   --blue-start: hsl(200, 70%, 10%);
   --blue-start-lighter: hsl(200, 70%, 20%);
-  --border-radius-big: 7vw;
+  --border-radius-big: 100vw;
   --border-radius-small: 1vw;
   --duration-hover: 0.2s;
   --distance-hover-pos: 18%;
@@ -1220,6 +1220,7 @@ h2 {
 
   background-color: var(--gray-dark);
   border-radius: var(--border-radius-big) var(--border-radius-big) 0 0;
+  /* border-radius: var(--border-radius-big) var(--border-radius-big) 0 0; */
   transition: var(--duration-hover) ease;
 }
 .player-char:hover {

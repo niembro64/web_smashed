@@ -55,7 +55,6 @@ export interface Debug {
   ChompExplosions: boolean;
   ChompVelocities: boolean;
   InstReplay: number;
-  ReplayControls: boolean;
   ReplayFastSlow: boolean;
   GravityLight: boolean;
   FlowerRapidFire: boolean;
