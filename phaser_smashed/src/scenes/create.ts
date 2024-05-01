@@ -165,9 +165,13 @@ export function createFireFlower(game: Game): void {
     'cannon'
   );
 
-  game.fireFlower.numUpdateIndexesToWait = game.debug.FireFlowerRapidFire
+  game.fireFlower.numUpdateIndexesToWait = game.debug.FFlowerRapFire
     ? 4
     : game.fireFlower.numUpdateIndexesToWait;
+
+  game.fireFlower.damage = game.debug.FFlowerRapFire
+    ? game.fireFlower.damage / 4
+    : game.fireFlower.damage;
 
   game.fireFlower.sprite.setScale(0.85);
   game.fireFlower.sprite.setImmovable(true);
@@ -199,7 +203,34 @@ export function createCollidersFireFlower(game: Game): void {
   game.physics.add.collider(aebs, game.chomp.sprite);
   aebs.children.iterate((child: any) => {
     // child.body.allowGravity = false;
+
+    game.physics.add.collider(child, game.PLATFORMS);
+    game.physics.add.collider(child, game.chomp.sprite);
+    game.physics.add.collider(child, game.TABLE);
+
+    // bounce off of game world boundary
+    child.setCollideWorldBounds(false, false, false, false);
+
+    // collide with player
+
   });
+
+  // collide with table
+  game.physics.add.collider(aebs, game.TABLE);
+
+  // collide with chomp
+  game.physics.add.collider(aebs, game.chomp.sprite);
+
+  // // collide with world bounds
+  // game.physics.world.setBoundsCollision(true, true, true, true);
+
+  // // collide with screen bounds
+  // game.physics.world.setBounds(
+  //   0,
+  //   0,
+  //   SCREEN_DIMENSIONS.WIDTH,
+  //   SCREEN_DIMENSIONS.HEIGHT
+  // );
 }
 
 export function createShake(game: Game): void {

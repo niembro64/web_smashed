@@ -10,7 +10,11 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.screen = SCREEN_DIMENSIONS;
     this.debug = game.debug;
     this.key = key;
+    this.goFullScreen = game.debug?.FFlowerFullScrn || false;
+    this.shootingDistanceThreshold = game.fireFlower.shootingDistanceThreshold;
   }
+  shootingDistanceThreshold: number = 0;
+  goFullScreen: boolean = false;
   key: string = '';
 
   screen: any = null;
@@ -66,7 +70,12 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    const keyDistance = this.key === 'bulletFireBall' ? 600 : 350;
+    const keyDistance =
+      this.key === 'bulletFireBall'
+        ? this.goFullScreen
+          ? this.screen.WIDTH
+          : this.shootingDistanceThreshold
+        : 350;
     // const keyDuration = this.key === 'bulletFireBall' ? 1000 : 3000;
 
     // if (this.timeAlive > keyDuration || distance > keyDistance) {
@@ -159,7 +168,7 @@ export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
   constructor(game: Game) {
     super(game.physics.world, game);
     this.createMultiple({
-      frameQuantity: game.fireFlower.attackBullets?.NUMBER_BULLETS || 10,
+      frameQuantity: game.fireFlower.attackBullets?.NUMBER_BULLETS || 0,
       key: game.fireFlower.srcImage,
       active: false,
       visible: false,

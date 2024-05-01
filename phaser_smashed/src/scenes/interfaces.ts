@@ -58,8 +58,9 @@ export interface Debug {
   ReplayControls: boolean;
   ReplayFastSlow: boolean;
   GravityLight: boolean;
-  FireFlowerRapidFire: boolean;
-  FireflowerOnInit: boolean;
+  FFlowerRapFire: boolean;
+  FFlowerOnInit: boolean;
+  FFlowerFullScrn: boolean;
   [key: string]: any; // add index signature
 }
 

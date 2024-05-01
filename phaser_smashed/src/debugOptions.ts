@@ -56,8 +56,9 @@ export const debugInit: Debug = {
   NNHelpPit: true,
   NNHelpWall: true,
   MusicTrack: 0, // 0123
-  FireflowerOnInit: true,
-  FireFlowerRapidFire: false,
+  FFlowerOnInit: true,
+  FFlowerRapFire: false,
+  FFlowerFullScrn: false,
 };
 
 export const debugMax: Debug = {
@@ -116,8 +117,9 @@ export const debugMax: Debug = {
   ChompExplosions: true,
   ReplayFastSlow: true,
   GravityLight: false,
-  FireFlowerRapidFire: true,
-  FireflowerOnInit: true,
+  FFlowerRapFire: true,
+  FFlowerOnInit: true,
+  FFlowerFullScrn: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -177,6 +179,7 @@ export const showOptionOnMainScreenInit: Debug = {
   ReplayFastSlow: false,
   GravityLight: false,
   MusicTrack: 1, // 012
-  FireflowerOnInit: false,
-  FireFlowerRapidFire: false,
+  FFlowerOnInit: false,
+  FFlowerRapFire: false,
+  FFlowerFullScrn: false,
 };
