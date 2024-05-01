@@ -450,7 +450,7 @@ h2 {
 #optionDebug {
   width: 25%;
   background-color: var(--gray-dark);
-  padding: 0.4vw 0vw 0.2vw 0vw;
+  padding: 0.1vw 0vw 0.1vw 0vw;
   margin: 0vw 0vw 0vw 0vw;
   border-radius: var(--border-radius-small);
   display: flex;

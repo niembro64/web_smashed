@@ -818,7 +818,7 @@ export default class Game extends Phaser.Scene {
 
   fireFlower: FireFlower = {
     sprite: null,
-    hitback: { x: 1, y: 1 },
+    hitback: { x: 10, y: 10 },
     srcImage: 'bulletFireBall',
     diesOnHitbox: true,
     damage: 1,
@@ -827,7 +827,7 @@ export default class Game extends Phaser.Scene {
       speed: 400,
     },
     shootingDistanceThreshold: 400,
-    numUpdateIndexesToWait: 4,
+    numUpdateIndexesToWait: 20,
     fireBallSounds: [],
     fireBallSoundsIndexCurr: 0,
     attackBullets: {

@@ -57,6 +57,7 @@ export const debugInit: Debug = {
   NNHelpWall: true,
   MusicTrack: 0, // 0123
   FireflowerOnInit: true,
+  FireFlowerRapidFire: false,
 };
 
 export const debugMax: Debug = {
@@ -115,6 +116,7 @@ export const debugMax: Debug = {
   ChompExplosions: true,
   ReplayFastSlow: true,
   GravityLight: false,
+  FireFlowerRapidFire: true,
   FireflowerOnInit: true,
 };
 
@@ -171,9 +173,10 @@ export const showOptionOnMainScreenInit: Debug = {
   ChompExplosions: false,
   TrophiesAlways: false,
   InstReplay: 1,
-  FireflowerOnInit: false,
   ReplayControls: false,
   ReplayFastSlow: false,
   GravityLight: false,
   MusicTrack: 1, // 012
+  FireflowerOnInit: false,
+  FireFlowerRapidFire: false,
 };

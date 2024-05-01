@@ -165,6 +165,10 @@ export function createFireFlower(game: Game): void {
     'cannon'
   );
 
+  game.fireFlower.numUpdateIndexesToWait = game.debug.FireFlowerRapidFire
+    ? 4
+    : game.fireFlower.numUpdateIndexesToWait;
+
   game.fireFlower.sprite.setScale(0.85);
   game.fireFlower.sprite.setImmovable(true);
   game.fireFlower.sprite.body.allowGravity = false;
