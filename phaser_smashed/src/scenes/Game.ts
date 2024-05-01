@@ -857,7 +857,7 @@ export default class Game extends Phaser.Scene {
   flagBoxBottom: number = 0.561 * SCREEN_DIMENSIONS.HEIGHT;
   flagBoxHeight: number = this.flagBoxBottom - this.flagBoxTop;
   flag: Flag = {
-    flagSpeedDark: 160,
+    flagSpeedDark: 250,
     flagSpeed: 80,
     movement: 'none',
     yPositionInit: (this.flagBoxBottom + this.flagBoxTop) / 2,

@@ -3,6 +3,10 @@ import Game from '../Game';
 import { Player } from '../interfaces';
 import { getLongEnoughTimeDuration } from './state';
 
+function increaseSemitones(frequency: number, semitones: number): number {
+  return frequency * Math.pow(2, semitones / 12);
+}
+
 export function setSoundDiePlay(game: Game): void {
   game.SOUND_DIE.play();
 }
@@ -90,14 +94,11 @@ export function setBGMusicResume(game: Game): void {
   }
   game.SOUND_BGM.resume();
 }
-export function setBGMusicSpeedFaster(game: Game): void {
-  game.SOUND_BGM.setRate(increaseSemitones(1, 2));
+export function setBGMusicSpeedSlower(game: Game): void {
+  game.SOUND_BGM.setRate(increaseSemitones(1, -7));
 }
 export function setBGMusicSpeedNormal(game: Game): void {
   game.SOUND_BGM.setRate(1);
-}
-function increaseSemitones(frequency: number, semitones: number): number {
-  return frequency * Math.pow(2, semitones / 12);
 }
 
 export function setMusicBoxPlay(game: Game): void {

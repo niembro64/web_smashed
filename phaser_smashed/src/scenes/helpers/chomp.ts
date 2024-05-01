@@ -1,7 +1,7 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { getDistance, getNormalizedVector, getVector } from './damage';
-import { getDoesAnyPlayerHaveDark, getDoesAnythingHaveDark } from './powers';
-import { setMusicChompSheepPause, setMusicChompSheepResume } from './sound';
+import { getDoesAnythingHaveDark } from './powers';
+import { setBGMusicSpeedNormal, setBGMusicSpeedSlower, setMusicChompSheepPause, setMusicChompSheepResume } from './sound';
 
 export function updateChomp(game: Game): void {
   updateChompSpriteDirection(game);
@@ -13,8 +13,10 @@ export function updateChomp(game: Game): void {
 export function updateChompAudio(game: Game): void {
   if (getDoesAnythingHaveDark(game)) {
     setMusicChompSheepResume(game);
+    setBGMusicSpeedSlower(game);
   } else {
     setMusicChompSheepPause(game);
+    setBGMusicSpeedNormal(game);
   }
 }
 
