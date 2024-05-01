@@ -95,7 +95,7 @@ export function setBGMusicResume(game: Game): void {
   game.soundBGM.resume();
 }
 export function setBGMusicSpeedSlower(game: Game): void {
-  game.soundBGM.setRate(increaseSemitones(1, -7));
+  game.soundBGM.setRate(increaseSemitones(1, -17));
 }
 export function setBGMusicSpeedNormal(game: Game): void {
   game.soundBGM.setRate(1);
