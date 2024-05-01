@@ -75,6 +75,7 @@ export function create(game: Game) {
   createCollidersAEvAE(game);
   createCollidersAEvAP(game);
   createCollidersFireFlower(game);
+  createBulletBillColliders(game);
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
