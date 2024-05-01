@@ -20,11 +20,13 @@ export function setPhysicsAndMusicPause(game: Game): void {
   game.chomp.emitterDark.active = false;
   setAnimationsOff(game);
 
-  if (game.chomp.soundSheep.isPlaying) {
-    setMusicChompSheepPause(game);
-    game.chomp.afterPauseResumeSoundSheep = true;
-  } else {
-    game.chomp.afterPauseResumeSoundSheep = false;
+  if (!game.debug.NNP1Train) {
+    if (game.chomp.soundSheep.isPlaying) {
+      setMusicChompSheepPause(game);
+      game.chomp.afterPauseResumeSoundSheep = true;
+    } else {
+      game.chomp.afterPauseResumeSoundSheep = false;
+    }
   }
 
   if (game.flag.soundFlagMusicBox.isPlaying) {
@@ -57,7 +59,8 @@ export function setPhysicsAndMusicResume(game: Game): void {
   });
   game.chomp.emitterDark.active = true;
   setAnimationsOn(game);
-  if (game.chomp.afterPauseResumeSoundSheep) {
+
+  if (!game.debug.NNP1Train && game.chomp.afterPauseResumeSoundSheep) {
     setMusicChompSheepResume(game);
   }
   if (game.flag.afterPauseResumeMusicFlagMusicBox) {
