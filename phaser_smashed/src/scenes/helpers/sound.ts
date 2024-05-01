@@ -192,5 +192,5 @@ export function setPlaySoundFireBall(game: Game): void {
   game.fireFlower.fireBallSounds[i].play();
 
   game.fireFlower.fireBallSoundsIndexCurr =
-    (i + 1) % game.fireFlower.attackBullets.NUMBER_BULLETS;
+    (i + 1) % game.fireFlower.fireBallSounds.length;
 }

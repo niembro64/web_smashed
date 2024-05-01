@@ -533,6 +533,7 @@ export interface FireFlower {
   rotation: AttackEnergyRotation;
   shootingDistanceThreshold: number;
   numUpdateIndexesToWait: number;
+  numUpdateIndexesToWaitFast: number;
 }
 
 export interface Owner {

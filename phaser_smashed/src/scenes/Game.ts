@@ -828,6 +828,7 @@ export default class Game extends Phaser.Scene {
     },
     shootingDistanceThreshold: 310,
     numUpdateIndexesToWait: 12,
+    numUpdateIndexesToWaitFast: 3,
     fireBallSounds: [],
     fireBallSoundsIndexCurr: 0,
     attackBullets: {

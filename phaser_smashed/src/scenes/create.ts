@@ -159,30 +159,28 @@ export function createPole(game: Game): void {
 }
 
 export function createFireFlower(game: Game): void {
-  game.fireFlower.sprite = game.physics.add.sprite(
-    game.fireFlower.posInit.x,
-    game.fireFlower.posInit.y,
-    'cannon'
-  );
+  const ff = game.fireFlower;
 
-  game.fireFlower.numUpdateIndexesToWait = game.debug.FlowerRapidFire
-    ? 5
-    : game.fireFlower.numUpdateIndexesToWait;
+  ff.sprite = game.physics.add.sprite(ff.posInit.x, ff.posInit.y, 'cannon');
 
-  game.fireFlower.damage = game.debug.FlowerRapidFire
-    ? game.fireFlower.damage / 4
-    : game.fireFlower.damage;
+  ff.numUpdateIndexesToWait = game.debug.FlowerRapidFire
+    ? ff.numUpdateIndexesToWaitFast
+    : ff.numUpdateIndexesToWait;
 
-  game.fireFlower.sprite.setScale(0.85);
-  game.fireFlower.sprite.setImmovable(true);
-  game.fireFlower.sprite.body.allowGravity = false;
-  game.fireFlower.sprite.setImmovable(false);
-  game.fireFlower.sprite.setOrigin(0.5, 0.5);
+  ff.damage = game.debug.FlowerRapidFire
+    ? ff.damage * (ff.numUpdateIndexesToWaitFast / ff.numUpdateIndexesToWait)
+    : ff.damage;
 
-  game.fireFlower.attackBullets.bullets = new BulletsFireFlower(game);
+  ff.sprite.setScale(0.85);
+  ff.sprite.setImmovable(true);
+  ff.sprite.body.allowGravity = false;
+  ff.sprite.setImmovable(false);
+  ff.sprite.setOrigin(0.5, 0.5);
+
+  ff.attackBullets.bullets = new BulletsFireFlower(game);
 
   for (let i = 0; i < 6; i++) {
-    game.fireFlower.fireBallSounds.push(
+    ff.fireBallSounds.push(
       game.sound.add('fire_ball_sound', {
         volume: 0.03,
       })
