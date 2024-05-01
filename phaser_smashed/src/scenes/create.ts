@@ -1268,17 +1268,18 @@ export function createAttackEnergies(game: Game): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      for (
-        let i = 0;
-        i < game.fireFlower.attackBullets.bullets.getChildren().length;
-        i++
-      ) {
-        game.physics.add.collider(
-          aebs,
-          game.fireFlower.attackBullets.bullets.getChildren()[i]
-        );
+      if (!game.debug.NNP1Train) {
+        for (
+          let i = 0;
+          i < game.fireFlower.attackBullets.bullets.getChildren().length;
+          i++
+        ) {
+          game.physics.add.collider(
+            aebs,
+            game.fireFlower.attackBullets.bullets.getChildren()[i]
+          );
+        }
       }
-
       // turn off gravity for bullets
       aebs.children.iterate((child: any) => {
         if (player.char.attackEnergy.gravity) {
