@@ -277,7 +277,7 @@ export function createExplosions(game: Game): void {
     e.sound = game.sound.add(
       eIndex % 2 === 0 ? 'boom_short_01' : 'boom_short_02',
       {
-        volume: game.debug.DevMode ? 0 : 0.2,
+        volume: game.debug.DevMode ? 0 : 0.12,
       }
     );
   });

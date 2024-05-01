@@ -21,16 +21,17 @@ export function getIsBotNearNearestPlayer(
   game: Game,
   amount: number
 ): boolean {
-  let nearestPlayerPosition: Position = {
-    x: SCREEN_DIMENSIONS.WIDTH / 2,
-    y: SCREEN_DIMENSIONS.HEIGHT / 2,
-  };
+  // let nearestPlayerPosition: Position | null = {
+  //   x: SCREEN_DIMENSIONS.WIDTH / 2,
+  //   y: SCREEN_DIMENSIONS.HEIGHT / 2,
+  // };
 
-  nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
-    player,
-    playerIndex,
-    game
-  );
+  const nearestPlayerPosition: Position | null =
+    getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
+
+  if (nearestPlayerPosition === null) {
+    return false;
+  }
 
   const distance = Math.sqrt(
     Math.pow(player.char.sprite.x - nearestPlayerPosition.x, 2) +
@@ -42,19 +43,20 @@ export function getIsBotNearNearestPlayer(
   }
   return false;
 }
-export function getSameHorizontalSlice(player: Player, game: Game): boolean {
-  let nearestPlayerPosition: Position = {
-    x: SCREEN_DIMENSIONS.WIDTH / 2,
-    y: SCREEN_DIMENSIONS.HEIGHT / 2,
-  };
-  game.players.forEach((player, playerIndex) => {
-    nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
-      player,
-      playerIndex,
-      game
-    );
-  });
-  let bot = player.char.sprite;
+export function getSameHorizontalSlice(
+  player: Player,
+  playerIndex: number,
+  game: Game
+): boolean {
+  const nearestPlayerPosition: Position | null =
+    getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
+
+  if (nearestPlayerPosition === null) {
+    return false;
+  }
+
+  const bot = player.char.sprite;
+
   if (
     nearestPlayerPosition.y > bot.Y + 120 &&
     nearestPlayerPosition.y < bot.Y - 50
@@ -63,19 +65,18 @@ export function getSameHorizontalSlice(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getSameVerticalSlice(player: Player, game: Game): boolean {
-  let nearestPlayerPosition: Position = {
-    x: SCREEN_DIMENSIONS.WIDTH / 2,
-    y: SCREEN_DIMENSIONS.HEIGHT / 2,
-  };
-  let bot = player.char.sprite;
-  game.players.forEach((player, playerIndex) => {
-    nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
-      player,
-      playerIndex,
-      game
-    );
-  });
+export function getSameVerticalSlice(
+  player: Player,
+  playerIndex: number,
+  game: Game
+): boolean {
+  const nearestPlayerPosition: Position | null =
+    getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
+  const bot = player.char.sprite;
+  if (nearestPlayerPosition === null) {
+    return false;
+  }
+
   if (
     nearestPlayerPosition.x > bot.x - 200 &&
     nearestPlayerPosition.x < bot.x + 200
@@ -89,16 +90,14 @@ export function getIsBotFacingNearestPlayer(
   playerIndex: number,
   game: Game
 ): boolean {
-  let nearestPlayerPosition: Position = {
-    x: SCREEN_DIMENSIONS.WIDTH / 2,
-    y: SCREEN_DIMENSIONS.HEIGHT / 2,
-  };
   let bot = player.char.sprite;
-  nearestPlayerPosition = getNearestPlayerAliveXYFromPlayer(
-    player,
-    playerIndex,
-    game
-  );
+  const nearestPlayerPosition: Position | null =
+    getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
+
+  if (nearestPlayerPosition === null) {
+    return false;
+  }
+
   if (
     (bot.x > nearestPlayerPosition.x && bot.flipX) ||
     (bot.x < nearestPlayerPosition.x && !bot.flipX)
@@ -276,11 +275,16 @@ export const getIsNearestAttackEnergyThisClose = (
   game: Game,
   distance: number
 ): boolean => {
-  const ae: Position = getNearestAttackEnergyXYFromPlayer(
+  const ae: Position | null = getNearestAttackEnergyXYFromPlayer(
     player,
     playerIndex,
     game
   );
+
+  if (ae === null) {
+    return false;
+  }
+
   const dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
@@ -295,11 +299,16 @@ export const getIsNearestAttackEnergyThisCloseAbove = (
   game: Game,
   distance: number
 ): boolean => {
-  const ae: Position = getNearestAttackEnergyXYAboveFromPlayer(
+  const ae: Position | null = getNearestAttackEnergyXYAboveFromPlayer(
     player,
     playerIndex,
     game
   );
+
+  if (ae === null) {
+    return false;
+  }
+
   const dCalc: number = getDistance(
     player.char.sprite.x,
     player.char.sprite.y,
@@ -394,11 +403,16 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
     getIsPlayerInAir(player) &&
     getIsNearestAttackEnergyThisClose(player, playerIndex, game, shortRange)
   ) {
-    const ae: Position = getNearestAttackEnergyXYFromPlayer(
+    const ae: Position | null = getNearestAttackEnergyXYFromPlayer(
       player,
       playerIndex,
       game
     );
+
+    if (ae === null) {
+      return;
+    }
+
     const ps: Position = { x: player.char.sprite.x, y: player.char.sprite.y };
     const direction: DodgeDirection = getDodgeDirectionPlayerToAttackEnergy(
       ps,
@@ -421,18 +435,23 @@ export function updateBotRules(
     }
     return;
   }
-  const nearestP: Position = getNearestPlayerAliveXYFromPlayer(
+  const nearestP: Position | null = getNearestPlayerAliveXYFromPlayer(
     player,
     playerIndex,
     game
   );
   const botSprite = player.char.sprite;
-  const enemyVector: xyVector = getNormalizedVector(
-    botSprite.x,
-    botSprite.y,
-    nearestP.x,
-    nearestP.y
-  );
+
+  let enemyVector: xyVector | null = null;
+  if (nearestP !== null) {
+    enemyVector = getNormalizedVector(
+      botSprite.x,
+      botSprite.y,
+      nearestP.x,
+      nearestP.y
+    );
+  }
+
   const pVelocity: Velocity = player.char.sprite.body.velocity;
   const d = player.padDebounced;
   const t = player.char.sprite.body.touching;
@@ -447,9 +466,9 @@ export function updateBotRules(
   //////////////////////
   // MOVEMENT
   //////////////////////
-  if (getSameVerticalSlice(player, game)) {
+  if (getSameVerticalSlice(player, playerIndex, game)) {
   } else {
-    if (enemyVector.x > 0) {
+    if (enemyVector !== null && enemyVector.x > 0) {
       p.right = true;
       p.left = false;
     } else {
@@ -552,6 +571,7 @@ export function updateBotRules(
     //////////////////////
     // AIR JUMPING
     //////////////////////
+    enemyVector !== null &&
     enemyVector.y < 0 &&
     pVelocity.y > 0 &&
     Math.random() > 0.9
@@ -573,7 +593,7 @@ export function updateBotRules(
   // ENERGY ATTACK
   //////////////////////
   if (
-    !getSameHorizontalSlice(player, game) &&
+    !getSameHorizontalSlice(player, playerIndex, game) &&
     !getIsBotNearNearestPlayer(player, playerIndex, game, 200) &&
     getIsBotFacingNearestPlayer(player, playerIndex, game) &&
     Math.random() > 0.01

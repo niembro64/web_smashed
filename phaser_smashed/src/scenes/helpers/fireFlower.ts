@@ -1,5 +1,6 @@
 import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { Player } from '../interfaces';
 import { getNormalizedVector } from './damage';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
@@ -20,38 +21,53 @@ export const updateFireFlowerShooting = (game: Game) => {
     //   return;
     // }
 
-    const { player: enemy } = getNearestPlayerAliveFromXY(
+    const z = getNearestPlayerAliveFromXY(
       game.fireFlower.posInit.x,
       game.fireFlower.posInit.y,
       game
     );
 
+    const enemy: Player | null = z?.player || null;
+
     // print('enemy', enemy.char.sprite.body.position.x, enemy.char.sprite.body.position.y);
-    const distance = getDistance(
-      game.fireFlower.posInit.x,
-      game.fireFlower.posInit.y,
-      enemy.char.sprite.body.position.x,
-      enemy.char.sprite.body.position.y
-    );
+
+    let distance: number | null = null;
+    if (enemy !== null) {
+      distance = getDistance(
+        game.fireFlower.posInit.x,
+        game.fireFlower.posInit.y,
+        enemy.char.sprite.body.position.x,
+        enemy.char.sprite.body.position.y
+      );
+    }
 
     // print('distance', distance, game.fireFlower.shootingDistanceThreshold);
     if (
+      distance === null ||
       distance >
-      (game.debug.FlowerFullScrn
-        ? SCREEN_DIMENSIONS.WIDTH
-        : game.fireFlower.shootingDistanceThreshold)
+        (game.debug.FlowerFullScrn
+          ? SCREEN_DIMENSIONS.WIDTH
+          : game.fireFlower.shootingDistanceThreshold)
     ) {
-      print(enemy.char.name, 'TOO FAR');
+      print(enemy?.char.name, 'TOO FAR');
       return;
     }
-    print(enemy.char.name, 'GOOD DISTANCE');
 
-    const v: { x: number; y: number } = getNormalizedVector(
-      game.fireFlower.posInit.x,
-      game.fireFlower.posInit.y,
-      enemy.char.sprite.body.position.x,
-      enemy.char.sprite.body.position.y
-    );
+    print(enemy?.char.name, 'GOOD DISTANCE');
+    let v: { x: number; y: number } | null = null;
+
+    if (enemy !== null) {
+      v = getNormalizedVector(
+        game.fireFlower.posInit.x,
+        game.fireFlower.posInit.y,
+        enemy.char.sprite.body.position.x,
+        enemy.char.sprite.body.position.y
+      );
+    }
+
+    if (v === null) {
+      return;
+    }
 
     const randMult = 300;
 

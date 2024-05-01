@@ -149,16 +149,13 @@ export const NNGetOutputStatic = (
   playerIndex: number,
   game: Game
 ): number[] => {
-  const { player: enemyNearest } = getNearestPlayerFromPlayer(
-    player,
-    playerIndex,
-    game
-  );
-  const { player: enemyAlive } = getNearestPlayerAliveFromPlayer(
-    player,
-    playerIndex,
-    game
-  );
+  const nearP = getNearestPlayerAliveFromPlayer(player, playerIndex, game);
+
+  const enemyNearest: Player | null = nearP?.player || null;
+
+  const aliveP = getNearestPlayerFromPlayer(player, playerIndex, game);
+
+  const enemyAlive = aliveP?.player || null;
 
   let enemy = enemyAlive;
 
@@ -166,23 +163,20 @@ export const NNGetOutputStatic = (
     enemy = enemyNearest;
   }
 
-  const { x: enemyAEX, y: enemyAEY } = getNearestAttackEnergyXYFromPlayer(
-    player,
-    playerIndex,
-    game
-  );
+  const z = getNearestAttackEnergyXYFromPlayer(player, playerIndex, game);
+  const enemyAEX: number | null = z?.x || null;
+  const enemyAEY: number | null = z?.y || null;
 
-  const { x: enemyAPX, y: enemyAPY } = getNearestAttackPhysicalXYFromPlayer(
-    player,
-    playerIndex,
-    game
-  );
+  const e = getNearestAttackPhysicalXYFromPlayer(player, playerIndex, game);
 
-  const enemyPositionX = enemy.char.sprite.x;
-  const enemyPositionY = enemy.char.sprite.y;
+  const enemyAPX: number | null = e?.x || null;
+  const enemyAPY: number | null = e?.y || null;
 
-  const enemyVelocyX = enemy.char.sprite.body.velocity.x;
-  const enemyVelocyY = enemy.char.sprite.body.velocity.y;
+  const enemyPositionX = enemy?.char.sprite.x || null;
+  const enemyPositionY = enemy?.char.sprite.y || null;
+
+  const enemyVelocyX = enemy?.char.sprite.body.velocity.x || null;
+  const enemyVelocyY = enemy?.char.sprite.body.velocity.y || null;
 
   // is p facing enemy
   let isPFacingEnemy: boolean = false;
@@ -246,12 +240,12 @@ export const NNGetOutputStatic = (
     player.char.sprite.body.velocity.y - enemyVelocyY,
 
     // DIFF SPRITE AE POSITIONS
-    player.char.sprite.body.position.x - enemyAEX,
-    player.char.sprite.body.position.y - enemyAEY,
+    enemyAEX === null ? 0 : player.char.sprite.body.position.x - enemyAEX,
+    enemyAEY === null ? 0 : player.char.sprite.body.position.y - enemyAEY,
 
     // DIFF SPRITE AP POSITIONS
-    player.char.sprite.body.position.x - enemyAPX,
-    player.char.sprite.body.position.y - enemyAPY,
+    enemyAPX === null ? 0 : player.char.sprite.body.position.x - enemyAPX,
+    enemyAPY === null ? 0 : player.char.sprite.body.position.y - enemyAPY,
 
     // TOUCHING
     player.char.sprite.body.touching.up ? 1 : 0,
@@ -308,19 +302,23 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
 
   const player: Player = game.players[0];
 
-  const e = getNearestPlayerAliveFromXY(
+  const e_or_null = getNearestPlayerAliveFromXY(
     player.char.sprite.body.position.x,
     player.char.sprite.body.position.y,
     game
   );
 
-  const enemy: Player | null = e?.player || null;
+  const enemy: Player | null = e_or_null?.player || null;
 
-  const { x: enemyAttackEnergyX, y: enemyAttackEnergyY } =
-    getNearestAttackEnergyXYFromPlayer(player, 0, game);
+  const EAE_XY = getNearestAttackEnergyXYFromPlayer(player, 0, game);
 
-  const { x: enemyAttackPhysicalX, y: enemyAttackPhysicalY } =
-    getNearestAttackPhysicalXYFromPlayer(player, 0, game);
+  const enemyAttackEnergyX: number | null = EAE_XY?.x || null;
+  const enemyAttackEnergyY: number | null = EAE_XY?.y || null;
+
+  const eap_XY = getNearestPlayerFromPlayer(player, 0, game);
+
+  const enemyAttackPhysicalX = eap_XY?.player?.char.sprite.x || null;
+  const enemyAttackPhysicalY = eap_XY?.player?.char.sprite.y || null;
 
   let isPFacingEnemy: boolean = false;
   if (enemy !== null) {
@@ -389,8 +387,12 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
           enemy.char.sprite.body.velocity.y,
 
       // DIFF SPRITE AE POSITIONS
-      player.char.sprite.body.position.x - enemyAttackEnergyX,
-      player.char.sprite.body.position.y - enemyAttackEnergyY,
+      enemyAttackEnergyX === null
+        ? 0
+        : player.char.sprite.body.position.x - enemyAttackEnergyX,
+      enemyAttackEnergyY === null
+        ? 0
+        : player.char.sprite.body.position.y - enemyAttackEnergyY,
 
       // DIFF SPRITE AP POSITIONS
       player.char.sprite.body.position.x - enemyAttackPhysicalX,
