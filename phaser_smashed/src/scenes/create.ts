@@ -1413,17 +1413,6 @@ export function createCollidersAEvAP(game: Game): void {
 export function createBulletBill(game: Game): void {
   const bb = game.bulletBillCombo;
 
-  bb.cannon.sprite = game.physics.add.sprite(
-    bb.cannon.posInit.x,
-    bb.cannon.posInit.y,
-    bb.cannon.srcImage
-  );
-
-  bb.cannon.sprite.setScale(bb.cannon.scale);
-  bb.cannon.sprite.setImmovable(true);
-  bb.cannon.sprite.body.allowGravity = false;
-  bb.cannon.sprite.setOrigin(0.5, 0.5);
-
   bb.bullet.sprite = game.physics.add.sprite(
     bb.bullet.posInit.x,
     bb.bullet.posInit.y,
@@ -1434,7 +1423,82 @@ export function createBulletBill(game: Game): void {
   bb.bullet.sprite.setImmovable(true);
   bb.bullet.sprite.body.allowGravity = false;
   bb.bullet.sprite.setOrigin(0.5, 0.5);
-  
+
+  bb.cannon.sprite = game.physics.add.sprite(
+    bb.cannon.posInit.x,
+    bb.cannon.posInit.y,
+    bb.cannon.srcImage
+  );
+
+  bb.cannon.sprite.setScale(bb.cannon.scale);
+  bb.cannon.sprite.setImmovable(true);
+  bb.cannon.sprite.body.allowGravity = false;
+  bb.cannon.sprite.setOrigin(0.5, 0.5);
+}
+
+export function createBulletBillColliders(game: Game): void {
+  const bb = game.bulletBillCombo;
+
+  game.physics.add.collider(bb.bullet.sprite, game.PLATFORMS);
+  game.physics.add.collider(bb.bullet.sprite, game.TABLE);
+  game.physics.add.collider(bb.bullet.sprite, game.chomp.sprite);
+
+  game.physics.add.collider(bb.cannon.sprite, game.PLATFORMS);
+  game.physics.add.collider(bb.cannon.sprite, game.TABLE);
+  game.physics.add.collider(bb.cannon.sprite, game.chomp.sprite);
+
+  // players
+  game.players.forEach((player, playerIndex) => {
+    game.physics.add.collider(player.char.sprite, bb.bullet.sprite);
+    game.physics.add.collider(player.char.sprite, bb.cannon.sprite);
+  });
+
+  // attack energies
+  game.players.forEach((player, playerIndex) => {
+    game.physics.add.collider(
+      player.char.attackEnergy.sprite,
+      bb.bullet.sprite
+    );
+    game.physics.add.collider(
+      player.char.attackEnergy.sprite,
+      bb.cannon.sprite
+    );
+  });
+
+  // attack physicals
+  game.players.forEach((player, playerIndex) => {
+    game.physics.add.collider(
+      player.char.attackPhysical.sprite,
+      bb.bullet.sprite
+    );
+    game.physics.add.collider(
+      player.char.attackPhysical.sprite,
+      bb.cannon.sprite
+    );
+  });
+
+  // fireballs
+  game.fireFlower.attackBullets.bullets
+    .getChildren()
+    .forEach((bullet: any, bi: number) => {
+      game.physics.add.collider(bullet, bb.bullet.sprite);
+      game.physics.add.collider(bullet, bb.cannon.sprite);
+    });
+
+  // player bullets
+  game.players.forEach((player, playerIndex) => {
+    if (
+      player.char.attackEnergy.attackBullets &&
+      player.char.attackEnergy.attackBullets.bullets
+    ) {
+      player.char.attackEnergy.attackBullets.bullets
+        .getChildren()
+        .forEach((bullet: any, bi: number) => {
+          game.physics.add.collider(bullet, bb.bullet.sprite);
+          game.physics.add.collider(bullet, bb.cannon.sprite);
+        });
+    }
+  });
 }
 
 export function createBackground(game: Game): void {

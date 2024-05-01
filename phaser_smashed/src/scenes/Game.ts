@@ -821,9 +821,10 @@ export default class Game extends Phaser.Scene {
 
   updateIndex: number = 0;
 
-  bbXinit: number = SCREEN_DIMENSIONS.WIDTH * 0.7208;
-  bbYinit: number = SCREEN_DIMENSIONS.HEIGHT * 0.429;
+  bbXInit: number = SCREEN_DIMENSIONS.WIDTH * 0.7208;
   bbScale: number = 0.25;
+  bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.429;
+  bbYInitBullet: number = this.bbYInitCannon - this.bbScale * 18;
 
   bulletBillCombo: BulletBillCombo = {
     bullet: {
@@ -835,8 +836,8 @@ export default class Game extends Phaser.Scene {
       diesOnHitbox: false,
       srcImage: 'bullet_bill_bullet',
       posInit: {
-        x: this.bbXinit,
-        y: this.bbYinit,
+        x: this.bbXInit,
+        y: this.bbYInitBullet,
       },
     },
     cannon: {
@@ -845,8 +846,8 @@ export default class Game extends Phaser.Scene {
       sound: null,
       srcImage: 'bullet_bill_cannon',
       posInit: {
-        x: this.bbXinit,
-        y: this.bbYinit,
+        x: this.bbXInit,
+        y: this.bbYInitCannon,
       },
     },
     shootingDistanceThreshold: 500,
