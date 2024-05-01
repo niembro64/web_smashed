@@ -23,6 +23,7 @@ import {
   SplashEndData,
   SplashRules,
   xyVector,
+  BulletBillCombo,
 } from './interfaces';
 import { preload } from './preload';
 import { update } from './update';
@@ -819,6 +820,33 @@ export default class Game extends Phaser.Scene {
   };
 
   updateIndex: number = 0;
+
+  bulletBillCombo: BulletBillCombo = {
+    bullet: {
+      sprite: null,
+      sound: null,
+      damage: 100,
+      hitback: { x: 10, y: 10 },
+      diesOnHitbox: false,
+      srcImage: 'bulletBillBullet',
+      posInit: {
+        x: SCREEN_DIMENSIONS.WIDTH * 0.18573,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.3356,
+      },
+    },
+    cannon: {
+      sprite: null,
+      sound: null,
+      srcImage: 'bulletBillCannon',
+      posInit: {
+        x: SCREEN_DIMENSIONS.WIDTH * 0.18573,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.3356,
+      },
+    },
+    shootingDistanceThreshold: 500,
+    numUpdateIndexesToWait: 6,
+    numUpdateIndexesToWaitFast: 1,
+  };
 
   fireFlower: FireFlower = {
     sprite: null,

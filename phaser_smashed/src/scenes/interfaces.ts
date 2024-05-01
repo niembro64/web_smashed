@@ -535,6 +535,31 @@ export interface FireFlower {
   numUpdateIndexesToWaitFast: number;
 }
 
+export type BulletBillBullet = {
+  sprite: any;
+  sound: any;
+  damage: number;
+  hitback: Hitback;
+  diesOnHitbox: boolean;
+  srcImage: any;
+  posInit: Position;
+};
+
+export type BulletBillCannon = {
+  sprite: any;
+  sound: any;
+  srcImage: any;
+  posInit: Position;
+};
+
+export type BulletBillCombo = {
+  bullet: BulletBillBullet;
+  cannon: BulletBillCannon;
+  shootingDistanceThreshold: number;
+  numUpdateIndexesToWait: number;
+  numUpdateIndexesToWaitFast: number;
+};
+
 export interface Owner {
   id: null | number;
   gameStamp: number;
