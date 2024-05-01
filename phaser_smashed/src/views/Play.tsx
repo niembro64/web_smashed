@@ -1485,7 +1485,7 @@ function Play() {
                         className={
                           'b-oscuro b-dark' +
                           (() => {
-                            switch (pIndex) {
+                            switch (getNumActiveBeforeMe(pIndex)) {
                               case 0:
                                 return ' b-dark-red';
                               case 1:
@@ -1526,7 +1526,7 @@ function Play() {
                         className={
                           'b-oscuro b-dark' +
                           (() => {
-                            switch (pIndex) {
+                            switch (getNumActiveBeforeMe(pIndex)) {
                               case 0:
                                 return ' b-dark-red';
                               case 1:
@@ -1570,7 +1570,7 @@ function Play() {
                         className={
                           'b-oscuro b-dark' +
                           (() => {
-                            switch (pIndex) {
+                            switch (getNumActiveBeforeMe(pIndex)) {
                               case 0:
                                 return ' b-dark-red';
                               case 1:
@@ -1597,7 +1597,7 @@ function Play() {
                         className={
                           'b-oscuro b-dark' +
                           (() => {
-                            switch (pIndex) {
+                            switch (getNumActiveBeforeMe(pIndex)) {
                               case 0:
                                 return ' b-dark-red';
                               case 1:
