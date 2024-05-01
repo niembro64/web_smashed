@@ -148,7 +148,6 @@ export function setMusicChompSheepResume(game: Game): void {
   if (game.chomp.soundSheep.isPlaying) {
     return;
   }
-  game.chomp.soundSheep.setRate(100);
 
   game.chomp.soundSheep.resume();
 }
