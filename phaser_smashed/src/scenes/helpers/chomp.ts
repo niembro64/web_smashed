@@ -1,9 +1,18 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { getDistance, getNormalizedVector, getVector } from './damage';
 import { getDoesAnythingHaveDark } from './powers';
-import { setBGMusicSpeedNormal, setBGMusicSpeedSlower, setMusicChompSheepPause, setMusicChompSheepResume } from './sound';
+import {
+  setBGMusicSpeedNormal,
+  setBGMusicSpeedSlower,
+  setMusicChompSheepPause,
+  setMusicChompSheepResume,
+} from './sound';
 
 export function updateChomp(game: Game): void {
+  if (game.debug.NNP1Train) {
+    return;
+  }
+
   updateChompSpriteDirection(game);
   updateChompVelocity(game);
   updateChompLinkPositions(game);

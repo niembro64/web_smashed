@@ -160,6 +160,10 @@ export function createPole(game: Game): void {
 }
 
 export function createFireFlower(game: Game): void {
+  if (game.debug.NNP1Train) {
+    return;
+  }
+
   const ff = game.fireFlower;
 
   ff.sprite = game.physics.add.sprite(ff.posInit.x, ff.posInit.y, 'cannon');
@@ -190,6 +194,10 @@ export function createFireFlower(game: Game): void {
 }
 
 export function createCollidersFireFlower(game: Game): void {
+  if (game.debug.NNP1Train) {
+    return;
+  }
+
   const aebs = game.fireFlower.attackBullets.bullets;
   game.physics.add.collider(aebs, game.PLATFORMS);
 
@@ -284,6 +292,10 @@ export function createExplosions(game: Game): void {
 }
 
 export function createChomp(game: Game): void {
+  if (game.debug.NNP1Train) {
+    return;
+  }
+
   const c = game.chomp;
   const b = c.block;
 
