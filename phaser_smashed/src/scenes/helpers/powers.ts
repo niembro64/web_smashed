@@ -33,9 +33,9 @@ export function setPlayerPowerState(
 
   switch (curr.name) {
     case 'none':
-      if (!getDoesAnyPlayerHaveDark(game)) {
-        setChompPowerState('dark', game);
-      }
+      // if (!getDoesAnyPlayerHaveDark(game)) {
+      //   setChompPowerState('dark', game);
+      // }
       p.emitterDark.visible = false;
       break;
     case 'dark':

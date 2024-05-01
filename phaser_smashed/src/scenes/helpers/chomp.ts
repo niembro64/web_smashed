@@ -1,6 +1,6 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { getDistance, getNormalizedVector, getVector } from './damage';
-import { getDoesAnyPlayerHaveDark } from './powers';
+import { getDoesAnyPlayerHaveDark, getDoesAnythingHaveDark } from './powers';
 import { setMusicChompSheepPause, setMusicChompSheepResume } from './sound';
 
 export function updateChomp(game: Game): void {
@@ -11,17 +11,10 @@ export function updateChomp(game: Game): void {
 }
 
 export function updateChompAudio(game: Game): void {
-  const cHasDark = game.chomp.powerStateCurr.name === 'dark';
-  const pHasDark = getDoesAnyPlayerHaveDark(game);
-
-  if (cHasDark || pHasDark) {
-    if (!game.chomp.soundBBWoah.isPlaying) {
-      setMusicChompSheepResume(game);
-    }
+  if (getDoesAnythingHaveDark(game)) {
+    setMusicChompSheepResume(game);
   } else {
-    if (game.chomp.soundBBWoah.isPlaying) {
-      setMusicChompSheepPause(game);
-    }
+    setMusicChompSheepPause(game);
   }
 }
 
