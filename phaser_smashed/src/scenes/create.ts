@@ -142,6 +142,7 @@ export function createFlag(game: Game): void {
   });
   f.soundFlagMusicBox = game.sound.add('flag_music_box', {
     volume: 0.35,
+    loop: true,
   });
 }
 
@@ -296,6 +297,7 @@ export function createChomp(game: Game): void {
 
   c.soundSheep = game.sound.add('chainChompSheep', {
     volume: game.debug.DevMode ? 0 : 0.34,
+    loop: true,
   });
 
   c.soundBBBambalam = game.sound.add('bb_bam', {
@@ -1917,6 +1919,8 @@ export function createTable(game: Game): void {
 
   // game.TABLE.setImmovable(true);
   // game.TABLE.body.allowGravity = false;
+
+  game.AUDIO_TABLE = game.sound.add('powerup', { volume: 0.5, loop: true });
 }
 
 export function createColliderTablePlatforms(game: Game): void {

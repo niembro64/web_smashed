@@ -148,6 +148,7 @@ export function setMusicChompSheepResume(game: Game): void {
   if (game.chomp.soundSheep.isPlaying) {
     return;
   }
+  game.chomp.soundSheep.setRate(100);
 
   game.chomp.soundSheep.resume();
 }
@@ -195,4 +196,29 @@ export function setPlaySoundFireBall(game: Game): void {
 
   game.fireFlower.fireBallSoundsIndexCurr =
     (i + 1) % game.fireFlower.fireBallSounds.length;
+}
+
+export function setPlaySoundPowerup(game: Game): void {
+  if (game.AUDIO_TABLE.isPlaying) {
+    return;
+  }
+  game.AUDIO_TABLE.play();
+}
+export function setStopSoundPowerup(game: Game): void {
+  if (!game.AUDIO_TABLE.isPlaying) {
+    return;
+  }
+  game.AUDIO_TABLE.stop();
+}
+export function setResumeSoundPowerup(game: Game): void {
+  if (game.AUDIO_TABLE.isPlaying) {
+    return;
+  }
+  game.AUDIO_TABLE.resume();
+}
+export function setPauseSoundPowerup(game: Game): void {
+  if (!game.AUDIO_TABLE.isPlaying) {
+    return;
+  }
+  game.AUDIO_TABLE.pause();
 }

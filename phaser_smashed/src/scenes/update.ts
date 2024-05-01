@@ -42,6 +42,8 @@ import {
   setMusicBoxPlay,
   setMusicChompSheepPause,
   setMusicChompSheepPlay,
+  setPauseSoundPowerup,
+  setPlaySoundPowerup,
   setPlayWiiMusicWaitLong,
 } from './helpers/sound';
 import {
@@ -70,6 +72,8 @@ export function setPreUpdate(game: Game): void {
   setMusicBoxPause(game);
   setMusicChompSheepPlay(game);
   setMusicChompSheepPause(game);
+  setPlaySoundPowerup(game);
+  setPauseSoundPowerup(game);
 }
 
 export function update(game: Game, time: number, delta: number): void {

@@ -62,6 +62,7 @@ export function preload(game: Game): void {
   // Load Audio
   //////////////////////////////
   let pathSounds = 'sounds/';
+  game.load.audio('powerup', pathSounds + game.FILE_SOUNDS.POWERUP);
   game.load.audio('intro', pathSounds + game.FILE_SOUNDS.INTRO);
   game.load.audio('gun', pathSounds + game.FILE_SOUNDS.GUN);
   game.load.audio('shot', pathSounds + game.FILE_SOUNDS.SHOT);

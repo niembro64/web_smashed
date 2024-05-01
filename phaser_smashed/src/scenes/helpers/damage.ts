@@ -15,6 +15,7 @@ import {
 } from './attacks';
 import { getNearestPlayerAliveFromXY, hitbackFly } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
+import { setPauseSoundPowerup, setResumeSoundPowerup } from './sound';
 import { setPlayerState } from './state';
 
 export function onHitHandlerAttackPhysical(
@@ -480,15 +481,19 @@ export function updateSuicide(game: Game): void {
 
 export function updateTableGiveHealth(game: Game): void {
   const t = game.TABLE.body;
-  let p: Player | null = null;
-  // const pIndex: number | null = null;
 
-  if (t.touching.up) {
-    p = getNearestPlayerAliveFromXY(t.x, t.y, game).player;
-    // pIndex = getNearestPlayerAlive(t.x, t.y, game).playerIndex;
-
+  const p: Player = getNearestPlayerAliveFromXY(t.x, t.y, game).player;
+  if (
+    t.touching.up &&
+    p.char.sprite.body.touching.down &&
+    p.char.damageCurr !== 0
+  ) {
     p.char.damageCurr =
       p.char.damageCurr > 0 ? (p.char.damageCurr -= 0.5) : p.char.damageCurr;
+
+    setResumeSoundPowerup(game);
+  } else {
+    setPauseSoundPowerup(game);
   }
 }
 
