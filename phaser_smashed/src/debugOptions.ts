@@ -47,7 +47,7 @@ export const debugInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   InstReplay: 0,
-  ChompVelocities: false,
+  ChompVelocities: true,
   ReplayFastSlow: false,
   GravityLight: false,
   NNHelpScreen: true,

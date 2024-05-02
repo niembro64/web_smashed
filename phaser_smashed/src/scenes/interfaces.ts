@@ -628,6 +628,7 @@ export interface Chomp {
   particles: any;
   emitterDark: any;
   darknessMoments: DarknessMoments;
+  explosionFPS: number;
 }
 export interface ChompBlock {
   sprite: any | Phaser.GameObjects.Sprite;

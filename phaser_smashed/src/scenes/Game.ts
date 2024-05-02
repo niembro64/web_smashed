@@ -788,6 +788,7 @@ export default class Game extends Phaser.Scene {
     percentFramesJump: 0,
     PERCENT_FRAMES_WALK: 0.01,
     NUM_LINKS: 12,
+    explosionFPS: 20,
     MASS: 10,
     links: [],
     block: {
@@ -811,7 +812,6 @@ export default class Game extends Phaser.Scene {
       PERCENT_DARKNESS_JUMP: 0.01,
       explosionsIndex: 0,
       explosions: [
-        { sprite: null, sound: null },
         { sprite: null, sound: null },
         { sprite: null, sound: null },
         { sprite: null, sound: null },

@@ -265,7 +265,7 @@ export function createExplosions(game: Game): void {
       end: 47,
       first: 0,
     }),
-    frameRate: 30,
+    frameRate: game.chomp.explosionFPS,
     repeat: 0,
   };
 
@@ -285,7 +285,9 @@ export function createExplosions(game: Game): void {
     e.sprite.setBounce(0);
     e.sprite.setOrigin(0.5, 0.5);
     e.sprite.setImmovable(true);
-    e.sprite.setRotation((Math.PI / 4) * eIndex);
+    e.sprite.setRotation(
+      ((2 * Math.PI) / c.darknessMoments.explosions.length) * eIndex
+    );
     // add sounds to explosions
     e.sound = game.sound.add(
       eIndex % 2 === 0 ? 'boom_short_01' : 'boom_short_02',

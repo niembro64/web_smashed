@@ -67,7 +67,7 @@ export function updateChompVelocity(game: Game): void {
   }
 
   c.percentFramesJump = Math.pow(
-    (1 - getClosestDistance(game) / SCREEN_DIMENSIONS.WIDTH) * 0.9,
+    (1 - getChompClosestDistance(game) / SCREEN_DIMENSIONS.WIDTH) * 0.9,
     15
   );
 
@@ -149,7 +149,7 @@ export function updateChompLinkPositions(game: Game): void {
   });
 }
 
-export function getClosestDistance(game: Game): number {
+export function getChompClosestDistance(game: Game): number {
   const c = game.chomp;
   const b = c.sprite.body;
   let shortestDistance = Infinity;
