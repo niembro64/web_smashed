@@ -31,7 +31,7 @@ export const getIsInPoleArea = (x: number, y: number, game: Game): boolean => {
 
   const pole = game.flag.spriteFlagPole;
 
-  const xMin = pole.x - 2 * pole.width;
+  const xMin = pole.x - 3.5 * pole.width;
   const xMax = pole.x + 2 * pole.width;
   const yMin = pole.y - pole.height / 2;
   const yMax = pole.y + pole.height / 2;

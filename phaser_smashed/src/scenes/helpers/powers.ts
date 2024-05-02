@@ -206,7 +206,7 @@ export function updatePlayerDarknessEvents(game: Game): void {
       const pj = game.chomp.darknessMoments.PERCENT_DARKNESS_JUMP;
 
       if (Math.random() > 1 - pj) {
-        const baseAmount = 4000;
+        const baseAmount = 10000;
         const amount =
           baseAmount +
           Math.pow(
@@ -222,12 +222,12 @@ export function updatePlayerDarknessEvents(game: Game): void {
         }
         const { x, y } = getRandomUnitVector();
 
-        player.char.damageCurr += amount / 10;
+        player.char.damageCurr += amount / 100;
         setPlayerState(player, playerIndex, 'player-state-hurt', game);
 
         if (game.debug.ChompVelocities) {
-          b.setVelocityX(b.velocity.x + x * amount);
-          b.setVelocityY(b.velocity.y + y * amount);
+          b.setVelocityX(b.velocity.x + x * amount * 10);
+          b.setVelocityY(b.velocity.y + y * amount * 10);
         }
 
         if (game.debug.ChompExplosions) {
