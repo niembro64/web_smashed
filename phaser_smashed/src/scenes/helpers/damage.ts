@@ -479,31 +479,64 @@ export function updateSuicide(game: Game): void {
   });
 }
 
-export function updateTableGiveHealth(game: Game): void {
-  const t = game.TABLE.body;
+// export function updateTableGiveHealthOld(game: Game): void {
+//   const t = game.TABLE.body;
 
-  const p = getNearestPlayerAliveFromXY(t.x, t.y, game);
-  if (p === null) {
-    setPauseSoundPowerup(game);
-    game.powerupActive = false;
-    return;
+//   const p = getNearestPlayerAliveFromXY(t.x, t.y, game);
+//   if (p === null) {
+//     setPauseSoundPowerup(game);
+//     game.powerupActive = false;
+//     return;
+//   }
+
+//   if (
+//     t.touching.up &&
+//     // p.char.sprite.body.touching.down &&
+//     p.player.char.damageCurr !== 0
+//   ) {
+//     p.player.char.damageCurr = Math.max(0, p.player.char.damageCurr - 0.5);
+//     if (!game.powerupActive) {
+//       setResumeSoundPowerup(game);
+//       game.powerupActive = true;
+//     }
+//   } else {
+//     if (game.powerupActive) {
+//       setPauseSoundPowerup(game);
+//       game.powerupActive = false;
+//     }
+//   }
+// }
+
+export function updateTableGiveHealth(game: Game): void {
+  const { body } = game.TABLE;
+
+  let charging: boolean = false;
+
+  for (let i = 0; i < game.players.length; i++) {
+    const p = game.players[i];
+
+    const isCloseEnough: boolean =
+      getDistance(body.x + 60, body.y, p.char.sprite.x, p.char.sprite.y) < 100;
+
+    if (isCloseEnough && p.char.damageCurr !== 0) {
+      charging = true;
+      p.char.damageCurr = Math.max(0, p.char.damageCurr - 0.5);
+    }
   }
 
-  if (
-    t.touching.up &&
-    // p.char.sprite.body.touching.down &&
-    p.player.char.damageCurr !== 0
-  ) {
-    p.player.char.damageCurr = Math.max(0, p.player.char.damageCurr - 0.5);
-    if (!game.powerupActive) {
-      setResumeSoundPowerup(game);
-      game.powerupActive = true;
+  if (charging) {
+    setResumeSoundPowerup(game);
+    if (Math.floor(game.timeNanoseconds / 2) % 2 === 0) {
+      // game.TABLE.setTexture('table2');
+      // game.TABLE.setTintFill(0x00ffff);
+      game.TABLE.setTint(0xffffff);
+    } else {
+      // game.TABLE.setTexture('table');
+      game.TABLE.setTintFill(0xffffff);
     }
   } else {
-    if (game.powerupActive) {
-      setPauseSoundPowerup(game);
-      game.powerupActive = false;
-    }
+    game.TABLE.setTint(0xffffff);
+    setPauseSoundPowerup(game);
   }
 }
 
