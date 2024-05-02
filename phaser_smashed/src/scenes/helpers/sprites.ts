@@ -291,13 +291,6 @@ export function setTintAttackEnergyID(
 ): void {
   player.char.attackEnergy.sprite.setTint(circleColor);
   player.char.attackEnergy.sprite.setAlpha(1);
-  // const aebs = player.char.attackEnergy.attackBullets;
-  // if (aebs !== null && aebs.bullets !== null) {
-  //   aebs.bullets.children.iterate((child: any) => {
-  //     child.setTint(circleColor);
-  //     child.setAlpha(1);
-  //   });
-  // }
 }
 export function setTintAttackPhysicalID(
   player: Player,

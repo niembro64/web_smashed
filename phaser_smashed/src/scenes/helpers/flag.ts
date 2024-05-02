@@ -127,61 +127,42 @@ export const updateFlagMovement = (game: Game): void => {
 };
 
 export const updateFlagOwner = (game: Game): void => {
-  const f = game.flag;
+  const { toucherCurr, ownerCurr, spriteFlagMover, box, completedCurr } =
+    game.flag;
 
-  if (f.completedCurr) {
-    return;
-  }
+  if (completedCurr || toucherCurr.id === null) return;
 
-  const toucher = game.flag.toucherCurr.id;
-  const owner = game.flag.ownerCurr.id;
-  const fs = game.flag.spriteFlagMover;
-
-  // do nothing
-  // if no one is touching the flat
-  if (toucher === null) {
-    return;
-  }
-
-  // if the flag is down
-  // and the toucher is not the owner
-  // make the toucher the owner
-  if (fs.y > f.box.bottom && toucher !== owner) {
-    f.ownerPrev.id = f.ownerCurr.id;
-    f.ownerPrev.gameStamp = f.ownerCurr.gameStamp;
-
-    f.ownerCurr.id = toucher;
-    f.ownerCurr.gameStamp = game.gameNanoseconds;
-    f.soundFlagCapture.play();
+  if (spriteFlagMover.y > box.bottom && toucherCurr.id !== ownerCurr.id) {
+    ownerCurr.id = toucherCurr.id;
+    ownerCurr.gameStamp = game.gameNanoseconds;
+    game.flag.soundFlagCapture.play();
   }
 };
 
 export const updateFlagColor = (game: Game): void => {
-  const f = game.flag;
-  const fs = game.flag.spriteFlagMover;
-  const fb = game.flag.spriteFlagStationary;
-  const owner = game.flag.ownerCurr.id;
+  const {
+    spriteFlagMover,
+    spriteFlagStationary,
+    spriteFlagChar,
+    ownerCurr,
+    completedCurr,
+    completedPrev,
+  } = game.flag;
 
-  if (f.completedCurr && f.completedCurr && !f.completedPrev) {
-    return;
-  }
+  if (completedCurr && !completedPrev) return;
 
-  if (owner === null) {
-    fs.setTint(0xffffff);
-    fb.setTint(0xffffff);
-    return;
-  }
+  const color =
+    ownerCurr.id === null
+      ? 0xffffff
+      : game.colorCircles[ownerCurr.id].colorNumber;
+  spriteFlagMover.setTint(color);
+  spriteFlagStationary.setTint(color);
 
-  const color = game.colorCircles[owner].colorNumber;
-  fs.setTint(color);
-  fb.setTint(color);
-
-  const player = game.players[owner];
-
-  if (player.char.srcSpriteSheet !== '') {
-    f.spriteFlagChar.setTexture(player.char.name + '_spritesheet', 0);
-  } else {
-    f.spriteFlagChar.setTexture(player.char.src);
+  if (ownerCurr.id !== null) {
+    const { char } = game.players[ownerCurr.id];
+    const texture =
+      char.srcSpriteSheet !== '' ? char.name + '_spritesheet' : char.src;
+    spriteFlagChar.setTexture(texture, 0);
   }
 };
 
@@ -190,22 +171,13 @@ export const getIsFlagShots = (game: Game): boolean => {
 };
 
 export const setFlagOwnerNullIfDead = (player: Player, game: Game): void => {
-  if (game.flag.completedCurr) {
-    return;
-  }
+  const { ownerCurr, ownerPrev, completedCurr } = game.flag;
 
-  const f = game.flag;
-  const owner = f.ownerCurr.id;
+  if (!completedCurr && ownerCurr.id === player.playerId) {
+    ownerPrev.id = ownerCurr.id;
+    ownerPrev.gameStamp = ownerCurr.gameStamp;
 
-  if (owner === null) {
-    return;
-  }
-
-  if (owner === player.playerId) {
-    f.ownerPrev.id = f.ownerCurr.id;
-    f.ownerPrev.gameStamp = f.ownerCurr.gameStamp;
-
-    f.ownerCurr.id = null;
-    f.ownerCurr.gameStamp = game.gameNanoseconds;
+    ownerCurr.id = null;
+    ownerCurr.gameStamp = game.gameNanoseconds;
   }
 };
