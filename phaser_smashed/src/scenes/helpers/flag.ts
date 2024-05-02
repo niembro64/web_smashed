@@ -1,14 +1,13 @@
 import Game from '../Game';
 import { Player } from '../interfaces';
 import {
-  setMusicBoxPause,
-  setMusicBoxPlay,
   setBGMusicPause,
   setBGMusicResume,
+  setMusicBoxPause,
   setMusicBoxResume,
 } from './sound';
 
-export const getIsInPole = (x: number, y: number, game: Game): boolean => {
+export const getIsInPoleExact = (x: number, y: number, game: Game): boolean => {
   const f = game.flag;
   if (f.completedCurr) {
     return false;
@@ -18,6 +17,22 @@ export const getIsInPole = (x: number, y: number, game: Game): boolean => {
 
   const xMin = pole.x - pole.width / 2;
   const xMax = pole.x + pole.width / 2;
+  const yMin = pole.y - pole.height / 2;
+  const yMax = pole.y + pole.height / 2;
+
+  return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
+};
+
+export const getIsInPoleArea = (x: number, y: number, game: Game): boolean => {
+  const f = game.flag;
+  if (f.completedCurr) {
+    return false;
+  }
+
+  const pole = game.flag.spriteFlagPole;
+
+  const xMin = pole.x - 2 * pole.width;
+  const xMax = pole.x + 2 * pole.width;
   const yMin = pole.y - pole.height / 2;
   const yMax = pole.y + pole.height / 2;
 
@@ -41,7 +56,7 @@ export const updateFlagToucher = (game: Game): void => {
     // and touching down
     if (
       pTouchingDown &&
-      getIsInPole(player.char.sprite.x, player.char.sprite.y, game)
+      getIsInPoleArea(player.char.sprite.x, player.char.sprite.y, game)
     ) {
       if (!ptStamps[pIndex].touching) {
         setBGMusicPause(game);

@@ -4,7 +4,7 @@ import importedSmallTalk from '../sounds/niemo_audio_small_talk.ogg';
 // @ts-ignore
 import importedMonkeys from '../sounds/monkeys.ogg';
 // @ts-ignore
-import importedGarage from '../sounds/garage.ogg';
+// import importedGarage from '../sounds/garage.ogg';
 
 function MusicManager() {
   // const setupMusic = new Audio(importedGarage);
