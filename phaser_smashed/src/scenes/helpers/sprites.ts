@@ -28,55 +28,25 @@ export function updateSpriteFilter(
   playerIndex: number,
   game: Game
 ): void {
+  const isFlicker =
+    Math.floor(
+      (game.gameNanoseconds - player.state.gameStamp) /
+        game.DURATION_PLAYER_FILTER_FLICKER_SLOW
+    ) %
+      2 ===
+    0;
+
   if (player.char.colorFilterBlink) {
     if (player.state.name === 'player-state-hurt') {
       if (player.char.powerStateCurr.name === 'dark') {
-        if (
-          Math.floor(
-            (game.gameNanoseconds - player.state.gameStamp) /
-              game.DURATION_PLAYER_FILTER_FLICKER_SLOW
-          ) %
-            2 ===
-          0
-        ) {
-          filterPlayerRed(player, playerIndex, game);
-          return;
-        } else {
-          filterPlayerDark(player, playerIndex, game);
-          return;
-        }
-      } else {
-        if (
-          Math.floor(
-            (game.gameNanoseconds - player.state.gameStamp) /
-              game.DURATION_PLAYER_FILTER_FLICKER_SLOW
-          ) %
-            2 ===
-          0
-        ) {
-          filterPlayerRed(player, playerIndex, game);
-          return;
-        } else {
-          filterPlayerNormal(player, playerIndex, game);
-          return;
-        }
+        filterPlayer(player, playerIndex, game, isFlicker ? 'Red' : 'Dark');
+        return;
       }
-    }
-
-    if (
-      Math.floor(
-        (game.gameNanoseconds - player.state.gameStamp) /
-          game.DURATION_PLAYER_FILTER_FLICKER_SLOW
-      ) %
-        2 ===
-      0
-    ) {
-      filterPlayerDark(player, playerIndex, game);
-      return;
-    } else {
-      filterPlayerNormal(player, playerIndex, game);
+      filterPlayer(player, playerIndex, game, isFlicker ? 'Red' : 'Normal');
       return;
     }
+    filterPlayer(player, playerIndex, game, isFlicker ? 'Dark' : 'Normal');
+    return;
   }
 
   if (player.char.powerStateCurr.name === 'dark') {
@@ -90,23 +60,41 @@ export function updateSpriteFilter(
   }
 
   if (player.char.damageCurr < player.char.damagePrev) {
-    if (
+    const isFastFlicker =
       Math.floor(
         (game.gameNanoseconds - player.state.gameStamp) /
           game.DURATION_PLAYER_FILTER_FLICKER_FAST
       ) %
         2 ===
-      0
-    ) {
-      filterPlayerWhite(player, playerIndex, game);
-      return;
-    } else {
-      filterPlayerNormal(player, playerIndex, game);
-      return;
-    }
+      0;
+    filterPlayer(player, playerIndex, game, isFastFlicker ? 'White' : 'Normal');
+    return;
   }
 
   filterPlayerNormal(player, playerIndex, game);
+}
+
+function filterPlayer(
+  player: Player,
+  playerIndex: number,
+  game: Game,
+  filterType: string
+) {
+  switch (filterType) {
+    case 'Red':
+      filterPlayerRed(player, playerIndex, game);
+      break;
+    case 'Dark':
+      filterPlayerDark(player, playerIndex, game);
+      break;
+    case 'White':
+      filterPlayerWhite(player, playerIndex, game);
+      break;
+    case 'Normal':
+    default:
+      filterPlayerNormal(player, playerIndex, game);
+      break;
+  }
 }
 
 ////////////////////////
