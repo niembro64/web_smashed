@@ -627,6 +627,10 @@ export interface Chomp {
   powerStatePrev: PowerStateChomp;
   particles: any;
   emitterDark: any;
+  musicRates: {
+    chomp: number;
+    player: number;
+  };
   darknessMoments: DarknessMoments;
   explosionFPS: number;
 }

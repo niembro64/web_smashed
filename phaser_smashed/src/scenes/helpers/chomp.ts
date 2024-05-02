@@ -49,55 +49,59 @@ export function updateChompSpriteDirection(game: Game): void {
 }
 
 export function updateChompVelocity(game: Game): void {
-  const c = game.chomp;
-  const b = c.sprite.body;
-  const x = c.originX;
-  const y = c.originY;
-  const r = c.radius;
-
-  const spriteX = c.sprite.x;
-  const spriteY = c.sprite.y;
+  const { chomp } = game;
+  const {
+    sprite,
+    originX,
+    originY,
+    radius,
+    percentFramesWalk,
+    percentFramesAttack,
+    powerStateCurr,
+  } = chomp;
+  const { body } = sprite;
 
   if (!isChompInsideCircle(game)) {
-    const { x: xNew, y: yNew } = getNormalizedVector(spriteX, spriteY, x, y);
-
-    b.setVelocityX(xNew * 100);
-    b.setVelocityY(yNew * 200);
+    const { x: xNew, y: yNew } = getNormalizedVector(
+      sprite.x,
+      sprite.y,
+      originX,
+      originY
+    );
+    body.setVelocityX(xNew * 100);
+    body.setVelocityY(yNew * 200);
     return;
   }
 
-  c.percentFramesAttack = Math.pow(
-    (1 - getChompClosestDistance(game) / SCREEN_DIMENSIONS.WIDTH) * 0.9,
-    15
-  );
+  // const closestDistance = getChompClosestDistance(game);
+  // chomp.percentFramesAttack = Math.pow(
+  //   (1 - closestDistance / SCREEN_DIMENSIONS.WIDTH) * 0.9,
+  //   15
+  // );
 
   if (
     Math.random() >
-    (game.chomp.powerStateCurr.name === 'none'
-      ? c.percentFramesWalk
-      : c.percentFramesAttack)
+    (powerStateCurr.name === 'none' ? percentFramesWalk : percentFramesAttack)
   ) {
     return;
   }
 
-  if (isChompInsideCircle(game)) {
-    if (b.touching.down) {
-      const randomX = Math.random() * r * 2 - r + x;
-      const randomY = getCircleYfromX(randomX, game);
+  if (body.touching.down) {
+    const randomX = Math.random() * radius * 2 - radius + originX;
+    const randomY = getCircleYfromX(randomX, game);
+    const { x: xNew, y: yNew } = getNormalizedVector(
+      sprite.x,
+      sprite.y,
+      randomX,
+      randomY
+    );
 
-      const { x: xNew, y: yNew } = getNormalizedVector(
-        spriteX,
-        spriteY,
-        randomX,
-        randomY
-      );
-      if (c.powerStateCurr.name === 'dark') {
-        c.soundAttack.play();
-        b.setVelocityY(-1 * Math.abs(yNew + 0.3) * 1000);
-        b.setVelocityX(xNew * 800);
-      } else {
-        b.setVelocityX(xNew * 80);
-      }
+    if (powerStateCurr.name === 'dark') {
+      chomp.soundAttack.play();
+      body.setVelocityY(-1 * Math.abs(yNew + 0.3) * 1000);
+      body.setVelocityX(xNew * 800);
+    } else {
+      body.setVelocityX(xNew * 110);
     }
   }
 }

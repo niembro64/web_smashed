@@ -8,6 +8,7 @@ import {
   xyVector,
 } from '../interfaces';
 import { getNormalizedVector } from './damage';
+import { setMusicChompSheepRate } from './sound';
 import { setPlayerState } from './state';
 import { addToMotionSlowdown } from './time';
 
@@ -37,6 +38,7 @@ export function setPlayerPowerState(
     case 'dark':
       p.emitterDark.visible = true;
       game.chomp.darknessMoments.passed = game.gameNanoseconds;
+      setMusicChompSheepRate(game, game.chomp.musicRates.player);
       break;
     case 'light':
       p.emitterDark.visible = false;
@@ -157,13 +159,33 @@ export function setChompPowerState(
       c.emitterDark.visible = false;
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_walking');
+      c.soundHurt.play();
       break;
     case 'dark':
       c.emitterDark.visible = true;
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_chomping');
+      // filter to 0x000000
+      c.sprite.setTint(0x000000);
       game.chomp.soundBBWoah.setRate(1);
+      setMusicChompSheepRate(game, game.chomp.musicRates.chomp);
       break;
+  }
+}
+
+export function updateChompStateLightIfHasBeenLongEnough(game: Game): void {
+  if (game.chomp.powerStateCurr.name !== 'dark') {
+    return;
+  }
+
+  const hasBeen: boolean = getHasBeenGameDurationSinceMoment(
+    3000,
+    game.chomp.darknessMoments.chomp,
+    game
+  );
+
+  if (hasBeen) {
+    setChompPowerState('none', game);
   }
 }
 

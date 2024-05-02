@@ -35,7 +35,7 @@ import {
   updateAttackEnergyFrictionWall,
   updatePadPreviousAndDebounced,
 } from '../helpers/pad';
-import { updateChompFilterState, updateChompFilterStatePlayer } from '../helpers/powers';
+import { updateChompFilterState, updateChompFilterStatePlayer, updateChompStateLightIfHasBeenLongEnough } from '../helpers/powers';
 import {
   updateAllSpriteFilters,
   updateSpritesFlipX,
@@ -74,6 +74,7 @@ export function updateGameStatePlay(
   updateTimeSlowdown(game);
   updateAtThreeShots(game);
   updateChompFilterState(game);
+  updateChompStateLightIfHasBeenLongEnough(game);
   updateFlagToucher(game);
   updateFlagOwner(game);
   updateFlagMovement(game);
