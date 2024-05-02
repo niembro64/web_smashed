@@ -35,7 +35,7 @@ import {
   updateAttackEnergyFrictionWall,
   updatePadPreviousAndDebounced,
 } from '../helpers/pad';
-import { updateChompFilterState } from '../helpers/powers';
+import { updateChompFilterState, updateChompFilterStatePlayer } from '../helpers/powers';
 import {
   updateAllSpriteFilters,
   updateSpritesFlipX,
@@ -73,15 +73,11 @@ export function updateGameStatePlay(
   updateSpritesheets(game);
   updateTimeSlowdown(game);
   updateAtThreeShots(game);
-  game.players.forEach((player, playerIndex) => {
-    updateChompFilterState(player, 0, game);
-  });
-  // updateBulletsFloat(game);
+  updateChompFilterState(game);
   updateFlagToucher(game);
   updateFlagOwner(game);
   updateFlagMovement(game);
   updateFlagColor(game);
-
   updateSuicide(game);
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);

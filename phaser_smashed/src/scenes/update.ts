@@ -102,53 +102,44 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       updateGameStatePlay(game, time, delta);
 
-      ////////////////////////////////
-      ///////// pausing => pause
-      ////////////////////////////////
       if (getIsAnyPlayerPausing(game)) {
+        ////////////////////////////////
+        ///////// pausing => pause
+        ////////////////////////////////
         setGameState(game, 'game-state-paused');
-      }
-
-      ////////////////////////////////
-      ///////// screenclear & deads++ => play
-      ////////////////////////////////
-      if (
+      } else if (
         getIsScreenClear(game) &&
         getHasNumDeadIncreased(game)
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
+        ////////////////////////////////
+        ///////// screenclear & deads++ => play
+        ////////////////////////////////
         setGameState(game, 'game-state-screen-clear');
-      }
-
-      ////////////////////////////////
-      ///////// firstblood & deads++ => play
-      ////////////////////////////////
-      if (
+      } else if (
         getIsFirstBlood(game) &&
         getHasNumDeadIncreased(game) &&
         game.players.length > 2
         // longEnoughGame(game.DURATION_PLAYER_DEAD, game)
       ) {
+        ////////////////////////////////
+        ///////// firstblood & deads++ => play
+        ////////////////////////////////
         setGameState(game, 'game-state-first-blood');
-      }
-
-      ////////////////////////////////
-      ///////// flag up => flag shot
-      ////////////////////////////////
-      if (getIsFlagShots(game)) {
+      } else if (getIsFlagShots(game)) {
+        ////////////////////////////////
+        ///////// flag up => flag shot
+        ////////////////////////////////
         setGameState(game, 'game-state-captured-flag');
-      }
-
-      ////////////////////////////////
-      ///////// GAME ENDING CONDITIONS
-      ////////////////////////////////
-      ///////// done shots => finished
-      ///////// time => finished
-      ////////////////////////////////
-      if (game.debug.ModeInfinity && game.shotsLeftCurr < 1) {
+      } else if (game.debug.ModeInfinity && game.shotsLeftCurr < 1) {
+        ////////////////////////////////
+        ///////// GAME ENDING CONDITIONS
+        ////////////////////////////////
+        ///////// done shots => finished
+        ///////// time => finished
+        ////////////////////////////////
         setGameState(game, 'game-state-finished');
-      }
-      if (!game.debug.ModeInfinity && game.gameSecondsClock < 1) {
+      } else if (!game.debug.ModeInfinity && game.gameSecondsClock < 1) {
         setGameState(game, 'game-state-finished');
       }
 
@@ -159,13 +150,13 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       setPlayWiiMusicWaitLong(game);
 
-      ////////////////////////////////
-      ///////// ready & duration => play
-      ////////////////////////////////
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
+        ////////////////////////////////
+        ///////// ready & duration => play
+        ////////////////////////////////
         setGameState(game, 'game-state-play');
       }
 
@@ -176,13 +167,13 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       setPlayWiiMusicWaitLong(game);
 
-      ////////////////////////////////
-      ///////// ready & duration => play
-      ////////////////////////////////
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
+        ////////////////////////////////
+        ///////// ready & duration => play
+        ////////////////////////////////
         setGameState(game, 'game-state-play');
       }
       break;
@@ -192,13 +183,13 @@ export function update(game: Game, time: number, delta: number): void {
       ////////////////////////////////
       setPlayWiiMusicWaitLong(game);
 
-      ////////////////////////////////
-      ///////// ready & duration => play
-      ////////////////////////////////
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
+        ////////////////////////////////
+        ///////// ready & duration => play
+        ////////////////////////////////
         setGameState(game, 'game-state-play');
       }
       break;
@@ -214,13 +205,13 @@ export function update(game: Game, time: number, delta: number): void {
     case 'game-state-paused':
       playWiiMusic(game);
 
-      ////////////////////////////////
-      ///////// ready & duration => play
-      ////////////////////////////////
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
         getIsAllPlayersReady(game)
       ) {
+        ////////////////////////////////
+        ///////// ready & duration => play
+        ////////////////////////////////
         setGameState(game, 'game-state-play');
       }
       break;
@@ -241,12 +232,12 @@ export function updatePlayers(game: Game): void {
         ///////// WHILE IN LOOP
         ////////////////////////////////
 
-        ////////////////////////////////
-        ///////// duration => alive
-        ////////////////////////////////
         if (
           getHasGameDurationPassedPlayer(player, game.DURATION_GAME_START, game)
         ) {
+          ////////////////////////////////
+          ///////// duration => alive
+          ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-alive', game);
         }
 
@@ -276,17 +267,15 @@ export function updatePlayers(game: Game): void {
         ///////// NOTE: handled in onHitHandlerAttackPhysical()
         ////////////////////////////////
 
-        ////////////////////////////////
-        ///////// attackEnergy hit => hurt
-        ////////////////////////////////
         if (getIsPlayerHitAttackEnergy(playerIndex, game)) {
+          ////////////////////////////////
+          ///////// attackEnergy hit => hurt
+          ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-hurt', game);
-        }
-
-        ////////////////////////////////
-        ///////// offscreen => dead
-        ////////////////////////////////
-        if (getIsPlayerOffscreen(player, game)) {
+        } else if (getIsPlayerOffscreen(player, game)) {
+          ////////////////////////////////
+          ///////// offscreen => dead
+          ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-dead', game);
         }
 
@@ -305,9 +294,6 @@ export function updatePlayers(game: Game): void {
         updateControllerMovement(player, game);
         updateAirDodge(player, game);
 
-        ////////////////////////////////
-        ///////// !offscreen && duration => alive
-        ////////////////////////////////
         if (
           !getIsPlayerOffscreen(player, game) &&
           getHasGameDurationPassedPlayer(
@@ -316,13 +302,14 @@ export function updatePlayers(game: Game): void {
             game
           )
         ) {
+          ////////////////////////////////
+          ///////// !offscreen && duration => alive
+          ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-alive', game);
-        }
-
-        ////////////////////////////////
-        ///////// offscreen => dead
-        ////////////////////////////////
-        if (getIsPlayerOffscreen(player, game)) {
+        } else if (getIsPlayerOffscreen(player, game)) {
+          ////////////////////////////////
+          ///////// offscreen => dead
+          ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-dead', game);
         }
 
@@ -350,9 +337,6 @@ export function updatePlayers(game: Game): void {
         break;
     }
   });
-
-  // print("game.input.gamepad.total", game.input.gamepad.total);
-  // game.loaded = true;
 }
 
 export function updateAttackPhysicals(
@@ -369,10 +353,10 @@ export function updateAttackPhysicals(
       ////////////////////////////////
       updatePhysicalAttackFollowsPlayer(player, game);
 
-      ////////////////////////////////
-      ///////// duration => cooldown
-      ////////////////////////////////
       if (getHasGameDurationPassedAttack(ap, ap.durationAttack, game)) {
+        ////////////////////////////////
+        ///////// duration => cooldown
+        ////////////////////////////////
         setAttackPhysicalState(
           ap,
           player,
@@ -387,10 +371,10 @@ export function updateAttackPhysicals(
       ///////// WHILE IN LOOP
       ////////////////////////////////
 
-      ////////////////////////////////
-      ///////// duration => off
-      ////////////////////////////////
       if (getHasGameDurationPassedAttack(ap, ap.durationCooldown, game)) {
+        ////////////////////////////////
+        ///////// duration => off
+        ////////////////////////////////
         setAttackPhysicalState(
           ap,
           player,
@@ -405,19 +389,10 @@ export function updateAttackPhysicals(
       ///////// WHILE IN LOOP
       ////////////////////////////////
 
-      ////////////////////////////////
-      ///////// button => on
-      ////////////////////////////////
-      // if (player.gamepad.A && !player.padPrev.A) {
-      //   setAttackPhysicalState(
-      //     attackPhysical,
-      //     player,
-      //     playerIndex,
-      //     "attackphysical-state-on",
-      //     game
-      //   );
-      // }
       if (player.padCurr.A && !player.padPrev.A) {
+        ////////////////////////////////
+        ///////// button => on
+        ////////////////////////////////
         setAttackPhysicalState(
           ap,
           player,

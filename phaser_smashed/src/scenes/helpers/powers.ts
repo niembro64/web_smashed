@@ -76,7 +76,13 @@ export function setChompFilterState(
   }
 }
 
-export function updateChompFilterState(
+export function updateChompFilterState(game: Game): void {
+  game.players.forEach((player) => {
+    updateChompFilterStatePlayer(player, 0, game);
+  });
+}
+
+export function updateChompFilterStatePlayer(
   player: Player,
   damage: number,
   game: Game

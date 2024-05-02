@@ -12,7 +12,7 @@ import {
   getHasBeenGameDurationSinceMoment,
   setChompPowerState,
   setPlayerPowerState,
-  updateChompFilterState,
+  updateChompFilterStatePlayer,
 } from './helpers/powers';
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
@@ -572,7 +572,11 @@ export function createHitboxOverlap(game: Game): void {
           return;
         }
 
-        updateChompFilterState(player, player.char.attackPhysical.damage, game);
+        updateChompFilterStatePlayer(
+          player,
+          player.char.attackPhysical.damage,
+          game
+        );
 
         if (!getDoesAnythingHaveDark(game)) {
           game.chomp.emitterDark.visible = true;
@@ -590,7 +594,11 @@ export function createHitboxOverlap(game: Game): void {
       player.char.attackEnergy.sprite,
       game.chomp.sprite,
       function () {
-        updateChompFilterState(player, player.char.attackEnergy.damage, game);
+        updateChompFilterStatePlayer(
+          player,
+          player.char.attackEnergy.damage,
+          game
+        );
         if (!getDoesAnythingHaveDark(game)) {
           game.chomp.emitterDark.visible = true;
           setChompPowerState('dark', game);
