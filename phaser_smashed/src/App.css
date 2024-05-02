@@ -1060,7 +1060,7 @@ h2 {
 .start-title {
   color: white;
   flex: 1;
-  width: 50%;
+  width: 45vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1070,7 +1070,7 @@ h2 {
   z-index: 1;
   min-width: 0; /* Allows shrinking below content's intrinsic size */
   min-height: 0; /* Allows the elements to shrink vertically */
-  overflow: show;
+  overflow: hide;
 }
 
 .start-title > div {
@@ -1082,6 +1082,7 @@ h2 {
   align-items: center;
   min-width: 0; /* Allows shrinking below content's intrinsic size */
   min-height: 0; /* Allows the elements to shrink vertically */
+  /* border: 10px dashed lime; */
 }
 .start-title > div > img {
   height: 100%;
@@ -1093,11 +1094,18 @@ h2 {
   font-size: 4vw;
   text-align: center;
   margin: 0;
+  width: 100%;
+
+  /* border: 10px dashed lime; */
 }
 
 .startTitleInit {
   transition: 1s ease-in-out;
   overflow: visible;
+  padding-bottom: 2.5vw;
+  /* padding-top: 1vw; */
+  border: 10px solid rgb(83, 83, 83);
+  background-color: rgba(227, 227, 227, 0.258);
 }
 .startTitleInit:hover {
   transition: 0.3s ease-in-out;
@@ -1120,8 +1128,11 @@ h2 {
   cursor: pointer;
 }
 .startTitleStart {
+  transition: 1s ease-in-out;
   animation: titleInitAnimation 2s ease-in-out both;
   overflow: visible;
+  padding-bottom: 0vw;
+  border: 10px solid rgba(255, 255, 255, 0);
 }
 .startTitleStart > h1 {
   transition: 3s ease-in-out;
@@ -1139,10 +1150,13 @@ h2 {
 }
 @keyframes titleInitAnimationLetters {
   0% {
-    filter: brightness(0);
+    filter: opacity(0);
+  }
+  70% {
+    filter: opacity(0);
   }
   100% {
-    filter: brightness(1);
+    filter: opacity(1);
   }
 }
 
@@ -1291,7 +1305,7 @@ h2 {
 }
 
 .loading-table-wrapper {
-flex: 0.3;
+  flex: 0.3;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -2036,4 +2050,9 @@ td > div:nth-child(2) {
 }
 .mobile-warning > span {
   padding-bottom: 3%;
+}
+
+#niemo-games {
+  font-size: 2.88vw;
+  margin-bottom: -1.8vw;
 }

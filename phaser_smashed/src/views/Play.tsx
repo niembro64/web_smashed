@@ -1288,11 +1288,14 @@ function Play() {
                   />
                 </div>
                 <h1
+                  id={'' + (webState === 'web-state-init' ? 'niemo-games' : '')}
                   onMouseDown={() => {
                     setWebState('web-state-setup');
                   }}
                 >
-                  {webState === 'web-state-init' ? 'START' : 'SMASHED'}
+                  {webState === 'web-state-init'
+                    ? 'PRESS START'
+                    : 'SMASHED'}
                 </h1>
               </div>
             </div>
