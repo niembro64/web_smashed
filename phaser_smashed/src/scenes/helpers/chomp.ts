@@ -1,5 +1,7 @@
 import Game, { SCREEN_DIMENSIONS } from '../Game';
+import { Player } from '../interfaces';
 import { getDistance, getNormalizedVector, getVector } from './damage';
+import { getNearestPlayerAliveFromXY } from './movement';
 import { getDoesAnythingHaveDark } from './powers';
 import {
   setBGMusicSpeedNormal,
@@ -61,6 +63,9 @@ export function updateChompVelocity(game: Game): void {
   } = chomp;
   const { body } = sprite;
 
+  ////////////////////////////
+  // Return chomp to circle
+  ////////////////////////////
   if (!isChompInsideCircle(game)) {
     const { x: xNew, y: yNew } = getNormalizedVector(
       sprite.x,
@@ -73,36 +78,35 @@ export function updateChompVelocity(game: Game): void {
     return;
   }
 
-  // const closestDistance = getChompClosestDistance(game);
-  // chomp.percentFramesAttack = Math.pow(
-  //   (1 - closestDistance / SCREEN_DIMENSIONS.WIDTH) * 0.9,
-  //   15
-  // );
-
   if (
+    !body.touching.down ||
     Math.random() >
-    (powerStateCurr.name === 'none' ? percentFramesWalk : percentFramesAttack)
+      (powerStateCurr.name === 'none' ? percentFramesWalk : percentFramesAttack)
   ) {
     return;
   }
 
-  if (body.touching.down) {
-    const randomX = Math.random() * radius * 2 - radius + originX;
-    const randomY = getCircleYfromX(randomX, game);
-    const { x: xNew, y: yNew } = getNormalizedVector(
-      sprite.x,
-      sprite.y,
-      randomX,
-      randomY
-    );
+  const p = getNearestPlayerAliveFromXY(body.position.x, body.position.y, game);
 
-    if (powerStateCurr.name === 'dark') {
-      chomp.soundAttack.play();
-      body.setVelocityY(-1 * Math.abs(yNew + 0.3) * 1000);
-      body.setVelocityX(xNew * 800);
-    } else {
-      body.setVelocityX(xNew * 110);
-    }
+  if (!p) {
+    return;
+  }
+
+  const { player } = p;
+
+  const { x: xNew, y: yNew } = getNormalizedVector(
+    sprite.x,
+    sprite.y,
+    player.char.sprite.x,
+    player.char.sprite.y
+  );
+
+  if (powerStateCurr.name === 'dark') {
+    chomp.soundAttack.play();
+    body.setVelocityY(-1 * Math.abs(yNew + 0.3) * 700 - 400);
+    body.setVelocityX(xNew * 400);
+  } else {
+    body.setVelocityX(xNew * 110);
   }
 }
 

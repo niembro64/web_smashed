@@ -166,7 +166,7 @@ export function setChompPowerState(
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_chomping');
       // filter to 0x000000
-      c.sprite.setTint(0x000000);
+      // c.sprite.setTint(0x000000);
       game.chomp.soundBBWoah.setRate(1);
       setMusicChompSheepRate(game, game.chomp.musicRates.chomp);
       break;

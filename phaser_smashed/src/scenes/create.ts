@@ -345,7 +345,7 @@ export function createChomp(game: Game): void {
       end: 3,
       first: 0,
     }),
-    frameRate: 30,
+    frameRate: 45,
     repeat: -1,
     yoyo: true,
   };
@@ -357,7 +357,7 @@ export function createChomp(game: Game): void {
       end: 3,
       first: 2,
     }),
-    frameRate: 10,
+    frameRate: 8,
     repeat: -1,
     yoyo: true,
   };
