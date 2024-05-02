@@ -402,8 +402,8 @@ function Play() {
         choosePlay();
         soundManager.startSound();
 
-        musicManager.smallTalkRef.current.play();
-        musicManager.monkeysRef.current.pause();
+        musicManager.musicSetupScreenRef.current.play();
+        musicManager.musicLoadingScreenRef.current.pause();
 
         setTopBarDivExists(true);
 
@@ -415,14 +415,14 @@ function Play() {
       case 'web-state-load':
         readyPlay();
         soundManager.startSound();
-        musicManager.smallTalkRef.current.pause();
-        musicManager.monkeysRef.current.play();
+        musicManager.musicSetupScreenRef.current.pause();
+        musicManager.musicLoadingScreenRef.current.play();
         setShowLoaderIntervalFunction();
         break;
       case 'web-state-game':
         goPlay();
-        musicManager.smallTalkRef.current.pause();
-        musicManager.monkeysRef.current.pause();
+        musicManager.musicSetupScreenRef.current.pause();
+        musicManager.musicLoadingScreenRef.current.pause();
         setTopBarDivExists(true);
         break;
 
