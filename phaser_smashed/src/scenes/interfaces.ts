@@ -611,8 +611,8 @@ export interface Chomp {
   originX: number;
   originY: number;
   radius: number;
-  percentFramesJump: number;
-  PERCENT_FRAMES_WALK: number;
+  percentFramesAttack: number;
+  percentFramesWalk: number;
   NUM_LINKS: number;
   MASS: number;
   links: ChompLink[];
@@ -701,7 +701,7 @@ export interface PowerStateFlag {
 export interface DarknessMoments {
   chomp: number;
   passed: number;
-  PERCENT_DARKNESS_JUMP: number;
+  percentExplosion: number;
   explosionsIndex: number;
   explosions: Explosion[];
 }

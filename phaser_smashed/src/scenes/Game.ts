@@ -785,8 +785,8 @@ export default class Game extends Phaser.Scene {
     originX: this.chompX,
     originY: this.chompY,
     radius: 150,
-    percentFramesJump: 0,
-    PERCENT_FRAMES_WALK: 0.01,
+    percentFramesAttack: 0,
+    percentFramesWalk: 0.01,
     NUM_LINKS: 12,
     explosionFPS: 20,
     MASS: 10,
@@ -809,7 +809,7 @@ export default class Game extends Phaser.Scene {
     darknessMoments: {
       chomp: 0,
       passed: 0,
-      PERCENT_DARKNESS_JUMP: 0.01,
+      percentExplosion: 0.01,
       explosionsIndex: 0,
       explosions: [
         { sprite: null, sound: null },

@@ -66,7 +66,7 @@ export function updateChompVelocity(game: Game): void {
     return;
   }
 
-  c.percentFramesJump = Math.pow(
+  c.percentFramesAttack = Math.pow(
     (1 - getChompClosestDistance(game) / SCREEN_DIMENSIONS.WIDTH) * 0.9,
     15
   );
@@ -74,8 +74,8 @@ export function updateChompVelocity(game: Game): void {
   if (
     Math.random() >
     (game.chomp.powerStateCurr.name === 'none'
-      ? c.PERCENT_FRAMES_WALK
-      : c.percentFramesJump)
+      ? c.percentFramesWalk
+      : c.percentFramesAttack)
   ) {
     return;
   }
@@ -94,9 +94,9 @@ export function updateChompVelocity(game: Game): void {
       if (c.powerStateCurr.name === 'dark') {
         c.soundAttack.play();
         b.setVelocityY(-1 * Math.abs(yNew + 0.3) * 1000);
-        b.setVelocityX(xNew * 500);
+        b.setVelocityX(xNew * 800);
       } else {
-        b.setVelocityX(xNew * 100);
+        b.setVelocityX(xNew * 80);
       }
     }
   }

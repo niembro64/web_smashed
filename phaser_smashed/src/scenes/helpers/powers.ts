@@ -163,28 +163,24 @@ export function setChompPowerState(
 }
 
 export function getDoesAnyPlayerHaveDark(game: Game): boolean {
-  let found = false;
-
-  game.players.forEach((player, playerIndex) => {
-    if (player.char.powerStateCurr.name === 'dark') {
-      found = true;
+  for (let i = 0; i < game.players.length; i++) {
+    if (game.players[i].char.powerStateCurr.name === 'dark') {
+      return true;
     }
-  });
+  }
 
-  return found;
+  return false;
 }
 
 export function getDoesAnythingHaveDark(game: Game): boolean {
-  let found = false;
-
   if (
     game.chomp.powerStateCurr.name === 'dark' ||
     getDoesAnyPlayerHaveDark(game)
   ) {
-    found = true;
+    return true;
   }
 
-  return found;
+  return false;
 }
 
 export function getHasBeenGameDurationSinceMoment(
@@ -203,7 +199,7 @@ export function updatePlayerDarknessEvents(game: Game): void {
     if (player.char.powerStateCurr.name === 'dark') {
       const s = player.char.sprite;
       const b = player.char.sprite.body;
-      const pj = game.chomp.darknessMoments.PERCENT_DARKNESS_JUMP;
+      const pj = game.chomp.darknessMoments.percentExplosion;
 
       if (Math.random() > 1 - pj) {
         const baseAmount = 10000;
