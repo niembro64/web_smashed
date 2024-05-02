@@ -55,7 +55,7 @@ export const debugInit: Debug = {
   NNHelpPit: true,
   NNHelpWall: true,
   MusicTrack: 0, // 0123
-  FlowerOnInit: false,
+  FlowerOnInit: true,
   FlowerRapidFire: false,
   FlowerFullScrn: false,
   FlowerGravity: true,
