@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game from '../Game';
+import Game, { SCREEN_DIMENSIONS } from '../Game';
 import {
   ChompFilterStateName,
   Player,

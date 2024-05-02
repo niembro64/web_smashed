@@ -47,7 +47,7 @@ export const debugInit: Debug = {
   TrophiesOnShots: false,
   TrophiesAlways: false,
   InstReplay: 0,
-  ChompVelocities: false,
+  ChompVelocities: true,
   ReplayFastSlow: false,
   GravityLight: false,
   NNHelpScreen: true,
@@ -61,6 +61,7 @@ export const debugInit: Debug = {
   FlowerGravity: true,
   FlowerBounceWall: true,
   Flower1000Balls: false,
+  BulletBillActive: false,
 };
 
 export const debugMax: Debug = {
@@ -124,6 +125,7 @@ export const debugMax: Debug = {
   FlowerGravity: true,
   FlowerBounceWall: true,
   Flower1000Balls: true,
+  BulletBillActive: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -188,4 +190,5 @@ export const showOptionOnMainScreenInit: Debug = {
   FlowerGravity: false,
   FlowerBounceWall: false,
   Flower1000Balls: false,
+  BulletBillActive: false,
 };

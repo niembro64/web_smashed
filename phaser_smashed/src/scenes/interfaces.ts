@@ -63,6 +63,7 @@ export interface Debug {
   FlowerGravity: boolean;
   FlowerBounceWall: boolean;
   Flower1000Balls: boolean;
+  BulletBillActive: boolean;
   [key: string]: any; // add index signature
 }
 

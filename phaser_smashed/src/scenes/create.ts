@@ -18,7 +18,7 @@ import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
 import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
-import { getFireFlowerDarkerColor } from './helpers/fireFlower';
+import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
 
 export function create(game: Game) {
@@ -185,7 +185,7 @@ export function createFireFlower(game: Game): void {
   ff.sprite.body.allowGravity = false;
   ff.sprite.setImmovable(false);
   ff.sprite.setOrigin(0.5, 0.5);
-  ff.sprite.setTint(getFireFlowerDarkerColor());
+  ff.sprite.setTint(getInactiveBackgroundTintColor());
 
   ff.attackBullets.bullets = new BulletsFireFlower(game);
 
@@ -315,7 +315,7 @@ export function createChomp(game: Game): void {
   });
 
   c.soundSheep = game.sound.add('chainChompSheep', {
-    volume: game.debug.DevMode ? 0 : 0.20,
+    volume: game.debug.DevMode ? 0 : 0.2,
     loop: true,
   });
 
@@ -1369,16 +1369,18 @@ export function createCollidersAEvAP(game: Game): void {
 export function createBulletBill(game: Game): void {
   const bb = game.bulletBillCombo;
 
-  bb.bullet.sprite = game.physics.add.sprite(
-    bb.bullet.posInit.x,
-    bb.bullet.posInit.y,
-    bb.bullet.srcImage
-  );
+  if (game.debug.BulletBillActive) {
+    bb.bullet.sprite = game.physics.add.sprite(
+      bb.bullet.posInit.x,
+      bb.bullet.posInit.y,
+      bb.bullet.srcImage
+    );
 
-  bb.bullet.sprite.setScale(bb.bullet.scale);
-  bb.bullet.sprite.setImmovable(true);
-  bb.bullet.sprite.body.allowGravity = false;
-  bb.bullet.sprite.setOrigin(0.5, 0.5);
+    bb.bullet.sprite.setScale(bb.bullet.scale);
+    bb.bullet.sprite.setImmovable(true);
+    bb.bullet.sprite.body.allowGravity = false;
+    bb.bullet.sprite.setOrigin(0.5, 0.5);
+  }
 
   bb.cannon.sprite = game.physics.add.sprite(
     bb.cannon.posInit.x,
@@ -1390,9 +1392,17 @@ export function createBulletBill(game: Game): void {
   bb.cannon.sprite.setImmovable(true);
   bb.cannon.sprite.body.allowGravity = false;
   bb.cannon.sprite.setOrigin(0.5, 0.5);
+  
+  if (!game.debug.BulletBillActive) {
+    bb.cannon.sprite.setTint(getInactiveBackgroundTintColor());
+  }
 }
 
 export function createBulletBillColliders(game: Game): void {
+  if (!game.debug.BulletBillActive) {
+    return;
+  }
+
   const bb = game.bulletBillCombo;
 
   game.physics.add.collider(bb.bullet.sprite, game.PLATFORMS);
