@@ -8,7 +8,6 @@ import {
   xyVector,
 } from '../interfaces';
 import { getNormalizedVector } from './damage';
-import { setMusicChompSheepPause, setMusicChompSheepResume } from './sound';
 import { setPlayerState } from './state';
 import { addToMotionSlowdown } from './time';
 

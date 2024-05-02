@@ -1,5 +1,6 @@
 import Game from '../Game';
 import { Player } from '../interfaces';
+import { setPlayerPowerState } from './powers';
 import {
   setBGMusicPause,
   setBGMusicResume,
@@ -89,57 +90,39 @@ export const updateFlagToucher = (game: Game): void => {
 };
 
 export const updateFlagMovement = (game: Game): void => {
-  const f = game.flag;
+  const { flag } = game;
 
-  if (f.completedPrev) {
+  if (flag.completedPrev) return;
+
+  flag.completedPrev = flag.completedCurr;
+
+  if (flag.completedCurr) {
+    flag.spriteFlagMover.body.setVelocityY(0);
     return;
   }
 
-  f.completedPrev = f.completedCurr;
+  const toucher = flag.toucherCurr.id;
+  const owner = flag.ownerCurr.id;
 
-  if (f.completedCurr) {
-    f.spriteFlagMover.body.setVelocityY(0);
-    return;
-  }
-
-  const toucher = game.flag.toucherCurr.id;
-  const owner = game.flag.ownerCurr.id;
-
-  if (owner !== null && f.spriteFlagMover.y < f.box.top) {
-    f.completedCurr = true;
-
+  if (owner !== null && flag.spriteFlagMover.y < flag.box.top) {
+    flag.completedCurr = true;
+    const playerOwner = game.players[owner];
+    setPlayerPowerState('none', playerOwner, game);
     setBGMusicResume(game);
     setMusicBoxPause(game);
-
-    if (f.completedCurr && !f.completedPrev) {
-      f.spriteFlagMover.body.setVelocityY(0);
-    }
-  }
-
-  // no one toucher
-  // no movement
-  if (toucher === null) {
-    f.spriteFlagMover.body.setVelocityY(0);
-    return;
-  }
-
-  // owner is toucher
-  // go up
-  if (toucher !== null && toucher === owner) {
-    const v = game.players[toucher].emitterDark.visible
-      ? -game.flag.flagSpeedDark
-      : -game.flag.flagSpeed;
-    f.spriteFlagMover.body.setVelocityY(v);
-    return;
-  }
-
-  // another player is toucher
-  // go down
-  if (toucher !== null && toucher !== owner) {
-    const v = game.players[toucher].emitterDark.visible
-      ? game.flag.flagSpeedDark
-      : game.flag.flagSpeed;
-    f.spriteFlagMover.body.setVelocityY(v);
+    flag.spriteFlagMover.body.setVelocityY(0);
+  } else if (toucher === null) {
+    flag.spriteFlagMover.body.setVelocityY(0);
+  } else if (toucher === owner) {
+    const speed = game.players[toucher].emitterDark.visible
+      ? -flag.flagSpeedDark
+      : -flag.flagSpeed;
+    flag.spriteFlagMover.body.setVelocityY(speed);
+  } else if (toucher !== owner) {
+    const speed = game.players[toucher].emitterDark.visible
+      ? flag.flagSpeedDark
+      : flag.flagSpeed;
+    flag.spriteFlagMover.body.setVelocityY(speed);
   }
 };
 
