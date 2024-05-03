@@ -530,9 +530,7 @@ function Play() {
 
     print('smashConfigAllowed', smashConfigAllowed);
 
-    const numTotal: number = smashConfigAllowed
-      .map((x: boolean) => (x ? 1 : 0) as number)
-      .reduce((a: number, b: number) => a + b);
+    const numTotal: number = smashConfigAllowed.filter((x) => x).length;
 
     if (!numTotal) {
       print('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', numTotal);
@@ -825,20 +823,17 @@ function Play() {
     soundManager.blipSound();
     const choices = [...smashConfig.players];
     const choice = choices[playerIndex];
-    let newCharacterId = choice.characterId + 1;
+    let newCharacterId = (choice.characterId + 1) % smashConfigOptions.length;
 
-    if (!debugState.DevMode && !debugState.AllowBlackChez) {
-      while (newCharacterId === 4 || newCharacterId === 5) {
-        newCharacterId++;
-      }
+    const numAllowed = smashConfigAllowed.filter((x) => x).length;
+
+    if (numAllowed === 0) {
+      print('numAllowed === 0');
+      return;
     }
 
-    if (!debugState.DevMode && !debugState.AllowKoopas && newCharacterId > 5) {
-      newCharacterId = 0;
-    }
-
-    if (newCharacterId > smashConfigOptions.length - 1) {
-      newCharacterId = 0;
+    while (!smashConfigAllowed[newCharacterId]) {
+      newCharacterId = (newCharacterId + 1) % smashConfigInitMax;
     }
 
     choice.characterId = newCharacterId as CharacterId;
