@@ -529,14 +529,20 @@ function Play() {
 
     print('smashConfigAllowed', smashConfigAllowed);
 
-    const numTotal: number = smashConfigAllowed.filter((x) => x).length;
-
-    if (!numTotal) {
-      print('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', numTotal);
+    const numTotalAllowed: number = smashConfigAllowed.filter((x) => x).length;
+    let inputArrayLocal = [...inputArray];
+    if (!numTotalAllowed) {
+      print('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', numTotalAllowed);
       return;
     }
 
-    print('numTotal', numTotal);
+    if (inputArrayLocal.filter((x) => x !== 0).length === 0) {
+      print('inputArrayToUse.filter((x) => x !== 0).length === 0');
+      inputArrayLocal = [3, 3, 3, 3];
+      setInputArray(inputArrayLocal);
+    }
+
+    print('numTotal', numTotalAllowed);
 
     const newPlayers: PlayerConfigSmall[] = [];
 
@@ -546,7 +552,7 @@ function Play() {
       let isAllowed: boolean = false;
 
       while (!isAllowed) {
-        newId = Math.floor(Math.random() * numTotal);
+        newId = Math.floor(Math.random() * numTotalAllowed);
 
         if (smashConfigAllowed[newId] && newId !== oldId) {
           isAllowed = true;
@@ -563,7 +569,7 @@ function Play() {
 
     let blipIndex = 0;
     for (let i = 0; i < 4; i++) {
-      if (inputArray[i] === 0) {
+      if (inputArrayLocal[i] === 0) {
         continue;
       }
 
@@ -1771,7 +1777,7 @@ function Play() {
             <div
               className="b-all-bots"
               id="dice"
-              onClick={() => {
+              onClick={async () => {
                 for (let i = 0; i < 3; i++) {
                   setTimeout(() => {
                     randomizeCharacters();
