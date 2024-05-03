@@ -443,6 +443,36 @@ function Play() {
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
+  const [smashConfigAllowed, setSmashConfigAllowed] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    let newSmashConfigAllowed: boolean[] = [];
+
+    for (let i = 0; i < 9; i++) {
+      smashConfigAllowed.push(false);
+    }
+
+    newSmashConfigAllowed[0] = true;
+    newSmashConfigAllowed[1] = true;
+    newSmashConfigAllowed[2] = true;
+    newSmashConfigAllowed[3] = true;
+
+    if (debugState.AllowChez) {
+      newSmashConfigAllowed[4] = true;
+    }
+
+    if (debugState.AllowBlackChez) {
+      newSmashConfigAllowed[5] = true;
+    }
+
+    if (debugState.AllowKoopas) {
+      newSmashConfigAllowed[6] = true;
+      newSmashConfigAllowed[7] = true;
+      newSmashConfigAllowed[8] = true;
+    }
+
+    setSmashConfigAllowed(smashConfigAllowed);
+  }, [debugState.AllowChez, debugState.AllowBlackChez, debugState.AllowKoopas]);
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     soundManager.blipSound();
@@ -490,32 +520,55 @@ function Play() {
     soundManager.dice();
 
     const numBase: number = 4;
-    const numChez: number = debugState.AllowChez ? 2 : 0;
+    const numChez: number = debugState.AllowChez ? 1 : 0;
+    const numBlackChez: number = debugState.AllowBlackChez ? 1 : 0;
     const numKoopas: number = debugState.AllowKoopas ? 3 : 0;
-    const numTotal: number = numBase + numChez + numKoopas;
+
+    const numTotal: number = numBase + numChez + numBlackChez + numKoopas;
+
+    print('numBase', numBase);
+    print('numChez', numChez);
+    print('numBlackChez', numBlackChez);
+    print('numKoopas', numKoopas);
+    print('numTotal', numTotal);
 
     const ratioBase: number = numBase / numTotal;
     const ratioChez: number = numChez / numTotal;
+    const ratioBlackChez: number = numBlackChez / numTotal;
 
     const baseUpperLimit: number = ratioBase;
-    const chezUpperLimit: number = baseUpperLimit + ratioChez;
+    const chezUpperLimit: number = ratioBase + ratioChez;
+    const blackChezUpperLimit: number = ratioBase + ratioChez + ratioBlackChez;
+
+    print('baseUpperLimit', baseUpperLimit);
+    print('chezUpperLimit', chezUpperLimit);
+    print('blackChezUpperLimit', blackChezUpperLimit);
+    print('remainder', 1 - blackChezUpperLimit);
 
     const newPlayers: PlayerConfigSmall[] = [];
 
     for (let i = 0; i < 4; i++) {
-      const rand: number = Math.random();
       const oldId: number = smashConfig.players[i].characterId;
       let newId: number | null = null;
 
       // too lazy to do it right
       do {
+        const rand: number = Math.random();
+
         if (rand < baseUpperLimit) {
-          newId = Math.floor(Math.random() * 4);
+          newId = Math.floor(Math.random() * numBase);
         } else if (rand < chezUpperLimit) {
-          newId = 4 + Math.floor(Math.random() * 2);
+          newId = numBase + Math.floor(Math.random() * numChez);
+        } else if (rand < blackChezUpperLimit) {
+          newId = numBase + numChez + Math.floor(Math.random() * numBlackChez);
         } else {
-          newId = 6 + Math.floor(Math.random() * 3);
+          newId =
+            numBase +
+            numChez +
+            numBlackChez +
+            Math.floor(Math.random() * numKoopas);
         }
+        print('newId', newId, 'oldId', oldId);
       } while (newId === oldId);
 
       print('new', newId, 'old', oldId);
@@ -763,7 +816,7 @@ function Play() {
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debugState.AllowChez || webState !== 'web-state-setup') {
+    if (debugState.AllowBlackChez || webState !== 'web-state-setup') {
       print('debugState.UseChez || webState !== start');
       return;
     }
@@ -789,17 +842,17 @@ function Play() {
     const choice = choices[playerIndex];
     let newCharacterId = choice.characterId + 1;
 
-    if (!debugState.DevMode && !debugState.AllowChez) {
+    if (!debugState.DevMode && !debugState.AllowBlackChez) {
       while (newCharacterId === 4 || newCharacterId === 5) {
         newCharacterId++;
       }
     }
 
-    if (newCharacterId > smashConfigOptions.length - 1) {
+    if (!debugState.DevMode && !debugState.AllowKoopas && newCharacterId > 5) {
       newCharacterId = 0;
     }
 
-    if (!debugState.DevMode && !debugState.AllowKoopas && newCharacterId > 5) {
+    if (newCharacterId > smashConfigOptions.length - 1) {
       newCharacterId = 0;
     }
 

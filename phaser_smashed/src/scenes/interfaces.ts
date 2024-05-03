@@ -38,6 +38,7 @@ export interface Debug {
   ConsoleLogConnected: boolean;
   LoadTimeExtra: boolean;
   AllowChez: boolean;
+  AllowBlackChez: boolean;
   AllowKoopas: boolean;
   ChompSlowMo: boolean;
   TypedLoadingText: boolean;

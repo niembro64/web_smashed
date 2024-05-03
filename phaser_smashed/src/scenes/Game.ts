@@ -1848,16 +1848,10 @@ export default class Game extends Phaser.Scene {
       char: {
         name: 'BlackChez',
         initializeCharPosition: {
-          // lookingRight: false,
           x: 200,
           y: 100,
         },
-        // color: {
-        //   primary: '#333333',
-        //   secondary: '#777777',
-        //   dark: '#333333',
-        //   light: '#ffffff',
-        // },
+
         colorFilterBlink: false,
         src: 'images/character_5_cropped.png',
         scaleCharSpriteReality: 3.1,

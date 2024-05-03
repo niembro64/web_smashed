@@ -36,7 +36,8 @@ export const debugInit: Debug = {
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
   AllowKoopas: true,
-  AllowChez: false,
+  AllowChez: true,
+  AllowBlackChez: true,
   TypedLoadingText: false,
   ChompSlowMo: false,
   ChompExplosions: true,
@@ -98,7 +99,8 @@ export const debugMax: Debug = {
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
   AllowKoopas: true,
-  AllowChez: true,
+  AllowBlackChez: true,
+  AllowChez: false,
   ChompSlowMo: true,
   TypedLoadingText: false,
   DevMode: true,
@@ -164,6 +166,7 @@ export const showOptionOnMainScreenInit: Debug = {
   UpdateLoopsNumSkip: 0, // 012
   LoadTimeExtra: false,
   AllowKoopas: false,
+  AllowBlackChez: false,
   AllowChez: false,
   ChompSlowMo: false,
   TypedLoadingText: false,
