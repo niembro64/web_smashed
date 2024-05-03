@@ -468,7 +468,7 @@ h2 {
 #optionDebug:active {
   background-color: var(--gray-light);
 }
-#optionStart {
+.optionStart {
   width: 100%;
   height: 5vw;
   background-color: var(--gray-dark);
@@ -483,11 +483,20 @@ h2 {
   border: 2px solid black;
 }
 
-#optionStart:hover {
+.optionStart:hover {
   background-color: var(--gray-medium);
 }
-#optionStart:active {
+.optionStart:active {
   background-color: var(--gray-light);
+}
+
+#option-start-true {
+  /* background-color: var(--gray-light); */
+  color: white;
+}
+#option-start-false {
+  /* background-color: transparent; */
+  color: var(--gray-lighter);
 }
 
 .key-start {

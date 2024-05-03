@@ -1377,7 +1377,14 @@ function Play() {
 
                 return (
                   <div
-                    id="optionStart"
+                    id={
+                      typeof value !== 'boolean'
+                        ? ''
+                        : value === true
+                        ? 'option-start-true'
+                        : 'option-start-false'
+                    }
+                    className={'optionStart'}
                     key={index}
                     onClick={(e: React.MouseEvent) => {
                       if (key === 'ModeInfinity') {
@@ -1446,8 +1453,8 @@ function Play() {
                             {typeof value !== 'boolean'
                               ? value
                               : value
-                              ? emoji.greenCheck
-                              : emoji.redX}
+                              ? ''
+                              : ''}
                           </p>
                         </div>
                         <p className="key-start">{key}</p>
@@ -1955,6 +1962,9 @@ function Play() {
                       >
                         <div className="debug-value">
                           <p>
+                            {/* {typeof value !== 'boolean'
+                              ? value
+                              : ''} */}
                             {typeof value !== 'boolean'
                               ? value
                               : value
