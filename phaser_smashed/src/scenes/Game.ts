@@ -844,6 +844,10 @@ export default class Game extends Phaser.Scene {
         x: this.bbXInit,
         y: this.bbYInitBullet,
       },
+      velInit: {
+        x: -10,
+        y: 0,
+      },
     },
     cannon: {
       scale: this.bbScale,

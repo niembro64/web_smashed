@@ -46,6 +46,7 @@ import {
   gravLightMultiplier,
   idColors,
   inputArrayInit,
+  inputArrayInitDebug,
   keyboardGroups,
   p1Keys,
   p2Keys,
@@ -442,7 +443,9 @@ function Play() {
   // 4 -> bot Neural-Network
   ///////////////////////////////////////
   ///////////////////////////////////////
-  const [inputArray, setInputArray] = useState<InputType[]>(inputArrayInit);
+  const [inputArray, setInputArray] = useState<InputType[]>(
+    debugInit.DevMode ? inputArrayInitDebug : inputArrayInit
+  );
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
   const [smashConfigAllowed, setSmashConfigAllowed] = useState<boolean[]>([]);
 
@@ -484,7 +487,7 @@ function Play() {
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     soundManager.blipSound();
-    setInputArray((prevArray: InputType[]) => [0, 0, 0, 0]);
+    setInputArray((prevArray: InputType[]) => inputArrayInit);
 
     newInputArray.forEach((item, index) => {
       if (item === 0) {

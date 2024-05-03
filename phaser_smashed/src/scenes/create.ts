@@ -1388,7 +1388,8 @@ export function createBulletBill(game: Game): void {
     bb.cannon.srcImage
   );
 
-  bb.cannon.sprite.setScale(bb.cannon.scale);
+  bb.cannon.sprite.setScale(0.01);
+  // bb.cannon.sprite.setScale(bb.cannon.scale);
   bb.cannon.sprite.setImmovable(true);
   bb.cannon.sprite.body.allowGravity = false;
   bb.cannon.sprite.setOrigin(0.5, 0.5);

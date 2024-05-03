@@ -3,7 +3,7 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   AutoStart: false,
   NNetTrainP1: false,
-  DevMode: false,
+  DevMode: true,
   DurSeconds: false,
   ModeInfinity: false,
   Minutes: 1, //01234567
@@ -62,7 +62,7 @@ export const debugInit: Debug = {
   FlowerGravity: true,
   FlowerBounceWall: true,
   Flower1000Balls: false,
-  BulletBillActive: false,
+  BulletBillActive: true,
 };
 
 export const debugMax: Debug = {

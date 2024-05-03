@@ -3,6 +3,7 @@ import {
   updateAttackEnergyOffscreen,
   updateRemoveAttackPhysicalsIfNotNearPlayer,
 } from '../helpers/attacks';
+import { updateBulletBill } from '../helpers/bulletBill';
 import { updateCamera } from '../helpers/camera';
 import { updateAtThreeShots, updateChomp } from '../helpers/chomp';
 import {
@@ -35,7 +36,11 @@ import {
   updateAttackEnergyFrictionWall,
   updatePadPreviousAndDebounced,
 } from '../helpers/pad';
-import { updateChompFilterState, updateChompFilterStatePlayer, updateChompStateLightIfHasBeenLongEnough } from '../helpers/powers';
+import {
+  updateChompFilterState,
+  updateChompFilterStatePlayer,
+  updateChompStateLightIfHasBeenLongEnough,
+} from '../helpers/powers';
 import {
   updateAllSpriteFilters,
   updateSpritesFlipX,
@@ -82,7 +87,8 @@ export function updateGameStatePlay(
   updateSuicide(game);
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);
-
+  updateBulletBill(game);
+  
   // UPDATE PLAYERS
   updatePlayers(game);
   // updatePhysicalAttackFollowPlayers(game);

@@ -546,6 +546,7 @@ export type BulletBillBullet = {
   diesOnHitbox: boolean;
   srcImage: any;
   posInit: Position;
+  velInit: Position;
 };
 
 export type BulletBillCannon = {
