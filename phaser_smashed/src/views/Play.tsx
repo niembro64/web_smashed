@@ -46,11 +46,13 @@ import {
   gravLightMultiplier,
   idColors,
   inputArrayInit,
+  inputArrayInitMax,
   keyboardGroups,
   p1Keys,
   p2Keys,
   quotes,
   smashConfigInit,
+  smashConfigInitMax,
   smashConfigOptions,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
@@ -448,8 +450,8 @@ function Play() {
   useEffect(() => {
     let newSmashConfigAllowed: boolean[] = [];
 
-    for (let i = 0; i < 9; i++) {
-      smashConfigAllowed.push(false);
+    for (let i = 0; i < smashConfigInitMax; i++) {
+      newSmashConfigAllowed.push(false);
     }
 
     newSmashConfigAllowed[0] = true;
@@ -471,8 +473,15 @@ function Play() {
       newSmashConfigAllowed[8] = true;
     }
 
-    setSmashConfigAllowed(smashConfigAllowed);
-  }, [debugState.AllowChez, debugState.AllowBlackChez, debugState.AllowKoopas]);
+    print('newSmashConfigAllowed', newSmashConfigAllowed);
+
+    setSmashConfigAllowed(newSmashConfigAllowed);
+  }, [
+    debugState.AllowChez,
+    debugState.AllowBlackChez,
+    debugState.AllowKoopas,
+    debugState,
+  ]);
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     soundManager.blipSound();
@@ -519,57 +528,33 @@ function Play() {
   const randomizeCharacters = () => {
     soundManager.dice();
 
-    const numBase: number = 4;
-    const numChez: number = debugState.AllowChez ? 1 : 0;
-    const numBlackChez: number = debugState.AllowBlackChez ? 1 : 0;
-    const numKoopas: number = debugState.AllowKoopas ? 3 : 0;
+    print('smashConfigAllowed', smashConfigAllowed);
 
-    const numTotal: number = numBase + numChez + numBlackChez + numKoopas;
+    const numTotal: number = smashConfigAllowed
+      .map((x: boolean) => (x ? 1 : 0) as number)
+      .reduce((a: number, b: number) => a + b);
 
-    print('numBase', numBase);
-    print('numChez', numChez);
-    print('numBlackChez', numBlackChez);
-    print('numKoopas', numKoopas);
+    if (!numTotal) {
+      print('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', numTotal);
+      return;
+    }
+
     print('numTotal', numTotal);
-
-    const ratioBase: number = numBase / numTotal;
-    const ratioChez: number = numChez / numTotal;
-    const ratioBlackChez: number = numBlackChez / numTotal;
-
-    const baseUpperLimit: number = ratioBase;
-    const chezUpperLimit: number = ratioBase + ratioChez;
-    const blackChezUpperLimit: number = ratioBase + ratioChez + ratioBlackChez;
-
-    print('baseUpperLimit', baseUpperLimit);
-    print('chezUpperLimit', chezUpperLimit);
-    print('blackChezUpperLimit', blackChezUpperLimit);
-    print('remainder', 1 - blackChezUpperLimit);
 
     const newPlayers: PlayerConfigSmall[] = [];
 
     for (let i = 0; i < 4; i++) {
       const oldId: number = smashConfig.players[i].characterId;
       let newId: number | null = null;
+      let isAllowed: boolean = false;
 
-      // too lazy to do it right
-      do {
-        const rand: number = Math.random();
+      while (!isAllowed) {
+        newId = Math.floor(Math.random() * numTotal);
 
-        if (rand < baseUpperLimit) {
-          newId = Math.floor(Math.random() * numBase);
-        } else if (rand < chezUpperLimit) {
-          newId = numBase + Math.floor(Math.random() * numChez);
-        } else if (rand < blackChezUpperLimit) {
-          newId = numBase + numChez + Math.floor(Math.random() * numBlackChez);
-        } else {
-          newId =
-            numBase +
-            numChez +
-            numBlackChez +
-            Math.floor(Math.random() * numKoopas);
+        if (smashConfigAllowed[newId] && newId !== oldId) {
+          isAllowed = true;
         }
-        print('newId', newId, 'oldId', oldId);
-      } while (newId === oldId);
+      }
 
       print('new', newId, 'old', oldId);
 

@@ -12,7 +12,9 @@ import Game from '../../scenes/Game';
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 
 export const inputArrayInit: InputType[] = [0, 2, 3, 0];
+export const inputArrayInitMax: number = 4;
 
+export const smashConfigInitMax: number = 8;
 export const smashConfigInit: SmashConfig = {
   players: [
     {

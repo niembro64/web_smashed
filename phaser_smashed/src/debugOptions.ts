@@ -36,7 +36,7 @@ export const debugInit: Debug = {
   UpdateLoopsNumSkip: 2, // 012
   LoadTimeExtra: true,
   AllowKoopas: true,
-  AllowChez: true,
+  AllowChez: false,
   AllowBlackChez: true,
   TypedLoadingText: false,
   ChompSlowMo: false,
