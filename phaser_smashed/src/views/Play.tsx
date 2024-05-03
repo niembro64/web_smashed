@@ -1293,9 +1293,7 @@ function Play() {
                     setWebState('web-state-setup');
                   }}
                 >
-                  {webState === 'web-state-init'
-                    ? 'PRESS START'
-                    : 'SMASHED'}
+                  {webState === 'web-state-init' ? 'PRESS START' : 'SMASHED'}
                 </h1>
               </div>
             </div>
@@ -1396,9 +1394,9 @@ function Play() {
                   <div className="player-choice" key={pIndex}>
                     {inputArray[pIndex] === 0 && (
                       <div
-                        className="player-char-blank"
+                        className="player-char"
                         onClick={() => {
-                          onClickRotateSelection(pIndex);
+                          onClickOscura(pIndex);
                         }}
                       >
                         <div className="startImageWrapper">
@@ -1422,9 +1420,7 @@ function Play() {
                                 alt="char"
                               />
                             )}
-                          <p className="player-char-image-name">
-                            {smashConfigOptions[p.characterId].name}
-                          </p>
+                          <p className="player-char-image-name"></p>
                         </div>
                       </div>
                     )}
@@ -1472,15 +1468,15 @@ function Play() {
                       )}
                     {inputArray[pIndex] === 0 && (
                       <div
-                        className="b-oscuro b-black"
+                        className="b-oscuro b-dark"
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
                       >
                         <span>Off</span>
-                        <div className="button-input-emoji">
+                        {/* <div className="button-input-emoji">
                           {emoji.cloudWhite}
-                        </div>
+                        </div> */}
                       </div>
                     )}
                     {inputArray[pIndex] === 1 && (
