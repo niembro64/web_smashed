@@ -20,7 +20,7 @@ export function setPhysicsAndMusicPause(game: Game): void {
   game.chomp.emitterDark.active = false;
   setAnimationsOff(game);
 
-  if (!game.debug.NNP1Train) {
+  if (!game.debug.NNetTrainP1) {
     if (game.chomp.soundSheep.isPlaying) {
       setMusicChompSheepPause(game);
       game.chomp.afterPauseResumeSoundSheep = true;
@@ -60,7 +60,7 @@ export function setPhysicsAndMusicResume(game: Game): void {
   game.chomp.emitterDark.active = true;
   setAnimationsOn(game);
 
-  if (!game.debug.NNP1Train && game.chomp.afterPauseResumeSoundSheep) {
+  if (!game.debug.NNetTrainP1 && game.chomp.afterPauseResumeSoundSheep) {
     setMusicChompSheepResume(game);
   }
   if (game.flag.afterPauseResumeMusicFlagMusicBox) {

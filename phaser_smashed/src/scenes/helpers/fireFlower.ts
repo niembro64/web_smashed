@@ -6,7 +6,7 @@ import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
 export const updateFireFlowerShooting = (game: Game) => {
-  if (game.debug.NNP1Train || game.fireFlower.attackBullets === null) {
+  if (game.debug.NNetTrainP1 || game.fireFlower.attackBullets === null) {
     return;
   }
 

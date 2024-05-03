@@ -2,7 +2,7 @@ import { Debug } from './scenes/interfaces';
 
 export const debugInit: Debug = {
   AutoStart: false,
-  NNP1Train: false,
+  NNetTrainP1: false,
   DevMode: false,
   DurSeconds: false,
   ModeInfinity: false,
@@ -51,10 +51,10 @@ export const debugInit: Debug = {
   ChompVelocities: true,
   ReplayFastSlow: false,
   GravityLight: false,
-  NNHelpScreen: true,
-  NNHelpCenterize: false,
-  NNHelpPit: true,
-  NNHelpWall: true,
+  NNetHelpScreen: true,
+  NNetHelpCenterize: false,
+  NNetHelpPit: true,
+  NNetHelpWall: true,
   MusicTrack: 0, // 0123
   FlowerOnInit: true,
   FlowerRapidFire: false,
@@ -112,11 +112,11 @@ export const debugMax: Debug = {
   BulletsFullScreen: true,
   TrophiesOnShots: true,
   TrophiesAlways: true,
-  NNP1Train: true,
-  NNHelpScreen: true, // 012
-  NNHelpCenterize: true,
-  NNHelpPit: true,
-  NNHelpWall: true,
+  NNetTrainP1: true,
+  NNetHelpScreen: true, // 012
+  NNetHelpCenterize: true,
+  NNetHelpPit: true,
+  NNetHelpWall: true,
   InstReplay: 3,
   ChompExplosions: true,
   ReplayFastSlow: true,
@@ -132,7 +132,7 @@ export const debugMax: Debug = {
 
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
-  NNP1Train: true,
+  NNetTrainP1: true,
   Level: 1, //0123456
   ModeInfinity: true,
   DurSeconds: false,
@@ -173,10 +173,10 @@ export const showOptionOnMainScreenInit: Debug = {
   DevMode: false,
   DevZoom: 0,
   CharOverride: false,
-  NNHelpScreen: false,
-  NNHelpCenterize: false,
-  NNHelpPit: false,
-  NNHelpWall: false,
+  NNetHelpScreen: false,
+  NNetHelpCenterize: false,
+  NNetHelpPit: false,
+  NNetHelpWall: false,
   CharOverrideId: 0,
   BulletsAllowGroups: false,
   BulletsFullScreen: false,

@@ -48,11 +48,11 @@ export interface Debug {
   BulletsFullScreen: boolean;
   TrophiesOnShots: boolean;
   TrophiesAlways: boolean;
-  NNP1Train: boolean;
-  NNHelpScreen: boolean;
-  NNHelpPit: boolean;
-  NNHelpWall: boolean;
-  NNHelpCenterize: boolean;
+  NNetTrainP1: boolean;
+  NNetHelpScreen: boolean;
+  NNetHelpPit: boolean;
+  NNetHelpWall: boolean;
+  NNetHelpCenterize: boolean;
   ChompExplosions: boolean;
   ChompVelocities: boolean;
   InstReplay: number;

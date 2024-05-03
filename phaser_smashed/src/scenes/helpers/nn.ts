@@ -19,7 +19,7 @@ export const nnConfigNN = {
 export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
-  if (!game.debug.NNP1Train) {
+  if (!game.debug.NNetTrainP1) {
     return;
   }
 
@@ -285,7 +285,7 @@ export const NNSetPlayerPadStatic = (
 };
 
 export const addPlayerOneNNObjectsStatic = (game: Game): void => {
-  if (!game.debug.NNP1Train) {
+  if (!game.debug.NNetTrainP1) {
     return;
   }
 
@@ -466,7 +466,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: Game
 ): void => {
-  if (!game.debug.NNP1Train) {
+  if (!game.debug.NNetTrainP1) {
     return;
   }
 

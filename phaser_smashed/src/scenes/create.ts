@@ -164,7 +164,7 @@ export function createPole(game: Game): void {
 }
 
 export function createFireFlower(game: Game): void {
-  if (game.debug.NNP1Train) {
+  if (game.debug.NNetTrainP1) {
     return;
   }
 
@@ -199,7 +199,7 @@ export function createFireFlower(game: Game): void {
 }
 
 export function createCollidersFireFlower(game: Game): void {
-  if (game.debug.NNP1Train) {
+  if (game.debug.NNetTrainP1) {
     return;
   }
 
@@ -299,7 +299,7 @@ export function createExplosions(game: Game): void {
 }
 
 export function createChomp(game: Game): void {
-  if (game.debug.NNP1Train) {
+  if (game.debug.NNetTrainP1) {
     return;
   }
 
@@ -568,7 +568,7 @@ export function createHitboxOverlap(game: Game): void {
       player.char.attackPhysical.sprite,
       game.chomp.sprite,
       function () {
-        if (game.debug.NNP1Train) {
+        if (game.debug.NNetTrainP1) {
           return;
         }
 
@@ -1236,7 +1236,7 @@ export function createAttackEnergies(game: Game): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      if (!game.debug.NNP1Train) {
+      if (!game.debug.NNetTrainP1) {
         for (
           let i = 0;
           i < game.fireFlower.attackBullets.bullets.getChildren().length;
@@ -1392,7 +1392,7 @@ export function createBulletBill(game: Game): void {
   bb.cannon.sprite.setImmovable(true);
   bb.cannon.sprite.body.allowGravity = false;
   bb.cannon.sprite.setOrigin(0.5, 0.5);
-  
+
   if (!game.debug.BulletBillActive) {
     bb.cannon.sprite.setTint(getInactiveBackgroundTintColor());
   }

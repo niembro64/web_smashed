@@ -53,7 +53,7 @@ import {
   smashConfigInit,
   smashConfigInitMax,
   smashConfigOptions,
-  workingControllersAmazon
+  workingControllersAmazon,
 } from './helpers/reactHelpers';
 
 function Play() {
@@ -119,7 +119,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.InstReplay === 0 || debugState.NNP1Train) {
+    if (debugState.InstReplay === 0 || debugState.NNetTrainP1) {
       setIsReplayHidden(true);
       return;
     }
@@ -629,7 +629,7 @@ function Play() {
       return;
     }
 
-    if (!debugState?.NNP1Train) {
+    if (!debugState?.NNetTrainP1) {
       return;
     }
     const debugStateCopy = { ...debugState };
@@ -660,7 +660,7 @@ function Play() {
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
-  }, [debugState?.NNP1Train]);
+  }, [debugState?.NNetTrainP1]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
@@ -1365,7 +1365,7 @@ function Play() {
                       if (typeof value === 'number') {
                         setDebugState((prevState) => ({
                           ...prevState,
-                          [key]: value - 1 < 0 ? getMaxFromKey(key) : value - 1,
+                          [key]: (value + 1) % getMaxFromKey(key),
                         }));
                         print(index, key, value);
                       }
@@ -1895,8 +1895,7 @@ function Play() {
                           if (typeof value === 'number') {
                             setDebugState((prevState) => ({
                               ...prevState,
-                              [key]:
-                                value - 1 < 0 ? getMaxFromKey(key) : value - 1,
+                              [key]: (value + 1) % getMaxFromKey(key),
                             }));
                             print(index, key, value);
                           }
