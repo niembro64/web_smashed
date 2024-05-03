@@ -1767,7 +1767,11 @@ function Play() {
               className="b-all-bots"
               id="dice"
               onClick={() => {
-                randomizeCharacters();
+                for (let i = 0; i < 3; i++) {
+                  setTimeout(() => {
+                    randomizeCharacters();
+                  }, i * blipDelay * 0.25);
+                }
               }}
             >
               {emoji.dice}
