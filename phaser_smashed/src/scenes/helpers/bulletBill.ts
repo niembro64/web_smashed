@@ -1,3 +1,4 @@
+import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 
 export function updateBulletBill(game: Game): void {
@@ -5,14 +6,16 @@ export function updateBulletBill(game: Game): void {
     return;
   }
 
-  if (!getResetBulletBillPosition(game)) {
+  if (!resetBulletBillPosition(game)) {
     return;
   }
 
-  game.bulletBillCombo.bullet.sprite.body.setPosition(
-    game.bulletBillCombo.bullet.posInit.x,
-    game.bulletBillCombo.bullet.posInit.y
-  );
+  print('updateBulletBill');
+
+  game.bulletBillCombo.bullet.sprite.body.position.x =
+    game.bulletBillCombo.bullet.posInit.x;
+  game.bulletBillCombo.bullet.sprite.body.position.y =
+    game.bulletBillCombo.bullet.posInit.y;
 
   game.bulletBillCombo.bullet.sprite.body.setVelocity(
     game.bulletBillCombo.bullet.velInit.x,
@@ -20,19 +23,29 @@ export function updateBulletBill(game: Game): void {
   );
 }
 
-export function getResetBulletBillPosition(game: Game): boolean {
+export function resetBulletBillPosition(game: Game): boolean {
+
+  print('resetBulletBillPosition')
   if (!game.debug.BulletBillActive) {
     return false;
   }
 
   if (
-    game.bulletBillCombo.bullet.sprite.body.y < 0 ||
-    game.bulletBillCombo.bullet.sprite.body.y > SCREEN_DIMENSIONS.HEIGHT ||
-    game.bulletBillCombo.bullet.sprite.body.x < 0 ||
-    game.bulletBillCombo.bullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH
+    game.bulletBillCombo.bullet.sprite.body.velocity.y === 0 ||
+    game.bulletBillCombo.bullet.sprite.body.velocity.x === 0
   ) {
     return true;
   }
 
-  return false;
+  if (
+    game.bulletBillCombo.bullet.sprite.body.position.y < 0 ||
+    game.bulletBillCombo.bullet.sprite.body.position.y >
+      SCREEN_DIMENSIONS.HEIGHT ||
+    game.bulletBillCombo.bullet.sprite.body.position.x < 0 ||
+    game.bulletBillCombo.bullet.sprite.body.position.x > SCREEN_DIMENSIONS.WIDTH
+  ) {
+    return false;
+  }
+
+  return true;
 }

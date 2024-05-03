@@ -433,6 +433,28 @@ function Play() {
     }
   }, [debugState.DevMode, webState]);
 
+  useEffect(() => {
+    switch (webState) {
+      case 'web-state-init':
+        break;
+      case 'web-state-setup':
+        setTimeout(() => {
+          setOpenEye(true);
+        }, 6000);
+        break;
+      case 'web-state-load':
+        setOpenEye(false);
+        break;
+      case 'web-state-game':
+        setTimeout(() => {
+          setOpenEye(true);
+        }, 3000);
+        break;
+      default:
+        break;
+    }
+  }, [webState]);
+
   ///////////////////////////////////////
   ///////////////////////////////////////
   // set initial inputs in inputArray

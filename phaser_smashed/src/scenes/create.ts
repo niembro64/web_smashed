@@ -1377,9 +1377,11 @@ export function createBulletBill(game: Game): void {
     );
 
     bb.bullet.sprite.setScale(bb.bullet.scale);
-    bb.bullet.sprite.setImmovable(true);
+    // bb.bullet.sprite.setImmovable(true);
     bb.bullet.sprite.body.allowGravity = false;
     bb.bullet.sprite.setOrigin(0.5, 0.5);
+    bb.bullet.sprite.body.setVelocityX(bb.bullet.velInit.x);
+    bb.bullet.sprite.body.setVelocityY(bb.bullet.velInit.y);
   }
 
   bb.cannon.sprite = game.physics.add.sprite(
@@ -1388,8 +1390,8 @@ export function createBulletBill(game: Game): void {
     bb.cannon.srcImage
   );
 
-  bb.cannon.sprite.setScale(0.01);
-  // bb.cannon.sprite.setScale(bb.cannon.scale);
+  // bb.cannon.sprite.setScale(0.01);
+  bb.cannon.sprite.setScale(bb.cannon.scale);
   bb.cannon.sprite.setImmovable(true);
   bb.cannon.sprite.body.allowGravity = false;
   bb.cannon.sprite.setOrigin(0.5, 0.5);

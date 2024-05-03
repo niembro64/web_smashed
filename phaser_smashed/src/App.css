@@ -106,7 +106,7 @@ h2 {
   height: 5%;
   width: 100%;
 
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 1);
 
   padding: 0% 3% 0% 3%;
 
@@ -116,6 +116,7 @@ h2 {
   align-items: center;
   z-index: 1;
   transition: 2s ease;
+  /* box-shadow: 0vw 0vw 1vw 1vw rgba(0, 0, 0, 1); */
 }
 
 .top-bar-eye-open > .link-tag,
@@ -800,7 +801,6 @@ h2 {
   align-items: center;
   cursor: pointer;
 }
-
 
 .b-start-inactive {
   justify-self: flex-end;
