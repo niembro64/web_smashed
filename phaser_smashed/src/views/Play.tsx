@@ -46,7 +46,6 @@ import {
   gravLightMultiplier,
   idColors,
   inputArrayInit,
-  inputArrayInitMax,
   keyboardGroups,
   p1Keys,
   p2Keys,
@@ -54,7 +53,7 @@ import {
   smashConfigInit,
   smashConfigInitMax,
   smashConfigOptions,
-  workingControllersAmazon,
+  workingControllersAmazon
 } from './helpers/reactHelpers';
 
 function Play() {
