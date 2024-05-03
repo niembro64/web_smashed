@@ -726,6 +726,12 @@ function Play() {
           break;
       }
     });
+
+    if (newPlayers.length === 0) {
+      print('newPlayers.length === 0');
+      return;
+    }
+
     const newSmashConfig: SmashConfig = { players: [...newPlayers] };
     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
@@ -1775,7 +1781,14 @@ function Play() {
             >
               {emoji.dice}
             </div>
-            <div className="b-start" onClick={onClickStartStartButton}>
+            <div
+              className={
+                inputArray.filter((x) => x !== 0).length === 0
+                  ? 'b-start-inactive'
+                  : 'b-start'
+              }
+              onClick={onClickStartStartButton}
+            >
               <span>START</span>
             </div>
           </div>
