@@ -4,11 +4,11 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 export function createPlatforms(game: Game): void {
   print(
     'createPlatforms',
-    game.debug.level,
+    game.debug.Level,
     'game.debug.Level',
-    game.debug.level
+    game.debug.Level
   );
-  switch (game.debug.level) {
+  switch (game.debug.Level) {
     case 0:
       createPlatforms0(game);
       break;
@@ -41,7 +41,7 @@ export function createPlatforms(game: Game): void {
       break;
     default:
       createPlatforms0(game);
-      print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.level);
+      print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.Level);
       break;
   }
 }

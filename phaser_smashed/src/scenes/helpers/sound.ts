@@ -130,7 +130,7 @@ export function setMusicBoxStop(game: Game): void {
 }
 
 export function setMusicChompSheepPlay(game: Game): void {
-  if (game.debug.nn_train_p1 || game.chomp.soundSheep.isPlaying) {
+  if (game.debug.NN_Train_P1 || game.chomp.soundSheep.isPlaying) {
     return;
   }
   game.chomp.soundSheep.play();
@@ -141,21 +141,21 @@ export function setMusicChompSheepRate(game: Game, semitones: number): void {
 }
 
 export function setMusicChompSheepPause(game: Game): void {
-  if (game.debug.nn_train_p1 || !game.chomp.soundSheep.isPlaying) {
+  if (game.debug.NN_Train_P1 || !game.chomp.soundSheep.isPlaying) {
     return;
   }
 
   game.chomp.soundSheep.pause();
 }
 export function setMusicChompSheepResume(game: Game): void {
-  if (game.debug.nn_train_p1 || game.chomp.soundSheep.isPlaying) {
+  if (game.debug.NN_Train_P1 || game.chomp.soundSheep.isPlaying) {
     return;
   }
 
   game.chomp.soundSheep.resume();
 }
 export function setMusicChompSheepStop(game: Game): void {
-  if (game.debug.nn_train_p1 || !game.chomp.soundSheep.isPlaying) {
+  if (game.debug.NN_Train_P1 || !game.chomp.soundSheep.isPlaying) {
     return;
   }
 

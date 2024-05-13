@@ -238,11 +238,11 @@ export function updatePlayerDarknessEvents(game: Game): void {
 
         addToMotionSlowdown(amount / baseAmount, game);
 
-        if (game.debug.chomp_explosions) {
+        if (game.debug.Chomp_Explosion) {
           playNextExplosion(s.x, s.y, game, amount);
           game.shake?.shake(amount / 20, amount / 100);
         }
-        if (game.debug.chomp_velocities) {
+        if (game.debug.Chomp_Velocities) {
           const { x, y } = getRandomUnitVector();
 
           player.char.damageCurr += amount / 100;

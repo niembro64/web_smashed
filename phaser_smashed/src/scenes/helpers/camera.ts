@@ -2,8 +2,8 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Loc } from '../interfaces';
 
 export function updateCamera(game: Game): void {
-  if (game.debug.dev_mode || !game.debug.use_camera) {
-    game.cameras.main.zoom = game.debug.dev_zoom / 10;
+  if (game.debug.Dev_Mode || !game.debug.Use_Camera) {
+    game.cameras.main.zoom = game.debug.Dev_Zoom / 10;
     return;
   }
   const cPlayer = getCameraPlayerStatus(game);

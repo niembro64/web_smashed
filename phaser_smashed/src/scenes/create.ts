@@ -164,7 +164,7 @@ export function createPole(game: Game): void {
 }
 
 export function createFireFlower(game: Game): void {
-  if (game.debug.nn_train_p1) {
+  if (game.debug.NN_Train_P1) {
     return;
   }
 
@@ -172,11 +172,11 @@ export function createFireFlower(game: Game): void {
 
   ff.sprite = game.physics.add.sprite(ff.posInit.x, ff.posInit.y, 'cannon');
 
-  ff.numUpdateIndexesToWait = game.debug.flower_rapid_fire
+  ff.numUpdateIndexesToWait = game.debug.Flower_Rapid_Fire
     ? ff.numUpdateIndexesToWaitFast
     : ff.numUpdateIndexesToWait;
 
-  ff.damage = game.debug.flower_rapid_fire
+  ff.damage = game.debug.Flower_Rapid_Fire
     ? ff.damage * (ff.numUpdateIndexesToWaitFast / ff.numUpdateIndexesToWait)
     : ff.damage;
 
@@ -199,7 +199,7 @@ export function createFireFlower(game: Game): void {
 }
 
 export function createCollidersFireFlower(game: Game): void {
-  if (game.debug.nn_train_p1) {
+  if (game.debug.NN_Train_P1) {
     return;
   }
 
@@ -214,7 +214,7 @@ export function createCollidersFireFlower(game: Game): void {
 
   game.physics.add.collider(aebs, game.chomp.sprite);
   aebs.children.iterate((child: any) => {
-    child.body.allowGravity = game.debug.flower_gravity;
+    child.body.allowGravity = game.debug.Flower_Gravity;
 
     game.physics.add.collider(child, game.PLATFORMS);
     game.physics.add.collider(child, game.chomp.sprite);
@@ -222,7 +222,7 @@ export function createCollidersFireFlower(game: Game): void {
 
     // bounce off of game world boundary
     // child.setCollideWorldBounds(false, false, false, false);
-    if (game.debug.flower_bounce_wall) {
+    if (game.debug.Flower_Bounce_Wall) {
       // bounce off world boundary
       child.setCollideWorldBounds(true, 1, 1);
     }
@@ -292,14 +292,14 @@ export function createExplosions(game: Game): void {
     e.sound = game.sound.add(
       eIndex % 2 === 0 ? 'boom_short_01' : 'boom_short_02',
       {
-        volume: game.debug.dev_mode ? 0 : 0.12,
+        volume: game.debug.Dev_Mode ? 0 : 0.12,
       }
     );
   });
 }
 
 export function createChomp(game: Game): void {
-  if (game.debug.nn_train_p1) {
+  if (game.debug.NN_Train_P1) {
     return;
   }
 
@@ -307,24 +307,24 @@ export function createChomp(game: Game): void {
   const b = c.block;
 
   c.soundAttack = game.sound.add('chainChompAttack', {
-    volume: game.debug.dev_mode ? 0 : 0.2,
+    volume: game.debug.Dev_Mode ? 0 : 0.2,
   });
 
   c.soundHurt = game.sound.add('chainChompHurt', {
-    volume: game.debug.dev_mode ? 0 : 0.2,
+    volume: game.debug.Dev_Mode ? 0 : 0.2,
   });
 
   c.soundSheep = game.sound.add('chainChompSheep', {
-    volume: game.debug.dev_mode ? 0 : 0.2,
+    volume: game.debug.Dev_Mode ? 0 : 0.2,
     loop: true,
   });
 
   c.soundBBBambalam = game.sound.add('bb_bam', {
-    volume: game.debug.dev_mode ? 0 : 0.4,
+    volume: game.debug.Dev_Mode ? 0 : 0.4,
   });
 
   c.soundBBWoah = game.sound.add('bb_woah', {
-    volume: game.debug.dev_mode ? 0 : 0.25,
+    volume: game.debug.Dev_Mode ? 0 : 0.25,
   });
 
   for (let i = 0; i < c.NUM_LINKS; i++) {
@@ -505,7 +505,7 @@ export function createSoundsGame(game: Game): void {
       'readyRepeat' + playerIndex.toString(),
       { volume: 0.3, loop: true }
     );
-    if (!game.debug.ready_sound_active) {
+    if (!game.debug.Ready_Sound_Active) {
       player.playerReadySound.volume = 0;
     }
   });
@@ -526,15 +526,15 @@ export function createSoundsGame(game: Game): void {
   });
   game.SOUND_PAUSED = game.sound.add('mii', { volume: 0.1, loop: true });
   game.soundBGM = game.sound.add('bgm', {
-    volume: game.debug.music_track === 3 ? 0.15 : 0.2,
+    volume: game.debug.Music_Track === 3 ? 0.15 : 0.2,
     loop: true,
   });
 
-  if (!game.debug.music_active) {
+  if (!game.debug.Music_Active) {
     game.soundBGM.volume = 0;
   }
 
-  if (!game.debug.ready_sound_active) {
+  if (!game.debug.Ready_Sound_Active) {
     game.SOUND_READY_REPEAT.volume = 0;
   }
 }
@@ -545,7 +545,7 @@ export function createShields(game: Game): void {
   });
 }
 export function createPlayerIdCircles(game: Game): void {
-  if (!game.debug.player_id_visible || game.debug.chars_colored) {
+  if (!game.debug.Player_ID_Visible || game.debug.Chars_Colored) {
     return;
   }
 
@@ -568,7 +568,7 @@ export function createHitboxOverlap(game: Game): void {
       player.char.attackPhysical.sprite,
       game.chomp.sprite,
       function () {
-        if (game.debug.nn_train_p1) {
+        if (game.debug.NN_Train_P1) {
           return;
         }
 
@@ -652,7 +652,7 @@ export function createHitboxOverlap(game: Game): void {
           player.char.sprite,
           pj.char.attackPhysical.sprite,
           function () {
-            if (game.debug.default_damage) {
+            if (game.debug.Default_Damage) {
               onHitHandlerAttackPhysical(
                 player,
                 playerIndex,
@@ -679,7 +679,7 @@ export function createHitboxOverlap(game: Game): void {
           player.char.sprite,
           pj.char.attackEnergy.sprite,
           function () {
-            if (game.debug.default_damage) {
+            if (game.debug.Default_Damage) {
               onHitHandlerAttackEnergy(
                 player,
                 playerIndex,
@@ -712,7 +712,7 @@ export function createHitboxOverlap(game: Game): void {
               game.physics.add.overlap(player.char.sprite, bullet, function () {
                 // p('BULLET OVERLAP', bi);
 
-                if (game.debug.default_damage) {
+                if (game.debug.Default_Damage) {
                   onHitHandlerBullets(
                     player,
                     playerIndex,
@@ -1202,7 +1202,7 @@ export function createAttackEnergies(game: Game): void {
 
   game.players.forEach((player, playerIndex) => {
     const ae = player.char.attackEnergy;
-    if (game.debug.bullets_allow_groups && ae.attackBullets) {
+    if (game.debug.Bullets_Allow_Groups && ae.attackBullets) {
       ae.attackBullets.bullets = new BulletsPlayer(game, player);
       const aebs = ae.attackBullets.bullets;
       const x = ae.attackBullets;
@@ -1218,13 +1218,13 @@ export function createAttackEnergies(game: Game): void {
       for (let i = 0; i < game.players.length; i++) {
         game.physics.add.collider(aebs, game.players[i].char.sprite);
 
-        if (game.debug.colliders_ab_v_ae) {
+        if (game.debug.Colliders_AB_v_AE) {
           game.physics.add.collider(
             aebs,
             game.players[i].char.attackEnergy.sprite
           );
         }
-        if (game.debug.colliders_ab_v_ap) {
+        if (game.debug.Colliders_AB_v_AP) {
           game.physics.add.collider(
             aebs,
             game.players[i].char.attackPhysical.sprite
@@ -1236,7 +1236,7 @@ export function createAttackEnergies(game: Game): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      if (!game.debug.nn_train_p1) {
+      if (!game.debug.NN_Train_P1) {
         for (
           let i = 0;
           i < game.fireFlower.attackBullets.bullets.getChildren().length;
@@ -1261,7 +1261,7 @@ export function createAttackEnergies(game: Game): void {
 }
 
 export function createCollidersPvP(game: Game): void {
-  if (!game.debug.colliders_P_v_P) {
+  if (!game.debug.Colliders_P_v_P) {
     return;
   }
 
@@ -1280,7 +1280,7 @@ export function createCollidersPvP(game: Game): void {
 }
 
 export function createCollidersPvAP(game: Game): void {
-  if (!game.debug.colliders_p_v_ap) {
+  if (!game.debug.Colliders_P_v_AP) {
     return;
   }
 
@@ -1301,7 +1301,7 @@ export function createCollidersPvAP(game: Game): void {
   });
 }
 export function createCollidersPvAE(game: Game): void {
-  if (!game.debug.colliders_p_v_ae) {
+  if (!game.debug.Colliders_P_v_AE) {
     return;
   }
 
@@ -1324,7 +1324,7 @@ export function createCollidersPvAE(game: Game): void {
   print('game.colliderPvAE', game.colliderPvAE);
 }
 export function createCollidersAEvAE(game: Game): void {
-  if (!game.debug.colliders_ae_v_ae) {
+  if (!game.debug.Colliders_AE_v_AE) {
     return;
   }
 
@@ -1345,7 +1345,7 @@ export function createCollidersAEvAE(game: Game): void {
   });
 }
 export function createCollidersAEvAP(game: Game): void {
-  if (!game.debug.colliders_ae_v_ap) {
+  if (!game.debug.Colliders_AE_v_AP) {
     return;
   }
 
@@ -1369,7 +1369,7 @@ export function createCollidersAEvAP(game: Game): void {
 export function createBulletBill(game: Game): void {
   const bb = game.bulletBillCombo;
 
-  if (game.debug.bullet_bill_active) {
+  if (game.debug.BulletBill_Active) {
     bb.bullet.sprite = game.physics.add.sprite(
       bb.bullet.posInit.x,
       bb.bullet.posInit.y,
@@ -1396,13 +1396,13 @@ export function createBulletBill(game: Game): void {
   bb.cannon.sprite.body.allowGravity = false;
   bb.cannon.sprite.setOrigin(0.5, 0.5);
 
-  if (!game.debug.bullet_bill_active) {
+  if (!game.debug.BulletBill_Active) {
     bb.cannon.sprite.setTint(getInactiveBackgroundTintColor());
   }
 }
 
 export function createBulletBillColliders(game: Game): void {
-  if (!game.debug.bullet_bill_active) {
+  if (!game.debug.BulletBill_Active) {
     return;
   }
 
@@ -1818,10 +1818,10 @@ export function createScoreboard(game: Game): void {
     '',
     {
       // font: "Arial 100px",
-      fontSize: game.debug.mode_infinity ? '45px' : '85px',
+      fontSize: game.debug.Mode_Infinity ? '45px' : '85px',
       // fontFamily: "'Courier New'",
       // fontFamily: game.FONT_DEFAULT_MONOSPACE,
-      fontFamily: game.debug.mode_infinity
+      fontFamily: game.debug.Mode_Infinity
         ? game.FONT_DEFAULT_NICE
         : game.FONT_DEFAULT_VIDEOGAME,
       // fontFamily: "'Press Start 2P'",
@@ -1935,7 +1935,7 @@ export function createScoreboard(game: Game): void {
 
 export function createCameras(game: Game): void {
   let debugAlpha = 1;
-  if (!game.debug.cameras_visible) {
+  if (!game.debug.Cameras_Visible) {
     debugAlpha = 0;
   }
 

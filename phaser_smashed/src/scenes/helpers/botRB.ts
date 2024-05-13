@@ -480,7 +480,7 @@ export function updateBotRules(
   // MOVE TO FLAG | TOUCHING
   //////////////////////
   if (
-    !(game.debug.nn_train_p1 && playerIndex === 0) &&
+    !(game.debug.NN_Train_P1 && playerIndex === 0) &&
     !game.flag.completedCurr
   ) {
     ///////////////////////

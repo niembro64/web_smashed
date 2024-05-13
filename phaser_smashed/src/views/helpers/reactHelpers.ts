@@ -208,11 +208,6 @@ export const configInit: Phaser.Types.Core.GameConfig = {
 // 🔴🟠🟡🟢🔵🟣🟤⚫⚪
 // ⌨🎮
 
-export const snakeCaseToTitleCase = (str: string): string => {
-  return str
-    .split('_')
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(' ');
+export const replaceUnderscoreWithSpace = (str: string): string => {
+  return str.replace(/_/g, ' ');
 };

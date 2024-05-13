@@ -100,7 +100,7 @@ export function updateBgLocation(game: Game, zoom: number, newY: number): void {
 }
 
 export function setSplashDataOn(game: Game): void {
-  if (game.debug.matrices_always) {
+  if (game.debug.Matrices_Always) {
     return;
   }
   game.splashesEndData.forEach((splash, splashIndex) => {
@@ -110,7 +110,7 @@ export function setSplashDataOn(game: Game): void {
 }
 
 export function setSplashDataOff(game: Game): void {
-  if (game.debug.matrices_always) {
+  if (game.debug.Matrices_Always) {
     return;
   }
   game.splashesEndData.forEach((splash, splashIndex) => {
@@ -155,11 +155,11 @@ export function updateClockTextUpper(
   // game.cameraMover.char.sprite.x + game.textLocationLROffset * (1 / zoom);
   game.scoreBoardTimeGame.y = newUpperY;
 
-  if (game.debug.mode_infinity) {
+  if (game.debug.Mode_Infinity) {
     game.scoreBoardTimeGame.setScale(1 / zoom, 1 / zoom);
     let shotsString: string = '';
 
-    for (let i = 0; i < game.debug.shots - game.shotsLeftCurr; i++) {
+    for (let i = 0; i < game.debug.Shots - game.shotsLeftCurr; i++) {
       shotsString += emoji.redX;
     }
 
@@ -217,7 +217,7 @@ export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
     game.gameState.nameCurr === 'game-state-first-blood' ||
     game.gameState.nameCurr === 'game-state-captured-flag'
   ) {
-    if (game.debug.tropies_on_shots || game.debug.trophies_always) {
+    if (game.debug.Trophies_On_Shots || game.debug.Trophies_Always) {
       ecs.forEach((ec, ecIndex) => {
         ec.sprite.setAlpha(0.5);
       });
@@ -228,7 +228,7 @@ export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
       return;
     }
   } else {
-    if (game.debug.trophies_always) {
+    if (game.debug.Trophies_Always) {
       ecs.forEach((ec, ecIndex) => {
         ec.sprite.setAlpha(0.5);
       });
@@ -353,7 +353,7 @@ export function updateDamageShotsText(
       .setScale(1 / zoom, 1 / zoom)
       .setText(
         Math.round(
-          game.debug.health_inverted
+          game.debug.Health_Inverted
             ? (100 / (100 + player.char.damageCurr)) * 100
             : player.char.damageCurr
         ).toString() +

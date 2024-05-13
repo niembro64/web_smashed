@@ -24,16 +24,16 @@ export function preload(game: Game): void {
   game.smashConfig = game.game.registry.get('smashConfig');
   game.debug = game.game.registry.get('debug');
   print('this.smashConfig', game.smashConfig);
-  game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.gravity_light ? 0.6 : 1;
-  game.BASE_PLAYER_JUMP_WALL *= game.debug.gravity_light ? 0.6 : 1;
+  game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.Gravity_Light ? 0.6 : 1;
+  game.BASE_PLAYER_JUMP_WALL *= game.debug.Gravity_Light ? 0.6 : 1;
 
   if (game.smashConfig) {
     game.durationPlayerDead = game.smashConfig.players.length * 2000;
     game.playerChoicesCharacterType = [];
     game.playerChoicesInputType = [];
     game.smashConfig.players.forEach((player, playerIndex) => {
-      if (game.debug.char_override) {
-        game.playerChoicesCharacterType.push(game.debug.char_override_id);
+      if (game.debug.Char_Override) {
+        game.playerChoicesCharacterType.push(game.debug.Char_Override_ID);
       } else {
         game.playerChoicesCharacterType.push(player.characterId);
       }
@@ -41,8 +41,8 @@ export function preload(game: Game): void {
     });
   }
   game.gameSecondsClock =
-    game.debug.minutes * (game.debug.dur_seconds ? 1 : 60);
-  if (!game.debug.friction_air_active) {
+    game.debug.Minutes * (game.debug.Dur_Seconds ? 1 : 60);
+  if (!game.debug.Friction_Air_Active) {
     game.players.forEach((iPlayer, i) => {
       iPlayer.char.friction_air = 0;
     });
@@ -54,7 +54,7 @@ export function preload(game: Game): void {
     hatPos += hatAdder * 2;
   }
 
-  game.shotsLeftCurr = game.debug.shots;
+  game.shotsLeftCurr = game.debug.Shots;
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   game.nnNet = game.nnNet.fromJSON(nnJsonNN);
@@ -135,7 +135,7 @@ export function preload(game: Game): void {
     pathSounds + game.FILE_SOUNDS.FLAG_MUSIC_BOX
   );
 
-  switch (game.debug.music_track) {
+  switch (game.debug.Music_Track) {
     case 0:
       game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DREAM);
       break;
