@@ -2068,7 +2068,7 @@ function Play() {
                       </div>
                       <div className="rules-li">
                         <div className="rules-big">Capture The Flag</div>
-                        <p className="rules-small">If you rased the flag...</p>
+                        <p className="rules-small">If you raised the flag...</p>
                         <p className="rules-small rules-end">
                           All others each take a shot.
                         </p>
