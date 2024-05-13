@@ -6,11 +6,11 @@ import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
 export const updateFireFlowerShooting = (game: Game) => {
-  if (game.debug.NNetTrainP1 || game.fireFlower.attackBullets === null) {
+  if (game.debug.nn_train_p1 || game.fireFlower.attackBullets === null) {
     return;
   }
 
-  if (game.debug.FlowerOnInit || game.flag.completedCurr) {
+  if (game.debug.flower_on_init || game.flag.completedCurr) {
     game.fireFlower.sprite.setTint(0xffffff);
 
     if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {
@@ -45,7 +45,7 @@ export const updateFireFlowerShooting = (game: Game) => {
     if (
       distance === null ||
       distance >
-        (game.debug.FlowerFullScrn
+        (game.debug.flower_full_screen
           ? SCREEN_DIMENSIONS.WIDTH
           : game.fireFlower.shootingDistanceThreshold)
     ) {

@@ -533,7 +533,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
   let b = player.char.sprite.body;
   let s = player.char.sprite;
   if (
-    game.debug.BulletsAllowGroups &&
+    game.debug.bullets_allow_groups &&
     ae.attackBullets !== null &&
     ae.attackBullets.bullets !== null
   ) {
@@ -741,7 +741,7 @@ export function updatePadPreviousAndDebounced(game: Game): void {
 }
 
 export function debugUpdateControllersPrintConnected(game: Game): void {
-  if (!game.debug.ConsoleLogConnected) {
+  if (!game.debug.console_log_connected) {
     return;
   }
   game.players.forEach((player, playerIndex) => {
@@ -814,7 +814,7 @@ export function updateControllerMovement(player: Player, game: Game): void {
 export function debugUpdatePrintAllControllerButtonsWhenActive(
   game: Game
 ): void {
-  if (!game.debug.ConsoleLogButtons) {
+  if (!game.debug.console_log_buttons) {
     return;
   }
   // Buttons
@@ -858,4 +858,3 @@ export function debugUpdatePrintAllControllerButtonsWhenActive(
     }
   });
 }
-

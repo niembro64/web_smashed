@@ -5,7 +5,7 @@ import { getIsAttackEnergyOffscreen } from './attacks';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
 export function updateCirclesLocations(game: Game): void {
-  if (!game.debug.PlayerIdVisible || game.debug.CharsColored) {
+  if (!game.debug.player_id_visible || game.debug.chars_colored) {
     return;
   }
 
@@ -29,7 +29,7 @@ export function updateTable(game: Game): void {
 }
 
 export function updateAttackEnergyWrapScreen(game: Game): void {
-  if (!game.debug.AEWrapScreen) {
+  if (!game.debug.ae_wrap_screen) {
     return;
   }
   game.players.forEach((player) => {
@@ -162,7 +162,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
 
     // // horizontal stuff WAS TOUCHING
     if (
-      game.debug.WallJumpsActive &&
+      game.debug.wall_jumps_active &&
       player.char.lastDirectionTouched === 'left' &&
       hasPlayerTouchedWallRecently(player)
     ) {
@@ -175,7 +175,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
     }
 
     if (
-      game.debug.WallJumpsActive &&
+      game.debug.wall_jumps_active &&
       player.char.lastDirectionTouched === 'right' &&
       hasPlayerTouchedWallRecently(player)
     ) {
@@ -205,7 +205,7 @@ export function updateJumpFloat(player: Player, game: Game): void {
 }
 
 export function updateFrictionWallY(player: Player, game: Game): void {
-  if (!game.debug.WallJumpsActive) {
+  if (!game.debug.wall_jumps_active) {
     return;
   }
 
@@ -221,7 +221,7 @@ export function updateFrictionWallY(player: Player, game: Game): void {
 }
 
 export function updateFrictionAirY(player: Player, game: Game): void {
-  if (!game.debug.FrictionAirActive) {
+  if (!game.debug.friction_air_active) {
     return;
   }
 
@@ -233,7 +233,7 @@ export function updateFrictionAirY(player: Player, game: Game): void {
 }
 
 export function updateFrictionAirX(player: Player, game: Game): void {
-  if (!game.debug.FrictionAirActive) {
+  if (!game.debug.friction_air_active) {
     return;
   }
 

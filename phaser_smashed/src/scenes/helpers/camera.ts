@@ -2,8 +2,8 @@ import Game, { SCREEN_DIMENSIONS } from '../Game';
 import { Loc } from '../interfaces';
 
 export function updateCamera(game: Game): void {
-  if (game.debug.DevMode || !game.debug.UseCamera) {
-    game.cameras.main.zoom = game.debug.DevZoom / 10;
+  if (game.debug.dev_mode || !game.debug.use_camera) {
+    game.cameras.main.zoom = game.debug.dev_zoom / 10;
     return;
   }
   const cPlayer = getCameraPlayerStatus(game);
@@ -201,7 +201,10 @@ export function getCameraMoverStatus(game: Game): Loc {
     game.cameraMoverZoomStatusKeeper * game.ZOOM_RATIO_SLOW +
     Math.max(getPlayerZoom(game), 1) * (1 - game.ZOOM_RATIO_SLOW);
 
-  const percentCloseToCenter = Math.pow(1 / game.cameraMoverZoomStatusKeeper, 3);
+  const percentCloseToCenter = Math.pow(
+    1 / game.cameraMoverZoomStatusKeeper,
+    3
+  );
 
   let x =
     spritePlayer.x * (1 - percentCloseToCenter) +

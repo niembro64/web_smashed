@@ -79,8 +79,8 @@ export function setPreUpdate(game: Game): void {
 export function update(game: Game, time: number, delta: number): void {
   game.updateIndex++;
 
-  if (game.debug.UpdateLoopsNumSkip > 0) {
-    game.debug.UpdateLoopsNumSkip--;
+  if (game.debug.update_loops_num_skip > 0) {
+    game.debug.update_loops_num_skip--;
     return;
   }
 
@@ -131,7 +131,7 @@ export function update(game: Game, time: number, delta: number): void {
         ///////// flag up => flag shot
         ////////////////////////////////
         setGameState(game, 'game-state-captured-flag');
-      } else if (game.debug.ModeInfinity && game.shotsLeftCurr < 1) {
+      } else if (game.debug.mode_infinity && game.shotsLeftCurr < 1) {
         ////////////////////////////////
         ///////// GAME ENDING CONDITIONS
         ////////////////////////////////
@@ -139,7 +139,7 @@ export function update(game: Game, time: number, delta: number): void {
         ///////// time => finished
         ////////////////////////////////
         setGameState(game, 'game-state-finished');
-      } else if (!game.debug.ModeInfinity && game.gameSecondsClock < 1) {
+      } else if (!game.debug.mode_infinity && game.gameSecondsClock < 1) {
         setGameState(game, 'game-state-finished');
       }
 
@@ -327,7 +327,7 @@ export function updatePlayers(game: Game): void {
         if (
           getHasGameDurationPassedPlayer(
             player,
-            game.debug.NNetTrainP1 ? 0 : game.durationPlayerDead,
+            game.debug.nn_train_p1 ? 0 : game.durationPlayerDead,
             game
           )
         ) {

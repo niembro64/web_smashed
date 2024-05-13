@@ -2,7 +2,7 @@ import { print } from '../../views/client';
 import Game, { SCREEN_DIMENSIONS } from '../Game';
 
 export function updateBulletBill(game: Game): void {
-  if (!game.debug.BulletBillActive) {
+  if (!game.debug.bullet_bill_active) {
     return;
   }
 
@@ -24,9 +24,8 @@ export function updateBulletBill(game: Game): void {
 }
 
 export function resetBulletBillPosition(game: Game): boolean {
-
-  print('resetBulletBillPosition')
-  if (!game.debug.BulletBillActive) {
+  print('resetBulletBillPosition');
+  if (!game.debug.bullet_bill_active) {
     return false;
   }
 

@@ -10,7 +10,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.screen = SCREEN_DIMENSIONS;
     this.debug = game.debug;
     this.key = key;
-    this.bouncingFullScreen = game.debug?.FlowerFullScrn || false;
+    this.bouncingFullScreen = game.debug?.flower_full_screen || false;
     this.shootingDistanceThreshold = game.fireFlower.shootingDistanceThreshold;
   }
   shootingDistanceThreshold: number = 0;
@@ -168,7 +168,7 @@ export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
   constructor(game: Game) {
     super(game.physics.world, game);
 
-    const numBullets = game.debug.Flower1000Balls
+    const numBullets = game.debug.flower_1000_balls
       ? 1000
       : game.fireFlower.attackBullets?.NUMBER_BULLETS || 0;
 

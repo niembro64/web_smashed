@@ -54,6 +54,7 @@ import {
   smashConfigInit,
   smashConfigInitMax,
   smashConfigOptions,
+  snakeCaseToTitleCase,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
 
@@ -95,7 +96,7 @@ function Play() {
     const pEnd = duration;
     let current = video.currentTime;
 
-    if (debugState.ReplayFastSlow) {
+    if (debugState.replay_fast_slow) {
       if (current >= pStart && current < pMid) {
         return;
       }
@@ -109,7 +110,7 @@ function Play() {
     if (current >= pEnd) {
       current = pStart;
       video.currentTime = current;
-      if (debugState.ReplayFastSlow) {
+      if (debugState.replay_fast_slow) {
         video.playbackRate = 2;
       } else {
         video.playbackRate = 1;
@@ -120,7 +121,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.InstReplay === 0 || debugState.NNetTrainP1) {
+    if (debugState.inst_replay === 0 || debugState.nn_train_p1) {
       setIsReplayHidden(true);
       return;
     }
@@ -137,15 +138,15 @@ function Play() {
       const stream = canvas.captureStream();
       const mediaRecorder = new MediaRecorder(
         stream,
-        debugState.InstReplay === 1
+        debugState.inst_replay === 1
           ? {
               videoBitsPerSecond: 20000,
             }
-          : debugState.InstReplay === 2
+          : debugState.inst_replay === 2
           ? {
               videoBitsPerSecond: 100000,
             }
-          : debugState.InstReplay === 3
+          : debugState.inst_replay === 3
           ? {
               // FULL QUALITY
             }
@@ -369,7 +370,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.DevMode) {
+    if (debugState.dev_mode) {
       setWebState('web-state-setup');
     }
   }, []);
@@ -388,7 +389,7 @@ function Play() {
             () => {
               setWebState('web-state-game');
             },
-            debugState.DevMode ? 0 : 1
+            debugState.dev_mode ? 0 : 1
           );
           clearInterval(myInterval);
         }
@@ -431,7 +432,7 @@ function Play() {
       default:
         break;
     }
-  }, [debugState.DevMode, webState]);
+  }, [debugState.dev_mode, webState]);
 
   useEffect(() => {
     switch (webState) {
@@ -466,7 +467,7 @@ function Play() {
   ///////////////////////////////////////
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(
-    debugInit.DevMode ? inputArrayInitDebug : inputArrayInit
+    debugInit.dev_mode ? inputArrayInitDebug : inputArrayInit
   );
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
   const [smashConfigAllowed, setSmashConfigAllowed] = useState<boolean[]>([]);
@@ -483,15 +484,15 @@ function Play() {
     newSmashConfigAllowed[2] = true;
     newSmashConfigAllowed[3] = true;
 
-    if (debugState.AllowChez) {
+    if (debugState.allow_chez) {
       newSmashConfigAllowed[4] = true;
     }
 
-    if (debugState.AllowBlackChez) {
+    if (debugState.allow_black_chez) {
       newSmashConfigAllowed[5] = true;
     }
 
-    if (debugState.AllowKoopas) {
+    if (debugState.allow_koopas) {
       newSmashConfigAllowed[6] = true;
       newSmashConfigAllowed[7] = true;
       newSmashConfigAllowed[8] = true;
@@ -501,9 +502,9 @@ function Play() {
 
     setSmashConfigAllowed(newSmashConfigAllowed);
   }, [
-    debugState.AllowChez,
-    debugState.AllowBlackChez,
-    debugState.AllowKoopas,
+    debugState.allow_chez,
+    debugState.allow_black_chez,
+    debugState.allow_koopas,
     debugState,
   ]);
 
@@ -617,7 +618,7 @@ function Play() {
     return numActiveBeforeMe;
   };
   useEffect(() => {
-    if (debugState.AutoStart && webState === 'web-state-setup') {
+    if (debugState.auto_start && webState === 'web-state-setup') {
       setTimeout(() => {
         onClickStartStartButton();
       }, 200);
@@ -639,15 +640,16 @@ function Play() {
         arcade: {
           gravity: {
             y:
-              baseGravity * (debugState.GravityLight ? gravLightMultiplier : 1),
+              baseGravity *
+              (debugState.gravity_light ? gravLightMultiplier : 1),
           },
-          debug: debugState.DevMode,
+          debug: debugState.dev_mode,
         },
       },
     };
 
     setConfig(newConfig);
-  }, [debugState.DevMode, debugState.GravityLight]);
+  }, [debugState.dev_mode, debugState.gravity_light]);
 
   const [prevent, setPrevent] = useState<boolean>(true);
   useEffect(() => {
@@ -660,7 +662,7 @@ function Play() {
       return;
     }
 
-    if (!debugState?.NNetTrainP1) {
+    if (!debugState?.nn_train_p1) {
       return;
     }
     const debugStateCopy = { ...debugState };
@@ -687,11 +689,11 @@ function Play() {
       ],
     };
 
-    debugStateCopy.Minutes = 7;
+    debugStateCopy.minutes = 7;
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
-  }, [debugState?.NNetTrainP1]);
+  }, [debugState?.nn_train_p1]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
@@ -766,7 +768,7 @@ function Play() {
     const newSmashConfig: SmashConfig = { players: [...newPlayers] };
     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
-    if (!debugState.LoadTimeExtra || debugState.DevMode) {
+    if (!debugState.load_time_extra || debugState.dev_mode) {
       setTimeoutQuotesLengthStart = 0;
     }
     const myMoment = moment();
@@ -835,7 +837,7 @@ function Play() {
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debugState.AllowBlackChez || webState !== 'web-state-setup') {
+    if (debugState.allow_black_chez || webState !== 'web-state-setup') {
       print('debugState.UseChez || webState !== start');
       return;
     }
@@ -1229,8 +1231,8 @@ function Play() {
 
   return (
     <div id="top-level" className="over-div">
-      {!debugState.DevMode &&
-        debugState.ShowHelperKeyboard &&
+      {!debugState.dev_mode &&
+        debugState.show_helper_keyboard &&
         webState !== 'web-state-setup' &&
         numKeyboards === 2 &&
         !bothKeysTouched && (
@@ -1256,8 +1258,8 @@ function Play() {
             )}
           </div>
         )}
-      {!debugState.DevMode &&
-        debugState.ShowHelperKeyboard &&
+      {!debugState.dev_mode &&
+        debugState.show_helper_keyboard &&
         webState !== 'web-state-setup' &&
         numKeyboards === 1 &&
         !p1KeysTouched && (
@@ -1311,7 +1313,7 @@ function Play() {
             />
           </div>
 
-          {!debugState.TypedLoadingText && (
+          {!debugState.typed_loading_text && (
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
@@ -1320,7 +1322,7 @@ function Play() {
       <div className="phaser-container" id="phaser-container"></div>
       {(webState === 'web-state-setup' || webState === 'web-state-init') && (
         <div className="start-class-div">
-          {!debugState.DevMode && (
+          {!debugState.dev_mode && (
             <div
               className={
                 'black-hiding-div' +
@@ -1367,7 +1369,7 @@ function Play() {
                 >
                   {webState === 'web-state-init' ? 'PRESS START' : 'SMASHED'}
                 </h1>
-                {debugState.SuperMarioBrosScrews &&
+                {debugState.super_mario_bros_screws &&
                   webState === 'web-state-init' && (
                     <>
                       <div className="start-title-corner-piece"></div>
@@ -1399,16 +1401,16 @@ function Play() {
                     className={'optionStart'}
                     key={index}
                     onClick={(e: React.MouseEvent) => {
-                      if (key === 'ModeInfinity') {
+                      if (key === 'mode_infinity') {
                         const newMainOpotionsDebugShow: Debug = {
                           ...mainOptionsDebugShowState,
                         };
-                        if (debugState.ModeInfinity) {
-                          newMainOpotionsDebugShow['Minutes'] = 1;
-                          newMainOpotionsDebugShow['Shots'] = 0;
+                        if (debugState.mode_infinity) {
+                          newMainOpotionsDebugShow['minutes'] = 1;
+                          newMainOpotionsDebugShow['shots'] = 0;
                         } else {
-                          newMainOpotionsDebugShow['Minutes'] = 0;
-                          newMainOpotionsDebugShow['Shots'] = 1;
+                          newMainOpotionsDebugShow['minutes'] = 0;
+                          newMainOpotionsDebugShow['shots'] = 1;
                         }
 
                         setMainOptionsDebugShowState(
@@ -1435,7 +1437,7 @@ function Play() {
                       }
                     }}
                   >
-                    {key === 'MusicTrack' && (
+                    {key === 'music_track' && (
                       <>
                         <div className="debug-value">
                           <p>🔊</p>
@@ -1458,7 +1460,7 @@ function Play() {
                         </p>
                       </>
                     )}
-                    {key !== 'MusicTrack' && (
+                    {key !== 'music_track' && (
                       <>
                         <div className="debug-value">
                           <p>
@@ -1469,7 +1471,7 @@ function Play() {
                               : ''}
                           </p>
                         </div>
-                        <p className="key-start">{key}</p>
+                        <p className="key-start">{snakeCaseToTitleCase(key)}</p>
                       </>
                     )}
                   </div>
@@ -1984,7 +1986,7 @@ function Play() {
                               : emoji.redX}
                           </p>
                         </div>
-                        <p className="key">{key}</p>
+                        <p className="key">{snakeCaseToTitleCase(key)}</p>
                       </div>
                     );
                   }
@@ -2447,7 +2449,7 @@ function Play() {
         </div>
       )}
 
-      {debugState.DevMode && <div className="dev-mode-div">Dev Mode</div>}
+      {debugState.dev_mode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'web-state-game' && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">

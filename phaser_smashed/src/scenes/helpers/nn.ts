@@ -19,7 +19,7 @@ export const nnConfigNN = {
 export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: Game): Promise<void> => {
-  if (!game.debug.NNetTrainP1) {
+  if (!game.debug.nn_train_p1) {
     return;
   }
 
@@ -32,7 +32,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
     Math.random()
   );
 
-  if (game.debug.DurSeconds) {
+  if (game.debug.dur_seconds) {
     // duplicate training date 60 times
 
     const newArray: NNObject[] = [];
@@ -285,7 +285,7 @@ export const NNSetPlayerPadStatic = (
 };
 
 export const addPlayerOneNNObjectsStatic = (game: Game): void => {
-  if (!game.debug.NNetTrainP1) {
+  if (!game.debug.nn_train_p1) {
     return;
   }
 
@@ -466,7 +466,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: Game
 ): void => {
-  if (!game.debug.NNetTrainP1) {
+  if (!game.debug.nn_train_p1) {
     return;
   }
 

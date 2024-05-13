@@ -106,7 +106,7 @@ export function filterPlayerTDark(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerTDark(player, game);
   } else {
     setTintPlayerTDark(player, game);
@@ -117,7 +117,7 @@ export function filterPlayerDark(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerDark(player, game);
   } else {
     setTintPlayerDark(player, game);
@@ -129,7 +129,7 @@ export function filterPlayerNormal(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
     setTintPlayerNormal(player, game);
@@ -141,7 +141,7 @@ export function filterPlayerTRed(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerTRed(player, game);
   } else {
     setTintPlayerTRed(player, game);
@@ -152,7 +152,7 @@ export function filterPlayerRed(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerRed(player, game);
   } else {
     setTintPlayerRed(player, game);
@@ -163,7 +163,7 @@ export function filterPlayerWhite(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerWhite(player, game);
   } else {
     setFillPlayerWhiteT(player, game);
@@ -175,7 +175,7 @@ export function filterPlayerID(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillPlayerID(player, game.colorCircles[playerIndex].colorNumber);
   } else {
     setTintPlayerID(player, game.colorCircles[playerIndex].colorNumber);
@@ -269,7 +269,7 @@ export function filterAttackEnergyNormal(
   playerIndex: number,
   game: Game
 ): void {
-  if (game.debug.CharsColored) {
+  if (game.debug.chars_colored) {
     setFillAttackPhysicalID(player, game.colorCircles[playerIndex].colorNumber);
     setFillAttackEnergyID(player, game.colorCircles[playerIndex].colorNumber);
   } else {

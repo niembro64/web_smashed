@@ -24,24 +24,25 @@ export function preload(game: Game): void {
   game.smashConfig = game.game.registry.get('smashConfig');
   game.debug = game.game.registry.get('debug');
   print('this.smashConfig', game.smashConfig);
-  game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.GravityLight ? 0.6 : 1;
-  game.BASE_PLAYER_JUMP_WALL *= game.debug.GravityLight ? 0.6 : 1;
+  game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.gravity_light ? 0.6 : 1;
+  game.BASE_PLAYER_JUMP_WALL *= game.debug.gravity_light ? 0.6 : 1;
 
   if (game.smashConfig) {
     game.durationPlayerDead = game.smashConfig.players.length * 2000;
     game.playerChoicesCharacterType = [];
     game.playerChoicesInputType = [];
     game.smashConfig.players.forEach((player, playerIndex) => {
-      if (game.debug.CharOverride) {
-        game.playerChoicesCharacterType.push(game.debug.CharOverrideId);
+      if (game.debug.char_override) {
+        game.playerChoicesCharacterType.push(game.debug.char_override_id);
       } else {
         game.playerChoicesCharacterType.push(player.characterId);
       }
       game.playerChoicesInputType.push(ensureTypeInput(player.input));
     });
   }
-  game.gameSecondsClock = game.debug.Minutes * (game.debug.DurSeconds ? 1 : 60);
-  if (!game.debug.FrictionAirActive) {
+  game.gameSecondsClock =
+    game.debug.minutes * (game.debug.dur_seconds ? 1 : 60);
+  if (!game.debug.friction_air_active) {
     game.players.forEach((iPlayer, i) => {
       iPlayer.char.friction_air = 0;
     });
@@ -53,7 +54,7 @@ export function preload(game: Game): void {
     hatPos += hatAdder * 2;
   }
 
-  game.shotsLeftCurr = game.debug.Shots;
+  game.shotsLeftCurr = game.debug.shots;
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
   game.nnNet = game.nnNet.fromJSON(nnJsonNN);
@@ -134,7 +135,7 @@ export function preload(game: Game): void {
     pathSounds + game.FILE_SOUNDS.FLAG_MUSIC_BOX
   );
 
-  switch (game.debug.MusicTrack) {
+  switch (game.debug.music_track) {
     case 0:
       game.load.audio('bgm', pathSounds + game.FILE_SOUNDS.BGM_DREAM);
       break;

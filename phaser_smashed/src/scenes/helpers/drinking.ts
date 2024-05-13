@@ -119,7 +119,7 @@ export function setAddShotsToMatrixFlagCaptured(game: Game): void {
 }
 
 export function updateNumShotsLeft(game: Game): void {
-  if (!game.debug.ModeInfinity) {
+  if (!game.debug.mode_infinity) {
     return;
   }
 
@@ -131,7 +131,7 @@ export function updateNumShotsLeft(game: Game): void {
       shots += game.numberShotsTakenByMeMatrix[playerIndex][i];
     }
   });
-  game.shotsLeftCurr = game.debug.Shots - shots;
+  game.shotsLeftCurr = game.debug.shots - shots;
 }
 
 export interface PositionEndGame {

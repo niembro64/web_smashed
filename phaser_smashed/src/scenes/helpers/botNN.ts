@@ -44,7 +44,7 @@ export function updateBotNN(
   //////////////////////
   // TOO FAR LEFT RIGHT CENTER
   //////////////////////
-  if (game.debug.NNetHelpCenterize) {
+  if (game.debug.nn_help_centerize) {
     const r = 0.01;
     if (
       Math.round(game.gameSeconds / 2) % 2 === playerIndex % 2 &&
@@ -63,7 +63,7 @@ export function updateBotNN(
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
-  if (game.debug.NNetHelpPit && getIsBotInPitArea(player, game)) {
+  if (game.debug.nn_help_pit && getIsBotInPitArea(player, game)) {
     if (pVelocity.y >= 0) {
       padCurr.X = Math.random() > 0.5;
 
@@ -84,7 +84,7 @@ export function updateBotNN(
   //////////////////////
   // IF BOT IS TOUCHING LEFT OR RIGHT, JUMP
   //////////////////////
-  if (game.debug.NNetHelpWall) {
+  if (game.debug.nn_help_wall) {
     if (
       player.char.sprite.body.touching.right ||
       player.char.sprite.body.touching.left
@@ -98,7 +98,7 @@ export function updateBotNN(
   //////////////////////
   // HELP SCREEN
   //////////////////////
-  if (game.debug.NNetHelpScreen) {
+  if (game.debug.nn_help_screen) {
     //////////////////////
     // TOO FAR LEFT RIGHT
     //////////////////////
