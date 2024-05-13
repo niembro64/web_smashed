@@ -1336,8 +1336,8 @@ function Play() {
                 className={
                   'start-title' +
                   (webState === 'web-state-setup'
-                    ? ' startTitleStart'
-                    : ' startTitleInit')
+                    ? ' start-title-start'
+                    : ' start-title-init')
                 }
                 onMouseDown={() => {
                   print('mouse down');
@@ -1347,16 +1347,19 @@ function Play() {
                 }}
               >
                 <div
+                  className="start-title-div"
                   onMouseDown={() => {
                     setWebState('web-state-setup');
                   }}
                 >
                   <img
+                    className="start-title-div-img"
                     src="images/smashed_x10_gif.gif"
                     alt="Smashed Title Gif"
                   />
                 </div>
                 <h1
+                  className="start-title-h1"
                   id={'' + (webState === 'web-state-init' ? 'niemo-games' : '')}
                   onMouseDown={() => {
                     setWebState('web-state-setup');
@@ -1364,6 +1367,15 @@ function Play() {
                 >
                   {webState === 'web-state-init' ? 'PRESS START' : 'SMASHED'}
                 </h1>
+                {debugState.SuperMarioBrosScrews &&
+                  webState === 'web-state-init' && (
+                    <>
+                      <div className="start-title-corner-piece"></div>
+                      <div className="start-title-corner-piece"></div>
+                      <div className="start-title-corner-piece"></div>
+                      <div className="start-title-corner-piece"></div>
+                    </>
+                  )}
               </div>
             </div>
           )}

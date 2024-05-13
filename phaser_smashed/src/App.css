@@ -1090,7 +1090,7 @@ h2 {
   overflow: hide;
 }
 
-.start-title > div {
+.start-title-div {
   width: 100%;
   flex: 2;
   display: flex;
@@ -1101,7 +1101,7 @@ h2 {
   min-height: 0; /* Allows the elements to shrink vertically */
   /* border: 10px dashed lime; */
 }
-.start-title > div > img {
+.start-title-div-img {
   height: 100%;
   object-fit: contain;
 }
@@ -1116,42 +1116,42 @@ h2 {
   /* border: 10px dashed lime; */
 }
 
-.startTitleInit {
+.start-title-init {
   transition: 1s ease-in-out;
   overflow: visible;
   padding-bottom: 2.5vw;
   /* padding-top: 1vw; */
-  border: 10px solid rgb(83, 83, 83);
+  border: 1vw solid rgb(83, 83, 83);
   background-color: rgba(227, 227, 227, 0.258);
 }
-.startTitleInit:hover {
+.start-title-init:hover {
   transition: 0.3s ease-in-out;
   filter: grayscale(1) brightness(1);
 }
-.startTitleInit:active {
+.start-title-init:active {
   transition: 0.3s ease-in-out;
   filter: grayscale(1) brightness(10);
 }
-.startTitleInit > h1 {
+.start-title-init > .start-title-h1 {
   overflow: visible;
   cursor: pointer;
   filter: brightness(0.5);
 }
-.startTitleInit > div > img {
+.start-title-init > .start-title-div > .start-title-div-img {
   overflow: visible;
 }
-.startTitleInit > div {
+.start-title-init > .start-title-div {
   width: auto;
   cursor: pointer;
 }
-.startTitleStart {
+.start-title-start {
   transition: 1s ease-in-out;
   animation: titleInitAnimation 2s ease-in-out both;
   overflow: visible;
   padding-bottom: 0vw;
-  border: 10px solid rgba(255, 255, 255, 0);
+  border: 1vw solid rgba(255, 255, 255, 0);
 }
-.startTitleStart > h1 {
+.start-title-start > .start-title-h1 {
   transition: 3s ease-in-out;
   animation: titleInitAnimationLetters 3s ease-in-out both;
 }
@@ -1175,6 +1175,31 @@ h2 {
   100% {
     filter: opacity(1);
   }
+}
+
+.start-title-corner-piece {
+  position: absolute;
+  width: 1vw;
+  height: 1vw;
+  background-color: rgb(83, 83, 83);
+  pointer-events: none;
+}
+
+.start-title-corner-piece:nth-of-type(5) {
+  top: 1vw;
+  left: 1vw;
+}
+.start-title-corner-piece:nth-of-type(2) {
+  top: 1vw;
+  right: 1vw;
+}
+.start-title-corner-piece:nth-of-type(3) {
+  bottom: 1vw;
+  left: 1vw;
+}
+.start-title-corner-piece:nth-of-type(4) {
+  bottom: 1vw;
+  right: 1vw;
 }
 
 .black-hiding-div {
