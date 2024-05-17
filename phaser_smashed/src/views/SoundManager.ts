@@ -40,7 +40,7 @@ function SoundManager() {
   const [meleeGo] = useSound(importedMeleeGo, { volume: 0.2 });
   const [meleeChoose] = useSound(importedMeleeChoose, { volume: 0.2 });
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
-  const [blipSoundSoft] = useSound(importedBlip, { volume: 0.03 });
+  const [blipSoundSoft] = useSound(importedBlip, { volume: 0.08 });
   const [blipSoundLoud] = useSound(importedBlip, { volume: 0.2 });
   const [beedeeSound] = useSound(importedBeeDee, { volume: 0.1 });
 

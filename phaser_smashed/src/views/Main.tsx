@@ -1391,6 +1391,9 @@ function Play() {
 
                 return (
                   <div
+                    onMouseEnter={() => {
+                      soundManager.blipSoundSoft();
+                    }}
                     id={
                       typeof value !== 'boolean'
                         ? ''
@@ -2114,7 +2117,13 @@ function Play() {
                 <h2>GamePads Suggested: </h2>
                 {workingControllersAmazon.map((controller) => {
                   return (
-                    <a className="working-controller" href={controller.url}>
+                    <a
+                      onMouseEnter={() => {
+                        soundManager.blipSoundSoft();
+                      }}
+                      className="working-controller"
+                      href={controller.url}
+                    >
                       <span>
                         {emoji.greenCheck} &nbsp;
                         {controller.name}
@@ -2126,12 +2135,18 @@ function Play() {
               <div id="wcl">
                 <h2>Accessories Suggested: </h2>
                 <a
+                  onMouseEnter={() => {
+                    soundManager.blipSoundSoft();
+                  }}
                   className="working-controller"
                   href="https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/"
                 >
                   <span>{emoji.greenCheck} &nbsp;USB-A Extension Cord</span>
                 </a>
                 <a
+                  onMouseEnter={() => {
+                    soundManager.blipSoundSoft();
+                  }}
                   className="working-controller"
                   href="https://www.amazon.com/gp/product/B01N5KGBGQ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1"
                 >
