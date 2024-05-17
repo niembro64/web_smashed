@@ -1,8 +1,7 @@
 import React from 'react';
 import { Debug, emoji } from '../scenes/interfaces';
-
 import { replaceUnderscoreWithSpace } from './reactHelpers';
-import { SoundManagerType } from './soundManager';
+import { SoundManagerType } from './SoundManager';
 
 interface PlayOptionsProps {
   soundManager: SoundManagerType;

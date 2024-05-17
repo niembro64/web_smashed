@@ -27,7 +27,9 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/interfaces';
-import MusicManager from './musicManager';
+import InputGroup from './InputPresets';
+import PlayOptions from './MainOptions';
+import { SoundManager, SoundManagerType } from './SoundManager';
 import {
   ClientInformation,
   SessionInfo,
@@ -50,15 +52,13 @@ import {
   p1Keys,
   p2Keys,
   quotes,
+  replaceUnderscoreWithSpace,
   smashConfigInit,
   smashConfigInitMax,
   smashConfigOptions,
-  replaceUnderscoreWithSpace,
   workingControllersAmazon,
 } from './reactHelpers';
-import PlayOptions from './MainOptions';
-import SoundManager, { SoundManagerType } from './soundManager';
-import InputGroup from './InputPresets';
+import { MusicManager, MusicManagerType } from './MusicManager';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -68,7 +68,7 @@ function Play() {
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
   const soundManager: SoundManagerType = SoundManager();
-  const musicManager = MusicManager();
+  const musicManager: MusicManagerType = MusicManager();
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -1801,7 +1801,11 @@ function Play() {
                 soundManager.blipSoundSoft();
               }}
               className="question-mark"
-              src={!openEye ? '/images/eye-shut-trans.png' : '/images/eye-open-trans.png'}
+              src={
+                !openEye
+                  ? '/images/eye-shut-trans.png'
+                  : '/images/eye-open-trans.png'
+              }
               alt="question mark"
               onClick={onClickEye}
             />

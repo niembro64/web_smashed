@@ -6,7 +6,12 @@ import importedMonkeys from '../sounds/monkeys.ogg';
 // @ts-ignore
 // import importedGarage from '../sounds/garage.ogg';
 
-function MusicManager() {
+export type MusicManagerType = {
+  musicSetupScreenRef: React.MutableRefObject<HTMLAudioElement>;
+  musicLoadingScreenRef: React.MutableRefObject<HTMLAudioElement>;
+};
+
+export function MusicManager() {
   // const setupMusic = new Audio(importedGarage);
   const setupMusic = new Audio(importedSmallTalk);
   setupMusic.volume = 0.2;
@@ -18,10 +23,5 @@ function MusicManager() {
   loadingMusic.loop = true;
   const musicLoadingScreenRef = useRef<HTMLAudioElement>(loadingMusic);
 
-
-
-
   return { musicSetupScreenRef, musicLoadingScreenRef };
 }
-
-export default MusicManager;

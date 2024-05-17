@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputType, emoji } from '../scenes/interfaces';
-import s, { SoundManagerType } from './soundManager';
+import { SoundManagerType } from './SoundManager';
 
 interface InputGroupProps {
   setInputArrayEffect: (inputArray: InputType[]) => void;
