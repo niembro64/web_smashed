@@ -58,6 +58,7 @@ import {
 } from './reactHelpers';
 import PlayOptions from './MainOptions';
 import SoundManager, { SoundManagerType } from './soundManager';
+import InputGroup from './InputPresets';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -1741,114 +1742,16 @@ function Play() {
             </div>
           </div>
           <div className="bottom-zone">
-            <div className="input-group">
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([2, 2, 0, 0]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.keyboardWhite + emoji.keyboardWhite}
-                </span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([2, 3, 0, 0]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.keyboardWhite + emoji.bot}
-                </span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([2, 4, 0, 0]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.keyboardWhite + emoji.brain}
-                </span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([1, 1, 0, 0]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.gamepad + emoji.gamepad}
-                </span>
-              </div>
-
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([2, 2, 3, 4]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.keyboardWhite + emoji.keyboardWhite}
-                </span>
-                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([1, 1, 3, 4]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.gamepad + emoji.gamepad}
-                </span>
-                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([1, 1, 1, 1]);
-                }}
-              >
-                <span className={'vs-span'}>
-                  {emoji.gamepad + emoji.gamepad}
-                </span>
-                <span className={'vs-span'}>
-                  {emoji.gamepad + emoji.gamepad}
-                </span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([3, 3, 3, 3]);
-                }}
-              >
-                <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
-                <span className={'vs-span'}>{emoji.bot + emoji.bot}</span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([4, 4, 4, 4]);
-                }}
-              >
-                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
-                <span className={'vs-span'}>{emoji.brain + emoji.brain}</span>
-              </div>
-              <div
-                className="b-all-bots"
-                onClick={() => {
-                  setInputArrayEffect([3, 3, 4, 4]);
-                }}
-              >
-                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
-                <span className={'vs-span'}>{emoji.bot + emoji.brain}</span>
-              </div>
-            </div>
+            <InputGroup
+              soundManager={soundManager}
+              setInputArrayEffect={setInputArrayEffect}
+            />
             <div
               className="b-all-bots"
               id="dice"
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
               onClick={async () => {
                 for (let i = 0; i < 3; i++) {
                   setTimeout(() => {
@@ -1860,6 +1763,9 @@ function Play() {
               {emoji.dice}
             </div>
             <div
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
               className={
                 inputArray.filter((x) => x !== 0).length === 0
                   ? 'b-start-inactive'
