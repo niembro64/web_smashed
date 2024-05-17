@@ -4,7 +4,7 @@ import importedWoah from '../sounds/BlackBetty_Woah.mp3';
 // @ts-ignore
 import importedBambalam from '../sounds/BlackBetty_Bambalam.mp3';
 // @ts-ignore
-import importedStartSound from '../sounds/start.wav';
+import importedStartSound from '../sounds/start-reverb.wav';
 // @ts-ignore
 import importedBeeDee from '../sounds/beedee.wav';
 // @ts-ignore

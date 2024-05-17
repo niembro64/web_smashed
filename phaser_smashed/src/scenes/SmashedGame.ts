@@ -95,7 +95,7 @@ export default class SmashedGame extends Phaser.Scene {
     SQUISH: 'goresplat-7088.mp3',
     DIE: 'sword-hits-the-body-48273.mp3',
     START_LIQUID: 'game-start-liquid.wav',
-    START: 'start.wav',
+    START: 'start-reverb.wav',
     READY: 'ready.wav',
     READY_REPEAT: 'ready_repeat.wav',
     READY_REPEAT0: 'ready_0.wav',

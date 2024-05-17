@@ -1764,6 +1764,10 @@ function Play() {
             </div>
             <div
               onMouseEnter={() => {
+                if (inputArray.filter((x) => x !== 0).length === 0) {
+                  return;
+                }
+
                 soundManager.blipSoundSoft();
               }}
               className={
