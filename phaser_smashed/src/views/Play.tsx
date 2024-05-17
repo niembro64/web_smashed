@@ -28,7 +28,7 @@ import {
   inputTypeNum,
 } from '../scenes/interfaces';
 import MusicManager from './MusicManager';
-import SoundManager from './SoundManager';
+import SoundManager, { SoundManagerType } from './SoundManager';
 import {
   ClientInformation,
   SessionInfo,
@@ -57,6 +57,7 @@ import {
   replaceUnderscoreWithSpace,
   workingControllersAmazon,
 } from './helpers/reactHelpers';
+import PlayOptions from './PlayOptions';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
@@ -65,7 +66,7 @@ function Play() {
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
-  const soundManager = SoundManager();
+  const soundManager: SoundManagerType = SoundManager();
   const musicManager = MusicManager();
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
@@ -1942,67 +1943,23 @@ function Play() {
             )}
           </div>
         )}
+
+        {/* ////////////////////////////////// */}
+        {/* PLAY OPTIONS */}
+        {/* ////////////////////////////////// */}
         {showOptions && (
-          <div className="over-div">
-            <div
-              className="popup"
-              onClick={() => {
-                onClickPlayNavBody('Options');
-              }}
-            >
-              <h1>Debug Options</h1>
-              <div id="debug-col">
-                {Object.entries(debugState).map(
-                  ([key, value], index: number) => {
-                    if (!!mainOptionsDebugShowState[key]) {
-                      return null;
-                    }
-
-                    return (
-                      <div
-                        id="optionDebug"
-                        key={index}
-                        onClick={(e) => {
-                          soundManager.blipSound();
-                          e.stopPropagation();
-                          if (typeof value === 'number') {
-                            setDebugState((prevState) => ({
-                              ...prevState,
-                              [key]: (value + 1) % getMaxFromKey(key),
-                            }));
-                            print(index, key, value);
-                          }
-
-                          if (typeof value === 'boolean') {
-                            setDebugState((prevState) => ({
-                              ...prevState,
-                              [key]: !value,
-                            }));
-                            print(index, key, value);
-                          }
-                        }}
-                      >
-                        <div className="debug-value">
-                          <p>
-                            {/* {typeof value !== 'boolean'
-                              ? value
-                              : ''} */}
-                            {typeof value !== 'boolean'
-                              ? value
-                              : value
-                              ? emoji.greenCheck
-                              : emoji.redX}
-                          </p>
-                        </div>
-                        <p className="key">{replaceUnderscoreWithSpace(key)}</p>
-                      </div>
-                    );
-                  }
-                )}
-              </div>
-            </div>
-          </div>
+          <PlayOptions
+            soundManager={soundManager}
+            debugState={debugState}
+            mainOptionsDebugShowState={mainOptionsDebugShowState}
+            setDebugState={setDebugState}
+            getMaxFromKey={getMaxFromKey}
+            onClickPlayNavBody={() => {
+              onClickPlayNavBody('Options');
+            }}
+          />
         )}
+
         {showControls && (
           <div className="over-div">
             <div

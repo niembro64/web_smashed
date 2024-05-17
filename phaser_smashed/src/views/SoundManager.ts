@@ -16,6 +16,17 @@ import importedMeleeChoose from '../sounds/melee_choose.mp3';
 // @ts-ignore
 import importedDice from '../sounds/dice_better.mp3';
 
+export type SoundManagerType = {
+  woah: () => void;
+  bam: () => void;
+  startSound: () => void;
+  meleeReady: () => void;
+  meleeGo: () => void;
+  meleeChoose: () => void;
+  blipSound: () => void;
+  dice: () => void;
+};
+
 function SoundManager() {
   const [woah] = useSound(importedWoah, { volume: 0.2 });
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
