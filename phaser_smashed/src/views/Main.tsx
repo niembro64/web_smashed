@@ -27,8 +27,7 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/interfaces';
-import MusicManager from './MusicManager';
-import SoundManager, { SoundManagerType } from './SoundManager';
+import MusicManager from './musicManager';
 import {
   ClientInformation,
   SessionInfo,
@@ -56,8 +55,9 @@ import {
   smashConfigOptions,
   replaceUnderscoreWithSpace,
   workingControllersAmazon,
-} from './helpers/reactHelpers';
-import PlayOptions from './PlayOptions';
+} from './reactHelpers';
+import PlayOptions from './MainOptions';
+import SoundManager, { SoundManagerType } from './soundManager';
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);

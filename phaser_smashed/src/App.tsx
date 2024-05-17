@@ -3,7 +3,7 @@ import './App.css';
 // import "@fontsource/press-start-2p";
 
 import { Switch, Route } from 'react-router-dom';
-import Play from './views/Play';
+import Play from './views/Main';
 
 function App() {
   // The debounce function receives our function as a parameter

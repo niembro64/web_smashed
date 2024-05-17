@@ -1,3 +1,5 @@
+import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
+import Game from '../scenes/Game';
 import {
   CharacterMove,
   InputType,
@@ -7,9 +9,7 @@ import {
   SmashConfig,
   WorkingController,
   emoji,
-} from '../../scenes/interfaces';
-import Game from '../../scenes/Game';
-import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
+} from '../scenes/interfaces';
 
 export const inputArrayInit: InputType[] = [0, 0, 0, 0];
 export const inputArrayInitDebug: InputType[] = [3, 3, 3, 3];
