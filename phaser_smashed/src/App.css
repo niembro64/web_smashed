@@ -98,6 +98,14 @@ h2 {
   justify-content: flex-end;
 }
 
+.bg-trans {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.bg-black {
+  background-color: black;
+}
+
 .top-bar-eye-open {
   position: absolute;
   top: 0%;
@@ -105,8 +113,6 @@ h2 {
 
   height: 5%;
   width: 100%;
-
-  background-color: rgba(0, 0, 0, 1);
 
   padding: 0% 3% 0% 3%;
 
@@ -122,7 +128,7 @@ h2 {
 .top-bar-eye-open > .link-tag,
 .top-bar-eye-open > .question-mark {
   border: 0;
-  /* background-color: rgba(0, 0, 0, 255); */
+
   color: white;
   filter: opacity(1);
   transition: 0.1s ease;
@@ -135,8 +141,6 @@ h2 {
 
   height: 5%;
   width: 100%;
-
-  background-color: rgba(0, 0, 0, 0);
 
   padding: 0% 3% 0% 3%;
 

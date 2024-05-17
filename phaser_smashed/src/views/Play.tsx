@@ -1849,7 +1849,14 @@ function Play() {
       )}
       <div className="over-div">
         {topBarDivExists && (
-          <div className={openEye ? 'top-bar-eye-open' : 'top-bar-eye-closed'}>
+          <div
+            className={
+              openEye
+                ? 'top-bar-eye-open ' +
+                  (webState === 'web-state-game' ? 'bg-black' : 'bg-trans')
+                : 'top-bar-eye-closed bg-trans'
+            }
+          >
             {!openEye && (
               <img
                 className="question-mark"
