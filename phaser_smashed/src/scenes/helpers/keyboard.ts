@@ -1,7 +1,7 @@
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Player } from '../interfaces';
 
-export function updatePadCurrKeyboard(player: Player, game: Game): void {
+export function updatePadCurrKeyboard(player: Player, game: SmashedGame): void {
   if (player.keyboard) {
     const c = player.padCurr;
     const k = player.keyboard;

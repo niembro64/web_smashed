@@ -1,10 +1,10 @@
 import { print } from '../../views/client';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Position, Velocity } from '../interfaces';
 import { Bullet } from './bullets';
 
 export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
-  constructor(game: Game) {
+  constructor(game: SmashedGame) {
     super(game.physics.world, game);
     this.createMultiple({
       frameQuantity: game.fireFlower.attackBullets?.NUMBER_BULLETS || 10,
@@ -35,7 +35,7 @@ export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
     pos: Position,
     vel: Velocity,
     firstFire: boolean,
-    game: Game
+    game: SmashedGame
   ): void {
     if (firstFire) {
       this.numSkip = 0;

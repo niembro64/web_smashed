@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import {
   AttackEnergy,
   AttackPhysical,
@@ -24,7 +24,7 @@ export function onHitHandlerAttackPhysical(
   attackPhysical: AttackPhysical,
   j: number,
   damage: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (player.state.name !== 'player-state-alive') {
     return;
@@ -77,7 +77,7 @@ export function onHitHandlerAttackEnergy(
   attackEnergy: AttackEnergy,
   j: number,
   damage: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (playerHit.state.name !== 'player-state-alive') {
     return;
@@ -132,7 +132,7 @@ export function onHitHandlerFireBall(
   bulletIndex: number,
   j: number,
   damage: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (playerHit.emitterPlayer.on) {
     return;
@@ -197,7 +197,7 @@ export function onHitHandlerBullets(
   bulletIndex: number,
   j: number,
   damage: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (playerHit.emitterPlayer.on) {
     return;
@@ -280,7 +280,10 @@ export function setEmitterPlayerVisibleFalse(player: Player): void {
   player.emitterPlayer.visible = false;
 }
 
-export function setOnDeadUpdateMatrix(playerIndex: number, game: Game): void {
+export function setOnDeadUpdateMatrix(
+  playerIndex: number,
+  game: SmashedGame
+): void {
   let killedSelf: boolean = true;
   for (let j = 0; j < game.players.length; j++) {
     if (game.wasLastHitByMatrix[playerIndex][j]) {
@@ -293,7 +296,7 @@ export function setOnDeadUpdateMatrix(playerIndex: number, game: Game): void {
   }
 }
 
-export function updateDeathsAndKillsMatrices(game: Game): void {
+export function updateDeathsAndKillsMatrices(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     updatePlayerNumberDeaths(player, playerIndex, game);
     updatePlayerNumberKills(player, playerIndex, game);
@@ -303,7 +306,7 @@ export function updateDeathsAndKillsMatrices(game: Game): void {
 export function updatePlayerNumberDeaths(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   player.deathCount = game.numberKilledByMatrix[playerIndex].reduce(
     (partialSum, a) => partialSum + a,
@@ -313,7 +316,7 @@ export function updatePlayerNumberDeaths(
 export function updatePlayerNumberKills(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   player.killCount = 0;
   for (let i = 0; i < game.players.length; i++) {
@@ -416,7 +419,7 @@ export function getDistance(
   return newRatio;
 }
 
-export function getGameHitbackMultiplier(game: Game): number {
+export function getGameHitbackMultiplier(game: SmashedGame): number {
   const t = game.gameNanoseconds * 0.001;
   let h: number = 0;
   const m = t / 60;
@@ -427,7 +430,7 @@ export function getGameHitbackMultiplier(game: Game): number {
   return h;
 }
 
-export function updateSuicide(game: Game): void {
+export function updateSuicide(game: SmashedGame): void {
   const lengthOfSuicideHold = 5000;
 
   game.players.forEach((player, playerIndex) => {
@@ -507,7 +510,7 @@ export function updateSuicide(game: Game): void {
 //   }
 // }
 
-export function updateTableGiveHealth(game: Game): void {
+export function updateTableGiveHealth(game: SmashedGame): void {
   const { body } = game.TABLE;
 
   let charging: boolean = false;
@@ -540,7 +543,7 @@ export function updateTableGiveHealth(game: Game): void {
   }
 }
 
-export function updateDamagePrev(game: Game): void {
+export function updateDamagePrev(game: SmashedGame): void {
   game.players.forEach((p, pIndex) => {
     p.char.damagePrev = p.char.damageCurr;
   });

@@ -1,5 +1,5 @@
 import { print } from '../views/client';
-import Game from './Game';
+import SmashedGame from './SmashedGame';
 import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
 import {
   updateAirDodge,
@@ -62,7 +62,7 @@ import {
 import { updateText } from './helpers/text';
 import { Player } from './interfaces';
 
-export function setPreUpdate(game: Game): void {
+export function setPreUpdate(game: SmashedGame): void {
   setBGMusicPlay(game);
   setGameState(game, 'game-state-play');
   game.loaded = true;
@@ -76,7 +76,7 @@ export function setPreUpdate(game: Game): void {
   setPauseSoundPowerup(game);
 }
 
-export function update(game: Game, time: number, delta: number): void {
+export function update(game: SmashedGame, time: number, delta: number): void {
   game.updateIndex++;
 
   if (game.debug.Update_Loops_Skip > 0) {
@@ -224,7 +224,7 @@ export function update(game: Game, time: number, delta: number): void {
   }
 }
 
-export function updatePlayers(game: Game): void {
+export function updatePlayers(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     switch (player.state.name) {
       case 'player-state-start':
@@ -342,7 +342,7 @@ export function updatePlayers(game: Game): void {
 export function updateAttackPhysicals(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   let ap = player.char.attackPhysical;
 

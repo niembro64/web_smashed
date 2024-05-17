@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import {
   ChompFilterStateName,
   Player,
@@ -15,7 +15,7 @@ import { addToMotionSlowdown } from './time';
 export function setPlayerPowerState(
   stateName: PowerStateCharacterName,
   player: Player,
-  game: Game
+  game: SmashedGame
 ): void {
   const p = player;
   const curr = p.char.powerStateCurr;
@@ -48,7 +48,7 @@ export function setPlayerPowerState(
 
 export function setChompFilterState(
   stateName: ChompFilterStateName,
-  game: Game
+  game: SmashedGame
 ): void {
   const curr = game.chomp.filterStateCurr;
   const prev = game.chomp.filterStatePrev;
@@ -77,7 +77,7 @@ export function setChompFilterState(
   }
 }
 
-export function updateChompFilterState(game: Game): void {
+export function updateChompFilterState(game: SmashedGame): void {
   game.players.forEach((player) => {
     updateChompFilterStatePlayer(player, 0, game);
   });
@@ -86,7 +86,7 @@ export function updateChompFilterState(game: Game): void {
 export function updateChompFilterStatePlayer(
   player: Player,
   damage: number,
-  game: Game
+  game: SmashedGame
 ): void {
   const c = game.chomp;
   const curr = c.filterStateCurr;
@@ -138,7 +138,7 @@ export function updateChompFilterStatePlayer(
 
 export function setChompPowerState(
   stateName: PowerStateChompName,
-  game: Game
+  game: SmashedGame
 ): void {
   const c = game.chomp;
   const curr = c.powerStateCurr;
@@ -171,7 +171,9 @@ export function setChompPowerState(
   }
 }
 
-export function updateChompStateLightIfHasBeenLongEnough(game: Game): void {
+export function updateChompStateLightIfHasBeenLongEnough(
+  game: SmashedGame
+): void {
   if (game.chomp.powerStateCurr.name !== 'dark') {
     return;
   }
@@ -187,7 +189,7 @@ export function updateChompStateLightIfHasBeenLongEnough(game: Game): void {
   }
 }
 
-export function getDoesAnyPlayerHaveDark(game: Game): boolean {
+export function getDoesAnyPlayerHaveDark(game: SmashedGame): boolean {
   for (let i = 0; i < game.players.length; i++) {
     if (game.players[i].char.powerStateCurr.name === 'dark') {
       return true;
@@ -197,7 +199,7 @@ export function getDoesAnyPlayerHaveDark(game: Game): boolean {
   return false;
 }
 
-export function getDoesAnythingHaveDark(game: Game): boolean {
+export function getDoesAnythingHaveDark(game: SmashedGame): boolean {
   if (
     game.chomp.powerStateCurr.name === 'dark' ||
     getDoesAnyPlayerHaveDark(game)
@@ -211,7 +213,7 @@ export function getDoesAnythingHaveDark(game: Game): boolean {
 export function getHasBeenGameDurationSinceMoment(
   durationNano: number,
   moment: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   if (game.gameNanoseconds > moment + durationNano) {
     return true;
@@ -219,7 +221,7 @@ export function getHasBeenGameDurationSinceMoment(
   return false;
 }
 
-export function updatePlayerDarknessEvents(game: Game): void {
+export function updatePlayerDarknessEvents(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.powerStateCurr.name === 'dark') {
       const s = player.char.sprite;
@@ -262,7 +264,7 @@ export function updatePlayerDarknessEvents(game: Game): void {
 export function playNextExplosion(
   x: number,
   y: number,
-  game: Game,
+  game: SmashedGame,
   amount: number
 ): void {
   const c = game.chomp;

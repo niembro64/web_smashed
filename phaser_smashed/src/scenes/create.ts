@@ -1,5 +1,5 @@
 import ShakePosition from 'phaser3-rex-plugins/plugins/behaviors/shake/ShakePosition';
-import Game, { SCREEN_DIMENSIONS } from './Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from './SmashedGame';
 import { setAttackPhysicalOffscreen } from './helpers/attacks';
 import {
   onHitHandlerAttackEnergy,
@@ -21,7 +21,7 @@ import { print } from '../views/client';
 import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
 
-export function create(game: Game) {
+export function create(game: SmashedGame) {
   createPreCreate(game);
   createDataMatrices(game);
   createSoundsGame(game);
@@ -74,7 +74,7 @@ export function create(game: Game) {
   setPreUpdate(game);
 }
 
-export function createFlag(game: Game): void {
+export function createFlag(game: SmashedGame): void {
   const f = game.flag;
 
   const flagAtTopOfPole = 0.382;
@@ -150,7 +150,7 @@ export function createFlag(game: Game): void {
   });
 }
 
-export function createPole(game: Game): void {
+export function createPole(game: SmashedGame): void {
   game.flag.spriteFlagPole = game.physics.add.sprite(
     (1920 - 105 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
@@ -163,7 +163,7 @@ export function createPole(game: Game): void {
   game.flag.spriteFlagPole.setOrigin(0.5, 0.5);
 }
 
-export function createFireFlower(game: Game): void {
+export function createFireFlower(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -198,7 +198,7 @@ export function createFireFlower(game: Game): void {
   }
 }
 
-export function createCollidersFireFlower(game: Game): void {
+export function createCollidersFireFlower(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -246,7 +246,7 @@ export function createCollidersFireFlower(game: Game): void {
   // );
 }
 
-export function createShake(game: Game): void {
+export function createShake(game: SmashedGame): void {
   const shakeConfig: ShakePosition.IConfig = {
     duration: 400,
     magnitude: 100,
@@ -257,7 +257,7 @@ export function createShake(game: Game): void {
   game.shake.setEnable(true);
 }
 
-export function createExplosions(game: Game): void {
+export function createExplosions(game: SmashedGame): void {
   const config = {
     key: 'explsionanimation',
     frames: game.anims.generateFrameNumbers('explosion256', {
@@ -298,7 +298,7 @@ export function createExplosions(game: Game): void {
   });
 }
 
-export function createChomp(game: Game): void {
+export function createChomp(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -379,7 +379,7 @@ export function createChomp(game: Game): void {
   game.physics.add.collider(c.sprite, game.PLATFORMS);
 }
 
-export function createPreCreate(game: Game): void {
+export function createPreCreate(game: SmashedGame): void {
   for (let i = 0; i < game.playerChoicesCharacterType.length; i++) {
     game.players.push(
       JSON.parse(
@@ -393,7 +393,7 @@ export function createPreCreate(game: Game): void {
   });
 }
 
-export function createEndDataMatrices(game: Game): void {
+export function createEndDataMatrices(game: SmashedGame): void {
   const numSplashes: number = game.splashesEndData.length;
   // const splashSizeTitleDefault = "40px";
   let splashSize = '';
@@ -458,7 +458,7 @@ export function createEndDataMatrices(game: Game): void {
   });
 }
 
-export function createDataMatrices(game: Game): void {
+export function createDataMatrices(game: SmashedGame): void {
   game.overlappingPlayerIAttackPhysicalJ = [];
   game.overlappingPlayerIAttackEnergyJ = [];
   game.wasLastHitByMatrix = [];
@@ -483,7 +483,7 @@ export function createDataMatrices(game: Game): void {
   }
 }
 
-export function createSoundsGame(game: Game): void {
+export function createSoundsGame(game: SmashedGame): void {
   game.SOUND_INTRO = game.sound.add('intro', { volume: 0.1 });
   game.SOUND_GUN = game.sound.add('gun', { volume: 0.6 });
   game.SOUND_HIT = game.sound.add('hit', { volume: 0.25 });
@@ -539,12 +539,12 @@ export function createSoundsGame(game: Game): void {
   }
 }
 
-export function createShields(game: Game): void {
+export function createShields(game: SmashedGame): void {
   game.colorCircles.forEach((circle, circleIndex) => {
     circle.graphic = game.add.circle(0, 0, 50, circle.colorNumber);
   });
 }
-export function createPlayerIdCircles(game: Game): void {
+export function createPlayerIdCircles(game: SmashedGame): void {
   if (!game.debug.Player_ID_Visible || game.debug.Chars_Colored) {
     return;
   }
@@ -561,7 +561,7 @@ export function createPlayerIdCircles(game: Game): void {
   // });
 }
 
-export function createHitboxOverlap(game: Game): void {
+export function createHitboxOverlap(game: SmashedGame): void {
   // ATTACK PHYSICAL CHOMP OVERLAP
   game.players.forEach((player, playerIndex) => {
     game.physics.add.overlap(
@@ -764,7 +764,7 @@ export function createHitboxOverlap(game: Game): void {
   });
 }
 
-export function createKeyboards(game: Game): void {
+export function createKeyboards(game: SmashedGame): void {
   let kIndex = 0;
 
   for (let i = 0; i < game.players.length; i++) {
@@ -779,7 +779,7 @@ export function createKeyboards(game: Game): void {
     }
   }
 }
-export function createKeyboardsOld(game: Game): void {
+export function createKeyboardsOld(game: SmashedGame): void {
   const k = game.keyboardHandPositions.length;
   const p = game.players.length;
   const d = p - k > 0 ? p - k : 0;
@@ -792,7 +792,7 @@ export function createKeyboardsOld(game: Game): void {
     }
   }
 }
-export function setPlayersInitialPositions(game: Game): void {
+export function setPlayersInitialPositions(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.char.initializeCharPosition.x =
       game.playerSpawnLocationsX[game.playerSpawnOrder[playerIndex]];
@@ -802,7 +802,7 @@ export function setPlayersInitialPositions(game: Game): void {
   });
 }
 
-export function createEmitterChomp(game: Game): void {
+export function createEmitterChomp(game: SmashedGame): void {
   const c = game.chomp;
   c.particles = game.add.particles('tail_0');
   c.emitterDark = c.particles.createEmitter({
@@ -817,7 +817,7 @@ export function createEmitterChomp(game: Game): void {
   });
 }
 
-export function createEmittersPlayers(game: Game): void {
+export function createEmittersPlayers(game: SmashedGame): void {
   const m = 1;
   const n = 4;
 
@@ -876,18 +876,18 @@ export function createEmittersPlayers(game: Game): void {
   });
 }
 
-export function createColliderTablePlayers(game: Game): void {
+export function createColliderTablePlayers(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.physics.add.collider(player.char.sprite, game.TABLE);
   });
 }
 
-export function createColliderTableAttackPhysicals(game: Game): void {
+export function createColliderTableAttackPhysicals(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.physics.add.collider(player.char.attackPhysical.sprite, game.TABLE);
   });
 }
-export function createColliderTableAttackEnergies(game: Game): void {
+export function createColliderTableAttackEnergies(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.attackEnergy.bouncePlatforms) {
       game.physics.add.collider(player.char.attackEnergy.sprite, game.TABLE);
@@ -895,7 +895,7 @@ export function createColliderTableAttackEnergies(game: Game): void {
   });
 }
 
-export function createEmitterChompFollowChomp(game: Game): void {
+export function createEmitterChompFollowChomp(game: SmashedGame): void {
   game.chomp.emitterDark
     .startFollow(game.chomp.block)
     .setAlpha(1)
@@ -906,7 +906,7 @@ export function createEmitterChompFollowChomp(game: Game): void {
   game.chomp.emitterDark.visible = false;
 }
 
-export function createEmittersFollowPlayers(game: Game): void {
+export function createEmittersFollowPlayers(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     // player.emitterLight.setScale(player.char.scaleCharSpriteReality);
     // player.emitterDark.setScale(player.char.scaleCharSpriteReality);
@@ -947,7 +947,7 @@ export function createEmittersFollowPlayers(game: Game): void {
   });
 }
 
-export function createLavas(game: Game): void {
+export function createLavas(game: SmashedGame): void {
   const initialLeftMostLava = (-1 * SCREEN_DIMENSIONS.WIDTH) / 2;
 
   for (let i = 0; i < game.lavas.length; i++) {
@@ -955,7 +955,7 @@ export function createLavas(game: Game): void {
   }
 }
 
-export function createFirework(game: Game): void {
+export function createFirework(game: SmashedGame): void {
   // const f = game.flag;
   // const fire = f.firework;
   game.flag.firework = game.physics.add.sprite(
@@ -1004,7 +1004,7 @@ export function createFirework(game: Game): void {
   });
 }
 
-export function createLava(i: number, game: Game, posX: number): void {
+export function createLava(i: number, game: SmashedGame, posX: number): void {
   const bottomOfMap = SCREEN_DIMENSIONS.HEIGHT + 10;
   // const bottomOfMap = SCREEN_DIMENSIONS.HEIGHT + 28;
 
@@ -1030,7 +1030,7 @@ export function createLava(i: number, game: Game, posX: number): void {
   game.lavas[i].sprite.setOrigin(0, 0);
 }
 
-export function createPlayers(game: Game): void {
+export function createPlayers(game: SmashedGame): void {
   setPlayersInitialPositions(game);
 
   game.players.forEach((player, playerIndex) => {
@@ -1163,7 +1163,7 @@ export function createPlayers(game: Game): void {
   });
 }
 
-export function createAttackPhysicals(game: Game): void {
+export function createAttackPhysicals(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.char.attackPhysical.sprite = game.physics.add
       .sprite(-500, -500, player.char.attackPhysical.srcImage)
@@ -1180,7 +1180,7 @@ export function createAttackPhysicals(game: Game): void {
     setAttackPhysicalOffscreen(player, game);
   });
 }
-export function createAttackEnergies(game: Game): void {
+export function createAttackEnergies(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     const ae = player.char.attackEnergy;
     ae.sprite = game.physics.add
@@ -1260,7 +1260,7 @@ export function createAttackEnergies(game: Game): void {
   });
 }
 
-export function createCollidersPvP(game: Game): void {
+export function createCollidersPvP(game: SmashedGame): void {
   if (!game.debug.Colliders_P_v_P) {
     return;
   }
@@ -1279,7 +1279,7 @@ export function createCollidersPvP(game: Game): void {
   });
 }
 
-export function createCollidersPvAP(game: Game): void {
+export function createCollidersPvAP(game: SmashedGame): void {
   if (!game.debug.Colliders_P_v_AP) {
     return;
   }
@@ -1300,7 +1300,7 @@ export function createCollidersPvAP(game: Game): void {
     });
   });
 }
-export function createCollidersPvAE(game: Game): void {
+export function createCollidersPvAE(game: SmashedGame): void {
   if (!game.debug.Colliders_P_v_AE) {
     return;
   }
@@ -1323,7 +1323,7 @@ export function createCollidersPvAE(game: Game): void {
 
   print('game.colliderPvAE', game.colliderPvAE);
 }
-export function createCollidersAEvAE(game: Game): void {
+export function createCollidersAEvAE(game: SmashedGame): void {
   if (!game.debug.Colliders_AE_v_AE) {
     return;
   }
@@ -1344,7 +1344,7 @@ export function createCollidersAEvAE(game: Game): void {
     });
   });
 }
-export function createCollidersAEvAP(game: Game): void {
+export function createCollidersAEvAP(game: SmashedGame): void {
   if (!game.debug.Colliders_AE_v_AP) {
     return;
   }
@@ -1366,7 +1366,7 @@ export function createCollidersAEvAP(game: Game): void {
   });
 }
 
-export function createBulletBill(game: Game): void {
+export function createBulletBill(game: SmashedGame): void {
   const bb = game.bulletBillCombo;
 
   if (game.debug.BulletBill_Active) {
@@ -1401,7 +1401,7 @@ export function createBulletBill(game: Game): void {
   }
 }
 
-export function createBulletBillColliders(game: Game): void {
+export function createBulletBillColliders(game: SmashedGame): void {
   if (!game.debug.BulletBill_Active) {
     return;
   }
@@ -1470,7 +1470,7 @@ export function createBulletBillColliders(game: Game): void {
   });
 }
 
-export function createBackground(game: Game): void {
+export function createBackground(game: SmashedGame): void {
   const scaleUp = 1.1;
 
   game.BACKGROUND = game.physics.add.sprite(
@@ -1487,7 +1487,7 @@ export function createBackground(game: Game): void {
   game.BACKGROUND.body.allowGravity = false;
 }
 
-export function createBackgroundOutline(game: Game): void {
+export function createBackgroundOutline(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE = game.physics.add.sprite(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
@@ -1502,7 +1502,7 @@ export function createBackgroundOutline(game: Game): void {
   game.BACKGROUND_OUTLINE.body.allowGravity = false;
 }
 
-export function createTable(game: Game): void {
+export function createTable(game: SmashedGame): void {
   game.TABLE = game.physics.add.sprite(
     (SCREEN_DIMENSIONS.WIDTH / 2) * game.SCREEN_SCALE.WIDTH,
     (SCREEN_DIMENSIONS.HEIGHT / 2 - 300) * game.SCREEN_SCALE.HEIGHT,
@@ -1524,11 +1524,11 @@ export function createTable(game: Game): void {
   game.soundPowerup = game.sound.add('powerup', { volume: 0.5, loop: true });
 }
 
-export function createColliderTablePlatforms(game: Game): void {
+export function createColliderTablePlatforms(game: SmashedGame): void {
   game.physics.add.collider(game.TABLE, game.PLATFORMS);
 }
 
-export function createBackgroundTitles(game: Game): void {
+export function createBackgroundTitles(game: SmashedGame): void {
   game.TEXT_TITLE = game.add
     .text(
       SCREEN_DIMENSIONS.WIDTH / 2,
@@ -1578,7 +1578,7 @@ export function createBackgroundTitles(game: Game): void {
     .setAlpha(0.3);
 }
 
-export function createSplashRuleFinished(game: Game): void {
+export function createSplashRuleFinished(game: SmashedGame): void {
   game.splashRules.forEach((splash, splashIndex) => {
     // if (splashIndex === game.splashRules.length - 1) {
     if (splash.name === 'splash-finished') {
@@ -1611,7 +1611,7 @@ export function createSplashRuleFinished(game: Game): void {
     }
   });
 }
-export function createSplashBlack(game: Game): void {
+export function createSplashBlack(game: SmashedGame): void {
   const splash = game.splashRules[0];
   splash.text = game.add
     .text(
@@ -1641,7 +1641,7 @@ export function createSplashBlack(game: Game): void {
     .setAlpha(1);
 }
 
-export function createSplashes(game: Game): void {
+export function createSplashes(game: SmashedGame): void {
   game.splashRules.forEach((splash, splashIndex) => {
     if (splashIndex !== 0 && splashIndex !== game.splashRules.length - 1) {
       splash.text = game.add
@@ -1674,7 +1674,7 @@ export function createSplashes(game: Game): void {
   });
 }
 
-export function createScoreboardShotGlass(game: Game): void {
+export function createScoreboardShotGlass(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.endCups.push({
       sprite: null,
@@ -1714,7 +1714,7 @@ export function createScoreboardShotGlass(game: Game): void {
   });
 }
 
-export function createScoreboardShotGlassNumber(game: Game): void {
+export function createScoreboardShotGlassNumber(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.shotGlassNumber = game.add
       .text(
@@ -1748,7 +1748,7 @@ export function createScoreboardShotGlassNumber(game: Game): void {
   });
 }
 
-export function createScoreboardReady(game: Game): void {
+export function createScoreboardReady(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardReady = game.add
       .text(
@@ -1782,7 +1782,7 @@ export function createScoreboardReady(game: Game): void {
   });
 }
 
-export function createScoreboardController(game: Game): void {
+export function createScoreboardController(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardController = game.add
       .text(SCREEN_DIMENSIONS.WIDTH / 2, SCREEN_DIMENSIONS.HEIGHT / 2, '🎮', {
@@ -1811,7 +1811,7 @@ export function createScoreboardController(game: Game): void {
   });
 }
 
-export function createScoreboard(game: Game): void {
+export function createScoreboard(game: SmashedGame): void {
   game.scoreBoardTimeGame = game.add.text(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
@@ -1933,7 +1933,7 @@ export function createScoreboard(game: Game): void {
   });
 }
 
-export function createCameras(game: Game): void {
+export function createCameras(game: SmashedGame): void {
   let debugAlpha = 1;
   if (!game.debug.Cameras_Visible) {
     debugAlpha = 0;

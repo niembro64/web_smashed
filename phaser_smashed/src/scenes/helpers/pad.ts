@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { InputType, Player } from '../interfaces';
 import {
   getIsAttackEnergyOffscreen,
@@ -14,7 +14,7 @@ import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 import { setPlaySoundFireBall } from './sound';
 
-export function updateGamePadsMaster(game: Game): void {
+export function updateGamePadsMaster(game: SmashedGame): void {
   let numPlayers = game.players.length;
   let padIndex = 0;
   let numPads = game.input.gamepad.gamepads.length;
@@ -61,7 +61,7 @@ export function updateGamePadsMaster(game: Game): void {
 
 export function updatePadCurrControllerTypePro(
   player: Player,
-  game: Game
+  game: SmashedGame
 ): void {
   player.padCurr.A = player.gamepad.A;
   player.padCurr.B = player.gamepad.B;
@@ -183,7 +183,7 @@ export function updatePadCurrControllerTypePro(
 
 export function updatePadCurrControllerTypeHat(
   player: Player,
-  game: Game
+  game: SmashedGame
 ): void {
   player.padCurr.A = player.gamepad.A;
   player.padCurr.B = player.gamepad.B;
@@ -250,7 +250,7 @@ export function updatePadCurrControllerTypeHat(
 export function updatePadCurrControllerTypeButtons(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   player.padCurr.up = player.gamepad.up;
   player.padCurr.down = player.gamepad.down;
@@ -290,7 +290,7 @@ export function getControllerIsRealController(gamepad: Gamepad): boolean {
   return true;
 }
 
-export function getIsAnyPlayerPausing(game: Game): boolean {
+export function getIsAnyPlayerPausing(game: SmashedGame): boolean {
   for (let i = 0; i < game.players.length; i++) {
     if (getPlayerPauses(game.players[i], game)) {
       return true;
@@ -299,19 +299,25 @@ export function getIsAnyPlayerPausing(game: Game): boolean {
   return false;
 }
 
-export function getPlayerPauses(player: Player, game: Game): boolean {
+export function getPlayerPauses(player: Player, game: SmashedGame): boolean {
   return getPlayerPressedStart(player, game);
   // getPlayerPressedBothLR(player, game) || getPlayerPressedStart(player, game)
 }
 
-export function getPlayerPressedStart(player: Player, game: Game): boolean {
+export function getPlayerPressedStart(
+  player: Player,
+  game: SmashedGame
+): boolean {
   if (player.padCurr.start) {
     return true;
   }
 
   return false;
 }
-export function getPlayerPressedBothLR(player: Player, game: Game): boolean {
+export function getPlayerPressedBothLR(
+  player: Player,
+  game: SmashedGame
+): boolean {
   if (player.padCurr.L && player.padCurr.R) {
     return true;
   }
@@ -319,7 +325,7 @@ export function getPlayerPressedBothLR(player: Player, game: Game): boolean {
   return false;
 }
 
-export function getIsPlayerReady(player: Player, game: Game): boolean {
+export function getIsPlayerReady(player: Player, game: SmashedGame): boolean {
   if (player.padCurr.L && player.padCurr.R) {
     return false;
   }
@@ -346,7 +352,7 @@ export function getIsPlayerReady(player: Player, game: Game): boolean {
   return true;
 }
 
-export function getIsAllPlayersReady(game: Game): boolean {
+export function getIsAllPlayersReady(game: SmashedGame): boolean {
   for (let i = 0; i < game.players.length; i++) {
     if (
       !game.players[i].padCurr.up &&
@@ -369,7 +375,7 @@ export function getIsAllPlayersReady(game: Game): boolean {
 export function resetMyHitByMatrix(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (player.state.name === 'player-state-hurt') {
     return;
@@ -379,7 +385,9 @@ export function resetMyHitByMatrix(
   }
 }
 
-export function updateAttackEnergyFrictionGroundRotation(game: Game): void {
+export function updateAttackEnergyFrictionGroundRotation(
+  game: SmashedGame
+): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.attackEnergy.sprite.body.touching.down) {
       player.char.attackEnergy.sprite.setAngularVelocity(
@@ -390,7 +398,9 @@ export function updateAttackEnergyFrictionGroundRotation(game: Game): void {
   });
 }
 
-export function updateAttackEnergyFrictionGroundMovement(game: Game): void {
+export function updateAttackEnergyFrictionGroundMovement(
+  game: SmashedGame
+): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.attackEnergy.sprite.body.touching.down) {
       player.char.attackEnergy.sprite.setVelocityX(
@@ -401,7 +411,7 @@ export function updateAttackEnergyFrictionGroundMovement(game: Game): void {
   });
 }
 
-export function updateAttackEnergyFrictionWall(game: Game): void {
+export function updateAttackEnergyFrictionWall(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     if (
       player.char.attackEnergy.friction.wallInvertRotation &&
@@ -486,7 +496,10 @@ export function updatePlayerHoldAttackEnergy(player: Player): void {
 //   }
 // }
 
-export function playerShootAttackEnergy(player: Player, game: Game): void {
+export function playerShootAttackEnergy(
+  player: Player,
+  game: SmashedGame
+): void {
   let ae = player.char.attackEnergy;
   const vX =
     player.char.sprite.body.velocity.x * player.char.attackEnergy.VEL.x * 0.5;
@@ -528,7 +541,7 @@ export function playerGrabAttackEnergy(player: Player): void {
   player.char.attackEnergy.sprite.body.setVelocityY(0);
 }
 
-export function updateAttackEnergy(player: Player, game: Game): void {
+export function updateAttackEnergy(player: Player, game: SmashedGame): void {
   let ae = player.char.attackEnergy;
   let b = player.char.sprite.body;
   let s = player.char.sprite;
@@ -636,7 +649,7 @@ export function updateAttackEnergy(player: Player, game: Game): void {
 
 export function isSpriteOffscreen(
   sprite: Phaser.GameObjects.Sprite,
-  game: Game
+  game: SmashedGame
 ): boolean {
   if (
     sprite.x > SCREEN_DIMENSIONS.WIDTH ||
@@ -649,7 +662,7 @@ export function isSpriteOffscreen(
   return false;
 }
 
-export function updatePadPreviousAndDebounced(game: Game): void {
+export function updatePadPreviousAndDebounced(game: SmashedGame): void {
   game.players.forEach((player) => {
     const c = player.padCurr;
     const p = player.padPrev;
@@ -740,7 +753,7 @@ export function updatePadPreviousAndDebounced(game: Game): void {
   });
 }
 
-export function debugUpdateControllersPrintConnected(game: Game): void {
+export function debugUpdateControllersPrintConnected(game: SmashedGame): void {
   if (!game.debug.Console_Log_Connected) {
     return;
   }
@@ -750,7 +763,10 @@ export function debugUpdateControllersPrintConnected(game: Game): void {
   });
 }
 
-export function updateControllerMovement(player: Player, game: Game): void {
+export function updateControllerMovement(
+  player: Player,
+  game: SmashedGame
+): void {
   if (!player.gamepad) {
     print('NO GAMEPAD');
     return;
@@ -812,7 +828,7 @@ export function updateControllerMovement(player: Player, game: Game): void {
 }
 
 export function debugUpdatePrintAllControllerButtonsWhenActive(
-  game: Game
+  game: SmashedGame
 ): void {
   if (!game.debug.Console_Log_Buttons) {
     return;

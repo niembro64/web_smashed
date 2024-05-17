@@ -1,4 +1,4 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Player, Position, Velocity, xyVector } from '../interfaces';
 import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
@@ -9,7 +9,7 @@ import {
   getNearestPlayerAliveXYFromPlayer,
   hasPlayerTouchedWallRecently,
 } from './movement';
-export function getIsBot(player: Player, game: Game): boolean {
+export function getIsBot(player: Player, game: SmashedGame): boolean {
   if (player.inputType === 3) {
     return true;
   }
@@ -18,7 +18,7 @@ export function getIsBot(player: Player, game: Game): boolean {
 export function getIsBotNearNearestPlayer(
   player: Player,
   playerIndex: number,
-  game: Game,
+  game: SmashedGame,
   amount: number
 ): boolean {
   // let nearestPlayerPosition: Position | null = {
@@ -46,7 +46,7 @@ export function getIsBotNearNearestPlayer(
 export function getSameHorizontalSlice(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   const nearestPlayerPosition: Position | null =
     getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
@@ -68,7 +68,7 @@ export function getSameHorizontalSlice(
 export function getSameVerticalSlice(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   const nearestPlayerPosition: Position | null =
     getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
@@ -88,7 +88,7 @@ export function getSameVerticalSlice(
 export function getIsBotFacingNearestPlayer(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   let bot = player.char.sprite;
   const nearestPlayerPosition: Position | null =
@@ -106,7 +106,10 @@ export function getIsBotFacingNearestPlayer(
   }
   return false;
 }
-export function getIsBotTooFarMiddleLeft(player: Player, game: Game): boolean {
+export function getIsBotTooFarMiddleLeft(
+  player: Player,
+  game: SmashedGame
+): boolean {
   let bot = player.char.sprite;
   let left = SCREEN_DIMENSIONS.WIDTH * 0.49;
   if (bot.x < left) {
@@ -114,7 +117,10 @@ export function getIsBotTooFarMiddleLeft(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotTooFarMiddleRight(player: Player, game: Game): boolean {
+export function getIsBotTooFarMiddleRight(
+  player: Player,
+  game: SmashedGame
+): boolean {
   let bot = player.char.sprite;
   let right = SCREEN_DIMENSIONS.WIDTH * 0.51;
   if (bot.x > right) {
@@ -122,7 +128,10 @@ export function getIsBotTooFarMiddleRight(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotTooFarCenterLeft(player: Player, game: Game): boolean {
+export function getIsBotTooFarCenterLeft(
+  player: Player,
+  game: SmashedGame
+): boolean {
   let bot = player.char.sprite;
   let left = SCREEN_DIMENSIONS.WIDTH * 0.35;
   if (bot.x < left) {
@@ -130,7 +139,10 @@ export function getIsBotTooFarCenterLeft(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
+export function getIsBotTooFarCenterRight(
+  player: Player,
+  game: SmashedGame
+): boolean {
   let bot = player.char.sprite;
   let right = SCREEN_DIMENSIONS.WIDTH * 0.65;
   if (bot.x > right) {
@@ -138,7 +150,7 @@ export function getIsBotTooFarCenterRight(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
+export function getIsBotTooFarLeft(player: Player, game: SmashedGame): boolean {
   let bot = player.char.sprite;
   let left = SCREEN_DIMENSIONS.WIDTH * 0.11;
   if (bot.x < left) {
@@ -146,7 +158,10 @@ export function getIsBotTooFarLeft(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotTooFarRight(player: Player, game: Game): boolean {
+export function getIsBotTooFarRight(
+  player: Player,
+  game: SmashedGame
+): boolean {
   let bot = player.char.sprite;
   let right = SCREEN_DIMENSIONS.WIDTH * 0.892;
   if (bot.x > right) {
@@ -154,13 +169,13 @@ export function getIsBotTooFarRight(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotTooFarUp(player: Player, game: Game): boolean {
+export function getIsBotTooFarUp(player: Player, game: SmashedGame): boolean {
   const bot = player.char.sprite;
   const up = SCREEN_DIMENSIONS.HEIGHT * 0.33;
 
   return bot.y < up;
 }
-export function getIsBotTooFarDown(player: Player, game: Game): boolean {
+export function getIsBotTooFarDown(player: Player, game: SmashedGame): boolean {
   const bot = player.char.sprite;
   const down = SCREEN_DIMENSIONS.HEIGHT * 0.9;
   if (bot.y > down) {
@@ -168,7 +183,10 @@ export function getIsBotTooFarDown(player: Player, game: Game): boolean {
   }
   return false;
 }
-export function getIsBotInPitAreaLeft(player: Player, game: Game): boolean {
+export function getIsBotInPitAreaLeft(
+  player: Player,
+  game: SmashedGame
+): boolean {
   const bot = player.char.sprite;
   const pit = game.pit;
   const isInPitArea = bot.x > pit.left && bot.x < pit.middle && bot.y > pit.top;
@@ -176,7 +194,7 @@ export function getIsBotInPitAreaLeft(player: Player, game: Game): boolean {
   return isInPitArea;
 }
 
-export function getIsBotInPitArea(player: Player, game: Game): boolean {
+export function getIsBotInPitArea(player: Player, game: SmashedGame): boolean {
   const p = player.char.sprite;
   const pit = game.pit;
 
@@ -185,7 +203,10 @@ export function getIsBotInPitArea(player: Player, game: Game): boolean {
   return isInPitArea;
 }
 
-export function getIsBotInPitAreaRight(player: Player, game: Game): boolean {
+export function getIsBotInPitAreaRight(
+  player: Player,
+  game: SmashedGame
+): boolean {
   const bot = player.char.sprite;
   const pit = game.pit;
 
@@ -194,7 +215,10 @@ export function getIsBotInPitAreaRight(player: Player, game: Game): boolean {
 
   return isInPitArea;
 }
-export function getIsBotInPitAreaBottom(player: Player, game: Game): boolean {
+export function getIsBotInPitAreaBottom(
+  player: Player,
+  game: SmashedGame
+): boolean {
   const bot = player.char.sprite;
   const p = game.pit;
 
@@ -272,7 +296,7 @@ export const getDodgeDirectionPlayerToAttackEnergy = (
 export const getIsNearestAttackEnergyThisClose = (
   player: Player,
   playerIndex: number,
-  game: Game,
+  game: SmashedGame,
   distance: number
 ): boolean => {
   const ae: Position | null = getNearestAttackEnergyXYFromPlayer(
@@ -296,7 +320,7 @@ export const getIsNearestAttackEnergyThisClose = (
 export const getIsNearestAttackEnergyThisCloseAbove = (
   player: Player,
   playerIndex: number,
-  game: Game,
+  game: SmashedGame,
   distance: number
 ): boolean => {
   const ae: Position | null = getNearestAttackEnergyXYAboveFromPlayer(
@@ -377,7 +401,7 @@ export const updatePlayerDodgeInThisDirection = (
 export const updatePlayerDodgeIfAttackEnergyTooClose = (
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void => {
   const shortRange = SCREEN_DIMENSIONS.HEIGHT * 0.2;
   const longRange = SCREEN_DIMENSIONS.HEIGHT * 0.5;
@@ -424,7 +448,7 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
 export function updateBotRules(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   const p = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {

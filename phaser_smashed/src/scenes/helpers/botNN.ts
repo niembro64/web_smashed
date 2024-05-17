@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Player, Velocity } from '../interfaces';
 import {
   allPadToFalse,
@@ -17,7 +17,7 @@ import { NNSetPlayerPadStatic } from './nn';
 export function updateBotNN(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   const padCurr = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {

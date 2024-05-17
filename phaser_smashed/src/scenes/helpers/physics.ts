@@ -1,4 +1,4 @@
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import {
   setBGMusicPause,
   setBGMusicResume,
@@ -11,7 +11,7 @@ import {
 } from './sound';
 import { setAnimationsOff, setAnimationsOn } from './sprites';
 
-export function setPhysicsAndMusicPause(game: Game): void {
+export function setPhysicsAndMusicPause(game: SmashedGame): void {
   game.physics.pause();
   game.players.forEach((player, playerIndex) => {
     player.emitterPlayer.active = false;
@@ -51,7 +51,7 @@ export function setPhysicsAndMusicPause(game: Game): void {
   }
 }
 
-export function setPhysicsAndMusicResume(game: Game): void {
+export function setPhysicsAndMusicResume(game: SmashedGame): void {
   game.physics.resume();
   game.players.forEach((player, playerIndex) => {
     player.emitterPlayer.active = true;

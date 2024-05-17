@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 
-export function updateTimeSlowdown(game: Game): void {
+export function updateTimeSlowdown(game: SmashedGame): void {
   if (!game.debug.Chomps_SlowMo) {
     return;
   }
@@ -20,7 +20,7 @@ export function updateTimeSlowdown(game: Game): void {
   game.motionSlowdown = game.motionSlowdown * 0.95 + 0.05;
 }
 
-export function addToMotionSlowdown(amount: number, game: Game): void {
+export function addToMotionSlowdown(amount: number, game: SmashedGame): void {
   game.motionSlowdown *= amount;
 }
 

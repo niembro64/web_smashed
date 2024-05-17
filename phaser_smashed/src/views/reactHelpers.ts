@@ -1,5 +1,5 @@
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
-import Game from '../scenes/Game';
+import SmashedGame from '../scenes/SmashedGame';
 import {
   CharacterMove,
   InputType,
@@ -200,7 +200,7 @@ export const configInit: Phaser.Types.Core.GameConfig = {
       debug: false,
     },
   },
-  scene: [Game],
+  scene: [SmashedGame],
 };
 
 // ✔️🚧❌🚫🛑🔜📄📋⚙️🚪⛔⌚🕹️🎮☠️👾💣🔥​➡️​⌨️​⌨🧊🌑🌒🌙⭐🌞☁☁☁

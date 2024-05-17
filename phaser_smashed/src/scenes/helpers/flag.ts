@@ -1,4 +1,4 @@
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Player } from '../interfaces';
 import { setPlayerPowerState } from './powers';
 import {
@@ -8,7 +8,11 @@ import {
   setMusicBoxResume,
 } from './sound';
 
-export const getIsInPoleExact = (x: number, y: number, game: Game): boolean => {
+export const getIsInPoleExact = (
+  x: number,
+  y: number,
+  game: SmashedGame
+): boolean => {
   const f = game.flag;
   if (f.completedCurr) {
     return false;
@@ -24,7 +28,11 @@ export const getIsInPoleExact = (x: number, y: number, game: Game): boolean => {
   return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
 };
 
-export const getIsInPoleArea = (x: number, y: number, game: Game): boolean => {
+export const getIsInPoleArea = (
+  x: number,
+  y: number,
+  game: SmashedGame
+): boolean => {
   const f = game.flag;
   if (f.completedCurr) {
     return false;
@@ -40,7 +48,7 @@ export const getIsInPoleArea = (x: number, y: number, game: Game): boolean => {
   return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
 };
 
-export const updateFlagToucher = (game: Game): void => {
+export const updateFlagToucher = (game: SmashedGame): void => {
   const f = game.flag;
 
   if (f.completedCurr) {
@@ -89,7 +97,7 @@ export const updateFlagToucher = (game: Game): void => {
   f.toucherCurr.gameStamp = toucherGameStamp;
 };
 
-export const updateFlagMovement = (game: Game): void => {
+export const updateFlagMovement = (game: SmashedGame): void => {
   const { flag } = game;
 
   if (flag.completedPrev) return;
@@ -126,7 +134,7 @@ export const updateFlagMovement = (game: Game): void => {
   }
 };
 
-export const updateFlagOwner = (game: Game): void => {
+export const updateFlagOwner = (game: SmashedGame): void => {
   const { toucherCurr, ownerCurr, spriteFlagMover, box, completedCurr } =
     game.flag;
 
@@ -139,7 +147,7 @@ export const updateFlagOwner = (game: Game): void => {
   }
 };
 
-export const updateFlagColor = (game: Game): void => {
+export const updateFlagColor = (game: SmashedGame): void => {
   const {
     spriteFlagMover,
     spriteFlagStationary,
@@ -166,11 +174,14 @@ export const updateFlagColor = (game: Game): void => {
   }
 };
 
-export const getIsFlagShots = (game: Game): boolean => {
+export const getIsFlagShots = (game: SmashedGame): boolean => {
   return game.flag.completedCurr && !game.flag.completedPrev;
 };
 
-export const setFlagOwnerNullIfDead = (player: Player, game: Game): void => {
+export const setFlagOwnerNullIfDead = (
+  player: Player,
+  game: SmashedGame
+): void => {
   const { ownerCurr, ownerPrev, completedCurr } = game.flag;
 
   if (!completedCurr && ownerCurr.id === player.playerId) {

@@ -1,4 +1,4 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Player } from '../interfaces';
 import { getDistance, getNormalizedVector, getVector } from './damage';
 import { getNearestPlayerAliveFromXY } from './movement';
@@ -10,7 +10,7 @@ import {
   setMusicChompSheepResume,
 } from './sound';
 
-export function updateChomp(game: Game): void {
+export function updateChomp(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -21,7 +21,7 @@ export function updateChomp(game: Game): void {
   updateChompAudio(game);
 }
 
-export function updateChompAudio(game: Game): void {
+export function updateChompAudio(game: SmashedGame): void {
   if (getDoesAnythingHaveDark(game)) {
     setMusicChompSheepResume(game);
     setBGMusicSpeedSlower(game);
@@ -31,7 +31,7 @@ export function updateChompAudio(game: Game): void {
   }
 }
 
-export function updateAtThreeShots(game: Game): void {
+export function updateAtThreeShots(game: SmashedGame): void {
   if (game.shotsLeftCurr === game.shotsLeftPrev) {
     return;
   }
@@ -40,7 +40,7 @@ export function updateAtThreeShots(game: Game): void {
   }
 }
 
-export function updateChompSpriteDirection(game: Game): void {
+export function updateChompSpriteDirection(game: SmashedGame): void {
   const c = game.chomp;
 
   if (c.sprite.body.velocity.x > 0) {
@@ -50,7 +50,7 @@ export function updateChompSpriteDirection(game: Game): void {
   }
 }
 
-export function updateChompVelocity(game: Game): void {
+export function updateChompVelocity(game: SmashedGame): void {
   const { chomp } = game;
   const {
     sprite,
@@ -110,7 +110,7 @@ export function updateChompVelocity(game: Game): void {
   }
 }
 
-export function isChompInsideCircle(game: Game): boolean {
+export function isChompInsideCircle(game: SmashedGame): boolean {
   const c = game.chomp;
   const x = c.sprite.x;
   const y = c.sprite.y;
@@ -125,7 +125,7 @@ export function isChompInsideCircle(game: Game): boolean {
   return distance < radius;
 }
 
-export function getCircleYfromX(x: number, game: Game): number {
+export function getCircleYfromX(x: number, game: SmashedGame): number {
   const c = game.chomp;
   const originX = c.originX;
   const originY = c.originY;
@@ -136,7 +136,7 @@ export function getCircleYfromX(x: number, game: Game): number {
   return y;
 }
 
-export function updateChompLinkPositions(game: Game): void {
+export function updateChompLinkPositions(game: SmashedGame): void {
   const c = game.chomp;
   const endX = c.sprite.x;
   const endY = c.sprite.y;
@@ -157,7 +157,7 @@ export function updateChompLinkPositions(game: Game): void {
   });
 }
 
-export function getChompClosestDistance(game: Game): number {
+export function getChompClosestDistance(game: SmashedGame): number {
   const c = game.chomp;
   const b = c.sprite.body;
   let shortestDistance = Infinity;

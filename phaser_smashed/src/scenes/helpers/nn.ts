@@ -1,6 +1,6 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../../views/client';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { NNObject, Player } from '../interfaces';
 import {
   getNearestAttackEnergyXYFromPlayer,
@@ -18,7 +18,7 @@ export const nnConfigNN = {
 
 export const nnNumTrainingBarTicks: number = 25;
 
-export const NNTrainNN = async (game: Game): Promise<void> => {
+export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   if (!game.debug.NN_Train_P1) {
     return;
   }
@@ -120,7 +120,7 @@ export const NNTrainNN = async (game: Game): Promise<void> => {
   );
 };
 
-export const NNGetOutputRatios = (game: Game): number[] => {
+export const NNGetOutputRatios = (game: SmashedGame): number[] => {
   const numObj: number = game.nnObjects.length;
   const numObjOuts: number = game.nnObjects[0].output.length;
 
@@ -147,7 +147,7 @@ export const NNGetOutputRatios = (game: Game): number[] => {
 export const NNGetOutputStatic = (
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): number[] => {
   const nearP = getNearestPlayerAliveFromPlayer(player, playerIndex, game);
 
@@ -268,7 +268,7 @@ export const NNGetOutputStatic = (
 export const NNSetPlayerPadStatic = (
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void => {
   const nnOutput = NNGetOutputStatic(player, playerIndex, game);
 
@@ -284,7 +284,7 @@ export const NNSetPlayerPadStatic = (
   player.padCurr.Y = nnOutput[7] > r[7];
 };
 
-export const addPlayerOneNNObjectsStatic = (game: Game): void => {
+export const addPlayerOneNNObjectsStatic = (game: SmashedGame): void => {
   if (!game.debug.NN_Train_P1) {
     return;
   }
@@ -425,7 +425,7 @@ export const addPlayerOneNNObjectsStatic = (game: Game): void => {
   game.nnObjects.push(newNNObject);
 };
 
-export const NNDownloadNNObjects = (game: Game): void => {
+export const NNDownloadNNObjects = (game: SmashedGame): void => {
   const nnObjects = game.nnObjects;
   const nnObjectsString = JSON.stringify(nnObjects, null, 2);
   const blob = new Blob([nnObjectsString], { type: 'text/plain' });
@@ -464,7 +464,7 @@ export const deleteLastNNObjects = (
   player: Player,
   playerIndex: number,
   numToDelete: number,
-  game: Game
+  game: SmashedGame
 ): void => {
   if (!game.debug.NN_Train_P1) {
     return;

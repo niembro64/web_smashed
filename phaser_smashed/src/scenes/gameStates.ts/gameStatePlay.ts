@@ -1,4 +1,4 @@
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import {
   updateAttackEnergyOffscreen,
   updateRemoveAttackPhysicalsIfNotNearPlayer,
@@ -51,7 +51,7 @@ import { updateTimeSlowdown } from '../helpers/time';
 import { updatePlayers } from '../update';
 
 export function updateGameStatePlay(
-  game: Game,
+  game: SmashedGame,
   time: number,
   delta: number
 ): void {
@@ -88,7 +88,7 @@ export function updateGameStatePlay(
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);
   updateBulletBill(game);
-  
+
   // UPDATE PLAYERS
   updatePlayers(game);
   // updatePhysicalAttackFollowPlayers(game);

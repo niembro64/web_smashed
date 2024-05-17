@@ -1,7 +1,7 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Loc } from '../interfaces';
 
-export function updateCamera(game: Game): void {
+export function updateCamera(game: SmashedGame): void {
   if (game.debug.Dev_Mode || !game.debug.Use_Camera) {
     game.cameras.main.zoom = game.debug.Dev_Zoom / 10;
     return;
@@ -58,7 +58,7 @@ export function updateCamera(game: Game): void {
   // }
 }
 
-export function getBorderZoom(game: Game): number {
+export function getBorderZoom(game: SmashedGame): number {
   let curr_x: number = 0;
   let curr_y: number = 0;
 
@@ -86,7 +86,7 @@ export function getBorderZoom(game: Game): number {
   return Math.max(return_x, return_y);
 }
 
-export function getPlayerZoom(game: Game): number {
+export function getPlayerZoom(game: SmashedGame): number {
   let curr_x = 0;
   let curr_y = 0;
 
@@ -130,7 +130,7 @@ export function getPlayerZoom(game: Game): number {
   );
 }
 
-export function getCameraBorderStatus(game: Game): Loc {
+export function getCameraBorderStatus(game: SmashedGame): Loc {
   let x_low: number = Infinity;
   let x_high: number = 0;
   let y_low: number = Infinity;
@@ -150,7 +150,7 @@ export function getCameraBorderStatus(game: Game): Loc {
   };
 }
 
-export function getCameraPlayerStatus(game: Game): Loc {
+export function getCameraPlayerStatus(game: SmashedGame): Loc {
   let x_low: number = Infinity;
   let x_high: number = 0;
   let y_low: number = Infinity;
@@ -187,7 +187,7 @@ export function getCameraPlayerStatus(game: Game): Loc {
   };
 }
 
-export function getCameraMoverStatus(game: Game): Loc {
+export function getCameraMoverStatus(game: SmashedGame): Loc {
   // const x_low: number = Infinity;
   // const x_high: number = 0;
   // const y_low: number = Infinity;
@@ -220,7 +220,7 @@ export function getCameraMoverStatus(game: Game): Loc {
   };
 }
 
-export function getCameraBoxStatus(game: Game): Loc {
+export function getCameraBoxStatus(game: SmashedGame): Loc {
   let x_low: number = Infinity;
   let x_high: number = 0;
   let y_low: number = Infinity;

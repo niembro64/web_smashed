@@ -1,10 +1,10 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Player } from '../interfaces';
 import { print } from '../../views/client';
 import { getIsAttackEnergyOffscreen } from './attacks';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
 
-export function updateCirclesLocations(game: Game): void {
+export function updateCirclesLocations(game: SmashedGame): void {
   if (!game.debug.Player_ID_Visible || game.debug.Chars_Colored) {
     return;
   }
@@ -22,13 +22,13 @@ export function updateCirclesLocations(game: Game): void {
   });
 }
 
-export function updateTable(game: Game): void {
+export function updateTable(game: SmashedGame): void {
   if (game.TABLE.body.touching.down) {
     game.TABLE.body.setVelocityX(game.TABLE.body.velocity.x * 0.9);
   }
 }
 
-export function updateAttackEnergyWrapScreen(game: Game): void {
+export function updateAttackEnergyWrapScreen(game: SmashedGame): void {
   if (!game.debug.AE_Wrap_Screen) {
     return;
   }
@@ -42,7 +42,7 @@ export function updateAttackEnergyWrapScreen(game: Game): void {
   });
 }
 
-export function updateKeepOnScreenPlayer(game: Game): void {
+export function updateKeepOnScreenPlayer(game: SmashedGame): void {
   game.players.forEach((player) => {
     if (player.char.sprite.y < 0) {
       player.char.sprite.y = SCREEN_DIMENSIONS.HEIGHT;
@@ -58,7 +58,7 @@ export function updateKeepOnScreenPlayer(game: Game): void {
     }
   });
 }
-export function isAnyPlayerOffscreen(game: Game): boolean {
+export function isAnyPlayerOffscreen(game: SmashedGame): boolean {
   for (let i = 0; i < game.players.length; i++) {
     if (getIsPlayerOffscreen(game.players[i], game)) {
       return true;
@@ -66,7 +66,10 @@ export function isAnyPlayerOffscreen(game: Game): boolean {
   }
   return false;
 }
-export function getIsPlayerOffscreen(player: Player, game: Game): boolean {
+export function getIsPlayerOffscreen(
+  player: Player,
+  game: SmashedGame
+): boolean {
   if (
     player.char.sprite.y < 0 ||
     player.char.sprite.y > SCREEN_DIMENSIONS.HEIGHT ||
@@ -78,7 +81,7 @@ export function getIsPlayerOffscreen(player: Player, game: Game): boolean {
   return false;
 }
 
-export function setRespawn(player: Player, game: Game): void {
+export function setRespawn(player: Player, game: SmashedGame): void {
   player.char.sprite.x =
     SCREEN_DIMENSIONS.WIDTH / 2 + player.char.initializeCharPosition.x;
   player.char.sprite.y = player.char.initializeCharPosition.y;
@@ -99,7 +102,7 @@ export function updateLastDirectionTouched(player: Player): void {
   }
 }
 
-export function updateWallTouchArray(game: Game): void {
+export function updateWallTouchArray(game: SmashedGame): void {
   game.players.forEach((player) => {
     let t = player.char.sprite.body.touching;
     let i = game.allPlayersWallTouchIterator;
@@ -121,7 +124,10 @@ export function hasPlayerTouchedWallRecently(player: Player): boolean {
   return !player.char.wallTouchArray.every((b) => b === false);
 }
 
-export function updateJumpPhysicalOnWall(player: Player, game: Game): void {
+export function updateJumpPhysicalOnWall(
+  player: Player,
+  game: SmashedGame
+): void {
   if (
     player.char.sprite.body.touching.down ||
     player.char.sprite.body.touching.left ||
@@ -131,7 +137,7 @@ export function updateJumpPhysicalOnWall(player: Player, game: Game): void {
   }
 }
 
-export function updateJumpPhysical(player: Player, game: Game): void {
+export function updateJumpPhysical(player: Player, game: SmashedGame): void {
   if (player.padCurr.Y && !player.padPrev.Y) {
     if (
       !player.char.sprite.body.touching.down &&
@@ -189,7 +195,7 @@ export function updateJumpPhysical(player: Player, game: Game): void {
   }
 }
 
-export function updateJumpFloat(player: Player, game: Game): void {
+export function updateJumpFloat(player: Player, game: SmashedGame): void {
   if (player.emitterPlayer.on) {
     return;
   }
@@ -204,7 +210,7 @@ export function updateJumpFloat(player: Player, game: Game): void {
   }
 }
 
-export function updateFrictionWallY(player: Player, game: Game): void {
+export function updateFrictionWallY(player: Player, game: SmashedGame): void {
   if (!game.debug.Wall_Jumps_Active) {
     return;
   }
@@ -220,7 +226,7 @@ export function updateFrictionWallY(player: Player, game: Game): void {
   }
 }
 
-export function updateFrictionAirY(player: Player, game: Game): void {
+export function updateFrictionAirY(player: Player, game: SmashedGame): void {
   if (!game.debug.Friction_Air_Active) {
     return;
   }
@@ -232,7 +238,7 @@ export function updateFrictionAirY(player: Player, game: Game): void {
   }
 }
 
-export function updateFrictionAirX(player: Player, game: Game): void {
+export function updateFrictionAirX(player: Player, game: SmashedGame): void {
   if (!game.debug.Friction_Air_Active) {
     return;
   }
@@ -244,7 +250,7 @@ export function updateFrictionAirX(player: Player, game: Game): void {
   }
 }
 
-export function updateFrictionGroundX(player: Player, game: Game): void {
+export function updateFrictionGroundX(player: Player, game: SmashedGame): void {
   if (
     player.char.sprite.body.touching.down &&
     !player.padCurr.left &&
@@ -258,7 +264,7 @@ export function updateFrictionGroundX(player: Player, game: Game): void {
 
 export function hitbackFly(
   player: Player,
-  game: Game,
+  game: SmashedGame,
   hitbackx: number,
   hitbacky: number
 ): void {
@@ -286,7 +292,7 @@ export function setGravityFalse(player: Player): void {
   player.char.sprite.body.allowGravity = false;
 }
 
-export function updateKeepObjectsFromFallingLikeCrazy(game: Game): void {
+export function updateKeepObjectsFromFallingLikeCrazy(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.attackEnergy.sprite.y > SCREEN_DIMENSIONS.HEIGHT) {
       player.char.attackEnergy.sprite.y = SCREEN_DIMENSIONS.HEIGHT + 200;
@@ -296,7 +302,7 @@ export function updateKeepObjectsFromFallingLikeCrazy(game: Game): void {
   });
 }
 
-export function updateAttackEnergyFollow(game: Game): void {
+export function updateAttackEnergyFollow(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     const ae = player.char.attackEnergy;
     if (!getIsAttackEnergyOffscreen(ae)) {
@@ -342,7 +348,7 @@ export function updateAttackEnergyFollow(game: Game): void {
 export function getNearestPlayerXFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): number | null {
   let goToX = Infinity;
   let myX = player.char.attackEnergy.sprite.x;
@@ -368,7 +374,7 @@ export function getNearestPlayerXFromPlayer(
 export function getNearestPlayerYFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): number | null {
   let goToY = Infinity;
   let myY = player.char.attackEnergy.sprite.y;
@@ -394,7 +400,7 @@ export function getNearestPlayerYFromPlayer(
 export function getNearestPlayerAliveXYFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): { x: number; y: number } | null {
   let goToXCurr = Infinity;
   let goToYCurr = Infinity;
@@ -427,7 +433,7 @@ export function getNearestPlayerAliveXYFromPlayer(
 export function getNearestPlayerAliveFromXY(
   x: number,
   y: number,
-  game: Game
+  game: SmashedGame
 ): { player: Player; playerIndex: number } | null {
   const players = game.players.filter(
     (player) => player.state.name === 'player-state-alive'
@@ -455,7 +461,7 @@ export function getNearestPlayerAliveFromXY(
 export function getNearestAttackEnergyXYFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): { x: number; y: number } | null {
   let currX = Infinity;
   let currY = Infinity;
@@ -485,7 +491,7 @@ export function getNearestAttackEnergyXYFromPlayer(
 export function getNearestAttackPhysicalXYFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): { x: number; y: number } | null {
   let currX = Infinity;
   let currY = Infinity;
@@ -515,7 +521,7 @@ export function getNearestAttackPhysicalXYFromPlayer(
 export function getNearestPlayerAliveFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): { player: Player; playerIndex: number } | null {
   let currentEnemyX = Infinity;
   let currentEnemyY = Infinity;
@@ -550,7 +556,7 @@ export function getNearestPlayerAliveFromPlayer(
 export function getNearestPlayerFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): { player: Player; playerIndex: number } | null {
   let currentEnemyX = Infinity;
   let currentEnemyY = Infinity;
@@ -586,7 +592,7 @@ export function getNearestPlayerFromPlayer(
 export function getNearestAttackEnergyXYAboveFromPlayer(
   player: Player,
   pIndex: number,
-  game: Game
+  game: SmashedGame
 ): { x: number; y: number } | null {
   let goToX = Infinity;
   let goToY = Infinity;
@@ -625,7 +631,7 @@ export function getDistance(
   return Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
 }
 
-export function updateAttackEnergyFlipXVel(game: Game): void {
+export function updateAttackEnergyFlipXVel(game: SmashedGame): void {
   for (let i = 0; i < game.players.length; i++) {
     const ae = game.players[i].char.attackEnergy;
 
@@ -637,7 +643,7 @@ export function updateAttackEnergyFlipXVel(game: Game): void {
     }
   }
 }
-export function updateAttackEnergyFlipXAcc(game: Game): void {
+export function updateAttackEnergyFlipXAcc(game: SmashedGame): void {
   for (let i = 0; i < game.players.length; i++) {
     const ae = game.players[i].char.attackEnergy;
 
@@ -650,7 +656,7 @@ export function updateAttackEnergyFlipXAcc(game: Game): void {
   }
 }
 
-export function updateAttackEnergyVelPrev(game: Game): void {
+export function updateAttackEnergyVelPrev(game: SmashedGame): void {
   for (let i = 0; i < game.players.length; i++) {
     game.players[i].char.attackEnergy.accX =
       game.players[i].char.attackEnergy.sprite.body.velocity.x -

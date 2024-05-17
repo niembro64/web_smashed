@@ -30,7 +30,7 @@ import { update } from './update';
 
 export const SCREEN_DIMENSIONS = { WIDTH: 1920, HEIGHT: 1080 };
 
-export default class Game extends Phaser.Scene {
+export default class SmashedGame extends Phaser.Scene {
   ////////////////////////////////
   ////////// GAME DEBUG
   ////////////////////////////////

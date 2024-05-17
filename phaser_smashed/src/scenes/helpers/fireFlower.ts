@@ -1,11 +1,11 @@
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Player } from '../interfaces';
 import { getNormalizedVector } from './damage';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
-export const updateFireFlowerShooting = (game: Game) => {
+export const updateFireFlowerShooting = (game: SmashedGame) => {
   if (game.debug.NN_Train_P1 || game.fireFlower.attackBullets === null) {
     return;
   }

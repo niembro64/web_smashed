@@ -1,10 +1,16 @@
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Debug, Player, Position, Velocity } from '../interfaces';
 import { getDistanceFromOrigin } from './math';
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
-  constructor(game: Game, x: number, y: number, key: string, rotation: number) {
+  constructor(
+    game: SmashedGame,
+    x: number,
+    y: number,
+    key: string,
+    rotation: number
+  ) {
     super(game, x, y, key);
     this.setRotation(rotation);
     this.screen = SCREEN_DIMENSIONS;
@@ -28,7 +34,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
   timeAlive: number = 0;
   initialPosition: Position = { x: 0, y: 0 };
 
-  fire(pos: Position, vel: Velocity, game: Game): void {
+  fire(pos: Position, vel: Velocity, game: SmashedGame): void {
     this.initialPosition = { x: pos.x, y: pos.y };
     this.timeAlive = 0;
     this.body.reset(pos.x, pos.y);
@@ -92,7 +98,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
 }
 
 export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
-  constructor(game: Game, player: Player) {
+  constructor(game: SmashedGame, player: Player) {
     super(game.physics.world, game);
 
     const ae = player.char.attackEnergy;
@@ -126,7 +132,7 @@ export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
     vel: Velocity,
     player: Player,
     firstFire: boolean,
-    game: Game
+    game: SmashedGame
   ): void {
     if (firstFire) {
       this.numSkip = 0;
@@ -165,7 +171,7 @@ export class BulletsPlayer extends Phaser.Physics.Arcade.Group {
 }
 
 export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
-  constructor(game: Game) {
+  constructor(game: SmashedGame) {
     super(game.physics.world, game);
 
     const numBullets = game.debug.Flower_1000_Balls
@@ -201,7 +207,7 @@ export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
     pos: Position,
     vel: Velocity,
     firstFire: boolean,
-    game: Game
+    game: SmashedGame
   ): void {
     if (firstFire) {
       this.numSkip = 0;

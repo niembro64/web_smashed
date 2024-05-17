@@ -1,8 +1,8 @@
 import { debug } from 'console';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Player } from '../interfaces';
 
-export function getIsScreenClear(game: Game): boolean {
+export function getIsScreenClear(game: SmashedGame): boolean {
   if (game.players.length < 2) {
     return false;
   }
@@ -20,7 +20,7 @@ export function getIsScreenClear(game: Game): boolean {
 
   return false;
 }
-export function getIsFirstBlood(game: Game): boolean {
+export function getIsFirstBlood(game: SmashedGame): boolean {
   if (game.players.length < 3) {
     return false;
   }
@@ -48,7 +48,7 @@ export function getIsFirstBlood(game: Game): boolean {
   return false;
 }
 
-export function getIsAnyPlayerCurrentlyDead(game: Game): boolean {
+export function getIsAnyPlayerCurrentlyDead(game: SmashedGame): boolean {
   for (let i = 0; i < game.players.length; i++) {
     if (game.players[i].state.name === 'player-state-dead') {
       return true;
@@ -60,7 +60,7 @@ export function getIsAnyPlayerCurrentlyDead(game: Game): boolean {
 export function setAddShotToMatrixFirstBlood(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (player.state.name !== 'player-state-dead') {
     return;
@@ -81,7 +81,7 @@ export function setAddShotToMatrixFirstBlood(
 export function setAddToShotsMatrixScreenClear(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   // add shots for each that isn't alive
   // if dead add shot by last touched
@@ -104,7 +104,7 @@ export function setAddToShotsMatrixScreenClear(
   }
 }
 
-export function setAddShotsToMatrixFlagCaptured(game: Game): void {
+export function setAddShotsToMatrixFlagCaptured(game: SmashedGame): void {
   let ownerIndex = game.flag.ownerCurr.id;
 
   if (ownerIndex === null) {
@@ -118,7 +118,7 @@ export function setAddShotsToMatrixFlagCaptured(game: Game): void {
   });
 }
 
-export function updateNumShotsLeft(game: Game): void {
+export function updateNumShotsLeft(game: SmashedGame): void {
   if (!game.debug.Mode_Infinity) {
     return;
   }
@@ -183,7 +183,7 @@ export function getSortedPositionsEndGame(p: PositionEndGame[]): number[] {
   return playerPositions;
 }
 
-export function getEndGame(game: Game): number[] {
+export function getEndGame(game: SmashedGame): number[] {
   let indexes: number[] = [];
 
   game.players.forEach((player, playerIndex) => {
@@ -217,14 +217,14 @@ export function getEndGame(game: Game): number[] {
   return z;
 }
 
-export function updatePlayerWinningPositions(game: Game): void {
+export function updatePlayerWinningPositions(game: SmashedGame): void {
   let positions: number[] = getEndGame(game);
 
   game.players.forEach((player, playerIndex) => {
     player.endPlace = positions[playerIndex];
   });
 }
-export function setPlayerWinningPositions(game: Game): void {
+export function setPlayerWinningPositions(game: SmashedGame): void {
   let positions: number[] = getEndGame(game);
 
   game.players.forEach((player, playerIndex) => {

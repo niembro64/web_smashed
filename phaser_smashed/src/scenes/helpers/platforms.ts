@@ -1,7 +1,7 @@
 import { print } from '../../views/client';
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 
-export function createPlatforms(game: Game): void {
+export function createPlatforms(game: SmashedGame): void {
   print(
     'createPlatforms',
     game.debug.Level,
@@ -46,7 +46,7 @@ export function createPlatforms(game: Game): void {
   }
 }
 
-export function createPlatforms0(game: Game): void {
+export function createPlatforms0(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   game.PLATFORMS.create(
@@ -55,7 +55,7 @@ export function createPlatforms0(game: Game): void {
     'platformHorizontal'
   );
 }
-export function createPlatforms1(game: Game): void {
+export function createPlatforms1(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   game.PLATFORMS.create(
@@ -69,7 +69,7 @@ export function createPlatforms1(game: Game): void {
     'platformHorizontal'
   );
 }
-export function createPlatforms2(game: Game): void {
+export function createPlatforms2(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   game.PLATFORMS.create(
@@ -89,7 +89,7 @@ export function createPlatforms2(game: Game): void {
   );
 }
 
-export function createPlatforms3(game: Game): void {
+export function createPlatforms3(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
   game.PLATFORMS.create(
     1200 * game.SCREEN_SCALE.WIDTH,
@@ -139,7 +139,7 @@ export function createPlatforms3(game: Game): void {
   );
 }
 
-export function createPlatforms4(game: Game): void {
+export function createPlatforms4(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   for (let i = 0; i < 3; i++) {
@@ -189,7 +189,7 @@ export function createPlatforms4(game: Game): void {
     );
   }
 }
-export function createPlatforms5(game: Game): void {
+export function createPlatforms5(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   for (let i = 0; i < 2; i++) {
@@ -225,7 +225,7 @@ export function createPlatforms5(game: Game): void {
   }
 }
 
-export function createPlatforms6(game: Game): void {
+export function createPlatforms6(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   for (let i = 0; i < 1; i++) {
@@ -317,7 +317,7 @@ export function createPlatforms6(game: Game): void {
   }
 }
 
-export function createPlatforms7(game: Game): void {
+export function createPlatforms7(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   for (let i = 0; i < 2; i++) {
@@ -419,7 +419,7 @@ export function createPlatforms7(game: Game): void {
   }
 }
 
-export function createPlatforms8(game: Game): void {
+export function createPlatforms8(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   for (let i = 0; i < 2; i++) {
@@ -533,7 +533,7 @@ export function createPlatforms8(game: Game): void {
   }
 }
 
-export function createPlatforms9(game: Game): void {
+export function createPlatforms9(game: SmashedGame): void {
   game.PLATFORMS = game.physics.add.staticGroup();
 
   for (let i = 0; i < 2; i++) {

@@ -1,10 +1,10 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { emoji, SplashName } from '../interfaces';
 import { updatePlayerWinningPositions } from './drinking';
 import { getIsPlayerReady } from './pad';
 import { pauseReadySoundPlayer, playReadySoundPlayer } from './sound';
 
-export function updateText(game: Game): void {
+export function updateText(game: SmashedGame): void {
   const dataTitleY = 65;
   const dataY = dataTitleY + 45;
   const splashY = SCREEN_DIMENSIONS.HEIGHT / 2;
@@ -90,7 +90,11 @@ export function updateText(game: Game): void {
   updateClockTextUpper(game, zoom, newGameTimeY);
 }
 
-export function updateBgLocation(game: Game, zoom: number, newY: number): void {
+export function updateBgLocation(
+  game: SmashedGame,
+  zoom: number,
+  newY: number
+): void {
   // game.BACKGROUND.setScale(1.1, 1.1);
   game.BACKGROUND.setScale(1.2 / zoom, 1.2 / zoom);
   let x = SCREEN_DIMENSIONS.WIDTH / 2;
@@ -99,7 +103,7 @@ export function updateBgLocation(game: Game, zoom: number, newY: number): void {
   game.BACKGROUND.y = game.cameraMover.char.sprite.y * 0.7 + y * 0.3;
 }
 
-export function setSplashDataOn(game: Game): void {
+export function setSplashDataOn(game: SmashedGame): void {
   if (game.debug.Matrices_Always) {
     return;
   }
@@ -109,7 +113,7 @@ export function setSplashDataOn(game: Game): void {
   });
 }
 
-export function setSplashDataOff(game: Game): void {
+export function setSplashDataOff(game: SmashedGame): void {
   if (game.debug.Matrices_Always) {
     return;
   }
@@ -120,7 +124,7 @@ export function setSplashDataOff(game: Game): void {
 }
 
 export function updateSplashRules(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number
 ): void {
@@ -131,7 +135,10 @@ export function updateSplashRules(
   });
 }
 
-export function setRuleSplashOn(game: Game, splashName: SplashName): void {
+export function setRuleSplashOn(
+  game: SmashedGame,
+  splashName: SplashName
+): void {
   game.splashRules.forEach((splash, splashIndex) => {
     splash.text.setAlpha(0);
     if (splash.name === splashName) {
@@ -147,7 +154,7 @@ export function setRuleSplashOn(game: Game, splashName: SplashName): void {
 }
 
 export function updateClockTextUpper(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newUpperY: number
 ): void {
@@ -179,7 +186,7 @@ export function updateClockTextUpper(
   }
 }
 export function updateClockTextLower(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newLowerY: number
 ): void {
@@ -195,7 +202,7 @@ export function updateClockTextLower(
   );
 }
 
-export function updateShotsOnPlayers(game: Game) {
+export function updateShotsOnPlayers(game: SmashedGame) {
   game.players.forEach((player, playerIndex) => {
     player.shotCountPrev = player.shotCountCurr;
     player.shotCountCurr = 0;
@@ -205,7 +212,11 @@ export function updateShotsOnPlayers(game: Game) {
   });
 }
 
-export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
+export function updatePlaceCups(
+  game: SmashedGame,
+  zoom: number,
+  newY: number
+): void {
   let players = game.players;
   let ecs = game.endCups;
   if (game.gameState.nameCurr === 'game-state-finished') {
@@ -266,7 +277,7 @@ export function updatePlaceCups(game: Game, zoom: number, newY: number): void {
 }
 
 export function updateShotGlasses(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number
 ): void {
@@ -304,7 +315,7 @@ export function updateShotGlasses(
 }
 
 export function updateGlassesNumberShots(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number
 ): void {
@@ -343,7 +354,7 @@ export function updateGlassesNumberShots(
 }
 
 export function updateDamageShotsText(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number
 ): void {
@@ -373,7 +384,11 @@ export function updateDamageShotsText(
   return;
 }
 
-export function updateReadyText(game: Game, zoom: number, newY: number): void {
+export function updateReadyText(
+  game: SmashedGame,
+  zoom: number,
+  newY: number
+): void {
   game.players.forEach((player, playerIndex) => {
     if (
       game.gameState.nameCurr === 'game-state-play' ||
@@ -405,7 +420,7 @@ export function updateReadyText(game: Game, zoom: number, newY: number): void {
   return;
 }
 export function updateControllerText(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number
 ): void {
@@ -441,7 +456,7 @@ export function updateControllerText(
 }
 
 export function updateDeathsKillsText(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number
 ): void {
@@ -466,7 +481,7 @@ export function updateDeathsKillsText(
   return;
 }
 export function updateEndDataMatrices(
-  game: Game,
+  game: SmashedGame,
   zoom: number,
   newY: number,
   newTitleY: number

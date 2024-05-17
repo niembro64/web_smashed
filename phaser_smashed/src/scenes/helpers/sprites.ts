@@ -1,10 +1,10 @@
 import { print } from '../../views/client';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Player, SpriteStateName } from '../interfaces';
 import { hasPlayerTouchedWallRecently } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 
-export function updateSpritesFlipX(game: Game): void {
+export function updateSpritesFlipX(game: SmashedGame): void {
   game.players.forEach((player) => {
     if (!hasPlayerTouchedWallRecently(player)) {
       if (player.char.sprite.body.velocity.x === 0) {
@@ -17,7 +17,7 @@ export function updateSpritesFlipX(game: Game): void {
   });
 }
 
-export function updateAllSpriteFilters(game: Game): void {
+export function updateAllSpriteFilters(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     updateSpriteFilter(player, playerIndex, game);
   });
@@ -26,7 +26,7 @@ export function updateAllSpriteFilters(game: Game): void {
 export function updateSpriteFilter(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   const isFlicker =
     Math.floor(
@@ -77,7 +77,7 @@ export function updateSpriteFilter(
 function filterPlayer(
   player: Player,
   playerIndex: number,
-  game: Game,
+  game: SmashedGame,
   filterType: string
 ) {
   switch (filterType) {
@@ -104,7 +104,7 @@ function filterPlayer(
 export function filterPlayerTDark(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerTDark(player, game);
@@ -115,7 +115,7 @@ export function filterPlayerTDark(
 export function filterPlayerDark(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerDark(player, game);
@@ -127,7 +127,7 @@ export function filterPlayerDark(
 export function filterPlayerNormal(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerID(player, game.colorCircles[playerIndex].colorNumber);
@@ -139,7 +139,7 @@ export function filterPlayerNormal(
 export function filterPlayerTRed(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerTRed(player, game);
@@ -150,7 +150,7 @@ export function filterPlayerTRed(
 export function filterPlayerRed(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerRed(player, game);
@@ -161,7 +161,7 @@ export function filterPlayerRed(
 export function filterPlayerWhite(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerWhite(player, game);
@@ -173,7 +173,7 @@ export function filterPlayerWhite(
 export function filterPlayerID(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillPlayerID(player, game.colorCircles[playerIndex].colorNumber);
@@ -182,7 +182,7 @@ export function filterPlayerID(
   }
 }
 
-export function setTintPlayerNormal(player: Player, game: Game): void {
+export function setTintPlayerNormal(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xffffff);
   player.char.sprite.setAlpha(1);
 }
@@ -190,27 +190,27 @@ export function setTintPlayerID(player: Player, circleColor: number): void {
   player.char.sprite.setTint(circleColor);
   player.char.sprite.setAlpha(1);
 }
-export function setTintPlayerRed(player: Player, game: Game): void {
+export function setTintPlayerRed(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xaa3333);
   player.char.sprite.setAlpha(1);
 }
-export function setTintPlayerTRed(player: Player, game: Game): void {
+export function setTintPlayerTRed(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xaa3333);
   player.char.sprite.setAlpha(0.8);
 }
-export function setTintPlayerDark(player: Player, game: Game): void {
+export function setTintPlayerDark(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0x444444);
   player.char.sprite.setAlpha(1);
 }
-export function setTintPlayerTDark(player: Player, game: Game): void {
+export function setTintPlayerTDark(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0x444444);
   player.char.sprite.setAlpha(0.8);
 }
-export function setTintPlayerLight(player: Player, game: Game): void {
+export function setTintPlayerLight(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xaaaaaa);
   player.char.sprite.setAlpha(1);
 }
-export function setTintPlayerTLight(player: Player, game: Game): void {
+export function setTintPlayerTLight(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xaaaaaa);
   player.char.sprite.setAlpha(0.8);
 }
@@ -221,32 +221,32 @@ export function setFillPlayerID(player: Player, circleColor: number): void {
   player.char.sprite.setTintFill(circleColor);
   player.char.sprite.setAlpha(1);
 }
-export function setFillPlayerTDark(player: Player, game: Game): void {
+export function setFillPlayerTDark(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0x444444);
   player.char.sprite.setAlpha(0.8);
 }
-export function setFillPlayerDark(player: Player, game: Game): void {
+export function setFillPlayerDark(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0x444444);
   player.char.sprite.setAlpha(1);
 }
-export function setFillPlayerRed(player: Player, game: Game): void {
+export function setFillPlayerRed(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0xaa3333);
   player.char.sprite.setAlpha(1);
 }
-export function setFillPlayerTRed(player: Player, game: Game): void {
+export function setFillPlayerTRed(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint('transparent');
   player.char.sprite.setTintFill(0xaa3333);
   player.char.sprite.setAlpha(0.8);
 }
-export function setFillPlayerWhite(player: Player, game: Game): void {
+export function setFillPlayerWhite(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xffffff);
   player.char.sprite.setTintFill(0xffffff);
   player.char.sprite.setAlpha(1);
 }
-export function setFillPlayerWhiteT(player: Player, game: Game): void {
+export function setFillPlayerWhiteT(player: Player, game: SmashedGame): void {
   player.char.sprite.setTint(0xffffff);
   player.char.sprite.setTintFill(0xffffff);
   player.char.sprite.setAlpha(0.7);
@@ -267,7 +267,7 @@ export function setBlinkFalse(player: Player): void {
 export function filterAttackEnergyNormal(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   if (game.debug.Chars_Colored) {
     setFillAttackPhysicalID(player, game.colorCircles[playerIndex].colorNumber);
@@ -326,7 +326,7 @@ export function setFillAttackEnergyID(
   print('aebs.bullets', aebs);
 }
 
-export function setAnimationsOff(game: Game): void {
+export function setAnimationsOff(game: SmashedGame): void {
   game.players.forEach((player) => {
     if (player.char.sprite?.anims) {
       player.char.sprite.anims.pause();
@@ -350,7 +350,7 @@ export function setAnimationsOff(game: Game): void {
   }
 }
 
-export function setAnimationsOn(game: Game): void {
+export function setAnimationsOn(game: SmashedGame): void {
   game.players.forEach((player) => {
     if (player.char.sprite?.anims) {
       player.char.sprite.anims.resume();
@@ -375,7 +375,7 @@ export function setAnimationsOn(game: Game): void {
   }
 }
 
-export function updateSpritesheets(game: Game): void {
+export function updateSpritesheets(game: SmashedGame): void {
   const movingXThreshold = 10;
   const movingYThreshold = 40;
   // update player spritesheets
@@ -413,7 +413,7 @@ export function updateSpritesheets(game: Game): void {
 export function updateSpriteState(
   newState: SpriteStateName,
   player: Player,
-  game: Game
+  game: SmashedGame
 ): void {
   if (player.char.srcSpriteSheet !== '') {
     if (newState === player.char.ssCurr.name) {

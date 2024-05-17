@@ -1,5 +1,5 @@
 import { print } from '../../views/client';
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import { Player } from '../interfaces';
 import { getLongEnoughTimeDuration } from './state';
 
@@ -7,33 +7,33 @@ function increaseSemitones(frequency: number, semitones: number): number {
   return frequency * Math.pow(2, semitones / 12);
 }
 
-export function setSoundDiePlay(game: Game): void {
+export function setSoundDiePlay(game: SmashedGame): void {
   game.SOUND_DIE.play();
 }
-export function setSoundFinishPlay(game: Game): void {
+export function setSoundFinishPlay(game: SmashedGame): void {
   game.ENERJA_FINISH.play();
 }
-export function setSoundFirstBloodPlay(game: Game): void {
+export function setSoundFirstBloodPlay(game: SmashedGame): void {
   game.SOUND_FIRST_BLOOD.play();
 }
-export function setSoundProfoundPlay(game: Game): void {
+export function setSoundProfoundPlay(game: SmashedGame): void {
   game.SOUND_INTRO.play();
 }
-export function setSoundSquishPlay(game: Game): void {
+export function setSoundSquishPlay(game: SmashedGame): void {
   game.SOUND_SQUISH.play();
 }
-export function setSoundEnerjaPlay(game: Game): void {
+export function setSoundEnerjaPlay(game: SmashedGame): void {
   game.ENERJA_SMASHED.play();
 }
-export function setSoundStartPlayLiquid(game: Game): void {
+export function setSoundStartPlayLiquid(game: SmashedGame): void {
   game.SOUND_START_LIQUID.play();
 }
-export function setSoundStartPlay(game: Game): void {
+export function setSoundStartPlay(game: SmashedGame): void {
   if (game.timeSecondsClock > 0) {
     game.SOUND_START.play();
   }
 }
-export function setPauseWiiMusic(game: Game): void {
+export function setPauseWiiMusic(game: SmashedGame): void {
   if (!game.SOUND_PAUSED.isPlaying) {
     return;
   }
@@ -41,19 +41,19 @@ export function setPauseWiiMusic(game: Game): void {
   game.SOUND_PAUSED.pause();
 }
 
-export function playGarageRepeat(game: Game): void {
+export function playGarageRepeat(game: SmashedGame): void {
   if (game.SOUND_GARAGE_REPEAT.isPlaying) {
     return;
   }
   game.SOUND_GARAGE_REPEAT.play();
 }
-export function playWiiMusic(game: Game): void {
+export function playWiiMusic(game: SmashedGame): void {
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
   game.SOUND_PAUSED.play();
 }
-export function setPlayWiiMusicWaitShort(game: Game): void {
+export function setPlayWiiMusicWaitShort(game: SmashedGame): void {
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
@@ -65,7 +65,7 @@ export function setPlayWiiMusicWaitShort(game: Game): void {
     game.SOUND_PAUSED.play();
   }
 }
-export function setPlayWiiMusicWaitLong(game: Game): void {
+export function setPlayWiiMusicWaitLong(game: SmashedGame): void {
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
@@ -74,54 +74,54 @@ export function setPlayWiiMusicWaitLong(game: Game): void {
     game.SOUND_PAUSED.play();
   }
 }
-export function setBGMusicPause(game: Game): void {
+export function setBGMusicPause(game: SmashedGame): void {
   if (!game.soundBGM.isPlaying) {
     return;
   }
 
   game.soundBGM.pause();
 }
-export function setBGMusicPlay(game: Game): void {
+export function setBGMusicPlay(game: SmashedGame): void {
   if (game.soundBGM.isPlaying) {
     return;
   }
 
   game.soundBGM.play();
 }
-export function setBGMusicResume(game: Game): void {
+export function setBGMusicResume(game: SmashedGame): void {
   if (game.soundBGM.isPlaying) {
     return;
   }
   game.soundBGM.resume();
 }
-export function setBGMusicSpeedSlower(game: Game): void {
+export function setBGMusicSpeedSlower(game: SmashedGame): void {
   game.soundBGM.setRate(increaseSemitones(1, -17));
 }
-export function setBGMusicSpeedNormal(game: Game): void {
+export function setBGMusicSpeedNormal(game: SmashedGame): void {
   game.soundBGM.setRate(1);
 }
 
-export function setMusicBoxPlay(game: Game): void {
+export function setMusicBoxPlay(game: SmashedGame): void {
   if (game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
   game.flag.soundFlagMusicBox.play();
 }
-export function setMusicBoxResume(game: Game): void {
+export function setMusicBoxResume(game: SmashedGame): void {
   if (game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
 
   game.flag.soundFlagMusicBox.resume();
 }
-export function setMusicBoxPause(game: Game): void {
+export function setMusicBoxPause(game: SmashedGame): void {
   if (!game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
 
   game.flag.soundFlagMusicBox.pause();
 }
-export function setMusicBoxStop(game: Game): void {
+export function setMusicBoxStop(game: SmashedGame): void {
   if (!game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
@@ -129,32 +129,35 @@ export function setMusicBoxStop(game: Game): void {
   game.flag.soundFlagMusicBox.stop();
 }
 
-export function setMusicChompSheepPlay(game: Game): void {
+export function setMusicChompSheepPlay(game: SmashedGame): void {
   if (game.debug.NN_Train_P1 || game.chomp.soundSheep.isPlaying) {
     return;
   }
   game.chomp.soundSheep.play();
 }
 
-export function setMusicChompSheepRate(game: Game, semitones: number): void {
+export function setMusicChompSheepRate(
+  game: SmashedGame,
+  semitones: number
+): void {
   game.chomp.soundSheep.setRate(increaseSemitones(1, semitones));
 }
 
-export function setMusicChompSheepPause(game: Game): void {
+export function setMusicChompSheepPause(game: SmashedGame): void {
   if (game.debug.NN_Train_P1 || !game.chomp.soundSheep.isPlaying) {
     return;
   }
 
   game.chomp.soundSheep.pause();
 }
-export function setMusicChompSheepResume(game: Game): void {
+export function setMusicChompSheepResume(game: SmashedGame): void {
   if (game.debug.NN_Train_P1 || game.chomp.soundSheep.isPlaying) {
     return;
   }
 
   game.chomp.soundSheep.resume();
 }
-export function setMusicChompSheepStop(game: Game): void {
+export function setMusicChompSheepStop(game: SmashedGame): void {
   if (game.debug.NN_Train_P1 || !game.chomp.soundSheep.isPlaying) {
     return;
   }
@@ -162,13 +165,13 @@ export function setMusicChompSheepStop(game: Game): void {
   game.chomp.soundSheep.stop();
 }
 
-export function playReadySound(game: Game): void {
+export function playReadySound(game: SmashedGame): void {
   if (!game.SOUND_READY_REPEAT.isPlaying) {
     game.SOUND_READY_REPEAT.play();
   }
 }
 
-export function pauseReadySound(game: Game): void {
+export function pauseReadySound(game: SmashedGame): void {
   if (game.SOUND_READY_REPEAT.isPlaying) {
     game.SOUND_READY_REPEAT.pause();
   }
@@ -185,13 +188,13 @@ export function pauseReadySoundPlayer(player: Player): void {
   }
 }
 
-export function setPauseAllReadySounds(game: Game): void {
+export function setPauseAllReadySounds(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     pauseReadySoundPlayer(player);
   });
 }
 
-export function setPlaySoundFireBall(game: Game): void {
+export function setPlaySoundFireBall(game: SmashedGame): void {
   const i = game.fireFlower.fireBallSoundsIndexCurr;
 
   game.fireFlower.fireBallSounds[i].play();
@@ -200,7 +203,7 @@ export function setPlaySoundFireBall(game: Game): void {
     (i + 1) % game.fireFlower.fireBallSounds.length;
 }
 
-export function setPlaySoundPowerup(game: Game): void {
+export function setPlaySoundPowerup(game: SmashedGame): void {
   if (game.soundPowerup.isPlaying) {
     return;
   }
@@ -209,19 +212,19 @@ export function setPlaySoundPowerup(game: Game): void {
   game.soundPowerup.setRate(newRate);
   game.soundPowerup.play();
 }
-export function setStopSoundPowerup(game: Game): void {
+export function setStopSoundPowerup(game: SmashedGame): void {
   if (!game.soundPowerup.isPlaying) {
     return;
   }
   game.soundPowerup.stop();
 }
-export function setResumeSoundPowerup(game: Game): void {
+export function setResumeSoundPowerup(game: SmashedGame): void {
   if (game.soundPowerup.isPlaying) {
     return;
   }
   game.soundPowerup.resume();
 }
-export function setPauseSoundPowerup(game: Game): void {
+export function setPauseSoundPowerup(game: SmashedGame): void {
   if (!game.soundPowerup.isPlaying) {
     return;
   }

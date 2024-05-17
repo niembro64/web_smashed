@@ -1,6 +1,6 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../views/client';
-import Game from './Game';
+import SmashedGame from './SmashedGame';
 import { nnConfigNN } from './helpers/nn';
 import { nnJsonNN } from './helpers/nnJson';
 
@@ -15,7 +15,7 @@ export function ensureTypeInput<Input>(
   return argument;
 }
 
-export function preload(game: Game): void {
+export function preload(game: SmashedGame): void {
   //////////////////////////////
   // Pull Configs
   //////////////////////////////

@@ -1,4 +1,4 @@
-import Game from '../Game';
+import SmashedGame from '../SmashedGame';
 import {
   AttackPhysical,
   AttackState,
@@ -55,7 +55,7 @@ import {
 import { axiosUpsertOne, print } from '../../views/client';
 import { NNTrainNN, deleteLastNNObjects } from './nn';
 
-export function setGameState(game: Game, state: GameState): void {
+export function setGameState(game: SmashedGame, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;
   game.gameState.gameStampPrev = game.gameState.gameStampCurr;
   game.gameState.timeStampPrev = game.gameState.timeStampCurr;
@@ -187,7 +187,7 @@ export function setAttackPhysicalState(
   player: Player,
   playerIndex: number,
   state: AttackState,
-  game: Game
+  game: SmashedGame
 ): void {
   attackPhysical.state.name = state;
   attackPhysical.state.gameStamp = game.gameNanoseconds;
@@ -231,7 +231,7 @@ export function setPlayerState(
   player: Player,
   playerIndex: number,
   state: PlayerState,
-  game: Game
+  game: SmashedGame
 ): void {
   player.state.name = state;
   player.state.gameStamp = game.gameNanoseconds;
@@ -288,14 +288,14 @@ export function setPlayerState(
   }
 }
 
-export function getHasNumDeadIncreased(game: Game): boolean {
+export function getHasNumDeadIncreased(game: SmashedGame): boolean {
   if (game.numDead <= game.numDeadPrev) {
     return false;
   }
   return true;
 }
 
-export function updateNumCurrentlyDead(game: Game): void {
+export function updateNumCurrentlyDead(game: SmashedGame): void {
   game.numDeadPrev = game.numDead;
   game.numDead = 0;
   for (let i = 0; i < game.players.length; i++) {
@@ -303,7 +303,7 @@ export function updateNumCurrentlyDead(game: Game): void {
   }
 }
 
-export function updateResetAllHitboxesAttackPhysical(game: Game): void {
+export function updateResetAllHitboxesAttackPhysical(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.players.forEach((p, i) => {
       game.overlappingPlayerIAttackPhysicalJ[playerIndex][i] = false;
@@ -313,7 +313,7 @@ export function updateResetAllHitboxesAttackPhysical(game: Game): void {
 
 export function getIsPlayerHitAttackPhysical(
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   for (let j = 0; j < game.players.length; j++) {
     if (game.overlappingPlayerIAttackPhysicalJ[playerIndex][j]) {
@@ -322,7 +322,7 @@ export function getIsPlayerHitAttackPhysical(
   }
   return false;
 }
-export function updateResetAllHitboxesAttackEnergy(game: Game): void {
+export function updateResetAllHitboxesAttackEnergy(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.players.forEach((p, i) => {
       game.overlappingPlayerIAttackEnergyJ[playerIndex][i] = false;
@@ -332,7 +332,7 @@ export function updateResetAllHitboxesAttackEnergy(game: Game): void {
 
 export function getIsPlayerHitAttackEnergy(
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   for (let j = 0; j < game.players.length; j++) {
     if (game.overlappingPlayerIAttackEnergyJ[playerIndex][j]) {
@@ -344,7 +344,7 @@ export function getIsPlayerHitAttackEnergy(
 
 export function getLongEnoughGameDuration(
   duration: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   if (game.gameNanoseconds > game.gameState.gameStampCurr + duration + 20) {
     return true;
@@ -353,7 +353,7 @@ export function getLongEnoughGameDuration(
 }
 export function getLongEnoughTimeDuration(
   duration: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   if (game.timeNanoseconds > game.gameState.timeStampCurr + duration + 20) {
     return true;
@@ -361,7 +361,11 @@ export function getLongEnoughTimeDuration(
   return false;
 }
 
-export function updateGameTime(game: Game, time: number, delta: number): void {
+export function updateGameTime(
+  game: SmashedGame,
+  time: number,
+  delta: number
+): void {
   if (game.gameState.nameCurr !== 'game-state-play') {
     return;
   }
@@ -376,7 +380,11 @@ export function updateGameTime(game: Game, time: number, delta: number): void {
   game.gameClock.seconds = Math.floor(game.gameSecondsClock % 60);
 }
 
-export function updateTimeTime(game: Game, time: number, delta: number): void {
+export function updateTimeTime(
+  game: SmashedGame,
+  time: number,
+  delta: number
+): void {
   game.timeNanoseconds += delta;
   game.timeSecondsPrev = game.timeSeconds;
   game.timeSeconds = Math.floor(game.timeNanoseconds / 1000);
@@ -391,7 +399,7 @@ export function updateTimeTime(game: Game, time: number, delta: number): void {
 export function getHasGameDurationPassedPlayer(
   player: Player,
   duration: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   if (game.gameNanoseconds > player.state.gameStamp + duration) {
     return true;
@@ -401,7 +409,7 @@ export function getHasGameDurationPassedPlayer(
 export function getHasGameDurationPassedAttack(
   attack: AttackPhysical,
   duration: number,
-  game: Game
+  game: SmashedGame
 ): boolean {
   if (game.gameNanoseconds > attack.state.gameStamp + duration) {
     return true;

@@ -1,4 +1,4 @@
-import Game, { SCREEN_DIMENSIONS } from '../Game';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { AttackEnergy, AttackPhysical, Player } from '../interfaces';
 import { setEmitterPlayerOnFalse } from './damage';
 import { getDistance } from './movement';
@@ -11,7 +11,7 @@ export function getIsPlayerInAir(player: Player): boolean {
   );
 }
 
-export function updateAirDodge(player: Player, game: Game): void {
+export function updateAirDodge(player: Player, game: SmashedGame): void {
   if (player.state.name === 'player-state-dead') {
     setEmitterPlayerOnFalse(player);
     return;
@@ -132,7 +132,7 @@ export function setPhysicsBulletOn(player: Player, bulletIndex: number): void {
   b.body.gameObject.body.allowGravity = player.char.attackEnergy.gravity;
 }
 
-export function updateAttackEnergyOffscreen(game: Game): void {
+export function updateAttackEnergyOffscreen(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     let ae = player.char.attackEnergy;
     if (getIsAttackEnergyOffscreen(ae)) {
@@ -199,7 +199,10 @@ export function isAttackEnergyNearPlayer(player: Player): boolean {
   return false;
 }
 
-export function setAttackPhysicalOffscreen(player: Player, game: Game): void {
+export function setAttackPhysicalOffscreen(
+  player: Player,
+  game: SmashedGame
+): void {
   player.char.attackPhysical.sprite.y = -1000;
   player.char.attackPhysical.sprite.x = SCREEN_DIMENSIONS.WIDTH / 2;
   player.char.attackPhysical.sprite.body.velocity.x = 0;
@@ -209,7 +212,7 @@ export function setAttackPhysicalOffscreen(player: Player, game: Game): void {
 export function setAttackEnergyOffscreen(
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   let ae = player.char.attackEnergy;
 
@@ -223,7 +226,7 @@ export function setBulletOffscreen(
   bulletIndex: number,
   player: Player,
   playerIndex: number,
-  game: Game
+  game: SmashedGame
 ): void {
   let b =
     player.char.attackEnergy.attackBullets?.bullets?.getChildren()[bulletIndex];
@@ -238,7 +241,10 @@ export function setBulletOffscreen(
   b.body.velocity.y = 0;
 }
 
-export function setFireBallOffscreen(bulletIndex: number, game: Game): void {
+export function setFireBallOffscreen(
+  bulletIndex: number,
+  game: SmashedGame
+): void {
   let b = game.fireFlower.attackBullets?.bullets?.getChildren()[bulletIndex];
 
   if (!b) {
@@ -253,7 +259,7 @@ export function setFireBallOffscreen(bulletIndex: number, game: Game): void {
 
 export function updatePhysicalAttackFollowsPlayer(
   player: Player,
-  game: Game
+  game: SmashedGame
 ): void {
   let ap = player.char.attackPhysical;
   let ae = player.char.attackEnergy;
@@ -283,7 +289,9 @@ export function updatePhysicalAttackFollowsPlayer(
   }
 }
 
-export function updateRemoveAttackPhysicalsIfNotNearPlayer(game: Game): void {
+export function updateRemoveAttackPhysicalsIfNotNearPlayer(
+  game: SmashedGame
+): void {
   game.players.forEach((player, playerIndex) => {
     let p = player.char.sprite;
     let ap = player.char.attackPhysical.sprite;
