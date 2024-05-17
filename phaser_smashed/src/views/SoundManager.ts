@@ -6,7 +6,11 @@ import importedBambalam from '../sounds/BlackBetty_Bambalam.mp3';
 // @ts-ignore
 import importedStartSound from '../sounds/start.wav';
 // @ts-ignore
-import importedBlipSound from '../sounds/game-start-liquid.wav';
+import importedBeeDee from '../sounds/beedee.wav';
+// @ts-ignore
+// import importedBlip2Sound from '../sounds/blip2.mp3';
+// @ts-ignore
+import importedBlip from '../sounds/blip.wav';
 // @ts-ignore
 import importedMeleeReady from '../sounds/melee_ready.mp3';
 // @ts-ignore
@@ -23,7 +27,9 @@ export type SoundManagerType = {
   meleeReady: () => void;
   meleeGo: () => void;
   meleeChoose: () => void;
-  blipSound: () => void;
+  beedeeSound: () => void;
+  blipSoundSoft: () => void;
+  blipBeedeeSound: () => void;
   dice: () => void;
 };
 
@@ -34,7 +40,15 @@ function SoundManager() {
   const [meleeGo] = useSound(importedMeleeGo, { volume: 0.2 });
   const [meleeChoose] = useSound(importedMeleeChoose, { volume: 0.2 });
   const [startSound] = useSound(importedStartSound, { volume: 0.4 });
-  const [blipSound] = useSound(importedBlipSound, { volume: 0.2 });
+  const [blipSoundSoft] = useSound(importedBlip, { volume: 0.03 });
+  const [blipSoundLoud] = useSound(importedBlip, { volume: 0.2 });
+  const [beedeeSound] = useSound(importedBeeDee, { volume: 0.1 });
+
+  const blipBeedeeSound = () => {
+    blipSoundLoud();
+    beedeeSound();
+  };
+
   const [dice] = useSound(importedDice, { volume: 0.1 });
   return {
     woah,
@@ -43,7 +57,9 @@ function SoundManager() {
     meleeReady,
     meleeGo,
     meleeChoose,
-    blipSound,
+    beedeeSound,
+    blipSoundSoft,
+    blipBeedeeSound,
     dice,
   };
 }

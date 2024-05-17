@@ -510,7 +510,7 @@ function Play() {
   ]);
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
-    soundManager.blipSound();
+    soundManager.blipBeedeeSound();
     setInputArray((prevArray: InputType[]) => inputArrayInit);
 
     newInputArray.forEach((item, index) => {
@@ -519,7 +519,7 @@ function Play() {
       }
 
       setTimeout(() => {
-        soundManager.blipSound();
+        soundManager.blipBeedeeSound();
         setInputArray((prevArray: InputType[]) => {
           const updatedArray = [...prevArray];
           for (let j = 0; j <= index; j++) {
@@ -601,7 +601,7 @@ function Play() {
       }
 
       setTimeout(() => {
-        soundManager.blipSound();
+        soundManager.blipBeedeeSound();
         setCharacterSlot(newPlayers[i].characterId, i);
       }, blipIndex * blipDelay);
 
@@ -809,7 +809,7 @@ function Play() {
     playerIndex: number,
     newInput: InputType
   ): void => {
-    soundManager.blipSound();
+    soundManager.blipBeedeeSound();
     let i = newInput;
     let k = getNumKeyboardsInUse();
     if (i === 2 && k >= 2) {
@@ -859,7 +859,7 @@ function Play() {
   };
 
   const onClickRotateSelection = (playerIndex: number): void => {
-    soundManager.blipSound();
+    soundManager.blipBeedeeSound();
     const choices = [...smashConfig.players];
     const choice = choices[playerIndex];
     let newCharacterId = (choice.characterId + 1) % smashConfigOptions.length;
@@ -922,7 +922,7 @@ function Play() {
   };
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
-    soundManager.blipSound();
+    soundManager.blipBeedeeSound();
 
     print('Click NavBody: ', buttonName);
 
@@ -935,7 +935,7 @@ function Play() {
   };
 
   const onClickPlayNavButtons = (buttonName: ButtonName) => {
-    soundManager.blipSound();
+    soundManager.blipBeedeeSound();
     clickPauseParent();
 
     switch (buttonName) {
@@ -1418,7 +1418,7 @@ function Play() {
                         );
                       }
 
-                      soundManager.blipSound();
+                      soundManager.blipBeedeeSound();
                       e.stopPropagation();
                       if (typeof value === 'number') {
                         setDebugState((prevState) => ({
@@ -1851,6 +1851,9 @@ function Play() {
       <div className="over-div">
         {topBarDivExists && (
           <div
+            onMouseEnter={() => {
+              soundManager.blipSoundSoft();
+            }}
             className={
               openEye
                 ? 'top-bar-eye-open ' +
@@ -1876,6 +1879,9 @@ function Play() {
             )}
             {webState === 'web-state-setup' && (
               <div
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
                 className="link-tag"
                 onClick={() => {
                   onClickPlayNavButtons('Options');
@@ -1887,6 +1893,9 @@ function Play() {
             )}
             {webState === 'web-state-setup' && (
               <div
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
                 className="link-tag"
                 onClick={() => {
                   onClickPlayNavButtons('Controllers');
@@ -1897,12 +1906,21 @@ function Play() {
               </div>
             )}
             {webState !== 'web-state-setup' && (
-              <div className="link-tag" onClick={onClickBackEventHandler}>
+              <div
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
+                className="link-tag"
+                onClick={onClickBackEventHandler}
+              >
                 <span>Back</span>
               </div>
             )}
             {webState !== 'web-state-setup' && (
               <div
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
                 className="link-tag"
                 onClick={() => {
                   onClickStartStartButton();
@@ -1913,6 +1931,9 @@ function Play() {
             )}
 
             <div
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
               className="link-tag"
               onClick={() => {
                 onClickPlayNavButtons('Controls');
@@ -1922,6 +1943,9 @@ function Play() {
               {!showControls && <span>Buttons</span>}
             </div>
             <div
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
               className="link-tag"
               onClick={() => {
                 onClickPlayNavButtons('Rules-N64');
@@ -1932,6 +1956,9 @@ function Play() {
             </div>
             {webState === 'web-state-setup' && (
               <div
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
                 className="link-tag"
                 onClick={() => {
                   onClickPlayNavButtons('About');
@@ -2195,10 +2222,13 @@ function Play() {
               </div>
               <div
                 id="show-all"
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
                 className={hideNiemoIp ? ' show-all-hide' : ' show-all-show'}
                 onClick={(e) => {
                   e.stopPropagation();
-                  soundManager.blipSound();
+                  soundManager.blipBeedeeSound();
                   setHideNiemoIp((x) => !hideNiemoIp);
                 }}
               >
@@ -2387,24 +2417,30 @@ function Play() {
 
           <div className="neural-network-train-bottom">
             <div
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
               className={nnJson === null ? ' b-start-inactive' : 'b-start'}
               onClick={() => {
                 if (nnJson !== null && navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(nnJson);
 
-                  soundManager.blipSound();
+                  soundManager.blipBeedeeSound();
                 }
               }}
             >
               <span>Model Weights</span>
             </div>
             <div
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
               className={nnRatios === null ? ' b-start-inactive' : 'b-start'}
               onClick={() => {
                 if (nnRatios !== null && navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(nnRatios.toString());
 
-                  soundManager.blipSound();
+                  soundManager.blipBeedeeSound();
                 }
               }}
             >

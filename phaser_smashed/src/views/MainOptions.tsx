@@ -40,8 +40,11 @@ const PlayOptions: React.FC<PlayOptionsProps> = ({
               <div
                 id="optionDebug"
                 key={index}
+                onMouseEnter={() => {
+                  soundManager.blipSoundSoft();
+                }}
                 onClick={(e) => {
-                  soundManager.blipSound();
+                  soundManager.blipBeedeeSound();
                   e.stopPropagation();
                   if (typeof value === 'number') {
                     setDebugState((prevState) => ({
