@@ -1490,6 +1490,9 @@ function Play() {
                     {inputArray[pIndex] === 0 && (
                       <div
                         className="player-char"
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1523,6 +1526,9 @@ function Play() {
                       inputArray[pIndex] < inputTypeNum && (
                         <div
                           className="player-char"
+                          onMouseEnter={() => {
+                            soundManager.blipSoundSoft();
+                          }}
                           onClick={() => {
                             onClickRotateSelection(pIndex);
                           }}
@@ -1564,6 +1570,9 @@ function Play() {
                     {inputArray[pIndex] === 0 && (
                       <div
                         className="b-oscuro b-dark"
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1593,6 +1602,9 @@ function Play() {
                             }
                           })()
                         }
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1634,6 +1646,9 @@ function Play() {
                             }
                           })()
                         }
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1678,6 +1693,9 @@ function Play() {
                             }
                           })()
                         }
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
@@ -1705,6 +1723,9 @@ function Play() {
                             }
                           })()
                         }
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
                         onClick={() => {
                           onClickOscura(pIndex);
                         }}
