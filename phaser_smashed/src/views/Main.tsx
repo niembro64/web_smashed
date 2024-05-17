@@ -368,6 +368,7 @@ function Play() {
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const onClickEye = () => {
+    soundManager.blipBeedeeSound();
     setOpenEye(!openEye);
   };
 
@@ -1795,22 +1796,16 @@ function Play() {
                 : 'top-bar-eye-closed bg-trans'
             }
           >
-            {!openEye && (
-              <img
-                className="question-mark"
-                src="/images/eye-shut-trans.png"
-                alt="question mark"
-                onClick={onClickEye}
-              />
-            )}
-            {openEye && (
-              <img
-                className="question-mark"
-                src="/images/eye-open-trans.png"
-                alt="question mark"
-                onClick={onClickEye}
-              />
-            )}
+            <img
+              onMouseEnter={() => {
+                soundManager.blipSoundSoft();
+              }}
+              className="question-mark"
+              src={!openEye ? '/images/eye-shut-trans.png' : '/images/eye-open-trans.png'}
+              alt="question mark"
+              onClick={onClickEye}
+            />
+
             {webState === 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
@@ -2123,6 +2118,9 @@ function Play() {
                     />
                   </div>
                   <a
+                    onMouseEnter={() => {
+                      soundManager.blipSoundSoft();
+                    }}
                     className="btn btn-dark text-light"
                     href="https://niemo.io/"
                   >
@@ -2141,6 +2139,9 @@ function Play() {
                     />
                   </div>
                   <a
+                    onMouseEnter={() => {
+                      soundManager.blipSoundSoft();
+                    }}
                     className="btn btn-dark text-light"
                     href="https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv"
                   >
@@ -2159,6 +2160,9 @@ function Play() {
                     />
                   </div>
                   <a
+                    onMouseEnter={() => {
+                      soundManager.blipSoundSoft();
+                    }}
                     className="btn btn-dark text-light"
                     href="https://resume.niemo.io/"
                   >
