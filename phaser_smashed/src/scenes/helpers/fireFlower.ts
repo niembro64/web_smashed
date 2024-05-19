@@ -145,7 +145,21 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
 
     let invertedYProjectileVelocity: Velocity | null = null;
 
-    if (game.debug.Flower_HighTrajectory) {
+    let shootHighTrajectory: null | boolean = null;
+
+    switch (game.debug.Flower_HighTrajectory) {
+      case 0:
+        shootHighTrajectory = Math.random() > 0.5;
+        break;
+      case 1:
+        shootHighTrajectory = false;
+        break;
+      case 2:
+        shootHighTrajectory = true;
+        break;
+    }
+
+    if (shootHighTrajectory) {
       ///////////////////////////////////////////////
       // Lobbed Projectile
       ///////////////////////////////////////////////
