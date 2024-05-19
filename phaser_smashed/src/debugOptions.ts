@@ -5,14 +5,14 @@ export const debugInit: Debug = {
   NN_Train_P1: false,
   Dev_Mode: false,
   Dur_Seconds: false,
-  Mode_Infinity: true,
+  Mode_Infinity: false,
   Minutes: 1, //01234567
   Shots: 7, //7
   Dev_Zoom: 8,
   Level: 9, //0123456
   Music_Active: true,
   Ready_Sound_Active: false,
-  Use_Camera: false,
+  Use_Camera: true,
   Cameras_Visible: false,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
