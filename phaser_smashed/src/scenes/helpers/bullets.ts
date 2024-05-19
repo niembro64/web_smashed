@@ -53,7 +53,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     this.timeAlive += delta;
 
-    let distance = getDistanceFromOrigin(
+    const currDistance = getDistanceFromOrigin(
       { x: this.x, y: this.y },
       this.initialPosition
     );
@@ -76,7 +76,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     //   return;
     // }
 
-    const keyDistance =
+    const maxDistance =
       this.key === 'bulletFireBall'
         ? this.bouncingFullScreen
           ? this.screen.WIDTH
@@ -85,7 +85,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     // const keyDuration = this.key === 'bulletFireBall' ? 1000 : 3000;
 
     // if (this.timeAlive > keyDuration || distance > keyDistance) {
-    if (distance > keyDistance) {
+    if (currDistance > maxDistance) {
       this.body.bounce.set(0);
       this.setActive(false);
       this.setVisible(false);
@@ -176,7 +176,7 @@ export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {
 
     const numBullets = game.debug.Flower_1000_Balls
       ? 1000
-      : game.fireFlower.attackBullets?.NUMBER_BULLETS || 0;
+      : game.fireFlower.attackBullets?.NUMBER_BULLETS || 1;
 
     this.createMultiple({
       frameQuantity: numBullets,

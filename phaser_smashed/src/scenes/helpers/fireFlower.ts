@@ -1,13 +1,10 @@
+import { print } from '../../views/client';
 import { baseGravity } from '../../views/reactHelpers';
 import SmashedGame from '../SmashedGame';
 import { Player, Position, Velocity } from '../interfaces';
 import { getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
-
-////////////////////////////////////////////////
-// reverses y coordinates for sake of function
-////////////////////////////////////////////////
 const calculateProjectileVelocity = (
   gravity: number,
   cannonPosition: Position,
@@ -15,9 +12,11 @@ const calculateProjectileVelocity = (
   baseVelocity: number
 ): Velocity | null => {
   const dx = targetPosition.x - cannonPosition.x;
-  const dy = -1 * (targetPosition.y - cannonPosition.y);
+  const dy = -1 * (targetPosition.y - cannonPosition.y); // Reversing y-coordinates
 
   const velocitySquared = baseVelocity * baseVelocity;
+
+  print('velocitySquared', velocitySquared);
   const gravitySquared = gravity * gravity;
 
   const a = gravitySquared * dx * dx;
@@ -26,6 +25,7 @@ const calculateProjectileVelocity = (
 
   const discriminant = b * b - 4 * a * c;
 
+  print('discriminant', discriminant);
   if (discriminant < 0) {
     return null;
   }
@@ -34,6 +34,9 @@ const calculateProjectileVelocity = (
 
   const t1 = (-b + discriminantSqrt) / (2 * a);
   const t2 = (-b - discriminantSqrt) / (2 * a);
+
+  print('t1', t1);
+  print('t2', t2);
 
   const t = Math.max(t1, t2);
 
@@ -44,7 +47,7 @@ const calculateProjectileVelocity = (
   const vx = dx / t;
   const vy = dy / t + 0.5 * gravity * t;
 
-  return { x: vx, y: -vy };
+  return { x: vx, y: -vy }; // Reversing y-velocity
 };
 
 export const updateFireFlowerShooting = (game: SmashedGame) => {
@@ -74,11 +77,15 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
     const projectileVelocity: Velocity | null = calculateProjectileVelocity(
       3000,
       game.fireFlower.posInit,
-      enemy.char.sprite.body.position,
-      0
+      {
+        x: enemy.char.sprite.body.position.x,
+        y: enemy.char.sprite.body.position.y,
+      },
+      0 // Setting baseVelocity to zero
     );
 
     if (projectileVelocity === null) {
+      print('No valid projectile velocity calculated.');
       return;
     }
 
