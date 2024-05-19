@@ -58,12 +58,12 @@ export const debugInit: Debug = {
   Music_Track: 0, // 0123
   Flower_On_Init: true,
   Flower_Rapid_Fire: false,
-  Flower_Full_Screen: false,
+  Flower_Full_Screen: true,
   Flower_Gravity: true,
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 1,
-  Flower_ShootLob: false,
+  Flower_HighTrajectory: false,
   BulletBill_Active: false,
 };
 
@@ -130,7 +130,7 @@ export const debugMax: Debug = {
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: true,
   Flower_ShootRndAmt: 4,
-  Flower_ShootLob: false,
+  Flower_HighTrajectory: false,
   BulletBill_Active: true,
 };
 
@@ -198,6 +198,6 @@ export const showOptionOnMainScreenInit: Debug = {
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
-  Flower_ShootLob: false,
+  Flower_HighTrajectory: false,
   BulletBill_Active: false,
 };

@@ -3,7 +3,7 @@ import { Player, Position, Velocity } from '../interfaces';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
-const calculateProjectileVelocityDirect = (
+const calculateProjectileVelocityLowTrajectory = (
   gravity: number,
   cannonPosition: Position,
   targetPosition: Position,
@@ -59,7 +59,7 @@ const calculateProjectileVelocityDirect = (
   return { x: vx, y: vy };
 };
 
-const calculateProjectileVelocityLob = (
+const calculateProjectileVelocityHighTrajectory = (
   gravity: number,
   cannonPosition: Position,
   targetPosition: Position,
@@ -145,11 +145,11 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
 
     let invertedYProjectileVelocity: Velocity | null = null;
 
-    if (game.debug.Flower_ShootLob) {
+    if (game.debug.Flower_HighTrajectory) {
       ///////////////////////////////////////////////
       // Lobbed Projectile
       ///////////////////////////////////////////////
-      invertedYProjectileVelocity = calculateProjectileVelocityLob(
+      invertedYProjectileVelocity = calculateProjectileVelocityHighTrajectory(
         game.game.config.physics.arcade?.gravity?.y || 0,
         {
           x: game.fireFlower.posInit.x,
@@ -170,23 +170,54 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       ///////////////////////////////////////////////
       // Direct Projectile
       ///////////////////////////////////////////////
-      invertedYProjectileVelocity = calculateProjectileVelocityDirect(
-        game.game.config.physics.arcade?.gravity?.y || 0,
-        {
-          x: game.fireFlower.posInit.x,
-          y: -game.fireFlower.posInit.y,
-        },
-        {
-          x:
-            enemy.char.sprite.body.position.x +
-            enemy.char.sprite.body.width / 2,
-          y:
-            -1 *
-            (enemy.char.sprite.body.position.y +
-              enemy.char.sprite.body.height / 2),
-        },
-        1000
-      );
+
+      const shootLeftToRight =
+        game.fireFlower.posInit.x < enemy.char.sprite.body.position.x;
+
+      const muzzleSpeed = 1500;
+
+      if (shootLeftToRight) {
+        invertedYProjectileVelocity = calculateProjectileVelocityLowTrajectory(
+          game.game.config.physics.arcade?.gravity?.y || 0,
+          {
+            x: game.fireFlower.posInit.x,
+            y: -game.fireFlower.posInit.y,
+          },
+          {
+            x:
+              enemy.char.sprite.body.position.x +
+              enemy.char.sprite.body.width / 2,
+            y:
+              -1 *
+              (enemy.char.sprite.body.position.y +
+                enemy.char.sprite.body.height / 2),
+          },
+          muzzleSpeed
+        );
+      } else {
+        invertedYProjectileVelocity = calculateProjectileVelocityLowTrajectory(
+          game.game.config.physics.arcade?.gravity?.y || 0,
+          {
+            x: -game.fireFlower.posInit.x,
+            y: -game.fireFlower.posInit.y,
+          },
+          {
+            x:
+              -1 *
+              (enemy.char.sprite.body.position.x +
+                enemy.char.sprite.body.width / 2),
+            y:
+              -1 *
+              (enemy.char.sprite.body.position.y +
+                enemy.char.sprite.body.height / 2),
+          },
+          muzzleSpeed
+        );
+
+        if (invertedYProjectileVelocity !== null) {
+          invertedYProjectileVelocity.x *= -1;
+        }
+      }
     }
 
     if (invertedYProjectileVelocity === null) {
