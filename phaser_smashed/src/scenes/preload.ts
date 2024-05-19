@@ -198,7 +198,7 @@ export function preload(game: SmashedGame): void {
   for (let i = 0; i < 4; i++) {
     game.load.image(
       'cup' + (i + 1).toString(),
-      'images/cupBig' + (i + 1).toString() + '.png'
+      'images/cupSimpleBig' + (i + 1).toString() + '.png'
     );
   }
 
