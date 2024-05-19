@@ -869,14 +869,15 @@ export default class SmashedGame extends Phaser.Scene {
     hitback: { x: 10, y: 10 },
     srcImage: 'bulletFireBall',
     diesOnHitbox: true,
-    damage: 5,
+    damage: 10,
     rotation: {
       initial: 0.25,
       speed: 400,
     },
     shootingDistanceThreshold: 500,
-    numUpdateIndexesToWait: 6,
-    numUpdateIndexesToWaitFast: 1,
+    numUpdateIndexesToWait: 20,
+    // numUpdateIndexesToWait: 6,
+    numUpdateIndexesToWaitFast: 3,
     fireBallSounds: [],
     fireBallSoundsIndexCurr: 0,
     attackBullets: {

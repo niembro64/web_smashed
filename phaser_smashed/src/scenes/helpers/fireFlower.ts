@@ -39,15 +39,15 @@ const calculateProjectileVelocity = (
   const tMin = Math.min(t1, t2);
   const tMax = Math.max(t1, t2);
 
-  print(`tMin: ${tMin}, tMax: ${tMax}`);
+  // print(`tMin: ${tMin}, tMax: ${tMax}`);
 
   let t = tMin;
 
   if (tMin <= 0) {
     t = tMax;
-    print('MAX');
+    // print('MAX');
   } else {
-    print('MIN');
+    // print('MIN');
   }
 
   if (t <= 0) {
@@ -100,14 +100,19 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
 
     const invertedYProjectileVelocity: Velocity | null =
       calculateProjectileVelocity(
-        baseGravity,
+        game.game.config.physics.arcade?.gravity?.y || 0,
         {
           x: game.fireFlower.posInit.x,
           y: -game.fireFlower.posInit.y,
         },
         {
-          x: enemy.char.sprite.body.position.x,
-          y: -enemy.char.sprite.body.position.y,
+          x:
+            enemy.char.sprite.body.position.x +
+            enemy.char.sprite.body.width / 2,
+          y:
+            -1 *
+            (enemy.char.sprite.body.position.y +
+              enemy.char.sprite.body.height / 2),
         },
         0
       );
@@ -122,9 +127,12 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       y: -invertedYProjectileVelocity.y,
     };
 
+    const randomX = (Math.random() - 0.5) * 100 * game.debug.Flower_ShootRndAmt;
+    const randomY = (Math.random() - 0.5) * 100 * game.debug.Flower_ShootRndAmt;
+
     game.fireFlower.attackBullets.bullets.fireBullet(
       game.fireFlower.posInit,
-      { x: projectileVelocity.x, y: projectileVelocity.y },
+      { x: projectileVelocity.x + randomX, y: projectileVelocity.y + randomY },
       game
     );
 
