@@ -128,7 +128,7 @@ export const debugMax: Debug = {
   Flower_On_Init: true,
   Flower_Full_Screen: true,
   Flower_Gravity: true,
-  Flower_Bounce_Wall: true,
+  Flower_Bounce_Wall: false,
   Flower_1000_Balls: true,
   Flower_ShootRndAmt: 4,
   BulletBill_Active: true,

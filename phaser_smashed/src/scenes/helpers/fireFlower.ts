@@ -1,8 +1,7 @@
-import { print } from '../../views/client';
-import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
+import { baseGravity } from '../../views/reactHelpers';
+import SmashedGame from '../SmashedGame';
 import { Player, Position, Velocity } from '../interfaces';
-import { getNormalizedVector } from './damage';
-import { getDistance, getNearestPlayerAliveFromXY } from './movement';
+import { getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
 const calculateProjectileVelocity = (
@@ -41,7 +40,7 @@ const calculateProjectileVelocity = (
   const vx = dx / t;
   const vy = dy / t + 0.5 * gravity * t;
 
-  return { x: vx, y: vy };
+  return { x: vx, y: -vy };
 };
 
 export const updateFireFlowerShooting = (game: SmashedGame) => {
@@ -56,10 +55,6 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       return;
     }
 
-    // if (game.gameSeconds % 2 === 0) {
-    //   return;
-    // }
-
     const z = getNearestPlayerAliveFromXY(
       game.fireFlower.posInit.x,
       game.fireFlower.posInit.y,
@@ -68,54 +63,24 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
 
     const enemy: Player | null = z?.player || null;
 
-    // print('enemy', enemy.char.sprite.body.position.x, enemy.char.sprite.body.position.y);
-
-    let distance: number | null = null;
-    if (enemy !== null) {
-      distance = getDistance(
-        game.fireFlower.posInit.x,
-        game.fireFlower.posInit.y,
-        enemy.char.sprite.body.position.x,
-        enemy.char.sprite.body.position.y
-      );
-    }
-
-    // print('distance', distance, game.fireFlower.shootingDistanceThreshold);
-    if (
-      distance === null ||
-      distance >
-        (game.debug.Flower_Full_Screen
-          ? SCREEN_DIMENSIONS.WIDTH
-          : game.fireFlower.shootingDistanceThreshold)
-    ) {
-      print(enemy?.char.name, 'TOO FAR');
+    if (enemy === null) {
       return;
     }
 
-    print(enemy?.char.name, 'GOOD DISTANCE');
-    let v: { x: number; y: number } | null = null;
+    const projectileVelocity: Velocity | null = calculateProjectileVelocity(
+      3000,
+      game.fireFlower.posInit,
+      enemy.char.sprite.body.position,
+      0
+    );
 
-    if (enemy !== null) {
-      v = getNormalizedVector(
-        game.fireFlower.posInit.x,
-        game.fireFlower.posInit.y,
-        enemy.char.sprite.body.position.x,
-        enemy.char.sprite.body.position.y
-      );
-    }
-
-    if (v === null) {
+    if (projectileVelocity === null) {
       return;
     }
-
-    const randY: number =
-      (Math.random() - 0.5) * 500 * game.debug.Flower_ShootRndAmt;
-    const randX: number =
-      (Math.random() - 0.5) * 500 * game.debug.Flower_ShootRndAmt;
 
     game.fireFlower.attackBullets.bullets.fireBullet(
       game.fireFlower.posInit,
-      { x: v.x * 1000 + randX, y: v.y * 1000 + randY },
+      { x: projectileVelocity.x, y: projectileVelocity.y },
       game
     );
 
@@ -131,7 +96,6 @@ export const getInactiveBackgroundTintColor = (): number => {
   const whiteBlockTopEdge = 0xf3c6b5;
 
   const diffBlocks = hexColorSubtraction(whiteBlockTopEdge, darkBlockTopEdge);
-
   const diffWhites = hexColorSubtraction(white, diffBlocks);
 
   return diffWhites;
