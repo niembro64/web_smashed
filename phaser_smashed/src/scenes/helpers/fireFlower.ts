@@ -1,12 +1,65 @@
-import { tmpdir } from 'os';
-import { baseGravity } from '../../views/Main';
-import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import { Player, Position, Velocity } from '../interfaces';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
-const calculateProjectileVelocity = (
+const calculateProjectileVelocityDirect = (
+  gravity: number,
+  cannonPosition: Position,
+  targetPosition: Position,
+  muzzleSpeed: number
+): Velocity | null => {
+  const dx = targetPosition.x - cannonPosition.x;
+  const dy = targetPosition.y - cannonPosition.y;
+
+  const velocitySquared = muzzleSpeed * muzzleSpeed;
+
+  // Calculate the discriminant for the quadratic equation
+  const discriminant =
+    velocitySquared * velocitySquared -
+    gravity * (gravity * dx * dx + 2 * dy * velocitySquared);
+
+  if (discriminant < 0) {
+    return null;
+  }
+
+  // Calculate the angles for the possible trajectories
+  const discriminantSqrt = Math.sqrt(discriminant);
+
+  const angle1 = Math.atan(
+    (velocitySquared + discriminantSqrt) / (gravity * dx)
+  );
+  const angle2 = Math.atan(
+    (velocitySquared - discriminantSqrt) / (gravity * dx)
+  );
+
+  // Calculate the time for both angles
+  const t1 = dx / (muzzleSpeed * Math.cos(angle1));
+  const t2 = dx / (muzzleSpeed * Math.cos(angle2));
+
+  // Ensure both angles result in a valid time
+  const validAngle1 = t1 > 0 ? angle1 : null;
+  const validAngle2 = t2 > 0 ? angle2 : null;
+
+  // Choose the angle that gives the smallest positive time
+  const angle =
+    validAngle1 && validAngle2
+      ? t1 < t2
+        ? validAngle1
+        : validAngle2
+      : validAngle1 || validAngle2;
+
+  if (!angle) {
+    return null;
+  }
+
+  const vx = muzzleSpeed * Math.cos(angle);
+  const vy = muzzleSpeed * Math.sin(angle);
+
+  return { x: vx, y: vy };
+};
+
+const calculateProjectileVelocityLob = (
   gravity: number,
   cannonPosition: Position,
   targetPosition: Position,
@@ -23,10 +76,6 @@ const calculateProjectileVelocity = (
   const c = velocitySquared * velocitySquared - gravitySquared * dx * dx;
 
   const discriminant = b * b - 4 * a * c;
-
-  // print(
-  //   `dx: ${dx}, dy: ${dy}, a: ${a}, b: ${b}, c: ${c}, discriminant: ${discriminant}`
-  // );
 
   if (discriminant < 0) {
     return null;
@@ -94,8 +143,13 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       return;
     }
 
-    const invertedYProjectileVelocity: Velocity | null =
-      calculateProjectileVelocity(
+    let invertedYProjectileVelocity: Velocity | null = null;
+
+    if (game.debug.Flower_ShootLob) {
+      ///////////////////////////////////////////////
+      // Lobbed Projectile
+      ///////////////////////////////////////////////
+      invertedYProjectileVelocity = calculateProjectileVelocityLob(
         game.game.config.physics.arcade?.gravity?.y || 0,
         {
           x: game.fireFlower.posInit.x,
@@ -112,6 +166,28 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
         },
         0
       );
+    } else {
+      ///////////////////////////////////////////////
+      // Direct Projectile
+      ///////////////////////////////////////////////
+      invertedYProjectileVelocity = calculateProjectileVelocityDirect(
+        game.game.config.physics.arcade?.gravity?.y || 0,
+        {
+          x: game.fireFlower.posInit.x,
+          y: -game.fireFlower.posInit.y,
+        },
+        {
+          x:
+            enemy.char.sprite.body.position.x +
+            enemy.char.sprite.body.width / 2,
+          y:
+            -1 *
+            (enemy.char.sprite.body.position.y +
+              enemy.char.sprite.body.height / 2),
+        },
+        1000
+      );
+    }
 
     if (invertedYProjectileVelocity === null) {
       // print('No valid projectile velocity calculated.');
