@@ -1,10 +1,10 @@
+import { tmpdir } from 'os';
+import { baseGravity } from '../../views/Main';
 import { print } from '../../views/client';
-import { baseGravity } from '../../views/reactHelpers';
 import SmashedGame from '../SmashedGame';
 import { Player, Position, Velocity } from '../interfaces';
 import { getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
-
 const calculateProjectileVelocity = (
   gravity: number,
   cannonPosition: Position,
@@ -12,20 +12,21 @@ const calculateProjectileVelocity = (
   baseVelocity: number
 ): Velocity | null => {
   const dx = targetPosition.x - cannonPosition.x;
-  const dy = -1 * (targetPosition.y - cannonPosition.y); // Reversing y-coordinates
+  const dy = targetPosition.y - cannonPosition.y; // Note: Y is not reversed here, ensure correct handling in function usage
 
   const velocitySquared = baseVelocity * baseVelocity;
-
-  print('velocitySquared', velocitySquared);
   const gravitySquared = gravity * gravity;
 
   const a = gravitySquared * dx * dx;
-  const b = 2 * gravity * dy * velocitySquared;
+  const b = -2 * gravity * dy * velocitySquared; // Note: Reversed sign for correct formulation
   const c = velocitySquared * velocitySquared - gravitySquared * dx * dx;
 
   const discriminant = b * b - 4 * a * c;
 
-  print('discriminant', discriminant);
+  // print(
+  //   `dx: ${dx}, dy: ${dy}, a: ${a}, b: ${b}, c: ${c}, discriminant: ${discriminant}`
+  // );
+
   if (discriminant < 0) {
     return null;
   }
@@ -35,10 +36,19 @@ const calculateProjectileVelocity = (
   const t1 = (-b + discriminantSqrt) / (2 * a);
   const t2 = (-b - discriminantSqrt) / (2 * a);
 
-  print('t1', t1);
-  print('t2', t2);
+  const tMin = Math.min(t1, t2);
+  const tMax = Math.max(t1, t2);
 
-  const t = Math.max(t1, t2);
+  print(`tMin: ${tMin}, tMax: ${tMax}`);
+
+  let t = tMin;
+
+  if (tMin <= 0) {
+    t = tMax;
+    print('MAX');
+  } else {
+    print('MIN');
+  }
 
   if (t <= 0) {
     return null;
@@ -47,8 +57,9 @@ const calculateProjectileVelocity = (
   const vx = dx / t;
   const vy = dy / t + 0.5 * gravity * t;
 
-  return { x: vx, y: -vy }; // Reversing y-velocity
+  return { x: vx, y: vy };
 };
+
 
 export const updateFireFlowerShooting = (game: SmashedGame) => {
   if (game.debug.NN_Train_P1 || game.fireFlower.attackBullets === null) {
@@ -74,20 +85,29 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       return;
     }
 
-    const projectileVelocity: Velocity | null = calculateProjectileVelocity(
-      3000,
-      game.fireFlower.posInit,
-      {
-        x: enemy.char.sprite.body.position.x,
-        y: enemy.char.sprite.body.position.y,
-      },
-      0 // Setting baseVelocity to zero
-    );
+    const invertedYProjectileVelocity: Velocity | null =
+      calculateProjectileVelocity(
+        baseGravity,
+        {
+          x: game.fireFlower.posInit.x,
+          y: -game.fireFlower.posInit.y,
+        },
+        {
+          x: enemy.char.sprite.body.position.x,
+          y: -enemy.char.sprite.body.position.y,
+        },
+        0
+      );
 
-    if (projectileVelocity === null) {
-      print('No valid projectile velocity calculated.');
+    if (invertedYProjectileVelocity === null) {
+      // print('No valid projectile velocity calculated.');
       return;
     }
+
+    const projectileVelocity = {
+      x: invertedYProjectileVelocity.x,
+      y: -invertedYProjectileVelocity.y,
+    };
 
     game.fireFlower.attackBullets.bullets.fireBullet(
       game.fireFlower.posInit,

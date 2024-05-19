@@ -40,11 +40,8 @@ import {
   sumNumbersIn2DArrayString,
 } from './client';
 import {
-  baseGravity,
-  blipDelay,
   characterMoves,
   configInit,
-  gravLightMultiplier,
   idColors,
   inputArrayInit,
   inputArrayInitDebug,
@@ -60,7 +57,11 @@ import {
 } from './reactHelpers';
 import { MusicManager, MusicManagerType } from './MusicManager';
 
+export const blipDelay = 200;
 
+export const baseGravity = 3000;
+
+export const gravLightMultiplier = 0.5;
 
 function Play() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);

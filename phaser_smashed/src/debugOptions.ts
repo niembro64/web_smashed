@@ -3,16 +3,16 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   Auto_Start: false,
   NN_Train_P1: false,
-  Dev_Mode: true,
+  Dev_Mode: false,
   Dur_Seconds: false,
-  Mode_Infinity: false,
+  Mode_Infinity: true,
   Minutes: 1, //01234567
   Shots: 7, //7
   Dev_Zoom: 8,
   Level: 9, //0123456
   Music_Active: true,
   Ready_Sound_Active: false,
-  Use_Camera: true,
+  Use_Camera: false,
   Cameras_Visible: false,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
@@ -59,11 +59,11 @@ export const debugInit: Debug = {
   Music_Track: 0, // 0123
   Flower_On_Init: true,
   Flower_Rapid_Fire: false,
-  Flower_Full_Screen: true,
+  Flower_Full_Screen: false,
   Flower_Gravity: true,
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: false,
-  Flower_ShootRndAmt: 0,
+  Flower_ShootRndAmt: 1,
   BulletBill_Active: false,
 };
 

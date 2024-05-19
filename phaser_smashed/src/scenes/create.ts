@@ -1145,6 +1145,8 @@ export function createPlayers(game: SmashedGame): void {
 
     player.char.sprite.setCollideWorldBounds(false);
 
+    player.char.sprite.setOrigin(0.5, 0.5);
+
     game.physics.add.collider(player.char.sprite, game.PLATFORMS);
 
     // player.keyboard = game.input.keyboard.addKeys(player.keyboard_static);
@@ -1159,6 +1161,12 @@ export function createPlayers(game: SmashedGame): void {
     if (player.inputType === 3) {
       player.padCurr.right = true;
       player.padCurr.left = false;
+    }
+
+    // IF NN BOT
+    if (player.inputType === 4) {
+      player.padCurr.right = false;
+      player.padCurr.left = true;
     }
   });
 }

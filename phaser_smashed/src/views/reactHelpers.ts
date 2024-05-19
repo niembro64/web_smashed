@@ -161,12 +161,6 @@ export const characterMoves: CharacterMove[] = [
   { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
 ];
 
-export const blipDelay = 200;
-
-export const baseGravity = 3000;
-
-export const gravLightMultiplier = 0.5;
-
 export const configInit: Phaser.Types.Core.GameConfig = {
   plugins: {
     global: [
