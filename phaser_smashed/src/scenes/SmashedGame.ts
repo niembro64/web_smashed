@@ -138,7 +138,7 @@ export default class SmashedGame extends Phaser.Scene {
     FLAG_COMPLETE: 'trumpet-medium.wav',
     FLAG_MUSIC_BOX: 'music_box.mp3',
     FIRE_BALL: 'niemo_fireball.wav',
-    POWERUP: 'powerup.wav',
+    POWERUP: 'powerup_sheep.wav',
   };
 
   SOUND_INTRO: any;
