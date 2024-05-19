@@ -529,6 +529,7 @@ export interface FireFlower {
   damage: number;
   hitback: Hitback;
   diesOnHitbox: boolean;
+  doNextHighTrajectory: boolean;
   fireBallSounds: any[];
   fireBallSoundsIndexCurr: number;
   srcImage: any | Phaser.GameObjects.Sprite;

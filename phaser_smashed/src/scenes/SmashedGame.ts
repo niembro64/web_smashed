@@ -867,6 +867,7 @@ export default class SmashedGame extends Phaser.Scene {
   fireFlower: FireFlower = {
     sprite: null,
     hitback: { x: 10, y: 10 },
+    doNextHighTrajectory: false,
     srcImage: 'bulletFireBall',
     diesOnHitbox: true,
     damage: 10,

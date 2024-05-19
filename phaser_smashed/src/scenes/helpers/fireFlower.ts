@@ -149,13 +149,15 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
 
     switch (game.debug.Flower_HighTrajectory) {
       case 0:
-        shootHighTrajectory = Math.random() > 0.5;
-        break;
-      case 1:
         shootHighTrajectory = false;
         break;
-      case 2:
+      case 1:
         shootHighTrajectory = true;
+        break;
+      case 2:
+        shootHighTrajectory = game.fireFlower.doNextHighTrajectory;
+        game.fireFlower.doNextHighTrajectory =
+          !game.fireFlower.doNextHighTrajectory;
         break;
     }
 
@@ -188,7 +190,7 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       const shootLeftToRight =
         game.fireFlower.posInit.x < enemy.char.sprite.body.position.x;
 
-      const muzzleSpeed = 1500;
+      const muzzleSpeed = 1200;
 
       if (shootLeftToRight) {
         invertedYProjectileVelocity = calculateProjectileVelocityLowTrajectory(

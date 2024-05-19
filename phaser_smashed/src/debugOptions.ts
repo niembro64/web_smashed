@@ -62,8 +62,8 @@ export const debugInit: Debug = {
   Flower_Gravity: true,
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: false,
-  Flower_ShootRndAmt: 1,
-  Flower_HighTrajectory: 0,
+  Flower_ShootRndAmt: 0,
+  Flower_HighTrajectory: 2,
   BulletBill_Active: false,
 };
 
