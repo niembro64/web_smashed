@@ -5,6 +5,7 @@ import SmashedGame from '../SmashedGame';
 import { Player, Position, Velocity } from '../interfaces';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
+
 const calculateProjectileVelocity = (
   gravity: number,
   cannonPosition: Position,
@@ -39,15 +40,10 @@ const calculateProjectileVelocity = (
   const tMin = Math.min(t1, t2);
   const tMax = Math.max(t1, t2);
 
-  // print(`tMin: ${tMin}, tMax: ${tMax}`);
-
   let t = tMin;
 
   if (tMin <= 0) {
     t = tMax;
-    // print('MAX');
-  } else {
-    // print('MIN');
   }
 
   if (t <= 0) {

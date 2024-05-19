@@ -192,7 +192,7 @@ export function createFireFlower(game: SmashedGame): void {
   for (let i = 0; i < 6; i++) {
     ff.fireBallSounds.push(
       game.sound.add('fire_ball_sound', {
-        volume: 0.03,
+        volume: 0.05,
       })
     );
   }
