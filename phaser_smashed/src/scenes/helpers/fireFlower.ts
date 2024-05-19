@@ -1,9 +1,48 @@
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Player } from '../interfaces';
+import { Player, Position, Velocity } from '../interfaces';
 import { getNormalizedVector } from './damage';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
+
+const calculateProjectileVelocity = (
+  gravity: number,
+  cannonPosition: Position,
+  targetPosition: Position,
+  baseVelocity: number
+): Velocity | null => {
+  const dx = targetPosition.x - cannonPosition.x;
+  const dy = targetPosition.y - cannonPosition.y;
+
+  const velocitySquared = baseVelocity * baseVelocity;
+  const gravitySquared = gravity * gravity;
+
+  const a = gravitySquared * dx * dx;
+  const b = 2 * gravity * dy * velocitySquared;
+  const c = velocitySquared * velocitySquared - gravitySquared * dx * dx;
+
+  const discriminant = b * b - 4 * a * c;
+
+  if (discriminant < 0) {
+    return null;
+  }
+
+  const discriminantSqrt = Math.sqrt(discriminant);
+
+  const t1 = (-b + discriminantSqrt) / (2 * a);
+  const t2 = (-b - discriminantSqrt) / (2 * a);
+
+  const t = Math.max(t1, t2);
+
+  if (t <= 0) {
+    return null;
+  }
+
+  const vx = dx / t;
+  const vy = dy / t + 0.5 * gravity * t;
+
+  return { x: vx, y: vy };
+};
 
 export const updateFireFlowerShooting = (game: SmashedGame) => {
   if (game.debug.NN_Train_P1 || game.fireFlower.attackBullets === null) {
@@ -69,10 +108,10 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       return;
     }
 
-    const randMult = 300;
-
-    const randY = (Math.random() - 0.5) * randMult;
-    const randX = (Math.random() - 0.5) * randMult;
+    const randY: number =
+      (Math.random() - 0.5) * 500 * game.debug.Flower_ShootRndAmt;
+    const randX: number =
+      (Math.random() - 0.5) * 500 * game.debug.Flower_ShootRndAmt;
 
     game.fireFlower.attackBullets.bullets.fireBullet(
       game.fireFlower.posInit,

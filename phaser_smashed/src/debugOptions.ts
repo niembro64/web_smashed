@@ -63,6 +63,7 @@ export const debugInit: Debug = {
   Flower_Gravity: true,
   Flower_Bounce_Wall: true,
   Flower_1000_Balls: false,
+  Flower_ShootRndAmt: 0,
   BulletBill_Active: false,
 };
 
@@ -129,6 +130,7 @@ export const debugMax: Debug = {
   Flower_Gravity: true,
   Flower_Bounce_Wall: true,
   Flower_1000_Balls: true,
+  Flower_ShootRndAmt: 4,
   BulletBill_Active: true,
 };
 
@@ -196,5 +198,6 @@ export const showOptionOnMainScreenInit: Debug = {
   Flower_Gravity: false,
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: false,
+  Flower_ShootRndAmt: 0,
   BulletBill_Active: false,
 };
