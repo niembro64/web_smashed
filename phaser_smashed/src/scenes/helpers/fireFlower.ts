@@ -4,6 +4,10 @@ import { Player, Position, Velocity } from '../interfaces';
 import { getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 
+
+////////////////////////////////////////////////
+// reverses y coordinates for sake of function
+////////////////////////////////////////////////
 const calculateProjectileVelocity = (
   gravity: number,
   cannonPosition: Position,
@@ -11,7 +15,7 @@ const calculateProjectileVelocity = (
   baseVelocity: number
 ): Velocity | null => {
   const dx = targetPosition.x - cannonPosition.x;
-  const dy = targetPosition.y - cannonPosition.y;
+  const dy = -1 * (targetPosition.y - cannonPosition.y);
 
   const velocitySquared = baseVelocity * baseVelocity;
   const gravitySquared = gravity * gravity;

@@ -12,7 +12,7 @@ export const debugInit: Debug = {
   Level: 9, //0123456
   Music_Active: true,
   Ready_Sound_Active: false,
-  Use_Camera: true,
+  Use_Camera: false,
   Cameras_Visible: false,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
@@ -61,8 +61,8 @@ export const debugInit: Debug = {
   Flower_Rapid_Fire: false,
   Flower_Full_Screen: false,
   Flower_Gravity: true,
-  Flower_Bounce_Wall: true,
-  Flower_1000_Balls: false,
+  Flower_Bounce_Wall: false,
+  Flower_1000_Balls: true,
   Flower_ShootRndAmt: 0,
   BulletBill_Active: false,
 };
