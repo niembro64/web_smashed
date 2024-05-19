@@ -46,7 +46,6 @@ export interface Debug {
   Char_Override: boolean;
   Char_Override_ID: CharacterId;
   Bullets_Allow_Groups: boolean;
-  Bullets_FullScreen: boolean;
   Trophies_On_Shots: boolean;
   Trophies_Always: boolean;
   NN_Train_P1: boolean;

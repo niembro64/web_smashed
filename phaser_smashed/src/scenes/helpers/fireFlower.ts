@@ -3,7 +3,7 @@ import { baseGravity } from '../../views/Main';
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import { Player, Position, Velocity } from '../interfaces';
-import { getNearestPlayerAliveFromXY } from './movement';
+import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 const calculateProjectileVelocity = (
   gravity: number,
@@ -60,7 +60,6 @@ const calculateProjectileVelocity = (
   return { x: vx, y: vy };
 };
 
-
 export const updateFireFlowerShooting = (game: SmashedGame) => {
   if (game.debug.NN_Train_P1 || game.fireFlower.attackBullets === null) {
     return;
@@ -82,6 +81,20 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
     const enemy: Player | null = z?.player || null;
 
     if (enemy === null) {
+      return;
+    }
+
+    const currDistance = getDistance(
+      game.fireFlower.posInit.x,
+      game.fireFlower.posInit.y,
+      enemy.char.sprite.body.position.x,
+      enemy.char.sprite.body.position.y
+    );
+
+    if (
+      !game.debug.Flower_Full_Screen &&
+      currDistance > game.fireFlower.shootingDistanceThreshold
+    ) {
       return;
     }
 

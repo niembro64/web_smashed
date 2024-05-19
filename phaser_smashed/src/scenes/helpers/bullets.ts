@@ -58,24 +58,6 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       this.initialPosition
     );
 
-    // if (this.debug?.BulletsFullScreen) {
-    //   if (
-    //     this.x > this.screen.WIDTH ||
-    //     this.x < 0 ||
-    //     this.y > this.screen.HEIGHT ||
-    //     this.y < 0
-    //   ) {
-    //     this.body.bounce.set(0);
-    //     this.setActive(false);
-    //     this.setVisible(false);
-    //     this.x = -100;
-    //     this.y = -100;
-    //     this.setVelocityX(0);
-    //     this.setVelocityY(0);
-    //   }
-    //   return;
-    // }
-
     const maxDistance =
       this.key === 'bulletFireBall'
         ? this.bouncingFullScreen
