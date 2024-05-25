@@ -1,6 +1,11 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import { Player, SpriteStateName } from '../interfaces';
+import {
+  darkBlockTopEdge,
+  getInactiveBackgroundTintColor,
+  isPlayerInFireFlowerRange,
+} from './fireFlower';
 import { hasPlayerTouchedWallRecently } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 
@@ -464,25 +469,3 @@ export function updateSpriteState(
     }
   }
 }
-
-// export const updateAllSpritesAlpha = (game: Game): void => {
-//   game.players.forEach((player) => {
-//     if (getIsPlayerOffscreen(player, game)) {
-//       player.char.sprite.setActive(0);
-//     } else {
-//       player.char.sprite.setActive(1);
-//     }
-
-//     if (getIsAttackEnergyOffscreen(player.char.attackEnergy)) {
-//       player.char.attackPhysical.sprite.setActive(0);
-//     } else {
-//       player.char.attackPhysical.sprite.setActive(1);
-//     }
-
-//     if (getIsAttackPhysicalOffscreen(player.char.attackPhysical)) {
-//       player.char.attackPhysical.sprite.setActive(0);
-//     } else {
-//       player.char.attackPhysical.sprite.setActive(1);
-//     }
-//   });
-// };

@@ -111,7 +111,7 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
   }
 
   if (game.debug.Flower_On_Init || game.flag.completedCurr) {
-    game.fireFlower.sprite.setTint(0xffffff);
+    // game.fireFlower.sprite.setTint(0xffffff);
 
     if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {
       return;
@@ -140,8 +140,12 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       !game.debug.Flower_Full_Screen &&
       currDistance > game.fireFlower.shootingDistanceThreshold
     ) {
+
+      game.fireFlower.sprite.setTint(getInactiveBackgroundTintColor());
       return;
-    }
+    } 
+
+    game.fireFlower.sprite.setTint(0xffffff);
 
     let invertedYProjectileVelocity: Velocity | null = null;
 
@@ -261,10 +265,10 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
   }
 };
 
+export const white = 0xffffff;
+export const darkBlockTopEdge = 0x836c64;
+export const whiteBlockTopEdge = 0xf3c6b5;
 export const getInactiveBackgroundTintColor = (): number => {
-  const white = 0xffffff;
-  const darkBlockTopEdge = 0x836c64;
-  const whiteBlockTopEdge = 0xf3c6b5;
 
   const diffBlocks = hexColorSubtraction(whiteBlockTopEdge, darkBlockTopEdge);
   const diffWhites = hexColorSubtraction(white, diffBlocks);
@@ -286,4 +290,18 @@ export const hexColorSubtraction = (color1: number, color2: number): number => {
   const b = b1 - b2;
 
   return (r << 16) + (g << 8) + b;
+};
+
+export const isPlayerInFireFlowerRange = (
+  player: Player,
+  game: SmashedGame
+): boolean => {
+  const distance = getDistance(
+    player.char.sprite.body.position.x,
+    player.char.sprite.body.position.y,
+    game.fireFlower.sprite.body.position.x,
+    game.fireFlower.sprite.body.position.y
+  );
+
+  return distance < game.fireFlower.shootingDistanceThreshold;
 };
