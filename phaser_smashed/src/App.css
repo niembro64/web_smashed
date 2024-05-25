@@ -856,11 +856,11 @@ h2 {
   padding: 0vw 0.5vw 0vw 0.5vw;
   margin: 0.2vw;
 
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.2);
   font-size: 1vw;
   transition: 0.5s ease;
   z-index: 0;
-
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -873,6 +873,7 @@ h2 {
   transition: 0s ease;
   background-color: hsl(200, 0%, 15%);
   border: 0px solid;
+  color: rgba(255, 255, 255, 1);
 }
 .b-all-bots:active {
   transition: 0s ease;

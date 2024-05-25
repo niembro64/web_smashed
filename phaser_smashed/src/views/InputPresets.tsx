@@ -17,13 +17,13 @@ export const InputGroup: React.FC<InputGroupProps> = ({
     { config: [2, 4, 0, 0], emojis: emoji.keyboardWhite + emoji.brain },
     { config: [1, 1, 0, 0], emojis: emoji.gamepad + emoji.gamepad },
     {
-      config: [2, 2, 3, 4],
-      emojis: emoji.keyboardWhite + emoji.keyboardWhite,
+      config: [2, 0, 3, 4],
+      emojis: emoji.keyboardWhite,
       extraEmojis: emoji.bot + emoji.brain,
     },
     {
-      config: [1, 1, 3, 4],
-      emojis: emoji.gamepad + emoji.gamepad,
+      config: [2, 2, 3, 4],
+      emojis: emoji.keyboardWhite + emoji.keyboardWhite,
       extraEmojis: emoji.bot + emoji.brain,
     },
     {
