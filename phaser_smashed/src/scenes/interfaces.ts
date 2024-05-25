@@ -714,6 +714,7 @@ export interface DarknessMoments {
   percentExplosion: number;
   explosionsIndex: number;
   explosions: Explosion[];
+  explosionsFront: Explosion[];
 }
 
 export interface Explosion {

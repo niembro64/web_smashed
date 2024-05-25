@@ -270,11 +270,15 @@ export function playNextExplosion(
   const c = game.chomp;
   const eIndex = c.darknessMoments.explosionsIndex;
   const eArr = c.darknessMoments.explosions;
+  const eFrontArr = c.darknessMoments.explosionsFront;
 
   game.chomp.darknessMoments.explosionsIndex = (eIndex + 1) % eArr.length;
 
   eArr[eIndex].sprite.x = x;
   eArr[eIndex].sprite.y = y;
+
+  eFrontArr[eIndex].sprite.x = x;
+  eFrontArr[eIndex].sprite.y = y;
 
   // eArr[eIndex].sprite.anims.stop();
   eArr[eIndex].sprite.setScale(amount / 500);
@@ -282,6 +286,9 @@ export function playNextExplosion(
   eArr[eIndex].sound.volume = amount / 3000;
   eArr[eIndex].sound.rate = Math.pow(500, 0.3) / Math.pow(amount, 0.3);
   eArr[eIndex].sound.play();
+
+  eFrontArr[eIndex].sprite.setScale(amount / 500);
+  eFrontArr[eIndex].sprite.anims.play('explsionanimationFront');
 }
 
 export function getRandomUnitVector(): xyVector {

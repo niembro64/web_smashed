@@ -33,7 +33,7 @@ export function create(game: SmashedGame) {
   createSplashRuleFinished(game); // MAYBE
   createFireFlower(game);
   createBulletBill(game);
-  createExplosions(game);
+  createExplosionsBack(game);
   createFirework(game);
   createPole(game);
   createFlag(game);
@@ -53,6 +53,7 @@ export function create(game: SmashedGame) {
   createChomp(game);
   createEmitterChompFollowChomp(game);
   createPlayers(game);
+  createExplosionsFront(game);
   createEmittersFollowPlayers(game);
   createColliderTablePlayers(game);
   createKeyboards(game);
@@ -257,7 +258,7 @@ export function createShake(game: SmashedGame): void {
   game.shake.setEnable(true);
 }
 
-export function createExplosions(game: SmashedGame): void {
+export function createExplosionsBack(game: SmashedGame): void {
   const config = {
     key: 'explsionanimation',
     frames: game.anims.generateFrameNumbers('explosion256', {
@@ -294,6 +295,41 @@ export function createExplosions(game: SmashedGame): void {
       {
         volume: game.debug.Dev_Mode ? 0 : 0.12,
       }
+    );
+  });
+}
+
+export function createExplosionsFront(game: SmashedGame): void {
+  const config = {
+    key: 'explsionanimationFront',
+    frames: game.anims.generateFrameNumbers('explosion256', {
+      start: 0,
+      end: 47,
+      first: 0,
+    }),
+    frameRate: game.chomp.explosionFPS * 0.8,
+    repeat: 0,
+  };
+
+  game.anims.create(config);
+
+  const eFrontArray = game.chomp.darknessMoments.explosionsFront;
+
+  eFrontArray.forEach((e, eIndex) => {
+    e.sprite = game.physics.add.sprite(
+      SCREEN_DIMENSIONS.WIDTH / 2,
+      -500,
+      'explosion256'
+    );
+    e.sprite.setScale(1);
+    e.sprite.body.allowGravity = false;
+    e.sprite.setBounce(0);
+    e.sprite.setOrigin(0.5, 0.5);
+    e.sprite.setImmovable(true);
+    e.sprite.setAlpha(0.3);
+    e.sprite.setRotation(
+      ((2 * Math.PI) / game.chomp.darknessMoments.explosionsFront.length) *
+        (eIndex - 1)
     );
   });
 }

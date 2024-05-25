@@ -820,6 +820,11 @@ export default class SmashedGame extends Phaser.Scene {
         { sprite: null, sound: null },
         { sprite: null, sound: null },
       ],
+      explosionsFront: [
+        { sprite: null, sound: null },
+        { sprite: null, sound: null },
+        { sprite: null, sound: null },
+      ],
     },
   };
 

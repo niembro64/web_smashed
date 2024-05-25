@@ -348,6 +348,9 @@ export function setAnimationsOff(game: SmashedGame): void {
   for (let i = 0; i < game.chomp.darknessMoments.explosions.length; i++) {
     game.chomp.darknessMoments.explosions[i].sprite.anims.pause();
   }
+  for (let i = 0; i < game.chomp.darknessMoments.explosionsFront.length; i++) {
+    game.chomp.darknessMoments.explosionsFront[i].sprite.anims.pause();
+  }
 }
 
 export function setAnimationsOn(game: SmashedGame): void {
@@ -372,6 +375,9 @@ export function setAnimationsOn(game: SmashedGame): void {
   }
   for (let i = 0; i < game.chomp.darknessMoments.explosions.length; i++) {
     game.chomp.darknessMoments.explosions[i].sprite.anims.resume();
+  }
+  for (let i = 0; i < game.chomp.darknessMoments.explosionsFront.length; i++) {
+    game.chomp.darknessMoments.explosionsFront[i].sprite.anims.resume();
   }
 }
 
