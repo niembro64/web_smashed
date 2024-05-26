@@ -72,6 +72,7 @@ export default class SmashedGame extends Phaser.Scene {
   BACKGROUND: any | Phaser.GameObjects.Sprite;
   BACKGROUND_OUTLINE: any | Phaser.GameObjects.Sprite;
   TABLE: any | Phaser.GameObjects.Sprite;
+  table_health_give: number = 1;
   powerupActive: boolean = false;
   soundPowerup: any = null;
   afterPauseResumePowerup: boolean = false;
@@ -830,11 +831,14 @@ export default class SmashedGame extends Phaser.Scene {
 
   updateIndex: number = 0;
 
-  bbXInit: number = SCREEN_DIMENSIONS.WIDTH * 0.728905;
-  bbScale: number = 0.63;
+  bbXInit: number = -4 * this.ASSET_BRICK_WIDTH;
+  bbScale: number = 0.63 * 3;
   // bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.429;
-  bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.372;
-  bbYInitBullet: number = this.bbYInitCannon - this.bbScale * 18;
+  bbYInitCannon: number =
+    SCREEN_DIMENSIONS.HEIGHT * 0.367 + 6 * this.ASSET_BRICK_HEIGHT;
+
+  bbYInitBullet: number =
+    this.bbYInitCannon - this.bbScale * 18 + 0 * this.ASSET_BRICK_HEIGHT;
 
   bulletBillCombo: BulletBillCombo = {
     bullet: {
@@ -848,9 +852,10 @@ export default class SmashedGame extends Phaser.Scene {
       posInit: {
         x: this.bbXInit,
         y: this.bbYInitBullet,
+        // y: this.bbYInitBullet,
       },
       velInit: {
-        x: -10,
+        x: 100,
         y: 0,
       },
     },

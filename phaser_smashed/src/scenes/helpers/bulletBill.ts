@@ -2,7 +2,7 @@ import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 
 export function updateBulletBill(game: SmashedGame): void {
-  if (!game.debug.BulletBill_Active) {
+  if (!game.debug.BulletBill_Bullet_Visible) {
     return;
   }
 
@@ -25,7 +25,7 @@ export function updateBulletBill(game: SmashedGame): void {
 
 export function resetBulletBillPosition(game: SmashedGame): boolean {
   print('resetBulletBillPosition');
-  if (!game.debug.BulletBill_Active) {
+  if (!game.debug.BulletBill_Bullet_Visible) {
     return false;
   }
 

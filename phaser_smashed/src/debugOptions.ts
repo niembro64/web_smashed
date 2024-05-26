@@ -3,7 +3,7 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   Auto_Start: false,
   NN_Train_P1: false,
-  Dev_Mode: false,
+  Dev_Mode: true,
   Dur_Seconds: false,
   Mode_Infinity: false,
   Minutes: 1, //01234567
@@ -21,6 +21,7 @@ export const debugInit: Debug = {
   Colliders_AE_v_AP: true,
   Colliders_AB_v_AE: false,
   Colliders_AB_v_AP: false,
+  Colliders_P_v_BB: false,
   Title_Screws: true,
   Show_Helper_Keyboard: false,
   Friction_Air_Active: true,
@@ -64,7 +65,7 @@ export const debugInit: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 2,
-  BulletBill_Active: false,
+  BulletBill_Bullet_Visible: true,
 };
 
 export const debugMax: Debug = {
@@ -131,7 +132,7 @@ export const debugMax: Debug = {
   Flower_1000_Balls: true,
   Flower_ShootRndAmt: 4,
   Flower_HighTrajectory: 2,
-  BulletBill_Active: true,
+  BulletBill_Bullet_Visible: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -199,5 +200,5 @@ export const showOptionOnMainScreenInit: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
-  BulletBill_Active: false,
+  BulletBill_Bullet_Visible: false,
 };

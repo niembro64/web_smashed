@@ -140,10 +140,9 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
       !game.debug.Flower_Full_Screen &&
       currDistance > game.fireFlower.shootingDistanceThreshold
     ) {
-
       game.fireFlower.sprite.setTint(getInactiveBackgroundTintColor());
       return;
-    } 
+    }
 
     game.fireFlower.sprite.setTint(0xffffff);
 
@@ -269,7 +268,6 @@ export const white = 0xffffff;
 export const darkBlockTopEdge = 0x836c64;
 export const whiteBlockTopEdge = 0xf3c6b5;
 export const getInactiveBackgroundTintColor = (): number => {
-
   const diffBlocks = hexColorSubtraction(whiteBlockTopEdge, darkBlockTopEdge);
   const diffWhites = hexColorSubtraction(white, diffBlocks);
 

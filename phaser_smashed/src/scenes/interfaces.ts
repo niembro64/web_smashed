@@ -66,7 +66,7 @@ export interface Debug {
   Flower_1000_Balls: boolean;
   Flower_ShootRndAmt: number;
   Flower_HighTrajectory: number;
-  BulletBill_Active: boolean;
+  BulletBill_Bullet_Visible: boolean;
   [key: string]: any; // add index signature
 }
 

@@ -27,12 +27,12 @@ export function create(game: SmashedGame) {
   createSoundsGame(game);
   createBackground(game);
   createSplashBlack(game);
+  createBulletBill(game);
   createBackgroundOutline(game);
   createLavas(game);
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createFireFlower(game);
-  createBulletBill(game);
   createExplosionsBack(game);
   createFirework(game);
   createPole(game);
@@ -66,7 +66,7 @@ export function create(game: SmashedGame) {
   createCollidersAEvAE(game);
   createCollidersAEvAP(game);
   createCollidersFireFlower(game);
-  createBulletBillColliders(game);
+  createCollidersBulletBill(game);
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
@@ -451,7 +451,8 @@ export function createEndDataMatrices(game: SmashedGame): void {
         {
           align: 'right',
           fontSize: splashSize,
-          fontFamily: game.FONT_DEFAULT_MONOSPACE,
+          fontFamily: game.FONT_DEFAULT_VIDEOGAME,
+          // fontFamily: game.FONT_DEFAULT_MONOSPACE,
           color: splash.color,
           stroke: splash.backgroundColor,
           strokeThickness: splash.strokeThickness,
@@ -1242,6 +1243,10 @@ export function createAttackEnergies(game: SmashedGame): void {
     }
 
     filterAttackEnergyNormal(player, playerIndex, game);
+
+    // game.players.forEach((p, i) => {
+    //   game.physics.add.collider(ae.sprite, game.bulletBillCombo.cannon.sprite);
+    // });
   });
 
   game.players.forEach((player, playerIndex) => {
@@ -1413,7 +1418,7 @@ export function createCollidersAEvAP(game: SmashedGame): void {
 export function createBulletBill(game: SmashedGame): void {
   const bb = game.bulletBillCombo;
 
-  if (game.debug.BulletBill_Active) {
+  if (game.debug.BulletBill_Bullet_Visible) {
     bb.bullet.sprite = game.physics.add.sprite(
       bb.bullet.posInit.x,
       bb.bullet.posInit.y,
@@ -1426,6 +1431,8 @@ export function createBulletBill(game: SmashedGame): void {
     bb.bullet.sprite.setOrigin(0.5, 0.5);
     bb.bullet.sprite.body.setVelocityX(bb.bullet.velInit.x);
     bb.bullet.sprite.body.setVelocityY(bb.bullet.velInit.y);
+
+    // bb.bullet.sprite.body.velocity.x = 50;
   }
 
   bb.cannon.sprite = game.physics.add.sprite(
@@ -1440,16 +1447,12 @@ export function createBulletBill(game: SmashedGame): void {
   bb.cannon.sprite.body.allowGravity = false;
   bb.cannon.sprite.setOrigin(0.5, 0.5);
 
-  if (!game.debug.BulletBill_Active) {
+  if (!game.debug.BulletBill_Bullet_Visible) {
     bb.cannon.sprite.setTint(getInactiveBackgroundTintColor());
   }
 }
 
-export function createBulletBillColliders(game: SmashedGame): void {
-  if (!game.debug.BulletBill_Active) {
-    return;
-  }
-
+export function createCollidersBulletBill(game: SmashedGame): void {
   const bb = game.bulletBillCombo;
 
   game.physics.add.collider(bb.bullet.sprite, game.PLATFORMS);
@@ -1462,16 +1465,11 @@ export function createBulletBillColliders(game: SmashedGame): void {
 
   // players
   game.players.forEach((player, playerIndex) => {
-    game.physics.add.collider(player.char.sprite, bb.bullet.sprite);
     game.physics.add.collider(player.char.sprite, bb.cannon.sprite);
   });
 
   // attack energies
   game.players.forEach((player, playerIndex) => {
-    game.physics.add.collider(
-      player.char.attackEnergy.sprite,
-      bb.bullet.sprite
-    );
     game.physics.add.collider(
       player.char.attackEnergy.sprite,
       bb.cannon.sprite
@@ -1482,10 +1480,6 @@ export function createBulletBillColliders(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.physics.add.collider(
       player.char.attackPhysical.sprite,
-      bb.bullet.sprite
-    );
-    game.physics.add.collider(
-      player.char.attackPhysical.sprite,
       bb.cannon.sprite
     );
   });
@@ -1494,11 +1488,9 @@ export function createBulletBillColliders(game: SmashedGame): void {
   game.fireFlower.attackBullets.bullets
     .getChildren()
     .forEach((bullet: any, bi: number) => {
-      game.physics.add.collider(bullet, bb.bullet.sprite);
       game.physics.add.collider(bullet, bb.cannon.sprite);
     });
 
-  // player bullets
   game.players.forEach((player, playerIndex) => {
     if (
       player.char.attackEnergy.attackBullets &&
@@ -1507,7 +1499,6 @@ export function createBulletBillColliders(game: SmashedGame): void {
       player.char.attackEnergy.attackBullets.bullets
         .getChildren()
         .forEach((bullet: any, bi: number) => {
-          game.physics.add.collider(bullet, bb.bullet.sprite);
           game.physics.add.collider(bullet, bb.cannon.sprite);
         });
     }
