@@ -1803,7 +1803,7 @@ function Play() {
               onMouseEnter={() => {
                 soundManager.blipSoundSoft();
               }}
-              className="question-mark"
+              className="eye-mark"
               src={
                 !openEye
                   ? '/images/eye-shut-trans.png'

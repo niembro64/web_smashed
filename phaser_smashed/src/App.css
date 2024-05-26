@@ -126,7 +126,7 @@ h2 {
 }
 
 .top-bar-eye-open > .link-tag,
-.top-bar-eye-open > .question-mark {
+.top-bar-eye-open > .eye-mark {
   border: 0;
 
   color: white;
@@ -196,14 +196,14 @@ h2 {
 }
 
 .top-bar-eye-closed:hover > .link-tag,
-.top-bar-eye-closed:hover > .question-mark {
+.top-bar-eye-closed:hover > .eye-mark {
   border: 0;
   color: white;
   filter: opacity(1);
   transition: 0.1s ease;
 }
 
-.question-mark {
+.eye-mark {
   height: 100%;
   justify-self: flex-start;
   filter: opacity(0.3);
