@@ -536,6 +536,19 @@ function Play() {
     });
   };
 
+  //////////////////////////////////////////////
+  // kill if its still alive on reload
+  // let's try this
+  //////////////////////////////////////////////
+  useEffect(() => {
+    // kill smashed game
+    if (myPhaser?.current?.scene?.keys?.game) {
+      // @ts-ignore
+      myPhaser.current.scene.keys.game.loaded = false;
+      myPhaser.current.destroy(true);
+    }
+  }, []);
+
   useEffect(() => {
     print('inputArray', inputArray);
   }, [inputArray]);

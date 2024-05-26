@@ -837,8 +837,7 @@ export default class SmashedGame extends Phaser.Scene {
   bbYInitCannon: number =
     SCREEN_DIMENSIONS.HEIGHT * 0.367 + 6 * this.ASSET_BRICK_HEIGHT;
 
-  bbYInitBullet: number =
-    this.bbYInitCannon - this.bbScale * 18 + 0 * this.ASSET_BRICK_HEIGHT;
+  bbYInitBullet: number = this.bbYInitCannon - this.bbScale * 13;
 
   bulletBillCombo: BulletBillCombo = {
     bullet: {
@@ -852,7 +851,6 @@ export default class SmashedGame extends Phaser.Scene {
       posInit: {
         x: this.bbXInit,
         y: this.bbYInitBullet,
-        // y: this.bbYInitBullet,
       },
       velInit: {
         x: 100,

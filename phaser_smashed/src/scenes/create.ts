@@ -1426,13 +1426,10 @@ export function createBulletBill(game: SmashedGame): void {
     );
 
     bb.bullet.sprite.setScale(bb.bullet.scale);
-    // bb.bullet.sprite.setImmovable(true);
     bb.bullet.sprite.body.allowGravity = false;
     bb.bullet.sprite.setOrigin(0.5, 0.5);
     bb.bullet.sprite.body.setVelocityX(bb.bullet.velInit.x);
     bb.bullet.sprite.body.setVelocityY(bb.bullet.velInit.y);
-
-    // bb.bullet.sprite.body.velocity.x = 50;
   }
 
   bb.cannon.sprite = game.physics.add.sprite(
