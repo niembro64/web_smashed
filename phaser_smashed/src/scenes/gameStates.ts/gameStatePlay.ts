@@ -87,7 +87,7 @@ export function updateGameStatePlay(
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);
   updateBulletBill(game);
-  
+
   // UPDATE PLAYERS
   updatePlayers(game);
   // updatePhysicalAttackFollowPlayers(game);

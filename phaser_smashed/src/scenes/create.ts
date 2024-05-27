@@ -1430,6 +1430,8 @@ export function createBulletBill(game: SmashedGame): void {
     bb.bullet.sprite.setOrigin(0.5, 0.5);
     bb.bullet.sprite.body.setVelocityX(bb.bullet.velInit.x);
     bb.bullet.sprite.body.setVelocityY(bb.bullet.velInit.y);
+
+    bb.bullet.sprite.setTint(getInactiveBackgroundTintColor());
   }
 
   bb.cannon.sprite = game.physics.add.sprite(
@@ -1449,58 +1451,7 @@ export function createBulletBill(game: SmashedGame): void {
   }
 }
 
-export function createCollidersBulletBill(game: SmashedGame): void {
-  const bb = game.bulletBillCombo;
-
-  game.physics.add.collider(bb.bullet.sprite, game.PLATFORMS);
-  game.physics.add.collider(bb.bullet.sprite, game.TABLE);
-  game.physics.add.collider(bb.bullet.sprite, game.chomp.sprite);
-
-  game.physics.add.collider(bb.cannon.sprite, game.PLATFORMS);
-  game.physics.add.collider(bb.cannon.sprite, game.TABLE);
-  game.physics.add.collider(bb.cannon.sprite, game.chomp.sprite);
-
-  // players
-  game.players.forEach((player, playerIndex) => {
-    game.physics.add.collider(player.char.sprite, bb.cannon.sprite);
-  });
-
-  // attack energies
-  game.players.forEach((player, playerIndex) => {
-    game.physics.add.collider(
-      player.char.attackEnergy.sprite,
-      bb.cannon.sprite
-    );
-  });
-
-  // attack physicals
-  game.players.forEach((player, playerIndex) => {
-    game.physics.add.collider(
-      player.char.attackPhysical.sprite,
-      bb.cannon.sprite
-    );
-  });
-
-  // fireballs
-  game.fireFlower.attackBullets.bullets
-    .getChildren()
-    .forEach((bullet: any, bi: number) => {
-      game.physics.add.collider(bullet, bb.cannon.sprite);
-    });
-
-  game.players.forEach((player, playerIndex) => {
-    if (
-      player.char.attackEnergy.attackBullets &&
-      player.char.attackEnergy.attackBullets.bullets
-    ) {
-      player.char.attackEnergy.attackBullets.bullets
-        .getChildren()
-        .forEach((bullet: any, bi: number) => {
-          game.physics.add.collider(bullet, bb.cannon.sprite);
-        });
-    }
-  });
-}
+export function createCollidersBulletBill(game: SmashedGame): void {}
 
 export function createBackground(game: SmashedGame): void {
   const scaleUp = 1.1;
@@ -1553,7 +1504,7 @@ export function createTable(game: SmashedGame): void {
   // game.TABLE.setImmovable(true);
   // game.TABLE.body.allowGravity = false;
 
-  game.soundPowerup = game.sound.add('powerup', { volume: 0.5, loop: true });
+  game.soundPowerup = game.sound.add('powerup', { volume: 0.3, loop: true });
 }
 
 export function createColliderTablePlatforms(game: SmashedGame): void {
