@@ -20,6 +20,7 @@ import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
 import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
+import { BulletBillCombo, FireFlower, Player } from './interfaces';
 
 export function create(game: SmashedGame) {
   createPreCreate(game);
@@ -27,8 +28,9 @@ export function create(game: SmashedGame) {
   createSoundsGame(game);
   createBackground(game);
   createSplashBlack(game);
+  createBackgroundOutlineBack(game);
   createBulletBill(game);
-  createBackgroundOutline(game);
+  createBackgroundOutlineFront(game);
   createLavas(game);
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
@@ -169,7 +171,7 @@ export function createFireFlower(game: SmashedGame): void {
     return;
   }
 
-  const ff = game.fireFlower;
+  const ff: FireFlower = game.fireFlower;
 
   ff.sprite = game.physics.add.sprite(ff.posInit.x, ff.posInit.y, 'cannon');
 
@@ -1430,6 +1432,8 @@ export function createBulletBill(game: SmashedGame): void {
     bb.bullet.sprite.setOrigin(0.5, 0.5);
     bb.bullet.sprite.body.setVelocityX(bb.bullet.velInit.x);
     bb.bullet.sprite.body.setVelocityY(bb.bullet.velInit.y);
+    bb.bullet.sprite.body.setMass(bb.bullet.mass);
+    bb.bullet.sprite.setImmovable(true);
 
     bb.bullet.sprite.setTint(getInactiveBackgroundTintColor());
   }
@@ -1451,7 +1455,54 @@ export function createBulletBill(game: SmashedGame): void {
   }
 }
 
-export function createCollidersBulletBill(game: SmashedGame): void {}
+export function createCollidersBulletBill(game: SmashedGame): void {
+  const bbCombo: BulletBillCombo = game.bulletBillCombo;
+  const bbBullet = bbCombo.bullet;
+  const bbCannon = bbCombo.cannon;
+  const players: Player[] = game.players;
+  const ff: FireFlower = game.fireFlower;
+  const aebs = game.fireFlower.attackBullets.bullets;
+
+  game.physics.add.collider(bbCannon.sprite, game.PLATFORMS);
+  game.physics.add.collider(bbCannon.sprite, game.TABLE);
+  game.physics.add.collider(bbCannon.sprite, ff.attackBullets);
+
+  players.forEach((player, playerIndex) => {
+    game.physics.add.collider(player.char.sprite, bbCannon.sprite);
+
+    if (player.char.attackEnergy.bouncePlatforms) {
+      game.physics.add.collider(
+        player.char.attackEnergy.sprite,
+        bbCannon.sprite
+      );
+      game.physics.add.collider(
+        player.char.attackEnergy.sprite,
+        bbBullet.sprite
+      );
+
+      if (
+        player.char.attackEnergy?.attackBullets !== null &&
+        player.char.attackEnergy?.attackBullets?.bullets !== null
+      ) {
+        player.char.attackEnergy.attackBullets.bullets
+          .getChildren()
+          .forEach((bullet, bi) => {
+            game.physics.add.collider(bullet, bbCannon.sprite);
+          });
+      }
+    }
+  });
+
+  game.physics.add.collider(bbBullet.sprite, ff.attackBullets);
+
+  aebs.children.iterate((child: any) => {
+    child.body.allowGravity = game.debug.Flower_Gravity;
+
+    game.physics.add.collider(child, bbBullet.sprite);
+    game.physics.add.collider(child, bbCannon.sprite);
+    game.physics.add.collider(child, game.TABLE);
+  });
+}
 
 export function createBackground(game: SmashedGame): void {
   const scaleUp = 1.1;
@@ -1470,19 +1521,34 @@ export function createBackground(game: SmashedGame): void {
   game.BACKGROUND.body.allowGravity = false;
 }
 
-export function createBackgroundOutline(game: SmashedGame): void {
-  game.BACKGROUND_OUTLINE = game.physics.add.sprite(
+export function createBackgroundOutlineFront(game: SmashedGame): void {
+  game.BACKGROUND_OUTLINE_FRONT = game.physics.add.sprite(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
-    'background_outline'
+    'background_outline_front'
   );
-  game.BACKGROUND_OUTLINE.setScale(
+  game.BACKGROUND_OUTLINE_FRONT.setScale(
     game.SCREEN_SCALE.WIDTH,
     game.SCREEN_SCALE.HEIGHT
   );
   // game.BACKGROUND_OUTLINE.setOrigin(0.5, 0.5);
-  game.BACKGROUND_OUTLINE.setImmovable(true);
-  game.BACKGROUND_OUTLINE.body.allowGravity = false;
+  game.BACKGROUND_OUTLINE_FRONT.setImmovable(true);
+  game.BACKGROUND_OUTLINE_FRONT.body.allowGravity = false;
+}
+
+export function createBackgroundOutlineBack(game: SmashedGame): void {
+  game.BACKGROUND_OUTLINE_BACK = game.physics.add.sprite(
+    SCREEN_DIMENSIONS.WIDTH / 2,
+    SCREEN_DIMENSIONS.HEIGHT / 2,
+    'background_outline_back'
+  );
+  game.BACKGROUND_OUTLINE_BACK.setScale(
+    game.SCREEN_SCALE.WIDTH,
+    game.SCREEN_SCALE.HEIGHT
+  );
+  // game.BACKGROUND_OUTLINE.setOrigin(0.5, 0.5);
+  game.BACKGROUND_OUTLINE_BACK.setImmovable(true);
+  game.BACKGROUND_OUTLINE_BACK.body.allowGravity = false;
 }
 
 export function createTable(game: SmashedGame): void {

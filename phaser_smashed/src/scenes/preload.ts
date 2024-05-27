@@ -180,7 +180,8 @@ export function preload(game: SmashedGame): void {
   game.load.image('blank', 'images/blank.png');
   game.load.image('pole', 'images/pole.png');
   game.load.image('background', 'images/darkxp.jpg');
-  game.load.image('background_outline', 'images/outline_blocks_11.png');
+  game.load.image('background_outline_front', 'images/outline_blocks_11_front.png');
+  game.load.image('background_outline_back', 'images/outline_blocks_11_back.png');
   game.load.image('centerWhite', 'images/wx.png');
   game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');
