@@ -8,81 +8,15 @@ import {
   Position,
 } from '../interfaces';
 
-// export type BulletBillBullet = {
-//   scale: number;
-//   mass: number;
-//   sprite: any;
-//   sound: any;
-//   damage: number;
-//   hitback: Hitback;
-//   diesOnHitbox: boolean;
-//   srcImage: any;
-//   posInit: Position;
-//   velInit: Position;
-// };
-
-// export type BulletBillCannon = {
-//   scale: number;
-//   sprite: any;
-//   sound: any;
-//   srcImage: any;
-//   posInit: Position;
-// };
-
-// export type BulletBillComboState =
-//   | 'button-up'
-//   | 'button-down'
-//   | 'shooting'
-//   | 'cooldown';
-
-// export type BulletBillCombo = {
-//   state: BulletBillComboState;
-//   sparkDistance: number;
-//   pathPoints: Position[];
-//   path: Phaser.Curves.Path | null;
-//   spark: any;
-//   graphics: Phaser.GameObjects.Graphics | null;
-//   bullet: BulletBillBullet;
-//   cannon: BulletBillCannon;
-//   shootingDistanceThreshold: number;
-//   numUpdateIndexesToWait: number;
-//   numUpdateIndexesToWaitFast: number;
-// };
-
-// function createBulletBillSparkLine(game: SmashedGame) {
-//   const bbCombo: BulletBillCombo = game.bulletBillCombo;
-
-//   bbCombo.graphics = game.add.graphics();
-
-//   // Draw the path
-//   bbCombo.graphics.lineStyle(30, 0x666666, 1);
-//   bbCombo.graphics.beginPath();
-//   bbCombo.graphics.moveTo(bbCombo.pathPoints[0].x, bbCombo.pathPoints[0].y);
-//   bbCombo.pathPoints.slice(1).forEach((point: Position) => {
-//     if (!bbCombo.graphics) {
-//       return;
-//     }
-//     bbCombo.graphics.lineTo(point.x, point.y);
-//   });
-//   bbCombo.graphics.strokePath();
-
-//   // Create a dot to animate along the path
-//   bbCombo.spark = game.add.circle(
-//     bbCombo.pathPoints[0].x,
-//     bbCombo.pathPoints[0].y,
-//     30,
-//     0xff5555
-//   );
-// }
-
 const updateSparkOnSparkLine = (game: SmashedGame): void => {
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
   const numPaths = bbSparkLine.pathPoints.length;
-  const percentCompleted = bbSparkLine.percentCompleted;
+  const percentCompleted = bbSparkLine.percentPathCurrCompleted;
 
-  bbSparkLine.percentCompleted = Math.min(1, percentCompleted + 0.01);
-  if (bbSparkLine.percentCompleted >= 1) {
-    bbSparkLine.percentCompleted = 0;
+  bbSparkLine.percentPathCurrCompleted = Math.min(1, percentCompleted + 0.01);
+
+  if (bbSparkLine.percentPathCurrCompleted >= 1) {
+    bbSparkLine.percentPathCurrCompleted = 0;
     bbSparkLine.pathPointsIndexCurr =
       (bbSparkLine.pathPointsIndexCurr + 1) % numPaths;
     return;
@@ -97,7 +31,7 @@ const updateSparkOnSparkLine = (game: SmashedGame): void => {
     game,
     pathPositionStart,
     pathPositionEnd,
-    bbSparkLine.percentCompleted
+    bbSparkLine.percentPathCurrCompleted
   );
 };
 
@@ -132,7 +66,7 @@ export const updateBulletBill = (game: SmashedGame): void => {
       updateSparkOnSparkLine(game);
       // print('sparkDistance:', bbSparkLine.sparkDistance);
 
-      if (bbSparkLine.percentCompleted >= 1) {
+      if (bbSparkLine.percentPathCurrCompleted >= 1) {
         setBulletBillState(game, 'shooting');
       }
 
@@ -170,7 +104,7 @@ export const setBulletBillState = (
     case 'shooting':
       print('setBulletBillState: shooting');
 
-      bbSparkLine.percentCompleted = 0;
+      bbSparkLine.percentPathCurrCompleted = 0;
       bbBullet.sprite.body.x = bbBullet.posInit.x;
       bbBullet.sprite.body.y = bbBullet.posInit.y;
 

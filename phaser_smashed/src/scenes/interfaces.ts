@@ -539,6 +539,12 @@ export interface FireFlower {
   numUpdateIndexesToWaitFast: number;
 }
 
+export type BulletBillTower = {
+  scale: number;
+  sprite: any;
+  posInit: Position;
+};
+
 export type BulletBillBullet = {
   scale: number;
   mass: number;
@@ -567,7 +573,7 @@ export type BulletBillComboState =
   | 'cooldown';
 
 export type BulletBillSparkLine = {
-  percentCompleted: number;
+  percentPathCurrCompleted: number;
   pathPoints: Position[];
   path: Phaser.Curves.Path | null;
   pathPointsIndexCurr: number;
@@ -579,6 +585,7 @@ export type BulletBillCombo = {
   state: BulletBillComboState;
   sparkLine: BulletBillSparkLine;
   bullet: BulletBillBullet;
+  tower: BulletBillTower;
   cannon: BulletBillCannon;
   shootingDistanceThreshold: number;
   numUpdateIndexesToWait: number;

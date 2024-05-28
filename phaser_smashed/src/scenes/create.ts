@@ -85,13 +85,27 @@ export function create(game: SmashedGame) {
 }
 
 function createBulletBillSparkLine(game: SmashedGame) {
+  const tower = game.bulletBillCombo.tower;
+  // add image to tower sprite
+  tower.sprite = game.physics.add.sprite(
+    tower.posInit.x,
+    tower.posInit.y,
+    'bullet_bill_tower'
+  );
+
+  // tower.sprite.setBounce(0);
+  tower.sprite.setScale(tower.scale);
+  tower.sprite.setBounce(0);
+  tower.sprite.setImmovable(true);
+  tower.sprite.body.allowGravity = false;
+
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
 
   bbSparkLine.graphics = game.add.graphics();
 
   // Draw the path
-  bbSparkLine.graphics.lineStyle(30, 0x666666, 1);
+  bbSparkLine.graphics.lineStyle(10, 0x000000, 1);
   bbSparkLine.graphics.beginPath();
   bbSparkLine.graphics.moveTo(
     bbSparkLine.pathPoints[0].x,
@@ -109,7 +123,7 @@ function createBulletBillSparkLine(game: SmashedGame) {
   bbSparkLine.spark = game.add.circle(
     bbSparkLine.pathPoints[0].x,
     bbSparkLine.pathPoints[0].y,
-    30,
+    15,
     0xff5555
   );
 }

@@ -832,10 +832,17 @@ export default class SmashedGame extends Phaser.Scene {
   };
 
   bbPathPoints: Position[] = [
-    { x: 100, y: 100 },
-    { x: 200, y: 200 },
-    { x: 300, y: 150 },
-    { x: 400, y: 300 },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.7285,
+      y: SCREEN_DIMENSIONS.HEIGHT * 0.399,
+    },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.7285, y: SCREEN_DIMENSIONS.HEIGHT * 0.66 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.645, y: SCREEN_DIMENSIONS.HEIGHT * 0.825 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.345, y: SCREEN_DIMENSIONS.HEIGHT * 0.825 },
+
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.15, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.75 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.674 },
   ];
 
   updateIndex: number = 0;
@@ -850,10 +857,18 @@ export default class SmashedGame extends Phaser.Scene {
 
   bulletBillCombo: BulletBillCombo = {
     state: 'button-up',
+    tower: {
+      scale: 1,
+      sprite: null,
+      posInit: {
+        x: SCREEN_DIMENSIONS.WIDTH * 0.7285,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.399,
+      },
+    },
     sparkLine: {
       graphics: null,
       spark: null,
-      percentCompleted: 0,
+      percentPathCurrCompleted: 0,
       pathPoints: this.bbPathPoints,
       pathPointsIndexCurr: 0,
       path: null,
