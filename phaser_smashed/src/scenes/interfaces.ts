@@ -66,7 +66,6 @@ export interface Debug {
   Flower_1000_Balls: boolean;
   Flower_ShootRndAmt: number;
   Flower_HighTrajectory: number;
-  BulletBill_Bullet_Visible: boolean;
   [key: string]: any; // add index signature
 }
 
@@ -561,7 +560,15 @@ export type BulletBillCannon = {
   posInit: Position;
 };
 
+export type BulletBillCombioState =
+  | 'button-up'
+  | 'button-down'
+  | 'shooting'
+  | 'cooldown';
+
 export type BulletBillCombo = {
+  state: BulletBillCombioState;
+  sparkDistance: number;
   bullet: BulletBillBullet;
   cannon: BulletBillCannon;
   shootingDistanceThreshold: number;

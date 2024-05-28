@@ -65,7 +65,6 @@ export const debugInit: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 2,
-  BulletBill_Bullet_Visible: true,
 };
 
 export const debugMax: Debug = {
@@ -132,7 +131,6 @@ export const debugMax: Debug = {
   Flower_1000_Balls: true,
   Flower_ShootRndAmt: 4,
   Flower_HighTrajectory: 2,
-  BulletBill_Bullet_Visible: true,
 };
 
 // TRUE means SHOWN ON MAIN PAGE
@@ -200,5 +198,4 @@ export const showOptionOnMainScreenInit: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
-  BulletBill_Bullet_Visible: false,
 };

@@ -1418,40 +1418,36 @@ export function createCollidersAEvAP(game: SmashedGame): void {
 }
 
 export function createBulletBill(game: SmashedGame): void {
-  const bb = game.bulletBillCombo;
+  const bbCombo: BulletBillCombo = game.bulletBillCombo;
 
-  if (game.debug.BulletBill_Bullet_Visible) {
-    bb.bullet.sprite = game.physics.add.sprite(
-      bb.bullet.posInit.x,
-      bb.bullet.posInit.y,
-      bb.bullet.srcImage
-    );
+  bbCombo.bullet.sprite = game.physics.add.sprite(
+    bbCombo.bullet.posInit.x,
+    bbCombo.bullet.posInit.y,
+    bbCombo.bullet.srcImage
+  );
 
-    bb.bullet.sprite.setScale(bb.bullet.scale);
-    bb.bullet.sprite.body.allowGravity = false;
-    bb.bullet.sprite.setOrigin(0.5, 0.5);
-    bb.bullet.sprite.body.setVelocityX(bb.bullet.velInit.x);
-    bb.bullet.sprite.body.setVelocityY(bb.bullet.velInit.y);
-    bb.bullet.sprite.body.setMass(bb.bullet.mass);
-    bb.bullet.sprite.setImmovable(true);
+  bbCombo.bullet.sprite.setScale(bbCombo.bullet.scale);
+  bbCombo.bullet.sprite.body.allowGravity = false;
+  bbCombo.bullet.sprite.setOrigin(0.5, 0.5);
+  bbCombo.bullet.sprite.body.setMass(bbCombo.bullet.mass);
+  bbCombo.bullet.sprite.setImmovable(true);
 
-    bb.bullet.sprite.setTint(getInactiveBackgroundTintColor());
-  }
+  bbCombo.bullet.sprite.setTint(getInactiveBackgroundTintColor());
 
-  bb.cannon.sprite = game.physics.add.sprite(
-    bb.cannon.posInit.x,
-    bb.cannon.posInit.y,
-    bb.cannon.srcImage
+  bbCombo.cannon.sprite = game.physics.add.sprite(
+    bbCombo.cannon.posInit.x,
+    bbCombo.cannon.posInit.y,
+    bbCombo.cannon.srcImage
   );
 
   // bb.cannon.sprite.setScale(0.01);
-  bb.cannon.sprite.setScale(bb.cannon.scale);
-  bb.cannon.sprite.setImmovable(true);
-  bb.cannon.sprite.body.allowGravity = false;
-  bb.cannon.sprite.setOrigin(0.5, 0.5);
+  bbCombo.cannon.sprite.setScale(bbCombo.cannon.scale);
+  bbCombo.cannon.sprite.setImmovable(true);
+  bbCombo.cannon.sprite.body.allowGravity = false;
+  bbCombo.cannon.sprite.setOrigin(0.5, 0.5);
 
   if (!game.debug.BulletBill_Bullet_Visible) {
-    bb.cannon.sprite.setTint(getInactiveBackgroundTintColor());
+    bbCombo.cannon.sprite.setTint(getInactiveBackgroundTintColor());
   }
 }
 

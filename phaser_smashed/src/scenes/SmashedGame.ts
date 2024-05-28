@@ -831,16 +831,18 @@ export default class SmashedGame extends Phaser.Scene {
   };
 
   updateIndex: number = 0;
-
-  bbXInit: number = -4 * this.ASSET_BRICK_WIDTH;
   bbScale: number = 0.63 * 3;
-  // bbYInitCannon: number = SCREEN_DIMENSIONS.HEIGHT * 0.429;
-  bbYInitCannon: number =
+
+  bbCannonInitX: number = -4 * this.ASSET_BRICK_WIDTH;
+  bbCannonPosInitY: number =
     SCREEN_DIMENSIONS.HEIGHT * 0.367 + 6 * this.ASSET_BRICK_HEIGHT;
 
-  bbYInitBullet: number = this.bbYInitCannon - this.bbScale * 15;
+  bbBulletInitX: number = -10 * this.ASSET_BRICK_WIDTH;
+  bbBulletInitY: number = this.bbCannonPosInitY - 166;
 
   bulletBillCombo: BulletBillCombo = {
+    state: 'button-up',
+    sparkDistance: 0,
     bullet: {
       scale: this.bbScale,
       sprite: null,
@@ -851,8 +853,8 @@ export default class SmashedGame extends Phaser.Scene {
       diesOnHitbox: false,
       srcImage: 'bullet_bill_bullet',
       posInit: {
-        x: this.bbXInit,
-        y: this.bbYInitBullet,
+        x: this.bbBulletInitX,
+        y: this.bbBulletInitY,
       },
       velInit: {
         x: 100,
@@ -865,8 +867,8 @@ export default class SmashedGame extends Phaser.Scene {
       sound: null,
       srcImage: 'bullet_bill_cannon',
       posInit: {
-        x: this.bbXInit,
-        y: this.bbYInitCannon,
+        x: this.bbCannonInitX,
+        y: this.bbCannonPosInitY,
       },
     },
     shootingDistanceThreshold: 500,
