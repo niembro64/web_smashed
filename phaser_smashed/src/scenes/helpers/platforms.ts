@@ -674,6 +674,19 @@ export function createPlatforms10(game: SmashedGame): void {
     );
   }
 
+  const numFromCenter: number = 9.5;
+
+  game.PLATFORMS.create(
+    SCREEN_DIMENSIONS.WIDTH / 2 - numFromCenter * game.ASSET_BRICK_WIDTH,
+    SCREEN_DIMENSIONS.HEIGHT / 2,
+    'brick'
+  );
+  game.PLATFORMS.create(
+    SCREEN_DIMENSIONS.WIDTH / 2 + numFromCenter * game.ASSET_BRICK_WIDTH,
+    SCREEN_DIMENSIONS.HEIGHT / 2,
+    'brick'
+  );
+
   for (let i = 0; i < 12; i++) {
     if (i < 4) {
       game.PLATFORMS.create(

@@ -3,7 +3,7 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   Auto_Start: false,
   NN_Train_P1: false,
-  Dev_Mode: false,
+  Dev_Mode: true,
   Dur_Seconds: false,
   Mode_Infinity: false,
   Minutes: 1, //01234567
