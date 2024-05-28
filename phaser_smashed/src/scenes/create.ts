@@ -83,27 +83,50 @@ export function create(game: SmashedGame) {
     { x: 400, y: 300 },
   ];
 
-  function drawPath(game: SmashedGame): void {
-    const graphics = game.add.graphics();
+  // Draw the path
+  const graphics = game.add.graphics();
 
-    // Set line style: line width (2), color (0xFF0000), alpha (1)
-    graphics.lineStyle(2, 0xff0000, 1);
+  // Set line style: line width (2), color (0xFF0000), alpha (1)
+  graphics.lineStyle(2, 0xff0000, 1);
 
-    // Begin the path
-    graphics.beginPath();
-    graphics.moveTo(pathPoints[0].x, pathPoints[0].y);
+  // Begin the path
+  graphics.beginPath();
+  graphics.moveTo(pathPoints[0].x, pathPoints[0].y);
 
-    // Draw lines to each point in the path
-    for (let i = 1; i < pathPoints.length; i++) {
-      graphics.lineTo(pathPoints[i].x, pathPoints[i].y);
-    }
-
-    // Complete the path
-    graphics.strokePath();
-    graphics.closePath();
+  // Draw lines to each point in the path
+  for (let i = 1; i < pathPoints.length; i++) {
+    graphics.lineTo(pathPoints[i].x, pathPoints[i].y);
   }
 
-  drawPath(game);
+  // Complete the path
+  graphics.strokePath();
+  graphics.closePath();
+
+  // Initialize the dot
+  const dot = game.add.circle(pathPoints[0].x, pathPoints[0].y, 5, 0x0000ff);
+
+  // Create the tween to move the dot along the path
+  game.tweens.add({
+    targets: dot,
+    x: pathPoints.map((point) => point.x),
+    y: pathPoints.map((point) => point.y),
+    ease: 'Linear',
+    duration: 2000 * pathPoints.length, // Adjust duration as needed
+    yoyo: false,
+    repeat: -1, // Repeat indefinitely
+    onStart: () => {
+      console.log('Tween started');
+    },
+    onComplete: () => {
+      console.log('Tween completed');
+    },
+    onYoyo: () => {
+      console.log('Tween yoyo');
+    },
+    onRepeat: () => {
+      console.log('Tween repeat');
+    },
+  });
 
   // INIT UPDATE
   setPreUpdate(game);
