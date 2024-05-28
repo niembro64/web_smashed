@@ -129,17 +129,17 @@ export function getPlayerZoom(game: SmashedGame): number {
   const sparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
   const sparkCircleX = sparkLine.spark.x + 100;
   const sparkCircleY = sparkLine.spark.y - 120;
-  const isSparkActive = sparkLine.emitter.active && sparkLine.emitter.on;
+  // const isSparkActive = sparkLine.emitter.active && sparkLine.emitter.on;
 
   if (
-    isSparkActive &&
+    // isSparkActive &&
     Math.abs(sparkCircleX - game.cameraPlayers.char.sprite.x) > curr_x
   ) {
     curr_x = Math.abs(sparkCircleX - game.cameraPlayers.char.sprite.x);
   }
 
   if (
-    isSparkActive &&
+    // isSparkActive &&
     Math.abs(sparkCircleY - game.cameraPlayers.char.sprite.y) > curr_y
   ) {
     curr_y = Math.abs(sparkCircleY - game.cameraPlayers.char.sprite.y);

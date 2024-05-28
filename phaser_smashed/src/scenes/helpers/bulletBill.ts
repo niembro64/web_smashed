@@ -153,6 +153,8 @@ export const setBulletBillState = (
 
       bbSparkLine.emitter.on = false;
       bbSparkLine.pathPointsIndexCurr = 0;
+      bbSparkLine.spark.x = bbSparkLine.pathPoints[0].x;
+      bbSparkLine.spark.y = bbSparkLine.pathPoints[0].y;
       break;
     case 'cooldown':
       print('setBulletBillState: cooldown');
