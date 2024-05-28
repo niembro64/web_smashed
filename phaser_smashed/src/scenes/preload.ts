@@ -156,6 +156,8 @@ export function preload(game: SmashedGame): void {
   //////////////////////////////
   // Load Images
   //////////////////////////////
+  game.load.image('button_down', 'images/pswitch_down.png');
+  game.load.image('button_up', 'images/pswitch_up.png');
   game.load.image('bullet_bill_tower', 'images/bullet_bill_line_tower.png');
   game.load.image('bullet_bill_cannon', 'images/bullet_bill_cannon.png');
   game.load.image('bullet_bill_bullet', 'images/bullet_bill_bullet.png');
@@ -181,8 +183,14 @@ export function preload(game: SmashedGame): void {
   game.load.image('blank', 'images/blank.png');
   game.load.image('pole', 'images/pole.png');
   game.load.image('background', 'images/darkxp.jpg');
-  game.load.image('background_outline_front', 'images/outline_blocks_11_front.png');
-  game.load.image('background_outline_back', 'images/outline_blocks_11_back.png');
+  game.load.image(
+    'background_outline_front',
+    'images/outline_blocks_11_front.png'
+  );
+  game.load.image(
+    'background_outline_back',
+    'images/outline_blocks_11_back.png'
+  );
   game.load.image('centerWhite', 'images/wx.png');
   game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');

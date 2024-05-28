@@ -124,6 +124,7 @@ export const setBulletBillState = (
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
+  const bbButton: BulletBillButton = bbCombo.button;
 
   bbCombo.statePrev = bbCombo.stateCurr;
   bbCombo.stateCurr = stateNew;
@@ -135,9 +136,15 @@ export const setBulletBillState = (
   switch (bbCombo.stateCurr) {
     case 'button-up':
       print('setBulletBillState: button-up');
+      bbButton.spriteUp.setAlpha(1);
+      bbButton.spriteDown.setAlpha(0);
+
       break;
     case 'button-down':
       print('setBulletBillState: button-down');
+      bbButton.spriteUp.setAlpha(0);
+      bbButton.spriteDown.setAlpha(1);
+      
       bbSparkLine.emitter.on = true;
       break;
     case 'shooting':

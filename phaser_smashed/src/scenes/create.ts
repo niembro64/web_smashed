@@ -23,6 +23,7 @@ import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
 import {
   BulletBillBullet,
+  BulletBillButton,
   BulletBillCombo,
   BulletBillSparkLine,
   FireFlower,
@@ -39,6 +40,7 @@ export function create(game: SmashedGame) {
   createSplashBlack(game);
   createBackgroundOutlineBack(game);
   createExplosionBulletBillCannon(game);
+  createPSwitch(game);
   createBulletBill(game);
   createBackgroundOutlineFront(game);
   createLavas(game);
@@ -136,6 +138,36 @@ function createBulletBillSparkLine(game: SmashedGame) {
 
   // game.bulletBillCombo.sparkLine.emitter.startFollow(bbSparkLine.spark);
 }
+
+function createPSwitch(game: SmashedGame): void {
+  const button: BulletBillButton = game.bulletBillCombo.button;
+
+  button.spriteUp = game.physics.add.sprite(
+    button.posInit.x,
+    button.posInit.y,
+    'button_up'
+  );
+  button.spriteUp.setBounce(0);
+  button.spriteUp.setScale(button.scale);
+  button.spriteUp.setImmovable(true);
+  button.spriteUp.setOrigin(0.5, 1);
+  button.spriteUp.body.allowGravity = false;
+  button.spriteUp.setAlpha(1);
+  
+  button.spriteDown = game.physics.add.sprite(
+    button.posInit.x,
+    button.posInit.y,
+    'button_down'
+  );
+  
+  button.spriteDown.setBounce(0);
+  button.spriteDown.setScale(button.scale);
+  button.spriteDown.setImmovable(true);
+  button.spriteDown.body.allowGravity = false;
+  button.spriteDown.setOrigin(0.5, 1);
+  button.spriteDown.setAlpha(0);
+}
+
 function createBulletBillSparkLineEmitter(game: SmashedGame) {
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
   bbSparkLine.particles = game.add.particles('tail_' + 0);
