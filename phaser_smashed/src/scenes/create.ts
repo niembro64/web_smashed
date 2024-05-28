@@ -85,7 +85,7 @@ export function create(game: SmashedGame) {
   ];
 
   // Draw the path
-  game.graphics.lineStyle(2, 0xff0000, 1);
+  game.graphics.lineStyle(30, 0x666666, 1);
   game.graphics.beginPath();
   game.graphics.moveTo(pathPoints[0].x, pathPoints[0].y);
   pathPoints.slice(1).forEach((point) => {
@@ -97,7 +97,7 @@ export function create(game: SmashedGame) {
   game.graphics.strokePath();
 
   // Create a dot to animate along the path
-  const dot = game.add.circle(pathPoints[0].x, pathPoints[0].y, 5, 0x0000ff);
+  const dot = game.add.circle(pathPoints[0].x, pathPoints[0].y, 30, 0xff5555);
 
   // Create the tween
   game.tweens.timeline({
