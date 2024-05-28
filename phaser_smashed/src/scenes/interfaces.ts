@@ -551,6 +551,7 @@ export type BulletBillBullet = {
   sprite: any;
   sound: any;
   explosionSprite: any;
+  explosionPosInit: Position;
   damage: number;
   hitback: Hitback;
   diesOnHitbox: boolean;

@@ -37,6 +37,7 @@ export function create(game: SmashedGame) {
   createBackground(game);
   createSplashBlack(game);
   createBackgroundOutlineBack(game);
+  createExplosionBulletBillCannon(game);
   createBulletBill(game);
   createBackgroundOutlineFront(game);
   createLavas(game);
@@ -83,7 +84,6 @@ export function create(game: SmashedGame) {
   createShake(game);
   // createBulletBillSparkLine(game);
   createBulletBillSparkLineEmitter(game);
-  createExplosionBulletBillCannon(game);
 
   // INIT UPDATE
   setPreUpdate(game);
@@ -402,19 +402,20 @@ function createExplosionBulletBillCannon(game: SmashedGame): void {
   const bbBullet: BulletBillBullet = bbCombo.bullet;
 
   bbBullet.explosionSprite = game.physics.add.sprite(
-    bbBullet.posInit.x,
-    bbBullet.posInit.y,
+    bbBullet.explosionPosInit.x,
+    bbBullet.explosionPosInit.y,
     'explosion256'
   );
 
-  bbBullet.explosionSprite.setScale(3);
+  bbBullet.explosionSprite.setScale(5);
   bbBullet.explosionSprite.body.allowGravity = false;
   bbBullet.explosionSprite.setBounce(0);
   bbBullet.explosionSprite.setOrigin(0.5, 0.5);
 
   bbBullet.sound = game.sound.add('boom_short_01', {
-    volume: game.debug.Dev_Mode ? 0 : 0.2,
+    volume: game.debug.Dev_Mode ? 0 : 0.3,
   });
+  bbBullet.sound.setRate(0.4);
 }
 
 function createExplosionsFront(game: SmashedGame): void {
