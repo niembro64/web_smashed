@@ -21,60 +21,60 @@ export function updateText(game: SmashedGame): void {
 
   const zoom = game.cameras.main.zoom;
   const redOffsetY =
-    game.cameraMover.char.sprite.y - game.cameraCenter.char.sprite.y;
+    game.cameraActual.char.sprite.y - game.cameraCenter.char.sprite.y;
 
   const newDataTitleY =
     dataTitleY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newDataY =
     dataY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newSplashY =
     splashY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newControllerY =
     controllerY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newTopY =
     glassY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newTopYCups =
     glassYCups * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newTopNumY =
     glassNumY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newReadyY =
     readyY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newGameTimeY =
     gameTimeY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newUpperY =
     damageY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * (-1 / zoom + 1);
+    game.cameraActual.char.sprite.y * (-1 / zoom + 1);
   const newTimeTimeY =
     timeTimeY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
+    game.cameraActual.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
   const newLowerY =
     killsY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
+    game.cameraActual.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
   const newBgY =
     bgY * (1 / zoom) +
     redOffsetY * (1 / zoom) +
-    game.cameraMover.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
+    game.cameraActual.char.sprite.y * ((-1 * 1) / Math.pow(zoom, 1) + 1);
 
   updateClockTextLower(game, zoom, newTimeTimeY);
   updatePlaceCups(game, zoom, newTopYCups);
@@ -99,8 +99,8 @@ export function updateBgLocation(
   game.BACKGROUND.setScale(1.2 / zoom, 1.2 / zoom);
   let x = SCREEN_DIMENSIONS.WIDTH / 2;
   let y = SCREEN_DIMENSIONS.HEIGHT / 2;
-  game.BACKGROUND.x = game.cameraMover.char.sprite.x * 0.7 + x * 0.3;
-  game.BACKGROUND.y = game.cameraMover.char.sprite.y * 0.7 + y * 0.3;
+  game.BACKGROUND.x = game.cameraActual.char.sprite.x * 0.7 + x * 0.3;
+  game.BACKGROUND.y = game.cameraActual.char.sprite.y * 0.7 + y * 0.3;
 }
 
 export function setSplashDataOn(game: SmashedGame): void {
@@ -130,7 +130,7 @@ export function updateSplashRules(
 ): void {
   game.splashRules.forEach((splash, splashIndex) => {
     splash.text.setScale(1 / zoom, 1 / zoom);
-    splash.text.x = game.cameraMover.char.sprite.x;
+    splash.text.x = game.cameraActual.char.sprite.x;
     splash.text.y = newY;
   });
 }
@@ -158,7 +158,7 @@ export function updateClockTextUpper(
   zoom: number,
   newUpperY: number
 ): void {
-  game.scoreBoardTimeGame.x = game.cameraMover.char.sprite.x;
+  game.scoreBoardTimeGame.x = game.cameraActual.char.sprite.x;
   // game.cameraMover.char.sprite.x + game.textLocationLROffset * (1 / zoom);
   game.scoreBoardTimeGame.y = newUpperY;
 
@@ -191,7 +191,7 @@ export function updateClockTextLower(
   newLowerY: number
 ): void {
   game.scoreBoardTimeTime.setScale(1 / zoom, 1 / zoom);
-  game.scoreBoardTimeTime.x = game.cameraMover.char.sprite.x;
+  game.scoreBoardTimeTime.x = game.cameraActual.char.sprite.x;
   game.scoreBoardTimeTime.y = newLowerY;
 
   game.scoreBoardTimeTime.setText(
@@ -267,7 +267,7 @@ export function updatePlaceCups(
     ecs[p].sprite.setScale(0.682 / zoom, 0.682 / zoom);
 
     ecs[p].sprite.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[i]] +
         game.glassLocationLROffset) *
         (1 / zoom);
@@ -305,7 +305,7 @@ export function updateShotGlasses(
 
     player.shotGlassImage.setScale(0.7 / zoom, 0.7 / zoom);
     player.shotGlassImage.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.glassLocationLROffset) *
         (1 / zoom);
@@ -342,7 +342,7 @@ export function updateGlassesNumberShots(
 
     player.shotGlassNumber.setScale(1 / zoom, 1 / zoom);
     player.shotGlassNumber.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.glassLocationLROffset) *
         (1 / zoom);
@@ -374,7 +374,7 @@ export function updateDamageShotsText(
           game.TEXT_GAMEBAR_CHARS.shots
       );
     player.scoreBoardUpper.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.upperTextLocationLROffset) *
         (1 / zoom);
@@ -410,7 +410,7 @@ export function updateReadyText(
     player.scoreBoardReady.setScale(1 / zoom, 1 / zoom);
 
     player.scoreBoardReady.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.readyLocationLROffset) *
         (1 / zoom);
@@ -445,7 +445,7 @@ export function updateControllerText(
     player.scoreBoardController.setScale(1 / zoom, 1 / zoom);
 
     player.scoreBoardController.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.readyLocationLROffset) *
         (1 / zoom);
@@ -471,7 +471,7 @@ export function updateDeathsKillsText(
           game.TEXT_GAMEBAR_CHARS.deaths
       );
     player.scoreBoardLower.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       (game.textLocations[game.playerSpawnOrder[playerIndex]] +
         game.lowerTextLocationLROffset) *
         (1 / zoom);
@@ -557,7 +557,7 @@ export function updateEndDataMatrices(
       }
     }
     splash.textTitle.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       ((game.splashEndDataOffset +
         SCREEN_DIMENSIONS.WIDTH * (Math.floor(numSplashes / 2) - splashIndex)) /
         (numSplashes + 1)) *
@@ -565,7 +565,7 @@ export function updateEndDataMatrices(
 
     splash.textData.setText(splash.words);
     splash.textData.x =
-      game.cameraMover.char.sprite.x +
+      game.cameraActual.char.sprite.x +
       ((game.splashEndDataOffset +
         SCREEN_DIMENSIONS.WIDTH * (Math.floor(numSplashes / 2) - splashIndex)) /
         (numSplashes + 1)) *

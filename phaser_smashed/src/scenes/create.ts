@@ -2107,6 +2107,7 @@ function createCameras(game: SmashedGame): void {
       SCREEN_DIMENSIONS.HEIGHT / 2,
       'centerWhite'
     )
+    .setTintFill(0xff0000)
     .setScale(0.05)
     .setAlpha(debugAlpha);
   game.cameraBox.char.sprite.setImmovable(true);
@@ -2118,6 +2119,7 @@ function createCameras(game: SmashedGame): void {
       SCREEN_DIMENSIONS.HEIGHT / 2,
       'centerWhite'
     )
+    .setTintFill(0x00ff00)
     .setScale(0.05)
     .setRotation(Math.PI / 4)
     .setAlpha(debugAlpha);
@@ -2129,6 +2131,7 @@ function createCameras(game: SmashedGame): void {
       SCREEN_DIMENSIONS.HEIGHT / 2,
       'centerWhite'
     )
+    .setTintFill(0x0000ff)
     .setRotation(Math.PI / 4)
     .setScale(0.05)
     .setAlpha(debugAlpha);
@@ -2141,21 +2144,23 @@ function createCameras(game: SmashedGame): void {
       SCREEN_DIMENSIONS.HEIGHT / 2,
       'centerWhite'
     )
+    .setTintFill(0xff00ff)
     .setScale(0.05)
     .setRotation(Math.PI / 4)
     .setAlpha(debugAlpha);
   game.cameraCenter.char.sprite.setImmovable(true);
   game.cameraCenter.char.sprite.body.allowGravity = false;
 
-  game.cameraMover.char.sprite = game.physics.add
+  game.cameraActual.char.sprite = game.physics.add
     .sprite(
       SCREEN_DIMENSIONS.WIDTH / 2,
       SCREEN_DIMENSIONS.HEIGHT / 2,
       'centerWhite'
     )
+    .setTintFill(0xffff00)
     .setScale(0.08)
     .setAlpha(debugAlpha)
     .setRotation(Math.PI / 4);
-  game.cameraMover.char.sprite.setImmovable(true);
-  game.cameraMover.char.sprite.body.allowGravity = false;
+  game.cameraActual.char.sprite.setImmovable(true);
+  game.cameraActual.char.sprite.body.allowGravity = false;
 }

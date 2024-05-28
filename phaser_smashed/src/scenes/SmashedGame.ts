@@ -518,7 +518,7 @@ export default class SmashedGame extends Phaser.Scene {
       zoom: 0,
     },
   };
-  cameraMover: Camera = {
+  cameraActual: Camera = {
     char: {
       name: 'center_10',
       src: 'images/x.png',

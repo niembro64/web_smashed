@@ -1,5 +1,5 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Loc } from '../interfaces';
+import { BulletBillSparkLine, Loc } from '../interfaces';
 
 export function updateCamera(game: SmashedGame): void {
   if (game.debug.Dev_Mode || !game.debug.Use_Camera) {
@@ -10,33 +10,38 @@ export function updateCamera(game: SmashedGame): void {
   const cMover = getCameraMoverStatus(game);
   const cBorder = getCameraBorderStatus(game);
   const cBox = getCameraBoxStatus(game);
+  const cSpark = {
+    x: game.bulletBillCombo.sparkLine.spark.x,
+    y: game.bulletBillCombo.sparkLine.spark.y,
+  };
 
   game.cameraPlayers.char.sprite.x = cPlayer.x;
   game.cameraPlayers.char.sprite.y = cPlayer.y;
-  game.cameraPlayers.char.zoom = game.cameraPlayers.char.zoom = cPlayer.zoom;
+  game.cameraPlayers.char.zoom = cPlayer.zoom;
 
-  game.cameraMover.char.sprite.x =
-    game.cameraMover.char.sprite.x * game.ZOOM_RATIO_FAST +
+  game.cameraActual.char.sprite.x =
+    game.cameraActual.char.sprite.x * game.ZOOM_RATIO_FAST +
     cMover.x * (1 - game.ZOOM_RATIO_FAST);
-  game.cameraMover.char.sprite.y =
-    game.cameraMover.char.sprite.y * game.ZOOM_RATIO_FAST +
+
+  game.cameraActual.char.sprite.y =
+    game.cameraActual.char.sprite.y * game.ZOOM_RATIO_FAST +
     (cMover.y + game.CAMERA_OFFSET_Y) * (1 - game.ZOOM_RATIO_FAST);
-  game.cameraMover.char.zoom = game.cameraMover.char.zoom = cMover.zoom;
+
+  game.cameraActual.char.zoom = cMover.zoom;
 
   game.cameraPlayersHalfway.char.sprite.x = cBorder.x;
   game.cameraPlayersHalfway.char.sprite.y = cBorder.y;
-  game.cameraPlayersHalfway.char.zoom = game.cameraPlayersHalfway.char.zoom =
-    cBorder.zoom;
+  game.cameraPlayersHalfway.char.zoom = cBorder.zoom;
 
   game.cameraBox.char.sprite.x = cBox.x;
   game.cameraBox.char.sprite.y = cBox.y;
-  game.cameraBox.char.zoom = game.cameraBox.char.zoom = cBox.zoom;
+  game.cameraBox.char.zoom = cBox.zoom;
 
   const newZoom = game.cameraPlayers.char.zoom;
   // const newZoom = game.cameraPlayers.char.zoom * game.ZOOM_MULTIPLIER_X;
   // const newZoom = Math.max(game.cameraPlayers.char.zoom, 1);
 
-  game.cameras.main.startFollow(game.cameraMover.char.sprite);
+  game.cameras.main.startFollow(game.cameraActual.char.sprite);
 
   if (game.cameras.main.zoom < newZoom) {
     game.cameras.main.zoom =
@@ -120,6 +125,25 @@ export function getPlayerZoom(game: SmashedGame): number {
       );
     }
   });
+
+  const sparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
+  const sparkCircleX = sparkLine.spark.x + 100;
+  const sparkCircleY = sparkLine.spark.y - 120;
+  const isSparkActive = sparkLine.emitter.active && sparkLine.emitter.on;
+
+  if (
+    isSparkActive &&
+    Math.abs(sparkCircleX - game.cameraPlayers.char.sprite.x) > curr_x
+  ) {
+    curr_x = Math.abs(sparkCircleX - game.cameraPlayers.char.sprite.x);
+  }
+
+  if (
+    isSparkActive &&
+    Math.abs(sparkCircleY - game.cameraPlayers.char.sprite.y) > curr_y
+  ) {
+    curr_y = Math.abs(sparkCircleY - game.cameraPlayers.char.sprite.y);
+  }
 
   let return_x = 1 / ((curr_x * 2) / SCREEN_DIMENSIONS.WIDTH);
   let return_y = 1 / ((curr_y * 2) / SCREEN_DIMENSIONS.HEIGHT);

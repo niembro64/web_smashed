@@ -13,7 +13,7 @@ export const debugInit: Debug = {
   Music_Active: true,
   Ready_Sound_Active: false,
   Use_Camera: true,
-  Cameras_Visible: false,
+  Cameras_Visible: true,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
   Colliders_P_v_AE: false,
@@ -78,7 +78,7 @@ export const debugMax: Debug = {
   Music_Track: 4, // 012
   Ready_Sound_Active: true,
   Use_Camera: true,
-  Cameras_Visible: false,
+  Cameras_Visible: true,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
   Colliders_P_v_AE: false,
