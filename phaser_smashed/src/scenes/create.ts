@@ -41,6 +41,7 @@ export function create(game: SmashedGame) {
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createFireFlower(game);
+  createBulletBillSparkLine(game);
   createExplosionsBack(game);
   createFirework(game);
   createPole(game);
@@ -78,7 +79,6 @@ export function create(game: SmashedGame) {
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
-  createBulletBillSparkLine(game);
 
   // INIT UPDATE
   setPreUpdate(game);
