@@ -23,6 +23,8 @@ import { createPlatforms } from './helpers/platforms';
 import { BulletBillCombo, FireFlower, Player } from './interfaces';
 
 export function create(game: SmashedGame) {
+  game.graphics = game.add.graphics();
+
   createPreCreate(game);
   createDataMatrices(game);
   createSoundsGame(game);
@@ -72,9 +74,119 @@ export function create(game: SmashedGame) {
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
+  drawFuse(game);
+  drawFuse2(game);
+  drawFusePath(game);
 
   // INIT UPDATE
   setPreUpdate(game);
+}
+
+function drawFusePath(game: SmashedGame): void {
+  if (game.graphics === null) {
+    throw new Error('Graphics object not found on game object');
+  }
+
+  const points = [
+    { x: 100, y: 100 },
+    { x: 200, y: 100 },
+    { x: 200, y: 200 },
+    { x: 300, y: 200 },
+  ];
+
+  // Draw the path
+  game.graphics.lineStyle(5, 0xffffff, 1);
+  game.graphics.beginPath();
+  game.graphics.moveTo(points[0].x, points[0].y);
+  points.slice(1).forEach((point) => {
+    if (game.graphics !== null) {
+      game.graphics.lineTo(point.x, point.y);
+    }
+  });
+  game.graphics.strokePath();
+
+  // Create a spark to animate along the path
+  const spark = game.add.circle(points[0].x, points[0].y, 5, 0xff0000);
+
+  // Create the tween
+  const tweenConfig = {
+    targets: spark,
+    x: points.map((point) => point.x),
+    y: points.map((point) => point.y),
+    ease: 'Linear',
+    duration: 1000,
+    repeat: -1,
+    yoyo: true,
+  };
+
+  console.log('Tween config:', tweenConfig);
+
+  game.tweens.timeline({
+    tweens: [
+      {
+        targets: spark,
+        x: { from: points[0].x, to: points[1].x },
+        y: { from: points[0].y, to: points[1].y },
+        ease: 'Linear',
+        duration: 1000,
+      },
+      {
+        targets: spark,
+        x: { from: points[1].x, to: points[2].x },
+        y: { from: points[1].y, to: points[2].y },
+        ease: 'Linear',
+        duration: 1000,
+      },
+      {
+        targets: spark,
+        x: { from: points[2].x, to: points[3].x },
+        y: { from: points[2].y, to: points[3].y },
+        ease: 'Linear',
+        duration: 1000,
+      },
+    ],
+    repeat: -1,
+    yoyo: true,
+  });
+}
+
+
+function drawFuse(game: SmashedGame): void {
+  if (!game.graphics) {
+    throw new Error('Graphics object not found on game object');
+  }
+  // Set line style: 5px wide, white color, fully opaque
+  game.graphics.lineStyle(5, 0xffffff, 1);
+
+  // Begin path
+  game.graphics.beginPath();
+
+  // Move to start point
+  game.graphics.moveTo(100, 100);
+
+  // Draw line to end point
+  game.graphics.lineTo(300, 300);
+
+  // Stroke the path
+  game.graphics.strokePath();
+
+  // Close the path
+  game.graphics.closePath();
+}
+
+function drawFuse2(game: SmashedGame): void {
+  if (!game.graphics) {
+    throw new Error('Graphics object not found on game object');
+  }
+  game.path = new Phaser.Curves.Path(400, 300);
+  game.path.lineTo(500, 300);
+  game.path.lineTo(550, 350);
+  game.path.lineTo(600, 300);
+  game.path.lineTo(700, 300);
+
+  // Draw the path
+  game.graphics.lineStyle(2, 0xffffff, 1);
+  game.path.draw(game.graphics);
 }
 
 export function createFlag(game: SmashedGame): void {

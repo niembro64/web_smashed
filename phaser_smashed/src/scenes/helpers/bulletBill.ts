@@ -20,7 +20,7 @@ export const updateBulletBill = (game: SmashedGame): void => {
       break;
     case 'button-down':
       bbCombo.sparkDistance += 0.01;
-      print('sparkDistance:', bbCombo.sparkDistance);
+      // print('sparkDistance:', bbCombo.sparkDistance);
 
       if (bbCombo.sparkDistance >= 1) {
         setBulletBillState(game, 'shooting');
@@ -31,13 +31,6 @@ export const updateBulletBill = (game: SmashedGame): void => {
       }
       break;
     case 'shooting':
-      // if (bbCombo.bullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
-      //   bbCombo.bullet.sprite.body.x = 0 - SCREEN_DIMENSIONS.WIDTH * 0.2;
-      // }
-
-      // bbBullet.sprite.body.setVelocityX(bbBullet.velInit.x);
-      // bbBullet.sprite.body.setVelocityY(bbBullet.velInit.y);
-
       if (bbBullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
         setBulletBillState(game, 'button-up');
       }
@@ -67,8 +60,8 @@ export const setBulletBillState = (
       print('setBulletBillState: shooting');
 
       bbCombo.sparkDistance = 0;
-      bbBullet.sprite.body.x = bbBullet.posInit.x
-      bbBullet.sprite.body.y = bbBullet.posInit.y
+      bbBullet.sprite.body.x = bbBullet.posInit.x;
+      bbBullet.sprite.body.y = bbBullet.posInit.y;
 
       bbBullet.sprite.body.setVelocityX(bbBullet.velInit.x);
       bbBullet.sprite.body.setVelocityY(bbBullet.velInit.y);
