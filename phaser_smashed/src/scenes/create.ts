@@ -40,12 +40,12 @@ export function create(game: SmashedGame) {
   createSplashBlack(game);
   createBackgroundOutlineBack(game);
   createExplosionBulletBillCannon(game);
-  createPSwitch(game);
   createBulletBill(game);
   createBackgroundOutlineFront(game);
   createLavas(game);
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
+  createPSwitch(game);
   createFireFlower(game);
   createBulletBillSparkLine(game);
   createExplosionsBack(game);
@@ -153,13 +153,13 @@ function createPSwitch(game: SmashedGame): void {
   button.spriteUp.setOrigin(0.5, 1);
   button.spriteUp.body.allowGravity = false;
   button.spriteUp.setAlpha(1);
-  
+
   button.spriteDown = game.physics.add.sprite(
     button.posInit.x,
     button.posInit.y,
     'button_down'
   );
-  
+
   button.spriteDown.setBounce(0);
   button.spriteDown.setScale(button.scale);
   button.spriteDown.setImmovable(true);

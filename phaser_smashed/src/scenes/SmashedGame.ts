@@ -873,8 +873,8 @@ export default class SmashedGame extends Phaser.Scene {
       spriteUp: null,
       scale: 0.11,
       posInit: {
-        x: 1402,
-        y: 440,
+        x: 1400.5,
+        y: 429,
       },
     },
     sparkLine: {
