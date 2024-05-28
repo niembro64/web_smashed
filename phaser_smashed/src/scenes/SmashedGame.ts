@@ -871,6 +871,8 @@ export default class SmashedGame extends Phaser.Scene {
       distanceTrigger: 70,
       spriteDown: null,
       spriteUp: null,
+      afterPauseResumeButtonSound: false,
+      sound: null,
       scale: 0.11,
       posInit: {
         x: 1400.5,

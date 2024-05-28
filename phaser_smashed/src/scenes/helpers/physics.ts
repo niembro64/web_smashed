@@ -4,6 +4,8 @@ import {
   setBGMusicResume,
   setMusicBoxPause,
   setMusicBoxResume,
+  setMusicBulletBillButtonPause,
+  setMusicBulletBillButtonPlay,
   setMusicChompSheepPause,
   setMusicChompSheepResume,
   setPauseSoundPowerup,
@@ -49,6 +51,14 @@ export function setPhysicsAndMusicPause(game: SmashedGame): void {
   } else {
     game.afterPauseResumePowerup = false;
   }
+
+  // BULLET BILL BUTTON MUSIC
+  if (game.bulletBillCombo.button.sound.isPlaying) {
+    game.bulletBillCombo.button.afterPauseResumeButtonSound = true;
+    setMusicBulletBillButtonPause(game);
+  } else {
+    game.bulletBillCombo.button.afterPauseResumeButtonSound = false;
+  }
 }
 
 export function setPhysicsAndMusicResume(game: SmashedGame): void {
@@ -71,5 +81,10 @@ export function setPhysicsAndMusicResume(game: SmashedGame): void {
   }
   if (game.afterPauseResumePowerup) {
     setResumeSoundPowerup(game);
+  }
+
+  // BULLET BILL BUTTON MUSIC
+  if (game.bulletBillCombo.button.afterPauseResumeButtonSound) {
+    setMusicBulletBillButtonPlay(game);
   }
 }

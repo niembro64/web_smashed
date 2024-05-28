@@ -578,9 +578,11 @@ export type BulletBillComboState =
 export type BulletBillButton = {
   scale: number;
   distanceTrigger: number;
+  sound: any;
   spriteDown: any;
   spriteUp: any;
   posInit: Position;
+  afterPauseResumeButtonSound: boolean;
 };
 
 export type BulletBillSparkLine = {

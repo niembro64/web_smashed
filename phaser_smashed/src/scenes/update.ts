@@ -40,6 +40,8 @@ import {
   setBGMusicSpeedNormal,
   setMusicBoxPause,
   setMusicBoxPlay,
+  setMusicBulletBillButtonPause,
+  setMusicBulletBillButtonPlay,
   setMusicChompSheepPause,
   setMusicChompSheepPlay,
   setPauseSoundPowerup,
@@ -74,6 +76,8 @@ export function setPreUpdate(game: SmashedGame): void {
   setMusicChompSheepPause(game);
   setPlaySoundPowerup(game);
   setPauseSoundPowerup(game);
+  setMusicBulletBillButtonPlay(game);
+  setMusicBulletBillButtonPause(game);
 }
 
 export function update(game: SmashedGame, time: number, delta: number): void {

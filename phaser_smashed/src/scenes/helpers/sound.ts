@@ -129,6 +129,9 @@ export function setMusicBoxStop(game: SmashedGame): void {
   game.flag.soundFlagMusicBox.stop();
 }
 
+////////////////////////////////////////
+// CHOMP SHEEP MUSIC
+////////////////////////////////////////
 export function setMusicChompSheepPlay(game: SmashedGame): void {
   if (game.debug.NN_Train_P1 || game.chomp.soundSheep.isPlaying) {
     return;
@@ -163,6 +166,48 @@ export function setMusicChompSheepStop(game: SmashedGame): void {
   }
 
   game.chomp.soundSheep.stop();
+}
+
+////////////////////////////////////////
+// BULLET BILL BUTTON MUSIC
+////////////////////////////////////////
+export function setMusicBulletBillButtonPlay(game: SmashedGame): void {
+  if (game.bulletBillCombo.button.sound.isPlaying) {
+    return;
+  }
+
+  game.bulletBillCombo.button.sound.play();
+}
+
+export function setMusicBulletBillButtonRate(
+  game: SmashedGame,
+  semitones: number
+): void {
+  game.bulletBillCombo.button.sound.setRate(increaseSemitones(1, semitones));
+}
+
+export function setMusicBulletBillButtonPause(game: SmashedGame): void {
+  if (!game.bulletBillCombo.button.sound.isPlaying) {
+    return;
+  }
+
+  game.bulletBillCombo.button.sound.pause();
+}
+
+export function setMusicBulletBillButtonResume(game: SmashedGame): void {
+  if (game.bulletBillCombo.button.sound.isPlaying) {
+    return;
+  }
+
+  game.bulletBillCombo.button.sound.resume();
+}
+
+export function setMusicBulletBillButtonStop(game: SmashedGame): void {
+  if (!game.bulletBillCombo.button.sound.isPlaying) {
+    return;
+  }
+
+  game.bulletBillCombo.button.sound.stop();
 }
 
 export function playReadySound(game: SmashedGame): void {

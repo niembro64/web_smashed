@@ -9,6 +9,10 @@ import {
   Player,
   Position,
 } from '../interfaces';
+import {
+  setMusicBulletBillButtonPause,
+  setMusicBulletBillButtonResume,
+} from './sound';
 
 const updateSparkOnSparkLine = (game: SmashedGame): void => {
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
@@ -139,6 +143,7 @@ export const setBulletBillState = (
       bbButton.spriteUp.setAlpha(1);
       bbButton.spriteDown.setAlpha(0);
 
+      setMusicBulletBillButtonPause(game);
       break;
     case 'button-down':
       print('setBulletBillState: button-down');
@@ -146,8 +151,11 @@ export const setBulletBillState = (
       bbButton.spriteDown.setAlpha(1);
 
       bbSparkLine.emitter.on = true;
+
+      setMusicBulletBillButtonResume(game);
       break;
     case 'shooting':
+      setMusicBulletBillButtonPause(game);
       print('setBulletBillState: shooting');
       bulletBillPlayExplosion(game);
 

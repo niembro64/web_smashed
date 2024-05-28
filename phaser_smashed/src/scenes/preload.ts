@@ -63,6 +63,7 @@ export function preload(game: SmashedGame): void {
   // Load Audio
   //////////////////////////////
   let pathSounds = 'sounds/';
+  game.load.audio('pmusic', pathSounds + 'pmusic.wav');
   game.load.audio('powerup', pathSounds + game.FILE_SOUNDS.POWERUP);
   game.load.audio('intro', pathSounds + game.FILE_SOUNDS.INTRO);
   game.load.audio('gun', pathSounds + game.FILE_SOUNDS.GUN);

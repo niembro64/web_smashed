@@ -166,6 +166,11 @@ function createPSwitch(game: SmashedGame): void {
   button.spriteDown.body.allowGravity = false;
   button.spriteDown.setOrigin(0.5, 1);
   button.spriteDown.setAlpha(0);
+
+  button.sound = game.sound.add('pmusic', {
+    volume: 1,
+    loop: true,
+  });
 }
 
 function createBulletBillSparkLineEmitter(game: SmashedGame) {
