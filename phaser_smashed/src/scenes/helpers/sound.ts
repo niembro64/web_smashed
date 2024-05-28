@@ -45,6 +45,12 @@ export function playGarageRepeat(game: SmashedGame): void {
   if (game.SOUND_GARAGE_REPEAT.isPlaying) {
     return;
   }
+
+  setBGMusicStop(game);
+  setMusicBoxStop(game);
+  setMusicChompSheepStop(game);
+  setMusicBulletBillButtonStop(game);
+
   game.SOUND_GARAGE_REPEAT.play();
 }
 export function playWiiMusic(game: SmashedGame): void {
@@ -74,6 +80,10 @@ export function setPlayWiiMusicWaitLong(game: SmashedGame): void {
     game.SOUND_PAUSED.play();
   }
 }
+
+////////////////////////////////////////
+// BACKGROUND MUSIC
+////////////////////////////////////////
 export function setBGMusicPause(game: SmashedGame): void {
   if (!game.soundBGM.isPlaying) {
     return;
@@ -81,10 +91,6 @@ export function setBGMusicPause(game: SmashedGame): void {
 
   game.soundBGM.pause();
 }
-
-////////////////////////////////////////
-// BACKGROUND MUSIC
-////////////////////////////////////////
 export function setBGMusicPlay(game: SmashedGame): void {
   if (game.soundBGM.isPlaying) {
     return;
@@ -103,6 +109,13 @@ export function setBGMusicSpeedSlower(game: SmashedGame): void {
 }
 export function setBGMusicSpeedNormal(game: SmashedGame): void {
   game.soundBGM.setRate(1);
+}
+export function setBGMusicStop(game: SmashedGame): void {
+  if (!game.soundBGM.isPlaying) {
+    return;
+  }
+
+  game.soundBGM.stop();
 }
 
 ////////////////////////////////////////
