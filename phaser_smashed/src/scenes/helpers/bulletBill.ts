@@ -100,15 +100,15 @@ const isAnyPlayerNearAndTouchingDown = (game: SmashedGame): boolean => {
     const playerBody = player.char.sprite.body;
 
     if (playerBody.touching.down) {
-      const playerX = playerBody.x;
-      const playerY = playerBody.y;
+      const playerX = playerBody.x + playerBody.width / 2;
+      const playerY = playerBody.y + playerBody.height;
 
       const dx = playerX - bbButton.posInit.x;
       const dy = playerY - bbButton.posInit.y;
 
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < 100) {
+      if (distance < bbButton.distanceTrigger) {
         return true;
       }
     }
@@ -144,7 +144,7 @@ export const setBulletBillState = (
       print('setBulletBillState: button-down');
       bbButton.spriteUp.setAlpha(0);
       bbButton.spriteDown.setAlpha(1);
-      
+
       bbSparkLine.emitter.on = true;
       break;
     case 'shooting':

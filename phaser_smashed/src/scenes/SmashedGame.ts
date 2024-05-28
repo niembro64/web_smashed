@@ -868,13 +868,13 @@ export default class SmashedGame extends Phaser.Scene {
       },
     },
     button: {
-      distanceTrigger: 100,
+      distanceTrigger: 70,
       spriteDown: null,
       spriteUp: null,
-      scale: 0.08,
+      scale: 0.11,
       posInit: {
-        x: 1366.03449,
-        y: 363.2,
+        x: 1402,
+        y: 440,
       },
     },
     sparkLine: {
