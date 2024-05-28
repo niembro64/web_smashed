@@ -560,15 +560,24 @@ export type BulletBillCannon = {
   posInit: Position;
 };
 
-export type BulletBillCombioState =
+export type BulletBillComboState =
   | 'button-up'
   | 'button-down'
   | 'shooting'
   | 'cooldown';
 
+export type BulletBillSparkLine = {
+  percentCompleted: number;
+  pathPoints: Position[];
+  path: Phaser.Curves.Path | null;
+  pathPointsIndexCurr: number;
+  spark: any;
+  graphics: Phaser.GameObjects.Graphics | null;
+};
+
 export type BulletBillCombo = {
-  state: BulletBillCombioState;
-  sparkDistance: number;
+  state: BulletBillComboState;
+  sparkLine: BulletBillSparkLine;
   bullet: BulletBillBullet;
   cannon: BulletBillCannon;
   shootingDistanceThreshold: number;

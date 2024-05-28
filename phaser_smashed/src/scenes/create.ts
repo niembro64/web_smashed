@@ -16,15 +16,19 @@ import {
 } from './helpers/powers';
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
 import { setPreUpdate } from './update';
-import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
+import { Bullet, BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import { print } from '../views/client';
 import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
-import { BulletBillCombo, FireFlower, Player } from './interfaces';
+import {
+  BulletBillCombo,
+  BulletBillSparkLine,
+  FireFlower,
+  Player,
+  Position,
+} from './interfaces';
 
 export function create(game: SmashedGame) {
-  game.graphics = game.add.graphics();
-
   createPreCreate(game);
   createDataMatrices(game);
   createSoundsGame(game);
@@ -74,49 +78,43 @@ export function create(game: SmashedGame) {
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
-  game.graphics = game.add.graphics();
-
-  // Example path points (you can customize these points as needed)
-  const pathPoints = [
-    { x: 100, y: 100 },
-    { x: 200, y: 200 },
-    { x: 300, y: 150 },
-    { x: 400, y: 300 },
-  ];
-
-  // Draw the path
-  game.graphics.lineStyle(30, 0x666666, 1);
-  game.graphics.beginPath();
-  game.graphics.moveTo(pathPoints[0].x, pathPoints[0].y);
-  pathPoints.slice(1).forEach((point) => {
-    if (!game.graphics) {
-      return;
-    }
-    game.graphics.lineTo(point.x, point.y);
-  });
-  game.graphics.strokePath();
-
-  // Create a dot to animate along the path
-  const dot = game.add.circle(pathPoints[0].x, pathPoints[0].y, 30, 0xff5555);
-
-  // Create the tween
-  game.tweens.timeline({
-    tweens: pathPoints.slice(1).map((point, index) => ({
-      targets: dot,
-      x: { from: pathPoints[index].x, to: point.x },
-      y: { from: pathPoints[index].y, to: point.y },
-      ease: 'Linear',
-      duration: 1000,
-    })),
-    repeat: -1,
-    yoyo: true,
-  });
+  createBulletBillSparkLine(game);
 
   // INIT UPDATE
   setPreUpdate(game);
 }
 
-export function createFlag(game: SmashedGame): void {
+function createBulletBillSparkLine(game: SmashedGame) {
+  const bbCombo: BulletBillCombo = game.bulletBillCombo;
+  const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
+
+  bbSparkLine.graphics = game.add.graphics();
+
+  // Draw the path
+  bbSparkLine.graphics.lineStyle(30, 0x666666, 1);
+  bbSparkLine.graphics.beginPath();
+  bbSparkLine.graphics.moveTo(
+    bbSparkLine.pathPoints[0].x,
+    bbSparkLine.pathPoints[0].y
+  );
+  bbSparkLine.pathPoints.slice(1).forEach((point: Position) => {
+    if (!bbSparkLine.graphics) {
+      return;
+    }
+    bbSparkLine.graphics.lineTo(point.x, point.y);
+  });
+  bbSparkLine.graphics.strokePath();
+
+  // Create a dot to animate along the path
+  bbSparkLine.spark = game.add.circle(
+    bbSparkLine.pathPoints[0].x,
+    bbSparkLine.pathPoints[0].y,
+    30,
+    0xff5555
+  );
+}
+
+function createFlag(game: SmashedGame): void {
   const f = game.flag;
 
   const flagAtTopOfPole = 0.382;
@@ -192,7 +190,7 @@ export function createFlag(game: SmashedGame): void {
   });
 }
 
-export function createPole(game: SmashedGame): void {
+function createPole(game: SmashedGame): void {
   game.flag.spriteFlagPole = game.physics.add.sprite(
     (1920 - 105 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
     (1080 - 557) * game.SCREEN_SCALE.HEIGHT,
@@ -205,7 +203,7 @@ export function createPole(game: SmashedGame): void {
   game.flag.spriteFlagPole.setOrigin(0.5, 0.5);
 }
 
-export function createFireFlower(game: SmashedGame): void {
+function createFireFlower(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -240,7 +238,7 @@ export function createFireFlower(game: SmashedGame): void {
   }
 }
 
-export function createCollidersFireFlower(game: SmashedGame): void {
+function createCollidersFireFlower(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -288,7 +286,7 @@ export function createCollidersFireFlower(game: SmashedGame): void {
   // );
 }
 
-export function createShake(game: SmashedGame): void {
+function createShake(game: SmashedGame): void {
   const shakeConfig: ShakePosition.IConfig = {
     duration: 400,
     magnitude: 100,
@@ -299,7 +297,7 @@ export function createShake(game: SmashedGame): void {
   game.shake.setEnable(true);
 }
 
-export function createExplosionsBack(game: SmashedGame): void {
+function createExplosionsBack(game: SmashedGame): void {
   const config = {
     key: 'explsionanimation',
     frames: game.anims.generateFrameNumbers('explosion256', {
@@ -340,7 +338,7 @@ export function createExplosionsBack(game: SmashedGame): void {
   });
 }
 
-export function createExplosionsFront(game: SmashedGame): void {
+function createExplosionsFront(game: SmashedGame): void {
   const config = {
     key: 'explsionanimationFront',
     frames: game.anims.generateFrameNumbers('explosion256', {
@@ -375,7 +373,7 @@ export function createExplosionsFront(game: SmashedGame): void {
   });
 }
 
-export function createChomp(game: SmashedGame): void {
+function createChomp(game: SmashedGame): void {
   if (game.debug.NN_Train_P1) {
     return;
   }
@@ -456,7 +454,7 @@ export function createChomp(game: SmashedGame): void {
   game.physics.add.collider(c.sprite, game.PLATFORMS);
 }
 
-export function createPreCreate(game: SmashedGame): void {
+function createPreCreate(game: SmashedGame): void {
   for (let i = 0; i < game.playerChoicesCharacterType.length; i++) {
     game.players.push(
       JSON.parse(
@@ -470,7 +468,7 @@ export function createPreCreate(game: SmashedGame): void {
   });
 }
 
-export function createEndDataMatrices(game: SmashedGame): void {
+function createEndDataMatrices(game: SmashedGame): void {
   const numSplashes: number = game.splashesEndData.length;
   // const splashSizeTitleDefault = "40px";
   let splashSize = '';
@@ -536,7 +534,7 @@ export function createEndDataMatrices(game: SmashedGame): void {
   });
 }
 
-export function createDataMatrices(game: SmashedGame): void {
+function createDataMatrices(game: SmashedGame): void {
   game.overlappingPlayerIAttackPhysicalJ = [];
   game.overlappingPlayerIAttackEnergyJ = [];
   game.wasLastHitByMatrix = [];
@@ -561,7 +559,7 @@ export function createDataMatrices(game: SmashedGame): void {
   }
 }
 
-export function createSoundsGame(game: SmashedGame): void {
+function createSoundsGame(game: SmashedGame): void {
   game.SOUND_INTRO = game.sound.add('intro', { volume: 0.1 });
   game.SOUND_GUN = game.sound.add('gun', { volume: 0.6 });
   game.SOUND_HIT = game.sound.add('hit', { volume: 0.25 });
@@ -617,12 +615,12 @@ export function createSoundsGame(game: SmashedGame): void {
   }
 }
 
-export function createShields(game: SmashedGame): void {
+function createShields(game: SmashedGame): void {
   game.colorCircles.forEach((circle, circleIndex) => {
     circle.graphic = game.add.circle(0, 0, 50, circle.colorNumber);
   });
 }
-export function createPlayerIdCircles(game: SmashedGame): void {
+function createPlayerIdCircles(game: SmashedGame): void {
   if (!game.debug.Player_ID_Visible || game.debug.Chars_Colored) {
     return;
   }
@@ -639,7 +637,7 @@ export function createPlayerIdCircles(game: SmashedGame): void {
   // });
 }
 
-export function createHitboxOverlap(game: SmashedGame): void {
+function createHitboxOverlap(game: SmashedGame): void {
   // ATTACK PHYSICAL CHOMP OVERLAP
   game.players.forEach((player, playerIndex) => {
     game.physics.add.overlap(
@@ -842,7 +840,7 @@ export function createHitboxOverlap(game: SmashedGame): void {
   });
 }
 
-export function createKeyboards(game: SmashedGame): void {
+function createKeyboards(game: SmashedGame): void {
   let kIndex = 0;
 
   for (let i = 0; i < game.players.length; i++) {
@@ -857,7 +855,7 @@ export function createKeyboards(game: SmashedGame): void {
     }
   }
 }
-export function createKeyboardsOld(game: SmashedGame): void {
+function createKeyboardsOld(game: SmashedGame): void {
   const k = game.keyboardHandPositions.length;
   const p = game.players.length;
   const d = p - k > 0 ? p - k : 0;
@@ -870,7 +868,7 @@ export function createKeyboardsOld(game: SmashedGame): void {
     }
   }
 }
-export function setPlayersInitialPositions(game: SmashedGame): void {
+function setPlayersInitialPositions(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.char.initializeCharPosition.x =
       game.playerSpawnLocationsX[game.playerSpawnOrder[playerIndex]];
@@ -880,7 +878,7 @@ export function setPlayersInitialPositions(game: SmashedGame): void {
   });
 }
 
-export function createEmitterChomp(game: SmashedGame): void {
+function createEmitterChomp(game: SmashedGame): void {
   const c = game.chomp;
   c.particles = game.add.particles('tail_0');
   c.emitterDark = c.particles.createEmitter({
@@ -895,7 +893,7 @@ export function createEmitterChomp(game: SmashedGame): void {
   });
 }
 
-export function createEmittersPlayers(game: SmashedGame): void {
+function createEmittersPlayers(game: SmashedGame): void {
   const m = 1;
   const n = 4;
 
@@ -954,18 +952,18 @@ export function createEmittersPlayers(game: SmashedGame): void {
   });
 }
 
-export function createColliderTablePlayers(game: SmashedGame): void {
+function createColliderTablePlayers(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.physics.add.collider(player.char.sprite, game.TABLE);
   });
 }
 
-export function createColliderTableAttackPhysicals(game: SmashedGame): void {
+function createColliderTableAttackPhysicals(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.physics.add.collider(player.char.attackPhysical.sprite, game.TABLE);
   });
 }
-export function createColliderTableAttackEnergies(game: SmashedGame): void {
+function createColliderTableAttackEnergies(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     if (player.char.attackEnergy.bouncePlatforms) {
       game.physics.add.collider(player.char.attackEnergy.sprite, game.TABLE);
@@ -973,7 +971,7 @@ export function createColliderTableAttackEnergies(game: SmashedGame): void {
   });
 }
 
-export function createEmitterChompFollowChomp(game: SmashedGame): void {
+function createEmitterChompFollowChomp(game: SmashedGame): void {
   game.chomp.emitterDark
     .startFollow(game.chomp.block)
     .setAlpha(1)
@@ -984,7 +982,7 @@ export function createEmitterChompFollowChomp(game: SmashedGame): void {
   game.chomp.emitterDark.visible = false;
 }
 
-export function createEmittersFollowPlayers(game: SmashedGame): void {
+function createEmittersFollowPlayers(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     // player.emitterLight.setScale(player.char.scaleCharSpriteReality);
     // player.emitterDark.setScale(player.char.scaleCharSpriteReality);
@@ -1025,7 +1023,7 @@ export function createEmittersFollowPlayers(game: SmashedGame): void {
   });
 }
 
-export function createLavas(game: SmashedGame): void {
+function createLavas(game: SmashedGame): void {
   const initialLeftMostLava = (-1 * SCREEN_DIMENSIONS.WIDTH) / 2;
 
   for (let i = 0; i < game.lavas.length; i++) {
@@ -1033,7 +1031,7 @@ export function createLavas(game: SmashedGame): void {
   }
 }
 
-export function createFirework(game: SmashedGame): void {
+function createFirework(game: SmashedGame): void {
   // const f = game.flag;
   // const fire = f.firework;
   game.flag.firework = game.physics.add.sprite(
@@ -1082,7 +1080,7 @@ export function createFirework(game: SmashedGame): void {
   });
 }
 
-export function createLava(i: number, game: SmashedGame, posX: number): void {
+function createLava(i: number, game: SmashedGame, posX: number): void {
   const bottomOfMap = SCREEN_DIMENSIONS.HEIGHT + 10;
   // const bottomOfMap = SCREEN_DIMENSIONS.HEIGHT + 28;
 
@@ -1108,7 +1106,7 @@ export function createLava(i: number, game: SmashedGame, posX: number): void {
   game.lavas[i].sprite.setOrigin(0, 0);
 }
 
-export function createPlayers(game: SmashedGame): void {
+function createPlayers(game: SmashedGame): void {
   setPlayersInitialPositions(game);
 
   game.players.forEach((player, playerIndex) => {
@@ -1249,7 +1247,7 @@ export function createPlayers(game: SmashedGame): void {
   });
 }
 
-export function createAttackPhysicals(game: SmashedGame): void {
+function createAttackPhysicals(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.char.attackPhysical.sprite = game.physics.add
       .sprite(-500, -500, player.char.attackPhysical.srcImage)
@@ -1266,7 +1264,7 @@ export function createAttackPhysicals(game: SmashedGame): void {
     setAttackPhysicalOffscreen(player, game);
   });
 }
-export function createAttackEnergies(game: SmashedGame): void {
+function createAttackEnergies(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     const ae = player.char.attackEnergy;
     ae.sprite = game.physics.add
@@ -1286,7 +1284,7 @@ export function createAttackEnergies(game: SmashedGame): void {
     filterAttackEnergyNormal(player, playerIndex, game);
 
     // game.players.forEach((p, i) => {
-    //   game.physics.add.collider(ae.sprite, game.bulletBillCombo.cannon.sprite);
+    //   game.physics.add.collider(ae.sprite, bbCombo.cannon.sprite);
     // });
   });
 
@@ -1350,7 +1348,7 @@ export function createAttackEnergies(game: SmashedGame): void {
   });
 }
 
-export function createCollidersPvP(game: SmashedGame): void {
+function createCollidersPvP(game: SmashedGame): void {
   if (!game.debug.Colliders_P_v_P) {
     return;
   }
@@ -1369,7 +1367,7 @@ export function createCollidersPvP(game: SmashedGame): void {
   });
 }
 
-export function createCollidersPvAP(game: SmashedGame): void {
+function createCollidersPvAP(game: SmashedGame): void {
   if (!game.debug.Colliders_P_v_AP) {
     return;
   }
@@ -1390,7 +1388,7 @@ export function createCollidersPvAP(game: SmashedGame): void {
     });
   });
 }
-export function createCollidersPvAE(game: SmashedGame): void {
+function createCollidersPvAE(game: SmashedGame): void {
   if (!game.debug.Colliders_P_v_AE) {
     return;
   }
@@ -1413,7 +1411,7 @@ export function createCollidersPvAE(game: SmashedGame): void {
 
   print('game.colliderPvAE', game.colliderPvAE);
 }
-export function createCollidersAEvAE(game: SmashedGame): void {
+function createCollidersAEvAE(game: SmashedGame): void {
   if (!game.debug.Colliders_AE_v_AE) {
     return;
   }
@@ -1434,7 +1432,7 @@ export function createCollidersAEvAE(game: SmashedGame): void {
     });
   });
 }
-export function createCollidersAEvAP(game: SmashedGame): void {
+function createCollidersAEvAP(game: SmashedGame): void {
   if (!game.debug.Colliders_AE_v_AP) {
     return;
   }
@@ -1456,7 +1454,7 @@ export function createCollidersAEvAP(game: SmashedGame): void {
   });
 }
 
-export function createBulletBill(game: SmashedGame): void {
+function createBulletBill(game: SmashedGame): void {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
 
   bbCombo.bullet.sprite = game.physics.add.sprite(
@@ -1490,7 +1488,7 @@ export function createBulletBill(game: SmashedGame): void {
   }
 }
 
-export function createCollidersBulletBill(game: SmashedGame): void {
+function createCollidersBulletBill(game: SmashedGame): void {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet = bbCombo.bullet;
   const bbCannon = bbCombo.cannon;
@@ -1539,7 +1537,7 @@ export function createCollidersBulletBill(game: SmashedGame): void {
   });
 }
 
-export function createBackground(game: SmashedGame): void {
+function createBackground(game: SmashedGame): void {
   const scaleUp = 1.1;
 
   game.BACKGROUND = game.physics.add.sprite(
@@ -1556,7 +1554,7 @@ export function createBackground(game: SmashedGame): void {
   game.BACKGROUND.body.allowGravity = false;
 }
 
-export function createBackgroundOutlineFront(game: SmashedGame): void {
+function createBackgroundOutlineFront(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_FRONT = game.physics.add.sprite(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
@@ -1571,7 +1569,7 @@ export function createBackgroundOutlineFront(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_FRONT.body.allowGravity = false;
 }
 
-export function createBackgroundOutlineBack(game: SmashedGame): void {
+function createBackgroundOutlineBack(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_BACK = game.physics.add.sprite(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
@@ -1586,7 +1584,7 @@ export function createBackgroundOutlineBack(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_BACK.body.allowGravity = false;
 }
 
-export function createTable(game: SmashedGame): void {
+function createTable(game: SmashedGame): void {
   game.TABLE = game.physics.add.sprite(
     (SCREEN_DIMENSIONS.WIDTH / 2) * game.SCREEN_SCALE.WIDTH,
     (SCREEN_DIMENSIONS.HEIGHT / 2 - 300) * game.SCREEN_SCALE.HEIGHT,
@@ -1608,11 +1606,11 @@ export function createTable(game: SmashedGame): void {
   game.soundPowerup = game.sound.add('powerup', { volume: 0.3, loop: true });
 }
 
-export function createColliderTablePlatforms(game: SmashedGame): void {
+function createColliderTablePlatforms(game: SmashedGame): void {
   game.physics.add.collider(game.TABLE, game.PLATFORMS);
 }
 
-export function createBackgroundTitles(game: SmashedGame): void {
+function createBackgroundTitles(game: SmashedGame): void {
   game.TEXT_TITLE = game.add
     .text(
       SCREEN_DIMENSIONS.WIDTH / 2,
@@ -1662,7 +1660,7 @@ export function createBackgroundTitles(game: SmashedGame): void {
     .setAlpha(0.3);
 }
 
-export function createSplashRuleFinished(game: SmashedGame): void {
+function createSplashRuleFinished(game: SmashedGame): void {
   game.splashRules.forEach((splash, splashIndex) => {
     // if (splashIndex === game.splashRules.length - 1) {
     if (splash.name === 'splash-finished') {
@@ -1695,7 +1693,7 @@ export function createSplashRuleFinished(game: SmashedGame): void {
     }
   });
 }
-export function createSplashBlack(game: SmashedGame): void {
+function createSplashBlack(game: SmashedGame): void {
   const splash = game.splashRules[0];
   splash.text = game.add
     .text(
@@ -1725,7 +1723,7 @@ export function createSplashBlack(game: SmashedGame): void {
     .setAlpha(1);
 }
 
-export function createSplashes(game: SmashedGame): void {
+function createSplashes(game: SmashedGame): void {
   game.splashRules.forEach((splash, splashIndex) => {
     if (splashIndex !== 0 && splashIndex !== game.splashRules.length - 1) {
       splash.text = game.add
@@ -1758,7 +1756,7 @@ export function createSplashes(game: SmashedGame): void {
   });
 }
 
-export function createScoreboardShotGlass(game: SmashedGame): void {
+function createScoreboardShotGlass(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.endCups.push({
       sprite: null,
@@ -1798,7 +1796,7 @@ export function createScoreboardShotGlass(game: SmashedGame): void {
   });
 }
 
-export function createScoreboardShotGlassNumber(game: SmashedGame): void {
+function createScoreboardShotGlassNumber(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.shotGlassNumber = game.add
       .text(
@@ -1832,7 +1830,7 @@ export function createScoreboardShotGlassNumber(game: SmashedGame): void {
   });
 }
 
-export function createScoreboardReady(game: SmashedGame): void {
+function createScoreboardReady(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardReady = game.add
       .text(
@@ -1866,7 +1864,7 @@ export function createScoreboardReady(game: SmashedGame): void {
   });
 }
 
-export function createScoreboardController(game: SmashedGame): void {
+function createScoreboardController(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardController = game.add
       .text(SCREEN_DIMENSIONS.WIDTH / 2, SCREEN_DIMENSIONS.HEIGHT / 2, '🎮', {
@@ -1895,7 +1893,7 @@ export function createScoreboardController(game: SmashedGame): void {
   });
 }
 
-export function createScoreboard(game: SmashedGame): void {
+function createScoreboard(game: SmashedGame): void {
   game.scoreBoardTimeGame = game.add.text(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
@@ -2017,7 +2015,7 @@ export function createScoreboard(game: SmashedGame): void {
   });
 }
 
-export function createCameras(game: SmashedGame): void {
+function createCameras(game: SmashedGame): void {
   let debugAlpha = 1;
   if (!game.debug.Cameras_Visible) {
     debugAlpha = 0;

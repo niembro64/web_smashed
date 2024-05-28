@@ -3,27 +3,28 @@ import 'phaser';
 import Shake from 'phaser3-rex-plugins/plugins/shakeposition';
 import { create } from './create';
 import {
+  BulletBillCombo,
   Camera,
   CharacterId,
   Chomp,
   Clock,
   ColorCircle,
   Debug,
-  emoji,
   EndCup,
+  FireFlower,
   Flag,
   GameStateWithTime,
-  FireFlower,
   InputType,
-  keyboard,
   Lava,
   NNObject,
   Player,
+  Position,
   SmashConfig,
   SplashEndData,
   SplashRules,
+  emoji,
+  keyboard,
   xyVector,
-  BulletBillCombo,
 } from './interfaces';
 import { preload } from './preload';
 import { update } from './update';
@@ -830,9 +831,12 @@ export default class SmashedGame extends Phaser.Scene {
     },
   };
 
-  graphics: Phaser.GameObjects.Graphics | null = null;
-  path: Phaser.Curves.Path | null = null;
-  sprite: Phaser.GameObjects.Sprite | null = null;
+  bbPathPoints: Position[] = [
+    { x: 100, y: 100 },
+    { x: 200, y: 200 },
+    { x: 300, y: 150 },
+    { x: 400, y: 300 },
+  ];
 
   updateIndex: number = 0;
   bbScale: number = 0.63 * 3;
@@ -846,7 +850,14 @@ export default class SmashedGame extends Phaser.Scene {
 
   bulletBillCombo: BulletBillCombo = {
     state: 'button-up',
-    sparkDistance: 0,
+    sparkLine: {
+      graphics: null,
+      spark: null,
+      percentCompleted: 0,
+      pathPoints: this.bbPathPoints,
+      pathPointsIndexCurr: 0,
+      path: null,
+    },
     bullet: {
       scale: this.bbScale,
       sprite: null,
