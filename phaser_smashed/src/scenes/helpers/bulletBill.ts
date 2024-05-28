@@ -77,33 +77,42 @@ import {
 
 const updateSparkOnSparkLine = (game: SmashedGame): void => {
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
+  const numPaths = bbSparkLine.pathPoints.length;
+  const percentCompleted = bbSparkLine.percentCompleted;
 
-  bbSparkLine.percentCompleted = Math.min(
-    1,
-    bbSparkLine.percentCompleted + 0.01
-  );
+  bbSparkLine.percentCompleted = Math.min(1, percentCompleted + 0.01);
+  if (bbSparkLine.percentCompleted >= 1) {
+    bbSparkLine.percentCompleted = 0;
+    bbSparkLine.pathPointsIndexCurr =
+      (bbSparkLine.pathPointsIndexCurr + 1) % numPaths;
+    return;
+  }
 
-  const currPathPoints = bbSparkLine.pathPoints[0];
-  const nextPathPoints = bbSparkLine.pathPoints[1];
+  const pathPositionStart =
+    bbSparkLine.pathPoints[bbSparkLine.pathPointsIndexCurr];
+  const pathPositionEnd =
+    bbSparkLine.pathPoints[(bbSparkLine.pathPointsIndexCurr + 1) % numPaths];
 
-  putSparkAtPercentageAlongPapth(
+  putSparkAtPercentageAlongPath(
     game,
-    currPathPoints,
-    nextPathPoints,
+    pathPositionStart,
+    pathPositionEnd,
     bbSparkLine.percentCompleted
   );
 };
 
-const putSparkAtPercentageAlongPapth = (
+const putSparkAtPercentageAlongPath = (
   game: SmashedGame,
-  position1: Position,
-  position2: Position,
+  positionStart: Position,
+  positionEnd: Position,
   percentage: number
 ): void => {
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
 
-  bbSparkLine.spark.x = position1.x + (position2.x - position1.x) * percentage;
-  bbSparkLine.spark.y = position1.y + (position2.y - position1.y) * percentage;
+  bbSparkLine.spark.x =
+    positionStart.x + (positionEnd.x - positionStart.x) * percentage;
+  bbSparkLine.spark.y =
+    positionStart.y + (positionEnd.y - positionStart.y) * percentage;
 };
 
 export const updateBulletBill = (game: SmashedGame): void => {
