@@ -668,11 +668,12 @@ export function createPlatforms10(game: SmashedGame): void {
     game.PLATFORMS.create(
       SCREEN_DIMENSIONS.WIDTH / 2,
       SCREEN_DIMENSIONS.HEIGHT / 2 -
-        i * game.ASSET_BRICK_HEIGHT +
+        (i + 1) * game.ASSET_BRICK_HEIGHT +
         3 * game.ASSET_BRICK_HEIGHT,
       'platformHorizontal'
     );
   }
+
   for (let i = 0; i < 12; i++) {
     if (i < 4) {
       game.PLATFORMS.create(
@@ -729,24 +730,12 @@ export function createPlatforms10(game: SmashedGame): void {
     }
   }
 
-  for (let i = 0; i < 1; i++) {
-    game.PLATFORMS.create(
-      (1207 + game.ASSET_BRICK_WIDTH * 5) * game.SCREEN_SCALE.WIDTH +
-        i * game.ASSET_BRICK_WIDTH +
-        13,
-      (718.2 - 5 * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT +
-        3 * game.ASSET_BRICK_HEIGHT,
-      'platformVertical'
-    );
-  }
-
   for (let i = 0; i < 2; i++) {
     game.PLATFORMS.create(
       (1207 + game.ASSET_BRICK_WIDTH * 5) * game.SCREEN_SCALE.WIDTH +
         i * game.ASSET_BRICK_WIDTH +
         13,
       (718.2 - 5 * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT +
-        3 * game.ASSET_BRICK_HEIGHT -
         game.ASSET_BRICK_HEIGHT,
       'platformVertical'
     );
@@ -787,15 +776,23 @@ export function createPlatforms10(game: SmashedGame): void {
     }
   }
 
-  for (let j = 0; j < 5; j++) {
-    for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 6; i++) {
+    for (let j = 0; j < 2; j++) {
+      if (i === 0 && j === 0) {
+        continue;
+      }
+
+      if (i === 5 && j === 1) {
+        continue;
+      }
+
       game.PLATFORMS.create(
-        1617 * game.SCREEN_SCALE.WIDTH -
-          j * game.ASSET_BRICK_WIDTH -
-          game.ASSET_BRICK_WIDTH * 8,
-        (686 - 68 + i * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT +
-          j * game.ASSET_BRICK_HEIGHT +
-          5 * game.ASSET_BRICK_HEIGHT,
+        1616 * game.SCREEN_SCALE.WIDTH -
+          i * game.ASSET_BRICK_WIDTH -
+          game.ASSET_BRICK_WIDTH * 7,
+        (685 - 68 + j * game.ASSET_BRICK_HEIGHT) * game.SCREEN_SCALE.HEIGHT +
+          i * game.ASSET_BRICK_HEIGHT +
+          3 * game.ASSET_BRICK_HEIGHT,
         'brick'
       );
     }
