@@ -19,6 +19,12 @@ const updateSparkOnSparkLine = (game: SmashedGame): void => {
     bbSparkLine.percentPathCurrCompleted = 0;
     bbSparkLine.pathPointsIndexCurr =
       (bbSparkLine.pathPointsIndexCurr + 1) % numPaths;
+
+    const isLastPath = bbSparkLine.pathPointsIndexCurr === numPaths - 1;
+
+    if (isLastPath) {
+      setBulletBillState(game, 'shooting');
+    }
     return;
   }
 
@@ -52,9 +58,9 @@ const putSparkAtPercentageAlongPath = (
 export const updateBulletBill = (game: SmashedGame): void => {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet: BulletBillBullet = bbCombo.bullet;
-  const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
+  // const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
 
-  const state: BulletBillComboState = bbCombo.state;
+  const state: BulletBillComboState = bbCombo.stateCurr;
 
   switch (state) {
     case 'button-up':
@@ -64,11 +70,6 @@ export const updateBulletBill = (game: SmashedGame): void => {
       break;
     case 'button-down':
       updateSparkOnSparkLine(game);
-      // print('sparkDistance:', bbSparkLine.sparkDistance);
-
-      if (bbSparkLine.percentPathCurrCompleted >= 1) {
-        setBulletBillState(game, 'shooting');
-      }
 
       if (!game.players[0].char.sprite.body.touching.down) {
         setBulletBillState(game, 'button-up');
@@ -78,6 +79,7 @@ export const updateBulletBill = (game: SmashedGame): void => {
       if (bbBullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
         setBulletBillState(game, 'button-up');
       }
+
       break;
     case 'cooldown':
       break;
@@ -94,12 +96,20 @@ export const setBulletBillState = (
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
 
-  switch (stateNew) {
+  bbCombo.statePrev = bbCombo.stateCurr;
+  bbCombo.stateCurr = stateNew;
+
+  if (bbCombo.stateCurr === bbCombo.statePrev) {
+    return;
+  }
+
+  switch (bbCombo.stateCurr) {
     case 'button-up':
       print('setBulletBillState: button-up');
       break;
     case 'button-down':
       print('setBulletBillState: button-down');
+      bbSparkLine.emitter.on = true;
       break;
     case 'shooting':
       print('setBulletBillState: shooting');
@@ -110,6 +120,9 @@ export const setBulletBillState = (
 
       bbBullet.sprite.body.setVelocityX(bbBullet.velInit.x);
       bbBullet.sprite.body.setVelocityY(bbBullet.velInit.y);
+
+      bbSparkLine.emitter.on = false;
+      bbSparkLine.pathPointsIndexCurr = 0;
       break;
     case 'cooldown':
       print('setBulletBillState: cooldown');
@@ -118,6 +131,4 @@ export const setBulletBillState = (
     default:
       throw new Error(`Invalid BulletBillComboState: ${stateNew}`);
   }
-
-  bbCombo.state = stateNew;
 };

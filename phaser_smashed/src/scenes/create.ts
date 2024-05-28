@@ -127,7 +127,7 @@ function createBulletBillSparkLine(game: SmashedGame) {
   bbSparkLine.spark = game.add.circle(
     bbSparkLine.pathPoints[0].x,
     bbSparkLine.pathPoints[0].y,
-    6,
+    0,
     0xffffff
   );
 

@@ -567,6 +567,7 @@ export type BulletBillCannon = {
 };
 
 export type BulletBillComboState =
+  | 'init'
   | 'button-up'
   | 'button-down'
   | 'shooting'
@@ -584,7 +585,8 @@ export type BulletBillSparkLine = {
 };
 
 export type BulletBillCombo = {
-  state: BulletBillComboState;
+  stateCurr: BulletBillComboState;
+  statePrev: BulletBillComboState;
   sparkLine: BulletBillSparkLine;
   bullet: BulletBillBullet;
   tower: BulletBillTower;

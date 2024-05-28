@@ -857,7 +857,8 @@ export default class SmashedGame extends Phaser.Scene {
   bbBulletInitY: number = this.bbCannonPosInitY - 166;
 
   bulletBillCombo: BulletBillCombo = {
-    state: 'button-up',
+    stateCurr: 'button-up',
+    statePrev: 'init',
     tower: {
       scale: 0.6,
       sprite: null,
@@ -890,7 +891,7 @@ export default class SmashedGame extends Phaser.Scene {
         y: this.bbBulletInitY,
       },
       velInit: {
-        x: 100,
+        x: 1000,
         y: 0,
       },
     },
