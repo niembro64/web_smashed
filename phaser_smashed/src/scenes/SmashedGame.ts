@@ -832,6 +832,7 @@ export default class SmashedGame extends Phaser.Scene {
 
   graphics: Phaser.GameObjects.Graphics | null = null;
   path: Phaser.Curves.Path | null = null;
+  sprite: Phaser.GameObjects.Sprite | null = null;
 
   updateIndex: number = 0;
   bbScale: number = 0.63 * 3;
