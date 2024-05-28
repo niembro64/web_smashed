@@ -27,6 +27,7 @@ import {
   Player,
   Position,
 } from './interfaces';
+import { color } from 'html2canvas/dist/types/css/types/color';
 
 export function create(game: SmashedGame) {
   createPreCreate(game);
@@ -79,6 +80,8 @@ export function create(game: SmashedGame) {
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
+  // createBulletBillSparkLine(game);
+  createBulletBillSparkLineEmitter(game);
 
   // INIT UPDATE
   setPreUpdate(game);
@@ -124,9 +127,34 @@ function createBulletBillSparkLine(game: SmashedGame) {
   bbSparkLine.spark = game.add.circle(
     bbSparkLine.pathPoints[0].x,
     bbSparkLine.pathPoints[0].y,
-    15,
-    0xff5555
+    6,
+    0xffffff
   );
+
+  // game.bulletBillCombo.sparkLine.emitter.startFollow(bbSparkLine.spark);
+}
+function createBulletBillSparkLineEmitter(game: SmashedGame) {
+  const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
+  bbSparkLine.particles = game.add.particles('tail_' + 0);
+
+  bbSparkLine.emitter = bbSparkLine.particles.createEmitter({
+    // speed: 80,
+    speed: { min: 0, max: 8 },
+    // scale: { start: 0.05, end: 0 },
+    scale: { start: 0.15, end: 0 },
+    alpha: { start: 1, end: 1 },
+    // color: { start: '0xffffff', end: '0xffff00' },
+    // blendMode: 'SUBTRACT',
+    blendMode: 'SUBTRACT',
+    // bounce: 1,
+    // length: 100,
+    gravityY: -250,
+
+    follow: bbSparkLine.spark,
+  });
+
+  // make it red
+  bbSparkLine.emitter.setTint(0xffffff);
 }
 
 function createFlag(game: SmashedGame): void {

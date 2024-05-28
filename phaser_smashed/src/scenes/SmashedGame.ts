@@ -868,6 +868,8 @@ export default class SmashedGame extends Phaser.Scene {
     },
     sparkLine: {
       graphics: null,
+      emitter: null,
+      particles: null,
       spark: null,
       percentPathCurrCompleted: 0,
       pathPoints: this.bbPathPoints,

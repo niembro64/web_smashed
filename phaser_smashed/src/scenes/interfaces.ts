@@ -577,6 +577,8 @@ export type BulletBillSparkLine = {
   pathPoints: Position[];
   path: Phaser.Curves.Path | null;
   pathPointsIndexCurr: number;
+  emitter: any;
+  particles: any;
   spark: any;
   graphics: Phaser.GameObjects.Graphics | null;
 };

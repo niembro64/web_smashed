@@ -12,7 +12,8 @@ import {
 } from '../scenes/interfaces';
 
 export const inputArrayInit: InputType[] = [0, 0, 0, 0];
-export const inputArrayInitDebug: InputType[] = [3, 3, 3, 3];
+export const inputArrayInitDebug: InputType[] = [2, 2, 0, 0];
+// export const inputArrayInitDebug: InputType[] = [3, 3, 3, 3];
 export const inputArrayInitMax: number = 4;
 
 export const smashConfigInitMax: number = 8;
