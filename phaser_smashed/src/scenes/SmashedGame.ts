@@ -838,7 +838,8 @@ export default class SmashedGame extends Phaser.Scene {
     },
     { x: SCREEN_DIMENSIONS.WIDTH * 0.7285, y: SCREEN_DIMENSIONS.HEIGHT * 0.66 },
     { x: SCREEN_DIMENSIONS.WIDTH * 0.645, y: SCREEN_DIMENSIONS.HEIGHT * 0.825 },
-    { x: SCREEN_DIMENSIONS.WIDTH * 0.345, y: SCREEN_DIMENSIONS.HEIGHT * 0.825 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.42, y: SCREEN_DIMENSIONS.HEIGHT * 0.825 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.42, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
 
     { x: SCREEN_DIMENSIONS.WIDTH * 0.15, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
     { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.75 },
@@ -858,11 +859,11 @@ export default class SmashedGame extends Phaser.Scene {
   bulletBillCombo: BulletBillCombo = {
     state: 'button-up',
     tower: {
-      scale: 1,
+      scale: 0.6,
       sprite: null,
       posInit: {
-        x: SCREEN_DIMENSIONS.WIDTH * 0.7285,
-        y: SCREEN_DIMENSIONS.HEIGHT * 0.399,
+        x: SCREEN_DIMENSIONS.WIDTH * 0.42,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.837,
       },
     },
     sparkLine: {

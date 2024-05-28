@@ -97,6 +97,7 @@ function createBulletBillSparkLine(game: SmashedGame) {
   tower.sprite.setScale(tower.scale);
   tower.sprite.setBounce(0);
   tower.sprite.setImmovable(true);
+  tower.sprite.setOrigin(0.5, 0.5);
   tower.sprite.body.allowGravity = false;
 
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
