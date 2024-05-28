@@ -228,7 +228,8 @@ export function updatePlayerDarknessEvents(game: SmashedGame): void {
       const b = player.char.sprite.body;
       const pj = game.chomp.darknessMoments.percentExplosion;
 
-      if (Math.random() > 1 - pj) {
+      player.char.damageCurr += 1;
+      if (game.debug.Chomp_Explosion && Math.random() > 1 - pj) {
         const baseAmount = 2000;
         const amount =
           baseAmount +
@@ -241,10 +242,9 @@ export function updatePlayerDarknessEvents(game: SmashedGame): void {
         addToMotionSlowdown(amount / baseAmount, game);
         player.char.damageCurr += amount / 100;
 
-        if (game.debug.Chomp_Explosion) {
-          playNextExplosion(s.x, s.y, game, amount);
-          game.shake?.shake(amount / 20, amount / 100);
-        }
+        playNextExplosion(s.x, s.y, game, amount);
+        game.shake?.shake(amount / 20, amount / 100);
+
         if (game.debug.Chomp_Velocities) {
           const { x, y } = getRandomUnitVector();
 
@@ -252,9 +252,6 @@ export function updatePlayerDarknessEvents(game: SmashedGame): void {
 
           b.setVelocityX(b.velocity.x + x * amount);
           b.setVelocityY(b.velocity.y + y * amount);
-        } else {
-          b.position.x = -100;
-          b.position.y = -100;
         }
       }
     }

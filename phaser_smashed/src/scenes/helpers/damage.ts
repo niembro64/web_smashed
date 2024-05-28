@@ -1,19 +1,13 @@
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import {
-  AttackEnergy,
-  AttackPhysical,
-  FireFlower,
-  Player,
-  xyVector,
-} from '../interfaces';
+import { AttackEnergy, AttackPhysical, Player, xyVector } from '../interfaces';
 import {
   setAttackEnergyOffscreen,
   setBulletOffscreen,
   setFireBallOffscreen,
   setPhysicsAttackEnergyOff,
 } from './attacks';
-import { getNearestPlayerAliveFromXY, hitbackFly } from './movement';
+import { hitbackFly } from './movement';
 import { getHasBeenGameDurationSinceMoment } from './powers';
 import { setPauseSoundPowerup, setResumeSoundPowerup } from './sound';
 import { setPlayerState } from './state';
@@ -495,7 +489,10 @@ export function updateTableGiveHealth(game: SmashedGame): void {
 
     if (isCloseEnough && p.char.damageCurr !== 0) {
       charging = true;
-      p.char.damageCurr = Math.max(0, p.char.damageCurr - game.table_health_give);
+      p.char.damageCurr = Math.max(
+        0,
+        p.char.damageCurr - game.table_health_give
+      );
     }
   }
 
