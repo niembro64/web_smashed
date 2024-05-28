@@ -81,6 +81,10 @@ export function setBGMusicPause(game: SmashedGame): void {
 
   game.soundBGM.pause();
 }
+
+////////////////////////////////////////
+// BACKGROUND MUSIC
+////////////////////////////////////////
 export function setBGMusicPlay(game: SmashedGame): void {
   if (game.soundBGM.isPlaying) {
     return;
@@ -101,6 +105,9 @@ export function setBGMusicSpeedNormal(game: SmashedGame): void {
   game.soundBGM.setRate(1);
 }
 
+////////////////////////////////////////
+// MUSIC BOX MUSIC
+////////////////////////////////////////
 export function setMusicBoxPlay(game: SmashedGame): void {
   if (game.flag.soundFlagMusicBox.isPlaying) {
     return;
@@ -112,12 +119,17 @@ export function setMusicBoxResume(game: SmashedGame): void {
     return;
   }
 
+  setMusicBulletBillButtonPause(game);
+  setBGMusicPause(game);
+
   game.flag.soundFlagMusicBox.resume();
 }
 export function setMusicBoxPause(game: SmashedGame): void {
   if (!game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
+
+  setBGMusicResume(game);
 
   game.flag.soundFlagMusicBox.pause();
 }
@@ -191,6 +203,8 @@ export function setMusicBulletBillButtonPause(game: SmashedGame): void {
     return;
   }
 
+  setBGMusicResume(game);
+
   game.bulletBillCombo.button.sound.pause();
 }
 
@@ -198,6 +212,9 @@ export function setMusicBulletBillButtonResume(game: SmashedGame): void {
   if (game.bulletBillCombo.button.sound.isPlaying) {
     return;
   }
+
+  setMusicBoxPause(game);
+  setBGMusicPause(game);
 
   game.bulletBillCombo.button.sound.resume();
 }

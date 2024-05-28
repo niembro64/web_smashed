@@ -168,7 +168,7 @@ function createPSwitch(game: SmashedGame): void {
   button.spriteDown.setAlpha(0);
 
   button.sound = game.sound.add('pmusic', {
-    volume: 1,
+    volume: 0.4,
     loop: true,
   });
 }

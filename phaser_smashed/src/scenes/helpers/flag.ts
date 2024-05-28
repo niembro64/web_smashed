@@ -68,13 +68,13 @@ export const updateFlagToucher = (game: SmashedGame): void => {
       getIsInPoleArea(player.char.sprite.x, player.char.sprite.y, game)
     ) {
       if (!ptStamps[pIndex].touching) {
-        setBGMusicPause(game);
+        // setBGMusicPause(game);
         setMusicBoxResume(game);
         ptStamps[pIndex].touching = true;
         ptStamps[pIndex].gameStamp = game.gameNanoseconds;
       }
     } else if (ptStamps[pIndex].touching) {
-      setBGMusicResume(game);
+      // setBGMusicResume(game);
       setMusicBoxPause(game);
       ptStamps[pIndex].touching = false;
       ptStamps[pIndex].gameStamp = game.gameNanoseconds;
