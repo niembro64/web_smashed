@@ -5,6 +5,7 @@ import {
   BulletBillCombo,
   BulletBillComboState,
   BulletBillSparkLine,
+  Position,
 } from '../interfaces';
 
 // export type BulletBillBullet = {
@@ -85,16 +86,24 @@ const updateSparkOnSparkLine = (game: SmashedGame): void => {
   const currPathPoints = bbSparkLine.pathPoints[0];
   const nextPathPoints = bbSparkLine.pathPoints[1];
 
-  // go between the two points, each point is an x and y coordiniate
-  // the percentCompleted is a value between 0 and 1
-  // so we can just multiply the difference between the two points by the percentCompleted
+  putSparkAtPercentageAlongPapth(
+    game,
+    currPathPoints,
+    nextPathPoints,
+    bbSparkLine.percentCompleted
+  );
+};
 
-  bbSparkLine.spark.x =
-    currPathPoints.x +
-    (nextPathPoints.x - currPathPoints.x) * bbSparkLine.percentCompleted;
-  bbSparkLine.spark.y =
-    currPathPoints.y +
-    (nextPathPoints.y - currPathPoints.y) * bbSparkLine.percentCompleted;
+const putSparkAtPercentageAlongPapth = (
+  game: SmashedGame,
+  position1: Position,
+  position2: Position,
+  percentage: number
+): void => {
+  const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
+
+  bbSparkLine.spark.x = position1.x + (position2.x - position1.x) * percentage;
+  bbSparkLine.spark.y = position1.y + (position2.y - position1.y) * percentage;
 };
 
 export const updateBulletBill = (game: SmashedGame): void => {
