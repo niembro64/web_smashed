@@ -899,7 +899,7 @@ export default class SmashedGame extends Phaser.Scene {
       },
       mass: 1000,
       damage: 100,
-      hitback: { x: 10, y: 10 },
+      hitback: { x: 17, y: 17 },
       diesOnHitbox: false,
       srcImage: 'bullet_bill_bullet',
       posInit: {

@@ -4,6 +4,7 @@ import { setAttackPhysicalOffscreen } from './helpers/attacks';
 import {
   onHitHandlerAttackEnergy,
   onHitHandlerAttackPhysical,
+  onHitHandlerBulletBill,
   onHitHandlerBullets,
   onHitHandlerFireBall,
 } from './helpers/damage';
@@ -761,6 +762,17 @@ function createHitboxOverlap(game: SmashedGame): void {
           game.chomp.soundAttack.play();
           game.SOUND_HIT.play();
         }
+      }
+    );
+  });
+
+  // PLAYER BULLET BILL BULLET OVERLAP
+  game.players.forEach((player, playerIndex) => {
+    game.physics.add.overlap(
+      player.char.sprite,
+      game.bulletBillCombo.bullet.sprite,
+      function () {
+        onHitHandlerBulletBill(player, playerIndex, game);
       }
     );
   });

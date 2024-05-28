@@ -514,3 +514,33 @@ export function updateDamagePrev(game: SmashedGame): void {
     p.char.damagePrev = p.char.damageCurr;
   });
 }
+
+export function onHitHandlerBulletBill(
+  player: Player,
+  playerIndex: number,
+  game: SmashedGame
+): void {
+  if (player.state.name !== 'player-state-alive') {
+    return;
+  }
+
+  setPlayerState(player, playerIndex, 'player-state-hurt', game);
+
+  player.char.damageCurr += game.bulletBillCombo.bullet.damage;
+
+  const normalizedVector = getNormalizedVector(
+    game.bulletBillCombo.bullet.sprite.x,
+    game.bulletBillCombo.bullet.sprite.y,
+    player.char.sprite.x,
+    player.char.sprite.y
+  );
+
+  const hitback = game.bulletBillCombo.bullet.hitback;
+
+  hitbackFly(
+    player,
+    game,
+    normalizedVector.x * hitback.x,
+    normalizedVector.y * hitback.y
+  );
+}

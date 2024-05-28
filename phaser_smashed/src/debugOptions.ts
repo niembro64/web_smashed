@@ -13,7 +13,7 @@ export const debugInit: Debug = {
   Music_Active: true,
   Ready_Sound_Active: false,
   Use_Camera: true,
-  Cameras_Visible: true,
+  Cameras_Visible: false,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
   Colliders_P_v_AE: false,
