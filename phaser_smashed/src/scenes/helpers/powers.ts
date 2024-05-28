@@ -239,6 +239,7 @@ export function updatePlayerDarknessEvents(game: SmashedGame): void {
             Math.pow(Math.random(), 0.4);
 
         addToMotionSlowdown(amount / baseAmount, game);
+        player.char.damageCurr += amount / 100;
 
         if (game.debug.Chomp_Explosion) {
           playNextExplosion(s.x, s.y, game, amount);
@@ -247,7 +248,6 @@ export function updatePlayerDarknessEvents(game: SmashedGame): void {
         if (game.debug.Chomp_Velocities) {
           const { x, y } = getRandomUnitVector();
 
-          player.char.damageCurr += amount / 100;
           setPlayerState(player, playerIndex, 'player-state-hurt', game);
 
           b.setVelocityX(b.velocity.x + x * amount);

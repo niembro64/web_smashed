@@ -171,5 +171,5 @@ const bulletBillPlayExplosion = (game: SmashedGame): void => {
   bbBullet.explosionSprite.play('explsionanimationBulletBillCannon');
   bbBullet.sound.play();
 
-  game.shake?.shake(2000, 200);
+  game.shake?.shake(3000, 300);
 };

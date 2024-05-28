@@ -392,7 +392,7 @@ function createExplosionBulletBillCannon(game: SmashedGame): void {
       end: 47,
       first: 0,
     }),
-    frameRate: 45,
+    frameRate: 30,
     repeat: 0,
   };
 
