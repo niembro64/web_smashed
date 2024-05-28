@@ -1549,7 +1549,7 @@ function createBulletBill(game: SmashedGame): void {
   bbCombo.bullet.sprite.body.setMass(bbCombo.bullet.mass);
   bbCombo.bullet.sprite.setImmovable(true);
 
-  bbCombo.bullet.sprite.setTint(getInactiveBackgroundTintColor());
+  // bbCombo.bullet.sprite.setTint(getInactiveBackgroundTintColor());
 
   bbCombo.cannon.sprite = game.physics.add.sprite(
     bbCombo.cannon.posInit.x,
@@ -1563,9 +1563,9 @@ function createBulletBill(game: SmashedGame): void {
   bbCombo.cannon.sprite.body.allowGravity = false;
   bbCombo.cannon.sprite.setOrigin(0.5, 0.5);
 
-  if (!game.debug.BulletBill_Bullet_Visible) {
-    bbCombo.cannon.sprite.setTint(getInactiveBackgroundTintColor());
-  }
+  // if (!game.debug.BulletBill_Bullet_Visible) {
+  //   bbCombo.cannon.sprite.setTint(getInactiveBackgroundTintColor());
+  // }
 }
 
 function createCollidersBulletBill(game: SmashedGame): void {
@@ -1574,7 +1574,7 @@ function createCollidersBulletBill(game: SmashedGame): void {
   const bbCannon = bbCombo.cannon;
   const players: Player[] = game.players;
   const ff: FireFlower = game.fireFlower;
-  const aebs = game.fireFlower.attackBullets.bullets;
+  const fireFlowerBullets = game.fireFlower.attackBullets.bullets;
 
   game.physics.add.collider(bbCannon.sprite, game.PLATFORMS);
   game.physics.add.collider(bbCannon.sprite, game.TABLE);
@@ -1588,10 +1588,10 @@ function createCollidersBulletBill(game: SmashedGame): void {
         player.char.attackEnergy.sprite,
         bbCannon.sprite
       );
-      game.physics.add.collider(
-        player.char.attackEnergy.sprite,
-        bbBullet.sprite
-      );
+      // game.physics.add.collider(
+      //   player.char.attackEnergy.sprite,
+      //   bbBullet.sprite
+      // );
 
       if (
         player.char.attackEnergy?.attackBullets !== null &&
@@ -1608,7 +1608,7 @@ function createCollidersBulletBill(game: SmashedGame): void {
 
   game.physics.add.collider(bbBullet.sprite, ff.attackBullets);
 
-  aebs.children.iterate((child: any) => {
+  fireFlowerBullets.children.iterate((child: any) => {
     child.body.allowGravity = game.debug.Flower_Gravity;
 
     game.physics.add.collider(child, bbBullet.sprite);
