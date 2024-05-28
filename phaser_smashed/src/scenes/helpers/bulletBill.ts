@@ -2,9 +2,11 @@ import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import {
   BulletBillBullet,
+  BulletBillButton,
   BulletBillCombo,
   BulletBillComboState,
   BulletBillSparkLine,
+  Player,
   Position,
 } from '../interfaces';
 
@@ -13,7 +15,10 @@ const updateSparkOnSparkLine = (game: SmashedGame): void => {
   const numPaths = bbSparkLine.pathPoints.length;
   const percentCompleted = bbSparkLine.percentPathCurrCompleted;
 
-  bbSparkLine.percentPathCurrCompleted = Math.min(1, percentCompleted + 0.01);
+  bbSparkLine.percentPathCurrCompleted = Math.min(
+    1,
+    percentCompleted + bbSparkLine.speed
+  );
 
   if (bbSparkLine.percentPathCurrCompleted >= 1) {
     bbSparkLine.percentPathCurrCompleted = 0;
@@ -58,20 +63,18 @@ const putSparkAtPercentageAlongPath = (
 export const updateBulletBill = (game: SmashedGame): void => {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet: BulletBillBullet = bbCombo.bullet;
-  // const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
+  const stateCurr: BulletBillComboState = bbCombo.stateCurr;
 
-  const state: BulletBillComboState = bbCombo.stateCurr;
-
-  switch (state) {
+  switch (stateCurr) {
     case 'button-up':
-      if (game.players[0].char.sprite.body.touching.down) {
+      if (isAnyPlayerNearAndTouchingDown(game)) {
         setBulletBillState(game, 'button-down');
       }
       break;
     case 'button-down':
       updateSparkOnSparkLine(game);
 
-      if (!game.players[0].char.sprite.body.touching.down) {
+      if (!isAnyPlayerNearAndTouchingDown(game)) {
         setBulletBillState(game, 'button-up');
       }
       break;
@@ -84,8 +87,34 @@ export const updateBulletBill = (game: SmashedGame): void => {
     case 'cooldown':
       break;
     default:
-      throw new Error(`Invalid BulletBillComboState: ${state}`);
+      throw new Error(`Invalid BulletBillComboState: ${stateCurr}`);
   }
+};
+
+const isAnyPlayerNearAndTouchingDown = (game: SmashedGame): boolean => {
+  const players: Player[] = game.players;
+  const bbButton: BulletBillButton = game.bulletBillCombo.button;
+
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i];
+    const playerBody = player.char.sprite.body;
+
+    if (playerBody.touching.down) {
+      const playerX = playerBody.x;
+      const playerY = playerBody.y;
+
+      const dx = playerX - bbButton.posInit.x;
+      const dy = playerY - bbButton.posInit.y;
+
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 100) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 };
 
 export const setBulletBillState = (

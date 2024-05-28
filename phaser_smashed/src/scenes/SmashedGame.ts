@@ -867,9 +867,20 @@ export default class SmashedGame extends Phaser.Scene {
         y: SCREEN_DIMENSIONS.HEIGHT * 0.837,
       },
     },
+    button: {
+      scale: 1,
+      distanceTrigger: 100,
+      spriteDown: null,
+      spriteUp: null,
+      posInit: {
+        x: 1366.03449,
+        y: 363.2,
+      },
+    },
     sparkLine: {
       graphics: null,
       emitter: null,
+      speed: 0.03,
       particles: null,
       spark: null,
       percentPathCurrCompleted: 0,
@@ -891,7 +902,7 @@ export default class SmashedGame extends Phaser.Scene {
         y: this.bbBulletInitY,
       },
       velInit: {
-        x: 1000,
+        x: 300,
         y: 0,
       },
     },

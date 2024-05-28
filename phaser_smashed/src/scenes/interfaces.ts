@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 
+
 export interface Debug {
   Dev_Mode: boolean;
   Dur_Seconds: boolean;
@@ -573,8 +574,17 @@ export type BulletBillComboState =
   | 'shooting'
   | 'cooldown';
 
+export type BulletBillButton = {
+  scale: number;
+  distanceTrigger: number;
+  spriteDown: any;
+  spriteUp: any;
+  posInit: Position;
+};
+
 export type BulletBillSparkLine = {
   percentPathCurrCompleted: number;
+  speed: number;
   pathPoints: Position[];
   path: Phaser.Curves.Path | null;
   pathPointsIndexCurr: number;
@@ -588,6 +598,7 @@ export type BulletBillCombo = {
   stateCurr: BulletBillComboState;
   statePrev: BulletBillComboState;
   sparkLine: BulletBillSparkLine;
+  button: BulletBillButton;
   bullet: BulletBillBullet;
   tower: BulletBillTower;
   cannon: BulletBillCannon;

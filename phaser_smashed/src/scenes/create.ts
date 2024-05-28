@@ -155,6 +155,7 @@ function createBulletBillSparkLineEmitter(game: SmashedGame) {
 
   // make it red
   bbSparkLine.emitter.setTint(0xffffff);
+  bbSparkLine.emitter.on = false;
 }
 
 function createFlag(game: SmashedGame): void {
