@@ -142,6 +142,7 @@ export const setBulletBillState = (
       break;
     case 'shooting':
       print('setBulletBillState: shooting');
+      bulletBillPlayExplosion(game);
 
       bbSparkLine.percentPathCurrCompleted = 0;
       bbBullet.sprite.body.x = bbBullet.posInit.x;
@@ -160,4 +161,13 @@ export const setBulletBillState = (
     default:
       throw new Error(`Invalid BulletBillComboState: ${stateNew}`);
   }
+};
+
+const bulletBillPlayExplosion = (game: SmashedGame): void => {
+  print('bulletBillPlayExplosion');
+  const bbCombo: BulletBillCombo = game.bulletBillCombo;
+  const bbBullet: BulletBillBullet = bbCombo.bullet;
+
+  bbBullet.explosionSprite.play('explsionanimationBulletBillCannon');
+  bbBullet.sound.play();
 };

@@ -21,6 +21,7 @@ import { print } from '../views/client';
 import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
 import {
+  BulletBillBullet,
   BulletBillCombo,
   BulletBillSparkLine,
   FireFlower,
@@ -82,6 +83,7 @@ export function create(game: SmashedGame) {
   createShake(game);
   // createBulletBillSparkLine(game);
   createBulletBillSparkLineEmitter(game);
+  createExplosionBulletBillCannon(game);
 
   // INIT UPDATE
   setPreUpdate(game);
@@ -379,6 +381,39 @@ function createExplosionsBack(game: SmashedGame): void {
         volume: game.debug.Dev_Mode ? 0 : 0.12,
       }
     );
+  });
+}
+
+function createExplosionBulletBillCannon(game: SmashedGame): void {
+  const config = {
+    key: 'explsionanimationBulletBillCannon',
+    frames: game.anims.generateFrameNumbers('explosion256', {
+      start: 0,
+      end: 47,
+      first: 0,
+    }),
+    frameRate: 45,
+    repeat: 0,
+  };
+
+  game.anims.create(config);
+
+  const bbCombo: BulletBillCombo = game.bulletBillCombo;
+  const bbBullet: BulletBillBullet = bbCombo.bullet;
+
+  bbBullet.explosionSprite = game.physics.add.sprite(
+    bbBullet.posInit.x,
+    bbBullet.posInit.y,
+    'explosion256'
+  );
+
+  bbBullet.explosionSprite.setScale(3);
+  bbBullet.explosionSprite.body.allowGravity = false;
+  bbBullet.explosionSprite.setBounce(0);
+  bbBullet.explosionSprite.setOrigin(0.5, 0.5);
+
+  bbBullet.sound = game.sound.add('boom_short_01', {
+    volume: game.debug.Dev_Mode ? 0 : 0.2,
   });
 }
 

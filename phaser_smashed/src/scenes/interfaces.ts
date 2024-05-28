@@ -2,7 +2,6 @@ import { Moment } from 'moment';
 import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 
-
 export interface Debug {
   Dev_Mode: boolean;
   Dur_Seconds: boolean;
@@ -551,6 +550,7 @@ export type BulletBillBullet = {
   mass: number;
   sprite: any;
   sound: any;
+  explosionSprite: any;
   damage: number;
   hitback: Hitback;
   diesOnHitbox: boolean;
