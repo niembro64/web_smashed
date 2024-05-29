@@ -179,13 +179,31 @@ function createBulletBillSparkLineEmitter(game: SmashedGame) {
 
   bbSparkLine.emitter = bbSparkLine.particles.createEmitter({
     // speed: 80,
-    speed: { min: 0, max: 8 },
+    speed: { min: 0, max: 11 },
     // scale: { start: 0.05, end: 0 },
-    scale: { start: 0.15, end: 0 },
-    alpha: { start: 1, end: 1 },
+    scale: { start: 0.22, end: 0 },
+    // alpha: { start: 1, end: 1 },
     // color: { start: '0xffffff', end: '0xffff00' },
     // blendMode: 'SUBTRACT',
-    blendMode: 'SUBTRACT',
+    blendMode: 'ADD',
+    // NORMAL
+    // ADD
+    // MULTIPLY
+    // SCREEN
+    // OVERLAY
+    // DARKEN
+    // LIGHTEN
+    // COLOR_DODGE
+    // COLOR_BURN
+    // HARD_LIGHT
+    // SOFT_LIGHT
+    // DIFFERENCE
+    // EXCLUSION
+    // HUE
+    // SATURATION
+    // COLOR
+    // LUMINOSITY
+
     // bounce: 1,
     // length: 100,
     gravityY: -250,
@@ -194,7 +212,8 @@ function createBulletBillSparkLineEmitter(game: SmashedGame) {
   });
 
   // make it red
-  bbSparkLine.emitter.setTint(0xffffff);
+  bbSparkLine.emitter.setTint(0xff3333);
+  // bbSparkLine.emitter.setTint(0xffffff);
   bbSparkLine.emitter.on = false;
 }
 
@@ -288,7 +307,7 @@ function createPole(game: SmashedGame): void {
 }
 
 function createFireFlower(game: SmashedGame): void {
-  if (game.debug.NN_Train_P1) {
+  if (game.debug.NN_Train) {
     return;
   }
 
@@ -323,7 +342,7 @@ function createFireFlower(game: SmashedGame): void {
 }
 
 function createCollidersFireFlower(game: SmashedGame): void {
-  if (game.debug.NN_Train_P1) {
+  if (game.debug.NN_Train) {
     return;
   }
 
@@ -492,7 +511,7 @@ function createExplosionsFront(game: SmashedGame): void {
 }
 
 function createChomp(game: SmashedGame): void {
-  if (game.debug.NN_Train_P1) {
+  if (game.debug.NN_Train) {
     return;
   }
 
@@ -762,7 +781,7 @@ function createHitboxOverlap(game: SmashedGame): void {
       player.char.attackPhysical.sprite,
       game.chomp.sprite,
       function () {
-        if (game.debug.NN_Train_P1) {
+        if (game.debug.NN_Train) {
           return;
         }
 
@@ -1453,7 +1472,7 @@ function createAttackEnergies(game: SmashedGame): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      if (!game.debug.NN_Train_P1) {
+      if (!game.debug.NN_Train) {
         for (
           let i = 0;
           i < game.fireFlower.attackBullets.bullets.getChildren().length;
@@ -2029,10 +2048,10 @@ function createScoreboard(game: SmashedGame): void {
     '',
     {
       // font: "Arial 100px",
-      fontSize: game.debug.Mode_Infinity ? '45px' : '85px',
+      fontSize: game.debug.Infinity ? '45px' : '85px',
       // fontFamily: "'Courier New'",
       // fontFamily: game.FONT_DEFAULT_MONOSPACE,
-      fontFamily: game.debug.Mode_Infinity
+      fontFamily: game.debug.Infinity
         ? game.FONT_DEFAULT_NICE
         : game.FONT_DEFAULT_VIDEOGAME,
       // fontFamily: "'Press Start 2P'",

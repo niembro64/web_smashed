@@ -3,11 +3,11 @@ import { Debug } from './scenes/interfaces';
 export const debugInit: Debug = {
   Dev_Mode: true,
   Auto_Start: false,
-  NN_Train_P1: false,
+  NN_Train: false,
   Dur_Seconds: false,
-  Mode_Infinity: false,
+  Infinity: true,
   Minutes: 1, //01234567
-  Shots: 7, //7
+  Shots: 9, //7
   Dev_Zoom: 8,
   Stage: 10, // 0 - 10 inclusive
   Music_Active: true,
@@ -64,13 +64,13 @@ export const debugInit: Debug = {
   Flower_Bounce_Wall: false,
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
-  Flower_HighTrajectory: 2,
+  Flower_HighTrajectory: 1,
 };
 
 export const debugMax: Debug = {
-  Stage: 8, //0123456
+  Stage: 10, //0123456
   Dur_Seconds: true,
-  Mode_Infinity: true,
+  Infinity: true,
   Shots: 15,
   Auto_Start: true,
   Minutes: 15, //01234567
@@ -114,7 +114,7 @@ export const debugMax: Debug = {
   Bullets_Allow_Groups: true,
   Trophies_On_Shots: true,
   Trophies_Always: true,
-  NN_Train_P1: true,
+  NN_Train: true,
   NN_Help_Screen: true, // 012
   NN_Help_Centerize: true,
   NN_Help_Pit: true,
@@ -135,9 +135,9 @@ export const debugMax: Debug = {
 
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
-  NN_Train_P1: true,
+  NN_Train: false,
   Stage: 1, //0123456
-  Mode_Infinity: true,
+  Infinity: true,
   Dur_Seconds: false,
   Shots: 0,
   Minutes: 1, //01234567

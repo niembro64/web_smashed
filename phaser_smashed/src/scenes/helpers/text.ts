@@ -162,7 +162,7 @@ export function updateClockTextUpper(
   // game.cameraMover.char.sprite.x + game.textLocationLROffset * (1 / zoom);
   game.scoreBoardTimeGame.y = newUpperY;
 
-  if (game.debug.Mode_Infinity) {
+  if (game.debug.Infinity) {
     game.scoreBoardTimeGame.setScale(1 / zoom, 1 / zoom);
     let shotsString: string = '';
 

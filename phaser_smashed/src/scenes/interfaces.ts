@@ -7,7 +7,7 @@ export interface Debug {
   Dur_Seconds: boolean;
   Dev_Zoom: number;
   Stage: number;
-  Mode_Infinity: boolean;
+  Infinity: boolean;
   Minutes: number;
   Shots: number;
   Music_Track: number;
@@ -48,7 +48,7 @@ export interface Debug {
   Bullets_Allow_Groups: boolean;
   Trophies_On_Shots: boolean;
   Trophies_Always: boolean;
-  NN_Train_P1: boolean;
+  NN_Train: boolean;
   NN_Help_Screen: boolean;
   NN_Help_Pit: boolean;
   NN_Help_Wall: boolean;

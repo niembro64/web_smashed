@@ -22,7 +22,7 @@ export function setPhysicsAndMusicPause(game: SmashedGame): void {
   game.chomp.emitterDark.active = false;
   setAnimationsOff(game);
 
-  if (!game.debug.NN_Train_P1) {
+  if (!game.debug.NN_Train) {
     if (game.chomp.soundSheep.isPlaying) {
       setMusicChompSheepPause(game);
       game.chomp.afterPauseResumeSoundSheep = true;
@@ -70,7 +70,7 @@ export function setPhysicsAndMusicResume(game: SmashedGame): void {
   game.chomp.emitterDark.active = true;
   setAnimationsOn(game);
 
-  if (!game.debug.NN_Train_P1 && game.chomp.afterPauseResumeSoundSheep) {
+  if (!game.debug.NN_Train && game.chomp.afterPauseResumeSoundSheep) {
     setMusicChompSheepResume(game);
   }
   if (game.flag.afterPauseResumeMusicFlagMusicBox) {

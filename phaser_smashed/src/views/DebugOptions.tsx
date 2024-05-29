@@ -34,7 +34,14 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
 
         return (
           <div
-            id="option-debug"
+            id={showHomeList ? 'home-debug' : 'option-debug'}
+            className={
+              typeof value === 'boolean'
+                ? value
+                  ? 'option-debug-true'
+                  : 'option-debug-false'
+                : 'option-debug-true'
+            }
             key={index}
             onMouseEnter={() => {
               soundManager.blipSoundSoft();
@@ -46,7 +53,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               if (typeof value === 'number') {
                 setDebugState((prevState) => ({
                   ...prevState,
-                  [key]: (value + 1) % getMaxFromKey(key),
+                  [key]: (value + 1) % (getMaxFromKey(key) + 1),
                 }));
               }
 
@@ -58,23 +65,11 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               }
             }}
           >
-            {typeof value !== 'boolean' && (
-              <div className="debug-value">
-                <p>{value}</p>
-              </div>
-            )}
-            <p
-              className={'debug-key'}
-              id={
-                typeof value === 'boolean'
-                  ? value
-                    ? 'option-start-true'
-                    : 'option-start-false'
-                  : ''
-              }
-            >
-              {replaceUnderscoreWithSpace(key)}
-            </p>
+            <div className={'option-debug-text'}>
+              {replaceUnderscoreWithSpace(
+                (typeof value !== 'boolean' ? value : '') + '_' + key
+              )}
+            </div>
           </div>
         );
       })}

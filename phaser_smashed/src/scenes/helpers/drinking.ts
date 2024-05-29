@@ -119,7 +119,7 @@ export function setAddShotsToMatrixFlagCaptured(game: SmashedGame): void {
 }
 
 export function updateNumShotsLeft(game: SmashedGame): void {
-  if (!game.debug.Mode_Infinity) {
+  if (!game.debug.Infinity) {
     return;
   }
 

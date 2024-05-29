@@ -126,7 +126,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.Inst_Replay === 0 || debugState.NN_Train_P1) {
+    if (debugState.Inst_Replay === 0 || debugState.NN_Train) {
       setIsReplayHidden(true);
       return;
     }
@@ -681,7 +681,7 @@ function Play() {
       return;
     }
 
-    if (!debugState?.NN_Train_P1) {
+    if (!debugState?.NN_Train) {
       return;
     }
     const debugStateCopy = { ...debugState };
@@ -712,7 +712,7 @@ function Play() {
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
-  }, [debugState?.NN_Train_P1]);
+  }, [debugState?.NN_Train]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
@@ -1842,7 +1842,7 @@ function Play() {
               }}
             >
               <h1>Debug Options</h1>
-              <div id="debug-col">
+              <div className="player-choices-left">
                 <DebugOptions
                   showHomeList={false}
                   soundManager={soundManager}

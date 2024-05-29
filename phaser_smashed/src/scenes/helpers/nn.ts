@@ -19,7 +19,7 @@ export const nnConfigNN = {
 export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
-  if (!game.debug.NN_Train_P1) {
+  if (!game.debug.NN_Train) {
     return;
   }
 
@@ -285,7 +285,7 @@ export const NNSetPlayerPadStatic = (
 };
 
 export const addPlayerOneNNObjectsStatic = (game: SmashedGame): void => {
-  if (!game.debug.NN_Train_P1) {
+  if (!game.debug.NN_Train) {
     return;
   }
 
@@ -466,7 +466,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: SmashedGame
 ): void => {
-  if (!game.debug.NN_Train_P1) {
+  if (!game.debug.NN_Train) {
     return;
   }
 
