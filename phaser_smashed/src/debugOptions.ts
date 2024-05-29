@@ -9,7 +9,7 @@ export const debugInit: Debug = {
   Minutes: 1, //01234567
   Shots: 7, //7
   Dev_Zoom: 8,
-  Level: 10, // 0 - 10 inclusive
+  Stage: 10, // 0 - 10 inclusive
   Music_Active: true,
   Ready_Sound_Active: false,
   Use_Camera: true,
@@ -68,7 +68,7 @@ export const debugInit: Debug = {
 };
 
 export const debugMax: Debug = {
-  Level: 8, //0123456
+  Stage: 8, //0123456
   Dur_Seconds: true,
   Mode_Infinity: true,
   Shots: 15,
@@ -136,7 +136,7 @@ export const debugMax: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train_P1: true,
-  Level: 1, //0123456
+  Stage: 1, //0123456
   Mode_Infinity: true,
   Dur_Seconds: false,
   Shots: 0,

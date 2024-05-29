@@ -1,9 +1,9 @@
 import React from 'react';
-import { Debug, emoji } from '../scenes/interfaces';
-import { replaceUnderscoreWithSpace } from './reactHelpers';
+import { Debug } from '../scenes/interfaces';
 import { SoundManagerType } from './SoundManager';
+import { replaceUnderscoreWithSpace } from './reactHelpers';
 
-interface PlayOptionsProps {
+interface DebugOptionsProps {
   soundManager: SoundManagerType;
   debugState: Debug;
   mainOptionsDebugShowState: Debug;
@@ -12,7 +12,7 @@ interface PlayOptionsProps {
   onClickPlayNavBody: () => void;
 }
 
-const PlayOptions: React.FC<PlayOptionsProps> = ({
+const DebugOptions: React.FC<DebugOptionsProps> = ({
   soundManager,
   debugState,
   mainOptionsDebugShowState,
@@ -37,7 +37,7 @@ const PlayOptions: React.FC<PlayOptionsProps> = ({
 
             return (
               <div
-                id="optionDebug"
+                id="option-debug"
                 key={index}
                 onMouseEnter={() => {
                   soundManager.blipSoundSoft();
@@ -45,6 +45,7 @@ const PlayOptions: React.FC<PlayOptionsProps> = ({
                 onClick={(e) => {
                   soundManager.blipBeedeeSound();
                   e.stopPropagation();
+
                   if (typeof value === 'number') {
                     setDebugState((prevState) => ({
                       ...prevState,
@@ -60,16 +61,23 @@ const PlayOptions: React.FC<PlayOptionsProps> = ({
                   }
                 }}
               >
-                <div className="debug-value">
-                  <p>
-                    {typeof value !== 'boolean'
+                {typeof value !== 'boolean' && (
+                  <div className="debug-value">
+                    <p>{value}</p>
+                  </div>
+                )}
+                <p
+                  className={'debug-key'}
+                  id={
+                    typeof value === 'boolean'
                       ? value
-                      : value
-                      ? emoji.greenCheck
-                      : emoji.redX}
-                  </p>
-                </div>
-                <p className="key">{replaceUnderscoreWithSpace(key)}</p>
+                        ? 'option-start-true'
+                        : 'option-start-false'
+                      : ''
+                  }
+                >
+                  {replaceUnderscoreWithSpace(key)}
+                </p>
               </div>
             );
           })}
@@ -79,4 +87,4 @@ const PlayOptions: React.FC<PlayOptionsProps> = ({
   );
 };
 
-export default PlayOptions;
+export default DebugOptions;

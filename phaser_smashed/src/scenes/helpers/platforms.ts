@@ -4,11 +4,11 @@ import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 export function createPlatforms(game: SmashedGame): void {
   print(
     'createPlatforms',
-    game.debug.Level,
+    game.debug.Stage,
     'game.debug.Level',
-    game.debug.Level
+    game.debug.Stage
   );
-  switch (game.debug.Level) {
+  switch (game.debug.Stage) {
     case 0:
       createPlatforms0(game);
       break;
@@ -44,7 +44,7 @@ export function createPlatforms(game: SmashedGame): void {
       break;
     default:
       createPlatforms0(game);
-      print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.Level);
+      print('createPlatforms', 'DEFAULT', 'game.debug.Level', game.debug.Stage);
       break;
   }
 }

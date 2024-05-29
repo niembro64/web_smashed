@@ -6,7 +6,7 @@ export interface Debug {
   Dev_Mode: boolean;
   Dur_Seconds: boolean;
   Dev_Zoom: number;
-  Level: number;
+  Stage: number;
   Mode_Infinity: boolean;
   Minutes: number;
   Shots: number;

@@ -28,7 +28,7 @@ import {
   inputTypeNum,
 } from '../scenes/interfaces';
 import InputGroup from './InputPresets';
-import PlayOptions from './MainOptions';
+import DebugOptions from './DebugOptions';
 import { SoundManager, SoundManagerType } from './SoundManager';
 import {
   ClientInformation,
@@ -1419,7 +1419,7 @@ function Play() {
                         ? 'option-start-true'
                         : 'option-start-false'
                     }
-                    className={'optionStart'}
+                    className={'option-debug'}
                     key={index}
                     onClick={(e: React.MouseEvent) => {
                       if (key === 'mode_infinity') {
@@ -1492,7 +1492,7 @@ function Play() {
                               : ''}
                           </p>
                         </div>
-                        <p className="key-start">
+                        <p className="debug-key">
                           {replaceUnderscoreWithSpace(key)}
                         </p>
                       </>
@@ -1924,7 +1924,7 @@ function Play() {
         {/* PLAY OPTIONS */}
         {/* ////////////////////////////////// */}
         {showOptions && (
-          <PlayOptions
+          <DebugOptions
             soundManager={soundManager}
             debugState={debugState}
             mainOptionsDebugShowState={mainOptionsDebugShowState}
