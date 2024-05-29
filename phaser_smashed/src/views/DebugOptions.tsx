@@ -1,5 +1,5 @@
 import React from 'react';
-import { Debug } from '../scenes/interfaces';
+import { Debug, emoji } from '../scenes/interfaces';
 import { SoundManagerType } from './SoundManager';
 import { replaceUnderscoreWithSpace } from './reactHelpers';
 
@@ -67,7 +67,17 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
           >
             <div className={'option-debug-text'}>
               {replaceUnderscoreWithSpace(
-                (typeof value !== 'boolean' ? value : '') + '_' + key
+                (typeof value === 'boolean'
+                  ? value
+                    ? showHomeList
+                      ? ''
+                      : emoji.greenCheck
+                    : showHomeList
+                    ? ''
+                    : emoji.redX
+                  : value) +
+                  '_' +
+                  key
               )}
             </div>
           </div>
