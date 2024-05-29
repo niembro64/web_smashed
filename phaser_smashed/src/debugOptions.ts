@@ -7,7 +7,7 @@ export const debugInit: Debug = {
   Dur_Seconds: false,
   Infinity: true,
   Minutes: 1, //01234567
-  Shots: 9, //7
+  Shots: 8, //7
   Dev_Zoom: 8,
   Stage: 10, // 0 - 10 inclusive
   Music_Active: true,
