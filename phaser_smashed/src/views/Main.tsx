@@ -1402,104 +1402,14 @@ function Play() {
 
           <div className="player-choices">
             <div className="player-choices-left">
-              {Object.entries(debugState).map(([key, value], index: number) => {
-                if (!mainOptionsDebugShowState[key]) {
-                  return null;
-                }
-
-                return (
-                  <div
-                    onMouseEnter={() => {
-                      soundManager.blipSoundSoft();
-                    }}
-                    id={
-                      typeof value !== 'boolean'
-                        ? ''
-                        : value === true
-                        ? 'option-start-true'
-                        : 'option-start-false'
-                    }
-                    className={'option-debug'}
-                    key={index}
-                    onClick={(e: React.MouseEvent) => {
-                      if (key === 'mode_infinity') {
-                        const newMainOpotionsDebugShow: Debug = {
-                          ...mainOptionsDebugShowState,
-                        };
-                        if (debugState.Mode_Infinity) {
-                          newMainOpotionsDebugShow['Minutes'] = 1;
-                          newMainOpotionsDebugShow['Shots'] = 0;
-                        } else {
-                          newMainOpotionsDebugShow['Minutes'] = 0;
-                          newMainOpotionsDebugShow['Shots'] = 1;
-                        }
-
-                        setMainOptionsDebugShowState(
-                          (x) => newMainOpotionsDebugShow
-                        );
-                      }
-
-                      soundManager.blipBeedeeSound();
-                      e.stopPropagation();
-                      if (typeof value === 'number') {
-                        setDebugState((prevState) => ({
-                          ...prevState,
-                          [key]: (value + 1) % getMaxFromKey(key),
-                        }));
-                        print(index, key, value);
-                      }
-
-                      if (typeof value === 'boolean') {
-                        setDebugState((prevState) => ({
-                          ...prevState,
-                          [key]: !value,
-                        }));
-                        print(index, key, value);
-                      }
-                    }}
-                  >
-                    {key === 'music_track' && (
-                      <>
-                        <div className="debug-value">
-                          <p>🔊</p>
-                        </div>
-                        <p className="key-start">
-                          {(() => {
-                            switch (value) {
-                              case 0:
-                                return 'Dreamland';
-                              case 1:
-                                return 'Niemo Audio 1';
-                              case 2:
-                                return 'Niemo Audio 2';
-                              case 3:
-                                return '1200 Micro';
-                              default:
-                                return 'Off';
-                            }
-                          })()}
-                        </p>
-                      </>
-                    )}
-                    {key !== 'music_track' && (
-                      <>
-                        <div className="debug-value">
-                          <p>
-                            {typeof value !== 'boolean'
-                              ? value
-                              : value
-                              ? ''
-                              : ''}
-                          </p>
-                        </div>
-                        <p className="debug-key">
-                          {replaceUnderscoreWithSpace(key)}
-                        </p>
-                      </>
-                    )}
-                  </div>
-                );
-              })}
+              <DebugOptions
+                showHomeList={true}
+                soundManager={soundManager}
+                debugState={debugState}
+                mainOptionsDebugShowState={mainOptionsDebugShowState}
+                setDebugState={setDebugState}
+                getMaxFromKey={getMaxFromKey}
+              />
             </div>
             <div className="player-choices-right">
               {smashConfig.players.map((p, pIndex) => {
@@ -1924,16 +1834,26 @@ function Play() {
         {/* PLAY OPTIONS */}
         {/* ////////////////////////////////// */}
         {showOptions && (
-          <DebugOptions
-            soundManager={soundManager}
-            debugState={debugState}
-            mainOptionsDebugShowState={mainOptionsDebugShowState}
-            setDebugState={setDebugState}
-            getMaxFromKey={getMaxFromKey}
-            onClickPlayNavBody={() => {
-              onClickPlayNavBody('Options');
-            }}
-          />
+          <div className="over-div">
+            <div
+              className="popup"
+              onClick={() => {
+                onClickPlayNavBody('Options');
+              }}
+            >
+              <h1>Debug Options</h1>
+              <div id="debug-col">
+                <DebugOptions
+                  showHomeList={false}
+                  soundManager={soundManager}
+                  debugState={debugState}
+                  mainOptionsDebugShowState={mainOptionsDebugShowState}
+                  setDebugState={setDebugState}
+                  getMaxFromKey={getMaxFromKey}
+                />
+              </div>
+            </div>
+          </div>
         )}
 
         {showControls && (

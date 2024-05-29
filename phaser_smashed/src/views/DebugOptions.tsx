@@ -8,8 +8,8 @@ interface DebugOptionsProps {
   debugState: Debug;
   mainOptionsDebugShowState: Debug;
   setDebugState: React.Dispatch<React.SetStateAction<Debug>>;
+  showHomeList: boolean;
   getMaxFromKey: (key: string) => number;
-  onClickPlayNavBody: () => void;
 }
 
 const DebugOptions: React.FC<DebugOptionsProps> = ({
@@ -18,72 +18,67 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
   mainOptionsDebugShowState,
   setDebugState,
   getMaxFromKey,
-  onClickPlayNavBody,
+  showHomeList,
 }) => {
   return (
-    <div className="over-div">
-      <div
-        className="popup"
-        onClick={() => {
-          onClickPlayNavBody();
-        }}
-      >
-        <h1>Debug Options</h1>
-        <div id="debug-col">
-          {Object.entries(debugState).map(([key, value], index) => {
-            if (!!mainOptionsDebugShowState[key]) {
-              return null;
-            }
+    <>
+      {Object.entries(debugState).map(([key, value], index) => {
+        const putKeyOnHome: boolean = !!mainOptionsDebugShowState[key];
 
-            return (
-              <div
-                id="option-debug"
-                key={index}
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                onClick={(e) => {
-                  soundManager.blipBeedeeSound();
-                  e.stopPropagation();
+        if (
+          (showHomeList && !putKeyOnHome) ||
+          (!showHomeList && putKeyOnHome)
+        ) {
+          return null;
+        }
 
-                  if (typeof value === 'number') {
-                    setDebugState((prevState) => ({
-                      ...prevState,
-                      [key]: (value + 1) % getMaxFromKey(key),
-                    }));
-                  }
+        return (
+          <div
+            id="option-debug"
+            key={index}
+            onMouseEnter={() => {
+              soundManager.blipSoundSoft();
+            }}
+            onClick={(e) => {
+              soundManager.blipBeedeeSound();
+              e.stopPropagation();
 
-                  if (typeof value === 'boolean') {
-                    setDebugState((prevState) => ({
-                      ...prevState,
-                      [key]: !value,
-                    }));
-                  }
-                }}
-              >
-                {typeof value !== 'boolean' && (
-                  <div className="debug-value">
-                    <p>{value}</p>
-                  </div>
-                )}
-                <p
-                  className={'debug-key'}
-                  id={
-                    typeof value === 'boolean'
-                      ? value
-                        ? 'option-start-true'
-                        : 'option-start-false'
-                      : ''
-                  }
-                >
-                  {replaceUnderscoreWithSpace(key)}
-                </p>
+              if (typeof value === 'number') {
+                setDebugState((prevState) => ({
+                  ...prevState,
+                  [key]: (value + 1) % getMaxFromKey(key),
+                }));
+              }
+
+              if (typeof value === 'boolean') {
+                setDebugState((prevState) => ({
+                  ...prevState,
+                  [key]: !value,
+                }));
+              }
+            }}
+          >
+            {typeof value !== 'boolean' && (
+              <div className="debug-value">
+                <p>{value}</p>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+            )}
+            <p
+              className={'debug-key'}
+              id={
+                typeof value === 'boolean'
+                  ? value
+                    ? 'option-start-true'
+                    : 'option-start-false'
+                  : ''
+              }
+            >
+              {replaceUnderscoreWithSpace(key)}
+            </p>
+          </div>
+        );
+      })}
+    </>
   );
 };
 
