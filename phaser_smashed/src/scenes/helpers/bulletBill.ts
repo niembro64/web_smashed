@@ -69,56 +69,67 @@ export const updateBulletBill = (game: SmashedGame): void => {
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const stateCurr: BulletBillComboState = bbCombo.stateCurr;
 
+  const closestTouchingIndex: number | null = getClosestPlayerTouchingButton(game);
+
   switch (stateCurr) {
     case 'button-up':
-      if (isAnyPlayerNearAndTouchingDown(game)) {
+      bbCombo.button.playerIndexPressing = closestTouchingIndex;
+      if (closestTouchingIndex !== null) {
         setBulletBillState(game, 'button-down');
       }
       break;
     case 'button-down':
       updateSparkOnSparkLine(game);
-
-      if (!isAnyPlayerNearAndTouchingDown(game)) {
+      bbCombo.button.playerIndexPressing = closestTouchingIndex;
+      if (closestTouchingIndex === null) {
         setBulletBillState(game, 'button-up');
       }
       break;
     case 'shooting':
+      bbCombo.button.playerIndexPressing = null;
       if (bbBullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
         setBulletBillState(game, 'button-up');
       }
 
       break;
     case 'cooldown':
-      break;
+      throw new Error('updateBulletBill: cooldown');
     default:
       throw new Error(`Invalid BulletBillComboState: ${stateCurr}`);
   }
 };
 
-const isAnyPlayerNearAndTouchingDown = (game: SmashedGame): boolean => {
-  const players: Player[] = game.players;
-  const bbButton: BulletBillButton = game.bulletBillCombo.button;
+const getClosestPlayerTouchingButton = (game: SmashedGame): number | null => {
+  const {
+    players,
+    bulletBillCombo: { button: bbButton },
+  } = game;
 
-  for (let i = 0; i < players.length; i++) {
-    const player = players[i];
-    const playerBody = player.char.sprite.body;
+  let closestPlayerIndex: number | null = null;
+  let shortestDistance = Infinity;
+
+  players.forEach((player, index) => {
+    const { body: playerBody } = player.char.sprite;
 
     if (playerBody.touching.down) {
-      const playerX = playerBody.x + playerBody.width / 2;
-      const playerY = playerBody.y + playerBody.height;
+      const playerCenterX = playerBody.x + playerBody.width / 2;
+      const playerBottomY = playerBody.y + playerBody.height;
+      const distanceToButton = Math.hypot(
+        playerCenterX - bbButton.posInit.x,
+        playerBottomY - bbButton.posInit.y
+      );
 
-      const dx = playerX - bbButton.posInit.x;
-      const dy = playerY - bbButton.posInit.y;
-
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      if (distance < bbButton.distanceTrigger) {
-        return true;
+      if (
+        distanceToButton < bbButton.distanceTrigger &&
+        distanceToButton < shortestDistance
+      ) {
+        shortestDistance = distanceToButton;
+        closestPlayerIndex = index;
       }
     }
-  }
+  });
 
-  return false;
+  return closestPlayerIndex;
 };
 
 export const setBulletBillState = (

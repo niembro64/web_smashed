@@ -579,6 +579,7 @@ export type BulletBillButton = {
   scale: number;
   distanceTrigger: number;
   sound: any;
+  playerIndexPressing: number | null;
   spriteDown: any;
   spriteUp: any;
   posInit: Position;

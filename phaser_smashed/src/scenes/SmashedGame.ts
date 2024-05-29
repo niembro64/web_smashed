@@ -874,6 +874,7 @@ export default class SmashedGame extends Phaser.Scene {
       afterPauseResumeButtonSound: false,
       sound: null,
       scale: 0.11,
+      playerIndexPressing: null,
       posInit: {
         x: 1400.5,
         y: 429,

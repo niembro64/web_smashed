@@ -1,5 +1,11 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Player, Position, Velocity, xyVector } from '../interfaces';
+import {
+  BulletBillButton,
+  Player,
+  Position,
+  Velocity,
+  xyVector,
+} from '../interfaces';
 import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
 import {
@@ -152,7 +158,7 @@ export function getIsBotTooFarCenterRight(
 }
 export function getIsBotTooFarLeft(player: Player, game: SmashedGame): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.11;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.04;
   if (bot.x < left) {
     return true;
   }
@@ -483,6 +489,8 @@ export function updateBotRules(
   const jumpIndex = player.char.jumpIndex;
   const onLastJump = jumpIndex === jumps.length - 1;
 
+  const button: BulletBillButton = game.bulletBillCombo.button;
+
   //////////////////////
   // DODGING
   //////////////////////
@@ -567,6 +575,7 @@ export function updateBotRules(
       }
     }
   }
+
   if (
     //////////////////////
     // WALL JUMPING
@@ -690,5 +699,57 @@ export function updateBotRules(
     Math.random() > 0.01
   ) {
     p.Y = !p.Y;
+  }
+
+  //////////////////////
+  // IF BUTTON STATE IS NOT FIRING RUN TOWARDS BUTTON
+  //////////////////////
+  if (game.bulletBillCombo.stateCurr !== 'shooting' && Math.random() < 0.01) {
+    if (
+      player.char.sprite.body.position.x + player.char.sprite.body.width / 2 <
+      button.posInit.x
+    ) {
+      p.right = true;
+      p.left = false;
+    } else {
+      p.left = true;
+      p.right = false;
+    }
+  }
+
+  //////////////////////
+  // STOP IF TOUCHING BUTTON
+  //////////////////////
+
+  if (button.playerIndexPressing === playerIndex) {
+    p.up = false;
+    p.down = false;
+
+    const buttonPosition = button.spriteDown.body.position.x;
+    const buttonWidth = button.spriteDown.width / 6;
+    const playerPosition = player.char.sprite.body.position.x;
+
+    if (playerPosition < buttonPosition - buttonWidth) {
+      p.right = true;
+      p.left = false;
+    } else if (buttonPosition + buttonWidth < playerPosition) {
+      p.left = true;
+      p.right = false;
+    } else {
+      p.left = false;
+      p.right = false;
+    }
+  }
+
+  //////////////////////
+  // STOP IF HEALTH CURR GREATER THAN HEALTH PREV
+  //////////////////////
+  if (player.char.damageCurr < player.char.damagePrev) {
+    p.up = false;
+    p.down = false;
+    p.left = false;
+    p.right = false;
+    
+    p.Y = false;
   }
 }
