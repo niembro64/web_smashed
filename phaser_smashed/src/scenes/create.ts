@@ -1617,7 +1617,7 @@ function createBulletBill(game: SmashedGame): void {
   bbCombo.bullet.sprite.body.setMass(bbCombo.bullet.mass);
   bbCombo.bullet.sprite.setImmovable(true);
 
-  // bbCombo.bullet.sprite.setTint(getInactiveBackgroundTintColor());
+  bbCombo.bullet.sprite.setTint(0xff0000);
 
   bbCombo.cannon.sprite = game.physics.add.sprite(
     bbCombo.cannon.posInit.x,
