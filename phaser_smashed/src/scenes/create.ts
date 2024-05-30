@@ -826,7 +826,7 @@ function createHitboxOverlap(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     game.physics.add.overlap(
       player.char.sprite,
-      game.bulletBillCombo.bullet.sprite,
+      game.bulletBillCombo.bullet.sprite_0,
       function () {
         onHitHandlerBulletBill(player, playerIndex, game);
       }
@@ -1605,24 +1605,46 @@ function createCollidersAEvAP(game: SmashedGame): void {
 function createBulletBill(game: SmashedGame): void {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
 
-  bbCombo.bullet.sprite = game.physics.add.sprite(
-    bbCombo.bullet.posInit.x,
-    bbCombo.bullet.posInit.y,
-    bbCombo.bullet.srcImage
-  );
+  for (let i = 0; i < 5; i++) {
+    let image: number | null = null;
 
-  bbCombo.bullet.sprite.setScale(bbCombo.bullet.scale);
-  bbCombo.bullet.sprite.body.allowGravity = false;
-  bbCombo.bullet.sprite.setOrigin(0.5, 0.5);
-  bbCombo.bullet.sprite.body.setMass(bbCombo.bullet.mass);
-  bbCombo.bullet.sprite.setImmovable(true);
+    switch (i) {
+      case 0:
+        image = bbCombo.bullet.srcImage_0;
+        break;
+      case 1:
+        image = bbCombo.bullet.srcImage_1;
+        break;
+      case 2:
+        image = bbCombo.bullet.srcImage_2;
+        break;
+      case 3:
+        image = bbCombo.bullet.srcImage_3;
+        break;
+        defualt: throw new Error('BulletBill image not found');
+    }
 
-  bbCombo.bullet.sprite.setTint(0xff0000); // Apply the tint color
-
-  // set blend mode to multiply
-  bbCombo.bullet.sprite.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    bbCombo.bullet.sprite[i] = game.physics.add.sprite(
+      bbCombo.bullet.posInit.x,
+      bbCombo.bullet.posInit.y,
+      image
+    );
+  }
   
-    
+
+    bbCombo.bullet.sprite_0 = game.physics.add.sprite(
+      bbCombo.bullet.posInit.x,
+      bbCombo.bullet.posInit.y,
+      bbCombo.bullet.srcImage_0
+    );
+  }
+
+  bbCombo.bullet.sprite_0.setScale(bbCombo.bullet.scale);
+  bbCombo.bullet.sprite_0.body.allowGravity = false;
+  bbCombo.bullet.sprite_0.setOrigin(0.5, 0.5);
+  bbCombo.bullet.sprite_0.body.setMass(bbCombo.bullet.mass);
+  bbCombo.bullet.sprite_0.setImmovable(true);
+
   bbCombo.cannon.sprite = game.physics.add.sprite(
     bbCombo.cannon.posInit.x,
     bbCombo.cannon.posInit.y,
@@ -1678,12 +1700,12 @@ function createCollidersBulletBill(game: SmashedGame): void {
     }
   });
 
-  game.physics.add.collider(bbBullet.sprite, ff.attackBullets);
+  game.physics.add.collider(bbBullet.sprite_0, ff.attackBullets);
 
   fireFlowerBullets.children.iterate((child: any) => {
     child.body.allowGravity = game.debug.Flower_Gravity;
 
-    game.physics.add.collider(child, bbBullet.sprite);
+    game.physics.add.collider(child, bbBullet.sprite_0);
     game.physics.add.collider(child, bbCannon.sprite);
     game.physics.add.collider(child, game.TABLE);
   });

@@ -69,7 +69,8 @@ export const updateBulletBill = (game: SmashedGame): void => {
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const stateCurr: BulletBillComboState = bbCombo.stateCurr;
 
-  const closestTouchingIndex: number | null = getClosestPlayerTouchingButton(game);
+  const closestTouchingIndex: number | null =
+    getClosestPlayerTouchingButton(game);
 
   switch (stateCurr) {
     case 'button-up':
@@ -87,7 +88,7 @@ export const updateBulletBill = (game: SmashedGame): void => {
       break;
     case 'shooting':
       bbCombo.button.playerIndexPressing = null;
-      if (bbBullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
+      if (bbBullet.sprite_0.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
         setBulletBillState(game, 'button-up');
       }
 
@@ -171,11 +172,11 @@ export const setBulletBillState = (
       bulletBillPlayExplosion(game);
 
       bbSparkLine.percentPathCurrCompleted = 0;
-      bbBullet.sprite.body.x = bbBullet.posInit.x;
-      bbBullet.sprite.body.y = bbBullet.posInit.y;
+      bbBullet.sprite_0.body.x = bbBullet.posInit.x;
+      bbBullet.sprite_0.body.y = bbBullet.posInit.y;
 
-      bbBullet.sprite.body.setVelocityX(bbBullet.velInit.x);
-      bbBullet.sprite.body.setVelocityY(bbBullet.velInit.y);
+      bbBullet.sprite_0.body.setVelocityX(bbBullet.velInit.x);
+      bbBullet.sprite_0.body.setVelocityY(bbBullet.velInit.y);
 
       bbSparkLine.emitter.on = false;
       bbSparkLine.pathPointsIndexCurr = 0;

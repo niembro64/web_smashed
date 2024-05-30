@@ -529,8 +529,8 @@ export function onHitHandlerBulletBill(
   player.char.damageCurr += game.bulletBillCombo.bullet.damage;
 
   const normalizedVector = getNormalizedVector(
-    game.bulletBillCombo.bullet.sprite.x,
-    game.bulletBillCombo.bullet.sprite.y,
+    game.bulletBillCombo.bullet.sprite_0.x,
+    game.bulletBillCombo.bullet.sprite_0.y,
     player.char.sprite.x,
     player.char.sprite.y
   );

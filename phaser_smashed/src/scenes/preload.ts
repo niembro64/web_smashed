@@ -161,7 +161,11 @@ export function preload(game: SmashedGame): void {
   game.load.image('button_up', 'images/pswitch_up.png');
   game.load.image('bullet_bill_tower', 'images/bullet_bill_line_tower.png');
   game.load.image('bullet_bill_cannon', 'images/bullet_bill_cannon.png');
-  game.load.image('bullet_bill_bullet', 'images/bullet_bill_bullet.png');
+  // game.load.image('bullet_bill_bullet', 'images/bullet_bill_bullet.png');
+  game.load.image('bullet_bill_bullet_0', 'images/bullet_bill_bullet_red.png');
+  game.load.image('bullet_bill_bullet_1', 'images/bullet_bill_bullet_blue.png');
+  game.load.image('bullet_bill_bullet_2', 'images/bullet_bill_bullet_yellow.png');
+  game.load.image('bullet_bill_bullet_3', 'images/bullet_bill_bullet_green.png');
   game.load.image('bulletFireBall', 'images/fireball_2x.png');
   game.load.image('cannon', 'images/fire_flower_5x_t.png');
   game.load.image('fist-gray', 'images/fist-gray.png');

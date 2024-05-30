@@ -893,7 +893,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     bullet: {
       scale: this.bbScale,
-      sprite: null,
+      sprite_0: null,
       sound: null,
       explosionSprite: null,
       explosionPosInit: {
@@ -904,7 +904,10 @@ export default class SmashedGame extends Phaser.Scene {
       damage: 100,
       hitback: { x: 17, y: 17 },
       diesOnHitbox: false,
-      srcImage: 'bullet_bill_bullet',
+      srcImage_0: 'bullet_bill_bullet_0',
+      srcImage_1: 'bullet_bill_bullet_1',
+      srcImage_2: 'bullet_bill_bullet_2',
+      srcImage_3: 'bullet_bill_bullet_3',
       posInit: {
         x: this.bbBulletInitX,
         y: this.bbBulletInitY,

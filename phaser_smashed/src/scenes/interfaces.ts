@@ -548,14 +548,20 @@ export type BulletBillTower = {
 export type BulletBillBullet = {
   scale: number;
   mass: number;
-  sprite: any;
+  sprite_0: any;
+  sprite_1: any;
+  sprite_2: any;
+  sprite_3: any;
   sound: any;
   explosionSprite: any;
   explosionPosInit: Position;
   damage: number;
   hitback: Hitback;
   diesOnHitbox: boolean;
-  srcImage: any;
+  srcImage_0: any;
+  srcImage_1: any;
+  srcImage_2: any;
+  srcImage_3: any;
   posInit: Position;
   velInit: Position;
 };
