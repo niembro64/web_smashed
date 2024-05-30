@@ -518,6 +518,7 @@ export function updateDamagePrev(game: SmashedGame): void {
 export function onHitHandlerBulletBill(
   player: Player,
   playerIndex: number,
+  bulletIndex: number,
   game: SmashedGame
 ): void {
   if (player.state.name !== 'player-state-alive') {
@@ -528,9 +529,30 @@ export function onHitHandlerBulletBill(
 
   player.char.damageCurr += game.bulletBillCombo.bullet.damage;
 
+  let closestBulletBillBulletIndex: number | null = null;
+  let shortestDistance = Infinity;
+
+  const bullet = game.bulletBillCombo.bullet.sprites[bulletIndex];
+
+  const distance = getDistance(
+    bullet.x,
+    bullet.y,
+    player.char.sprite.x,
+    player.char.sprite.y
+  );
+
+  if (distance < shortestDistance) {
+    shortestDistance = distance;
+    closestBulletBillBulletIndex = bulletIndex;
+  }
+
+  if (closestBulletBillBulletIndex === null) {
+    return;
+  }
+
   const normalizedVector = getNormalizedVector(
-    game.bulletBillCombo.bullet.sprite_0.x,
-    game.bulletBillCombo.bullet.sprite_0.y,
+    game.bulletBillCombo.bullet.sprites[bulletIndex].x,
+    game.bulletBillCombo.bullet.sprites[bulletIndex].y,
     player.char.sprite.x,
     player.char.sprite.y
   );

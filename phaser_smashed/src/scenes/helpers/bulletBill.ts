@@ -72,31 +72,33 @@ export const updateBulletBill = (game: SmashedGame): void => {
   const closestTouchingIndex: number | null =
     getClosestPlayerTouchingButton(game);
 
-  switch (stateCurr) {
-    case 'button-up':
-      bbCombo.button.playerIndexPressing = closestTouchingIndex;
-      if (closestTouchingIndex !== null) {
-        setBulletBillState(game, 'button-down');
-      }
-      break;
-    case 'button-down':
-      updateSparkOnSparkLine(game);
-      bbCombo.button.playerIndexPressing = closestTouchingIndex;
-      if (closestTouchingIndex === null) {
-        setBulletBillState(game, 'button-up');
-      }
-      break;
-    case 'shooting':
-      bbCombo.button.playerIndexPressing = null;
-      if (bbBullet.sprite_0.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
-        setBulletBillState(game, 'button-up');
-      }
+  for (let i = 0; i < game.players.length; i++) {
+    switch (stateCurr) {
+      case 'button-up':
+        bbCombo.button.playerIndexPressing = closestTouchingIndex;
+        if (closestTouchingIndex !== null) {
+          setBulletBillState(game, 'button-down');
+        }
+        break;
+      case 'button-down':
+        updateSparkOnSparkLine(game);
+        bbCombo.button.playerIndexPressing = closestTouchingIndex;
+        if (closestTouchingIndex === null) {
+          setBulletBillState(game, 'button-up');
+        }
+        break;
+      case 'shooting':
+        bbCombo.button.playerIndexPressing = null;
+        if (bbBullet.sprites[i].body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
+          setBulletBillState(game, 'button-up');
+        }
 
-      break;
-    case 'cooldown':
-      throw new Error('updateBulletBill: cooldown');
-    default:
-      throw new Error(`Invalid BulletBillComboState: ${stateCurr}`);
+        break;
+      case 'cooldown':
+        throw new Error('updateBulletBill: cooldown');
+      default:
+        throw new Error(`Invalid BulletBillComboState: ${stateCurr}`);
+    }
   }
 };
 
@@ -172,11 +174,14 @@ export const setBulletBillState = (
       bulletBillPlayExplosion(game);
 
       bbSparkLine.percentPathCurrCompleted = 0;
-      bbBullet.sprite_0.body.x = bbBullet.posInit.x;
-      bbBullet.sprite_0.body.y = bbBullet.posInit.y;
 
-      bbBullet.sprite_0.body.setVelocityX(bbBullet.velInit.x);
-      bbBullet.sprite_0.body.setVelocityY(bbBullet.velInit.y);
+      for (let i = 0; i < game.players.length; i++) {
+        bbBullet.sprites[i].body.x = bbBullet.posInit.x;
+        bbBullet.sprites[i].body.y = bbBullet.posInit.y;
+
+        bbBullet.sprites[i].body.setVelocityX(bbBullet.velInit.x);
+        bbBullet.sprites[i].body.setVelocityY(bbBullet.velInit.y);
+      }
 
       bbSparkLine.emitter.on = false;
       bbSparkLine.pathPointsIndexCurr = 0;

@@ -823,16 +823,17 @@ function createHitboxOverlap(game: SmashedGame): void {
   });
 
   // PLAYER BULLET BILL BULLET OVERLAP
-  game.players.forEach((player, playerIndex) => {
-    game.physics.add.overlap(
-      player.char.sprite,
-      game.bulletBillCombo.bullet.sprite_0,
-      function () {
-        onHitHandlerBulletBill(player, playerIndex, game);
-      }
-    );
-  });
-
+  for (let i = 0; i < game.bulletBillCombo.bullet.sprites.length; i++) {
+    game.players.forEach((player, playerIndex) => {
+      game.physics.add.overlap(
+        player.char.sprite,
+        game.bulletBillCombo.bullet.sprites,
+        function () {
+          onHitHandlerBulletBill(player, playerIndex, i, game);
+        }
+      );
+    });
+  }
   // PLAYER CHOMP OVERLAP
   game.players.forEach((player, playerIndex) => {
     game.physics.add.overlap(
@@ -1605,45 +1606,22 @@ function createCollidersAEvAP(game: SmashedGame): void {
 function createBulletBill(game: SmashedGame): void {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
 
-  for (let i = 0; i < 5; i++) {
-    let image: number | null = null;
+  for (let i = 0; i < 1; i++) {
+    const image = 'bullet_bill_bullet_' + i;
+    let sprite = bbCombo.bullet.sprites[i];
 
-    switch (i) {
-      case 0:
-        image = bbCombo.bullet.srcImage_0;
-        break;
-      case 1:
-        image = bbCombo.bullet.srcImage_1;
-        break;
-      case 2:
-        image = bbCombo.bullet.srcImage_2;
-        break;
-      case 3:
-        image = bbCombo.bullet.srcImage_3;
-        break;
-        defualt: throw new Error('BulletBill image not found');
-    }
-
-    bbCombo.bullet.sprite[i] = game.physics.add.sprite(
+    bbCombo.bullet.sprites[i] = game.physics.add.sprite(
       bbCombo.bullet.posInit.x,
       bbCombo.bullet.posInit.y,
       image
     );
-  }
-  
 
-    bbCombo.bullet.sprite_0 = game.physics.add.sprite(
-      bbCombo.bullet.posInit.x,
-      bbCombo.bullet.posInit.y,
-      bbCombo.bullet.srcImage_0
-    );
+    bbCombo.bullet.sprites[i].setScale(bbCombo.bullet.scale);
+    bbCombo.bullet.sprites[i].body.allowGravity = false;
+    bbCombo.bullet.sprites[i].setOrigin(0.5, 0.5);
+    bbCombo.bullet.sprites[i].body.setMass(bbCombo.bullet.mass);
+    bbCombo.bullet.sprites[i].setImmovable(true);
   }
-
-  bbCombo.bullet.sprite_0.setScale(bbCombo.bullet.scale);
-  bbCombo.bullet.sprite_0.body.allowGravity = false;
-  bbCombo.bullet.sprite_0.setOrigin(0.5, 0.5);
-  bbCombo.bullet.sprite_0.body.setMass(bbCombo.bullet.mass);
-  bbCombo.bullet.sprite_0.setImmovable(true);
 
   bbCombo.cannon.sprite = game.physics.add.sprite(
     bbCombo.cannon.posInit.x,
@@ -1651,15 +1629,10 @@ function createBulletBill(game: SmashedGame): void {
     bbCombo.cannon.srcImage
   );
 
-  // bb.cannon.sprite.setScale(0.01);
   bbCombo.cannon.sprite.setScale(bbCombo.cannon.scale);
   bbCombo.cannon.sprite.setImmovable(true);
   bbCombo.cannon.sprite.body.allowGravity = false;
   bbCombo.cannon.sprite.setOrigin(0.5, 0.5);
-
-  // if (!game.debug.BulletBill_Bullet_Visible) {
-  //   bbCombo.cannon.sprite.setTint(getInactiveBackgroundTintColor());
-  // }
 }
 
 function createCollidersBulletBill(game: SmashedGame): void {
@@ -1700,12 +1673,16 @@ function createCollidersBulletBill(game: SmashedGame): void {
     }
   });
 
-  game.physics.add.collider(bbBullet.sprite_0, ff.attackBullets);
+  for (let i = 0; i < bbBullet.sprites.length; i++) {
+    game.physics.add.collider(bbBullet.sprites[i], ff.attackBullets);
+  }
 
   fireFlowerBullets.children.iterate((child: any) => {
     child.body.allowGravity = game.debug.Flower_Gravity;
 
-    game.physics.add.collider(child, bbBullet.sprite_0);
+    for (let i = 0; i < bbBullet.sprites.length; i++) {
+      game.physics.add.collider(child, bbBullet.sprites[i]);
+    }
     game.physics.add.collider(child, bbCannon.sprite);
     game.physics.add.collider(child, game.TABLE);
   });
