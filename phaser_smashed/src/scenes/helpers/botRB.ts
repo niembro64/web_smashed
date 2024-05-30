@@ -722,9 +722,6 @@ export function updateBotRules(
   //////////////////////
 
   if (button.playerIndexPressing === playerIndex) {
-    p.up = false;
-    p.down = false;
-
     const buttonPosition = button.spriteDown.body.position.x;
     const buttonWidth = button.spriteDown.width / 6;
     const playerPosition = player.char.sprite.body.position.x;
@@ -749,7 +746,7 @@ export function updateBotRules(
     p.down = false;
     p.left = false;
     p.right = false;
-    
+
     p.Y = false;
   }
 }
