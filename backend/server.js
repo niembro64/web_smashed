@@ -12,6 +12,9 @@ app.use(express.json(), express.urlencoded({ extended: true }));
 const AllMySmashedRoutes = require('./server/routes/smashed.routes');
 AllMySmashedRoutes(app);
 
+const NeuralNetworkRoutes = require('./server/routes/neuralNetwork.routes');
+NeuralNetworkRoutes(app);
+
 app.get('/api', (req, res) => {
   console.log('trying to talk to database');
   res.json({ title: 'Niemo Smashed', port: port });

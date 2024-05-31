@@ -35,6 +35,7 @@ import {
   SessionInfo,
   axiosSaveOne,
   fetchClientData,
+  fetchNeuralNetwork,
   getAllAxios,
   print,
   sumNumbersIn2DArrayString,
@@ -56,6 +57,7 @@ import {
   workingControllersAmazon,
 } from './reactHelpers';
 import { MusicManager, MusicManagerType } from './MusicManager';
+import { nnJsonNNHardcodeClient } from '../scenes/helpers/nnJson';
 
 export const blipDelay = 200;
 
@@ -79,6 +81,27 @@ function Play() {
   const chunksRef = useRef<Blob[]>([]);
 
   const [videoGray, setVideoGray] = useState(false);
+
+  const nnJsonReact = useRef<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      let nn = null;
+      if (debugState.NN_Use_Client) {
+        print('USING CLIENT NN');
+        nn = nnJsonNNHardcodeClient;
+      } else {
+        print('FETCHING NEURAL NETWORK');
+        nn = await fetchNeuralNetwork();
+
+        if (!nn) {
+          throw new Error('nn === null');
+        }
+      }
+
+      nnJsonReact.current = nn;
+    })();
+  }, [debugState.NN_Use_Client]);
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
     useState<Debug>(showOptionOnMainScreenInit);
@@ -801,6 +824,7 @@ function Play() {
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debugState);
       myPhaser.current.registry.set('myMoment', myMoment);
+      myPhaser.current.registry.set('nnJson', nnJsonReact.current);
     }, setTimeoutQuotesLengthStart);
 
     const c: ClientInformation = await fetchClientData();

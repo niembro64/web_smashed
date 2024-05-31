@@ -1459,18 +1459,19 @@ function createAttackEnergies(game: SmashedGame): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      if (!(game.debug.NN_Train && playerIndex === 0)) {
-        for (
-          let i = 0;
-          i < game.fireFlower.attackBullets.bullets.getChildren().length;
-          i++
-        ) {
-          game.physics.add.collider(
-            aebs,
-            game.fireFlower.attackBullets.bullets.getChildren()[i]
-          );
-        }
-      }
+      // if (!(game.debug.NN_Train && playerIndex === 0)) {
+      //   for (
+      //     let i = 0;
+      //     i < game.fireFlower.attackBullets.bullets.getChildren().length;
+      //     i++
+      //   ) {
+      //     game.physics.add.collider(
+      //       aebs,
+      //       game.fireFlower.attackBullets.bullets.getChildren()[i]
+      //     );
+      //   }
+      // }
+
       // turn off gravity for bullets
       aebs.children.iterate((child: any) => {
         if (player.char.attackEnergy.gravity) {

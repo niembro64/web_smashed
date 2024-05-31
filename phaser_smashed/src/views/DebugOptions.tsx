@@ -37,11 +37,18 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
         let textToShow: string = 'XXX';
 
         switch (key) {
-          case 'Mode_Infinity':
-            if (value) {
-              textToShow = 'Shots Mode';
+          // case 'Mode_Infinity':
+          //   if (value) {
+          //     textToShow = 'Shots Mode';
+          //   } else {
+          //     textToShow = 'Time Mode';
+          //   }
+          //   break;
+          case 'Minutes':
+            if (debugState.Dur_Seconds) {
+              textToShow = value + ' Seconds';
             } else {
-              textToShow = 'Time Mode';
+              textToShow = value + ' Minutes';
             }
             break;
           default:
@@ -68,9 +75,9 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               typeof value === 'boolean'
                 ? value
                   ? 'option-debug-true'
-                  : showHomeList
-                  ? 'option-debug-true'
-                  : 'option-debug-false'
+                  : // : showHomeList
+                    // ? 'option-debug-true'
+                    'option-debug-false'
                 : 'option-debug-true'
             }
             key={index}

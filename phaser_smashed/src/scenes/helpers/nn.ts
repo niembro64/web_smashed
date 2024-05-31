@@ -1,5 +1,9 @@
 import { NeuralNetwork } from 'brain.js';
-import { print } from '../../views/client';
+import {
+  fetchNeuralNetwork,
+  print,
+  saveNeuralNetwork,
+} from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import { NNObject, Player } from '../types';
 import {
@@ -9,7 +13,7 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
-import { nnJsonNN } from './nnJson';
+import { nnJsonNNHardcodeClient } from './nnJson';
 
 export const nnConfigNN = {
   hiddenLayers: [40],
@@ -23,10 +27,17 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     return;
   }
 
-  print('NNTrain');
+  // print('NNTrain');
+  // let nnJsonToUse = await fetchNeuralNetwork();
+  // if (!nnJsonToUse) {
+  //   nnJsonToUse = nnJsonNNHardcodeClient;
+  // }
 
-  game.nnNet = new NeuralNetwork(nnConfigNN);
-  game.nnNet = game.nnNet.fromJSON(nnJsonNN);
+  // // const nnJsonToUse = nnJsonNNHardcodeClient;
+
+
+  // game.nnNet = new NeuralNetwork(nnConfigNN);
+  // game.nnNet = game.nnNet.fromJSON(nnJsonToUse);
   print('game.nnNet', game.nnNet);
 
   let randomizedNnObjects: NNObject[] = game.nnObjects.sort(() =>
@@ -119,6 +130,14 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
       },
     })
   );
+
+  const success = await saveNeuralNetwork(netJson);
+
+  if (success) {
+    print('neural network saved');
+  } else {
+    print('neural network not saved');
+  }
 };
 
 const NNGetOutputRatios = (game: SmashedGame): number[] => {

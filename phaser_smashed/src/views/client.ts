@@ -1,6 +1,7 @@
 import axios from 'axios';
 import moment, { Moment } from 'moment';
 import { Debug, SmashConfig } from '../scenes/types';
+import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
 
 export interface ClientInformation {
   city: string;
@@ -163,44 +164,6 @@ export const axiosUpsertOne = async (
   };
   print('NEW SESSION', si);
 
-  // let sessionInfoReturn = {
-  //   smashConfig: JSON.parse(si.smashConfig),
-  //   debug: JSON.parse(si.debug),
-  //   ip: si.ip,
-  //   date: si.date,
-  //   city: si.city,
-  //   region: si.region,
-  //   country: si.country,
-  //   clientVisits: si.clientVisits,
-  //   countryArea: si.countryArea,
-  //   latitude: si.latitude,
-  //   longitude: si.longitude,
-  //   network: si.network,
-  //   postal: si.postal,
-  //   matrixShotsUnto: JSON.parse(si.matrixShotsUnto),
-  //   matrixDeathsUnto: JSON.parse(si.matrixDeathsUnto),
-  //   matrixHitsUnto: JSON.parse(si.matrixHitsUnto),
-  // };
-
-  // let sessionInfo: SessionInfo = {
-  //   smashConfig: JSON.stringify(smashConfig),
-  //   debug: JSON.stringify(debug),
-  //   ip: clientInformation.ip,
-  //   timeStamp: clientInformation.timeStamp,
-  //   city: clientInformation.city,
-  //   region: clientInformation.region,
-  //   country: clientInformation.country,
-  //   clientVisits: clientInformation.clientVisits,
-  //   countryArea: clientInformation.countryArea,
-  //   latitude: clientInformation.latitude,
-  //   longitude: clientInformation.longitude,
-  //   network: clientInformation.network,
-  //   postal: clientInformation.postal,
-  //   matrixShotsUnto: JSON.stringify(matrixShotsUnto),
-  //   matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
-  //   matrixHitsUnto: JSON.stringify(matrixHitsUnto),
-  // };
-
   if (process.env.NODE_ENV === 'production') {
     await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
   } else {
@@ -241,5 +204,56 @@ export function sumNumbersIn2DArrayString(s: string) {
 export const print = (...args: any[]): void => {
   if (process.env.NODE_ENV === 'development') {
     console.log(...args);
+  }
+};
+
+//////////////////////////////////////////
+//////////////////////////////////////////
+// NEURAL NETWORK STUFF
+//////////////////////////////////////////
+//////////////////////////////////////////
+
+const getApiBaseUrl = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return ''; // Assuming the production URL will be relative to the current domain
+  } else {
+    return 'http://localhost:8000';
+  }
+};
+
+// Function to fetch the neural network from the backend
+export const fetchNeuralNetwork =
+  // async (): Promise<INeuralNetworkJSON | null> => {
+  async (): Promise<any> => {
+    let neuralNetwork = null;
+    try {
+      const response = await axios.get(`${getApiBaseUrl()}/api/neural-network`);
+      neuralNetwork = response.data;
+      // Use the neural network data
+      print('Neural network fetched:', neuralNetwork);
+    } catch (error) {
+      console.error('Error fetching neural network:', error);
+    }
+    return neuralNetwork;
+  };
+
+// Function to send the updated neural network to the backend
+export const saveNeuralNetwork = async (
+  updatedNetwork: any
+): Promise<boolean> => {
+  try {
+    print('attmepting to save neural network');
+    const response = await axios.post(
+      `${getApiBaseUrl()}/api/neural-network`,
+      updatedNetwork
+    );
+
+    const savedNetwork = response.data;
+    // Handle the response
+    console.log(savedNetwork);
+    return true;
+  } catch (error) {
+    console.error('Error saving neural network:', error);
+    return false;
   }
 };

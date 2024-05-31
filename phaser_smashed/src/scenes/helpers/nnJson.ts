@@ -1,4 +1,4 @@
-export const nnJsonNN = {
+export const nnJsonNNHardcodeClient = {
   type: 'NeuralNetwork',
   sizes: [45, 40, 8],
   layers: [

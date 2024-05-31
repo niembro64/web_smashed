@@ -1,11 +1,16 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
+  NN_Train: false,
+  NN_Use_Client: false,
+  NN_Help_Screen: true,
+  NN_Help_Centerize: false,
+  NN_Help_Pit: true,
+  NN_Help_Wall: true,
   Dev_Mode: false,
   Auto_Start: false,
-  NN_Train: false,
   Dur_Seconds: false,
-  Mode_Infinity: true,
+  Mode_Infinity: false,
   Minutes: 1, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
@@ -52,10 +57,7 @@ export const debugInit: Debug = {
   Inst_Replay: 0,
   Replay_FastSlow: false,
   Gravity_Light: false,
-  NN_Help_Screen: true,
-  NN_Help_Centerize: false,
-  NN_Help_Pit: true,
-  NN_Help_Wall: true,
+
   Game_Music: 0, // 0123
   Flower_On_Init: true,
   Flower_Rapid_Fire: false,
@@ -119,6 +121,7 @@ export const debugMax: Debug = {
   NN_Help_Centerize: true,
   NN_Help_Pit: true,
   NN_Help_Wall: true,
+  NN_Use_Client: true,
   Inst_Replay: 3,
   Chomp_Explosion: true,
   Replay_FastSlow: true,
@@ -136,11 +139,16 @@ export const debugMax: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: false,
+  NN_Help_Screen: false,
+  NN_Help_Centerize: false,
+  NN_Help_Pit: false,
+  NN_Help_Wall: false,
+  NN_Use_Client: false,
   Stage: 0, //0123456
   Mode_Infinity: true,
   Dur_Seconds: false,
-  Shots: 1,
-  Minutes: 0, //01234567
+  Shots: 0,
+  Minutes: 1, //01234567
   Music_Active: false,
   Auto_Start: false,
   Ready_Sound_Active: false,
@@ -177,10 +185,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Dev_Mode: false,
   Dev_Zoom: 0,
   Char_Override: false,
-  NN_Help_Screen: false,
-  NN_Help_Centerize: false,
-  NN_Help_Pit: false,
-  NN_Help_Wall: false,
+
   Char_Override_ID: 0,
   Bullets_Allow_Groups: false,
   Trophies_On_Shots: false,
