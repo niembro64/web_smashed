@@ -1,3 +1,4 @@
+import { axiosUpsertOne, print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import {
   AttackPhysical,
@@ -23,18 +24,17 @@ import {
 import {
   getIsFirstBlood,
   getIsScreenClear,
-  setAddShotsToMatrixFlagCaptured,
   setAddShotToMatrixFirstBlood,
+  setAddShotsToMatrixFlagCaptured,
   setAddToShotsMatrixScreenClear,
   setPlayerWinningPositions,
 } from './drinking';
 import { setFlagOwnerNullIfDead } from './flag';
 import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
+import { NNTrainNN, deleteLastNNObjects } from './nn';
 import { setPhysicsAndMusicPause, setPhysicsAndMusicResume } from './physics';
 import { setPlayerPowerState } from './powers';
 import {
-  setBGMusicPause,
-  setBGMusicResume,
   setPauseAllReadySounds,
   setPauseWiiMusic,
   setSoundDiePlay,
@@ -52,8 +52,6 @@ import {
   setSplashDataOn,
   updateShotsOnPlayers,
 } from './text';
-import { axiosUpsertOne, print } from '../../views/client';
-import { NNTrainNN, deleteLastNNObjects } from './nn';
 
 export function setGameState(game: SmashedGame, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;

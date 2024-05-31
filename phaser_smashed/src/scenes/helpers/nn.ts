@@ -9,6 +9,7 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
+import { nnJsonNN } from './nnJson';
 
 export const nnConfigNN = {
   hiddenLayers: [40],
@@ -25,6 +26,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   print('NNTrain');
 
   game.nnNet = new NeuralNetwork(nnConfigNN);
+  game.nnNet = game.nnNet.fromJSON(nnJsonNN);
   print('game.nnNet', game.nnNet);
 
   let randomizedNnObjects: NNObject[] = game.nnObjects.sort(() =>
