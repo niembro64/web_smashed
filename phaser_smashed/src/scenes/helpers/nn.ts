@@ -1,7 +1,7 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { NNObject, Player } from '../types';
+import { NNInput, NNObject, Player } from '../types';
 import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestAttackPhysicalXYFromPlayer,
@@ -17,6 +17,15 @@ export const nnConfigNN = {
 };
 
 export const nnNumTrainingBarTicks: number = 25;
+
+export const convertNNObjectToArray = (obj: object): number[] => {
+  return Object.keys(obj)
+    .sort()
+    .map((key) => {
+      // @ts-ignore
+      return obj[key];
+    });
+};
 
 export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   if (!game.debug.NN_Train) {
@@ -254,6 +263,68 @@ export const NNGetOutputStatic = (
     isPFacingEnemy ? 1 : 0,
     player.char.sprite.flipX ? 1 : 0,
   ];
+
+  // const nnInputObject: NNInput = {
+  //   emitterOn: player.emitterPlayer.on ? 1 : 0,
+  //   powerState: player.char.powerStateCurr.name === 'none' ? 0 : 1,
+  //   stateHurt: player.state.name === 'player-state-hurt' ? 1 : 0,
+  //   controllerCurrUp: pCurr.up ? 1 : 0,
+  //   controllerCurrDown: pCurr.down ? 1 : 0,
+  //   controllerCurrLeft: pCurr.left ? 1 : 0,
+  //   controllerCurrRight: pCurr.right ? 1 : 0,
+  //   controllerCurrA: pCurr.A ? 1 : 0,
+  //   controllerCurrB: pCurr.B ? 1 : 0,
+  //   controllerCurrX: pCurr.X ? 1 : 0,
+  //   controllerCurrY: pCurr.Y ? 1 : 0,
+  //   controllerPrevUp: pPrev.up ? 1 : 0,
+  //   controllerPrevDown: pPrev.down ? 1 : 0,
+  //   controllerPrevLeft: pPrev.left ? 1 : 0,
+  //   controllerPrevRight: pPrev.right ? 1 : 0,
+  //   controllerPrevA: pPrev.A ? 1 : 0,
+  //   controllerPrevB: pPrev.B ? 1 : 0,
+  //   controllerPrevX: pPrev.X ? 1 : 0,
+  //   controllerPrevY: pPrev.Y ? 1 : 0,
+  //   controllerDebUp: pDeb.up,
+  //   controllerDebDown: pDeb.down,
+  //   controllerDebLeft: pDeb.left,
+  //   controllerDebRight: pDeb.right,
+  //   controllerDebA: pDeb.A,
+  //   controllerDebB: pDeb.B,
+  //   controllerDebX: pDeb.X,
+  //   controllerDebY: pDeb.Y,
+  //   playerPosX: player.char.sprite.body.position.x,
+  //   playerPosY: player.char.sprite.body.position.y,
+  //   playerVelX: player.char.sprite.body.velocity.x,
+  //   playerVelY: player.char.sprite.body.velocity.y,
+  //   playerEnemyDPX:
+  //     enemyPositionX === null ? 0 : player.char.sprite.x - enemyPositionX,
+  //   playerEnemyDPY:
+  //     enemyPositionY === null ? 0 : player.char.sprite.y - enemyPositionY,
+  //   playerEnemyDVX:
+  //     enemyVelocyX === null
+  //       ? 0
+  //       : player.char.sprite.body.velocity.x - enemyVelocyX,
+  //   playerEnemyDVY:
+  //     enemyVelocyY === null
+  //       ? 0
+  //       : player.char.sprite.body.velocity.y - enemyVelocyY,
+  //   playerEnemyAttackEnergyDPX:
+  //     enemyAEX === null ? 0 : player.char.sprite.x - enemyAEX,
+  //   playerEnemyAttackEnergyDPY:
+  //     enemyAEY === null ? 0 : player.char.sprite.y - enemyAEY,
+  //   playerEnemyAttackPhysicalDPX:
+  //     enemyAPX === null ? 0 : player.char.sprite.x - enemyAPX,
+  //   playerEnemyAttackPhysicalDPY:
+  //     enemyAPY === null ? 0 : player.char.sprite.y - enemyAPY,
+  //   playerTouchingUp: player.char.sprite.body.touching.up ? 1 : 0,
+  //   playerTouchingDown: player.char.sprite.body.touching.down ? 1 : 0,
+  //   playerTouchingLeft: player.char.sprite.body.touching.left ? 1 : 0,
+  //   playerTouchingRight: player.char.sprite.body.touching.right ? 1 : 0,
+  //   playerFacingEnemy: isPFacingEnemy ? 1 : 0,
+  //   flipX: player.char.sprite.flipX ? 1 : 0,
+  // };
+
+  // const nnInput: number[] = Object.values(nnInputObject);
 
   const nnOutput: number[] = game.nnNet.run(nnInput);
 
