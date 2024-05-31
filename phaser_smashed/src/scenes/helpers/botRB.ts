@@ -451,6 +451,7 @@ export const updatePlayerDodgeIfAttackEnergyTooClose = (
     updatePlayerDodgeInThisDirection(player, direction);
   }
 };
+
 export function updateBotRules(
   player: Player,
   playerIndex: number,
@@ -491,6 +492,9 @@ export function updateBotRules(
 
   const button: BulletBillButton = game.bulletBillCombo.button;
 
+  const isPlayerOneAndTraining: boolean =
+    game.debug.NN_Train && playerIndex === 0;
+
   //////////////////////
   // DODGING
   //////////////////////
@@ -511,7 +515,7 @@ export function updateBotRules(
   //////////////////////
   // MOVE TO FLAG | TOUCHING
   //////////////////////
-  if (!(game.debug.NN_Train && playerIndex === 0) && !game.flag.completedCurr) {
+  if (!isPlayerOneAndTraining && !game.flag.completedCurr) {
     ///////////////////////
     // ON GROUND
     ///////////////////////
@@ -721,7 +725,7 @@ export function updateBotRules(
   // STOP IF TOUCHING BUTTON
   //////////////////////
 
-  if (button.playerIndexPressing === playerIndex) {
+  if (!isPlayerOneAndTraining && button.playerIndexPressing === playerIndex) {
     const buttonPosition = button.spriteDown.body.position.x;
     const buttonWidth = button.spriteDown.width / 6;
     const playerPosition = player.char.sprite.body.position.x;
@@ -741,7 +745,10 @@ export function updateBotRules(
   //////////////////////
   // STOP IF HEALTH CURR GREATER THAN HEALTH PREV
   //////////////////////
-  if (player.char.damageCurr < player.char.damagePrev) {
+  if (
+    !isPlayerOneAndTraining &&
+    player.char.damageCurr < player.char.damagePrev
+  ) {
     p.up = false;
     p.down = false;
     p.left = false;

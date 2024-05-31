@@ -1668,13 +1668,15 @@ function createCollidersBulletBill(game: SmashedGame): void {
 
   game.physics.add.collider(bbBullet.sprite, ff.attackBullets);
 
-  fireFlowerBullets.children.iterate((child: any) => {
-    child.body.allowGravity = game.debug.Flower_Gravity;
+  if (!game.debug.NN_Train) {
+    fireFlowerBullets.children.iterate((child: any) => {
+      child.body.allowGravity = game.debug.Flower_Gravity;
 
-    game.physics.add.collider(child, bbBullet.sprite);
-    game.physics.add.collider(child, bbCannon.sprite);
-    game.physics.add.collider(child, game.TABLE);
-  });
+      game.physics.add.collider(child, bbBullet.sprite);
+      game.physics.add.collider(child, bbCannon.sprite);
+      game.physics.add.collider(child, game.TABLE);
+    });
+  }
 }
 
 function createBackground(game: SmashedGame): void {
