@@ -894,6 +894,8 @@ export default class SmashedGame extends Phaser.Scene {
     bullet: {
       scale: this.bbScale,
       sprite: null,
+      playerIndexOwns: null,
+      sprites_colored: [],
       sound: null,
       explosionSprite: null,
       explosionPosInit: {

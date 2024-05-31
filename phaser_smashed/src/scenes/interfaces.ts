@@ -549,11 +549,13 @@ export type BulletBillBullet = {
   scale: number;
   mass: number;
   sprite: any;
+  sprites_colored: any[];
   sound: any;
   explosionSprite: any;
   explosionPosInit: Position;
   damage: number;
   hitback: Hitback;
+  playerIndexOwns: number | null;
   diesOnHitbox: boolean;
   srcImage: any;
   posInit: Position;

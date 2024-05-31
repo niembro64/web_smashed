@@ -1605,6 +1605,7 @@ function createCollidersAEvAP(game: SmashedGame): void {
 function createBulletBill(game: SmashedGame): void {
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
 
+  // CREATE BASE BULLET
   bbCombo.bullet.sprite = game.physics.add.sprite(
     bbCombo.bullet.posInit.x,
     bbCombo.bullet.posInit.y,
@@ -1617,23 +1618,32 @@ function createBulletBill(game: SmashedGame): void {
   bbCombo.bullet.sprite.body.setMass(bbCombo.bullet.mass);
   bbCombo.bullet.sprite.setImmovable(true);
 
-  // bbCombo.bullet.sprite.setTint(getInactiveBackgroundTintColor());
+  for (let i = 0; i < game.players.length; i++) {
+    const newColoredBullet = game.physics.add.sprite(
+      bbCombo.bullet.posInit.x,
+      bbCombo.bullet.posInit.y,
+      bbCombo.bullet.srcImage + '_' + i
+    );
 
+    newColoredBullet.setScale(bbCombo.bullet.scale);
+    newColoredBullet.body.allowGravity = false;
+    newColoredBullet.setOrigin(0.5, 0.5);
+    newColoredBullet.body.setMass(bbCombo.bullet.mass);
+    newColoredBullet.setImmovable(true);
+
+    bbCombo.bullet.sprites_colored.push(newColoredBullet);
+  }
+  // CREATE CANNON
   bbCombo.cannon.sprite = game.physics.add.sprite(
     bbCombo.cannon.posInit.x,
     bbCombo.cannon.posInit.y,
     bbCombo.cannon.srcImage
   );
 
-  // bb.cannon.sprite.setScale(0.01);
   bbCombo.cannon.sprite.setScale(bbCombo.cannon.scale);
   bbCombo.cannon.sprite.setImmovable(true);
   bbCombo.cannon.sprite.body.allowGravity = false;
   bbCombo.cannon.sprite.setOrigin(0.5, 0.5);
-
-  // if (!game.debug.BulletBill_Bullet_Visible) {
-  //   bbCombo.cannon.sprite.setTint(getInactiveBackgroundTintColor());
-  // }
 }
 
 function createCollidersBulletBill(game: SmashedGame): void {

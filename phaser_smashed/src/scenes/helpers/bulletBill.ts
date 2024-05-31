@@ -14,7 +14,10 @@ import {
   setMusicBulletBillButtonResume,
 } from './sound';
 
-const updateSparkOnSparkLine = (game: SmashedGame): void => {
+const updateSparkOnSparkLine = (
+  game: SmashedGame,
+  playerIndex: number | null = null
+): void => {
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
   const numPaths = bbSparkLine.pathPoints.length;
   const percentCompleted = bbSparkLine.percentPathCurrCompleted;
@@ -69,7 +72,8 @@ export const updateBulletBill = (game: SmashedGame): void => {
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const stateCurr: BulletBillComboState = bbCombo.stateCurr;
 
-  const closestTouchingIndex: number | null = getClosestPlayerTouchingButton(game);
+  const closestTouchingIndex: number | null =
+    getClosestPlayerTouchingButton(game);
 
   switch (stateCurr) {
     case 'button-up':
@@ -86,7 +90,15 @@ export const updateBulletBill = (game: SmashedGame): void => {
       }
       break;
     case 'shooting':
+      updateColoredBulletFollows(game);
+
+      if (bbCombo.button.playerIndexPressing !== null) {
+        game.bulletBillCombo.bullet.playerIndexOwns =
+          game.bulletBillCombo.button.playerIndexPressing;
+      } 
+
       bbCombo.button.playerIndexPressing = null;
+
       if (bbBullet.sprite.body.x > SCREEN_DIMENSIONS.WIDTH * 1.2) {
         setBulletBillState(game, 'button-up');
       }
@@ -200,4 +212,19 @@ const bulletBillPlayExplosion = (game: SmashedGame): void => {
   bbBullet.sound.play();
 
   game.shake?.shake(3000, 300);
+};
+
+const updateColoredBulletFollows = (game: SmashedGame): void => {
+  const playerIndex = game.bulletBillCombo.bullet.playerIndexOwns;
+
+  if (playerIndex === null) {
+    return;
+  }
+
+  const bbCombo: BulletBillCombo = game.bulletBillCombo;
+
+  bbCombo.bullet.sprites_colored[playerIndex].body.x =
+    bbCombo.bullet.sprite.body.x;
+  bbCombo.bullet.sprites_colored[playerIndex].body.y =
+    bbCombo.bullet.sprite.body.y;
 };
