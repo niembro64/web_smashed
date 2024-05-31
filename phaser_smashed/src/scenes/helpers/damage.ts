@@ -524,8 +524,20 @@ export function onHitHandlerBulletBill(
     return;
   }
 
-  if (playerIndex === game.bulletBillCombo.bullet.playerIndexOwns) {
+  const bulletBillOwnerIndex = game.bulletBillCombo.bullet.playerIndexOwns;
+
+  if (playerIndex === bulletBillOwnerIndex) {
     return;
+  }
+
+  // Update "last hit by" information
+  for (let bj = 0; bj < game.players.length; bj++) {
+    if (bj === bulletBillOwnerIndex) {
+      game.wasLastHitByMatrix[playerIndex][bj] = true;
+      game.numberHitByMatrix[playerIndex][bj]++;
+    } else {
+      game.wasLastHitByMatrix[playerIndex][bj] = false;
+    }
   }
 
   setPlayerState(player, playerIndex, 'player-state-hurt', game);
