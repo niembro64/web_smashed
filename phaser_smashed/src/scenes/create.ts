@@ -818,28 +818,33 @@ function createHitboxOverlap(game: SmashedGame): void {
 
   // PLAYER BULLET BILL BULLET OVERLAP
   game.players.forEach((player, playerIndex) => {
-    game.physics.add.overlap(
-      player.char.sprite,
-      game.bulletBillCombo.bullet.sprite,
-      function () {
-        onHitHandlerBulletBill(player, playerIndex, game);
-      }
-    );
+    if (!(game.debug.NN_Train && playerIndex === 0)) {
+      game.physics.add.overlap(
+        player.char.sprite,
+        game.bulletBillCombo.bullet.sprite,
+        function () {
+          onHitHandlerBulletBill(player, playerIndex, game);
+        }
+      );
+    }
   });
 
-  // PLAYER CHOMP OVERLAP
   game.players.forEach((player, playerIndex) => {
-    game.physics.add.overlap(
-      player.char.sprite,
-      game.chomp.sprite,
-      function () {
-        if (game.chomp.powerStateCurr.name === 'dark') {
-          setPlayerPowerState('dark', player, game);
-          setChompPowerState('none', game);
-          game.chomp.soundBBBambalam.play();
+    // PLAYER CHOMP OVERLAP
+
+    if (!(game.debug.NN_Train && playerIndex === 0)) {
+      game.physics.add.overlap(
+        player.char.sprite,
+        game.chomp.sprite,
+        function () {
+          if (game.chomp.powerStateCurr.name === 'dark') {
+            setPlayerPowerState('dark', player, game);
+            setChompPowerState('none', game);
+            game.chomp.soundBBBambalam.play();
+          }
         }
-      }
-    );
+      );
+    }
 
     game.players.forEach((pj, j) => {
       if (player !== pj) {
@@ -1454,7 +1459,7 @@ function createAttackEnergies(game: SmashedGame): void {
       game.physics.add.collider(aebs, game.TABLE);
 
       // colliders with fireballs (fireflower bullets)
-      if (!game.debug.NN_Train) {
+      if (!(game.debug.NN_Train && playerIndex === 0)) {
         for (
           let i = 0;
           i < game.fireFlower.attackBullets.bullets.getChildren().length;

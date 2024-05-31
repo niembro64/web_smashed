@@ -6,20 +6,20 @@ import { replaceUnderscoreWithSpace } from './reactHelpers';
 interface DebugOptionsProps {
   soundManager: SoundManagerType;
   debugState: Debug;
-  mainOptionsDebugShowState: Debug;
   setDebugState: React.Dispatch<React.SetStateAction<Debug>>;
   showHomeList: boolean;
   getMaxFromKey: (key: string) => number;
+  mainOptionsDebugShowState: Debug;
   setMainOptionsDebugShowState: React.Dispatch<React.SetStateAction<Debug>>;
 }
 
 const DebugOptions: React.FC<DebugOptionsProps> = ({
   soundManager,
   debugState,
-  mainOptionsDebugShowState,
   setDebugState,
   getMaxFromKey,
   showHomeList,
+  mainOptionsDebugShowState,
   setMainOptionsDebugShowState,
 }) => {
   return (
@@ -95,19 +95,23 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
                 }));
               }
 
-              if (key === 'Mode_Infinity') {
-                const newMainOpotionsDebugShow: Debug = {
-                  ...mainOptionsDebugShowState,
-                };
-                if (debugState.Mode_Infinity) {
-                  newMainOpotionsDebugShow['Minutes'] = 1;
-                  newMainOpotionsDebugShow['Shots'] = 0;
-                } else {
-                  newMainOpotionsDebugShow['Minutes'] = 0;
-                  newMainOpotionsDebugShow['Shots'] = 1;
-                }
+              switch (key) {
+                case 'Mode_Infinity':
+                  setMainOptionsDebugShowState((x: Debug) => {
+                    const newMainOpotionsDebugShow: Debug = {
+                      ...x,
+                    };
+                    if (debugState.Mode_Infinity) {
+                      newMainOpotionsDebugShow.Minutes = 1;
+                      newMainOpotionsDebugShow.Shots = 0;
+                    } else {
+                      newMainOpotionsDebugShow.Minutes = 0;
+                      newMainOpotionsDebugShow.Shots = 1;
+                    }
 
-                setMainOptionsDebugShowState((x) => newMainOpotionsDebugShow);
+                    return newMainOpotionsDebugShow;
+                  });
+                  break;
               }
             }}
           >

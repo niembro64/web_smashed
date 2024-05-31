@@ -708,7 +708,7 @@ function Play() {
       ],
     };
 
-    debugStateCopy.Minutes = 7;
+    debugStateCopy.Minutes = 1;
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
