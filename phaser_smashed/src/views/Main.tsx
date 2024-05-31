@@ -149,7 +149,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.Inst_Replay === 0 || debugState.NN_Train) {
+    if (debugState.Inst_Replay === 0 || debugState.NN_Train_Easy) {
       setIsReplayHidden(true);
       return;
     }
@@ -704,7 +704,7 @@ function Play() {
       return;
     }
 
-    if (!debugState?.NN_Train) {
+    if (!debugState?.NN_Train_Easy) {
       return;
     }
     const debugStateCopy = { ...debugState };
@@ -735,7 +735,7 @@ function Play() {
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
-  }, [debugState?.NN_Train]);
+  }, [debugState?.NN_Train_Easy]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
@@ -2313,58 +2313,68 @@ function Play() {
       </div>
 
       {/* { */}
-      {webState === 'web-state-game' && nnProgress !== null && (
-        <div className="neural-network-train-status">
-          <span>Neural Network Training</span>
-          <div className="neural-network-train-top">
-            <span>
-              {percentDoneBar(nnProgress)} {Math.floor((nnProgress || 0) * 100)}
-              %
-            </span>
-            <span> Error Init {nnErrInit || 0}</span>
-            <span> Error Curr {nnErrorCurr || 0}</span>
-            <span>
-              {' '}
-              ITER {nnNumIter || 0} | OBJ {nnNumObj || 0}
-            </span>
-            {/* <span> Num Object {nnNumObj || 0}</span> */}
-            {/* <span> Log Period {nnLogPeriod || 0}</span> */}
-          </div>
-
-          <div className="neural-network-train-bottom">
-            <div
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className={nnJson === null ? ' b-start-inactive' : 'b-start'}
-              onClick={() => {
-                if (nnJson !== null && navigator.clipboard !== undefined) {
-                  navigator.clipboard.writeText(nnJson);
-
-                  soundManager.blipBeedeeSound();
-                }
-              }}
-            >
-              <span>Model Weights</span>
+      {webState === 'web-state-game' &&
+        nnProgress !== null &&
+        (debugState.NN_Train_Easy
+          ? true
+          : nnProgress !== 1 && nnProgress !== 100) && (
+          <div className="neural-network-train-status">
+            <span>Neural Network Training</span>
+            <div className="neural-network-train-top">
+              <span>
+                {percentDoneBar(nnProgress)}{' '}
+                {Math.floor((nnProgress || 0) * 100)}%
+              </span>
+              <span> Error Init {nnErrInit || 0}</span>
+              <span> Error Curr {nnErrorCurr || 0}</span>
+              <span>
+                {' '}
+                ITER {nnNumIter || 0} | OBJ {nnNumObj || 0}
+              </span>
+              {/* <span> Num Object {nnNumObj || 0}</span> */}
+              {/* <span> Log Period {nnLogPeriod || 0}</span> */}
             </div>
-            <div
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className={nnRatios === null ? ' b-start-inactive' : 'b-start'}
-              onClick={() => {
-                if (nnRatios !== null && navigator.clipboard !== undefined) {
-                  navigator.clipboard.writeText(nnRatios.toString());
+            {debugState.NN_Train_Easy && (
+              <div className="neural-network-train-bottom">
+                <div
+                  onMouseEnter={() => {
+                    soundManager.blipSoundSoft();
+                  }}
+                  className={nnJson === null ? ' b-start-inactive' : 'b-start'}
+                  onClick={() => {
+                    if (nnJson !== null && navigator.clipboard !== undefined) {
+                      navigator.clipboard.writeText(nnJson);
 
-                  soundManager.blipBeedeeSound();
-                }
-              }}
-            >
-              <span>Output Ratios</span>
-            </div>
+                      soundManager.blipBeedeeSound();
+                    }
+                  }}
+                >
+                  <span>Model Weights</span>
+                </div>
+                <div
+                  onMouseEnter={() => {
+                    soundManager.blipSoundSoft();
+                  }}
+                  className={
+                    nnRatios === null ? ' b-start-inactive' : 'b-start'
+                  }
+                  onClick={() => {
+                    if (
+                      nnRatios !== null &&
+                      navigator.clipboard !== undefined
+                    ) {
+                      navigator.clipboard.writeText(nnRatios.toString());
+
+                      soundManager.blipBeedeeSound();
+                    }
+                  }}
+                >
+                  <span>Output Ratios</span>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        )}
 
       {debugState.Dev_Mode && <div className="dev-mode-div">Dev Mode</div>}
       {webState === 'web-state-game' && !isReplayHidden && (

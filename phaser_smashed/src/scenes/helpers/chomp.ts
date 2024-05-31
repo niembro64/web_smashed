@@ -11,7 +11,7 @@ import {
 } from './sound';
 
 export function updateChomp(game: SmashedGame): void {
-  if (game.debug.NN_Train) {
+  if (game.debug.NN_Train_Easy) {
     return;
   }
 

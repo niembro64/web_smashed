@@ -306,7 +306,7 @@ function createPole(game: SmashedGame): void {
 }
 
 function createFireFlower(game: SmashedGame): void {
-  if (game.debug.NN_Train) {
+  if (game.debug.NN_Train_Easy) {
     return;
   }
 
@@ -341,7 +341,7 @@ function createFireFlower(game: SmashedGame): void {
 }
 
 function createCollidersFireFlower(game: SmashedGame): void {
-  if (game.debug.NN_Train) {
+  if (game.debug.NN_Train_Easy) {
     return;
   }
 
@@ -510,7 +510,7 @@ function createExplosionsFront(game: SmashedGame): void {
 }
 
 function createChomp(game: SmashedGame): void {
-  if (game.debug.NN_Train) {
+  if (game.debug.NN_Train_Easy) {
     return;
   }
 
@@ -775,7 +775,7 @@ function createHitboxOverlap(game: SmashedGame): void {
       player.char.attackPhysical.sprite,
       game.chomp.sprite,
       function () {
-        if (game.debug.NN_Train) {
+        if (game.debug.NN_Train_Easy) {
           return;
         }
 
@@ -818,7 +818,7 @@ function createHitboxOverlap(game: SmashedGame): void {
 
   // PLAYER BULLET BILL BULLET OVERLAP
   game.players.forEach((player, playerIndex) => {
-    if (!(game.debug.NN_Train && playerIndex === 0)) {
+    if (!(game.debug.NN_Train_Easy && playerIndex === 0)) {
       game.physics.add.overlap(
         player.char.sprite,
         game.bulletBillCombo.bullet.sprite,
@@ -832,7 +832,7 @@ function createHitboxOverlap(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     // PLAYER CHOMP OVERLAP
 
-    if (!(game.debug.NN_Train && playerIndex === 0)) {
+    if (!(game.debug.NN_Train_Easy && playerIndex === 0)) {
       game.physics.add.overlap(
         player.char.sprite,
         game.chomp.sprite,
@@ -1674,7 +1674,7 @@ function createCollidersBulletBill(game: SmashedGame): void {
 
   game.physics.add.collider(bbBullet.sprite, ff.attackBullets);
 
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Easy) {
     fireFlowerBullets.children.iterate((child: any) => {
       child.body.allowGravity = game.debug.Flower_Gravity;
 

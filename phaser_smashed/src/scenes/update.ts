@@ -331,7 +331,7 @@ export function updatePlayers(game: SmashedGame): void {
         if (
           getHasGameDurationPassedPlayer(
             player,
-            game.debug.NN_Train ? 0 : game.durationPlayerDead,
+            game.debug.NN_Train_Easy ? 0 : game.durationPlayerDead,
             game
           )
         ) {

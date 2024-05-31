@@ -27,18 +27,9 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     return;
   }
 
-  // print('NNTrain');
-  // let nnJsonToUse = await fetchNeuralNetwork();
-  // if (!nnJsonToUse) {
-  //   nnJsonToUse = nnJsonNNHardcodeClient;
-  // }
+  const trainHeavy: boolean = game.debug.NN_Train_Easy;
 
-  // // const nnJsonToUse = nnJsonNNHardcodeClient;
-
-
-  // game.nnNet = new NeuralNetwork(nnConfigNN);
-  // game.nnNet = game.nnNet.fromJSON(nnJsonToUse);
-  print('game.nnNet', game.nnNet);
+  print('NNTrain');
 
   let randomizedNnObjects: NNObject[] = game.nnObjects.sort(() =>
     Math.random()
@@ -78,7 +69,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   await game.nnNet.trainAsync(randomizedNnObjects, {
     iterations: numIter,
     randomize: true,
-    learningRate: 0.0001,
+    learningRate: trainHeavy ? 0.00001 : 0.0000001,
     logPeriod: logPeriod,
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / numIter);
@@ -404,7 +395,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: SmashedGame
 ): void => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Easy) {
     return;
   }
 

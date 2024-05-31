@@ -493,7 +493,7 @@ export function updateBotRules(
   const button: BulletBillButton = game.bulletBillCombo.button;
 
   const isPlayerOneAndTraining: boolean =
-    game.debug.NN_Train && playerIndex === 0;
+    game.debug.NN_Train_Easy && playerIndex === 0;
 
   //////////////////////
   // DODGING
@@ -730,14 +730,11 @@ export function updateBotRules(
     const buttonWidth = button.spriteDown.width / 6;
     const playerPosition = player.char.sprite.body.position.x;
 
-    if (playerPosition < buttonPosition - buttonWidth) {
+    if (playerPosition < buttonPosition) {
       p.right = true;
       p.left = false;
-    } else if (buttonPosition + buttonWidth < playerPosition) {
+    } else if (buttonPosition < playerPosition) {
       p.left = true;
-      p.right = false;
-    } else {
-      p.left = false;
       p.right = false;
     }
   }
@@ -745,15 +742,15 @@ export function updateBotRules(
   //////////////////////
   // STOP IF HEALTH CURR GREATER THAN HEALTH PREV
   //////////////////////
-  if (
-    !isPlayerOneAndTraining &&
-    player.char.damageCurr < player.char.damagePrev
-  ) {
-    p.up = false;
-    p.down = false;
-    p.left = false;
-    p.right = false;
+  // if (
+  //   !isPlayerOneAndTraining &&
+  //   player.char.damageCurr < player.char.damagePrev
+  // ) {
+  //   p.up = false;
+  //   p.down = false;
+  //   p.left = false;
+  //   p.right = false;
 
-    p.Y = false;
-  }
+  //   p.Y = false;
+  // }
 }
