@@ -5,7 +5,7 @@ import {
   GameState,
   Player,
   PlayerState,
-} from '../interfaces';
+} from '../types';
 import {
   getIsAttackEnergyOffscreen,
   setAttackPhysicalOffscreen,

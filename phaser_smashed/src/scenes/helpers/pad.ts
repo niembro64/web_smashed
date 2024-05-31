@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { InputType, Player } from '../interfaces';
+import { InputType, Player } from '../types';
 import {
   getIsAttackEnergyOffscreen,
   isAttackEnergyNearPlayer,

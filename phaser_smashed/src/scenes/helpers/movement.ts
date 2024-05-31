@@ -1,5 +1,5 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Player } from '../interfaces';
+import { Player } from '../types';
 import { print } from '../../views/client';
 import { getIsAttackEnergyOffscreen } from './attacks';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';

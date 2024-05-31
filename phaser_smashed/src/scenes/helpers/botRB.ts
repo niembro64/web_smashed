@@ -5,7 +5,7 @@ import {
   Position,
   Velocity,
   xyVector,
-} from '../interfaces';
+} from '../types';
 import { getIsPlayerInAir } from './attacks';
 import { getNormalizedVector } from './damage';
 import {

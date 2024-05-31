@@ -1,5 +1,5 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { emoji, SplashName } from '../interfaces';
+import { emoji, SplashName } from '../types';
 import { updatePlayerWinningPositions } from './drinking';
 import { getIsPlayerReady } from './pad';
 import { pauseReadySoundPlayer, playReadySoundPlayer } from './sound';

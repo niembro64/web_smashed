@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment, { Moment } from 'moment';
-import { Debug, SmashConfig } from '../scenes/interfaces';
+import { Debug, SmashConfig } from '../scenes/types';
 
 export interface ClientInformation {
   city: string;

@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { Player, SpriteStateName } from '../interfaces';
+import { Player, SpriteStateName } from '../types';
 import {
   darkBlockTopEdge,
   getInactiveBackgroundTintColor,

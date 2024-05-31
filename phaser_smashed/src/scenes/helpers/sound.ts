@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { Player } from '../interfaces';
+import { Player } from '../types';
 import { getLongEnoughTimeDuration } from './state';
 
 function increaseSemitones(frequency: number, semitones: number): number {

@@ -8,7 +8,7 @@ import {
   BulletBillSparkLine,
   Player,
   Position,
-} from '../interfaces';
+} from '../types';
 import {
   setMusicBulletBillButtonPause,
   setMusicBulletBillButtonResume,
@@ -95,7 +95,7 @@ export const updateBulletBill = (game: SmashedGame): void => {
       if (bbCombo.button.playerIndexPressing !== null) {
         game.bulletBillCombo.bullet.playerIndexOwns =
           game.bulletBillCombo.button.playerIndexPressing;
-      } 
+      }
 
       bbCombo.button.playerIndexPressing = null;
 

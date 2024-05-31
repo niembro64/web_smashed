@@ -28,7 +28,7 @@ import {
   FireFlower,
   Player,
   Position,
-} from './interfaces';
+} from './types';
 import { setPreUpdate } from './update';
 
 export function create(game: SmashedGame) {

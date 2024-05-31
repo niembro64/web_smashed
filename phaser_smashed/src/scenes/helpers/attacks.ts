@@ -1,5 +1,5 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { AttackEnergy, AttackPhysical, Player } from '../interfaces';
+import { AttackEnergy, AttackPhysical, Player } from '../types';
 import { setEmitterPlayerOnFalse } from './damage';
 import { getDistance } from './movement';
 

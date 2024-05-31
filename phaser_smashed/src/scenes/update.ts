@@ -62,7 +62,7 @@ import {
   updateTimeTime,
 } from './helpers/state';
 import { updateText } from './helpers/text';
-import { Player } from './interfaces';
+import { Player } from './types';
 
 export function setPreUpdate(game: SmashedGame): void {
   setBGMusicPlay(game);

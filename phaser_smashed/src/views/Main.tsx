@@ -26,7 +26,7 @@ import {
   bar,
   emoji,
   inputTypeNum,
-} from '../scenes/interfaces';
+} from '../scenes/types';
 import InputGroup from './InputPresets';
 import DebugOptions from './DebugOptions';
 import SoundManager, { SoundManagerType } from './SoundManager';

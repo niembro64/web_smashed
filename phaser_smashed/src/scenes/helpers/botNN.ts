@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { Player, Velocity } from '../interfaces';
+import { Player, Velocity } from '../types';
 import {
   allPadToFalse,
   getIsBotInPitArea,

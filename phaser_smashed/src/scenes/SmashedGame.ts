@@ -25,7 +25,7 @@ import {
   emoji,
   keyboard,
   xyVector,
-} from './interfaces';
+} from './types';
 import { preload } from './preload';
 import { update } from './update';
 

@@ -9,7 +9,7 @@ import {
   SmashConfig,
   WorkingController,
   emoji,
-} from '../scenes/interfaces';
+} from '../scenes/types';
 
 export const inputArrayInit: InputType[] = [0, 0, 0, 0];
 export const inputArrayInitDebug: InputType[] = [2, 2, 0, 0];

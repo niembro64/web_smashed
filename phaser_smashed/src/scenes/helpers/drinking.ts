@@ -1,6 +1,6 @@
 import { debug } from 'console';
 import SmashedGame from '../SmashedGame';
-import { Player } from '../interfaces';
+import { Player } from '../types';
 
 export function getIsScreenClear(game: SmashedGame): boolean {
   if (game.players.length < 2) {

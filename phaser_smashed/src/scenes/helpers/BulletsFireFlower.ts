@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { Position, Velocity } from '../interfaces';
+import { Position, Velocity } from '../types';
 import { Bullet } from './bullets';
 
 export class BulletsFireFlower extends Phaser.Physics.Arcade.Group {

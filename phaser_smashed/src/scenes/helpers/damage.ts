@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { AttackEnergy, AttackPhysical, Player, xyVector } from '../interfaces';
+import { AttackEnergy, AttackPhysical, Player, xyVector } from '../types';
 import {
   setAttackEnergyOffscreen,
   setBulletOffscreen,

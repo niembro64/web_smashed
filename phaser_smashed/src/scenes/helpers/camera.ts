@@ -1,5 +1,5 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { BulletBillSparkLine, Loc } from '../interfaces';
+import { BulletBillSparkLine, Loc } from '../types';
 
 export function updateCamera(game: SmashedGame): void {
   if (game.debug.Dev_Mode || !game.debug.Use_Camera) {

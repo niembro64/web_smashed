@@ -1,5 +1,5 @@
 import SmashedGame from '../SmashedGame';
-import { Player } from '../interfaces';
+import { Player } from '../types';
 
 export function updatePadCurrKeyboard(player: Player, game: SmashedGame): void {
   if (player.keyboard) {

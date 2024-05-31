@@ -1,4 +1,4 @@
-import { Debug } from './scenes/interfaces';
+import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   Dev_Mode: false,

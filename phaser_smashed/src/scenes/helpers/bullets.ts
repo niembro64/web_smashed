@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Debug, Player, Position, Velocity } from '../interfaces';
+import { Debug, Player, Position, Velocity } from '../types';
 import { getDistanceFromOrigin } from './math';
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {

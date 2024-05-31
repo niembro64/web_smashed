@@ -6,7 +6,7 @@ import {
   PowerStateCharacterName,
   PowerStateChompName,
   xyVector,
-} from '../interfaces';
+} from '../types';
 import { getNormalizedVector } from './damage';
 import { setMusicChompSheepRate } from './sound';
 import { setPlayerState } from './state';

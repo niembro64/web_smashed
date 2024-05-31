@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputType, emoji } from '../scenes/interfaces';
+import { InputType, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 
 interface InputGroupProps {

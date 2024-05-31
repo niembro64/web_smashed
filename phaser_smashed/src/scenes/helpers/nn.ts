@@ -1,7 +1,7 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { NNObject, Player } from '../interfaces';
+import { NNObject, Player } from '../types';
 import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestAttackPhysicalXYFromPlayer,
@@ -234,16 +234,13 @@ export const NNGetOutputStatic = (
     // DIFF SPRITE POSITIONS
     player.char.sprite.body.position.x - enemyPositionX,
     player.char.sprite.body.position.y - enemyPositionY,
-
-    // DIFF SPRITE VELOCITIES
     player.char.sprite.body.velocity.x - enemyVelocyX,
     player.char.sprite.body.velocity.y - enemyVelocyY,
 
     // DIFF SPRITE AE POSITIONS
+    // DIFF SPRITE AP POSITIONS
     enemyAEX === null ? 0 : player.char.sprite.body.position.x - enemyAEX,
     enemyAEY === null ? 0 : player.char.sprite.body.position.y - enemyAEY,
-
-    // DIFF SPRITE AP POSITIONS
     enemyAPX === null ? 0 : player.char.sprite.body.position.x - enemyAPX,
     enemyAPY === null ? 0 : player.char.sprite.body.position.y - enemyAPY,
 

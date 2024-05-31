@@ -1,5 +1,5 @@
 import SmashedGame from '../SmashedGame';
-import { Player, Position, Velocity } from '../interfaces';
+import { Player, Position, Velocity } from '../types';
 import { getDistance, getNearestPlayerAliveFromXY } from './movement';
 import { setPlaySoundFireBall } from './sound';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Debug, emoji } from '../scenes/interfaces';
+import { Debug, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import { replaceUnderscoreWithSpace } from './reactHelpers';
 

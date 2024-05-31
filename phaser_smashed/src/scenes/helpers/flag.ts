@@ -1,5 +1,5 @@
 import SmashedGame from '../SmashedGame';
-import { Player } from '../interfaces';
+import { Player } from '../types';
 import { setPlayerPowerState } from './powers';
 import {
   setBGMusicPause,

@@ -1,4 +1,4 @@
-import { Position } from '../interfaces';
+import { Position } from '../types';
 
 export function normalRandom(mean: number = 0, stdev: number = 1) {
   let u, v, s;

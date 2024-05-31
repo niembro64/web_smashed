@@ -810,24 +810,59 @@ export interface NNObject {
 
 // TO HELP KEEP TRACK
 export interface NNInput {
-  controllerUp: number;
-  controllerDown: number;
-  controllerLeft: number;
-  controllerRight: number;
-  controllerA: number;
-  controllerB: number;
-  controllerX: number;
-  controllerY: number;
+  emitterOn: number;
+  powerState: number;
+  stateHurt: number;
+
+  controllerCurrUp: number;
+  controllerCurrDown: number;
+  controllerCurrLeft: number;
+  controllerCurrRight: number;
+  controllerCurrA: number;
+  controllerCurrB: number;
+  controllerCurrX: number;
+  controllerCurrY: number;
+
+  controllerPrevUp: number;
+  controllerPrevDown: number;
+  controllerPrevLeft: number;
+  controllerPrevRight: number;
+  controllerPrevA: number;
+  controllerPrevB: number;
+  controllerPrevX: number;
+  controllerPrevY: number;
+
+  controllerDebUp: number;
+  controllerDebDown: number;
+  controllerDebLeft: number;
+  controllerDebRight: number;
+  controllerDebA: number;
+  controllerDebB: number;
+  controllerDebX: number;
+  controllerDebY: number;
+
+  playerPosX: number;
+  playerPosY: number;
+  playerVelX: number;
+  playerVelY: number;
+
   playerEnemyDPX: number;
   playerEnemyDPY: number;
   playerEnemyDVX: number;
   playerEnemyDVY: number;
+
   playerEnemyAttackEnergyDPX: number;
   playerEnemyAttackEnergyDPY: number;
+  playerEnemyAttackPhysicalDPX: number;
+  playerEnemyAttackPhysicalDPY: number;
+
+  playerTouchingUp: number;
   playerTouchingDown: number;
   playerTouchingLeft: number;
   playerTouchingRight: number;
+
   playerFacingEnemy: number;
+  flipX: number;
   [key: string]: any;
 }
 
