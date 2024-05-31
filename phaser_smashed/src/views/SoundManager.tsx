@@ -33,7 +33,7 @@ export type SoundManagerType = {
   dice: () => void;
 };
 
-export function SoundManager() {
+function SoundManager() {
   const [woah] = useSound(importedWoah, { volume: 0.2 });
   const [bam] = useSound(importedBambalam, { volume: 0.2 });
   const [meleeReady] = useSound(importedMeleeReady, { volume: 0.2 });
@@ -64,4 +64,4 @@ export function SoundManager() {
   };
 }
 
-
+export default SoundManager;

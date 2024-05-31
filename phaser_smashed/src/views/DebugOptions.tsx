@@ -63,6 +63,9 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
                   [key]: !value,
                 }));
               }
+
+
+              
             }}
           >
             <div className={'option-debug-text'}>

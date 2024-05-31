@@ -29,7 +29,7 @@ import {
 } from '../scenes/interfaces';
 import InputGroup from './InputPresets';
 import DebugOptions from './DebugOptions';
-import { SoundManager, SoundManagerType } from './SoundManager';
+import SoundManager, { SoundManagerType } from './SoundManager';
 import {
   ClientInformation,
   SessionInfo,
