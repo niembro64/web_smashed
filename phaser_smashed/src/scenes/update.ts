@@ -135,7 +135,7 @@ export function update(game: SmashedGame, time: number, delta: number): void {
         ///////// flag up => flag shot
         ////////////////////////////////
         setGameState(game, 'game-state-captured-flag');
-      } else if (game.debug.Infinity && game.shotsLeftCurr < 1) {
+      } else if (game.debug.Mode_Infinity && game.shotsLeftCurr < 1) {
         ////////////////////////////////
         ///////// GAME ENDING CONDITIONS
         ////////////////////////////////
@@ -143,7 +143,7 @@ export function update(game: SmashedGame, time: number, delta: number): void {
         ///////// time => finished
         ////////////////////////////////
         setGameState(game, 'game-state-finished');
-      } else if (!game.debug.Infinity && game.gameSecondsClock < 1) {
+      } else if (!game.debug.Mode_Infinity && game.gameSecondsClock < 1) {
         setGameState(game, 'game-state-finished');
       }
 

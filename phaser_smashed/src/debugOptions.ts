@@ -5,7 +5,7 @@ export const debugInit: Debug = {
   Auto_Start: false,
   NN_Train: false,
   Dur_Seconds: false,
-  Infinity: true,
+  Mode_Infinity: true,
   Minutes: 1, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
@@ -56,7 +56,7 @@ export const debugInit: Debug = {
   NN_Help_Centerize: false,
   NN_Help_Pit: true,
   NN_Help_Wall: true,
-  Music_Track: 0, // 0123
+  Game_Music: 0, // 0123
   Flower_On_Init: true,
   Flower_Rapid_Fire: false,
   Flower_Full_Screen: false,
@@ -70,12 +70,12 @@ export const debugInit: Debug = {
 export const debugMax: Debug = {
   Stage: 10, //0123456
   Dur_Seconds: true,
-  Infinity: true,
+  Mode_Infinity: true,
   Shots: 15,
   Auto_Start: true,
   Minutes: 15, //01234567
   Music_Active: true,
-  Music_Track: 4, // 012
+  Game_Music: 4, // 012
   Ready_Sound_Active: true,
   Use_Camera: true,
   Cameras_Visible: true,
@@ -136,8 +136,8 @@ export const debugMax: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: false,
-  Stage: 1, //0123456
-  Infinity: true,
+  Stage: 0, //0123456
+  Mode_Infinity: true,
   Dur_Seconds: false,
   Shots: 1,
   Minutes: 0, //01234567
@@ -189,7 +189,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Inst_Replay: 1,
   Replay_FastSlow: false,
   Gravity_Light: false,
-  Music_Track: 1, // 012
+  Game_Music: 1, // 012
   Flower_On_Init: false,
   Flower_Rapid_Fire: false,
   Flower_Full_Screen: false,

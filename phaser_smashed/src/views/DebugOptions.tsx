@@ -34,6 +34,33 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
           return null;
         }
 
+        let textToShow = 'XXX';
+
+        switch (key) {
+          case 'Mode_Infinity':
+            if (value) {
+              textToShow = 'Mode: Shots';
+            } else {
+              textToShow = 'Mode: Time';
+            }
+            break;
+          default:
+            textToShow = replaceUnderscoreWithSpace(
+              (typeof value === 'boolean'
+                ? value
+                  ? showHomeList
+                    ? ''
+                    : emoji.greenCheck
+                  : showHomeList
+                  ? ''
+                  : emoji.redX
+                : value) +
+                '_' +
+                key
+            );
+            break;
+        }
+
         return (
           <div
             id={showHomeList ? 'home-debug' : 'option-debug'}
@@ -66,11 +93,11 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
                 }));
               }
 
-              if (key === 'Infinity') {
+              if (key === 'Mode_Infinity') {
                 const newMainOpotionsDebugShow: Debug = {
                   ...mainOptionsDebugShowState,
                 };
-                if (debugState.Infinity) {
+                if (debugState.Mode_Infinity) {
                   newMainOpotionsDebugShow['Minutes'] = 1;
                   newMainOpotionsDebugShow['Shots'] = 0;
                 } else {
@@ -82,21 +109,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               }
             }}
           >
-            <div className={'option-debug-text'}>
-              {replaceUnderscoreWithSpace(
-                (typeof value === 'boolean'
-                  ? value
-                    ? showHomeList
-                      ? ''
-                      : emoji.greenCheck
-                    : showHomeList
-                    ? ''
-                    : emoji.redX
-                  : value) +
-                  '_' +
-                  key
-              )}
-            </div>
+            <div className={'option-debug-text'}>{textToShow}</div>
           </div>
         );
       })}

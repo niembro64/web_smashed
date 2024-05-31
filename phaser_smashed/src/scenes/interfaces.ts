@@ -7,10 +7,10 @@ export interface Debug {
   Dur_Seconds: boolean;
   Dev_Zoom: number;
   Stage: number;
-  Infinity: boolean;
+  Mode_Infinity: boolean;
   Minutes: number;
   Shots: number;
-  Music_Track: number;
+  Game_Music: number;
   Music_Active: boolean;
   Update_Loops_Skip: number;
   Friction_Air_Active: boolean;

@@ -1,6 +1,8 @@
 import ShakePosition from 'phaser3-rex-plugins/plugins/behaviors/shake/ShakePosition';
+import { print } from '../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from './SmashedGame';
 import { setAttackPhysicalOffscreen } from './helpers/attacks';
+import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import {
   onHitHandlerAttackEnergy,
   onHitHandlerAttackPhysical,
@@ -8,6 +10,8 @@ import {
   onHitHandlerBullets,
   onHitHandlerFireBall,
 } from './helpers/damage';
+import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
+import { createPlatforms } from './helpers/platforms';
 import {
   getDoesAnythingHaveDark,
   getHasBeenGameDurationSinceMoment,
@@ -16,11 +20,6 @@ import {
   updateChompFilterStatePlayer,
 } from './helpers/powers';
 import { filterAttackEnergyNormal, setBlinkTrue } from './helpers/sprites';
-import { setPreUpdate } from './update';
-import { Bullet, BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
-import { print } from '../views/client';
-import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
-import { createPlatforms } from './helpers/platforms';
 import {
   BulletBillBullet,
   BulletBillButton,
@@ -30,7 +29,7 @@ import {
   Player,
   Position,
 } from './interfaces';
-import { color } from 'html2canvas/dist/types/css/types/color';
+import { setPreUpdate } from './update';
 
 export function create(game: SmashedGame) {
   createPreCreate(game);
@@ -739,7 +738,7 @@ function createSoundsGame(game: SmashedGame): void {
   });
   game.SOUND_PAUSED = game.sound.add('mii', { volume: 0.1, loop: true });
   game.soundBGM = game.sound.add('bgm', {
-    volume: game.debug.Music_Track === 3 ? 0.15 : 0.2,
+    volume: game.debug.Game_Music === 3 ? 0.15 : 0.2,
     loop: true,
   });
 
@@ -752,11 +751,6 @@ function createSoundsGame(game: SmashedGame): void {
   }
 }
 
-function createShields(game: SmashedGame): void {
-  game.colorCircles.forEach((circle, circleIndex) => {
-    circle.graphic = game.add.circle(0, 0, 50, circle.colorNumber);
-  });
-}
 function createPlayerIdCircles(game: SmashedGame): void {
   if (!game.debug.Player_ID_Visible || game.debug.Chars_Colored) {
     return;
@@ -1003,19 +997,7 @@ function createKeyboards(game: SmashedGame): void {
     }
   }
 }
-function createKeyboardsOld(game: SmashedGame): void {
-  const k = game.keyboardHandPositions.length;
-  const p = game.players.length;
-  const d = p - k > 0 ? p - k : 0;
 
-  for (let i = 0; i < k; i++) {
-    if (game?.players[i + d]) {
-      game.players[i + d].keyboard = game.input.keyboard.addKeys(
-        game.keyboardHandPositions[i]
-      );
-    }
-  }
-}
 function setPlayersInitialPositions(game: SmashedGame): void {
   game.players.forEach((player, playerIndex) => {
     player.char.initializeCharPosition.x =
@@ -1768,56 +1750,6 @@ function createColliderTablePlatforms(game: SmashedGame): void {
   game.physics.add.collider(game.TABLE, game.PLATFORMS);
 }
 
-function createBackgroundTitles(game: SmashedGame): void {
-  game.TEXT_TITLE = game.add
-    .text(
-      SCREEN_DIMENSIONS.WIDTH / 2,
-      300 * game.SCREEN_SCALE.HEIGHT,
-      'SMASHED',
-      {
-        // font: "300px Impact",
-        fontFamily: 'Impact',
-        // fontFamily: "'Press Start 2P'",
-        // font: "64px Press Start 2P",
-        // font: '"Press Start 2P"',
-        fontSize: '500px',
-        // fontSize: "500px",
-      }
-    )
-    .setOrigin(0.5)
-    .setColor('black')
-    .setAlpha(0.3);
-  game.TEXT_SUBTITLE = game.add
-    .text(
-      SCREEN_DIMENSIONS.WIDTH / 13,
-      SCREEN_DIMENSIONS.HEIGHT / 2 + 10,
-      'NIEMBRO64',
-      {
-        // font: "300px Impact",
-        fontFamily: 'Impact',
-        // fontFamily: "'Press Start 2P'",
-        // font: "64px Press Start 2P",
-        // font: '"Press Start 2P"',
-        fontSize: '50px',
-      }
-    )
-    .setOrigin(0.5)
-    .setColor('black')
-    .setAlpha(0.3);
-  game.TEXT_SUPERTITLE = game.add
-    .text(SCREEN_DIMENSIONS.WIDTH / 2, 50, 'WEB', {
-      // font: "300px Impact",
-      fontFamily: 'Impact',
-      // fontFamily: "'Press Start 2P'",
-      // font: "64px Press Start 2P",
-      // font: '"Press Start 2P"',
-      fontSize: '80px',
-    })
-    .setOrigin(0.5)
-    .setColor('black')
-    .setAlpha(0.3);
-}
-
 function createSplashRuleFinished(game: SmashedGame): void {
   game.splashRules.forEach((splash, splashIndex) => {
     // if (splashIndex === game.splashRules.length - 1) {
@@ -2058,10 +1990,10 @@ function createScoreboard(game: SmashedGame): void {
     '',
     {
       // font: "Arial 100px",
-      fontSize: game.debug.Infinity ? '45px' : '85px',
+      fontSize: game.debug.Mode_Infinity ? '45px' : '85px',
       // fontFamily: "'Courier New'",
       // fontFamily: game.FONT_DEFAULT_MONOSPACE,
-      fontFamily: game.debug.Infinity
+      fontFamily: game.debug.Mode_Infinity
         ? game.FONT_DEFAULT_NICE
         : game.FONT_DEFAULT_VIDEOGAME,
       // fontFamily: "'Press Start 2P'",
