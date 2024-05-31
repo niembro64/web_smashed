@@ -1,31 +1,21 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { NNInput, NNObject, Player } from '../types';
+import { NNObject, Player } from '../types';
 import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestAttackPhysicalXYFromPlayer,
   getNearestPlayerAliveFromPlayer,
-  getNearestPlayerAliveFromXY,
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
 
 export const nnConfigNN = {
-  hiddenLayers: [40, 40],
+  hiddenLayers: [40],
   useGpu: true,
 };
 
 export const nnNumTrainingBarTicks: number = 25;
-
-export const convertNNObjectToArray = (obj: object): number[] => {
-  return Object.keys(obj)
-    .sort()
-    .map((key) => {
-      // @ts-ignore
-      return obj[key];
-    });
-};
 
 export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   if (!game.debug.NN_Train) {
@@ -129,7 +119,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   );
 };
 
-export const NNGetOutputRatios = (game: SmashedGame): number[] => {
+const NNGetOutputRatios = (game: SmashedGame): number[] => {
   const numObj: number = game.nnObjects.length;
   const numObjOuts: number = game.nnObjects[0].output.length;
 
@@ -153,39 +143,42 @@ export const NNGetOutputRatios = (game: SmashedGame): number[] => {
   return btnUsedRatio;
 };
 
-export const NNGetOutputStatic = (
+const NNGetInputArrayFromWorld = (
   player: Player,
   playerIndex: number,
   game: SmashedGame
 ): number[] => {
-  const nearP = getNearestPlayerAliveFromPlayer(player, playerIndex, game);
+  const largeNumber = 9999;
+  const nearestPlayerAlive = getNearestPlayerAliveFromPlayer(
+    player,
+    playerIndex,
+    game
+  );
+  const nearestPlayer = getNearestPlayerFromPlayer(player, playerIndex, game);
 
-  const enemyNearest: Player | null = nearP?.player || null;
+  const enemyNearestAlive: Player | null = nearestPlayerAlive?.player || null;
+  const enemyNearest = nearestPlayer?.player || null;
 
-  const aliveP = getNearestPlayerFromPlayer(player, playerIndex, game);
-
-  const enemyAlive = aliveP?.player || null;
-
-  let enemy = enemyAlive;
+  let enemy = enemyNearestAlive;
 
   if (enemy === null) {
     enemy = enemyNearest;
   }
 
   const z = getNearestAttackEnergyXYFromPlayer(player, playerIndex, game);
-  const enemyAEX: number | null = z?.x || null;
-  const enemyAEY: number | null = z?.y || null;
+  const enemyAEX: number = z?.x || largeNumber;
+  const enemyAEY: number = z?.y || largeNumber;
 
   const e = getNearestAttackPhysicalXYFromPlayer(player, playerIndex, game);
 
-  const enemyAPX: number | null = e?.x || null;
-  const enemyAPY: number | null = e?.y || null;
+  const enemyAPX: number = e?.x || largeNumber;
+  const enemyAPY: number = e?.y || largeNumber;
 
-  const enemyPositionX = enemy?.char.sprite.x || null;
-  const enemyPositionY = enemy?.char.sprite.y || null;
+  const enemyPositionX = enemy?.char.sprite.x || largeNumber;
+  const enemyPositionY = enemy?.char.sprite.y || largeNumber;
 
-  const enemyVelocyX = enemy?.char.sprite.body.velocity.x || null;
-  const enemyVelocyY = enemy?.char.sprite.body.velocity.y || null;
+  const enemyVelocyX = enemy?.char.sprite.body.velocity.x || 0;
+  const enemyVelocyY = enemy?.char.sprite.body.velocity.y || 0;
 
   // is p facing enemy
   let isPFacingEnemy: boolean = false;
@@ -248,10 +241,18 @@ export const NNGetOutputStatic = (
 
     // DIFF SPRITE AE POSITIONS
     // DIFF SPRITE AP POSITIONS
-    enemyAEX === null ? 0 : player.char.sprite.body.position.x - enemyAEX,
-    enemyAEY === null ? 0 : player.char.sprite.body.position.y - enemyAEY,
-    enemyAPX === null ? 0 : player.char.sprite.body.position.x - enemyAPX,
-    enemyAPY === null ? 0 : player.char.sprite.body.position.y - enemyAPY,
+    enemyAEX === null
+      ? largeNumber
+      : player.char.sprite.body.position.x - enemyAEX,
+    enemyAEY === null
+      ? largeNumber
+      : player.char.sprite.body.position.y - enemyAEY,
+    enemyAPX === null
+      ? largeNumber
+      : player.char.sprite.body.position.x - enemyAPX,
+    enemyAPY === null
+      ? largeNumber
+      : player.char.sprite.body.position.y - enemyAPY,
 
     // TOUCHING
     player.char.sprite.body.touching.up ? 1 : 0,
@@ -264,72 +265,27 @@ export const NNGetOutputStatic = (
     player.char.sprite.flipX ? 1 : 0,
   ];
 
-  // const nnInputObject: NNInput = {
-  //   emitterOn: player.emitterPlayer.on ? 1 : 0,
-  //   powerState: player.char.powerStateCurr.name === 'none' ? 0 : 1,
-  //   stateHurt: player.state.name === 'player-state-hurt' ? 1 : 0,
-  //   controllerCurrUp: pCurr.up ? 1 : 0,
-  //   controllerCurrDown: pCurr.down ? 1 : 0,
-  //   controllerCurrLeft: pCurr.left ? 1 : 0,
-  //   controllerCurrRight: pCurr.right ? 1 : 0,
-  //   controllerCurrA: pCurr.A ? 1 : 0,
-  //   controllerCurrB: pCurr.B ? 1 : 0,
-  //   controllerCurrX: pCurr.X ? 1 : 0,
-  //   controllerCurrY: pCurr.Y ? 1 : 0,
-  //   controllerPrevUp: pPrev.up ? 1 : 0,
-  //   controllerPrevDown: pPrev.down ? 1 : 0,
-  //   controllerPrevLeft: pPrev.left ? 1 : 0,
-  //   controllerPrevRight: pPrev.right ? 1 : 0,
-  //   controllerPrevA: pPrev.A ? 1 : 0,
-  //   controllerPrevB: pPrev.B ? 1 : 0,
-  //   controllerPrevX: pPrev.X ? 1 : 0,
-  //   controllerPrevY: pPrev.Y ? 1 : 0,
-  //   controllerDebUp: pDeb.up,
-  //   controllerDebDown: pDeb.down,
-  //   controllerDebLeft: pDeb.left,
-  //   controllerDebRight: pDeb.right,
-  //   controllerDebA: pDeb.A,
-  //   controllerDebB: pDeb.B,
-  //   controllerDebX: pDeb.X,
-  //   controllerDebY: pDeb.Y,
-  //   playerPosX: player.char.sprite.body.position.x,
-  //   playerPosY: player.char.sprite.body.position.y,
-  //   playerVelX: player.char.sprite.body.velocity.x,
-  //   playerVelY: player.char.sprite.body.velocity.y,
-  //   playerEnemyDPX:
-  //     enemyPositionX === null ? 0 : player.char.sprite.x - enemyPositionX,
-  //   playerEnemyDPY:
-  //     enemyPositionY === null ? 0 : player.char.sprite.y - enemyPositionY,
-  //   playerEnemyDVX:
-  //     enemyVelocyX === null
-  //       ? 0
-  //       : player.char.sprite.body.velocity.x - enemyVelocyX,
-  //   playerEnemyDVY:
-  //     enemyVelocyY === null
-  //       ? 0
-  //       : player.char.sprite.body.velocity.y - enemyVelocyY,
-  //   playerEnemyAttackEnergyDPX:
-  //     enemyAEX === null ? 0 : player.char.sprite.x - enemyAEX,
-  //   playerEnemyAttackEnergyDPY:
-  //     enemyAEY === null ? 0 : player.char.sprite.y - enemyAEY,
-  //   playerEnemyAttackPhysicalDPX:
-  //     enemyAPX === null ? 0 : player.char.sprite.x - enemyAPX,
-  //   playerEnemyAttackPhysicalDPY:
-  //     enemyAPY === null ? 0 : player.char.sprite.y - enemyAPY,
-  //   playerTouchingUp: player.char.sprite.body.touching.up ? 1 : 0,
-  //   playerTouchingDown: player.char.sprite.body.touching.down ? 1 : 0,
-  //   playerTouchingLeft: player.char.sprite.body.touching.left ? 1 : 0,
-  //   playerTouchingRight: player.char.sprite.body.touching.right ? 1 : 0,
-  //   playerFacingEnemy: isPFacingEnemy ? 1 : 0,
-  //   flipX: player.char.sprite.flipX ? 1 : 0,
-  // };
+  return nnInput;
+};
 
-  // const nnInput: number[] = Object.values(nnInputObject);
+const NNGetOutputArrayFromWorld = (
+  player: Player,
+  playerIndex: number,
+  game: SmashedGame
+): number[] => {
+  const pCurr = player.padCurr;
 
-  const nnOutput: number[] = game.nnNet.run(nnInput);
+  const nnOutput: number[] = [
+    pCurr.up ? 1 : 0,
+    pCurr.down ? 1 : 0,
+    pCurr.left ? 1 : 0,
+    pCurr.right ? 1 : 0,
+    pCurr.A ? 1 : 0,
+    pCurr.B ? 1 : 0,
+    pCurr.X ? 1 : 0,
+    pCurr.Y ? 1 : 0,
+  ];
 
-  // print('input', JSON.stringify(input, null, 2));
-  // print('output', JSON.stringify(output, null, 2));
   return nnOutput;
 };
 
@@ -338,7 +294,8 @@ export const NNSetPlayerPadStatic = (
   playerIndex: number,
   game: SmashedGame
 ): void => {
-  const nnOutput = NNGetOutputStatic(player, playerIndex, game);
+  const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game);
+  const nnOutput: number[] = game.nnNet.run(nnInput);
 
   const r: number[] = NNRatiosNN;
 
@@ -352,7 +309,7 @@ export const NNSetPlayerPadStatic = (
   player.padCurr.Y = nnOutput[7] > r[7];
 };
 
-export const addPlayerOneNNObjectsStatic = (game: SmashedGame): void => {
+export const addPlayerNNObjectsStatic = (game: SmashedGame): void => {
   if (!game.debug.NN_Train) {
     return;
   }
@@ -361,131 +318,23 @@ export const addPlayerOneNNObjectsStatic = (game: SmashedGame): void => {
     return;
   }
 
+  const playerIndex = 0;
+
   if (
-    game.players[0].state.name === 'player-state-dead' ||
-    game.players[0].state.name === 'player-state-start'
+    game.players[playerIndex].state.name === 'player-state-dead' ||
+    game.players[playerIndex].state.name === 'player-state-start'
   ) {
     return;
   }
 
-  const player: Player = game.players[0];
+  const player: Player = game.players[playerIndex];
 
-  const e_or_null = getNearestPlayerAliveFromXY(
-    player.char.sprite.body.position.x,
-    player.char.sprite.body.position.y,
-    game
-  );
-
-  const enemy: Player | null = e_or_null?.player || null;
-
-  const EAE_XY = getNearestAttackEnergyXYFromPlayer(player, 0, game);
-
-  const enemyAttackEnergyX: number | null = EAE_XY?.x || null;
-  const enemyAttackEnergyY: number | null = EAE_XY?.y || null;
-
-  const eap_XY = getNearestPlayerFromPlayer(player, 0, game);
-
-  const enemyAttackPhysicalX = eap_XY?.player?.char.sprite.x || null;
-  const enemyAttackPhysicalY = eap_XY?.player?.char.sprite.y || null;
-
-  let isPFacingEnemy: boolean = false;
-  if (enemy !== null) {
-    if (player.char.sprite.x < enemy.char.sprite.x) {
-      if (player.char.sprite.flipX) {
-        isPFacingEnemy = true;
-      }
-    } else {
-      if (!player.char.sprite.flipX) {
-        isPFacingEnemy = true;
-      }
-    }
-  }
+  const inputArray = NNGetInputArrayFromWorld(player, playerIndex, game);
+  const outputArray = NNGetOutputArrayFromWorld(player, playerIndex, game);
 
   const newNNObject: NNObject = {
-    input: [
-      // STATES
-      player.emitterPlayer.on ? 1 : 0,
-      player.char.powerStateCurr.name === 'none' ? 0 : 1,
-      player.state.name === 'player-state-hurt' ? 1 : 0,
-
-      // BUTTONS
-      player.padCurr.up ? 1 : 0,
-      player.padCurr.down ? 1 : 0,
-      player.padCurr.left ? 1 : 0,
-      player.padCurr.right ? 1 : 0,
-      player.padCurr.A ? 1 : 0,
-      player.padCurr.B ? 1 : 0,
-      player.padCurr.X ? 1 : 0,
-      player.padCurr.Y ? 1 : 0,
-      player.padPrev.up ? 1 : 0,
-      player.padPrev.down ? 1 : 0,
-      player.padPrev.left ? 1 : 0,
-      player.padPrev.right ? 1 : 0,
-      player.padPrev.A ? 1 : 0,
-      player.padPrev.B ? 1 : 0,
-      player.padPrev.X ? 1 : 0,
-      player.padPrev.Y ? 1 : 0,
-      player.padDebounced.up,
-      player.padDebounced.down,
-      player.padDebounced.left,
-      player.padDebounced.right,
-      player.padDebounced.A,
-      player.padDebounced.B,
-      player.padDebounced.X,
-      player.padDebounced.Y,
-
-      // SPRITE POSITIONS
-      player.char.sprite.body.position.x,
-      player.char.sprite.body.position.y,
-      player.char.sprite.body.velocity.x,
-      player.char.sprite.body.velocity.y,
-
-      // DIFF SPRITE POSITIONS
-      enemy === null ? 0 : player.char.sprite.x - enemy.char.sprite.x,
-      enemy === null ? 0 : player.char.sprite.y - enemy.char.sprite.y,
-
-      // DIFF SPRITE VELOCITIES
-      enemy === null
-        ? 0
-        : player.char.sprite.body.velocity.x -
-          enemy.char.sprite.body.velocity.x,
-      enemy === null
-        ? 0
-        : player.char.sprite.body.velocity.y -
-          enemy.char.sprite.body.velocity.y,
-
-      // DIFF SPRITE AE POSITIONS
-      enemyAttackEnergyX === null
-        ? 0
-        : player.char.sprite.body.position.x - enemyAttackEnergyX,
-      enemyAttackEnergyY === null
-        ? 0
-        : player.char.sprite.body.position.y - enemyAttackEnergyY,
-
-      // DIFF SPRITE AP POSITIONS
-      player.char.sprite.body.position.x - enemyAttackPhysicalX,
-      player.char.sprite.body.position.y - enemyAttackPhysicalY,
-
-      // TOUCHING
-      player.char.sprite.body.touching.up ? 1 : 0,
-      player.char.sprite.body.touching.down ? 1 : 0,
-      player.char.sprite.body.touching.left ? 1 : 0,
-      player.char.sprite.body.touching.right ? 1 : 0,
-
-      // FACING
-      isPFacingEnemy ? 1 : 0,
-      player.char.sprite.flipX ? 1 : 0,
-    ],
-    output: [
-      player.padCurr.up ? 1 : 0,
-      player.padCurr.down ? 1 : 0,
-      player.padCurr.left ? 1 : 0,
-      player.padCurr.right ? 1 : 0,
-      player.padCurr.A ? 1 : 0,
-      player.padCurr.B ? 1 : 0,
-      player.padCurr.X ? 1 : 0,
-      player.padCurr.Y ? 1 : 0,
-    ],
+    input: inputArray,
+    output: outputArray,
   };
 
   print('newNNObject', JSON.stringify(newNNObject, null, 2));
@@ -493,7 +342,7 @@ export const addPlayerOneNNObjectsStatic = (game: SmashedGame): void => {
   game.nnObjects.push(newNNObject);
 };
 
-export const NNDownloadNNObjects = (game: SmashedGame): void => {
+const NNDownloadNNObjects = (game: SmashedGame): void => {
   const nnObjects = game.nnObjects;
   const nnObjectsString = JSON.stringify(nnObjects, null, 2);
   const blob = new Blob([nnObjectsString], { type: 'text/plain' });
@@ -510,7 +359,7 @@ export const NNDownloadNNObjects = (game: SmashedGame): void => {
   URL.revokeObjectURL(url);
 };
 
-export const saveTextStringAsFileToBaseOfDirectory = (
+const saveTextStringAsFileToBaseOfDirectory = (
   text: string,
   filename: string
 ): void => {
