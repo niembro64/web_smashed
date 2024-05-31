@@ -26,6 +26,7 @@ import {
   updateAttackEnergyWrapScreen,
   updateCirclesLocations,
   updateKeepObjectsFromFallingLikeCrazy,
+  updatePlayerPositionIfUndefined,
   updateTable,
   updateWallTouchArray,
 } from '../helpers/movement';
@@ -87,6 +88,7 @@ export function updateGameStatePlay(
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);
   updateBulletBill(game);
+  updatePlayerPositionIfUndefined(game);
 
   // UPDATE PLAYERS
   updatePlayers(game);

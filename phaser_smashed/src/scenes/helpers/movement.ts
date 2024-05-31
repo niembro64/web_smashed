@@ -679,3 +679,12 @@ export function getIsSpriteMoving(
   const isMoving = Math.abs(sprite.body.velocity.x) > tolerance;
   return isMoving;
 }
+
+export function updatePlayerPositionIfUndefined(game: SmashedGame): void {
+  game.players.forEach((player) => {
+    if (!player.char.sprite.x || !player.char.sprite.y) {
+      player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+      player.char.sprite.y = SCREEN_DIMENSIONS.HEIGHT * 0.2;
+    }
+  });
+}
