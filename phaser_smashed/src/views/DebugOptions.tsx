@@ -10,6 +10,7 @@ interface DebugOptionsProps {
   setDebugState: React.Dispatch<React.SetStateAction<Debug>>;
   showHomeList: boolean;
   getMaxFromKey: (key: string) => number;
+  setMainOptionsDebugShowState: React.Dispatch<React.SetStateAction<Debug>>;
 }
 
 const DebugOptions: React.FC<DebugOptionsProps> = ({
@@ -19,6 +20,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
   setDebugState,
   getMaxFromKey,
   showHomeList,
+  setMainOptionsDebugShowState,
 }) => {
   return (
     <>
@@ -64,8 +66,20 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
                 }));
               }
 
+              if (key === 'Infinity') {
+                const newMainOpotionsDebugShow: Debug = {
+                  ...mainOptionsDebugShowState,
+                };
+                if (debugState.Infinity) {
+                  newMainOpotionsDebugShow['Minutes'] = 1;
+                  newMainOpotionsDebugShow['Shots'] = 0;
+                } else {
+                  newMainOpotionsDebugShow['Minutes'] = 0;
+                  newMainOpotionsDebugShow['Shots'] = 1;
+                }
 
-              
+                setMainOptionsDebugShowState((x) => newMainOpotionsDebugShow);
+              }
             }}
           >
             <div className={'option-debug-text'}>

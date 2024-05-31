@@ -139,8 +139,8 @@ export const showOptionOnMainScreenInit: Debug = {
   Stage: 1, //0123456
   Infinity: true,
   Dur_Seconds: false,
-  Shots: 0,
-  Minutes: 1, //01234567
+  Shots: 1,
+  Minutes: 0, //01234567
   Music_Active: false,
   Auto_Start: false,
   Ready_Sound_Active: false,

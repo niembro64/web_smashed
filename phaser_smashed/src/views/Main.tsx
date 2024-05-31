@@ -1409,6 +1409,7 @@ function Play() {
                 mainOptionsDebugShowState={mainOptionsDebugShowState}
                 setDebugState={setDebugState}
                 getMaxFromKey={getMaxFromKey}
+                setMainOptionsDebugShowState={setMainOptionsDebugShowState}
               />
             </div>
             <div className="player-choices-right">
@@ -1850,6 +1851,7 @@ function Play() {
                   mainOptionsDebugShowState={mainOptionsDebugShowState}
                   setDebugState={setDebugState}
                   getMaxFromKey={getMaxFromKey}
+                  setMainOptionsDebugShowState={setMainOptionsDebugShowState}
                 />
               </div>
             </div>
