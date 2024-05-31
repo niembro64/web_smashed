@@ -524,6 +524,10 @@ export function onHitHandlerBulletBill(
     return;
   }
 
+  if (playerIndex === game.bulletBillCombo.bullet.playerIndexOwns) {
+    return;
+  }
+
   setPlayerState(player, playerIndex, 'player-state-hurt', game);
 
   player.char.damageCurr += game.bulletBillCombo.bullet.damage;
