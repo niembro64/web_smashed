@@ -1059,15 +1059,15 @@ function createEmittersPlayers(game: SmashedGame): void {
     player.particles = game.add.particles('tail_' + playerIndex);
     player.particlesShield = game.add.particles('shield_' + playerIndex);
 
-    player.emitterLight = player.particles.createEmitter({
-      speed: 10,
-      // scale: { start: 0.05, end: 0 },
-      scale: { start: 1.5 * player.char.scaleCharSpriteReality * m, end: 0 },
-      blendMode: 'ADD',
-      // bounce: 1,
-      // length: 100,
-      lifespan: 30,
-    });
+    // player.emitterLight = player.particles.createEmitter({
+    //   speed: 10,
+    //   // scale: { start: 0.05, end: 0 },
+    //   scale: { start: 1.5 * player.char.scaleCharSpriteReality * m, end: 0 },
+    //   blendMode: 'ADD',
+    //   // bounce: 1,
+    //   // length: 100,
+    //   lifespan: 30,
+    // });
 
     player.emitterDark = player.particles.createEmitter({
       // speed: 1000,
@@ -1151,34 +1151,34 @@ function createEmittersFollowPlayers(game: SmashedGame): void {
     // player.emitterPlayer.setScale(player.char.scaleCharSpriteReality);
     // player.emitterHurt.setScale(player.char.scaleCharSpriteReality);
 
-    player.emitterLight.startFollow(player.char.sprite);
+    // player.emitterLight.startFollow(player.char.sprite);
     player.emitterDark.startFollow(player.char.sprite);
     player.emitterPlayer.startFollow(player.char.sprite);
     player.emitterHurt.startFollow(player.char.sprite);
 
-    player.emitterLight.setAlpha(0.3);
+    // player.emitterLight.setAlpha(0.3);
     player.emitterDark.setAlpha(1);
     player.emitterPlayer.setAlpha(1);
     player.emitterHurt.setAlpha(0.5);
     // player.emitterPlayer.setAlpha(0.3);
 
-    player.emitterLight.setTint(0xffffff);
+    // player.emitterLight.setTint(0xffffff);
     player.emitterDark.setTint(0x000000);
     player.emitterPlayer.setTint(game.colorCircles[playerIndex].colorNumber);
     player.emitterHurt.setTint(game.colorCircles[playerIndex].colorNumber);
 
     // EMN ACTIVE
-    player.emitterLight.active = false;
+    // player.emitterLight.active = false;
     player.emitterDark.active = true;
     player.emitterPlayer.active = false;
     player.emitterHurt.active = false;
 
-    player.emitterLight.on = false;
+    // player.emitterLight.on = false;
     player.emitterDark.on = true;
     player.emitterPlayer.on = false;
     player.emitterHurt.on = true; // always on
 
-    player.emitterLight.visible = false;
+    // player.emitterLight.visible = false;
     player.emitterDark.visible = false;
     // player.emitterPlayer.visible = false;
     // player.emitterHurt.visible = false;
