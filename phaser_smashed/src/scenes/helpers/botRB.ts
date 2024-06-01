@@ -158,7 +158,7 @@ export function getIsBotTooFarCenterRight(
 }
 export function getIsBotTooFarLeft(player: Player, game: SmashedGame): boolean {
   let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.04;
+  let left = SCREEN_DIMENSIONS.WIDTH * 0.07;
   if (bot.x < left) {
     return true;
   }

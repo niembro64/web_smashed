@@ -364,10 +364,29 @@ export const NNSetPlayerPadStatic = (
     throw new Error('nnOutput === null');
   }
 
+  // let canChangeDirection = false;
+  // const amt = 8;
+  // if (player.padDebounced.left > amt || player.padDebounced.right > amt) {
+  //   canChangeDirection = true;
+  // }
+
+  // if (canChangeDirection) {
+  //   const padPrev = player.padPrev;
+  //   const padPrevRight = padPrev.right;
+  //   const padPrevLeft = padPrev.left;
+
+  //   const shouldGoLeft = nnOutput[2] > nnOutput[3];
+
+  // }
+
   player.padCurr.up = nnOutput[0] > ratioThresh[0];
   player.padCurr.down = nnOutput[1] > ratioThresh[1];
+
   player.padCurr.left = nnOutput[2] > ratioThresh[2];
-  player.padCurr.right = nnOutput[3] > ratioThresh[3];
+  player.padCurr.right = !player.padCurr.left;
+  // player.padCurr.left = nnOutput[2] > ratioThresh[2];
+  // player.padCurr.right = nnOutput[3] > ratioThresh[3];
+  
   player.padCurr.A = nnOutput[4] > ratioThresh[4];
   player.padCurr.B = nnOutput[5] > ratioThresh[5];
   player.padCurr.X = nnOutput[6] > ratioThresh[6];
