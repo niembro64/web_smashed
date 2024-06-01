@@ -1,5 +1,8 @@
 import { Debug } from './scenes/types';
 
+////////////////////////////////
+// DEFAULT DEBUG OPTIONS
+////////////////////////////////
 export const debugInit: Debug = {
   NN_Train: true,
   NN_Brand_New: false,
@@ -71,7 +74,9 @@ export const debugInit: Debug = {
   Flower_HighTrajectory: 1,
 };
 
-// TRUE means SHOWN ON MAIN PAGE
+////////////////////////////////
+// SHOW OPTION ON MAIN SCREEN
+////////////////////////////////
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: true,
   NN_Help_Screen: false,
@@ -142,6 +147,9 @@ export const showOptionOnMainScreenInit: Debug = {
   Flower_HighTrajectory: 0,
 };
 
+////////////////////////////////
+// MAXIMUM DEBUG OPTIONS
+////////////////////////////////
 export const debugMax: Debug = {
   NN_Train: true,
   NN_Brand_New: false,
@@ -211,7 +219,9 @@ export const debugMax: Debug = {
   Flower_HighTrajectory: 2,
 };
 
-// all false or 0
+////////////////////////////////
+// DO NOT SHOW
+////////////////////////////////
 export const doNotShowDebug: Debug = {
   NN_Train: false,
   NN_Brand_New: false,
