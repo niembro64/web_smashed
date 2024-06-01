@@ -89,7 +89,8 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
           const doSwitch = Math.random() < percentReverse;
 
           if (isBinary) {
-            return input === 0 ? 1 : 0;
+            // return input === 0 ? 1 : 0;
+            return input;
           }
 
           return input * (doSwitch ? -1 : 1);
@@ -100,7 +101,8 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
           const doSwitch = Math.random() < percentReverse;
 
           if (isBinary) {
-            return output === 0 ? 1 : 0;
+            // return output === 0 ? 1 : 0;
+            return output;
           }
 
           return output * (doSwitch ? -1 : 1);
