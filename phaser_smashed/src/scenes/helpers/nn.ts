@@ -21,7 +21,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     return;
   }
 
-  if (!isFirstPlayerANeuralNetwork(game)) {
+  if (isFirstPlayerANeuralNetwork(game)) {
     return;
   }
 
