@@ -2,6 +2,7 @@ import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   NN_Train: true,
+  NN_Brand_New: false,
   NN_Use_Client: false,
   NN_Help_Screen: true,
   NN_Help_Centerize: false,
@@ -42,7 +43,7 @@ export const debugInit: Debug = {
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
-  Load_Time_Extra: true,
+  Load_Time_Extra: false,
   Allow_Koopas: true,
   Allow_Chez: true,
   Allow_BlackChez: false,
@@ -75,13 +76,14 @@ export const showOptionOnMainScreenInit: Debug = {
   NN_Train: true,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
+  NN_Brand_New: true,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
   NN_Use_Client: true,
   Simple_Stage: true,
   Stage: 0, //0123456
   Mode_Infinity: true,
-  Dur_Seconds: false,
+  Dur_Seconds: true,
   Shots: 0,
   Minutes: 1, //01234567
   Music_Active: false,
@@ -142,6 +144,7 @@ export const showOptionOnMainScreenInit: Debug = {
 
 export const debugMax: Debug = {
   NN_Train: true,
+  NN_Brand_New: false,
   Stage: 10, //0123456
   Dur_Seconds: true,
   Mode_Infinity: true,

@@ -52,6 +52,7 @@ export interface Debug {
   Simple_Stage: boolean;
   NN_Help_Screen: boolean;
   NN_Help_Pit: boolean;
+  NN_Brand_New: boolean;
   NN_Help_Wall: boolean;
   NN_Help_Centerize: boolean;
   NN_Use_Client: boolean;

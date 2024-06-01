@@ -1,3 +1,4 @@
+import { NeuralNetwork } from 'brain.js';
 import { print, saveNeuralNetwork } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import { NNObject, Player } from '../types';
@@ -8,6 +9,7 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
+import { nnJsonNNHardcodeClient } from './nnJson';
 
 export const nnConfigNN = {
   hiddenLayers: [40, 30, 20],
@@ -24,8 +26,12 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   if (isFirstPlayerANeuralNetwork(game)) {
     return;
   }
+  const newNN: boolean = game.debug.NN_Brand_New;
 
-  const trainHeavy: boolean = game.debug.Simple_Stage;
+  if (newNN) {
+    game.nnNet = new NeuralNetwork(nnConfigNN);
+    // game.nnNet = game.nnNet.fromJSON(nnJsonNNHardcodeClient);
+  }
 
   print('NNTrain');
 
@@ -67,7 +73,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   await game.nnNet.trainAsync(randomizedNnObjects, {
     iterations: numIter,
     randomize: true,
-    learningRate: trainHeavy ? 0.00001 : 0.0000001,
+    learningRate: newNN ? 0.00001 : 0.0000001,
     logPeriod: logPeriod,
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / numIter);

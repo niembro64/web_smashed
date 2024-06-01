@@ -174,7 +174,7 @@ export const axiosUpsertOne = async (
   }
 };
 
-export const getAllAxios = async (): Promise<SessionInfo[]> => {
+export const getAllGameHistory = async (): Promise<SessionInfo[]> => {
   let response;
   if (process.env.NODE_ENV === 'production') {
     // response = await axios.get('http://3.86.180.36:8000/api/smashed');

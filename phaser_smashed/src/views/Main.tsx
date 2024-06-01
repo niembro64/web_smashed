@@ -36,7 +36,7 @@ import {
   axiosSaveOne,
   fetchClientData,
   fetchNeuralNetwork,
-  getAllAxios,
+  getAllGameHistory,
   print,
   sumNumbersIn2DArrayString,
 } from './client';
@@ -84,25 +84,42 @@ function Play() {
 
   const nnJsonReact = useRef<string | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      let nn = null;
-      if (debugState.NN_Use_Client) {
-        print('USING CLIENT NN');
+  // useEffect(() => {
+  //   (async () => {
+  //     let nn = null;
+  //     if (debugState.NN_Use_Client) {
+  //       print('USING CLIENT NN');
+  //       nn = nnJsonNNHardcodeClient;
+  //     } else {
+  //       print('FETCHING NEURAL NETWORK');
+  //       nn = await fetchNeuralNetwork();
+
+  //       if (!nn) {
+  //         // throw new Error('nn === null');
+  //         nn = nnJsonNNHardcodeClient;
+  //       }
+  //     }
+
+  //     nnJsonReact.current = nn;
+  //   })();
+  // }, [debugState.NN_Use_Client]);
+  const pullCorrectNeuralNetworkWeights = async () => {
+    let nn = null;
+    if (debugState.NN_Use_Client) {
+      print('USING CLIENT NN');
+      nn = nnJsonNNHardcodeClient;
+    } else {
+      print('FETCHING NEURAL NETWORK');
+      nn = await fetchNeuralNetwork();
+
+      if (!nn) {
+        // throw new Error('nn === null');
         nn = nnJsonNNHardcodeClient;
-      } else {
-        print('FETCHING NEURAL NETWORK');
-        nn = await fetchNeuralNetwork();
-
-        if (!nn) {
-          // throw new Error('nn === null');
-          nn = nnJsonNNHardcodeClient;
-        }
       }
+    }
 
-      nnJsonReact.current = nn;
-    })();
-  }, [debugState.NN_Use_Client]);
+    nnJsonReact.current = nn;
+  };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
     useState<Debug>(showOptionOnMainScreenInit);
@@ -440,10 +457,10 @@ function Play() {
 
         setTopBarDivExists(true);
 
-        (async () => {
-          const allSessions: SessionInfo[] = await getAllAxios();
-          setAllSessions(allSessions);
-        })();
+        // (async () => {
+        //   const allSessions: SessionInfo[] = await getAllGameHistory();
+        //   setAllSessions(allSessions);
+        // })();
         break;
       case 'web-state-load':
         readyPlay();
@@ -705,7 +722,7 @@ function Play() {
       return;
     }
 
-    if (!debugState?.Simple_Stage) {
+    if (!debugState?.NN_Brand_New) {
       return;
     }
     const debugStateCopy = { ...debugState };
@@ -732,11 +749,12 @@ function Play() {
       ],
     };
 
-    debugStateCopy.Minutes = 1;
+    debugStateCopy.Minutes = 10;
+    debugStateCopy.Simple_Stage = true;
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
-  }, [debugState?.Simple_Stage]);
+  }, [debugState?.NN_Brand_New]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
@@ -818,15 +836,7 @@ function Play() {
 
     setWebState('web-state-load');
 
-    setTimeout(() => {
-      // @ts-ignore
-      myPhaser.current = new Phaser.Game(config);
-      myPhaser.current.registry.set('parentContext', Play);
-      myPhaser.current.registry.set('smashConfig', newSmashConfig);
-      myPhaser.current.registry.set('debug', debugState);
-      myPhaser.current.registry.set('myMoment', myMoment);
-      myPhaser.current.registry.set('nnJson', nnJsonReact.current);
-    }, setTimeoutQuotesLengthStart);
+    await pullCorrectNeuralNetworkWeights();
 
     const c: ClientInformation = await fetchClientData();
     const s: SessionInfo = await axiosSaveOne(
@@ -836,6 +846,16 @@ function Play() {
       debugState
     );
     setSession(s);
+
+    setTimeout(() => {
+      // @ts-ignore
+      myPhaser.current = new Phaser.Game(config);
+      myPhaser.current.registry.set('parentContext', Play);
+      myPhaser.current.registry.set('smashConfig', newSmashConfig);
+      myPhaser.current.registry.set('debug', debugState);
+      myPhaser.current.registry.set('myMoment', myMoment);
+      myPhaser.current.registry.set('nnJson', nnJsonReact.current);
+    }, setTimeoutQuotesLengthStart);
   };
 
   const getNumKeyboardsInUse = (): number => {
@@ -929,6 +949,15 @@ function Play() {
   const [showAbout, setShowAbout] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+
+  useEffect(() => {
+    if (showAbout) {
+      (async () => {
+        const allSessions: SessionInfo[] = await getAllGameHistory();
+        setAllSessions(allSessions);
+      })();
+    }
+  }, [showAbout]);
 
   const clickPauseParent = () => {
     // @ts-ignore
@@ -2316,7 +2345,7 @@ function Play() {
       {/* { */}
       {webState === 'web-state-game' &&
         nnProgress !== null &&
-        (debugState.Simple_Stage
+        (debugState.NN_Brand_New
           ? true
           : nnProgress !== 1 && nnProgress !== 100) && (
           <div className="neural-network-train-status">
@@ -2335,7 +2364,7 @@ function Play() {
               {/* <span> Num Object {nnNumObj || 0}</span> */}
               {/* <span> Log Period {nnLogPeriod || 0}</span> */}
             </div>
-            {debugState.Simple_Stage && (
+            {debugState.NN_Brand_New && (
               <div className="neural-network-train-bottom">
                 <div
                   onMouseEnter={() => {
@@ -2350,7 +2379,7 @@ function Play() {
                     }
                   }}
                 >
-                  <span>Model Weights</span>
+                  <span>Copy Weights</span>
                 </div>
                 <div
                   onMouseEnter={() => {
@@ -2370,7 +2399,7 @@ function Play() {
                     }
                   }}
                 >
-                  <span>Output Ratios</span>
+                  <span>Copy Ratios</span>
                 </div>
               </div>
             )}

@@ -683,8 +683,9 @@ export function getIsSpriteMoving(
 export function updatePlayerPositionIfUndefined(game: SmashedGame): void {
   game.players.forEach((player) => {
     if (!player.char.sprite.x || !player.char.sprite.y) {
-      player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
-      player.char.sprite.y = SCREEN_DIMENSIONS.HEIGHT * 0.2;
+      print('player position undefined');
+      player.char.sprite.body.position.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+      player.char.sprite.body.position.y = SCREEN_DIMENSIONS.HEIGHT * 0.2;
     }
   });
 }
