@@ -2279,8 +2279,7 @@ function Play() {
                               gameViewBottom += '' + emoji.dna + ' ';
                               break;
                             default:
-                              gameViewBottom += '?? ';
-                              break;
+                              throw new Error('input not found');
                           }
                         });
                       }
