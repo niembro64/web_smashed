@@ -27,7 +27,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     return;
   }
 
-  const trainHeavy: boolean = game.debug.NN_Train_Easy;
+  const trainHeavy: boolean = game.debug.Simple_Stage;
 
   print('NNTrain');
 
@@ -395,7 +395,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: SmashedGame
 ): void => {
-  if (!game.debug.NN_Train_Easy) {
+  if (!game.debug.Simple_Stage) {
     return;
   }
 

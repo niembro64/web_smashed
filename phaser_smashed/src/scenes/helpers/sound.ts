@@ -158,7 +158,7 @@ export function setMusicBoxStop(game: SmashedGame): void {
 // CHOMP SHEEP MUSIC
 ////////////////////////////////////////
 export function setMusicChompSheepPlay(game: SmashedGame): void {
-  if (game.debug.NN_Train_Easy || game.chomp.soundSheep.isPlaying) {
+  if (game.debug.Simple_Stage || game.chomp.soundSheep.isPlaying) {
     return;
   }
   game.chomp.soundSheep.play();
@@ -172,21 +172,21 @@ export function setMusicChompSheepRate(
 }
 
 export function setMusicChompSheepPause(game: SmashedGame): void {
-  if (game.debug.NN_Train_Easy || !game.chomp.soundSheep.isPlaying) {
+  if (game.debug.Simple_Stage || !game.chomp.soundSheep.isPlaying) {
     return;
   }
 
   game.chomp.soundSheep.pause();
 }
 export function setMusicChompSheepResume(game: SmashedGame): void {
-  if (game.debug.NN_Train_Easy || game.chomp.soundSheep.isPlaying) {
+  if (game.debug.Simple_Stage || game.chomp.soundSheep.isPlaying) {
     return;
   }
 
   game.chomp.soundSheep.resume();
 }
 export function setMusicChompSheepStop(game: SmashedGame): void {
-  if (game.debug.NN_Train_Easy || !game.chomp.soundSheep.isPlaying) {
+  if (game.debug.Simple_Stage || !game.chomp.soundSheep.isPlaying) {
     return;
   }
 

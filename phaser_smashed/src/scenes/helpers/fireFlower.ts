@@ -106,7 +106,7 @@ const calculateProjectileVelocityHighTrajectory = (
 };
 
 export const updateFireFlowerShooting = (game: SmashedGame) => {
-  if (game.debug.NN_Train_Easy || game.fireFlower.attackBullets === null) {
+  if (game.debug.Simple_Stage || game.fireFlower.attackBullets === null) {
     return;
   }
 

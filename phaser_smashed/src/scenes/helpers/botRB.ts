@@ -493,7 +493,7 @@ export function updateBotRules(
   const button: BulletBillButton = game.bulletBillCombo.button;
 
   const isPlayerOneAndTraining: boolean =
-    game.debug.NN_Train_Easy && playerIndex === 0;
+    game.debug.Simple_Stage && playerIndex === 0;
 
   //////////////////////
   // DODGING

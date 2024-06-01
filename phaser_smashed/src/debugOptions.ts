@@ -2,7 +2,7 @@ import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   NN_Train: true,
-  NN_Train_Easy: false,
+  Simple_Stage: false,
   NN_Use_Client: false,
   NN_Help_Screen: true,
   NN_Help_Centerize: false,
@@ -118,7 +118,7 @@ export const debugMax: Debug = {
   Bullets_Allow_Groups: true,
   Trophies_On_Shots: true,
   Trophies_Always: true,
-  NN_Train_Easy: true,
+  Simple_Stage: true,
   NN_Help_Screen: true, // 012
   NN_Help_Centerize: true,
   NN_Help_Pit: true,
@@ -141,7 +141,7 @@ export const debugMax: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: true,
-  NN_Train_Easy: false,
+  Simple_Stage: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
   NN_Help_Pit: false,

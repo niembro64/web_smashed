@@ -124,7 +124,6 @@ export function onHitHandlerFireBall(
   playerHitIndex: number,
   bullet: Phaser.GameObjects.GameObject,
   bulletIndex: number,
-  j: number,
   damage: number,
   game: SmashedGame
 ): void {
@@ -147,14 +146,6 @@ export function onHitHandlerFireBall(
     playerHit.state.name === 'player-state-dead'
   ) {
     return;
-  }
-
-  for (let bj = 0; bj < game.players.length; bj++) {
-    if (bj === j) {
-      game.wasLastHitByMatrix[playerHitIndex][bj] = true;
-    } else {
-      game.wasLastHitByMatrix[playerHitIndex][bj] = false;
-    }
   }
 
   const vector = {

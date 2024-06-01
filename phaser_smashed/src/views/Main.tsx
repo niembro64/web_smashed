@@ -149,7 +149,7 @@ function Play() {
   };
 
   useEffect(() => {
-    if (debugState.Inst_Replay === 0 || debugState.NN_Train_Easy) {
+    if (debugState.Inst_Replay === 0 || debugState.Simple_Stage) {
       setIsReplayHidden(true);
       return;
     }
@@ -704,7 +704,7 @@ function Play() {
       return;
     }
 
-    if (!debugState?.NN_Train_Easy) {
+    if (!debugState?.Simple_Stage) {
       return;
     }
     const debugStateCopy = { ...debugState };
@@ -735,7 +735,7 @@ function Play() {
     setSmashConfig(smashConfigNew);
     setInputArray(inputArrayNew);
     setDebugState(debugStateCopy);
-  }, [debugState?.NN_Train_Easy]);
+  }, [debugState?.Simple_Stage]);
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
@@ -2315,7 +2315,7 @@ function Play() {
       {/* { */}
       {webState === 'web-state-game' &&
         nnProgress !== null &&
-        (debugState.NN_Train_Easy
+        (debugState.Simple_Stage
           ? true
           : nnProgress !== 1 && nnProgress !== 100) && (
           <div className="neural-network-train-status">
@@ -2334,7 +2334,7 @@ function Play() {
               {/* <span> Num Object {nnNumObj || 0}</span> */}
               {/* <span> Log Period {nnLogPeriod || 0}</span> */}
             </div>
-            {debugState.NN_Train_Easy && (
+            {debugState.Simple_Stage && (
               <div className="neural-network-train-bottom">
                 <div
                   onMouseEnter={() => {
