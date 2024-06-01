@@ -20,7 +20,7 @@ export const nnConfigNNExpress = {
 };
 
 export const nnConfigNNClient = {
-  hiddenLayers: [40],
+  hiddenLayers: [40, 30, 20],
   useGpu: true,
 };
 

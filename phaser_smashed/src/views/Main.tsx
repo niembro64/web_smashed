@@ -801,9 +801,15 @@ function Play() {
             input: inputArray[inputIndex],
           });
           break;
+        case 5:
+          newPlayers.push({
+            characterId: players[inputIndex].characterId,
+            input: inputArray[inputIndex],
+          });
+          break;
         default:
           print("inputArray[inputIndex] didn't match any cases");
-          break;
+          throw new Error("inputArray[inputIndex] didn't match any cases");
       }
     });
 
