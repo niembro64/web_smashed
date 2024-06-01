@@ -28,7 +28,7 @@ export const nnConfigNNClient = {
 export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Evolving) {
     return;
   }
 
@@ -412,7 +412,7 @@ export const NNSetPlayerPadStatic = (
 };
 
 export const addToNNTrainingArray = (game: SmashedGame): void => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Evolving) {
     return;
   }
 
@@ -469,7 +469,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: SmashedGame
 ): void => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Evolving) {
     return;
   }
 

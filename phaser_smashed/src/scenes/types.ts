@@ -48,7 +48,7 @@ export interface Debug {
   Bullets_Allow_Groups: boolean;
   Trophies_On_Shots: boolean;
   Trophies_Always: boolean;
-  NN_Train: boolean;
+  NN_Train_Evolving: boolean;
   Simple_Stage: boolean;
   NN_Help_Screen: boolean;
   NN_Help_Pit: boolean;

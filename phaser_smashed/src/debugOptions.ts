@@ -4,7 +4,7 @@ import { Debug } from './scenes/types';
 // DEFAULT DEBUG OPTIONS
 ////////////////////////////////
 export const debugInit: Debug = {
-  NN_Train: true,
+  NN_Train_Evolving: true,
   NN_Brand_New: false,
   NN_Help_Screen: true,
   NN_Help_Centerize: false,
@@ -61,7 +61,6 @@ export const debugInit: Debug = {
   Inst_Replay: 0,
   Replay_FastSlow: false,
   Gravity_Light: false,
-
   Game_Music: 0, // 0123
   Flower_On_Init: true,
   Flower_Rapid_Fire: false,
@@ -77,16 +76,16 @@ export const debugInit: Debug = {
 // SHOW OPTION ON MAIN SCREEN
 ////////////////////////////////
 export const showOptionOnMainScreenInit: Debug = {
-  NN_Train: true,
+  NN_Train_Evolving: true,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
   NN_Brand_New: true,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
-  Simple_Stage: true,
+  Simple_Stage: false,
   Stage: 0, //0123456
   Mode_Infinity: true,
-  Dur_Seconds: true,
+  Dur_Seconds: false,
   Shots: 0,
   Minutes: 1, //01234567
   Music_Active: false,
@@ -148,7 +147,7 @@ export const showOptionOnMainScreenInit: Debug = {
 // MAXIMUM DEBUG OPTIONS
 ////////////////////////////////
 export const debugMax: Debug = {
-  NN_Train: true,
+  NN_Train_Evolving: true,
   NN_Brand_New: false,
   Stage: 10, //0123456
   Dur_Seconds: true,
@@ -220,7 +219,7 @@ export const debugMax: Debug = {
 ////////////////////////////////
 export const doNotShowDebug: Debug = {
   NN_Brand_New: true,
-  NN_Train: false,
+  NN_Train_Evolving: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
   NN_Help_Pit: false,
