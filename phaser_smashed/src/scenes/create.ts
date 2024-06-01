@@ -177,9 +177,9 @@ function createPSwitch(game: SmashedGame): void {
 }
 
 function createBulletBillSparkLineEmitter(game: SmashedGame) {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
   bbSparkLine.particles = game.add.particles('tail_' + 0);
@@ -225,9 +225,9 @@ function createBulletBillSparkLineEmitter(game: SmashedGame) {
 }
 
 function createFlag(game: SmashedGame): void {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   const f = game.flag;
 
@@ -305,9 +305,9 @@ function createFlag(game: SmashedGame): void {
 }
 
 function createPole(game: SmashedGame): void {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   game.flag.spriteFlagPole = game.physics.add.sprite(
     (1920 - 105 - game.ASSET_BRICK_WIDTH * 3) * game.SCREEN_SCALE.WIDTH,
@@ -322,9 +322,9 @@ function createPole(game: SmashedGame): void {
 }
 
 function createFireFlower(game: SmashedGame): void {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   const ff: FireFlower = game.fireFlower;
 
@@ -357,9 +357,9 @@ function createFireFlower(game: SmashedGame): void {
 }
 
 function createCollidersFireFlower(game: SmashedGame): void {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   const aebs = game.fireFlower.attackBullets.bullets;
   game.physics.add.collider(aebs, game.PLATFORMS);
@@ -526,9 +526,9 @@ function createExplosionsFront(game: SmashedGame): void {
 }
 
 function createChomp(game: SmashedGame): void {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   const c = game.chomp;
   const b = c.block;
@@ -1130,9 +1130,9 @@ function createColliderTableAttackEnergies(game: SmashedGame): void {
 }
 
 function createEmitterChompFollowChomp(game: SmashedGame): void {
-  // if (game.debug.Simple_Stage) {
-  //   return;
-  // }
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   game.chomp.emitterDark
     .startFollow(game.chomp.block)
@@ -1705,15 +1705,15 @@ function createCollidersBulletBill(game: SmashedGame): void {
 
   game.physics.add.collider(bbBullet.sprite, ff.attackBullets);
 
-  // if (!game.debug.Simple_Stage) {
-  fireFlowerBullets.children.iterate((child: any) => {
-    child.body.allowGravity = game.debug.Flower_Gravity;
+  if (!game.debug.Simple_Stage) {
+    fireFlowerBullets.children.iterate((child: any) => {
+      child.body.allowGravity = game.debug.Flower_Gravity;
 
-    game.physics.add.collider(child, bbBullet.sprite);
-    game.physics.add.collider(child, bbCannon.sprite);
-    game.physics.add.collider(child, game.TABLE);
-  });
-  // }
+      game.physics.add.collider(child, bbBullet.sprite);
+      game.physics.add.collider(child, bbCannon.sprite);
+      game.physics.add.collider(child, game.TABLE);
+    });
+  }
 }
 
 function createBackground(game: SmashedGame): void {
