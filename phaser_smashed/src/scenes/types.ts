@@ -55,7 +55,6 @@ export interface Debug {
   NN_Brand_New: boolean;
   NN_Help_Wall: boolean;
   NN_Help_Centerize: boolean;
-  NN_Use_Client: boolean;
   Chomp_Explosion: boolean;
   Chomp_Velocities: boolean;
   Inst_Replay: number;
