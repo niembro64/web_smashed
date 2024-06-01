@@ -12,7 +12,7 @@ import {
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerFromPlayer,
 } from './movement';
-import { NNRatiosNN } from './nnRatios';
+import { NNRatiosNNClient, NNRatiosNNExpress } from './nnRatios';
 import { random } from 'brain.js/dist/layer';
 
 export const nnConfigNNExpress = {
@@ -385,13 +385,16 @@ export const NNSetPlayerPadStatic = (
 ): void => {
   const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game, false);
   let nnOutput: number[] | null = null;
+  let r: number[] | null = null; //= NNRatiosNNClient;
 
   switch (inputType_NN) {
     case 4:
       nnOutput = game.nnClientNet.run(nnInput);
+      r = NNRatiosNNClient;
       break;
     case 5:
       nnOutput = game.nnExpressNet.run(nnInput);
+      r = NNRatiosNNExpress;
       break;
     default:
       throw new Error('inputType_NN not recognized');
@@ -400,8 +403,6 @@ export const NNSetPlayerPadStatic = (
   if (nnOutput === null) {
     throw new Error('nnOutput === null');
   }
-
-  const r: number[] = NNRatiosNN;
 
   player.padCurr.up = nnOutput[0] > r[0];
   player.padCurr.down = nnOutput[1] > r[1];
