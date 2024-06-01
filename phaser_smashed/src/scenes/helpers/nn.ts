@@ -15,7 +15,7 @@ import {
 import { NNRatiosNNClient, NNRatiosNNExpress } from './nnRatios';
 
 export const nnConfigNNExpress = {
-  hiddenLayers: [40],
+  hiddenLayers: [30, 20, 10],
   useGpu: true,
 };
 
@@ -386,7 +386,7 @@ export const NNSetPlayerPadStatic = (
   player.padCurr.right = !player.padCurr.left;
   // player.padCurr.left = nnOutput[2] > ratioThresh[2];
   // player.padCurr.right = nnOutput[3] > ratioThresh[3];
-  
+
   player.padCurr.A = nnOutput[4] > ratioThresh[4];
   player.padCurr.B = nnOutput[5] > ratioThresh[5];
   player.padCurr.X = nnOutput[6] > ratioThresh[6];
