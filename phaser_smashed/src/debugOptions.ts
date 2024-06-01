@@ -79,7 +79,7 @@ export const showOptionOnMainScreenInit: Debug = {
   NN_Train_Evolving: true,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
-  NN_Brand_New: false,
+  NN_Brand_New: true,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
   Simple_Stage: false,
@@ -218,7 +218,7 @@ export const debugMax: Debug = {
 // DO NOT SHOW
 ////////////////////////////////
 export const doNotShowDebug: Debug = {
-  NN_Brand_New: true,
+  NN_Brand_New: false,
   NN_Train_Evolving: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
