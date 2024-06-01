@@ -12,20 +12,15 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   soundManager,
 }) => {
   const inputConfigurations = [
+    // { config: [2, 3, 0, 0], emojis: emoji.keyboardWhite + emoji.bot },
+    // { config: [2, 4, 0, 0], emojis: emoji.keyboardWhite + emoji.brain },
+    // { config: [1, 1, 0, 0], emojis: emoji.gamepad + emoji.gamepad },
+    // {
+    //   config: [2, 0, 3, 4],
+    //   emojis: emoji.keyboardWhite,
+    //   extraEmojis: emoji.bot + emoji.brain,
+    // },
     { config: [2, 2, 0, 0], emojis: emoji.keyboardWhite + emoji.keyboardWhite },
-    { config: [2, 3, 0, 0], emojis: emoji.keyboardWhite + emoji.bot },
-    { config: [2, 4, 0, 0], emojis: emoji.keyboardWhite + emoji.brain },
-    { config: [1, 1, 0, 0], emojis: emoji.gamepad + emoji.gamepad },
-    {
-      config: [2, 0, 3, 4],
-      emojis: emoji.keyboardWhite,
-      extraEmojis: emoji.bot + emoji.brain,
-    },
-    {
-      config: [2, 2, 3, 4],
-      emojis: emoji.keyboardWhite + emoji.keyboardWhite,
-      extraEmojis: emoji.bot + emoji.brain,
-    },
     {
       config: [1, 1, 1, 1],
       emojis: emoji.gamepad + emoji.gamepad,
@@ -42,10 +37,25 @@ export const InputGroup: React.FC<InputGroupProps> = ({
       extraEmojis: emoji.brain + emoji.brain,
     },
     {
-      config: [3, 3, 4, 4],
-      emojis: emoji.bot + emoji.brain,
-      extraEmojis: emoji.bot + emoji.brain,
+      config: [5, 5, 5, 5],
+      emojis: emoji.dna + emoji.dna,
+      extraEmojis: emoji.dna + emoji.dna,
     },
+    {
+      config: [2, 3, 4, 5],
+      emojis: emoji.keyboardWhite + emoji.brain,
+      extraEmojis: emoji.bot + emoji.dna,
+    },
+    // {
+    //   config: [3, 3, 4, 4],
+    //   emojis: emoji.bot + emoji.brain,
+    //   extraEmojis: emoji.bot + emoji.brain,
+    // },
+    // {
+    //   config: [4, 4, 5, 5],
+    //   emojis: emoji.brain + emoji.dna,
+    //   extraEmojis: emoji.brain + emoji.dna,
+    // },
   ];
 
   return (

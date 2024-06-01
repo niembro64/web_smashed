@@ -815,7 +815,7 @@ function Play() {
 
     if (newPlayers.length === 0) {
       print('newPlayers.length === 0');
-      return;
+      throw new Error('newPlayers.length === 0');
     }
 
     const newSmashConfig: SmashConfig = { players: [...newPlayers] };
@@ -1676,6 +1676,7 @@ function Play() {
                         }}
                       >
                         <span>Bot</span>
+                        <span id="input-sub">{'If -> Then'}</span>
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}
@@ -1738,7 +1739,7 @@ function Play() {
                       >
                         <span>Evolving</span>
                         <span id="input-sub">Neural Network</span>
-                        <div className="button-input-emoji">{emoji.update}</div>
+                        <div className="button-input-emoji">{emoji.dna}</div>
                       </div>
                     )}
                   </div>

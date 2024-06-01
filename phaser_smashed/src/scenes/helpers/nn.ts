@@ -31,7 +31,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     return;
   }
 
-  if (isFirstPlayerANeuralNetwork(game)) {
+  if (isFirstPlayerAnExpressNeuralNetwork(game)) {
     return;
   }
 
@@ -391,7 +391,7 @@ export const addToNNTrainingArray = (game: SmashedGame): void => {
     return;
   }
 
-  if (isFirstPlayerANeuralNetwork(game)) {
+  if (isFirstPlayerAnExpressNeuralNetwork(game)) {
     return;
   }
 
@@ -419,8 +419,8 @@ export const addToNNTrainingArray = (game: SmashedGame): void => {
   game.nnObjects.push(newNNObject);
 };
 
-export const isFirstPlayerANeuralNetwork = (game: SmashedGame): boolean => {
-  return game.players[0].inputType === 4;
+export const isFirstPlayerAnExpressNeuralNetwork = (game: SmashedGame): boolean => {
+  return game.players[0].inputType === 5;
 };
 
 export const deleteLastNNObjects = (

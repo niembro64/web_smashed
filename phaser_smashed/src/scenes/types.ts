@@ -489,7 +489,6 @@ export const inputTypeNum = 6;
 export type InputType = 0 | 1 | 2 | 3 | 4 | 5;
 export type InputTypeNN = 4 | 5;
 
-
 export type CharacterName =
   | 'Mario'
   | 'Link'
@@ -741,20 +740,14 @@ export const emoji = {
   restart: '🔄',
   waiting: '⏳',
   clock: '⏰',
-  evolve: '🔁',
-  evolving: '🔄',
-  watch: '⌚',
-  update: '🔄',
-  learn: '📚',
-  improve: '🔍',
-  training: '🏋️',
-  bot: '🤖',
   dice: '🎲',
   alien: '👽',
   fire: '🔥',
   spaceInvader: '👾',
   bomb: '💣',
+  bot: '🤖',
   brain: '🧠',
+  dna: '🧬',
 };
 
 //🥃⭐🔫⚪​🍺​🍻​🥂​🍾​🥃
