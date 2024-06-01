@@ -12,7 +12,7 @@ import {
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerFromPlayer,
 } from './movement';
-import { NNRatiosNN } from './nnRatios';
+import { NNRatiosNNClient, NNRatiosNNExpress } from './nnRatios';
 
 export const nnConfigNNExpress = {
   hiddenLayers: [100, 30],
@@ -345,12 +345,15 @@ export const NNSetPlayerPadStatic = (
 ): void => {
   const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game, false);
   let nnOutput: number[] | null = null;
+  let ratioThresh: number[] | null = null;
 
   switch (inputType_NN) {
     case 4:
+      ratioThresh = NNRatiosNNClient;
       nnOutput = game.nnClientNet.run(nnInput);
       break;
     case 5:
+      ratioThresh = NNRatiosNNExpress;
       nnOutput = game.nnExpressNet.run(nnInput);
       break;
     default:
@@ -361,16 +364,14 @@ export const NNSetPlayerPadStatic = (
     throw new Error('nnOutput === null');
   }
 
-  const r: number[] = NNRatiosNN;
-
-  player.padCurr.up = nnOutput[0] > r[0];
-  player.padCurr.down = nnOutput[1] > r[1];
-  player.padCurr.left = nnOutput[2] > r[2];
-  player.padCurr.right = nnOutput[3] > r[3];
-  player.padCurr.A = nnOutput[4] > r[4];
-  player.padCurr.B = nnOutput[5] > r[5];
-  player.padCurr.X = nnOutput[6] > r[6];
-  player.padCurr.Y = nnOutput[7] > r[7];
+  player.padCurr.up = nnOutput[0] > ratioThresh[0];
+  player.padCurr.down = nnOutput[1] > ratioThresh[1];
+  player.padCurr.left = nnOutput[2] > ratioThresh[2];
+  player.padCurr.right = nnOutput[3] > ratioThresh[3];
+  player.padCurr.A = nnOutput[4] > ratioThresh[4];
+  player.padCurr.B = nnOutput[5] > ratioThresh[5];
+  player.padCurr.X = nnOutput[6] > ratioThresh[6];
+  player.padCurr.Y = nnOutput[7] > ratioThresh[7];
 };
 
 export const addToNNTrainingArray = (game: SmashedGame): void => {
