@@ -1008,6 +1008,7 @@ export default class SmashedGame extends Phaser.Scene {
   playerOptions: Player[] = [
     {
       playerId: 0,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -1131,7 +1132,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1179,6 +1180,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 1,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -1310,7 +1312,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1358,6 +1360,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 2,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -1488,7 +1491,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1536,6 +1539,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 3,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -1674,7 +1678,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1722,6 +1726,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 4,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -1852,7 +1857,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -1900,6 +1905,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 5,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -2024,7 +2030,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -2072,6 +2078,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 6,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -2202,7 +2209,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -2250,6 +2257,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 8,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -2380,7 +2388,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,
@@ -2428,6 +2436,7 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       playerId: 8,
+      emitterGamestamp: null,
       emitterLight: null,
       emitterDark: null,
       emitterPlayer: null,
@@ -2561,7 +2570,7 @@ export default class SmashedGame extends Phaser.Scene {
       inputType: 0,
       keyboard: null,
       gamepad: null,
-      LRStamp: null,
+      LRGameStamp: null,
       padCurr: {
         up: false,
         down: false,

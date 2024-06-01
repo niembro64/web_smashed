@@ -10,7 +10,7 @@ import {
 import { NNRatiosNN } from './nnRatios';
 
 export const nnConfigNN = {
-  hiddenLayers: [40],
+  hiddenLayers: [40, 30, 20],
   useGpu: true,
 };
 
@@ -156,7 +156,8 @@ const NNGetOutputRatios = (game: SmashedGame): number[] => {
 const NNGetInputArrayFromWorld = (
   player: Player,
   playerIndex: number,
-  game: SmashedGame
+  game: SmashedGame,
+  isForTraining: boolean
 ): number[] => {
   const largeNumber = 9999;
   const nearestPlayerAlive = getNearestPlayerAliveFromPlayer(
@@ -205,6 +206,8 @@ const NNGetInputArrayFromWorld = (
   const pPrev = player.padPrev;
   const pDeb = player.padDebounced;
 
+  const t: boolean = isForTraining;
+
   const nnInput: number[] = [
     // STATES
     player.emitterPlayer.on ? 1 : 0,
@@ -212,22 +215,34 @@ const NNGetInputArrayFromWorld = (
     player.state.name === 'player-state-hurt' ? 1 : 0,
 
     // BUTTONS
-    pCurr.up ? 1 : 0,
-    pCurr.down ? 1 : 0,
-    pCurr.left ? 1 : 0,
-    pCurr.right ? 1 : 0,
-    pCurr.A ? 1 : 0,
-    pCurr.B ? 1 : 0,
-    pCurr.X ? 1 : 0,
-    pCurr.Y ? 1 : 0,
-    pPrev.up ? 1 : 0,
-    pPrev.down ? 1 : 0,
-    pPrev.left ? 1 : 0,
-    pPrev.right ? 1 : 0,
-    pPrev.A ? 1 : 0,
-    pPrev.B ? 1 : 0,
-    pPrev.X ? 1 : 0,
-    pPrev.Y ? 1 : 0,
+
+    t ? (pPrev.up ? 1 : 0) : pCurr.up ? 1 : 0,
+    t ? (pPrev.down ? 1 : 0) : pCurr.down ? 1 : 0,
+    t ? (pPrev.left ? 1 : 0) : pCurr.left ? 1 : 0,
+    t ? (pPrev.right ? 1 : 0) : pCurr.right ? 1 : 0,
+    t ? (pPrev.A ? 1 : 0) : pCurr.A ? 1 : 0,
+    t ? (pPrev.B ? 1 : 0) : pCurr.B ? 1 : 0,
+    t ? (pPrev.X ? 1 : 0) : pCurr.X ? 1 : 0,
+    t ? (pPrev.Y ? 1 : 0) : pCurr.Y ? 1 : 0,
+
+    // pCurr.up ? 1 : 0,
+    // pCurr.down ? 1 : 0,
+    // pCurr.left ? 1 : 0,
+    // pCurr.right ? 1 : 0,
+    // pCurr.A ? 1 : 0,
+    // pCurr.B ? 1 : 0,
+    // pCurr.X ? 1 : 0,
+    // pCurr.Y ? 1 : 0,
+
+    // pPrev.up ? 1 : 0,
+    // pPrev.down ? 1 : 0,
+    // pPrev.left ? 1 : 0,
+    // pPrev.right ? 1 : 0,
+    // pPrev.A ? 1 : 0,
+    // pPrev.B ? 1 : 0,
+    // pPrev.X ? 1 : 0,
+    // pPrev.Y ? 1 : 0,
+
     pDeb.up,
     pDeb.down,
     pDeb.left,
@@ -304,7 +319,7 @@ export const NNSetPlayerPadStatic = (
   playerIndex: number,
   game: SmashedGame
 ): void => {
-  const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game);
+  const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game, false);
   const nnOutput: number[] = game.nnNet.run(nnInput);
 
   const r: number[] = NNRatiosNN;
@@ -351,7 +366,7 @@ export const addToNNTrainingArray = (game: SmashedGame): void => {
     return;
   }
 
-  const inputArray = NNGetInputArrayFromWorld(player, playerIndex, game);
+  const inputArray = NNGetInputArrayFromWorld(player, playerIndex, game, true);
   const outputArray = NNGetOutputArrayFromWorld(player, playerIndex, game);
 
   const newNNObject: NNObject = {

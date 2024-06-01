@@ -113,7 +113,7 @@ export function updateChompFilterStatePlayer(
       break;
     case 'cooldown':
       if (
-        getHasBeenGameDurationSinceMoment(
+        getHasBeenGameDurationSinceMomentBoolean(
           game.flashCooldownMs,
           curr.gameStamp,
           game
@@ -124,7 +124,7 @@ export function updateChompFilterStatePlayer(
       break;
     case 'hurt':
       if (
-        getHasBeenGameDurationSinceMoment(
+        getHasBeenGameDurationSinceMomentBoolean(
           game.flashActiveMs,
           curr.gameStamp,
           game
@@ -178,7 +178,7 @@ export function updateChompStateLightIfHasBeenLongEnough(
     return;
   }
 
-  const hasBeen: boolean = getHasBeenGameDurationSinceMoment(
+  const hasBeen: boolean = getHasBeenGameDurationSinceMomentBoolean(
     3000,
     game.chomp.darknessMoments.chomp,
     game
@@ -210,7 +210,32 @@ export function getDoesAnythingHaveDark(game: SmashedGame): boolean {
   return false;
 }
 
-export function getHasBeenGameDurationSinceMoment(
+export function getHowLongSinceGameMoment(
+  moment: number,
+  game: SmashedGame
+): number {
+  const duration = game.gameNanoseconds - moment;
+
+  if (duration < 0) {
+    throw new Error('getHowLongSinceGameMoment: duration < 0');
+  }
+
+  return duration;
+}
+
+export function getHowLongSinceGameMomentAsRatio(
+  baseDuration: number,
+  moment: number,
+  game: SmashedGame
+): number {
+  if (baseDuration <= 0) {
+    throw new Error('getHowLongSinceGameMomentAsRatio: baseDuration === 0');
+  }
+
+  return getHowLongSinceGameMoment(moment, game) / baseDuration;
+}
+
+export function getHasBeenGameDurationSinceMomentBoolean(
   durationNano: number,
   moment: number,
   game: SmashedGame

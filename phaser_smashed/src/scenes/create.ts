@@ -14,7 +14,7 @@ import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
 import { createPlatforms } from './helpers/platforms';
 import {
   getDoesAnythingHaveDark,
-  getHasBeenGameDurationSinceMoment,
+  getHasBeenGameDurationSinceMomentBoolean,
   setChompPowerState,
   setPlayerPowerState,
   updateChompFilterStatePlayer,
@@ -791,7 +791,7 @@ function createHitboxOverlap(game: SmashedGame): void {
             });
           });
 
-      ////////////////////////////////////
+      //////////////////////////////////R//
       // ATTACK PHYSICAL CHOMP OVERLAP
       ////////////////////////////////////
       game.physics.add.overlap(
@@ -872,7 +872,7 @@ function createHitboxOverlap(game: SmashedGame): void {
           player.char.sprite,
           pj.char.sprite,
           function () {
-            const hasBeen = getHasBeenGameDurationSinceMoment(
+            const hasBeen = getHasBeenGameDurationSinceMomentBoolean(
               2000,
               game.chomp.darknessMoments.passed,
               game

@@ -95,7 +95,8 @@ function Play() {
         nn = await fetchNeuralNetwork();
 
         if (!nn) {
-          throw new Error('nn === null');
+          // throw new Error('nn === null');
+          nn = nnJsonNNHardcodeClient;
         }
       }
 

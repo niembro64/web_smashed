@@ -11,7 +11,7 @@ import { updateBotNN } from './botNN';
 import { updateBotRules } from './botRB';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
-import { getHasBeenGameDurationSinceMoment } from './powers';
+import { getHasBeenGameDurationSinceMomentBoolean } from './powers';
 import { setPlaySoundFireBall } from './sound';
 
 export function updateGamePadsMaster(game: SmashedGame): void {
@@ -606,7 +606,7 @@ export function updateAttackEnergy(player: Player, game: SmashedGame): void {
   // STATE HOLD
   if (
     player.padCurr.X &&
-    getHasBeenGameDurationSinceMoment(
+    getHasBeenGameDurationSinceMomentBoolean(
       player.char.attackEnergy.durationCooldown,
       player.char.attackEnergy.timestampThrow,
       game
@@ -619,7 +619,7 @@ export function updateAttackEnergy(player: Player, game: SmashedGame): void {
   } else if (
     !player.padCurr.X &&
     player.padPrev.X &&
-    getHasBeenGameDurationSinceMoment(
+    getHasBeenGameDurationSinceMomentBoolean(
       player.char.attackEnergy.durationCooldown,
       player.char.attackEnergy.timestampThrow,
       game

@@ -155,7 +155,8 @@ export interface Player {
   keyboard: keyboard | any;
   gamepad: Gamepad | any;
   padCurr: GamepadData;
-  LRStamp: number | null;
+  LRGameStamp: number | null;
+  emitterGamestamp: number | null;
   padPrev: GamepadData;
   padDebounced: PadStateDebounced;
   particles: any;
@@ -461,6 +462,17 @@ export interface keyboard {
   select: any;
 }
 
+//////////////////////////
+// 0: Mario
+// 1: Link
+// 2: Pikachu
+// 3: Kirby
+// 4: Chez
+// 5: B-Chez
+// 6: G-Koopa
+// 7: R-Koopa
+// 8: B-Koopa
+//////////////////////////
 export type CharacterId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 //////////////////////////
@@ -816,14 +828,14 @@ export interface NNInput {
   powerState: number;
   stateHurt: number;
 
-  controllerCurrUp: number;
-  controllerCurrDown: number;
-  controllerCurrLeft: number;
-  controllerCurrRight: number;
-  controllerCurrA: number;
-  controllerCurrB: number;
-  controllerCurrX: number;
-  controllerCurrY: number;
+  // controllerCurrUp: number;
+  // controllerCurrDown: number;
+  // controllerCurrLeft: number;
+  // controllerCurrRight: number;
+  // controllerCurrA: number;
+  // controllerCurrB: number;
+  // controllerCurrX: number;
+  // controllerCurrY: number;
 
   controllerPrevUp: number;
   controllerPrevDown: number;

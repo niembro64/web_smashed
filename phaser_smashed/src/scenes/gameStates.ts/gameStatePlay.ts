@@ -9,6 +9,7 @@ import { updateAtThreeShots, updateChomp } from '../helpers/chomp';
 import {
   updateDamagePrev,
   updateDeathsAndKillsMatrices,
+  updateEmitterPlayerSuicide,
   updateSuicide,
   updateTableGiveHealth,
 } from '../helpers/damage';
@@ -85,6 +86,7 @@ export function updateGameStatePlay(
   updateFlagMovement(game);
   updateFlagColor(game);
   updateSuicide(game);
+  updateEmitterPlayerSuicide(game);
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);
   updateBulletBill(game);

@@ -7,7 +7,7 @@ import {
   isPlayerInFireFlowerRange,
 } from './fireFlower';
 import { hasPlayerTouchedWallRecently } from './movement';
-import { getHasBeenGameDurationSinceMoment } from './powers';
+import { getHasBeenGameDurationSinceMomentBoolean } from './powers';
 
 export function updateSpritesFlipX(game: SmashedGame): void {
   game.players.forEach((player) => {
@@ -436,7 +436,7 @@ export function updateSpriteState(
     }
 
     if (
-      !getHasBeenGameDurationSinceMoment(
+      !getHasBeenGameDurationSinceMomentBoolean(
         100,
         player.char.ssCurr.timeStamp,
         game

@@ -1,6 +1,13 @@
+import { random } from 'brain.js/dist/layer';
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { AttackEnergy, AttackPhysical, Player, xyVector } from '../types';
+import {
+  AttackEnergy,
+  AttackPhysical,
+  Player,
+  Velocity,
+  xyVector,
+} from '../types';
 import {
   setAttackEnergyOffscreen,
   setBulletOffscreen,
@@ -8,7 +15,10 @@ import {
   setPhysicsAttackEnergyOff,
 } from './attacks';
 import { hitbackFly } from './movement';
-import { getHasBeenGameDurationSinceMoment } from './powers';
+import {
+  getHasBeenGameDurationSinceMomentBoolean,
+  getHowLongSinceGameMomentAsRatio,
+} from './powers';
 import { setPauseSoundPowerup, setResumeSoundPowerup } from './sound';
 import { setPlayerState } from './state';
 
@@ -415,9 +425,8 @@ export function getGameHitbackMultiplier(game: SmashedGame): number {
   return h;
 }
 
+const lengthOfSuicideHold = 5000;
 export function updateSuicide(game: SmashedGame): void {
-  const lengthOfSuicideHold = 5000;
-
   game.players.forEach((player, playerIndex) => {
     // print('updateSuicide', playerIndex, player.LRStamp);
     // print(
@@ -443,29 +452,90 @@ export function updateSuicide(game: SmashedGame): void {
       !player.padCurr.L ||
       !player.padCurr.R
     ) {
-      player.LRStamp = null;
+      player.LRGameStamp = null;
       return;
     }
 
-    if (player.LRStamp === null && (player.padPrev.L || player.padPrev.R)) {
-      player.LRStamp = game.gameNanoseconds;
-      print('LRStamp', player.LRStamp);
+    if (player.LRGameStamp === null && (player.padPrev.L || player.padPrev.R)) {
+      player.LRGameStamp = game.gameNanoseconds;
+      print('LRStamp', player.LRGameStamp);
     }
 
     if (
-      player.LRStamp &&
-      getHasBeenGameDurationSinceMoment(
+      player.LRGameStamp &&
+      getHasBeenGameDurationSinceMomentBoolean(
         lengthOfSuicideHold,
-        player.LRStamp,
+        player.LRGameStamp,
         game
       )
     ) {
-      print('SUICIDE');
-      player.char.sprite.y = -200;
-      player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+      forceSuicide(player);
     }
   });
 }
+
+export function forceSuicide(player: Player) {
+  print('SUICIDE');
+  player.char.sprite.y = -200;
+  player.char.sprite.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+}
+
+export function updateEmitterPlayerSuicide(game: SmashedGame): void {
+  print('game.players[0].emitterGamestamp', game.players[0].emitterGamestamp);
+
+  game.players.forEach((player: Player, playerIndex: number) => {
+    if (player.emitterPlayer.on && player.emitterGamestamp === null) {
+      player.emitterGamestamp = game.gameNanoseconds;
+    } else if (!player.emitterPlayer.on && player.emitterGamestamp !== null) {
+      player.emitterGamestamp = null;
+    }
+
+    if (
+      player.emitterGamestamp !== null &&
+      getHasBeenGameDurationSinceMomentBoolean(
+        lengthOfSuicideHold,
+        player.emitterGamestamp,
+        game
+      )
+    ) {
+      // if too long commit suicide
+      forceSuicide(player);
+    }
+
+    if (player.emitterGamestamp === null) {
+      return;
+    }
+
+    const ratio = getHowLongSinceGameMomentAsRatio(
+      lengthOfSuicideHold,
+      player.emitterGamestamp,
+      game
+    );
+
+    const v = getRandomVelocitiesBasedOnRatio(ratio, 1000);
+
+    const newX = player.char.sprite.body.velocity.x + v.x;
+    const newY = player.char.sprite.body.velocity.y + v.y;
+
+    player.char.sprite.body.setVelocityX(newX);
+    player.char.sprite.body.setVelocityY(newY);
+  });
+}
+
+export const getRandomVelocitiesBasedOnRatio = (
+  ratio: number,
+  amount: number
+): Velocity => {
+  const ratioPow = Math.pow(ratio, 3);
+
+  const randomX = (Math.random() - 0.5) * amount * ratioPow;
+  const randomY = (Math.random() - 0.5) * amount * ratioPow;
+
+  return {
+    x: randomX,
+    y: randomY,
+  };
+};
 
 export function updateTableGiveHealth(game: SmashedGame): void {
   const { body } = game.TABLE;
