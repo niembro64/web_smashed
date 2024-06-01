@@ -79,7 +79,7 @@ export const showOptionOnMainScreenInit: Debug = {
   NN_Train_Evolving: true,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
-  NN_Brand_New: true,
+  NN_Brand_New: false,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
   Simple_Stage: false,
