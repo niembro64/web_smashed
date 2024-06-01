@@ -1,9 +1,4 @@
-import { NeuralNetwork } from 'brain.js';
-import {
-  fetchNeuralNetwork,
-  print,
-  saveNeuralNetwork,
-} from '../../views/client';
+import { print, saveNeuralNetwork } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import { NNObject, Player } from '../types';
 import {
@@ -13,7 +8,6 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
-import { nnJsonNNHardcodeClient } from './nnJson';
 
 export const nnConfigNN = {
   hiddenLayers: [40],
@@ -24,6 +18,10 @@ export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   if (!game.debug.NN_Train) {
+    return;
+  }
+
+  if (!isFirstPlayerANeuralNetwork(game)) {
     return;
   }
 
@@ -321,7 +319,7 @@ export const NNSetPlayerPadStatic = (
   player.padCurr.Y = nnOutput[7] > r[7];
 };
 
-export const addPlayerNNObjectsStatic = (game: SmashedGame): void => {
+export const addToNNTrainingArray = (game: SmashedGame): void => {
   if (!game.debug.NN_Train) {
     return;
   }
@@ -339,7 +337,19 @@ export const addPlayerNNObjectsStatic = (game: SmashedGame): void => {
     return;
   }
 
+  if (isFirstPlayerANeuralNetwork(game)) {
+    return;
+  }
+
   const player: Player = game.players[playerIndex];
+
+  // SKIP IF PLAYER IS NOT MOVING
+  if (
+    (player.padCurr.left && player.padCurr.right) ||
+    (!player.padCurr.left && !player.padCurr.right)
+  ) {
+    return;
+  }
 
   const inputArray = NNGetInputArrayFromWorld(player, playerIndex, game);
   const outputArray = NNGetOutputArrayFromWorld(player, playerIndex, game);
@@ -349,44 +359,14 @@ export const addPlayerNNObjectsStatic = (game: SmashedGame): void => {
     output: outputArray,
   };
 
+  // print statement that overwrites itself
   print('newNNObject', JSON.stringify(newNNObject, null, 2));
 
   game.nnObjects.push(newNNObject);
 };
 
-const NNDownloadNNObjects = (game: SmashedGame): void => {
-  const nnObjects = game.nnObjects;
-  const nnObjectsString = JSON.stringify(nnObjects, null, 2);
-  const blob = new Blob([nnObjectsString], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  // Create an anchor tag with the download attribute
-  const downloadLink = document.createElement('a');
-  downloadLink.setAttribute('href', url);
-  downloadLink.setAttribute('download', 'example.txt');
-
-  // Simulate a click on the anchor tag to trigger the download
-  downloadLink.click();
-
-  // Clean up the URL object
-  URL.revokeObjectURL(url);
-};
-
-const saveTextStringAsFileToBaseOfDirectory = (
-  text: string,
-  filename: string
-): void => {
-  const blob = new Blob([text], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  // Create an anchor tag with the download attribute
-  const downloadLink = document.createElement('a');
-  downloadLink.setAttribute('href', url);
-  downloadLink.setAttribute('download', filename);
-
-  // Simulate a click on the anchor tag to trigger the download
-  downloadLink.click();
-
-  // Clean up the URL object
-  URL.revokeObjectURL(url);
+export const isFirstPlayerANeuralNetwork = (game: SmashedGame): boolean => {
+  return game.players[0].inputType === 4;
 };
 
 export const deleteLastNNObjects = (
@@ -395,7 +375,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: SmashedGame
 ): void => {
-  if (!game.debug.Simple_Stage) {
+  if (!game.debug.NN_Train) {
     return;
   }
 

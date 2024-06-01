@@ -30,7 +30,7 @@ import {
   updateTable,
   updateWallTouchArray,
 } from '../helpers/movement';
-import { addPlayerNNObjectsStatic } from '../helpers/nn';
+import { addToNNTrainingArray } from '../helpers/nn';
 import {
   updateAttackEnergyFrictionGroundMovement,
   updateAttackEnergyFrictionGroundRotation,
@@ -99,6 +99,6 @@ export function updateGameStatePlay(
   updateResetAllHitboxesAttackEnergy(game);
   // updateDamagePrev(game);
 
-  addPlayerNNObjectsStatic(game);
+  addToNNTrainingArray(game);
   // NNSetPlayer2Output(game);
 }
