@@ -12,17 +12,34 @@ import {
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerFromPlayer,
 } from './movement';
-import { NNRatiosNNClient, NNRatiosNNExpress } from './nnRatios';
 
+/////////////////////////////////
+// EXPRESS
+/////////////////////////////////
 export const nnConfigNNExpress = {
-  hiddenLayers: [30, 20, 10],
+  hiddenLayers: [100],
   useGpu: true,
 };
 
+export const NNRatiosNNExpress: number[] = [
+  0.11391458742173628, 0.22684795813475375, 0.4769180450425194,
+  0.5230819549574806, 0.06013456686291001, 0.22189514998598261,
+  0.37706756377908607, 0.06046163909914961,
+];
+
+/////////////////////////////////
+// CLIENT
+/////////////////////////////////
 export const nnConfigNNClient = {
   hiddenLayers: [100],
   useGpu: true,
 };
+
+export const NNRatiosNNClient: number[] = [
+  0.07072905331882481, 0.21201975391311625, 0.5024273876286934,
+  0.4975726123713066, 0.06851092324432911, 0.3027538294132418,
+  0.35364526659412404, 0.05285845819034067,
+];
 
 export const nnNumTrainingBarTicks: number = 25;
 
