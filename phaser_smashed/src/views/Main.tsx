@@ -82,25 +82,6 @@ function Play() {
 
   const nnJsonExpress = useRef<string | null>(null);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     let nn = null;
-  //     if (debugState.NN_Use_Client) {
-  //       print('USING CLIENT NN');
-  //       nn = nnJsonNNHardcodeClient;
-  //     } else {
-  //       print('FETCHING NEURAL NETWORK');
-  //       nn = await fetchNeuralNetwork();
-
-  //       if (!nn) {
-  //         // throw new Error('nn === null');
-  //         nn = nnJsonNNHardcodeClient;
-  //       }
-  //     }
-
-  //     nnJsonReact.current = nn;
-  //   })();
-  // }, [debugState.NN_Use_Client]);
   const pullExpressNeuralNet = async () => {
     nnJsonExpress.current = await fetchNeuralNetwork();
   };

@@ -6,7 +6,6 @@ import { Debug } from './scenes/types';
 export const debugInit: Debug = {
   NN_Train: true,
   NN_Brand_New: false,
-  NN_Use_Client: false,
   NN_Help_Screen: true,
   NN_Help_Centerize: false,
   NN_Help_Pit: true,
@@ -84,7 +83,6 @@ export const showOptionOnMainScreenInit: Debug = {
   NN_Brand_New: true,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
-  NN_Use_Client: true,
   Simple_Stage: true,
   Stage: 0, //0123456
   Mode_Infinity: true,
@@ -127,7 +125,6 @@ export const showOptionOnMainScreenInit: Debug = {
   Dev_Mode: false,
   Dev_Zoom: 0,
   Char_Override: false,
-
   Char_Override_ID: 0,
   Bullets_Allow_Groups: false,
   Trophies_On_Shots: false,
@@ -204,7 +201,6 @@ export const debugMax: Debug = {
   NN_Help_Centerize: true,
   NN_Help_Pit: true,
   NN_Help_Wall: true,
-  NN_Use_Client: true,
   Inst_Replay: 3,
   Chomp_Explosion: true,
   Replay_FastSlow: true,
@@ -223,13 +219,12 @@ export const debugMax: Debug = {
 // DO NOT SHOW
 ////////////////////////////////
 export const doNotShowDebug: Debug = {
+  NN_Brand_New: true,
   NN_Train: false,
-  NN_Brand_New: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
-  NN_Use_Client: false,
   Simple_Stage: false,
   Dev_Mode: false,
   Auto_Start: false,
