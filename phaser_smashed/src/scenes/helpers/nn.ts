@@ -13,6 +13,7 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
+import { random } from 'brain.js/dist/layer';
 
 export const nnConfigNNExpress = {
   hiddenLayers: [100, 30],
@@ -71,8 +72,45 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   print('randomizedNnObjects', randomizedNnObjects);
 
   const numObj: number = randomizedNnObjects.length;
+  let numIter: number = 6;
+  if (trainANewNeuralNetwork) {
+    numIter = Math.floor(100 * Math.exp(-numObj * 0.0001) + 10);
+  }
 
-  const numIter = Math.floor(100 * Math.exp(-numObj * 0.0001) + 10);
+  const randomlyMultiplByNegativeOne = (
+    trainingObjects: NNObject[],
+    percentReverse: number
+  ) => {
+    return trainingObjects.map((object: NNObject) => {
+      return {
+        input: object.input.map((input: number) => {
+          const isBinary: boolean = input === 0 || input === 1;
+
+          const doSwitch = Math.random() < percentReverse;
+
+          if (isBinary) {
+            return input === 0 ? 1 : 0;
+          }
+
+          return input * (doSwitch ? -1 : 1);
+        }),
+        output: object.output.map((output: number) => {
+          const isBinary: boolean = output === 0 || output === 1;
+
+          const doSwitch = Math.random() < percentReverse;
+
+          if (isBinary) {
+            return output === 0 ? 1 : 0;
+          }
+
+          return output * (doSwitch ? -1 : 1);
+        }),
+      };
+    });
+  };
+
+  randomizedNnObjects = randomlyMultiplByNegativeOne(randomizedNnObjects, 0.13);
+
   const logPeriod = 1;
 
   window.dispatchEvent(
@@ -90,7 +128,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   await game.nnExpressNet.trainAsync(randomizedNnObjects, {
     iterations: numIter,
     randomize: true,
-    learningRate: trainANewNeuralNetwork ? 0.00001 : 0.0000001,
+    learningRate: trainANewNeuralNetwork ? 0.00001 : 0.000001,
     logPeriod: logPeriod,
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / numIter);
