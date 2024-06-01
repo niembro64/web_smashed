@@ -104,14 +104,25 @@ export const axiosSaveOne = async (
     matrixHitsUnto: 'null',
   };
 
-  print('sessionInfo', sessionInfo);
+  print('axiosSaveOne: sessionInfo', sessionInfo);
 
-  if (process.env.NODE_ENV === 'production') {
-    // await axios.post('http://3.86.180.36:8000/api/smashed/create', sessionInfo);
-    await axios.post('/api/smashed/create', sessionInfo);
-  } else {
-    await axios.post('http://localhost:8000/api/smashed/create', sessionInfo);
+  let res: any = null;
+  try {
+    if (process.env.NODE_ENV === 'production') {
+      // await axios.post('http://3.86.180.36:8000/api/smashed/create', sessionInfo);
+      res = await axios.post('/api/smashed/create', sessionInfo);
+    } else {
+      res = await axios.post(
+        'http://localhost:8000/api/smashed/create',
+        sessionInfo
+      );
+    }
+  } catch (error) {
+    print('axiosSaveOne: error', error);
   }
+
+  print('axiosSaveOne: res', res);
+
   return sessionInfo;
 };
 

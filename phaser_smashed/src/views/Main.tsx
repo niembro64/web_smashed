@@ -342,14 +342,10 @@ function Play() {
     }
   }, [nnErrorCurr, nnErrInit]);
 
-  const [session, setSession] = useState<SessionInfo | null>(null);
+  // const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
 
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(true);
-
-  useEffect(() => {
-    print('sessionInfo', session);
-  }, [session]);
 
   function captureScreenshot() {
     print('Capture Screenshot');
@@ -835,7 +831,7 @@ function Play() {
       newSmashConfig,
       debugState
     );
-    setSession(s);
+    // setSession(s);
 
     setTimeout(() => {
       // @ts-ignore
@@ -2278,6 +2274,9 @@ function Play() {
                               break;
                             case 4:
                               gameViewBottom += '' + emoji.brain + ' ';
+                              break;
+                            case 5:
+                              gameViewBottom += '' + emoji.dna + ' ';
                               break;
                             default:
                               gameViewBottom += '?? ';
