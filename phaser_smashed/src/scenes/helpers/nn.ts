@@ -15,12 +15,12 @@ import {
 import { NNRatiosNN } from './nnRatios';
 
 export const nnConfigNNExpress = {
-  hiddenLayers: [40, 30, 20],
+  hiddenLayers: [40, 20],
   useGpu: true,
 };
 
 export const nnConfigNNClient = {
-  hiddenLayers: [40, 30, 20],
+  hiddenLayers: [40, 20],
   useGpu: true,
 };
 
@@ -419,7 +419,9 @@ export const addToNNTrainingArray = (game: SmashedGame): void => {
   game.nnObjects.push(newNNObject);
 };
 
-export const isFirstPlayerAnExpressNeuralNetwork = (game: SmashedGame): boolean => {
+export const isFirstPlayerAnExpressNeuralNetwork = (
+  game: SmashedGame
+): boolean => {
   return game.players[0].inputType === 5;
 };
 

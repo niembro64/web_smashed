@@ -27,8 +27,9 @@ import {
   emoji,
   inputTypeNum,
 } from '../scenes/types';
-import InputGroup from './InputPresets';
 import DebugOptions from './DebugOptions';
+import InputGroup from './InputPresets';
+import { MusicManager, MusicManagerType } from './MusicManager';
 import SoundManager, { SoundManagerType } from './SoundManager';
 import {
   ClientInformation,
@@ -50,14 +51,11 @@ import {
   p1Keys,
   p2Keys,
   quotes,
-  replaceUnderscoreWithSpace,
   smashConfigInit,
   smashConfigInitMax,
   smashConfigOptions,
   workingControllersAmazon,
 } from './reactHelpers';
-import { MusicManager, MusicManagerType } from './MusicManager';
-import { nnJsonNNClient } from '../scenes/helpers/nnJson';
 
 export const blipDelay = 200;
 
