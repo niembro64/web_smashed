@@ -785,98 +785,98 @@ function createPlayerIdCircles(game: SmashedGame): void {
 }
 
 function createHitboxOverlap(game: SmashedGame): void {
-  // if (!game.debug.Simple_Stage) {
-  game.players.forEach((player, playerIndex) => {
-    ////////////////////////////////////
-    // FIREFLOWER BULLETS OVERLAP
-    ////////////////////////////////////
-    game.fireFlower.attackBullets !== null &&
-      game.fireFlower.attackBullets.bullets !== null &&
-      game.fireFlower.attackBullets.bullets
-        .getChildren()
-        .forEach((bullet: any, bi: number) => {
-          game.physics.add.overlap(player.char.sprite, bullet, function () {
-            onHitHandlerFireBall(
-              player,
-              playerIndex,
-              bullet,
-              bi,
-              game.fireFlower.damage,
-              game
-            );
+  if (!game.debug.Simple_Stage) {
+    game.players.forEach((player, playerIndex) => {
+      ////////////////////////////////////
+      // FIREFLOWER BULLETS OVERLAP
+      ////////////////////////////////////
+      game.fireFlower.attackBullets !== null &&
+        game.fireFlower.attackBullets.bullets !== null &&
+        game.fireFlower.attackBullets.bullets
+          .getChildren()
+          .forEach((bullet: any, bi: number) => {
+            game.physics.add.overlap(player.char.sprite, bullet, function () {
+              onHitHandlerFireBall(
+                player,
+                playerIndex,
+                bullet,
+                bi,
+                game.fireFlower.damage,
+                game
+              );
+            });
           });
-        });
 
-    //////////////////////////////////R//
-    // ATTACK PHYSICAL CHOMP OVERLAP
-    ////////////////////////////////////
-    game.physics.add.overlap(
-      player.char.attackPhysical.sprite,
-      game.chomp.sprite,
-      function () {
-        updateChompFilterStatePlayer(
-          player,
-          player.char.attackPhysical.damage,
-          game
-        );
+      //////////////////////////////////R//
+      // ATTACK PHYSICAL CHOMP OVERLAP
+      ////////////////////////////////////
+      game.physics.add.overlap(
+        player.char.attackPhysical.sprite,
+        game.chomp.sprite,
+        function () {
+          updateChompFilterStatePlayer(
+            player,
+            player.char.attackPhysical.damage,
+            game
+          );
 
-        if (!getDoesAnythingHaveDark(game)) {
-          game.chomp.emitterDark.visible = true;
-          setChompPowerState('dark', game);
-          game.chomp.soundAttack.play();
-          game.SOUND_HIT.play();
+          if (!getDoesAnythingHaveDark(game)) {
+            game.chomp.emitterDark.visible = true;
+            setChompPowerState('dark', game);
+            game.chomp.soundAttack.play();
+            game.SOUND_HIT.play();
+          }
         }
-      }
-    );
+      );
 
-    ////////////////////////////////////
-    // ATTACK ENERGY CHOMP OVERLAP
-    ////////////////////////////////////
-    game.physics.add.overlap(
-      player.char.attackEnergy.sprite,
-      game.chomp.sprite,
-      function () {
-        updateChompFilterStatePlayer(
-          player,
-          player.char.attackEnergy.damage,
-          game
-        );
-        if (!getDoesAnythingHaveDark(game)) {
-          game.chomp.emitterDark.visible = true;
-          setChompPowerState('dark', game);
-          game.chomp.soundAttack.play();
-          game.SOUND_HIT.play();
+      ////////////////////////////////////
+      // ATTACK ENERGY CHOMP OVERLAP
+      ////////////////////////////////////
+      game.physics.add.overlap(
+        player.char.attackEnergy.sprite,
+        game.chomp.sprite,
+        function () {
+          updateChompFilterStatePlayer(
+            player,
+            player.char.attackEnergy.damage,
+            game
+          );
+          if (!getDoesAnythingHaveDark(game)) {
+            game.chomp.emitterDark.visible = true;
+            setChompPowerState('dark', game);
+            game.chomp.soundAttack.play();
+            game.SOUND_HIT.play();
+          }
         }
-      }
-    );
+      );
 
-    ////////////////////////////////////
-    // PLAYER BULLET BILL BULLET OVERLAP
-    ////////////////////////////////////
-    game.physics.add.overlap(
-      player.char.sprite,
-      game.bulletBillCombo.bullet.sprite,
-      function () {
-        onHitHandlerBulletBill(player, playerIndex, game);
-      }
-    );
-
-    ////////////////////////////////////
-    // PLAYER CHOMP OVERLAP
-    ////////////////////////////////////
-    game.physics.add.overlap(
-      player.char.sprite,
-      game.chomp.sprite,
-      function () {
-        if (game.chomp.powerStateCurr.name === 'dark') {
-          setPlayerPowerState('dark', player, game);
-          setChompPowerState('none', game);
-          game.chomp.soundBBBambalam.play();
+      ////////////////////////////////////
+      // PLAYER BULLET BILL BULLET OVERLAP
+      ////////////////////////////////////
+      game.physics.add.overlap(
+        player.char.sprite,
+        game.bulletBillCombo.bullet.sprite,
+        function () {
+          onHitHandlerBulletBill(player, playerIndex, game);
         }
-      }
-    );
-  });
-  // }
+      );
+
+      ////////////////////////////////////
+      // PLAYER CHOMP OVERLAP
+      ////////////////////////////////////
+      game.physics.add.overlap(
+        player.char.sprite,
+        game.chomp.sprite,
+        function () {
+          if (game.chomp.powerStateCurr.name === 'dark') {
+            setPlayerPowerState('dark', player, game);
+            setChompPowerState('none', game);
+            game.chomp.soundBBBambalam.play();
+          }
+        }
+      );
+    });
+  }
 
   game.players.forEach((player, playerIndex) => {
     game.players.forEach((pj, j) => {
