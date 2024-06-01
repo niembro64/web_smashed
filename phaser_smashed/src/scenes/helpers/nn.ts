@@ -111,7 +111,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     });
   };
 
-  randomizedNnObjects = randomlyMultiplByNegativeOne(randomizedNnObjects, 0.02);
+  // randomizedNnObjects = randomlyMultiplByNegativeOne(randomizedNnObjects, 0.02);
 
   const logPeriod = 1;
 
