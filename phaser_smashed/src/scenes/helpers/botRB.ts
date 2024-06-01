@@ -515,7 +515,11 @@ export function updateBotRules(
   //////////////////////
   // MOVE TO FLAG | TOUCHING
   //////////////////////
-  if (!isPlayerOneAndTraining && !game.flag.completedCurr) {
+  if (
+    !game.debug.Simple_Stage &&
+    !isPlayerOneAndTraining &&
+    !game.flag.completedCurr
+  ) {
     ///////////////////////
     // ON GROUND
     ///////////////////////

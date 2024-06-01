@@ -357,7 +357,9 @@ export function setAnimationsOff(game: SmashedGame): void {
     game.chomp.darknessMoments.explosionsFront[i].sprite.anims.pause();
   }
 
-  game.bulletBillCombo.sparkLine.emitter.active = false;
+  if (!game.debug.Simple_Stage) {
+    game.bulletBillCombo.sparkLine.emitter.active = false;
+  }
 }
 
 export function setAnimationsOn(game: SmashedGame): void {
@@ -387,7 +389,9 @@ export function setAnimationsOn(game: SmashedGame): void {
     game.chomp.darknessMoments.explosionsFront[i].sprite.anims.resume();
   }
 
-  game.bulletBillCombo.sparkLine.emitter.active = true;
+  if (!game.debug.Simple_Stage) {
+    game.bulletBillCombo.sparkLine.emitter.active = true;
+  }
 }
 
 export function updateSpritesheets(game: SmashedGame): void {

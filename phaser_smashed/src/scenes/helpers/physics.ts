@@ -19,7 +19,10 @@ export function setPhysicsAndMusicPause(game: SmashedGame): void {
     player.emitterPlayer.active = false;
     player.emitterDark.active = false;
   });
-  game.chomp.emitterDark.active = false;
+
+  if (!game.debug.Simple_Stage) {
+    game.chomp.emitterDark.active = false;
+  }
   setAnimationsOff(game);
 
   if (!game.debug.Simple_Stage) {
@@ -30,12 +33,13 @@ export function setPhysicsAndMusicPause(game: SmashedGame): void {
       game.chomp.afterPauseResumeSoundSheep = false;
     }
   }
-
-  if (game.flag.soundFlagMusicBox.isPlaying) {
-    setMusicBoxPause(game);
-    game.flag.afterPauseResumeMusicFlagMusicBox = true;
-  } else {
-    game.flag.afterPauseResumeMusicFlagMusicBox = false;
+  if (!game.debug.Simple_Stage) {
+    if (game.flag.soundFlagMusicBox.isPlaying) {
+      setMusicBoxPause(game);
+      game.flag.afterPauseResumeMusicFlagMusicBox = true;
+    } else {
+      game.flag.afterPauseResumeMusicFlagMusicBox = false;
+    }
   }
 
   if (game.soundBGM.isPlaying) {
@@ -67,15 +71,22 @@ export function setPhysicsAndMusicResume(game: SmashedGame): void {
     player.emitterPlayer.active = true;
     player.emitterDark.active = true;
   });
-  game.chomp.emitterDark.active = true;
+
+  if (!game.debug.Simple_Stage) {
+    game.chomp.emitterDark.active = true;
+  }
   setAnimationsOn(game);
 
   if (!game.debug.Simple_Stage && game.chomp.afterPauseResumeSoundSheep) {
     setMusicChompSheepResume(game);
   }
-  if (game.flag.afterPauseResumeMusicFlagMusicBox) {
-    setMusicBoxResume(game);
+
+  if (!game.debug.Simple_Stage) {
+    if (game.flag.afterPauseResumeMusicFlagMusicBox) {
+      setMusicBoxResume(game);
+    }
   }
+
   if (game.afterPauseResumeMusicBGM) {
     setBGMusicResume(game);
   }

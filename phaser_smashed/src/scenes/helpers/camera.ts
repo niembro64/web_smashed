@@ -10,10 +10,6 @@ export function updateCamera(game: SmashedGame): void {
   const cMover = getCameraMoverStatus(game);
   const cBorder = getCameraBorderStatus(game);
   const cBox = getCameraBoxStatus(game);
-  const cSpark = {
-    x: game.bulletBillCombo.sparkLine.spark.x,
-    y: game.bulletBillCombo.sparkLine.spark.y,
-  };
 
   game.cameraPlayers.char.sprite.x = cPlayer.x;
   game.cameraPlayers.char.sprite.y = cPlayer.y;
@@ -126,10 +122,22 @@ export function getPlayerZoom(game: SmashedGame): number {
     }
   });
 
-  const sparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
-  const sparkCircleX = sparkLine.spark.x + 100;
-  const sparkCircleY = sparkLine.spark.y - 120;
-  // const isSparkActive = sparkLine.emitter.active && sparkLine.emitter.on;
+  const sparkLine: BulletBillSparkLine | null =
+    game?.bulletBillCombo?.sparkLine || null;
+
+  let sparkCircleX = SCREEN_DIMENSIONS.WIDTH / 2;
+  let sparkCircleY = SCREEN_DIMENSIONS.HEIGHT / 2;
+
+  if (
+    sparkLine !== null &&
+    sparkLine &&
+    sparkLine.spark &&
+    sparkLine.spark.x &&
+    sparkLine.spark.y
+  ) {
+    sparkCircleX = sparkLine.spark.x + 100;
+    sparkCircleY = sparkLine.spark.y - 120;
+  }
 
   if (
     // isSparkActive &&

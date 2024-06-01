@@ -1,12 +1,7 @@
 import SmashedGame from '../SmashedGame';
 import { Player } from '../types';
 import { setPlayerPowerState } from './powers';
-import {
-  setBGMusicPause,
-  setBGMusicResume,
-  setMusicBoxPause,
-  setMusicBoxResume,
-} from './sound';
+import { setBGMusicResume, setMusicBoxPause, setMusicBoxResume } from './sound';
 
 export const getIsInPoleExact = (
   x: number,
@@ -49,6 +44,10 @@ export const getIsInPoleArea = (
 };
 
 export const updateFlagToucher = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const f = game.flag;
 
   if (f.completedCurr) {
@@ -98,6 +97,10 @@ export const updateFlagToucher = (game: SmashedGame): void => {
 };
 
 export const updateFlagMovement = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const { flag } = game;
 
   if (flag.completedPrev) return;
@@ -135,6 +138,10 @@ export const updateFlagMovement = (game: SmashedGame): void => {
 };
 
 export const updateFlagOwner = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const { toucherCurr, ownerCurr, spriteFlagMover, box, completedCurr } =
     game.flag;
 
@@ -148,6 +155,10 @@ export const updateFlagOwner = (game: SmashedGame): void => {
 };
 
 export const updateFlagColor = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const {
     spriteFlagMover,
     spriteFlagStationary,
@@ -175,6 +186,10 @@ export const updateFlagColor = (game: SmashedGame): void => {
 };
 
 export const getIsFlagShots = (game: SmashedGame): boolean => {
+  if (game.debug.Simple_Stage) {
+    return false;
+  }
+
   return game.flag.completedCurr && !game.flag.completedPrev;
 };
 
@@ -182,6 +197,10 @@ export const setFlagOwnerNullIfDead = (
   player: Player,
   game: SmashedGame
 ): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const { ownerCurr, ownerPrev, completedCurr } = game.flag;
 
   if (!completedCurr && ownerCurr.id === player.playerId) {

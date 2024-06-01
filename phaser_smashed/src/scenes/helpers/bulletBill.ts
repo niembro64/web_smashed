@@ -18,6 +18,10 @@ const updateSparkOnSparkLine = (
   game: SmashedGame,
   playerIndex: number | null = null
 ): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
   const numPaths = bbSparkLine.pathPoints.length;
   const percentCompleted = bbSparkLine.percentPathCurrCompleted;
@@ -59,6 +63,10 @@ const putSparkAtPercentageAlongPath = (
   positionEnd: Position,
   percentage: number
 ): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const bbSparkLine: BulletBillSparkLine = game.bulletBillCombo.sparkLine;
 
   bbSparkLine.spark.x =
@@ -68,6 +76,10 @@ const putSparkAtPercentageAlongPath = (
 };
 
 export const updateBulletBill = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const stateCurr: BulletBillComboState = bbCombo.stateCurr;
@@ -112,6 +124,10 @@ export const updateBulletBill = (game: SmashedGame): void => {
 };
 
 const getClosestPlayerTouchingButton = (game: SmashedGame): number | null => {
+  if (game.debug.Simple_Stage) {
+    return null;
+  }
+
   const {
     players,
     bulletBillCombo: { button: bbButton },
@@ -148,6 +164,10 @@ export const setBulletBillState = (
   game: SmashedGame,
   stateNew: BulletBillComboState
 ): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet: BulletBillBullet = bbCombo.bullet;
   const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;
@@ -204,6 +224,10 @@ export const setBulletBillState = (
 };
 
 const bulletBillPlayExplosion = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   print('bulletBillPlayExplosion');
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbBullet: BulletBillBullet = bbCombo.bullet;
@@ -215,6 +239,11 @@ const bulletBillPlayExplosion = (game: SmashedGame): void => {
 };
 
 const updateColoredBulletFollows = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
+
   const playerIndex = game.bulletBillCombo.bullet.playerIndexOwns;
 
   if (playerIndex === null) {

@@ -294,6 +294,10 @@ export const isPlayerInFireFlowerRange = (
   player: Player,
   game: SmashedGame
 ): boolean => {
+  if (game.debug.Simple_Stage) {
+    return true;
+  }
+
   const distance = getDistance(
     player.char.sprite.body.position.x,
     player.char.sprite.body.position.y,

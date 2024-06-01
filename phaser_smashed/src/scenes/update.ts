@@ -70,14 +70,18 @@ export function setPreUpdate(game: SmashedGame): void {
   game.loaded = true;
   print('players', game.players);
   setBGMusicSpeedNormal(game);
-  setMusicBoxPlay(game);
-  setMusicBoxPause(game);
-  setMusicChompSheepPlay(game);
-  setMusicChompSheepPause(game);
+
   setPlaySoundPowerup(game);
   setPauseSoundPowerup(game);
-  setMusicBulletBillButtonPlay(game);
-  setMusicBulletBillButtonPause(game);
+
+  if (!game.debug.Simple_Stage) {
+    setMusicBoxPlay(game);
+    setMusicBoxPause(game);
+    setMusicChompSheepPlay(game);
+    setMusicChompSheepPause(game);
+    setMusicBulletBillButtonPlay(game);
+    setMusicBulletBillButtonPause(game);
+  }
 }
 
 export function update(game: SmashedGame, time: number, delta: number): void {
