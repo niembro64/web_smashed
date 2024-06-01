@@ -6,8 +6,7 @@ import {
   BulletBillCombo,
   BulletBillComboState,
   BulletBillSparkLine,
-  Player,
-  Position,
+  Position
 } from '../types';
 import {
   setMusicBulletBillButtonPause,

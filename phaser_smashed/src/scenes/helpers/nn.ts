@@ -15,12 +15,12 @@ import {
 import { NNRatiosNN } from './nnRatios';
 
 export const nnConfigNNExpress = {
-  hiddenLayers: [100, 20],
+  hiddenLayers: [100, 30],
   useGpu: true,
 };
 
 export const nnConfigNNClient = {
-  hiddenLayers: [100, 20],
+  hiddenLayers: [100],
   useGpu: true,
 };
 
