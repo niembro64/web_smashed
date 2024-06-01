@@ -57,7 +57,7 @@ import {
   workingControllersAmazon,
 } from './reactHelpers';
 import { MusicManager, MusicManagerType } from './MusicManager';
-import { nnJsonNNHardcodeClient } from '../scenes/helpers/nnJson';
+import { nnJsonNNClient } from '../scenes/helpers/nnJson';
 
 export const blipDelay = 200;
 
@@ -82,7 +82,7 @@ function Play() {
 
   const [videoGray, setVideoGray] = useState(false);
 
-  const nnJsonReact = useRef<string | null>(null);
+  const nnJsonExpress = useRef<string | null>(null);
 
   // useEffect(() => {
   //   (async () => {
@@ -103,22 +103,8 @@ function Play() {
   //     nnJsonReact.current = nn;
   //   })();
   // }, [debugState.NN_Use_Client]);
-  const pullCorrectNeuralNetworkWeights = async () => {
-    let nn = null;
-    if (debugState.NN_Use_Client) {
-      print('USING CLIENT NN');
-      nn = nnJsonNNHardcodeClient;
-    } else {
-      print('FETCHING NEURAL NETWORK');
-      nn = await fetchNeuralNetwork();
-
-      if (!nn) {
-        // throw new Error('nn === null');
-        nn = nnJsonNNHardcodeClient;
-      }
-    }
-
-    nnJsonReact.current = nn;
+  const pullExpressNeuralNet = async () => {
+    nnJsonExpress.current = await fetchNeuralNetwork();
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
@@ -836,7 +822,7 @@ function Play() {
 
     setWebState('web-state-load');
 
-    await pullCorrectNeuralNetworkWeights();
+    await pullExpressNeuralNet();
 
     const c: ClientInformation = await fetchClientData();
     const s: SessionInfo = await axiosSaveOne(
@@ -854,7 +840,7 @@ function Play() {
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debugState);
       myPhaser.current.registry.set('myMoment', myMoment);
-      myPhaser.current.registry.set('nnJson', nnJsonReact.current);
+      myPhaser.current.registry.set('nnJsonExpress', nnJsonExpress.current);
     }, setTimeoutQuotesLengthStart);
   };
 
@@ -1713,9 +1699,40 @@ function Play() {
                           onClickOscura(pIndex);
                         }}
                       >
-                        <span>Bot</span>
+                        <span>Static</span>
                         <span id="input-sub">Neural Network</span>
                         <div className="button-input-emoji">{emoji.brain}</div>
+                      </div>
+                    )}
+                    {inputArray[pIndex] === 5 && (
+                      <div
+                        className={
+                          'b-oscuro b-dark' +
+                          (() => {
+                            switch (getNumActiveBeforeMe(pIndex)) {
+                              case 0:
+                                return ' b-dark-red';
+                              case 1:
+                                return ' b-dark-blue';
+                              case 2:
+                                return ' b-dark-yellow';
+                              case 3:
+                                return ' b-dark-green';
+                              default:
+                                return '';
+                            }
+                          })()
+                        }
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
+                        onClick={() => {
+                          onClickOscura(pIndex);
+                        }}
+                      >
+                        <span>Evolving</span>
+                        <span id="input-sub">Neural Network</span>
+                        <div className="button-input-emoji">{emoji.update}</div>
                       </div>
                     )}
                   </div>

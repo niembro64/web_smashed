@@ -1,6 +1,6 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { Player, Velocity } from '../types';
+import { InputTypeNN, Player, Velocity } from '../types';
 import {
   allPadToFalse,
   getIsBotInPitArea,
@@ -17,7 +17,8 @@ import { NNSetPlayerPadStatic } from './nn';
 export function updateBotNN(
   player: Player,
   playerIndex: number,
-  game: SmashedGame
+  game: SmashedGame,
+  inputType_NN: InputTypeNN
 ): void {
   const padCurr = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {
@@ -29,7 +30,7 @@ export function updateBotNN(
     return;
   }
 
-  NNSetPlayerPadStatic(player, playerIndex, game);
+  NNSetPlayerPadStatic(player, playerIndex, game, inputType_NN);
 
   const pVelocity: Velocity = player.char.sprite.body.velocity;
   const jumps = player.char.jumps;

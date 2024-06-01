@@ -1,7 +1,11 @@
 import { NeuralNetwork } from 'brain.js';
-import { print, saveNeuralNetwork } from '../../views/client';
+import {
+  fetchNeuralNetwork,
+  print,
+  saveNeuralNetwork,
+} from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { NNObject, Player } from '../types';
+import { InputTypeNN, NNObject, Player, inputTypeNum } from '../types';
 import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestAttackPhysicalXYFromPlayer,
@@ -9,10 +13,14 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { NNRatiosNN } from './nnRatios';
-import { nnJsonNNHardcodeClient } from './nnJson';
 
-export const nnConfigNN = {
+export const nnConfigNNExpress = {
   hiddenLayers: [40, 30, 20],
+  useGpu: true,
+};
+
+export const nnConfigNNClient = {
+  hiddenLayers: [40],
   useGpu: true,
 };
 
@@ -26,11 +34,20 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   if (isFirstPlayerANeuralNetwork(game)) {
     return;
   }
-  const newNN: boolean = game.debug.NN_Brand_New;
 
-  if (newNN) {
-    game.nnNet = new NeuralNetwork(nnConfigNN);
-    // game.nnNet = game.nnNet.fromJSON(nnJsonNNHardcodeClient);
+  const trainANewNeuralNetwork: boolean = game.debug.NN_Brand_New;
+
+  game.nnExpressNet = new NeuralNetwork(nnConfigNNExpress);
+
+  if (!trainANewNeuralNetwork) {
+    const nnjson = await fetchNeuralNetwork();
+
+    if (nnjson === null) {
+      print('nnjson === null');
+      return;
+    }
+
+    game.nnExpressNet = game.nnExpressNet.fromJSON(nnjson);
   }
 
   print('NNTrain');
@@ -70,10 +87,10 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
       },
     })
   );
-  await game.nnNet.trainAsync(randomizedNnObjects, {
+  await game.nnExpressNet.trainAsync(randomizedNnObjects, {
     iterations: numIter,
     randomize: true,
-    learningRate: newNN ? 0.00001 : 0.0000001,
+    learningRate: trainANewNeuralNetwork ? 0.00001 : 0.0000001,
     logPeriod: logPeriod,
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / numIter);
@@ -95,8 +112,8 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     },
   });
 
-  print('game.nnNet after train', game.nnNet);
-  const netJson = game.nnNet.toJSON();
+  print('game.nnNet after train', game.nnExpressNet);
+  const netJson = game.nnExpressNet.toJSON();
   // print('netJson', JSON.stringify(netJson, null, 2));
   window.dispatchEvent(
     new CustomEvent('nn-train', {
@@ -323,10 +340,26 @@ const NNGetOutputArrayFromWorld = (
 export const NNSetPlayerPadStatic = (
   player: Player,
   playerIndex: number,
-  game: SmashedGame
+  game: SmashedGame,
+  inputType_NN: InputTypeNN
 ): void => {
   const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game, false);
-  const nnOutput: number[] = game.nnNet.run(nnInput);
+  let nnOutput: number[] | null = null;
+
+  switch (inputType_NN) {
+    case 4:
+      nnOutput = game.nnClientNet.run(nnInput);
+      break;
+    case 5:
+      nnOutput = game.nnExpressNet.run(nnInput);
+      break;
+    default:
+      throw new Error('inputType_NN not recognized');
+  }
+
+  if (nnOutput === null) {
+    throw new Error('nnOutput === null');
+  }
 
   const r: number[] = NNRatiosNN;
 

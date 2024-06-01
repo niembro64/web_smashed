@@ -1,7 +1,8 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../views/client';
 import SmashedGame from './SmashedGame';
-import { nnConfigNN } from './helpers/nn';
+import { nnConfigNNClient, nnConfigNNExpress } from './helpers/nn';
+import { nnJsonNNClient } from './helpers/nnJson';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -18,7 +19,8 @@ export function preload(game: SmashedGame): void {
   //////////////////////////////
   // Pull Configs
   //////////////////////////////
-  const nnJsonFromReact = game.game.registry.get('nnJson');
+  const nnJsonExpress_FromReact = game.game.registry.get('nnJsonExpress');
+
   game.sessionMoment = game.game.registry.get('myMoment');
   print('game.sessionMoment', game.sessionMoment);
   game.smashConfig = game.game.registry.get('smashConfig');
@@ -56,8 +58,11 @@ export function preload(game: SmashedGame): void {
 
   game.shotsLeftCurr = game.debug.Shots;
 
-  game.nnNet = new NeuralNetwork(nnConfigNN);
-  game.nnNet = game.nnNet.fromJSON(nnJsonFromReact);
+  game.nnClientNet = new NeuralNetwork(nnConfigNNClient);
+  game.nnClientNet = game.nnClientNet.fromJSON(nnJsonNNClient);
+
+  game.nnExpressNet = new NeuralNetwork(nnConfigNNExpress);
+  game.nnExpressNet = game.nnExpressNet.fromJSON(nnJsonExpress_FromReact);
   // game.nnNet = game.nnNet.fromJSON(nnJsonNNHardcodeClient);
 
   //////////////////////////////

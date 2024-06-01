@@ -12,7 +12,6 @@ import { updateBotRules } from './botRB';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMomentBoolean } from './powers';
-import { setPlaySoundFireBall } from './sound';
 
 export function updateGamePadsMaster(game: SmashedGame): void {
   let numPlayers = game.players.length;
@@ -51,7 +50,10 @@ export function updateGamePadsMaster(game: SmashedGame): void {
         updateBotRules(player, playerIndex, game);
         break;
       case 4:
-        updateBotNN(player, playerIndex, game);
+        updateBotNN(player, playerIndex, game, inputType);
+        break;
+      case 5:
+        updateBotNN(player, playerIndex, game, inputType);
         break;
       default:
         break;

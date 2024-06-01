@@ -225,16 +225,17 @@ const getApiBaseUrl = () => {
 export const fetchNeuralNetwork =
   // async (): Promise<INeuralNetworkJSON | null> => {
   async (): Promise<any> => {
-    let neuralNetwork = null;
     try {
       const response = await axios.get(`${getApiBaseUrl()}/api/neural-network`);
-      neuralNetwork = response.data;
+      const neuralNetwork = response.data;
       // Use the neural network data
       print('Neural network fetched:', neuralNetwork);
+      return neuralNetwork;
     } catch (error) {
       console.error('Error fetching neural network:', error);
     }
-    return neuralNetwork;
+
+    return null;
   };
 
 // Function to send the updated neural network to the backend

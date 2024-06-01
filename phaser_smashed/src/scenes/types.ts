@@ -482,10 +482,13 @@ export type CharacterId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 // 1: pad
 // 2: keyboard
 // 3: bot | Rule-Based
-// 4: bot | Neural-Network
+// 4: bot | Neural-Network Client
+// 5: bot | Neural-Network Server
 //////////////////////////
-export type InputType = 0 | 1 | 2 | 3 | 4;
-export const inputTypeNum = 5;
+export const inputTypeNum = 6;
+export type InputType = 0 | 1 | 2 | 3 | 4 | 5;
+export type InputTypeNN = 4 | 5;
+
 
 export type CharacterName =
   | 'Mario'
@@ -737,6 +740,14 @@ export const emoji = {
   forward: '🔜',
   restart: '🔄',
   waiting: '⏳',
+  clock: '⏰',
+  evolve: '🔁',
+  evolving: '🔄',
+  watch: '⌚',
+  update: '🔄',
+  learn: '📚',
+  improve: '🔍',
+  training: '🏋️',
   bot: '🤖',
   dice: '🎲',
   alien: '👽',
