@@ -1,8 +1,22 @@
 import { NeuralNetwork } from 'brain.js';
 import { print } from '../views/client';
 import SmashedGame from './SmashedGame';
-import { nnConfigNNClient, nnConfigNNExpress } from './helpers/nn';
+import {
+  getNumberOfNeuralNetworkTypeFromGame,
+  getNumberOfNeuralNetworkTypeFromInputArray,
+  getSlightlyModifiedWeightsAndBiasesFromNNJson,
+  nnConfigNNClient,
+  nnConfigNNExpress,
+  printWeightsAndBiases,
+} from './helpers/nn';
 import { nnJsonNNClient } from './helpers/nnJson';
+import {
+  InputType,
+  InputTypeNNClient,
+  InputTypeNNExpress,
+  inputTypeNNClient,
+  inputTypeNNExpress,
+} from './types';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -57,13 +71,6 @@ export function preload(game: SmashedGame): void {
   }
 
   game.shotsLeftCurr = game.debug.Shots;
-
-  game.nnClientNet = new NeuralNetwork(nnConfigNNClient);
-  game.nnClientNet = game.nnClientNet.fromJSON(nnJsonNNClient);
-
-  game.nnExpressNet = new NeuralNetwork(nnConfigNNExpress);
-  game.nnExpressNet = game.nnExpressNet.fromJSON(nnJsonExpress_FromReact);
-  // game.nnNet = game.nnNet.fromJSON(nnJsonNNHardcodeClient);
 
   //////////////////////////////
   // Load Audio
@@ -320,4 +327,66 @@ export function preload(game: SmashedGame): void {
       });
     }
   });
+
+  //////////////////////////////
+  // NEURAL NETWORK | CLIENT
+  //////////////////////////////
+
+  const inputArray: InputType[] = game.playerChoicesInputType;
+
+  const numClientNNs = getNumberOfNeuralNetworkTypeFromInputArray(
+    inputArray,
+    inputTypeNNClient
+  );
+  print('numClientNNs', numClientNNs);
+  for (let i = 0; i < numClientNNs; i++) {
+    game.nnClientNets.push(new NeuralNetwork(nnConfigNNClient));
+  }
+
+  for (let i = 0; i < numClientNNs; i++) {
+    if (i === 0) {
+      game.nnClientNets[i] = game.nnClientNets[i].fromJSON(nnJsonNNClient);
+    } else {
+      const nnJsonNNClientModified =
+        getSlightlyModifiedWeightsAndBiasesFromNNJson(nnJsonNNClient);
+      printWeightsAndBiases(nnJsonNNClientModified);
+
+      game.nnClientNets[i] = game.nnClientNets[i].fromJSON(
+        nnJsonNNClientModified
+      );
+    }
+  }
+
+  //////////////////////////////
+  // NEURAL NETWORK | EXPRESS
+  //////////////////////////////
+  const numExpressNNs = getNumberOfNeuralNetworkTypeFromInputArray(
+    inputArray,
+    inputTypeNNExpress
+  );
+  print('numExpressNNs', numExpressNNs);
+
+  for (let i = 0; i < numExpressNNs; i++) {
+    game.nnExpressNets.push(new NeuralNetwork(nnConfigNNExpress));
+  }
+
+  if (nnJsonExpress_FromReact) {
+    for (let i = 0; i < numExpressNNs; i++) {
+      if (i === 0) {
+        game.nnExpressNets[i] = game.nnExpressNets[i].fromJSON(
+          nnJsonExpress_FromReact
+        );
+      } else {
+        const nnJsonExpressModified =
+          getSlightlyModifiedWeightsAndBiasesFromNNJson(
+            nnJsonExpress_FromReact
+          );
+        printWeightsAndBiases(nnJsonExpressModified);
+
+        game.nnExpressNets[i] = game.nnExpressNets[i].fromJSON(
+          nnJsonExpressModified
+        );
+      }
+    }
+  }
 }

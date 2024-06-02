@@ -482,11 +482,27 @@ export type CharacterId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 // 2: keyboard
 // 3: bot | Rule-Based
 // 4: bot | Neural-Network Client
-// 5: bot | Neural-Network Server
+// 5: bot | Neural-Network Express
 //////////////////////////
 export const inputTypeNum = 6;
-export type InputType = 0 | 1 | 2 | 3 | 4 | 5;
-export type InputTypeNN = 4 | 5;
+
+export type InputTypeNone = 0;
+export type InputTypePad = 1;
+export type InputTypeKeyboard = 2;
+export type InputTypeBot = 3;
+export type InputTypeNNClient = 4;
+export type InputTypeNNExpress = 5;
+
+export const inputTypeNNClient: InputTypeNNClient = 4;
+export const inputTypeNNExpress: InputTypeNNExpress = 5;
+
+export type InputType =
+  | InputTypeNone
+  | InputTypePad
+  | InputTypeKeyboard
+  | InputTypeBot
+  | InputTypeNNClient
+  | InputTypeNNExpress;
 
 export type CharacterName =
   | 'Mario'

@@ -1,7 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
-  NN_Train: true,
+  NN_Train: false,
   NN_Brand_New: false,
 
   NN_Help_Screen: true,

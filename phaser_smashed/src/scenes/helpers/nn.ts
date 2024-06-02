@@ -5,7 +5,13 @@ import {
   saveNeuralNetwork,
 } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { InputTypeNN, NNObject, Player, inputTypeNum } from '../types';
+import {
+  InputType,
+  InputTypeNNClient,
+  InputTypeNNExpress,
+  NNObject,
+  Player,
+} from '../types';
 import {
   getNearestAttackEnergyXYFromPlayer,
   getNearestAttackPhysicalXYFromPlayer,
@@ -54,7 +60,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
 
   const trainANewNeuralNetwork: boolean = game.debug.NN_Brand_New;
 
-  game.nnExpressNet = new NeuralNetwork(nnConfigNNExpress);
+  game.nnExpressNets = [new NeuralNetwork(nnConfigNNExpress)];
 
   if (!trainANewNeuralNetwork) {
     const nnjson = await fetchNeuralNetwork();
@@ -64,7 +70,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
       return;
     }
 
-    game.nnExpressNet = game.nnExpressNet.fromJSON(nnjson);
+    game.nnExpressNets = [game.nnExpressNets[0].fromJSON(nnjson)];
   }
 
   print('NNTrain');
@@ -104,7 +110,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
       },
     })
   );
-  await game.nnExpressNet.trainAsync(randomizedNnObjects, {
+  await game.nnExpressNets[0].trainAsync(randomizedNnObjects, {
     iterations: numIter,
     randomize: true,
     learningRate: trainANewNeuralNetwork ? 0.00001 : 0.0000001,
@@ -129,8 +135,8 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     },
   });
 
-  print('game.nnNet after train', game.nnExpressNet);
-  const netJson = game.nnExpressNet.toJSON();
+  print('game.nnNet after train', game.nnExpressNets);
+  const netJson = game.nnExpressNets[0].toJSON();
   // print('netJson', JSON.stringify(netJson, null, 2));
   window.dispatchEvent(
     new CustomEvent('nn-train', {
@@ -358,20 +364,33 @@ export const NNSetPlayerPadStatic = (
   player: Player,
   playerIndex: number,
   game: SmashedGame,
-  inputType_NN: InputTypeNN
+  inputType_NN: InputTypeNNClient | InputTypeNNExpress
 ): void => {
   const nnInput = NNGetInputArrayFromWorld(player, playerIndex, game, false);
   let nnOutput: number[] | null = null;
   let ratioThresh: number[] | null = null;
 
+  const numPlayersBelowMeWithSameNNType = () => {
+    let num = 0;
+    game.players.forEach((p, i) => {
+      if (i < playerIndex && p.inputType === inputType_NN) {
+        num++;
+      }
+    });
+    return num;
+  };
+
+  const nnIndexToUse = numPlayersBelowMeWithSameNNType();
+  print('nnIndexToUse', nnIndexToUse);
+
   switch (inputType_NN) {
     case 4:
       ratioThresh = NNRatiosNNClient;
-      nnOutput = game.nnClientNet.run(nnInput);
+      nnOutput = game.nnClientNets[nnIndexToUse].run(nnInput);
       break;
     case 5:
       ratioThresh = NNRatiosNNExpress;
-      nnOutput = game.nnExpressNet.run(nnInput);
+      nnOutput = game.nnExpressNets[nnIndexToUse].run(nnInput);
       break;
     default:
       throw new Error('inputType_NN not recognized');
@@ -519,22 +538,61 @@ export const getSlightlyModifiedWeightsAndBiasesFromNNJson = (
   if (!nn) {
     throw new Error('nn is null');
   }
-
-  const modAmountPercent = 0.01;
+  const numOverride = 999;
+  const modAmountPercent = 0.5;
 
   const newNNJson: NeuralNetworkJsonPartial = JSON.parse(JSON.stringify(nn));
 
   newNNJson.layers.forEach((layer, layerIndex) => {
     layer.weights.forEach((weightChunk: number[], weightChunkIndex) => {
       weightChunk.forEach((weight, weightIndex) => {
-        weightChunk[weightIndex] =
-          weight + (Math.random() - 0.5) * modAmountPercent;
+        weightChunk[weightIndex] = weight;
+        // weightChunk[weightIndex] = numOverride;
+        // weight + weight * (Math.random() - 0.5) * modAmountPercent;
       });
     });
     layer.biases.forEach((bias, biasIndex) => {
-      layer.biases[biasIndex] = bias + (Math.random() - 0.5) * modAmountPercent;
+      layer.biases[biasIndex] = bias;
+      // layer.biases[biasIndex] = numOverride;
+      // bias + bias * (Math.random() - 0.5) * modAmountPercent;
     });
   });
 
   return newNNJson;
+};
+
+export const getNumberOfNeuralNetworkTypeFromGame = (
+  game: SmashedGame,
+  nn_Type: InputTypeNNClient | InputTypeNNExpress
+): number => {
+  let num = 0;
+
+  const numPlayers = game.players.length;
+
+  print('numPlayers', numPlayers);
+
+  game.players.forEach((player) => {
+    print('player.inputType', player.inputType, nn_Type);
+    if (player.inputType === nn_Type) {
+      num++;
+    }
+  });
+
+  return num;
+};
+
+export const getNumberOfNeuralNetworkTypeFromInputArray = (
+  inputs: InputType[],
+  nn_Type: InputTypeNNClient | InputTypeNNExpress
+): number => {
+  let num = 0;
+
+  inputs.forEach((input) => {
+    // @ts-ignore
+    if (input === nn_Type) {
+      num++;
+    }
+  });
+
+  return num;
 };

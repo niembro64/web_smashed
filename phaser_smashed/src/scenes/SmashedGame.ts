@@ -45,10 +45,10 @@ export default class SmashedGame extends Phaser.Scene {
   nnObjects: NNObject[] = [];
 
   nnClientRatios: number[] = [];
-  nnClientNet: any;
+  nnClientNets: any[] = [];
 
   nnExpressRatios: number[] = [];
-  nnExpressNet: any;
+  nnExpressNets: any[] = [];
 
   ////////////////////////////////
   ////////// GAME CONSTANTS

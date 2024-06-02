@@ -1,6 +1,11 @@
 import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
-import { InputTypeNN, Player, Velocity } from '../types';
+import {
+  InputTypeNNClient,
+  InputTypeNNExpress,
+  Player,
+  Velocity,
+} from '../types';
 import {
   allPadToFalse,
   getIsBotInPitArea,
@@ -18,7 +23,7 @@ export function updateBotNN(
   player: Player,
   playerIndex: number,
   game: SmashedGame,
-  inputType_NN: InputTypeNN
+  inputType_NN: InputTypeNNClient | InputTypeNNExpress
 ): void {
   const padCurr = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {
