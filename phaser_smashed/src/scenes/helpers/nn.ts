@@ -546,14 +546,14 @@ export const getSlightlyModifiedWeightsAndBiasesFromNNJson = (
   newNNJson.layers.forEach((layer, layerIndex) => {
     layer.weights.forEach((weightChunk: number[], weightChunkIndex) => {
       weightChunk.forEach((weight, weightIndex) => {
-        weightChunk[weightIndex] = weight;
-        // weightChunk[weightIndex] = numOverride;
+        // weightChunk[weightIndex] = weight;
+        weightChunk[weightIndex] = numOverride;
         // weight + weight * (Math.random() - 0.5) * modAmountPercent;
       });
     });
     layer.biases.forEach((bias, biasIndex) => {
-      layer.biases[biasIndex] = bias;
-      // layer.biases[biasIndex] = numOverride;
+      // layer.biases[biasIndex] = bias;
+      layer.biases[biasIndex] = numOverride;
       // bias + bias * (Math.random() - 0.5) * modAmountPercent;
     });
   });
