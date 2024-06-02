@@ -487,3 +487,54 @@ export const deleteLastNNObjects = (
 
   print('deleting post', game.nnObjects.length);
 };
+
+interface NeuralNetworkJsonPartial {
+  layers: Array<{
+    weights: number[][];
+    biases: number[];
+  }>;
+}
+
+export function printWeightsAndBiases(nn: NeuralNetworkJsonPartial): void {
+  nn.layers.forEach((layer, layerIndex) => {
+    console.log(`Layer ${layerIndex + 1}:`);
+    console.log(`  Weights:`);
+    layer.weights.forEach((weightChunk: number[], weightChunkIndex) => {
+      console.log(`    WeightChunkIndex: ${weightChunkIndex + 1}}`);
+
+      weightChunk.forEach((weight, weightIndex) => {
+        console.log(`      Weight ${weightIndex + 1}: ${weight}`);
+      });
+    });
+    console.log(`  Biases:`);
+    layer.biases.forEach((bias, biasIndex) => {
+      console.log(`    Bias ${biasIndex + 1}: ${bias}`);
+    });
+  });
+}
+
+export const getSlightlyModifiedWeightsAndBiasesFromNNJson = (
+  nn: NeuralNetworkJsonPartial
+): NeuralNetworkJsonPartial => {
+  if (!nn) {
+    throw new Error('nn is null');
+  }
+
+  const modAmountPercent = 0.01;
+
+  const newNNJson: NeuralNetworkJsonPartial = JSON.parse(JSON.stringify(nn));
+
+  newNNJson.layers.forEach((layer, layerIndex) => {
+    layer.weights.forEach((weightChunk: number[], weightChunkIndex) => {
+      weightChunk.forEach((weight, weightIndex) => {
+        weightChunk[weightIndex] =
+          weight + (Math.random() - 0.5) * modAmountPercent;
+      });
+    });
+    layer.biases.forEach((bias, biasIndex) => {
+      layer.biases[biasIndex] = bias + (Math.random() - 0.5) * modAmountPercent;
+    });
+  });
+
+  return newNNJson;
+};

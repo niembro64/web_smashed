@@ -10,7 +10,11 @@ import {
   debugMax,
   showOptionOnMainScreenInit,
 } from '../debugOptions';
-import { nnNumTrainingBarTicks } from '../scenes/helpers/nn';
+import {
+  getSlightlyModifiedWeightsAndBiasesFromNNJson,
+  nnNumTrainingBarTicks,
+  printWeightsAndBiases,
+} from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
 import { momentStringToMoment } from '../scenes/helpers/time';
 import {
@@ -56,6 +60,7 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './reactHelpers';
+import { isNonNullExpression } from 'typescript';
 
 export const blipDelay = 200;
 
@@ -103,6 +108,13 @@ function Play() {
   // }, [debugState.NN_Use_Client]);
   const pullExpressNeuralNet = async () => {
     nnJsonExpress.current = await fetchNeuralNetwork();
+    if (nnJsonExpress.current !== null) {
+      // printWeightsAndBiases(nnJsonExpress.current as any);
+      // @ts-ignore
+      nnJsonExpress.current = getSlightlyModifiedWeightsAndBiasesFromNNJson(
+        nnJsonExpress.current as any
+      ) as any;
+    }
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
@@ -833,6 +845,11 @@ function Play() {
     );
     // setSession(s);
 
+    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
+    // PHASER GAME CREATION
+    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
     setTimeout(() => {
       // @ts-ignore
       myPhaser.current = new Phaser.Game(config);
