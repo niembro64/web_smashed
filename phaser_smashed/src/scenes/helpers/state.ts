@@ -1,4 +1,4 @@
-import { axiosUpsertOne, print } from '../../views/client';
+import { axiosUpsertOne, print, saveNeuralNetwork } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import {
   AttackPhysical,
@@ -6,6 +6,7 @@ import {
   GameState,
   Player,
   PlayerState,
+  inputTypeNNExpress,
 } from '../types';
 import {
   getIsAttackEnergyOffscreen,
@@ -31,10 +32,15 @@ import {
 } from './drinking';
 import { setFlagOwnerNullIfDead } from './flag';
 import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
-import { NNTrainNN, deleteLastNNObjects } from './nn';
+import {
+  NNTrainNN,
+  deleteLastNNObjects,
+  getNeuralNetworkBestInstanceIndex,
+} from './nn';
 import { setPhysicsAndMusicPause, setPhysicsAndMusicResume } from './physics';
 import { setPlayerPowerState } from './powers';
 import {
+  playGarageRepeat,
   setPauseAllReadySounds,
   setPauseWiiMusic,
   setSoundDiePlay,
@@ -137,6 +143,21 @@ export function setGameState(game: SmashedGame, state: GameState): void {
       isDrinkingCurr = true;
       setPlayerWinningPositions(game);
       NNTrainNN(game);
+
+      const bestExpressNN: number | null = getNeuralNetworkBestInstanceIndex(
+        game,
+        inputTypeNNExpress
+      );
+
+      if (bestExpressNN !== null) {
+        print('BEST EXPRESS NN', bestExpressNN);
+
+        saveNeuralNetwork(game.nnExpressNets[bestExpressNN]);
+      }
+
+      setTimeout(() => {
+        playGarageRepeat(game);
+      }, 2500);
       break;
     default:
       print('BROKEN_____________________');

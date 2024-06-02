@@ -1,7 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
-  Replace_Express_NN: false,
+  NN_Reset_Evolving: false,
   Super_Speed: false,
   NN_Train: false,
   NN_Brand_New: false,
@@ -76,7 +76,7 @@ export const debugInit: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: true,
-  Replace_Express_NN: true,
+  NN_Reset_Evolving: true,
   Super_Speed: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
@@ -146,7 +146,7 @@ export const showOptionOnMainScreenInit: Debug = {
 };
 
 export const debugMax: Debug = {
-  Replace_Express_NN: false,
+  NN_Reset_Evolving: false,
   NN_Train: true,
   Super_Speed: true,
   NN_Brand_New: false,
@@ -217,7 +217,7 @@ export const debugMax: Debug = {
 
 // all false or 0
 export const doNotShowDebug: Debug = {
-  Replace_Express_NN: false,
+  NN_Reset_Evolving: false,
   NN_Train: false,
   Super_Speed: false,
   NN_Brand_New: false,

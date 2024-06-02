@@ -30,32 +30,22 @@ import {
 import { nnJsonNNClient } from './nnJson';
 
 /////////////////////////////////
-// EXPRESS
-/////////////////////////////////
-export const nnConfigNNExpress = {
-  hiddenLayers: [100],
-  useGpu: true,
-};
-
-export const NNRatiosNNExpress: number[] = [
-  0.11391458742173628, 0.22684795813475375, 0.4769180450425194,
-  0.5230819549574806, 0.06013456686291001, 0.22189514998598261,
-  0.37706756377908607, 0.06046163909914961,
-];
-
-/////////////////////////////////
 // CLIENT
 /////////////////////////////////
 export const nnConfigNNClient = {
   hiddenLayers: [100],
   useGpu: true,
 };
-
 export const NNRatiosNNClient: number[] = [
   0.07072905331882481, 0.21201975391311625, 0.5024273876286934,
   0.4975726123713066, 0.06851092324432911, 0.3027538294132418,
   0.35364526659412404, 0.05285845819034067,
 ];
+/////////////////////////////////
+// EXPRESS
+/////////////////////////////////
+export const nnConfigNNExpress = nnConfigNNClient;
+export const NNRatiosNNExpress: number[] = NNRatiosNNClient;
 
 export const nnNumTrainingBarTicks: number = 25;
 
@@ -68,11 +58,9 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
     return;
   }
 
-  const trainANewNeuralNetwork: boolean = game.debug.NN_Brand_New;
-
   game.nnExpressNets = [new NeuralNetwork(nnConfigNNExpress)];
 
-  if (!trainANewNeuralNetwork) {
+  if (!game.debug.NN_Brand_New) {
     const nnjson = await fetchNeuralNetwork();
 
     if (nnjson === null) {
@@ -123,7 +111,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   await game.nnExpressNets[0].trainAsync(randomizedNnObjects, {
     iterations: numIter,
     randomize: true,
-    learningRate: trainANewNeuralNetwork ? 0.00001 : 0.0000001,
+    learningRate: game.debug.NN_Brand_New ? 0.00001 : 0.0000001,
     logPeriod: logPeriod,
     log: (stats: any) => {
       const percentDone = Math.min(1, stats.iterations / numIter);
@@ -175,14 +163,6 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
       },
     })
   );
-
-  const success = await saveNeuralNetwork(netJson);
-
-  if (success) {
-    print('neural network saved');
-  } else {
-    print('neural network not saved');
-  }
 };
 
 const NNGetOutputRatios = (game: SmashedGame): number[] => {
@@ -439,6 +419,22 @@ export const NNSetPlayerPadStatic = (
   player.padCurr.Y = nnOutput[7] > ratioThresh[7];
 };
 
+export const isNNTrainingObjectOk = (nnObject: NNObject): boolean => {
+  for (let i = 0; i < nnObject.input.length; i++) {
+    if (typeof nnObject.input[i] !== 'number' || isNaN(nnObject.input[i])) {
+      return false;
+    }
+  }
+
+  for (let i = 0; i < nnObject.output.length; i++) {
+    if (typeof nnObject.output[i] !== 'number' || isNaN(nnObject.output[i])) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export const addToNNTrainingArray = (game: SmashedGame): void => {
   if (!game.debug.NN_Train) {
     return;
@@ -478,6 +474,11 @@ export const addToNNTrainingArray = (game: SmashedGame): void => {
     input: inputArray,
     output: outputArray,
   };
+
+  if (!isNNTrainingObjectOk(newNNObject)) {
+    print('BAD | newNNObject', newNNObject);
+    return;
+  }
 
   // print statement that overwrites itself
   print('newNNObject', JSON.stringify(newNNObject, null, 2));

@@ -3,7 +3,7 @@ import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 
 export interface Debug {
-  Replace_Express_NN: boolean;
+  NN_Reset_Evolving: boolean;
   Super_Speed: boolean;
   Dev_Mode: boolean;
   Dur_Seconds: boolean;

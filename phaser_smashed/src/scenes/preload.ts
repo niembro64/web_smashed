@@ -1,22 +1,14 @@
 import { NeuralNetwork } from 'brain.js';
-import { print, getFirstWeightOfNNJson } from '../views/client';
+import { getFirstWeightOfNNJson, print } from '../views/client';
 import SmashedGame from './SmashedGame';
 import {
-  getNumberOfNeuralNetworkTypeFromGame,
-  getNumberOfNeuralNetworkTypeFromInputArray,
   getNewModifiedWeights,
+  getNumberOfNeuralNetworkTypeFromInputArray,
   nnConfigNNClient,
   nnConfigNNExpress,
-  printWeightsAndBiases,
 } from './helpers/nn';
 import { nnJsonNNClient } from './helpers/nnJson';
-import {
-  InputType,
-  InputTypeNNClient,
-  InputTypeNNExpress,
-  inputTypeNNClient,
-  inputTypeNNExpress,
-} from './types';
+import { InputType, inputTypeNNClient, inputTypeNNExpress } from './types';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,

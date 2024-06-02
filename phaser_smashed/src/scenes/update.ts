@@ -21,7 +21,7 @@ import {
   updateJumpFloat,
   updateJumpPhysical,
   updateJumpPhysicalOnWall,
-  updateLastDirectionTouched
+  updateLastDirectionTouched,
 } from './helpers/movement';
 import { getNeuralNetworkBestInstanceIndex } from './helpers/nn';
 import {
@@ -208,10 +208,7 @@ export function update(game: SmashedGame, time: number, delta: number): void {
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
-      // setPlayWiiMusicWaitShort(game);
-      setTimeout(() => {
-        playGarageRepeat(game);
-      }, 2500);
+
       break;
     case 'game-state-paused':
       playWiiMusic(game);
