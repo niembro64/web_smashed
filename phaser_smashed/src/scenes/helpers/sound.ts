@@ -8,32 +8,68 @@ function increaseSemitones(frequency: number, semitones: number): number {
 }
 
 export function setSoundDiePlay(game: SmashedGame): void {
+  if (!game.SOUND_DIE) {
+    return;
+  }
+
   game.SOUND_DIE.play();
 }
 export function setSoundFinishPlay(game: SmashedGame): void {
+  if (!game.ENERJA_FINISH) {
+    return;
+  }
+
   game.ENERJA_FINISH.play();
 }
 export function setSoundFirstBloodPlay(game: SmashedGame): void {
+  if (!game.SOUND_FIRST_BLOOD) {
+    return;
+  }
+
   game.SOUND_FIRST_BLOOD.play();
 }
 export function setSoundProfoundPlay(game: SmashedGame): void {
+  if (!game.SOUND_INTRO) {
+    return;
+  }
+
   game.SOUND_INTRO.play();
 }
 export function setSoundSquishPlay(game: SmashedGame): void {
+  if (!game.SOUND_SQUISH) {
+    return;
+  }
+
   game.SOUND_SQUISH.play();
 }
 export function setSoundEnerjaPlay(game: SmashedGame): void {
+  if (!game.ENERJA_SMASHED) {
+    return;
+  }
+
   game.ENERJA_SMASHED.play();
 }
 export function setSoundStartPlayLiquid(game: SmashedGame): void {
+  if (!game.SOUND_START_LIQUID) {
+    return;
+  }
+
   game.SOUND_START_LIQUID.play();
 }
 export function setSoundStartPlay(game: SmashedGame): void {
+  if (!game.SOUND_START) {
+    return;
+  }
+
   if (game.timeSecondsClock > 0) {
     game.SOUND_START.play();
   }
 }
 export function setPauseWiiMusic(game: SmashedGame): void {
+  if (!game.SOUND_PAUSED) {
+    return;
+  }
+
   if (!game.SOUND_PAUSED.isPlaying) {
     return;
   }
@@ -42,6 +78,10 @@ export function setPauseWiiMusic(game: SmashedGame): void {
 }
 
 export function playGarageRepeat(game: SmashedGame): void {
+  if (!game.SOUND_GARAGE_REPEAT) {
+    return;
+  }
+
   if (game.SOUND_GARAGE_REPEAT.isPlaying) {
     return;
   }
@@ -54,12 +94,20 @@ export function playGarageRepeat(game: SmashedGame): void {
   game.SOUND_GARAGE_REPEAT.play();
 }
 export function playWiiMusic(game: SmashedGame): void {
+  if (!game.SOUND_PAUSED) {
+    return;
+  }
+
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
   game.SOUND_PAUSED.play();
 }
 export function setPlayWiiMusicWaitShort(game: SmashedGame): void {
+  if (!game.SOUND_PAUSED) {
+    return;
+  }
+
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
@@ -72,6 +120,10 @@ export function setPlayWiiMusicWaitShort(game: SmashedGame): void {
   }
 }
 export function setPlayWiiMusicWaitLong(game: SmashedGame): void {
+  if (!game.SOUND_PAUSED) {
+    return;
+  }
+
   if (game.SOUND_PAUSED.isPlaying) {
     return;
   }
@@ -85,6 +137,10 @@ export function setPlayWiiMusicWaitLong(game: SmashedGame): void {
 // BACKGROUND MUSIC
 ////////////////////////////////////////
 export function setBGMusicPause(game: SmashedGame): void {
+  if (!game.soundBGM) {
+    return;
+  }
+
   if (!game.soundBGM.isPlaying) {
     return;
   }
@@ -92,6 +148,10 @@ export function setBGMusicPause(game: SmashedGame): void {
   game.soundBGM.pause();
 }
 export function setBGMusicPlay(game: SmashedGame): void {
+  if (!game.soundBGM) {
+    return;
+  }
+
   if (game.soundBGM.isPlaying) {
     return;
   }
@@ -99,18 +159,34 @@ export function setBGMusicPlay(game: SmashedGame): void {
   game.soundBGM.play();
 }
 export function setBGMusicResume(game: SmashedGame): void {
+  if (!game.soundBGM) {
+    return;
+  }
+
   if (game.soundBGM.isPlaying) {
     return;
   }
   game.soundBGM.resume();
 }
 export function setBGMusicSpeedSlower(game: SmashedGame): void {
+  if (!game.soundBGM) {
+    return;
+  }
+
   game.soundBGM.setRate(increaseSemitones(1, -17));
 }
 export function setBGMusicSpeedNormal(game: SmashedGame): void {
+  if (!game.soundBGM) {
+    return;
+  }
+
   game.soundBGM.setRate(1);
 }
 export function setBGMusicStop(game: SmashedGame): void {
+  if (!game.soundBGM) {
+    return;
+  }
+
   if (!game.soundBGM.isPlaying) {
     return;
   }
@@ -122,12 +198,19 @@ export function setBGMusicStop(game: SmashedGame): void {
 // MUSIC BOX MUSIC
 ////////////////////////////////////////
 export function setMusicBoxPlay(game: SmashedGame): void {
+  if (!game.flag.soundFlagMusicBox) {
+    return;
+  }
+
   if (game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
   game.flag.soundFlagMusicBox.play();
 }
 export function setMusicBoxResume(game: SmashedGame): void {
+  if (!game.flag.soundFlagMusicBox) {
+    return;
+  }
   if (game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
@@ -138,6 +221,9 @@ export function setMusicBoxResume(game: SmashedGame): void {
   game.flag.soundFlagMusicBox.resume();
 }
 export function setMusicBoxPause(game: SmashedGame): void {
+  if (!game.flag.soundFlagMusicBox) {
+    return;
+  }
   if (!game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
@@ -147,6 +233,9 @@ export function setMusicBoxPause(game: SmashedGame): void {
   game.flag.soundFlagMusicBox.pause();
 }
 export function setMusicBoxStop(game: SmashedGame): void {
+  if (!game.flag.soundFlagMusicBox) {
+    return;
+  }
   if (!game.flag.soundFlagMusicBox.isPlaying) {
     return;
   }
@@ -158,6 +247,10 @@ export function setMusicBoxStop(game: SmashedGame): void {
 // CHOMP SHEEP MUSIC
 ////////////////////////////////////////
 export function setMusicChompSheepPlay(game: SmashedGame): void {
+  if (!game.chomp.soundSheep) {
+    return;
+  }
+
   if (game.debug.Simple_Stage || game.chomp.soundSheep.isPlaying) {
     return;
   }
@@ -168,10 +261,16 @@ export function setMusicChompSheepRate(
   game: SmashedGame,
   semitones: number
 ): void {
+  if (!game.chomp.soundSheep) {
+    return;
+  }
   game.chomp.soundSheep.setRate(increaseSemitones(1, semitones));
 }
 
 export function setMusicChompSheepPause(game: SmashedGame): void {
+  if (!game.chomp.soundSheep) {
+    return;
+  }
   if (game.debug.Simple_Stage || !game.chomp.soundSheep.isPlaying) {
     return;
   }
@@ -179,6 +278,9 @@ export function setMusicChompSheepPause(game: SmashedGame): void {
   game.chomp.soundSheep.pause();
 }
 export function setMusicChompSheepResume(game: SmashedGame): void {
+  if (!game.chomp.soundSheep) {
+    return;
+  }
   if (game.debug.Simple_Stage || game.chomp.soundSheep.isPlaying) {
     return;
   }
@@ -186,6 +288,9 @@ export function setMusicChompSheepResume(game: SmashedGame): void {
   game.chomp.soundSheep.resume();
 }
 export function setMusicChompSheepStop(game: SmashedGame): void {
+  if (!game.chomp.soundSheep) {
+    return;
+  }
   if (game.debug.Simple_Stage || !game.chomp.soundSheep.isPlaying) {
     return;
   }
@@ -197,6 +302,10 @@ export function setMusicChompSheepStop(game: SmashedGame): void {
 // BULLET BILL BUTTON MUSIC
 ////////////////////////////////////////
 export function setMusicBulletBillButtonPlay(game: SmashedGame): void {
+  if (!game.bulletBillCombo.button.sound) {
+    return;
+  }
+
   if (game.bulletBillCombo.button.sound.isPlaying) {
     return;
   }
@@ -208,10 +317,16 @@ export function setMusicBulletBillButtonRate(
   game: SmashedGame,
   semitones: number
 ): void {
+  if (!game.bulletBillCombo.button.sound) {
+    return;
+  }
   game.bulletBillCombo.button.sound.setRate(increaseSemitones(1, semitones));
 }
 
 export function setMusicBulletBillButtonPause(game: SmashedGame): void {
+  if (!game.bulletBillCombo.button.sound) {
+    return;
+  }
   if (!game.bulletBillCombo.button.sound.isPlaying) {
     return;
   }
@@ -222,6 +337,9 @@ export function setMusicBulletBillButtonPause(game: SmashedGame): void {
 }
 
 export function setMusicBulletBillButtonResume(game: SmashedGame): void {
+  if (!game.bulletBillCombo.button.sound) {
+    return;
+  }
   if (game.bulletBillCombo.button.sound.isPlaying) {
     return;
   }
@@ -233,6 +351,9 @@ export function setMusicBulletBillButtonResume(game: SmashedGame): void {
 }
 
 export function setMusicBulletBillButtonStop(game: SmashedGame): void {
+  if (!game.bulletBillCombo.button.sound) {
+    return;
+  }
   if (!game.bulletBillCombo.button.sound.isPlaying) {
     return;
   }
@@ -241,23 +362,37 @@ export function setMusicBulletBillButtonStop(game: SmashedGame): void {
 }
 
 export function playReadySound(game: SmashedGame): void {
+  if (!game.SOUND_READY) {
+    return;
+  }
+
   if (!game.SOUND_READY_REPEAT.isPlaying) {
     game.SOUND_READY_REPEAT.play();
   }
 }
 
 export function pauseReadySound(game: SmashedGame): void {
+  if (!game.SOUND_READY) {
+    return;
+  }
   if (game.SOUND_READY_REPEAT.isPlaying) {
     game.SOUND_READY_REPEAT.pause();
   }
 }
 export function playReadySoundPlayer(player: Player): void {
+  if (!player.playerReadySound) {
+    return;
+  }
+
   if (!player.playerReadySound.isPlaying) {
     player.playerReadySound.play();
   }
 }
 
 export function pauseReadySoundPlayer(player: Player): void {
+  if (!player.playerReadySound) {
+    return;
+  }
   if (player.playerReadySound.isPlaying) {
     player.playerReadySound.pause();
   }
@@ -272,13 +407,19 @@ export function setPauseAllReadySounds(game: SmashedGame): void {
 export function setPlaySoundFireBall(game: SmashedGame): void {
   const i = game.fireFlower.fireBallSoundsIndexCurr;
 
-  game.fireFlower.fireBallSounds[i].play();
+  if (game.fireFlower.fireBallSounds[i]) {
+    game.fireFlower.fireBallSounds[i].play();
+  }
 
   game.fireFlower.fireBallSoundsIndexCurr =
     (i + 1) % game.fireFlower.fireBallSounds.length;
 }
 
 export function setPlaySoundPowerup(game: SmashedGame): void {
+  if (!game.soundPowerup) {
+    return;
+  }
+
   if (game.soundPowerup.isPlaying) {
     return;
   }
@@ -288,18 +429,30 @@ export function setPlaySoundPowerup(game: SmashedGame): void {
   game.soundPowerup.play();
 }
 export function setStopSoundPowerup(game: SmashedGame): void {
+  if (!game.soundPowerup) {
+    return;
+  }
+
   if (!game.soundPowerup.isPlaying) {
     return;
   }
   game.soundPowerup.stop();
 }
 export function setResumeSoundPowerup(game: SmashedGame): void {
+  if (!game.soundPowerup) {
+    return;
+  }
+
   if (game.soundPowerup.isPlaying) {
     return;
   }
   game.soundPowerup.resume();
 }
 export function setPauseSoundPowerup(game: SmashedGame): void {
+  if (!game.soundPowerup) {
+    return;
+  }
+
   if (!game.soundPowerup.isPlaying) {
     return;
   }

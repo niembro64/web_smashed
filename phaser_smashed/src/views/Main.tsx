@@ -14,6 +14,7 @@ import {
   getNewModifiedWeights,
   nnNumTrainingBarTicks,
   printWeightsAndBiases,
+  replaceNNExpressWithNNClient,
 } from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
 import { momentStringToMoment } from '../scenes/helpers/time';
@@ -87,6 +88,15 @@ function Play() {
 
   const nnJsonExpress = useRef<string | null>(null);
 
+  useEffect(() => {
+    if (!debugState.Replace_Express_NN) {
+      return;
+    }
+    (async () => {
+      await replaceNNExpressWithNNClient();
+    })();
+  }, [debugState.Replace_Express_NN]);
+
   // useEffect(() => {
   //   (async () => {
   //     let nn = null;
@@ -108,12 +118,10 @@ function Play() {
   // }, [debugState.NN_Use_Client]);
   const pullExpressNeuralNet = async () => {
     nnJsonExpress.current = await fetchNeuralNetwork();
+    print('nnJsonExpress.current', nnJsonExpress.current);
     if (nnJsonExpress.current !== null) {
       // printWeightsAndBiases(nnJsonExpress.current as any);
       // @ts-ignore
-      nnJsonExpress.current = getNewModifiedWeights(
-        nnJsonExpress.current as any
-      ) as any;
     }
   };
 
@@ -417,11 +425,11 @@ function Play() {
   useEffect(() => {
     const setShowLoaderIntervalFunction = () => {
       const myInterval = setInterval(() => {
-        print(
-          'myPhaser.current?.scene?.keys?.game?.loaded',
-          // @ts-ignore
-          myPhaser?.current?.scene?.keys?.game?.loaded
-        );
+        // print(
+        //   'myPhaser.current?.scene?.keys?.game?.loaded',
+        //   // @ts-ignore
+        //   myPhaser?.current?.scene?.keys?.game?.loaded
+        // );
         // @ts-ignore
         if (myPhaser?.current?.scene?.keys?.game?.loaded) {
           setTimeout(
@@ -537,8 +545,8 @@ function Play() {
       newSmashConfigAllowed[8] = true;
     }
 
-    print('newSmashConfigAllowed', newSmashConfigAllowed);
-
+    // print('newSmashConfigAllowed', newSmashConfigAllowed);
+    //
     setSmashConfigAllowed(newSmashConfigAllowed);
   }, [
     debugState.Allow_Chez,
@@ -581,10 +589,6 @@ function Play() {
       myPhaser.current.destroy(true);
     }
   }, []);
-
-  useEffect(() => {
-    print('inputArray', inputArray);
-  }, [inputArray]);
 
   const setCharacterSlot = (
     charId: CharacterId,
@@ -2265,7 +2269,7 @@ function Play() {
                       let sc: SmashConfig | null = null;
                       try {
                         sc = JSON.parse(s.smashConfig);
-                        print('smashConfig', sc);
+                        // print('smashConfig', sc);
                       } catch (e) {
                         print('error parsing smashConfigString', e);
                       }

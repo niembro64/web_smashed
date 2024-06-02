@@ -5,6 +5,7 @@ import {
   InputTypeNNExpress,
   Player,
   Velocity,
+  inputTypeNNExpress,
 } from '../types';
 import {
   allPadToFalse,
@@ -40,7 +41,8 @@ export function updateBotNN(
   const pVelocity: Velocity = player.char.sprite.body.velocity;
   const jumps = player.char.jumps;
   const jumpIndex = player.char.jumpIndex;
-  const onLastJump = jumpIndex === jumps.length - 1;
+
+  const expressNN: boolean = inputType_NN === inputTypeNNExpress;
 
   ////////////////////////////////
   // EVERYTHING HERE HELPS OUT
@@ -50,7 +52,7 @@ export function updateBotNN(
   //////////////////////
   // TOO FAR LEFT RIGHT CENTER
   //////////////////////
-  if (game.debug.NN_Help_Centerize) {
+  if (!expressNN && game.debug.NN_Help_Centerize) {
     const r = 0.01;
     if (
       Math.round(game.gameSeconds / 2) % 2 === playerIndex % 2 &&
@@ -69,7 +71,7 @@ export function updateBotNN(
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
-  if (game.debug.NN_Help_Pit && getIsBotInPitArea(player, game)) {
+  if (!expressNN && game.debug.NN_Help_Pit && getIsBotInPitArea(player, game)) {
     if (pVelocity.y >= 0) {
       padCurr.X = Math.random() > 0.5;
 
@@ -90,7 +92,7 @@ export function updateBotNN(
   //////////////////////
   // IF BOT IS TOUCHING LEFT OR RIGHT, JUMP
   //////////////////////
-  if (game.debug.NN_Help_Wall) {
+  if (!expressNN && game.debug.NN_Help_Wall) {
     if (
       player.char.sprite.body.touching.right ||
       player.char.sprite.body.touching.left
@@ -104,7 +106,7 @@ export function updateBotNN(
   //////////////////////
   // HELP SCREEN
   //////////////////////
-  if (game.debug.NN_Help_Screen) {
+  if (!expressNN && game.debug.NN_Help_Screen) {
     //////////////////////
     // TOO FAR LEFT RIGHT
     //////////////////////

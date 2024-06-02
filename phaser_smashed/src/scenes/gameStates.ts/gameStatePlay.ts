@@ -90,17 +90,18 @@ export function updateGameStatePlay(
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);
   updateTableGiveHealth(game);
   updateBulletBill(game);
-  updatePlayerPositionIfUndefined(game);
 
   // UPDATE PLAYERS
   updatePlayers(game);
+  
   // updatePhysicalAttackFollowPlayers(game);
-
+  
   // AFTER PLAYERS
   updatePadPreviousAndDebounced(game);
   updateResetAllHitboxesAttackEnergy(game);
   // updateDamagePrev(game);
-
+  
   addToNNTrainingArray(game);
   // NNSetPlayer2Output(game);
+  updatePlayerPositionIfUndefined(game);
 }

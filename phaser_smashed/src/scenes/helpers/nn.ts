@@ -27,6 +27,7 @@ import {
   getNumberOfShotsGiven,
   getNumberOfShotsTaken,
 } from './damage';
+import { nnJsonNNClient } from './nnJson';
 
 /////////////////////////////////
 // EXPRESS
@@ -642,9 +643,9 @@ const getScoreNNInstance = (game: SmashedGame, playerIndex: number): number => {
   const hitsGiven = getNumberOfHitsGiven(playerIndex, game);
   const hitsTaken = getNumberOfHitsTaken(playerIndex, game);
 
-  const shotsWeight = 1;
-  const deathsWeight = 5;
-  const hitsWeight = 10;
+  const shotsWeight = 0;
+  const deathsWeight = 1;
+  const hitsWeight = 1;
 
   const score =
     shotsWeight * (shotsGiven - shotsTaken) +
@@ -652,4 +653,10 @@ const getScoreNNInstance = (game: SmashedGame, playerIndex: number): number => {
     hitsWeight * (hitsGiven - hitsTaken);
 
   return score;
+};
+
+export const replaceNNExpressWithNNClient = async (): Promise<void> => {
+  const clientNNJson = nnJsonNNClient;
+
+  await saveNeuralNetwork(clientNNJson);
 };

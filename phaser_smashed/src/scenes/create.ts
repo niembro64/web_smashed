@@ -89,8 +89,9 @@ export function create(game: SmashedGame) {
   createBulletBillSparkLineEmitter(game);
 
   if (game.debug.Super_Speed) {
-    // game.time.timeScale = 2;
-    game.physics.world.timeScale = 0.5;
+    game.time.timeScale = 10;
+
+    game.physics.world.timeScale = 0.1;
   }
 
   // INIT UPDATE

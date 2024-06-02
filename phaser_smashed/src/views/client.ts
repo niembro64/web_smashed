@@ -251,14 +251,20 @@ export const fetchNeuralNetwork =
 
 // Function to send the updated neural network to the backend
 export const saveNeuralNetwork = async (
-  updatedNetwork: any
+  nn: any
 ): Promise<boolean> => {
   try {
     print('attmepting to save neural network');
     const response = await axios.post(
       `${getApiBaseUrl()}/api/neural-network`,
-      updatedNetwork
+      nn
     );
+
+    print('response', response);
+
+    if (response.status !== 200) {
+      print('failed to save neural network');
+    }
 
     const savedNetwork = response.data;
     // Handle the response
@@ -268,4 +274,10 @@ export const saveNeuralNetwork = async (
     console.error('Error saving neural network:', error);
     return false;
   }
+};
+
+export const getFirstWeightOfNNJson = (
+  neuralNetwork: INeuralNetworkJSON
+): any => {
+  return neuralNetwork.layers[1].weights[0][0];
 };
