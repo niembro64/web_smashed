@@ -11,7 +11,7 @@ import {
   showOptionOnMainScreenInit,
 } from '../debugOptions';
 import {
-  getSlightlyModifiedWeightsAndBiasesFromNNJson,
+  getNewModifiedWeights,
   nnNumTrainingBarTicks,
   printWeightsAndBiases,
 } from '../scenes/helpers/nn';
@@ -111,7 +111,7 @@ function Play() {
     if (nnJsonExpress.current !== null) {
       // printWeightsAndBiases(nnJsonExpress.current as any);
       // @ts-ignore
-      nnJsonExpress.current = getSlightlyModifiedWeightsAndBiasesFromNNJson(
+      nnJsonExpress.current = getNewModifiedWeights(
         nnJsonExpress.current as any
       ) as any;
     }

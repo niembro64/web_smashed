@@ -4,7 +4,7 @@ import SmashedGame from './SmashedGame';
 import {
   getNumberOfNeuralNetworkTypeFromGame,
   getNumberOfNeuralNetworkTypeFromInputArray,
-  getSlightlyModifiedWeightsAndBiasesFromNNJson,
+  getNewModifiedWeights,
   nnConfigNNClient,
   nnConfigNNExpress,
   printWeightsAndBiases,
@@ -347,8 +347,7 @@ export function preload(game: SmashedGame): void {
     if (i === 0) {
       game.nnClientNets[i] = game.nnClientNets[i].fromJSON(nnJsonNNClient);
     } else {
-      const nnJsonNNClientModified =
-        getSlightlyModifiedWeightsAndBiasesFromNNJson(nnJsonNNClient);
+      const nnJsonNNClientModified = getNewModifiedWeights(nnJsonNNClient, i);
       printWeightsAndBiases(nnJsonNNClientModified);
 
       game.nnClientNets[i] = game.nnClientNets[i].fromJSON(
@@ -377,10 +376,10 @@ export function preload(game: SmashedGame): void {
           nnJsonExpress_FromReact
         );
       } else {
-        const nnJsonExpressModified =
-          getSlightlyModifiedWeightsAndBiasesFromNNJson(
-            nnJsonExpress_FromReact
-          );
+        const nnJsonExpressModified = getNewModifiedWeights(
+          nnJsonExpress_FromReact,
+          i
+        );
         printWeightsAndBiases(nnJsonExpressModified);
 
         game.nnExpressNets[i] = game.nnExpressNets[i].fromJSON(

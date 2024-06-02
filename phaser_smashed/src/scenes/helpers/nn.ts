@@ -18,6 +18,7 @@ import {
   getNearestPlayerAliveFromPlayer,
   getNearestPlayerFromPlayer,
 } from './movement';
+import { normalRandom } from './math';
 
 /////////////////////////////////
 // EXPRESS
@@ -532,29 +533,26 @@ export function printWeightsAndBiases(nn: NeuralNetworkJsonPartial): void {
   });
 }
 
-export const getSlightlyModifiedWeightsAndBiasesFromNNJson = (
-  nn: NeuralNetworkJsonPartial
+export const getNewModifiedWeights = (
+  nn: NeuralNetworkJsonPartial,
+  index_of_type: number
 ): NeuralNetworkJsonPartial => {
   if (!nn) {
     throw new Error('nn is null');
   }
-  const numOverride = 999;
-  const modAmountPercent = 0.5;
+
+  const modAmt = 0.5 * index_of_type;
 
   const newNNJson: NeuralNetworkJsonPartial = JSON.parse(JSON.stringify(nn));
 
-  newNNJson.layers.forEach((layer, layerIndex) => {
-    layer.weights.forEach((weightChunk: number[], weightChunkIndex) => {
+  newNNJson.layers.forEach((layer) => {
+    layer.weights.forEach((weightChunk: number[]) => {
       weightChunk.forEach((weight, weightIndex) => {
-        // weightChunk[weightIndex] = weight;
-        weightChunk[weightIndex] = numOverride;
-        // weight + weight * (Math.random() - 0.5) * modAmountPercent;
+        weightChunk[weightIndex] += weight * normalRandom(0, modAmt);
       });
     });
     layer.biases.forEach((bias, biasIndex) => {
-      // layer.biases[biasIndex] = bias;
-      layer.biases[biasIndex] = numOverride;
-      // bias + bias * (Math.random() - 0.5) * modAmountPercent;
+      layer.biases[biasIndex] += bias * normalRandom(0, modAmt);
     });
   });
 
