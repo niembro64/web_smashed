@@ -19,6 +19,14 @@ import {
   getNearestPlayerFromPlayer,
 } from './movement';
 import { normalRandom } from './math';
+import {
+  getNumberOfDeathsGiven,
+  getNumberOfDeathsTaken,
+  getNumberOfHitsGiven,
+  getNumberOfHitsTaken,
+  getNumberOfShotsGiven,
+  getNumberOfShotsTaken,
+} from './damage';
 
 /////////////////////////////////
 // EXPRESS
@@ -382,7 +390,7 @@ export const NNSetPlayerPadStatic = (
   };
 
   const nnIndexToUse = numPlayersBelowMeWithSameNNType();
-  print('nnIndexToUse', nnIndexToUse);
+  // print('nnIndexToUse', nnIndexToUse);
 
   switch (inputType_NN) {
     case 4:
@@ -565,12 +573,12 @@ export const getNumberOfNeuralNetworkTypeFromGame = (
 ): number => {
   let num = 0;
 
-  const numPlayers = game.players.length;
+  // const numPlayers = game.players.length;
 
-  print('numPlayers', numPlayers);
+  // print('numPlayers', numPlayers);
 
   game.players.forEach((player) => {
-    print('player.inputType', player.inputType, nn_Type);
+    // print('player.inputType', player.inputType, nn_Type);
     if (player.inputType === nn_Type) {
       num++;
     }
@@ -593,4 +601,55 @@ export const getNumberOfNeuralNetworkTypeFromInputArray = (
   });
 
   return num;
+};
+
+export const getNeuralNetworkBestInstanceIndex = (
+  game: SmashedGame,
+  nn_Type: InputTypeNNClient | InputTypeNNExpress
+): number | null => {
+  let bestIndexCurr: number | null = null;
+  let bestScoreCurr: number | null = null;
+
+  const numOfNNType = getNumberOfNeuralNetworkTypeFromGame(game, nn_Type);
+
+  if (numOfNNType === 0) {
+    return null;
+  }
+
+  for (let i = 0; i < game.players.length; i++) {
+    if (game.players[i].inputType === nn_Type) {
+      if (bestIndexCurr === null || bestScoreCurr === null) {
+        bestIndexCurr = i;
+        bestScoreCurr = getScoreNNInstance(game, i);
+      } else {
+        const newScore = getScoreNNInstance(game, i);
+        if (newScore > bestScoreCurr) {
+          bestIndexCurr = i;
+          bestScoreCurr = newScore;
+        }
+      }
+    }
+  }
+
+  return bestIndexCurr;
+};
+
+const getScoreNNInstance = (game: SmashedGame, playerIndex: number): number => {
+  const shotsGiven = getNumberOfShotsGiven(playerIndex, game);
+  const shotsTaken = getNumberOfShotsTaken(playerIndex, game);
+  const deathsGiven = getNumberOfDeathsGiven(playerIndex, game);
+  const deathsTaken = getNumberOfDeathsTaken(playerIndex, game);
+  const hitsGiven = getNumberOfHitsGiven(playerIndex, game);
+  const hitsTaken = getNumberOfHitsTaken(playerIndex, game);
+
+  const shotsWeight = 1;
+  const deathsWeight = 5;
+  const hitsWeight = 10;
+
+  const score =
+    shotsWeight * (shotsGiven - shotsTaken) +
+    deathsWeight * (deathsGiven - deathsTaken) +
+    hitsWeight * (hitsGiven - hitsTaken);
+
+  return score;
 };

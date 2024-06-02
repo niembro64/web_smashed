@@ -481,7 +481,7 @@ export function forceSuicide(player: Player) {
 }
 
 export function updateEmitterPlayerSuicide(game: SmashedGame): void {
-  print('game.players[0].emitterGamestamp', game.players[0].emitterGamestamp);
+  // print('game.players[0].emitterGamestamp', game.players[0].emitterGamestamp);
 
   game.players.forEach((player: Player, playerIndex: number) => {
     if (player.emitterPlayer.on && player.emitterGamestamp === null) {
@@ -621,3 +621,51 @@ export function onHitHandlerBulletBill(
     normalizedVector.y * hitback.y
   );
 }
+
+export const getNumberOfHitsTaken = (
+  playerIndex: number,
+  game: SmashedGame
+): number => {
+  return game.numberHitByMatrix[playerIndex].reduce((a, b) => a + b, 0);
+};
+
+export const getNumberOfHitsGiven = (
+  playerIndex: number,
+  game: SmashedGame
+): number => {
+  return game.numberHitByMatrix.reduce((a, b) => a + b[playerIndex], 0);
+};
+
+export const getNumberOfDeathsTaken = (
+  playerIndex: number,
+  game: SmashedGame
+): number => {
+  return game.numberKilledByMatrix[playerIndex].reduce((a, b) => a + b, 0);
+};
+
+export const getNumberOfDeathsGiven = (
+  playerIndex: number,
+  game: SmashedGame
+): number => {
+  return game.numberKilledByMatrix.reduce((a, b) => a + b[playerIndex], 0);
+};
+
+export const getNumberOfShotsTaken = (
+  playerIndex: number,
+  game: SmashedGame
+): number => {
+  return game.numberShotsTakenByMeMatrix[playerIndex].reduce(
+    (a, b) => a + b,
+    0
+  );
+};
+
+export const getNumberOfShotsGiven = (
+  playerIndex: number,
+  game: SmashedGame
+): number => {
+  return game.numberShotsTakenByMeMatrix.reduce(
+    (a, b) => a + b[playerIndex],
+    0
+  );
+};

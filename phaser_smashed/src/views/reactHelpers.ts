@@ -193,6 +193,7 @@ export const configInit: Phaser.Types.Core.GameConfig = {
     arcade: {
       gravity: { y: 0 },
       debug: false,
+      // fps: 600, // 10 times the default 60 FPS
     },
   },
   scene: [SmashedGame],

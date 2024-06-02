@@ -3,6 +3,7 @@ import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 
 export interface Debug {
+  Super_Speed: boolean;
   Dev_Mode: boolean;
   Dur_Seconds: boolean;
   Dev_Zoom: number;

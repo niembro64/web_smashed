@@ -85,7 +85,13 @@ export function create(game: SmashedGame) {
   createEndDataMatrices(game);
   createShake(game);
   // createBulletBillSparkLine(game);
+
   createBulletBillSparkLineEmitter(game);
+
+  if (game.debug.Super_Speed) {
+    // game.time.timeScale = 2;
+    game.physics.world.timeScale = 0.5;
+  }
 
   // INIT UPDATE
   setPreUpdate(game);

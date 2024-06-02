@@ -1,6 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
+  Super_Speed: true,
   NN_Train: false,
   NN_Brand_New: false,
 
@@ -39,7 +40,7 @@ export const debugInit: Debug = {
   Player_ID_Visible: true,
   Chars_Colored: false,
   Health_Inverted: false,
-  Matrices_Always: false,
+  Matrices_Always: true,
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
@@ -74,6 +75,7 @@ export const debugInit: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: true,
+  Super_Speed: true,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
   NN_Brand_New: true,
@@ -143,6 +145,7 @@ export const showOptionOnMainScreenInit: Debug = {
 
 export const debugMax: Debug = {
   NN_Train: true,
+  Super_Speed: true,
   NN_Brand_New: false,
   Stage: 10, //0123456
   Dur_Seconds: true,
@@ -212,6 +215,7 @@ export const debugMax: Debug = {
 // all false or 0
 export const doNotShowDebug: Debug = {
   NN_Train: false,
+  Super_Speed: false,
   NN_Brand_New: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,

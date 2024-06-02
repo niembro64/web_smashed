@@ -348,7 +348,7 @@ export function preload(game: SmashedGame): void {
       game.nnClientNets[i] = game.nnClientNets[i].fromJSON(nnJsonNNClient);
     } else {
       const nnJsonNNClientModified = getNewModifiedWeights(nnJsonNNClient, i);
-      printWeightsAndBiases(nnJsonNNClientModified);
+      // printWeightsAndBiases(nnJsonNNClientModified);
 
       game.nnClientNets[i] = game.nnClientNets[i].fromJSON(
         nnJsonNNClientModified
@@ -380,7 +380,7 @@ export function preload(game: SmashedGame): void {
           nnJsonExpress_FromReact,
           i
         );
-        printWeightsAndBiases(nnJsonExpressModified);
+        // printWeightsAndBiases(nnJsonExpressModified);
 
         game.nnExpressNets[i] = game.nnExpressNets[i].fromJSON(
           nnJsonExpressModified

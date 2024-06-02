@@ -126,7 +126,7 @@ export function updateBotNN(
     // TOO FAR UP
     //////////////////////
     if (getIsBotTooFarUp(player, game)) {
-      print('toofar high');
+      // print('toofar high');
 
       padCurr.down = true;
       padCurr.up = false;

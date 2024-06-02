@@ -23,6 +23,7 @@ import {
   updateJumpPhysicalOnWall,
   updateLastDirectionTouched,
 } from './helpers/movement';
+import { getNeuralNetworkBestInstanceIndex } from './helpers/nn';
 import {
   debugUpdateControllersPrintConnected,
   debugUpdatePrintAllControllerButtonsWhenActive,
@@ -86,6 +87,8 @@ export function setPreUpdate(game: SmashedGame): void {
 
 export function update(game: SmashedGame, time: number, delta: number): void {
   game.updateIndex++;
+
+  print('best index 4', getNeuralNetworkBestInstanceIndex(game, 4));
 
   if (game.debug.Update_Loops_Skip > 0) {
     game.debug.Update_Loops_Skip--;
