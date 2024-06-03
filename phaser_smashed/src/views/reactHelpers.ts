@@ -182,6 +182,8 @@ export const characterMoves: CharacterMove[] = [
   { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
 ];
 
+export const baseGravity = 3000;
+
 export const configInit: Phaser.Types.Core.GameConfig = {
   plugins: {
     global: [
@@ -211,7 +213,7 @@ export const configInit: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 0 },
+      gravity: { y: baseGravity },
       debug: false,
       // fps: 600, // 10 times the default 60 FPS
     },

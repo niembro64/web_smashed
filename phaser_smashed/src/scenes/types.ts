@@ -4,6 +4,7 @@ import { BulletsPlayer } from './helpers/bullets';
 
 export interface Debug {
   NN_Reset_Evolving: boolean;
+  Auto_Restart: boolean;
   Super_Speed: boolean;
   Dev_Mode: boolean;
   Dur_Seconds: boolean;
@@ -61,7 +62,6 @@ export interface Debug {
   Chomp_Velocities: boolean;
   Inst_Replay: number;
   Replay_FastSlow: boolean;
-  Gravity_Light: boolean;
   Flower_Rapid_Fire: boolean;
   Flower_On_Init: boolean;
   Flower_Full_Screen: boolean;

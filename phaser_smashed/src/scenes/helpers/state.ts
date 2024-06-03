@@ -61,6 +61,22 @@ import {
   updateShotsOnPlayers,
 } from './text';
 
+export const sendRestartSignal = () => {
+  print('SENDING RESTART SIGNAL');
+  window.dispatchEvent(
+    new CustomEvent('nn-train', {
+      detail: {
+        name: 'restart-game',
+        value: null,
+        error: null,
+        numIter: null,
+        numObj: null,
+        logPeriod: null,
+      },
+    })
+  );
+};
+
 export function setGameState(game: SmashedGame, state: GameState): void {
   game.gameState.namePrev = game.gameState.nameCurr;
   game.gameState.gameStampPrev = game.gameState.gameStampCurr;
@@ -156,14 +172,26 @@ export function setGameState(game: SmashedGame, state: GameState): void {
         print('  FIRST EXPRESS INDEX', firstExpressNNIndex);
         print('   BEST EXPRESS INDEX', bestExpressNN?.playerIndex);
         print('  BEST EXPRESS RATING', bestExpressNN?.score);
-        if (bestExpressNN.playerIndex !== firstExpressNNIndex) {
-          saveNeuralNetwork(game.nnExpressNets[bestExpressNN.playerIndex]);
-        }
+
+        (async () => {
+          if (bestExpressNN.playerIndex !== firstExpressNNIndex) {
+            saveNeuralNetwork(
+              game.nnExpressNets[bestExpressNN.playerIndex],
+              game.debug.Auto_Restart
+            );
+          } else {
+            if (game.debug.Auto_Restart) {
+              sendRestartSignal();
+            }
+          }
+        })();
       }
 
-      setTimeout(() => {
-        playGarageRepeat(game);
-      }, 2500);
+      if (!game.debug.Auto_Restart) {
+        setTimeout(() => {
+          playGarageRepeat(game);
+        }, 2500);
+      }
       break;
     default:
       print('BROKEN_____________________');

@@ -2,6 +2,7 @@ import axios from 'axios';
 import moment, { Moment } from 'moment';
 import { Debug, SmashConfig } from '../scenes/types';
 import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
+import { sendRestartSignal } from '../scenes/helpers/state';
 
 export interface ClientInformation {
   city: string;
@@ -264,7 +265,10 @@ export const fetchNeuralNetwork =
   };
 
 // Function to send the updated neural network to the backend
-export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
+export const saveNeuralNetwork = async (
+  nn: any,
+  restartGame: boolean = false
+): Promise<boolean> => {
   let firstWeight;
   firstWeight = getFirstWeightOfNNJson(nn);
   // if (!nn?.toJSON) {
@@ -290,6 +294,11 @@ export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
     const savedNetwork = response.data;
     // Handle the response
     console.log(savedNetwork);
+
+    if (restartGame) {
+      sendRestartSignal();
+    }
+
     return true;
   } catch (error) {
     console.error('Error saving neural network:', error);

@@ -11,9 +11,7 @@ import {
   showOptionOnMainScreenInit,
 } from '../debugOptions';
 import {
-  getNewModifiedWeights,
   nnNumTrainingBarTicks,
-  printWeightsAndBiases,
   replaceNNExpressWithNNClient,
 } from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
@@ -62,7 +60,6 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './reactHelpers';
-import { isNonNullExpression } from 'typescript';
 
 export const blipDelay = 200;
 
@@ -330,7 +327,7 @@ function Play() {
   };
 
   useEffect(() => {
-    window.addEventListener('nn-train', (t) => {
+    window.addEventListener('nn-train', async (t) => {
       // @ts-ignore
       switch (t?.detail?.name) {
         case 'netStart':
@@ -358,6 +355,11 @@ function Play() {
           setNnProgress(t?.detail?.value);
           // @ts-ignore
           setNnErrorCurr(t?.detail?.error);
+          break;
+        case 'restart-game':
+          print('RESTART GAME SIGNAL RECEIVED');
+          setWebState('web-state-setup');
+          onClickStartStartButton(4000);
           break;
         default:
           break;
@@ -701,25 +703,6 @@ function Play() {
   const [config, setConfig] =
     useState<Phaser.Types.Core.GameConfig>(configInit);
 
-  useEffect(() => {
-    const newConfig: Phaser.Types.Core.GameConfig = {
-      ...config,
-      physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: {
-            y:
-              baseGravity *
-              (debugState.Gravity_Light ? gravLightMultiplier : 1),
-          },
-          debug: debugState.Dev_Mode,
-        },
-      },
-    };
-
-    setConfig(newConfig);
-  }, [debugState.Dev_Mode, debugState.Gravity_Light]);
-
   const [prevent, setPrevent] = useState<boolean>(true);
   useEffect(() => {
     if (!debugState) {
@@ -777,12 +760,16 @@ function Play() {
   const [anyKeyWasPressed, setAnyKeyWasPressed] = useState<boolean>(false);
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
-  const onClickStartStartButton = async () => {
+  const onClickStartStartButton = async (durationSlowdown: number = 0) => {
+    // wait 2 seconds
+
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
     }
+
+    // await new Promise((resolve) => setTimeout(resolve, durationSlowdown));
 
     setAllTrainingStatesToNull();
 
@@ -1809,7 +1796,9 @@ function Play() {
                   ? 'b-start-inactive'
                   : 'b-start'
               }
-              onClick={onClickStartStartButton}
+              onClick={() => {
+                onClickStartStartButton();
+              }}
             >
               <span>START</span>
             </div>

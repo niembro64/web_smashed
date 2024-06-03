@@ -2,6 +2,8 @@ import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   NN_Reset_Evolving: true,
+  Auto_Restart: true,
+  Auto_Start: false,
   Super_Speed: false,
   NN_Train: false,
   NN_Brand_New: false,
@@ -11,11 +13,10 @@ export const debugInit: Debug = {
   NN_Help_Pit: true,
   NN_Help_Wall: true,
   Simple_Stage: false,
-  Dev_Mode: false,
-  Auto_Start: false,
-  Dur_Seconds: false,
+  Dev_Mode: true,
+  Dur_Seconds: true,
   Mode_Infinity: false,
-  Minutes: 2, //01234567
+  Minutes: 6, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
   Stage: 10, // 0 - 10 inclusive
@@ -60,8 +61,6 @@ export const debugInit: Debug = {
   Trophies_Always: false,
   Inst_Replay: 0,
   Replay_FastSlow: false,
-  Gravity_Light: false,
-
   Game_Music: 0, // 0123
   Flower_On_Init: true,
   Flower_Rapid_Fire: false,
@@ -75,6 +74,7 @@ export const debugInit: Debug = {
 
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
+  Auto_Restart: false,
   NN_Train: true,
   NN_Reset_Evolving: false,
   Super_Speed: false,
@@ -133,7 +133,6 @@ export const showOptionOnMainScreenInit: Debug = {
   Trophies_Always: false,
   Inst_Replay: 1,
   Replay_FastSlow: false,
-  Gravity_Light: false,
   Game_Music: 1, // 012
   Flower_On_Init: false,
   Flower_Rapid_Fire: false,
@@ -146,6 +145,7 @@ export const showOptionOnMainScreenInit: Debug = {
 };
 
 export const debugMax: Debug = {
+  Auto_Restart: false,
   NN_Reset_Evolving: false,
   NN_Train: true,
   Super_Speed: true,
@@ -204,7 +204,6 @@ export const debugMax: Debug = {
   Inst_Replay: 3,
   Chomp_Explosion: true,
   Replay_FastSlow: true,
-  Gravity_Light: false,
   Flower_Rapid_Fire: false,
   Flower_On_Init: true,
   Flower_Full_Screen: false,
@@ -217,6 +216,7 @@ export const debugMax: Debug = {
 
 // all false or 0
 export const doNotShowDebug: Debug = {
+  Auto_Restart: false,
   NN_Reset_Evolving: false,
   NN_Train: false,
   Super_Speed: false,
@@ -276,7 +276,6 @@ export const doNotShowDebug: Debug = {
   Trophies_Always: false,
   Inst_Replay: 0,
   Replay_FastSlow: false,
-  Gravity_Light: false,
   Game_Music: 0, // 0123
   Flower_On_Init: false,
   Flower_Rapid_Fire: false,
