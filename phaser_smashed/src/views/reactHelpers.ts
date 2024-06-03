@@ -12,7 +12,7 @@ import {
 } from '../scenes/types';
 
 export const inputArrayInit: InputType[] = [0, 0, 0, 0];
-export const inputArrayInitDebug: InputType[] = [2, 2, 0, 0];
+export const inputArrayInitDevMode: InputType[] = [5, 5, 5, 5];
 // export const inputArrayInitDebug: InputType[] = [3, 3, 3, 3];
 export const inputArrayInitMax: number = 4;
 
@@ -33,6 +33,26 @@ export const smashConfigInit: SmashConfig = {
     },
     {
       characterId: 3,
+      input: 0, // don't set this here
+    },
+  ],
+};
+export const smashConfigInitDevMode: SmashConfig = {
+  players: [
+    {
+      characterId: 0,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 0,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 0,
+      input: 0, // don't set this here
+    },
+    {
+      characterId: 0,
       input: 0, // don't set this here
     },
   ],

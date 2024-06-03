@@ -1,11 +1,9 @@
-import { print } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import {
   InputTypeNNClient,
   InputTypeNNExpress,
   Player,
   Velocity,
-  inputTypeNNExpress,
 } from '../types';
 import {
   allPadToFalse,
@@ -18,7 +16,7 @@ import {
   getIsBotTooFarRight,
   getIsBotTooFarUp,
 } from './botRB';
-import { NNSetPlayerPadStatic } from './nn';
+import { NNSetPlayerPadStatic, getRatingNNInstance } from './nn';
 
 export function updateBotNN(
   player: Player,
@@ -39,10 +37,6 @@ export function updateBotNN(
   NNSetPlayerPadStatic(player, playerIndex, game, inputType_NN);
 
   const pVelocity: Velocity = player.char.sprite.body.velocity;
-  const jumps = player.char.jumps;
-  const jumpIndex = player.char.jumpIndex;
-
-  const expressNN: boolean = inputType_NN === inputTypeNNExpress;
 
   ////////////////////////////////
   // EVERYTHING HERE HELPS OUT
@@ -52,7 +46,7 @@ export function updateBotNN(
   //////////////////////
   // TOO FAR LEFT RIGHT CENTER
   //////////////////////
-  if (!expressNN && game.debug.NN_Help_Centerize) {
+  if (game.debug.NN_Help_Centerize) {
     const r = 0.01;
     if (
       Math.round(game.gameSeconds / 2) % 2 === playerIndex % 2 &&
@@ -71,7 +65,7 @@ export function updateBotNN(
   //////////////////////
   // LEFT SIDE OF PIT
   //////////////////////
-  if (!expressNN && game.debug.NN_Help_Pit && getIsBotInPitArea(player, game)) {
+  if (game.debug.NN_Help_Pit && getIsBotInPitArea(player, game)) {
     if (pVelocity.y >= 0) {
       padCurr.X = Math.random() > 0.5;
 
@@ -92,7 +86,7 @@ export function updateBotNN(
   //////////////////////
   // IF BOT IS TOUCHING LEFT OR RIGHT, JUMP
   //////////////////////
-  if (!expressNN && game.debug.NN_Help_Wall) {
+  if (game.debug.NN_Help_Wall) {
     if (
       player.char.sprite.body.touching.right ||
       player.char.sprite.body.touching.left
@@ -106,7 +100,7 @@ export function updateBotNN(
   //////////////////////
   // HELP SCREEN
   //////////////////////
-  if (!expressNN && game.debug.NN_Help_Screen) {
+  if (game.debug.NN_Help_Screen) {
     //////////////////////
     // TOO FAR LEFT RIGHT
     //////////////////////
@@ -138,4 +132,8 @@ export function updateBotNN(
       padCurr.Y = false;
     }
   }
+
+  const score = getRatingNNInstance(game, playerIndex);
+
+  // print('score: ' + score);
 }

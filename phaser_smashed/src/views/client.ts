@@ -218,6 +218,20 @@ export const print = (...args: any[]): void => {
   }
 };
 
+export const getBarsFromNumber = (num: number): string => {
+  if (num < 0) return '';
+  return '▇'.repeat(Math.round(num));
+};
+
+export const getBarsFromPercent = (
+  percent: number,
+  maxBars: number = 8
+): string => {
+  if (percent < 0) return '';
+
+  return getBarsFromNumber(Math.round(percent * maxBars));
+};
+
 //////////////////////////////////////////
 //////////////////////////////////////////
 // NEURAL NETWORK STUFF
@@ -250,9 +264,11 @@ export const fetchNeuralNetwork =
   };
 
 // Function to send the updated neural network to the backend
-export const saveNeuralNetwork = async (
-  nn: any
-): Promise<boolean> => {
+export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
+  const firstWeight = getFirstWeightOfNNJson(nn.toJSON());
+  print('///////////////////////////////////');
+  print('SAVING NEURAL NETWORK', firstWeight);
+  print('///////////////////////////////////');
   try {
     print('attmepting to save neural network');
     const response = await axios.post(

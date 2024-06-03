@@ -36,9 +36,6 @@ export default class SmashedGame extends Phaser.Scene {
   ////////// GAME DEBUG
   ////////////////////////////////
   debug!: Debug;
-  // debug: Debug | any;
-  // NOT USING THIS MOMENT
-  // PULLING FROM PRELOAD
 
   sessionMoment: Moment = moment();
 
@@ -1181,6 +1178,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 1,
@@ -1361,6 +1435,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 2,
@@ -1540,6 +1691,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 3,
@@ -1727,6 +1955,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 4,
@@ -1906,6 +2211,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 5,
@@ -2079,6 +2461,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 6,
@@ -2258,6 +2717,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 8,
@@ -2437,6 +2973,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
     {
       playerId: 8,
@@ -2619,6 +3232,83 @@ export default class SmashedGame extends Phaser.Scene {
       },
       playerReadySound: null,
       endPlace: 0,
+      controllerButtonPresses: {
+        up: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        down: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        left: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        right: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        A: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        B: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        X: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        Y: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        R: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        L: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        start: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+        select: {
+          pressed: 0,
+          released: 0,
+          ratio: 0,
+        },
+      },
+      averagePositionXY: {
+        x: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+        y: { positionAverage: 0, positionSum: 0, positionCount: 0 },
+      },
+      nnRating: null,
+      maxPositionsXY: {
+        x: {
+          start: SCREEN_DIMENSIONS.WIDTH / 2,
+          end: SCREEN_DIMENSIONS.WIDTH / 2,
+        },
+        y: {
+          start: SCREEN_DIMENSIONS.HEIGHT / 2,
+          end: SCREEN_DIMENSIONS.HEIGHT / 2,
+        },
+      },
     },
   ];
 

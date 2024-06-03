@@ -22,8 +22,8 @@ import {
   updateJumpPhysical,
   updateJumpPhysicalOnWall,
   updateLastDirectionTouched,
+  updatePlayerControllerCountersAndPositionCounters,
 } from './helpers/movement';
-import { getNeuralNetworkBestInstanceIndex } from './helpers/nn';
 import {
   debugUpdateControllersPrintConnected,
   debugUpdatePrintAllControllerButtonsWhenActive,
@@ -35,7 +35,6 @@ import {
 } from './helpers/pad';
 import { updatePlayerDarknessEvents } from './helpers/powers';
 import {
-  playGarageRepeat,
   playWiiMusic,
   setBGMusicPlay,
   setBGMusicSpeedNormal,
@@ -63,7 +62,7 @@ import {
   updateTimeTime,
 } from './helpers/state';
 import { updateText } from './helpers/text';
-import { Player } from './types';
+import { Player, inputTypeNNClient, inputTypeNNExpress } from './types';
 
 export function setPreUpdate(game: SmashedGame): void {
   setBGMusicPlay(game);
@@ -266,6 +265,14 @@ export function updatePlayers(game: SmashedGame): void {
         updateControllerMovement(player, game);
         updateAirDodge(player, game);
         updatePlayerDarknessEvents(game);
+
+        const isPlayerNN: boolean =
+          player.inputType === inputTypeNNExpress ||
+          player.inputType === inputTypeNNClient;
+
+        if (!isPlayerNN) {
+          updatePlayerControllerCountersAndPositionCounters(player);
+        }
 
         // UPDATE ATTACK PHYSICAL
         updateAttackPhysicals(player, playerIndex, game);

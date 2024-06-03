@@ -5,6 +5,7 @@ import {
   AttackState,
   GameState,
   Player,
+  PlayerIndexAndScore,
   PlayerState,
   inputTypeNNExpress,
 } from '../types';
@@ -35,7 +36,8 @@ import { setGravityFalse, setGravityTrue, setRespawn } from './movement';
 import {
   NNTrainNN,
   deleteLastNNObjects,
-  getNeuralNetworkBestInstanceIndex,
+  getFirstPlayerIndexThatIsOfInputType,
+  getNeuralNetworkBestInstancePlayerIndex,
 } from './nn';
 import { setPhysicsAndMusicPause, setPhysicsAndMusicResume } from './physics';
 import { setPlayerPowerState } from './powers';
@@ -144,15 +146,19 @@ export function setGameState(game: SmashedGame, state: GameState): void {
       setPlayerWinningPositions(game);
       NNTrainNN(game);
 
-      const bestExpressNN: number | null = getNeuralNetworkBestInstanceIndex(
-        game,
-        inputTypeNNExpress
-      );
-
+      const bestExpressNN: PlayerIndexAndScore | null =
+        getNeuralNetworkBestInstancePlayerIndex(game, inputTypeNNExpress);
       if (bestExpressNN !== null) {
-        print('BEST EXPRESS NN', bestExpressNN);
-
-        saveNeuralNetwork(game.nnExpressNets[bestExpressNN]);
+        const firstExpressNNIndex = getFirstPlayerIndexThatIsOfInputType(
+          game,
+          inputTypeNNExpress
+        );
+        print('  FIRST EXPRESS INDEX', firstExpressNNIndex);
+        print('   BEST EXPRESS INDEX', bestExpressNN?.playerIndex);
+        print('  BEST EXPRESS RATING', bestExpressNN?.score);
+        if (bestExpressNN.playerIndex !== firstExpressNNIndex) {
+          saveNeuralNetwork(game.nnExpressNets[bestExpressNN.playerIndex]);
+        }
       }
 
       setTimeout(() => {

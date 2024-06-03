@@ -27,6 +27,7 @@ import {
   updateAttackEnergyWrapScreen,
   updateCirclesLocations,
   updateKeepObjectsFromFallingLikeCrazy,
+  updatePlayerControllerCountersAndPositionCounters,
   updatePlayerPositionIfUndefined,
   updateTable,
   updateWallTouchArray,
@@ -93,14 +94,15 @@ export function updateGameStatePlay(
 
   // UPDATE PLAYERS
   updatePlayers(game);
-  
+  // updatePlayerControllerButtonsPressedCounters(game);
+
   // updatePhysicalAttackFollowPlayers(game);
-  
+
   // AFTER PLAYERS
   updatePadPreviousAndDebounced(game);
   updateResetAllHitboxesAttackEnergy(game);
   // updateDamagePrev(game);
-  
+
   addToNNTrainingArray(game);
   // NNSetPlayer2Output(game);
   updatePlayerPositionIfUndefined(game);

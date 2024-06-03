@@ -51,12 +51,13 @@ import {
   configInit,
   idColors,
   inputArrayInit,
-  inputArrayInitDebug,
+  inputArrayInitDevMode,
   keyboardGroups,
   p1Keys,
   p2Keys,
   quotes,
   smashConfigInit,
+  smashConfigInitDevMode,
   smashConfigInitMax,
   smashConfigOptions,
   workingControllersAmazon,
@@ -514,9 +515,11 @@ function Play() {
   ///////////////////////////////////////
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(
-    debugInit.Dev_Mode ? inputArrayInitDebug : inputArrayInit
+    debugInit.Dev_Mode ? inputArrayInitDevMode : inputArrayInit
   );
-  const [smashConfig, setSmashConfig] = useState<SmashConfig>(smashConfigInit);
+  const [smashConfig, setSmashConfig] = useState<SmashConfig>(
+    debugState.Dev_Mode ? smashConfigInitDevMode : smashConfigInit
+  );
   const [smashConfigAllowed, setSmashConfigAllowed] = useState<boolean[]>([]);
 
   useEffect(() => {

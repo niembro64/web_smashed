@@ -174,7 +174,53 @@ export interface Player {
   playerReadySound: any;
   circleOffset: number;
   endPlace: number;
+  controllerButtonPresses: ControllerNumButtonoPresses;
+  averagePositionXY: AveragePositionXY;
+  nnRating: number | null;
+  maxPositionsXY: MMaxPositionsXY;
 }
+
+export type MMaxPositionsXY = {
+  x: MaxPositions;
+  y: MaxPositions;
+};
+
+export type MaxPositions = {
+  start: number;
+  end: number;
+};
+
+export type ControllerNumButtonoPresses = {
+  up: NumButtonPresses;
+  down: NumButtonPresses;
+  left: NumButtonPresses;
+  right: NumButtonPresses;
+  A: NumButtonPresses;
+  B: NumButtonPresses;
+  X: NumButtonPresses;
+  Y: NumButtonPresses;
+  R: NumButtonPresses;
+  L: NumButtonPresses;
+  start: NumButtonPresses;
+  select: NumButtonPresses;
+};
+
+export type AveragePosition = {
+  positionSum: number;
+  positionCount: number;
+  positionAverage: number;
+};
+
+export type AveragePositionXY = {
+  x: AveragePosition;
+  y: AveragePosition;
+};
+
+export type NumButtonPresses = {
+  pressed: number;
+  released: number;
+  ratio: number;
+};
 
 export interface Char {
   name: string;
@@ -919,4 +965,9 @@ export type NNTrainProgressObject = {
   name: string;
   value: number;
   error: number;
+};
+
+export type PlayerIndexAndScore = {
+  playerIndex: number;
+  score: number;
 };

@@ -1,5 +1,10 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Player } from '../types';
+import {
+  AveragePositionXY,
+  ControllerNumButtonoPresses,
+  MMaxPositionsXY as MaxPositionsXY,
+  Player,
+} from '../types';
 import { print } from '../../views/client';
 import { getIsAttackEnergyOffscreen } from './attacks';
 import { getGameHitbackMultiplier, getNormalizedVector } from './damage';
@@ -693,8 +698,211 @@ export function updatePlayerPositionIfUndefined(game: SmashedGame): void {
         playerIndex,
         player.char.sprite.body.position
       );
-      player.char.sprite.body.position.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
-      player.char.sprite.body.position.y = SCREEN_DIMENSIONS.HEIGHT * 0.2;
+      // player.char.sprite.body.position.x = SCREEN_DIMENSIONS.WIDTH * 0.5;
+      // player.char.sprite.body.position.y = SCREEN_DIMENSIONS.HEIGHT * 0.2;
     }
   }
 }
+
+export function updatePlayerControllerCountersAndPositionCounters(
+  player: Player
+): void {
+  const padCurr = player.padCurr;
+  const cbp: ControllerNumButtonoPresses = player.controllerButtonPresses;
+  const apxy: AveragePositionXY = player.averagePositionXY;
+  const mpxy: MaxPositionsXY = player.maxPositionsXY;
+
+  const centerX = SCREEN_DIMENSIONS.WIDTH * 0.5;
+  const centerY = SCREEN_DIMENSIONS.HEIGHT * 0.5;
+
+  mpxy.x.start =
+    mpxy.x.start !== null
+      ? Math.min(mpxy.x.start, player.char.sprite.body.position.x || centerX)
+      : player.char.sprite.body.position.x || centerX;
+  mpxy.x.end =
+    mpxy.x.end !== null
+      ? Math.max(mpxy.x.end, player.char.sprite.body.position.x || centerX)
+      : player.char.sprite.body.position.x || centerX;
+  mpxy.y.start =
+    mpxy.y.start !== null
+      ? Math.min(mpxy.y.start, player.char.sprite.body.position.y || centerY)
+      : player.char.sprite.body.position.y || centerY;
+  mpxy.y.end =
+    mpxy.y.end !== null
+      ? Math.max(mpxy.y.end, player.char.sprite.body.position.y || centerY)
+      : player.char.sprite.body.position.y || centerY;
+
+  apxy.x.positionSum +=
+    (player.char.sprite.body.position?.x || 0) / SCREEN_DIMENSIONS.WIDTH;
+  apxy.x.positionCount += 1;
+  apxy.x.positionAverage = apxy.x.positionSum / apxy.x.positionCount;
+  apxy.y.positionSum +=
+    (player.char.sprite.body.position?.y || 0) / SCREEN_DIMENSIONS.HEIGHT;
+  apxy.y.positionCount += 1;
+  apxy.y.positionAverage = apxy.y.positionSum / apxy.y.positionCount;
+
+  if (padCurr.up) {
+    cbp.up.pressed += 1;
+  } else {
+    cbp.up.released += 1;
+  }
+
+  if (padCurr.down) {
+    cbp.down.pressed += 1;
+  } else {
+    cbp.down.released += 1;
+  }
+
+  if (padCurr.left) {
+    cbp.left.pressed += 1;
+  } else {
+    cbp.left.released += 1;
+  }
+
+  if (padCurr.right) {
+    cbp.right.pressed += 1;
+  } else {
+    cbp.right.released += 1;
+  }
+
+  if (padCurr.A) {
+    cbp.A.pressed += 1;
+  } else {
+    cbp.A.released += 1;
+  }
+
+  if (padCurr.B) {
+    cbp.B.pressed += 1;
+  } else {
+    cbp.B.released += 1;
+  }
+
+  if (padCurr.X) {
+    cbp.X.pressed += 1;
+  } else {
+    cbp.X.released += 1;
+  }
+
+  if (padCurr.Y) {
+    cbp.Y.pressed += 1;
+  } else {
+    cbp.Y.released += 1;
+  }
+
+  if (padCurr.L) {
+    cbp.L.pressed += 1;
+  } else {
+    cbp.L.released += 1;
+  }
+
+  if (padCurr.R) {
+    cbp.R.pressed += 1;
+  } else {
+    cbp.R.released += 1;
+  }
+
+  if (padCurr.start) {
+    cbp.start.pressed += 1;
+  } else {
+    cbp.start.released += 1;
+  }
+
+  if (padCurr.select) {
+    cbp.select.pressed += 1;
+  } else {
+    cbp.select.released += 1;
+  }
+
+  cbp.up.ratio = cbp.up.pressed / (cbp.up.pressed + cbp.up.released);
+  cbp.down.ratio = cbp.down.pressed / (cbp.down.pressed + cbp.down.released);
+  cbp.left.ratio = cbp.left.pressed / (cbp.left.pressed + cbp.left.released);
+  cbp.right.ratio =
+    cbp.right.pressed / (cbp.right.pressed + cbp.right.released);
+  cbp.A.ratio = cbp.A.pressed / (cbp.A.pressed + cbp.A.released);
+  cbp.B.ratio = cbp.B.pressed / (cbp.B.pressed + cbp.B.released);
+  cbp.X.ratio = cbp.X.pressed / (cbp.X.pressed + cbp.X.released);
+  cbp.Y.ratio = cbp.Y.pressed / (cbp.Y.pressed + cbp.Y.released);
+  cbp.L.ratio = cbp.L.pressed / (cbp.L.pressed + cbp.L.released);
+  cbp.R.ratio = cbp.R.pressed / (cbp.R.pressed + cbp.R.released);
+  cbp.start.ratio =
+    cbp.start.pressed / (cbp.start.pressed + cbp.start.released);
+  cbp.select.ratio =
+    cbp.select.pressed / (cbp.select.pressed + cbp.select.released);
+}
+
+export const getPlayerLRBalanced = (
+  player: Player,
+  playerIndex: number,
+  game: SmashedGame
+): { isBalanced: boolean; error: number } => {
+  const cbp = player.controllerButtonPresses;
+
+  const seconds = game.gameSeconds;
+
+  // Exponential decay constant can be adjusted for a more intuitive control over tolerance decrease
+  const decayRate = 0.99; // Adjust this value as needed to control the decay rate
+  const initialTolerance = 0.2; // Starting tolerance value
+
+  const tolerance = initialTolerance * Math.pow(decayRate, seconds);
+
+  const error = Math.abs(cbp.left.ratio - cbp.right.ratio);
+
+  const isBalanced = error < tolerance;
+  // print('LR', playerIndex, 'tolerance:', tolerance);
+  // print('LR', playerIndex, 'error:', error);
+  // print('LR', playerIndex, 'isBalanced:', isBalanced);
+
+  return {
+    isBalanced: isBalanced,
+    error: error,
+  };
+};
+
+export const getPlayerXYBalanced = (
+  player: Player,
+  playerIndex: number,
+  game: SmashedGame
+): { isBalanced: boolean; error: number } => {
+  const apxy = player.averagePositionXY;
+
+  const seconds = game.gameSeconds;
+
+  // Exponential decay constant can be adjusted for a more intuitive control over tolerance decrease
+  const decayRate = 0.99; // Adjust this value as needed to control the decay rate
+  const initialTolerance = 0.8; // Starting tolerance value
+
+  const tolerance = initialTolerance * Math.pow(decayRate, seconds);
+
+  const error = Math.abs(0.5 - apxy.x.positionAverage);
+
+  const isBalanced = error < tolerance;
+  // print('XY', playerIndex, 'tolerance:', tolerance);
+  // print('XY', playerIndex, 'error:', error);
+  // print('XY', playerIndex, 'isBalanced:', isBalanced);
+
+  return {
+    isBalanced: isBalanced,
+    error: error,
+  };
+};
+
+export const getPercentOfScreenTravelled = (
+  player: Player,
+  playerIndex: number,
+  game: SmashedGame
+): { percentX: number; percentY: number } => {
+  const { x, y }: MaxPositionsXY = player.maxPositionsXY;
+
+  const xStart = x.start;
+  const xEnd = x.end;
+  const yStart = y.start;
+  const yEnd = y.end;
+
+  const percentX = Math.abs(xEnd - xStart) / SCREEN_DIMENSIONS.WIDTH;
+  const percentY = Math.abs(yEnd - yStart) / SCREEN_DIMENSIONS.HEIGHT;
+
+  return {
+    percentX: percentX,
+    percentY: percentY,
+  };
+};
