@@ -13,7 +13,7 @@ export const debugInit: Debug = {
   NN_Help_Pit: true,
   NN_Help_Wall: true,
   Simple_Stage: false,
-  
+
   Dev_Mode: false,
 
   Dur_Seconds: false,
@@ -52,7 +52,7 @@ export const debugInit: Debug = {
   Allow_Koopas: true,
   Allow_Chez: true,
   Allow_BlackChez: false,
-  Typed_Loading_Text: false,
+
   Allow_SlowMo: true,
   Chomp_Explosion: false,
   Chomp_Velocities: false,
@@ -114,7 +114,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Chars_Colored: false,
   Title_Screws: false,
   Health_Inverted: false,
-  Matrices_Always: false,
+  Matrices_Always: true,
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 0, // 012
@@ -123,7 +123,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Allow_BlackChez: false,
   Allow_Chez: false,
   Allow_SlowMo: false,
-  Typed_Loading_Text: false,
+
   Dev_Mode: false,
   Dev_Zoom: 0,
   Char_Override: false,
@@ -132,7 +132,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Bullets_Allow_Groups: false,
   Trophies_On_Shots: false,
   Chomp_Explosion: false,
-  Trophies_Always: false,
+  Trophies_Always: true,
   Inst_Replay: 0,
   Replay_FastSlow: false,
   Game_Music: 0, // 012
@@ -189,7 +189,7 @@ export const debugMax: Debug = {
   Allow_BlackChez: true,
   Allow_Chez: false,
   Allow_SlowMo: true,
-  Typed_Loading_Text: false,
+
   Dev_Mode: true,
   Dev_Zoom: 10,
   Show_Helper_Keyboard: true,
@@ -267,7 +267,6 @@ export const doNotShowDebug: Debug = {
   Allow_Koopas: false,
   Allow_Chez: false,
   Allow_BlackChez: false,
-  Typed_Loading_Text: false,
   Allow_SlowMo: false,
   Chomp_Explosion: false,
   Chomp_Velocities: false,
