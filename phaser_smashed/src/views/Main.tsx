@@ -5,11 +5,7 @@ import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
 import { useEffect, useRef, useState } from 'react';
 import '../App.css';
-import {
-  debugInit,
-  debugMax,
-  showOptionOnMainScreenInit,
-} from '../debugOptions';
+import { debugInit } from '../debugInit';
 import {
   nnNumTrainingBarTicks,
   replaceNNExpressWithNNClient,
@@ -60,6 +56,8 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './reactHelpers';
+import { debugMain } from '../debugMain';
+import { debugMax } from '../debugMax';
 
 export const blipDelay = 200;
 
@@ -134,7 +132,7 @@ function Play() {
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
-    useState<Debug>(showOptionOnMainScreenInit);
+    useState<Debug>(debugMain);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;

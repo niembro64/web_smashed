@@ -1,0 +1,76 @@
+import { Debug } from './scenes/types';
+
+export const debugInit: Debug = {
+  NN_Reset_Evolving: true,
+  Auto_Start: false,
+  Auto_Restart: false,
+  Super_Speed: false,
+  NN_Train: false,
+  NN_Brand_New: false,
+
+  NN_Help_Screen: true,
+  NN_Help_Centerize: false,
+  NN_Help_Pit: true,
+  NN_Help_Wall: true,
+  Simple_Stage: false,
+
+  Dev_Mode: false,
+
+  Dur_Seconds: false,
+  Mode_Infinity: false,
+  Minutes: 2, //01234567
+  Shots: 8, //7
+  Dev_Zoom: 8,
+  Stage: 11, // 0 - 10 inclusive
+  Music_Active: true,
+  Ready_Sound_Active: false,
+  Use_Camera: true,
+  Cameras_Visible: false,
+  Colliders_P_v_P: false,
+  Colliders_P_v_AP: false,
+  Colliders_P_v_AE: false,
+  Colliders_AE_v_AE: true,
+  Colliders_AE_v_AP: true,
+  Colliders_AB_v_AE: false,
+  Colliders_AB_v_AP: false,
+  Colliders_P_v_BB: false,
+  Title_Screws: true,
+  Show_Helper_Keyboard: false,
+  Friction_Air_Active: true,
+  AE_Wrap_Screen: false,
+  Wall_Jumps_Active: true,
+  Default_Damage: false,
+  Default_Hitback: false,
+  Player_ID_Visible: true,
+  Chars_Colored: false,
+  Health_Inverted: false,
+  Matrices_Always: false,
+  Console_Log_Buttons: false,
+  Console_Log_Connected: false,
+  Update_Loops_Skip: 2, // 012
+  Load_Time_Extra: false,
+  Allow_Koopas: true,
+  Allow_Chez: true,
+  Allow_BlackChez: false,
+
+  Allow_SlowMo: true,
+  Chomp_Explosion: false,
+  Chomp_Velocities: false,
+  Char_Override: false,
+  Char_Override_ID: 3,
+  Bullets_Allow_Groups: true,
+  Trophies_On_Shots: false,
+  Trophies_Always: false,
+  Inst_Replay: 0,
+  Replay_FastSlow: false,
+  Game_Music: 0, // 0123
+  Flower_On_Init: true,
+  Flower_Rapid_Fire: false,
+  Flower_Full_Screen: false,
+  Flower_Gravity: true,
+  Flower_Bounce_Wall: false,
+  Flower_1000_Balls: false,
+  Flower_ShootRndAmt: 0,
+  Flower_HighTrajectory: 1,
+};
+

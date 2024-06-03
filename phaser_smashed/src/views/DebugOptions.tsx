@@ -2,7 +2,7 @@ import React from 'react';
 import { Debug, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import { replaceUnderscoreWithSpace } from './reactHelpers';
-import { doNotShowDebug } from '../debugOptions';
+import { debugHide } from '../debugHide';
 
 interface DebugOptionsProps {
   soundManager: SoundManagerType;
@@ -26,7 +26,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
   return (
     <>
       {Object.entries(debugState).map(([key, value], index) => {
-        if (doNotShowDebug[key]) {
+        if (debugHide[key]) {
           return null;
         }
 
