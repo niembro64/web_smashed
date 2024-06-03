@@ -2,7 +2,7 @@ import moment, { Moment } from 'moment';
 import SmashedGame from '../SmashedGame';
 
 export function updateTimeSlowdown(game: SmashedGame): void {
-  if (!game.debug.Chomps_SlowMo) {
+  if (!game.debug.Allow_SlowMo) {
     return;
   }
 

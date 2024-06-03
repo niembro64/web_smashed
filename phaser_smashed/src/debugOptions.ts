@@ -2,8 +2,8 @@ import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   NN_Reset_Evolving: true,
-  Auto_Restart: true,
   Auto_Start: false,
+  Auto_Restart: false,
   Super_Speed: false,
   NN_Train: false,
   NN_Brand_New: false,
@@ -13,10 +13,10 @@ export const debugInit: Debug = {
   NN_Help_Pit: true,
   NN_Help_Wall: true,
   Simple_Stage: false,
-  Dev_Mode: true,
-  Dur_Seconds: true,
+  Dev_Mode: false,
+  Dur_Seconds: false,
   Mode_Infinity: false,
-  Minutes: 6, //01234567
+  Minutes: 2, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
   Stage: 10, // 0 - 10 inclusive
@@ -51,7 +51,7 @@ export const debugInit: Debug = {
   Allow_Chez: true,
   Allow_BlackChez: false,
   Typed_Loading_Text: false,
-  Chomps_SlowMo: false,
+  Allow_SlowMo: true,
   Chomp_Explosion: false,
   Chomp_Velocities: false,
   Char_Override: false,
@@ -120,7 +120,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Allow_Koopas: false,
   Allow_BlackChez: false,
   Allow_Chez: false,
-  Chomps_SlowMo: false,
+  Allow_SlowMo: false,
   Typed_Loading_Text: false,
   Dev_Mode: false,
   Dev_Zoom: 0,
@@ -186,7 +186,7 @@ export const debugMax: Debug = {
   Allow_Koopas: true,
   Allow_BlackChez: true,
   Allow_Chez: false,
-  Chomps_SlowMo: true,
+  Allow_SlowMo: true,
   Typed_Loading_Text: false,
   Dev_Mode: true,
   Dev_Zoom: 10,
@@ -266,7 +266,7 @@ export const doNotShowDebug: Debug = {
   Allow_Chez: false,
   Allow_BlackChez: false,
   Typed_Loading_Text: false,
-  Chomps_SlowMo: false,
+  Allow_SlowMo: false,
   Chomp_Explosion: false,
   Chomp_Velocities: false,
   Char_Override: false,

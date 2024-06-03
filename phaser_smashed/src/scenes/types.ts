@@ -44,7 +44,7 @@ export interface Debug {
   Allow_Chez: boolean;
   Allow_BlackChez: boolean;
   Allow_Koopas: boolean;
-  Chomps_SlowMo: boolean;
+  Allow_SlowMo: boolean;
   Typed_Loading_Text: boolean;
   Char_Override: boolean;
   Char_Override_ID: CharacterId;

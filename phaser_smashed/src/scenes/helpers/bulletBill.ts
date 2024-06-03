@@ -6,12 +6,13 @@ import {
   BulletBillCombo,
   BulletBillComboState,
   BulletBillSparkLine,
-  Position
+  Position,
 } from '../types';
 import {
   setMusicBulletBillButtonPause,
   setMusicBulletBillButtonResume,
 } from './sound';
+import { addToMotionSlowdown } from './time';
 
 const updateSparkOnSparkLine = (
   game: SmashedGame,
@@ -197,6 +198,7 @@ export const setBulletBillState = (
       setMusicBulletBillButtonResume(game);
       break;
     case 'shooting':
+      addToMotionSlowdown(3000, game);
       setMusicBulletBillButtonPause(game);
       print('setBulletBillState: shooting');
       bulletBillPlayExplosion(game);
@@ -241,7 +243,6 @@ const updateColoredBulletFollows = (game: SmashedGame): void => {
   if (game.debug.Simple_Stage) {
     return;
   }
-
 
   const playerIndex = game.bulletBillCombo.bullet.playerIndexOwns;
 
