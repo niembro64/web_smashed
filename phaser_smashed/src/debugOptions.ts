@@ -133,7 +133,7 @@ export const showOptionOnMainScreenInit: Debug = {
   Trophies_On_Shots: false,
   Chomp_Explosion: false,
   Trophies_Always: false,
-  Inst_Replay: 1,
+  Inst_Replay: 0,
   Replay_FastSlow: false,
   Game_Music: 1, // 012
   Flower_On_Init: false,
