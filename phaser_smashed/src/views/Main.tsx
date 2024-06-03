@@ -359,7 +359,7 @@ function Play() {
         case 'restart-game':
           print('RESTART GAME SIGNAL RECEIVED');
           setWebState('web-state-setup');
-          onClickStartStartButton(4000);
+          onClickStartStartButton();
           break;
         default:
           break;
@@ -402,9 +402,15 @@ function Play() {
   }
 
   const [numClicks, setNumClicks] = useState<number>(0);
-  const [webState, setWebState] = useState<WebState>('web-state-init');
   const [openEye, setOpenEye] = useState<boolean>(false);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
+  const [webState, setWebStateCurr] = useState<WebState>('web-state-init');
+  const [webStatePrev, setWebStatePrev] = useState<WebState>('web-state-init');
+
+  const setWebState = (ws: WebState) => {
+    setWebStatePrev(webState);
+    setWebStateCurr(ws);
+  };
 
   useEffect(() => {
     if (!myPhaser || !myPhaser.current) {
@@ -462,6 +468,10 @@ function Play() {
         print('init');
         break;
       case 'web-state-setup':
+        setTimeout(() => {
+          setOpenEye(true);
+        }, 6000);
+
         choosePlay();
         soundManager.startSound();
 
@@ -470,12 +480,18 @@ function Play() {
 
         setTopBarDivExists(true);
 
-        // (async () => {
-        //   const allSessions: SessionInfo[] = await getAllGameHistory();
-        //   setAllSessions(allSessions);
-        // })();
+        if (debugState.Auto_Start && webStatePrev === 'web-state-init') {
+          print('AUTO START');
+          onClickStartStartButton();
+        }
+        if (debugState.Auto_Restart && webStatePrev === 'web-state-game') {
+          print('AUTO START');
+          onClickStartStartButton();
+        }
+
         break;
       case 'web-state-load':
+        setOpenEye(false);
         readyPlay();
         soundManager.startSound();
         musicManager.musicSetupScreenRef.current.pause();
@@ -483,34 +499,15 @@ function Play() {
         setShowLoaderIntervalFunction();
         break;
       case 'web-state-game':
+        setTimeout(() => {
+          setOpenEye(true);
+        }, 3000);
         goPlay();
         musicManager.musicSetupScreenRef.current.pause();
         musicManager.musicLoadingScreenRef.current.pause();
         setTopBarDivExists(true);
         break;
 
-      default:
-        break;
-    }
-  }, [debugState.Dev_Mode, webState]);
-
-  useEffect(() => {
-    switch (webState) {
-      case 'web-state-init':
-        break;
-      case 'web-state-setup':
-        setTimeout(() => {
-          setOpenEye(true);
-        }, 6000);
-        break;
-      case 'web-state-load':
-        setOpenEye(false);
-        break;
-      case 'web-state-game':
-        setTimeout(() => {
-          setOpenEye(true);
-        }, 3000);
-        break;
       default:
         break;
     }
@@ -688,13 +685,6 @@ function Play() {
     }
     return numActiveBeforeMe;
   };
-  useEffect(() => {
-    if (debugState.Auto_Start && webState === 'web-state-setup') {
-      setTimeout(() => {
-        onClickStartStartButton();
-      }, 200);
-    }
-  }, [webState]);
 
   useEffect(() => {
     print('smashConfig', smashConfig);
@@ -760,7 +750,7 @@ function Play() {
   const [anyKeyWasPressed, setAnyKeyWasPressed] = useState<boolean>(false);
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
-  const onClickStartStartButton = async (durationSlowdown: number = 0) => {
+  const onClickStartStartButton = async () => {
     // wait 2 seconds
 
     if (myPhaser?.current?.scene?.keys?.game) {
@@ -768,8 +758,6 @@ function Play() {
       myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
     }
-
-    // await new Promise((resolve) => setTimeout(resolve, durationSlowdown));
 
     setAllTrainingStatesToNull();
 

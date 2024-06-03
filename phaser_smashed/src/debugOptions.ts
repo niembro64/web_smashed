@@ -3,7 +3,7 @@ import { Debug } from './scenes/types';
 export const debugInit: Debug = {
   NN_Reset_Evolving: true,
   Auto_Start: false,
-  Auto_Restart: false,
+  Auto_Restart: true,
   Super_Speed: false,
   NN_Train: false,
   NN_Brand_New: false,
@@ -12,11 +12,11 @@ export const debugInit: Debug = {
   NN_Help_Centerize: false,
   NN_Help_Pit: true,
   NN_Help_Wall: true,
-  Simple_Stage: false,
-  Dev_Mode: false,
-  Dur_Seconds: false,
+  Simple_Stage: true,
+  Dev_Mode: true,
+  Dur_Seconds: true,
   Mode_Infinity: false,
-  Minutes: 2, //01234567
+  Minutes: 6, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
   Stage: 10, // 0 - 10 inclusive
