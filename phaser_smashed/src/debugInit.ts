@@ -73,4 +73,3 @@ export const debugInit: Debug = {
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 1,
 };
-

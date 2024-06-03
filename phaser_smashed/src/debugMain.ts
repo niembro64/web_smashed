@@ -37,7 +37,7 @@ export const debugMain: Debug = {
   Default_Damage: false,
   Default_Hitback: false,
   Player_ID_Visible: false,
-  Chars_Colored: false,
+  Chars_Colored: true,
   Title_Screws: false,
   Health_Inverted: false,
   Matrices_Always: true,
