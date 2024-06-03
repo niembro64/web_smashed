@@ -63,7 +63,7 @@ export const debugInit: Debug = {
   Replay_FastSlow: false,
   Game_Music: 0, // 0123
   Flower_On_Init: true,
-  Flower_Rapid_Fire: false,
+  Flower_Rapid_Fire: true,
   Flower_Full_Screen: false,
   Flower_Gravity: true,
   Flower_Bounce_Wall: false,
