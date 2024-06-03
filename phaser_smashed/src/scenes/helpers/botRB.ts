@@ -27,7 +27,7 @@ export function getIsBotNearNearestPlayer(
   game: SmashedGame,
   amount: number
 ): boolean {
-  // let nearestPlayerPosition: Position | null = {
+  // const nearestPlayerPosition: Position | null = {
   //   x: SCREEN_DIMENSIONS.WIDTH / 2,
   //   y: SCREEN_DIMENSIONS.HEIGHT / 2,
   // };
@@ -96,7 +96,7 @@ export function getIsBotFacingNearestPlayer(
   playerIndex: number,
   game: SmashedGame
 ): boolean {
-  let bot = player.char.sprite;
+  const bot = player.char.sprite;
   const nearestPlayerPosition: Position | null =
     getNearestPlayerAliveXYFromPlayer(player, playerIndex, game);
 
@@ -116,8 +116,8 @@ export function getIsBotTooFarMiddleLeft(
   player: Player,
   game: SmashedGame
 ): boolean {
-  let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.49;
+  const bot = player.char.sprite;
+  const left = SCREEN_DIMENSIONS.WIDTH * 0.49;
   if (bot.x < left) {
     return true;
   }
@@ -127,8 +127,8 @@ export function getIsBotTooFarMiddleRight(
   player: Player,
   game: SmashedGame
 ): boolean {
-  let bot = player.char.sprite;
-  let right = SCREEN_DIMENSIONS.WIDTH * 0.51;
+  const bot = player.char.sprite;
+  const right = SCREEN_DIMENSIONS.WIDTH * 0.51;
   if (bot.x > right) {
     return true;
   }
@@ -138,8 +138,8 @@ export function getIsBotTooFarCenterLeft(
   player: Player,
   game: SmashedGame
 ): boolean {
-  let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.35;
+  const bot = player.char.sprite;
+  const left = SCREEN_DIMENSIONS.WIDTH * 0.35;
   if (bot.x < left) {
     return true;
   }
@@ -149,27 +149,36 @@ export function getIsBotTooFarCenterRight(
   player: Player,
   game: SmashedGame
 ): boolean {
-  let bot = player.char.sprite;
-  let right = SCREEN_DIMENSIONS.WIDTH * 0.65;
+  const bot = player.char.sprite;
+  const right = SCREEN_DIMENSIONS.WIDTH * 0.65;
   if (bot.x > right) {
     return true;
   }
   return false;
 }
 export function getIsBotTooFarLeft(player: Player, game: SmashedGame): boolean {
-  let bot = player.char.sprite;
-  let left = SCREEN_DIMENSIONS.WIDTH * 0.07;
-  if (bot.x < left) {
+  const bot = player.char.sprite;
+  const leftUpper = SCREEN_DIMENSIONS.WIDTH * 0.05;
+  const leftLower = SCREEN_DIMENSIONS.WIDTH * 0.12;
+
+  const isBotUpper = bot.y < SCREEN_DIMENSIONS.HEIGHT * 0.6;
+
+  if (isBotUpper && bot.x < leftUpper) {
     return true;
   }
+
+  if (!isBotUpper && bot.x < leftLower) {
+    return true;
+  }
+
   return false;
 }
 export function getIsBotTooFarRight(
   player: Player,
   game: SmashedGame
 ): boolean {
-  let bot = player.char.sprite;
-  let right = SCREEN_DIMENSIONS.WIDTH * 0.892;
+  const bot = player.char.sprite;
+  const right = SCREEN_DIMENSIONS.WIDTH * 0.892;
   if (bot.x > right) {
     return true;
   }
