@@ -265,7 +265,12 @@ export const fetchNeuralNetwork =
 
 // Function to send the updated neural network to the backend
 export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
-  const firstWeight = getFirstWeightOfNNJson(nn.toJSON());
+  let firstWeight;
+  firstWeight = getFirstWeightOfNNJson(nn);
+  // if (!nn?.toJSON) {
+  // } else {
+  //   firstWeight = getFirstWeightOfNNJson(nn);
+  // }
   print('///////////////////////////////////');
   print('SAVING NEURAL NETWORK', firstWeight);
   print('///////////////////////////////////');
@@ -294,6 +299,33 @@ export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
 
 export const getFirstWeightOfNNJson = (
   neuralNetwork: INeuralNetworkJSON
-): any => {
-  return neuralNetwork.layers[1].weights[0][0];
+): number | null => {
+  print('neuralNetwork', neuralNetwork);
+  if (
+    neuralNetwork &&
+    neuralNetwork.layers &&
+    neuralNetwork.layers[1] &&
+    neuralNetwork.layers[1].weights &&
+    neuralNetwork.layers[1].weights[0] &&
+    neuralNetwork.layers[1].weights[0][0]
+  ) {
+    return neuralNetwork.layers[1].weights[0][0];
+  }
+
+  if (
+    neuralNetwork &&
+    // @ts-ignore
+    neuralNetwork.weights &&
+    // @ts-ignore
+    neuralNetwork.weights[1] &&
+    // @ts-ignore
+    neuralNetwork.weights[1][0] &&
+    // @ts-ignore
+    neuralNetwork.weights[1][0][0]
+  ) {
+    // @ts-ignore
+    return neuralNetwork.weights[1][0][0];
+  }
+
+  return null;
 };

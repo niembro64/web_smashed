@@ -1,7 +1,5 @@
 import { NeuralNetwork } from 'brain.js';
 import {
-  fetchNeuralNetwork,
-  getBarsFromNumber,
   getBarsFromPercent,
   print,
   saveNeuralNetwork,
@@ -16,17 +14,6 @@ import {
   PlayerIndexAndScore,
 } from '../types';
 import {
-  getPlayerLRBalanced,
-  getNearestAttackEnergyXYFromPlayer,
-  getNearestAttackPhysicalXYFromPlayer,
-  getNearestPlayerAliveFromPlayer,
-  getNearestPlayerFromPlayer,
-  getPlayerXYBalanced,
-  updatePlayerControllerCountersAndPositionCounters,
-  getPercentOfScreenTravelled,
-} from './movement';
-import { normalRandom } from './math';
-import {
   getNumberOfDeathsGiven,
   getNumberOfDeathsTaken,
   getNumberOfHitsGiven,
@@ -34,6 +21,17 @@ import {
   getNumberOfShotsGiven,
   getNumberOfShotsTaken,
 } from './damage';
+import { normalRandom } from './math';
+import {
+  getNearestAttackEnergyXYFromPlayer,
+  getNearestAttackPhysicalXYFromPlayer,
+  getNearestPlayerAliveFromPlayer,
+  getNearestPlayerFromPlayer,
+  getPercentOfScreenTravelled,
+  getPlayerLRBalanced,
+  getPlayerXYBalanced,
+  updatePlayerControllerCountersAndPositionCounters,
+} from './movement';
 import { nnJsonNNClient } from './nnJson';
 
 /////////////////////////////////

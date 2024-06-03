@@ -1,7 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
-  NN_Reset_Evolving: false,
+  NN_Reset_Evolving: true,
   Super_Speed: false,
   NN_Train: false,
   NN_Brand_New: false,
@@ -10,8 +10,8 @@ export const debugInit: Debug = {
   NN_Help_Centerize: false,
   NN_Help_Pit: true,
   NN_Help_Wall: true,
-  Simple_Stage: true,
-  Dev_Mode: true,
+  Simple_Stage: false,
+  Dev_Mode: false,
   Auto_Start: false,
   Dur_Seconds: false,
   Mode_Infinity: false,
@@ -41,7 +41,7 @@ export const debugInit: Debug = {
   Player_ID_Visible: true,
   Chars_Colored: false,
   Health_Inverted: false,
-  Matrices_Always: true,
+  Matrices_Always: false,
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
@@ -76,17 +76,17 @@ export const debugInit: Debug = {
 // TRUE means SHOWN ON MAIN PAGE
 export const showOptionOnMainScreenInit: Debug = {
   NN_Train: true,
-  NN_Reset_Evolving: true,
+  NN_Reset_Evolving: false,
   Super_Speed: false,
   NN_Help_Screen: false,
   NN_Help_Centerize: false,
-  NN_Brand_New: true,
+  NN_Brand_New: false,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
-  Simple_Stage: true,
+  Simple_Stage: false,
   Stage: 0, //0123456
   Mode_Infinity: true,
-  Dur_Seconds: true,
+  Dur_Seconds: false,
   Shots: 0,
   Minutes: 1, //01234567
   Music_Active: false,

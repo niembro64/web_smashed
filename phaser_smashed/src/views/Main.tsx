@@ -90,11 +90,21 @@ function Play() {
   const nnJsonExpress = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!debugState.NN_Reset_Evolving) {
+    if (debugState.NN_Reset_Evolving) {
       return;
     }
     (async () => {
-      await replaceNNExpressWithNNClient();
+      const x = await replaceNNExpressWithNNClient();
+
+      setTimeout(() => {
+        print('NN_Reset_Evolving setTimeout');
+        setDebugState((prev: Debug) => {
+          return {
+            ...prev,
+            NN_Reset_Evolving: !debugState.NN_Reset_Evolving,
+          };
+        });
+      }, 1000);
     })();
   }, [debugState.NN_Reset_Evolving]);
 
