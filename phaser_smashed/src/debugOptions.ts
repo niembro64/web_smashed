@@ -15,7 +15,7 @@ export const debugInit: Debug = {
   Auto_Start: false,
   Dur_Seconds: false,
   Mode_Infinity: false,
-  Minutes: 1, //01234567
+  Minutes: 2, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
   Stage: 10, // 0 - 10 inclusive
