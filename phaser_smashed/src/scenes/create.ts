@@ -47,6 +47,7 @@ export function create(game: SmashedGame) {
   createPSwitch(game);
   createFireFlower(game);
   createBulletBillSparkLine(game);
+  createBulletBillTowers(game);
   createExplosionsBack(game);
   createFirework(game);
   createPole(game);
@@ -98,25 +99,46 @@ export function create(game: SmashedGame) {
   setPreUpdate(game);
 }
 
-function createBulletBillSparkLine(game: SmashedGame) {
+function createBulletBillTowers(game: SmashedGame): void {
   if (game.debug.Simple_Stage) {
     return;
   }
 
-  const tower = game.bulletBillCombo.tower;
-  // add image to tower sprite
-  tower.sprite = game.physics.add.sprite(
-    tower.posInit.x,
-    tower.posInit.y,
+  const towerCenter = game.bulletBillCombo.towerCenter;
+  // add image to towerCenter sprite
+  towerCenter.sprite = game.physics.add.sprite(
+    towerCenter.posInit.x,
+    towerCenter.posInit.y,
     'bullet_bill_tower'
   );
 
-  // tower.sprite.setBounce(0);
-  tower.sprite.setScale(tower.scale);
-  tower.sprite.setBounce(0);
-  tower.sprite.setImmovable(true);
-  tower.sprite.setOrigin(0.5, 0.5);
-  tower.sprite.body.allowGravity = false;
+  // towerCenter.sprite.setBounce(0);
+  towerCenter.sprite.setScale(towerCenter.scale);
+  towerCenter.sprite.setBounce(0);
+  towerCenter.sprite.setImmovable(true);
+  towerCenter.sprite.setOrigin(0.5, 0.5);
+  towerCenter.sprite.body.allowGravity = false;
+
+  const towerLeft = game.bulletBillCombo.towerLeft;
+  // add image to towerLeft sprite
+  towerLeft.sprite = game.physics.add.sprite(
+    towerLeft.posInit.x,
+    towerLeft.posInit.y,
+    'bullet_bill_tower_left'
+  );
+
+  // towerLeft.sprite.setBounce(0);
+  towerLeft.sprite.setScale(towerLeft.scale);
+  towerLeft.sprite.setBounce(0);
+  towerLeft.sprite.setImmovable(true);
+  towerLeft.sprite.setOrigin(0.5, 0.5);
+  towerLeft.sprite.body.allowGravity = false;
+}
+
+function createBulletBillSparkLine(game: SmashedGame) {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
 
   const bbCombo: BulletBillCombo = game.bulletBillCombo;
   const bbSparkLine: BulletBillSparkLine = bbCombo.sparkLine;

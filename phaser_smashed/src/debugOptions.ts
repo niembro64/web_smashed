@@ -2,7 +2,7 @@ import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   NN_Reset_Evolving: true,
-  Auto_Start: true,
+  Auto_Start: false,
   Auto_Restart: false,
   Super_Speed: false,
   NN_Train: false,

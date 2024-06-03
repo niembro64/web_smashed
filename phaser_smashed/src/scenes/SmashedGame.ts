@@ -843,7 +843,8 @@ export default class SmashedGame extends Phaser.Scene {
     { x: SCREEN_DIMENSIONS.WIDTH * 0.42, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
 
     { x: SCREEN_DIMENSIONS.WIDTH * 0.15, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
-    { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.75 },
+    // { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.75 },
+    { x: SCREEN_DIMENSIONS.WIDTH * 0.1, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
     { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.674 },
   ];
 
@@ -860,12 +861,20 @@ export default class SmashedGame extends Phaser.Scene {
   bulletBillCombo: BulletBillCombo = {
     stateCurr: 'button-up',
     statePrev: 'init',
-    tower: {
+    towerCenter: {
       scale: 0.6,
       sprite: null,
       posInit: {
         x: SCREEN_DIMENSIONS.WIDTH * 0.42,
         y: SCREEN_DIMENSIONS.HEIGHT * 0.837,
+      },
+    },
+    towerLeft: {
+      scale: 0.6,
+      sprite: null,
+      posInit: {
+        x: SCREEN_DIMENSIONS.WIDTH * 0.123,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.95,
       },
     },
     button: {

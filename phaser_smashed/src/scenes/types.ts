@@ -686,7 +686,8 @@ export type BulletBillCombo = {
   sparkLine: BulletBillSparkLine;
   button: BulletBillButton;
   bullet: BulletBillBullet;
-  tower: BulletBillTower;
+  towerCenter: BulletBillTower;
+  towerLeft: BulletBillTower;
   cannon: BulletBillCannon;
   shootingDistanceThreshold: number;
   numUpdateIndexesToWait: number;
