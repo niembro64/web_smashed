@@ -13,7 +13,9 @@ export const debugInit: Debug = {
   NN_Help_Pit: true,
   NN_Help_Wall: true,
   Simple_Stage: false,
-  Dev_Mode: true,
+  
+  Dev_Mode: false,
+
   Dur_Seconds: false,
   Mode_Infinity: false,
   Minutes: 2, //01234567
@@ -42,7 +44,7 @@ export const debugInit: Debug = {
   Player_ID_Visible: true,
   Chars_Colored: false,
   Health_Inverted: false,
-  Matrices_Always: true,
+  Matrices_Always: false,
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
