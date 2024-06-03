@@ -944,7 +944,7 @@ export default class SmashedGame extends Phaser.Scene {
       speed: 400,
     },
     shootingDistanceThreshold: 500,
-    numUpdateIndexesToWait: 20,
+    numUpdateIndexesToWait: 10,
     // numUpdateIndexesToWait: 6,
     numUpdateIndexesToWaitFast: 3,
     fireBallSounds: [],

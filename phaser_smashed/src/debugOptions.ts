@@ -2,7 +2,7 @@ import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
   NN_Reset_Evolving: true,
-  Auto_Start: false,
+  Auto_Start: true,
   Auto_Restart: false,
   Super_Speed: false,
   NN_Train: false,
@@ -13,13 +13,13 @@ export const debugInit: Debug = {
   NN_Help_Pit: true,
   NN_Help_Wall: true,
   Simple_Stage: false,
-  Dev_Mode: false,
+  Dev_Mode: true,
   Dur_Seconds: false,
   Mode_Infinity: false,
   Minutes: 2, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
-  Stage: 10, // 0 - 10 inclusive
+  Stage: 11, // 0 - 10 inclusive
   Music_Active: true,
   Ready_Sound_Active: false,
   Use_Camera: true,
@@ -42,7 +42,7 @@ export const debugInit: Debug = {
   Player_ID_Visible: true,
   Chars_Colored: false,
   Health_Inverted: false,
-  Matrices_Always: false,
+  Matrices_Always: true,
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
@@ -63,7 +63,7 @@ export const debugInit: Debug = {
   Replay_FastSlow: false,
   Game_Music: 0, // 0123
   Flower_On_Init: true,
-  Flower_Rapid_Fire: true,
+  Flower_Rapid_Fire: false,
   Flower_Full_Screen: false,
   Flower_Gravity: true,
   Flower_Bounce_Wall: false,
