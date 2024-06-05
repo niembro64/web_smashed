@@ -92,7 +92,7 @@ function Play() {
       const x = await replaceNNExpressWithNNClient();
 
       setTimeout(() => {
-        print('NN_Reset_Evolving setTimeout');
+        print('debugState.NN_Reset_Evolving Button setTimeout');
         setDebugState((prev: Debug) => {
           return {
             ...prev,

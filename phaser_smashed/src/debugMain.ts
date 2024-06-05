@@ -2,8 +2,8 @@ import { Debug } from './scenes/types';
 
 // TRUE means SHOWN ON MAIN PAGE
 export const debugMain: Debug = {
-  Auto_Restart: true,
-  NN_Train: false,
+  Auto_Restart: false,
+  NN_Train: true,
   NN_Reset_Evolving: false,
   Super_Speed: false,
   NN_Help_Screen: false,
@@ -11,10 +11,10 @@ export const debugMain: Debug = {
   NN_Brand_New: false,
   NN_Help_Pit: false,
   NN_Help_Wall: false,
-  Simple_Stage: true,
+  Simple_Stage: false,
   Stage: 0, //0123456
-  Mode_Infinity: false,
-  Dur_Seconds: true,
+  Mode_Infinity: true,
+  Dur_Seconds: false,
   Shots: 0,
   Minutes: 1, //01234567
   Music_Active: false,
@@ -52,7 +52,7 @@ export const debugMain: Debug = {
 
   Dev_Mode: false,
   Dev_Zoom: 0,
-  Char_Override: true,
+  Char_Override: false,
 
   Char_Override_ID: 0,
   Bullets_Allow_Groups: false,
