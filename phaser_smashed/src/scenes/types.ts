@@ -4,6 +4,7 @@ import { BulletsPlayer } from './helpers/bullets';
 
 export interface Debug {
   NN_Reset_Evolving: boolean;
+  NN_Train_Evolving: boolean;
   Auto_Restart: boolean;
   Super_Speed: boolean;
   Dev_Mode: boolean;
@@ -50,7 +51,7 @@ export interface Debug {
   Bullets_Allow_Groups: boolean;
   Trophies_On_Shots: boolean;
   Trophies_Always: boolean;
-  NN_Train: boolean;
+  NN_Train_Static: boolean;
   Simple_Stage: boolean;
   NN_Help_Screen: boolean;
   NN_Help_Pit: boolean;

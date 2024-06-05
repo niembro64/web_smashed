@@ -3,7 +3,8 @@ import { Debug } from './scenes/types';
 export const debugHide: Debug = {
   Auto_Restart: false,
   NN_Reset_Evolving: false,
-  NN_Train: false,
+  NN_Train_Static: false,
+  NN_Train_Evolving: false,
   Super_Speed: false,
   NN_Brand_New: false,
   NN_Help_Screen: false,

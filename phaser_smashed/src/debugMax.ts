@@ -1,9 +1,10 @@
 import { Debug } from './scenes/types';
 
-export const debugMax: Debug= {
+export const debugMax: Debug = {
   Auto_Restart: false,
   NN_Reset_Evolving: false,
-  NN_Train: true,
+  NN_Train_Static: true,
+  NN_Train_Evolving: true,
   Super_Speed: true,
   NN_Brand_New: false,
   Stage: 10, //0123456

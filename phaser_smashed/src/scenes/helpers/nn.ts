@@ -60,7 +60,7 @@ export const NNRatiosNNExpress: number[] = NNRatiosNNClient;
 export const nnNumTrainingBarTicks: number = 25;
 
 export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Static) {
     return;
   }
 
@@ -446,7 +446,7 @@ export const isNNTrainingObjectOk = (nnObject: NNObject): boolean => {
 };
 
 export const addToNNTrainingArray = (game: SmashedGame): void => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Static) {
     return;
   }
 
@@ -508,7 +508,7 @@ export const deleteLastNNObjects = (
   numToDelete: number,
   game: SmashedGame
 ): void => {
-  if (!game.debug.NN_Train) {
+  if (!game.debug.NN_Train_Static) {
     return;
   }
 

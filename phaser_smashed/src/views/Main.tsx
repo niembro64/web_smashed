@@ -84,6 +84,9 @@ function Play() {
 
   const nnJsonExpress = useRef<string | null>(null);
 
+  ////////////////////////////////
+  // Reste NN_Rest_Evolving Button
+  ////////////////////////////////
   useEffect(() => {
     if (debugState.NN_Reset_Evolving) {
       return;
@@ -103,25 +106,40 @@ function Play() {
     })();
   }, [debugState.NN_Reset_Evolving]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     let nn = null;
-  //     if (debugState.NN_Use_Client) {
-  //       print('USING CLIENT NN');
-  //       nn = nnJsonNNHardcodeClient;
-  //     } else {
-  //       print('FETCHING NEURAL NETWORK');
-  //       nn = await fetchNeuralNetwork();
+  ////////////////////////////////
+  // Reste NN_Train_Evolving Button
+  ////////////////////////////////
+  useEffect(() => {
+    if (debugState.NN_Train_Evolving) {
+      return;
+    }
+    (async () => {
+      setDebugState((prev: Debug) => {
+        return {
+          ...prev,
+          Mode_Infinity: false,
+          Minutes: 15,
+          Dur_Seconds: false,
+          Matrices_Always: true,
+          Auto_Restart: true,
+        };
+      });
 
-  //       if (!nn) {
-  //         // throw new Error('nn === null');
-  //         nn = nnJsonNNHardcodeClient;
-  //       }
-  //     }
+      // set inputs to all input 5
+      setInputArrayEffect([5, 5, 5, 5]);
 
-  //     nnJsonReact.current = nn;
-  //   })();
-  // }, [debugState.NN_Use_Client]);
+      setTimeout(() => {
+        print('debugState.NN_Train_Evolving Button setTimeout');
+        setDebugState((prev: Debug) => {
+          return {
+            ...prev,
+            NN_Train_Evolving: !debugState.NN_Train_Evolving,
+          };
+        });
+      }, 1000);
+    })();
+  }, [debugState.NN_Train_Evolving]);
+
   const pullExpressNeuralNet = async () => {
     nnJsonExpress.current = await fetchNeuralNetwork();
     print('nnJsonExpress.current', nnJsonExpress.current);
@@ -1483,75 +1501,97 @@ function Play() {
                         }}
                       >
                         <div className="startImageWrapper">
-                          {inputArray[pIndex] !== 0 &&
-                            inputArray[pIndex] < inputTypeNum && (
-                              <img
-                                className={
-                                  'startImage' +
-                                  (pIndex > 1 ? 'Inverse' : 'Normal')
+                          {inputArray[pIndex] !== 0 && (
+                            <img
+                              id={(() => {
+                                switch (pIndex) {
+                                  case 0:
+                                    return 'fill-index-0';
+                                  case 1:
+                                    return 'fill-index-1';
+                                  case 2:
+                                    return 'fill-index-2';
+                                  case 3:
+                                    return 'fill-index-3';
+                                  default:
+                                    return '';
                                 }
-                                src={
-                                  'images/character_' +
-                                  p.characterId.toString() +
-                                  '_cropped.png'
-                                }
-                                width={
-                                  (
-                                    55 * smashConfigOptions[p.characterId].scale
-                                  ).toString() + '%'
-                                }
-                                alt="char"
-                              />
-                            )}
+                              })()}
+                              className={
+                                'startImage' +
+                                (pIndex > 1 ? 'Inverse' : 'Normal') +
+                                (pIndex === 0
+                                  ? ' img-colorize-red'
+                                  : pIndex === 1
+                                  ? ' img-colorize-blue'
+                                  : pIndex === 2
+                                  ? ' img-colorize-yellow'
+                                  : pIndex === 3
+                                  ? ' img-colorize-green'
+                                  : '')
+                              }
+                              src={
+                                'images/character_' +
+                                p.characterId.toString() +
+                                '_cropped.png'
+                              }
+                              width={
+                                (
+                                  55 * smashConfigOptions[p.characterId].scale
+                                ).toString() + '%'
+                              }
+                              alt="char"
+                            />
+                          )}
                           <p className="player-char-image-name"></p>
                         </div>
                       </div>
                     )}
-                    {inputArray[pIndex] !== 0 &&
-                      inputArray[pIndex] < inputTypeNum && (
-                        <div
-                          className="player-char"
-                          onMouseEnter={() => {
-                            soundManager.blipSoundSoft();
-                          }}
-                          onClick={() => {
-                            onClickRotateSelection(pIndex);
-                          }}
-                        >
-                          <div className="startImageWrapper">
-                            <div
-                              className={
-                                'id-circle ' +
-                                idColors[getNumActiveBeforeMe(pIndex)]
-                              }
-                            ></div>
-                            {inputArray[pIndex] !== 0 &&
-                              inputArray[pIndex] < inputTypeNum && (
-                                <img
-                                  className={
-                                    'startImage' +
-                                    (pIndex > 1 ? 'Inverse' : 'Normal')
-                                  }
-                                  src={
-                                    'images/character_' +
-                                    p.characterId.toString() +
-                                    '_cropped.png'
-                                  }
-                                  width={
-                                    (
-                                      55 *
-                                      smashConfigOptions[p.characterId].scale
-                                    ).toString() + '%'
-                                  }
-                                  alt="char"
-                                />
-                              )}
-                            <p className="player-char-image-name">
-                              {smashConfigOptions[p.characterId].name}
-                            </p>
-                          </div>
+                    {inputArray[pIndex] !== 0 && (
+                      <div
+                        className="player-char"
+                        onMouseEnter={() => {
+                          soundManager.blipSoundSoft();
+                        }}
+                        onClick={() => {
+                          onClickRotateSelection(pIndex);
+                        }}
+                      >
+                        <div className="startImageWrapper">
+                          <div
+                            className={
+                              'id-circle ' +
+                              idColors[getNumActiveBeforeMe(pIndex)]
+                            }
+                          ></div>
+
+                          <img
+                            className={
+                              'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal')
+                            }
+                            src={
+                              'images/character_' +
+                              p.characterId.toString() +
+                              '_cropped.png'
+                            }
+                            width={
+                              (
+                                55 * smashConfigOptions[p.characterId].scale
+                              ).toString() + '%'
+                            }
+                            alt="char"
+                          />
+
+                          <p className="player-char-image-name">
+                            {smashConfigOptions[p.characterId].name}
+                          </p>
                         </div>
-                      )}
+                      </div>
+                    )}
+
+                    {/* ////////////////////////////////////// */}
+                    {/* EMPTY OFF */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 0 && (
                       <div
                         className="b-oscuro b-dark"
@@ -1568,6 +1608,10 @@ function Play() {
                         </div> */}
                       </div>
                     )}
+
+                    {/* ////////////////////////////////////// */}
+                    {/* GAMEPAD CONTROLLER */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 1 && (
                       <div
                         className={
@@ -1612,6 +1656,9 @@ function Play() {
                         )}
                       </div>
                     )}
+                    {/* ////////////////////////////////////// */}
+                    {/* KEYBOARD */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 2 && (
                       <div
                         className={
@@ -1659,6 +1706,9 @@ function Play() {
                         )}
                       </div>
                     )}
+                    {/* ////////////////////////////////////// */}
+                    {/* BOT ROBOT */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 3 && (
                       <div
                         className={
@@ -1690,6 +1740,10 @@ function Play() {
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}
+
+                    {/* ////////////////////////////////////// */}
+                    {/* NEURAL NETWORK STATIC BRAIN */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 4 && (
                       <div
                         className={
@@ -1721,6 +1775,10 @@ function Play() {
                         <div className="button-input-emoji">{emoji.brain}</div>
                       </div>
                     )}
+
+                    {/* ////////////////////////////////////// */}
+                    {/* NEURAL NETWORK EVOLVING DNA */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 5 && (
                       <div
                         className={

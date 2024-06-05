@@ -743,6 +743,24 @@ h2 {
 .id-green {
   background-color: var(--id-green);
 }
+
+.img-colorize-red {
+  filter: sepia(1) hue-rotate(0deg) saturate(10);
+}
+
+.img-colorize-blue {
+  filter: sepia(1) hue-rotate(202deg) saturate(10);
+}
+
+.img-colorize-yellow {
+  filter: sepia(1) hue-rotate(58deg) saturate(10);
+}
+
+.img-colorize-green {
+  filter: sepia(1) hue-rotate(90deg) saturate(10);
+}
+
+
 .playLink {
   height: 15%;
   width: 90%;

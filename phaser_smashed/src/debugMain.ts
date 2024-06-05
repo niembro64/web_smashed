@@ -2,8 +2,9 @@ import { Debug } from './scenes/types';
 
 // TRUE means SHOWN ON MAIN PAGE
 export const debugMain: Debug = {
-  Auto_Restart: false,
-  NN_Train: true,
+  Auto_Restart: true,
+  NN_Train_Static: true,
+  NN_Train_Evolving: true,
   NN_Reset_Evolving: false,
   Super_Speed: false,
   NN_Help_Screen: false,

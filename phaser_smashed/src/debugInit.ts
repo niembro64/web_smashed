@@ -5,7 +5,8 @@ export const debugInit: Debug = {
   Auto_Start: false,
   Auto_Restart: false,
   Super_Speed: false,
-  NN_Train: false,
+  NN_Train_Static: false,
+  NN_Train_Evolving: true,
   NN_Brand_New: false,
 
   NN_Help_Screen: true,
