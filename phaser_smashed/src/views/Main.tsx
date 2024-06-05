@@ -118,7 +118,7 @@ function Play() {
         return {
           ...prev,
           Mode_Infinity: false,
-          Minutes: 15,
+          Minutes: 30,
           Dur_Seconds: false,
           Matrices_Always: true,
           Auto_Restart: true,
