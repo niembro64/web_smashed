@@ -331,8 +331,8 @@ function Play() {
     if (numAutoRestarts === 0) {
       return;
     }
-
     onClickStartStartButton();
+    // onClickBackButtonHandler();
   }, [numAutoRestarts]);
 
   useEffect(() => {
@@ -496,10 +496,6 @@ function Play() {
         setTopBarDivExists(true);
 
         if (debugState.Auto_Start && webStatePrev === 'web-state-init') {
-          print('AUTO START');
-          onClickStartStartButton();
-        }
-        if (debugState.Auto_Restart && webStatePrev === 'web-state-game') {
           print('AUTO START');
           onClickStartStartButton();
         }
