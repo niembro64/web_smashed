@@ -1,5 +1,7 @@
 import SmashedGame from '../SmashedGame';
 import {
+  InputType,
+  InputTypeBot,
   InputTypeNNClient,
   InputTypeNNExpress,
   Player,
@@ -16,13 +18,13 @@ import {
   getIsBotTooFarRight,
   getIsBotTooFarUp,
 } from './botRB';
-import { NNSetPlayerPadStatic, getRatingNNInstance } from './nn';
+import { NNSetPlayerPadStatic, getRatingOfInstance } from './nn';
 
 export function updateBotNN(
   player: Player,
   playerIndex: number,
   game: SmashedGame,
-  inputType_NN: InputTypeNNClient | InputTypeNNExpress
+  inputType: InputTypeNNClient | InputTypeNNExpress
 ): void {
   const padCurr = player.padCurr;
   if (game.gameState.nameCurr !== 'game-state-play') {
@@ -34,7 +36,7 @@ export function updateBotNN(
     return;
   }
 
-  NNSetPlayerPadStatic(player, playerIndex, game, inputType_NN);
+  NNSetPlayerPadStatic(player, playerIndex, game, inputType);
 
   const pVelocity: Velocity = player.char.sprite.body.velocity;
 
@@ -133,7 +135,7 @@ export function updateBotNN(
     }
   }
 
-  const score = getRatingNNInstance(game, playerIndex);
+  const score = getRatingOfInstance(game, playerIndex, inputType);
 
   // print('score: ' + score);
 }

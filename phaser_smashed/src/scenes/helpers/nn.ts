@@ -1,17 +1,22 @@
 import { NeuralNetwork } from 'brain.js';
 import {
   getBarsFromPercent,
+  nodeEnvIsProduction,
   print,
   saveNeuralNetwork,
 } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import {
   InputType,
+  InputTypeBot,
+  InputTypeKeyboard,
   InputTypeNNClient,
   InputTypeNNExpress,
+  InputTypePad,
   NNObject,
   Player,
   PlayerIndexAndScore,
+  inputTypeNNExpress,
 } from '../types';
 import {
   getNumberOfDeathsGiven,
@@ -577,22 +582,42 @@ export const getNewModifiedWeights = (
   return newNNJson;
 };
 
-export const getNumberOfNeuralNetworkTypeFromGame = (
+export const getNumberOfInputTypeFromGame = (
   game: SmashedGame,
-  nn_Type: InputTypeNNClient | InputTypeNNExpress
+  inputType:
+    | InputTypeNNClient
+    | InputTypeNNExpress
+    | InputTypeBot
+    | InputTypeKeyboard
+    | InputTypePad
 ): number => {
   let num = 0;
 
-  // const numPlayers = game.players.length;
-
-  // print('numPlayers', numPlayers);
-
   game.players.forEach((player) => {
-    // print('player.inputType', player.inputType, nn_Type);
-    if (player.inputType === nn_Type) {
+    if (player.inputType === inputType) {
       num++;
     }
   });
+
+  return num;
+};
+
+export const getNumberOfInputTypeUnderMeFromGame = (
+  game: SmashedGame,
+  playerIndex: number,
+  inputType: InputType
+): number => {
+  let num = 0;
+
+  for (let i = 0; i < playerIndex; i++) {
+    if (i === playerIndex) {
+      break;
+    }
+
+    if (game.players[i].inputType === inputType) {
+      num++;
+    }
+  }
 
   return num;
 };
@@ -615,29 +640,36 @@ export const getNumberOfNeuralNetworkTypeFromInputArray = (
 
 export const getNeuralNetworkBestInstancePlayerIndex = (
   game: SmashedGame,
-  nn_Type: InputTypeNNClient | InputTypeNNExpress
+  inputType: InputTypeNNExpress
 ): PlayerIndexAndScore | null => {
   let bestIndexCurr: number | null = null;
   let bestScoreCurr: number | null = null;
 
-  const numOfNNType = getNumberOfNeuralNetworkTypeFromGame(game, nn_Type);
+  const numOfNNType = getNumberOfInputTypeFromGame(game, inputType);
+  let nnIndexOfType: InputType | null = null;
 
   if (numOfNNType === 0) {
     return null;
   }
 
-  for (let i = 0; i < game.players.length; i++) {
-    const player = game.players[i];
+  for (let playerIndex = 0; playerIndex < game.players.length; playerIndex++) {
+    const player = game.players[playerIndex];
 
-    if (player.inputType === nn_Type) {
-      if (bestIndexCurr === null || bestScoreCurr === null) {
-        bestIndexCurr = i;
-        bestScoreCurr = getRatingNNInstance(game, i);
+    if (player.inputType === inputType) {
+      if (nnIndexOfType === null) {
+        nnIndexOfType = 0;
       } else {
-        const newScore = getRatingNNInstance(game, i);
+        nnIndexOfType++;
+      }
+
+      if (bestIndexCurr === null || bestScoreCurr === null) {
+        bestIndexCurr = playerIndex;
+        bestScoreCurr = getRatingOfInstance(game, playerIndex, inputType);
+      } else {
+        const newScore = getRatingOfInstance(game, playerIndex, inputType);
 
         if (newScore > bestScoreCurr) {
-          bestIndexCurr = i;
+          bestIndexCurr = playerIndex;
           bestScoreCurr = newScore;
         }
       }
@@ -654,9 +686,10 @@ export const getNeuralNetworkBestInstancePlayerIndex = (
   };
 };
 
-export const getRatingNNInstance = (
+export const getRatingOfInstance = (
   game: SmashedGame,
-  playerIndex: number
+  playerIndex: number,
+  inputType: InputType
 ): number => {
   const shotsGiven = getNumberOfShotsGiven(playerIndex, game);
   const shotsTaken = getNumberOfShotsTaken(playerIndex, game);
@@ -664,26 +697,32 @@ export const getRatingNNInstance = (
   const deathsTaken = getNumberOfDeathsTaken(playerIndex, game);
   const hitsGiven = getNumberOfHitsGiven(playerIndex, game);
   const hitsTaken = getNumberOfHitsTaken(playerIndex, game);
+  const playerIndexOfInputType = getNumberOfInputTypeUnderMeFromGame(
+    game,
+    playerIndex,
+    inputType
+  );
 
   const player = game.players[playerIndex];
 
   const balanceXY = getPlayerXYBalanced(player, playerIndex, game);
   const balanceLR = getPlayerLRBalanced(player, playerIndex, game);
-  const { percentX, percentY } = getPercentOfScreenTravelled(
-    player,
-    playerIndex,
-    game
-  );
+  const { percentX } = getPercentOfScreenTravelled(player, playerIndex, game);
+
+  const timeRatio: number =
+    playerIndexOfInputType === 0 && inputType === inputTypeNNExpress
+      ? 1
+      : getNNReductionRatioFromGame(game);
 
   const shot_w = 0;
-  const death_w = 3;
+  const death_w = 2;
   const hit_w = 1;
 
   const shot_give = 0;
   const shot_take = 0;
-  const death_give = 10;
-  const death_take = -2;
-  const hit_give = 10;
+  const death_give = 3;
+  const death_take = -1;
+  const hit_give = 3;
   const hit_take = -1;
 
   const scoreActions =
@@ -697,19 +736,23 @@ export const getRatingNNInstance = (
   const scoreXY = 1 - balanceXY.error;
   const scoreLR = 1 - balanceLR.error;
   const scorePercentX = percentX;
+  const scoreTime = timeRatio;
 
   let rating: number | null = null;
   if (scoreActions >= 0) {
-    rating = scoreActions * scoreXY * scoreLR * scorePercentX;
+    rating = scoreActions * scoreXY * scoreLR * scorePercentX * scoreTime;
   } else {
-    rating = scoreActions;
+    rating = 0;
   }
 
   player.nnRating = rating;
-  const maxRating = findMaxNNRating(game);
-  const bars = getBarsFromPercent(rating / maxRating);
 
-  print(playerIndex, 'NN Rating', bars, Math.round(rating));
+  if (!nodeEnvIsProduction) {
+    const maxRating = findMaxNNRating(game);
+    const bars = getBarsFromPercent(rating / maxRating);
+
+    print(playerIndex, 'NN Rating', bars, Math.round(rating));
+  }
 
   return rating;
 };
@@ -719,6 +762,16 @@ export const replaceNNExpressWithNNClient = async (): Promise<void> => {
 
   await saveNeuralNetwork(clientNNJson);
 };
+
+export const getNNReductionRatioFromGame = (game: SmashedGame): number => {
+  const minutes: number = game.gameSeconds / 60;
+
+  return getNNTimeRatioFromMinutes(minutes);
+};
+
+export function getNNTimeRatioFromMinutes(minutes: number): number {
+  return minutes / (1 + minutes);
+}
 
 export const getFirstPlayerIndexThatIsOfInputType = (
   game: SmashedGame,

@@ -324,6 +324,17 @@ function Play() {
     return str;
   };
 
+  const [numAutoRestarts, setNumAutoRestarts] = useState<number>(0);
+
+  useEffect(() => {
+    print('numAutoRestarts', numAutoRestarts);
+    if (numAutoRestarts === 0) {
+      return;
+    }
+    
+    onClickStartStartButton();
+  }, [numAutoRestarts]);
+
   useEffect(() => {
     window.addEventListener('nn-train', async (t) => {
       // @ts-ignore
@@ -356,8 +367,10 @@ function Play() {
           break;
         case 'restart-game':
           print('RESTART GAME SIGNAL RECEIVED');
-          setWebState('web-state-setup');
-          onClickStartStartButton();
+          // setWebStateCurr('web-state-setup');
+          // onClickStartStartButton();
+          // onClickBackButtonHandler();
+          setNumAutoRestarts((prev) => prev + 1);
           break;
         default:
           break;
@@ -402,12 +415,16 @@ function Play() {
   const [numClicks, setNumClicks] = useState<number>(0);
   const [openEye, setOpenEye] = useState<boolean>(false);
   const [topBarDivExists, setTopBarDivExists] = useState<boolean>(false);
-  const [webState, setWebStateCurr] = useState<WebState>('web-state-init');
+  const [webStateCurr, setWebStateXXXX] = useState<WebState>('web-state-init');
   const [webStatePrev, setWebStatePrev] = useState<WebState>('web-state-init');
 
-  const setWebState = (ws: WebState) => {
-    setWebStatePrev(webState);
-    setWebStateCurr(ws);
+  const setWebStateCurr = (webStateNext: WebState) => {
+    if (webStateNext === webStateCurr) {
+      throw new Error('ws === webStateCurr');
+    }
+
+    setWebStatePrev(webStateCurr);
+    setWebStateXXXX(webStateNext);
   };
 
   useEffect(() => {
@@ -435,23 +452,21 @@ function Play() {
 
   useEffect(() => {
     if (debugState.Dev_Mode) {
-      setWebState('web-state-setup');
+      setWebStateCurr('web-state-setup');
     }
   }, []);
 
   useEffect(() => {
+    print('webStatePrev', webStatePrev);
+    print('webStateCurr', webStateCurr);
+
     const setShowLoaderIntervalFunction = () => {
       const myInterval = setInterval(() => {
-        // print(
-        //   'myPhaser.current?.scene?.keys?.game?.loaded',
-        //   // @ts-ignore
-        //   myPhaser?.current?.scene?.keys?.game?.loaded
-        // );
         // @ts-ignore
         if (myPhaser?.current?.scene?.keys?.game?.loaded) {
           setTimeout(
             () => {
-              setWebState('web-state-game');
+              setWebStateCurr('web-state-game');
             },
             debugState.Dev_Mode ? 0 : 1
           );
@@ -460,10 +475,12 @@ function Play() {
       }, 1);
     };
 
-    print('webState', webState);
-    switch (webState) {
+    switch (webStateCurr) {
       case 'web-state-init':
         print('init');
+
+        setP1KeysTouched(true);
+        setP2KeysTouched(true);
         break;
       case 'web-state-setup':
         setTimeout(() => {
@@ -487,6 +504,9 @@ function Play() {
           onClickStartStartButton();
         }
 
+        setP1KeysTouched(true);
+        setP2KeysTouched(true);
+
         break;
       case 'web-state-load':
         setOpenEye(false);
@@ -504,12 +524,28 @@ function Play() {
         musicManager.musicSetupScreenRef.current.pause();
         musicManager.musicLoadingScreenRef.current.pause();
         setTopBarDivExists(true);
+
+        const numKeyboards = getNumKeyboardsInUse();
+        switch (numKeyboards) {
+          case 0:
+            setP1KeysTouched(true);
+            setP2KeysTouched(true);
+            break;
+          case 1:
+            setP1KeysTouched(false);
+            setP2KeysTouched(true);
+            break;
+          case 2:
+            setP1KeysTouched(false);
+            setP2KeysTouched(false);
+            break;
+        }
         break;
 
       default:
         break;
     }
-  }, [webState]);
+  }, [webStateCurr]);
 
   ///////////////////////////////////////
   ///////////////////////////////////////
@@ -604,7 +640,7 @@ function Play() {
     charId: CharacterId,
     positionIndex: number
   ): void => {
-    if (webState !== 'web-state-setup') {
+    if (webStateCurr !== 'web-state-setup') {
       print('webState !== start');
       return;
     }
@@ -822,7 +858,7 @@ function Play() {
     }
     const myMoment = moment();
 
-    setWebState('web-state-load');
+    setWebStateCurr('web-state-load');
 
     await pullExpressNeuralNet();
 
@@ -894,7 +930,7 @@ function Play() {
   };
 
   const setFirstCharacterSlot = (charId: CharacterId): void => {
-    if (debugState.Allow_BlackChez || webState !== 'web-state-setup') {
+    if (debugState.Allow_BlackChez || webStateCurr !== 'web-state-setup') {
       print('debugState.UseChez || webState !== start');
       return;
     }
@@ -955,8 +991,8 @@ function Play() {
   const clickPauseParent = () => {
     // @ts-ignore
     print('GAME STATE', myPhaser.current?.scene?.keys?.game.gameState.nameCurr);
-    if (webState !== 'web-state-game') {
-      print('webState !== play');
+    if (webStateCurr !== 'web-state-game') {
+      print('webStateCurr !== web-state-game');
       return;
     }
 
@@ -1090,15 +1126,15 @@ function Play() {
   const onEventKeyboard = (event: any) => {
     const k = event.key;
 
-    if (webState === 'web-state-init') {
+    if (webStateCurr === 'web-state-init') {
       switch (k) {
         case 'Enter':
-          setWebState('web-state-setup');
+          setWebStateCurr('web-state-setup');
           break;
       }
     }
 
-    if (webState === 'web-state-setup') {
+    if (webStateCurr === 'web-state-setup') {
       let pIndex;
       switch (k) {
         case 'Enter':
@@ -1143,7 +1179,7 @@ function Play() {
       }
     }
 
-    if (webState === 'web-state-game') {
+    if (webStateCurr === 'web-state-game') {
       if (p1Keys.includes(k)) {
         setP1KeysTouched(true);
       }
@@ -1155,7 +1191,7 @@ function Play() {
           onClickStartStartButton();
           break;
         case 'Escape':
-          onClickBackEventHandler();
+          onClickBackButtonHandler();
           break;
       }
     }
@@ -1224,7 +1260,7 @@ function Play() {
     return pads;
   };
 
-  const onClickBackEventHandler = () => {
+  const onClickBackButtonHandler = () => {
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
@@ -1239,36 +1275,8 @@ function Play() {
       myPhaser.current.destroy(true);
     }
 
-    setWebState('web-state-setup');
+    setWebStateCurr('web-state-setup');
   };
-
-  useEffect(() => {
-    if (webState === 'web-state-init') {
-      setP1KeysTouched(true);
-      setP2KeysTouched(true);
-    }
-    if (webState === 'web-state-setup') {
-      setP1KeysTouched(true);
-      setP2KeysTouched(true);
-    }
-    if (webState === 'web-state-game') {
-      const numKeyboards = getNumKeyboardsInUse();
-      switch (numKeyboards) {
-        case 0:
-          setP1KeysTouched(true);
-          setP2KeysTouched(true);
-          break;
-        case 1:
-          setP1KeysTouched(false);
-          setP2KeysTouched(true);
-          break;
-        case 2:
-          setP1KeysTouched(false);
-          setP2KeysTouched(false);
-          break;
-      }
-    }
-  }, [webState]);
 
   useEffect(() => {
     let numK = 0;
@@ -1299,7 +1307,7 @@ function Play() {
     <div id="top-level" className="over-div">
       {!debugState.Dev_Mode &&
         debugState.Show_Helper_Keyboard &&
-        webState !== 'web-state-setup' &&
+        webStateCurr !== 'web-state-setup' &&
         numKeyboards === 2 &&
         !bothKeysTouched && (
           <div
@@ -1326,7 +1334,7 @@ function Play() {
         )}
       {!debugState.Dev_Mode &&
         debugState.Show_Helper_Keyboard &&
-        webState !== 'web-state-setup' &&
+        webStateCurr !== 'web-state-setup' &&
         numKeyboards === 1 &&
         !p1KeysTouched && (
           <div
@@ -1343,7 +1351,7 @@ function Play() {
           </div>
         )}
 
-      {webState === 'web-state-load' && (
+      {webStateCurr === 'web-state-load' && (
         <div className="loader">
           <div className="spinner-box">
             <div className="spinner-rotate-x">
@@ -1386,13 +1394,14 @@ function Play() {
         </div>
       )}
       <div className="phaser-container" id="phaser-container"></div>
-      {(webState === 'web-state-setup' || webState === 'web-state-init') && (
+      {(webStateCurr === 'web-state-setup' ||
+        webStateCurr === 'web-state-init') && (
         <div className="start-class-div">
           {!debugState.Dev_Mode && (
             <div
               className={
                 'black-hiding-div' +
-                (webState === 'web-state-init'
+                (webStateCurr === 'web-state-init'
                   ? ' black-hiding-div-init'
                   : ' black-hiding-div-start')
               }
@@ -1403,7 +1412,7 @@ function Play() {
               <div
                 className={
                   'start-title' +
-                  (webState === 'web-state-setup'
+                  (webStateCurr === 'web-state-setup'
                     ? ' start-title-start'
                     : ' start-title-init')
                 }
@@ -1417,7 +1426,7 @@ function Play() {
                 <div
                   className="start-title-div"
                   onMouseDown={() => {
-                    setWebState('web-state-setup');
+                    setWebStateCurr('web-state-setup');
                   }}
                 >
                   <img
@@ -1428,21 +1437,25 @@ function Play() {
                 </div>
                 <h1
                   className="start-title-h1"
-                  id={'' + (webState === 'web-state-init' ? 'niemo-games' : '')}
+                  id={
+                    '' +
+                    (webStateCurr === 'web-state-init' ? 'niemo-games' : '')
+                  }
                   onMouseDown={() => {
-                    setWebState('web-state-setup');
+                    setWebStateCurr('web-state-setup');
                   }}
                 >
-                  {webState === 'web-state-init' ? 'START' : 'SMASHED'}
+                  {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
                 </h1>
-                {debugState.Title_Screws && webState === 'web-state-init' && (
-                  <>
-                    <div className="start-title-corner-piece"></div>
-                    <div className="start-title-corner-piece"></div>
-                    <div className="start-title-corner-piece"></div>
-                    <div className="start-title-corner-piece"></div>
-                  </>
-                )}
+                {debugState.Title_Screws &&
+                  webStateCurr === 'web-state-init' && (
+                    <>
+                      <div className="start-title-corner-piece"></div>
+                      <div className="start-title-corner-piece"></div>
+                      <div className="start-title-corner-piece"></div>
+                      <div className="start-title-corner-piece"></div>
+                    </>
+                  )}
               </div>
             </div>
           )}
@@ -1800,7 +1813,7 @@ function Play() {
             className={
               openEye
                 ? 'top-bar-eye-open ' +
-                  (webState === 'web-state-game' ? 'bg-black' : 'bg-trans')
+                  (webStateCurr === 'web-state-game' ? 'bg-black' : 'bg-trans')
                 : 'top-bar-eye-closed bg-trans'
             }
           >
@@ -1818,7 +1831,7 @@ function Play() {
               onClick={onClickEye}
             />
 
-            {webState === 'web-state-setup' && (
+            {webStateCurr === 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
                   soundManager.blipSoundSoft();
@@ -1832,7 +1845,7 @@ function Play() {
                 {!showOptions && <span>Options</span>}
               </div>
             )}
-            {webState === 'web-state-setup' && (
+            {webStateCurr === 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
                   soundManager.blipSoundSoft();
@@ -1846,18 +1859,20 @@ function Play() {
                 {!showControllers && <span>Pads</span>}
               </div>
             )}
-            {webState !== 'web-state-setup' && (
+            {webStateCurr !== 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
                   soundManager.blipSoundSoft();
                 }}
                 className="link-tag"
-                onClick={onClickBackEventHandler}
+                onClick={() => {
+                  onClickBackButtonHandler();
+                }}
               >
                 <span>Back</span>
               </div>
             )}
-            {webState !== 'web-state-setup' && (
+            {webStateCurr !== 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
                   soundManager.blipSoundSoft();
@@ -1895,7 +1910,7 @@ function Play() {
               {showRulesN64 && <span className="dark-span">Rules</span>}
               {!showRulesN64 && <span>Rules</span>}
             </div>
-            {webState === 'web-state-setup' && (
+            {webStateCurr === 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
                   soundManager.blipSoundSoft();
@@ -2372,7 +2387,7 @@ function Play() {
       </div>
 
       {/* { */}
-      {webState === 'web-state-game' && nnProgress !== null && (
+      {webStateCurr === 'web-state-game' && nnProgress !== null && (
         <div className="neural-network-train-status">
           <span>Neural Network Training</span>
           <div className="neural-network-train-top">
@@ -2426,7 +2441,7 @@ function Play() {
       )}
 
       {debugState.Dev_Mode && <div className="dev-mode-div">Dev Mode</div>}
-      {webState === 'web-state-game' && !isReplayHidden && (
+      {webStateCurr === 'web-state-game' && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">
             {videoGray && <p className="replay">FAST FORWARD</p>}

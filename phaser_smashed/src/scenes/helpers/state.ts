@@ -173,18 +173,11 @@ export function setGameState(game: SmashedGame, state: GameState): void {
         print('   BEST EXPRESS INDEX', bestExpressNN?.playerIndex);
         print('  BEST EXPRESS RATING', bestExpressNN?.score);
 
-        (async () => {
-          if (bestExpressNN.playerIndex !== firstExpressNNIndex) {
-            saveNeuralNetwork(
-              game.nnExpressNets[bestExpressNN.playerIndex],
-              game.debug.Auto_Restart
-            );
-          } else {
-            if (game.debug.Auto_Restart) {
-              sendRestartSignal();
-            }
-          }
-        })();
+        if (bestExpressNN.playerIndex !== firstExpressNNIndex) {
+          saveNeuralNetwork(game.nnExpressNets[bestExpressNN.playerIndex]);
+        }
+      } else if (game.debug.Auto_Restart) {
+        sendRestartSignal();
       }
 
       if (!game.debug.Auto_Restart) {

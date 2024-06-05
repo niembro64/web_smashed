@@ -18,6 +18,8 @@ export interface ClientInformation {
   postal: string;
 }
 
+export const nodeEnvIsProduction = process.env.NODE_ENV === 'production';
+
 export const fetchClientData = async (): Promise<ClientInformation> => {
   // let counterContainer = document.querySelector("#visits");
   // let resetButton = document.querySelector('#reset');
@@ -109,7 +111,7 @@ export const axiosSaveOne = async (
 
   let res: any = null;
   try {
-    if (process.env.NODE_ENV === 'production') {
+    if (nodeEnvIsProduction) {
       // await axios.post('http://3.86.180.36:8000/api/smashed/create', sessionInfo);
       res = await axios.post('/api/smashed/create', sessionInfo);
     } else {
@@ -139,7 +141,7 @@ export const axiosUpsertOne = async (
   );
 
   let s: SessionInfo;
-  if (process.env.NODE_ENV === 'production') {
+  if (nodeEnvIsProduction) {
     let apiString: string =
       '/api/smashedByMomentCreated/' +
       moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
@@ -176,7 +178,7 @@ export const axiosUpsertOne = async (
   };
   print('NEW SESSION', si);
 
-  if (process.env.NODE_ENV === 'production') {
+  if (nodeEnvIsProduction) {
     await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
   } else {
     await axios.patch(
@@ -188,7 +190,7 @@ export const axiosUpsertOne = async (
 
 export const getAllGameHistory = async (): Promise<SessionInfo[]> => {
   let response;
-  if (process.env.NODE_ENV === 'production') {
+  if (nodeEnvIsProduction) {
     // response = await axios.get('http://3.86.180.36:8000/api/smashed');
     response = await axios.get('/api/smashed');
   } else {
@@ -240,7 +242,7 @@ export const getBarsFromPercent = (
 //////////////////////////////////////////
 
 const getApiBaseUrl = () => {
-  if (process.env.NODE_ENV === 'production') {
+  if (nodeEnvIsProduction) {
     return ''; // Assuming the production URL will be relative to the current domain
   } else {
     return 'http://localhost:8000';
