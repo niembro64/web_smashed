@@ -122,6 +122,7 @@ function Play() {
           Dur_Seconds: false,
           Matrices_Always: true,
           Auto_Restart: true,
+          Simple_Stage: true,
         };
       });
 

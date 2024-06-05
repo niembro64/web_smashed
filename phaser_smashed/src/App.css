@@ -1113,7 +1113,7 @@ h2 {
   overflow: visible;
   padding-bottom: 2.5vw;
   /* padding-top: 1vw; */
-  border: 0.5vw solid rgb(83, 83, 83);
+  border: 1vw solid rgb(83, 83, 83);
   background-color: rgba(227, 227, 227, 0.258);
 }
 .start-title-init:hover {
@@ -1141,7 +1141,7 @@ h2 {
   animation: titleInitAnimation 2s ease-in-out both;
   overflow: visible;
   padding-bottom: 0vw;
-  border: 0.5vw solid rgba(255, 255, 255, 0);
+  border: 0vw solid rgba(255, 255, 255, 0);
 }
 .start-title-start > .start-title-h1 {
   transition: 3s ease-in-out;
@@ -1171,8 +1171,10 @@ h2 {
 
 .start-title-corner-piece {
   position: absolute;
-  width: 0.5vw;
-  height: 0.5vw;
+  /* width: 0.5vw;
+  height: 0.5vw; */
+  width: 1vw;
+  height: 1vw;
   background-color: rgb(83, 83, 83);
   pointer-events: none;
 }
