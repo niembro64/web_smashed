@@ -1,8 +1,8 @@
 import { Debug } from './scenes/types';
 
 // TRUE means SHOWN ON MAIN PAGE
-export const debugMain: Debug = {
-  Auto_Restart: true,
+export const debugOnMain: Debug = {
+  Auto_Restart: false,
   NN_Train_Static: true,
   NN_Train_Evolving: true,
   NN_Reset_Evolving: false,

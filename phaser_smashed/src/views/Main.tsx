@@ -56,7 +56,7 @@ import {
   smashConfigOptions,
   workingControllersAmazon,
 } from './reactHelpers';
-import { debugMain } from '../debugMain';
+import { debugOnMain } from '../debugOnMain';
 import { debugMax } from '../debugMax';
 
 export const blipDelay = 200;
@@ -150,7 +150,7 @@ function Play() {
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
-    useState<Debug>(debugMain);
+    useState<Debug>(debugOnMain);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
