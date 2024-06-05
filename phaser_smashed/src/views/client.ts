@@ -267,10 +267,7 @@ export const fetchNeuralNetwork =
   };
 
 // Function to send the updated neural network to the backend
-export const saveNeuralNetwork = async (
-  nn: any,
-  restartGame: boolean = false
-): Promise<boolean> => {
+export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
   let firstWeight;
   firstWeight = getFirstWeightOfNNJson(nn);
   // if (!nn?.toJSON) {
@@ -296,10 +293,6 @@ export const saveNeuralNetwork = async (
     const savedNetwork = response.data;
     // Handle the response
     console.log(savedNetwork);
-
-    if (restartGame) {
-      sendRestartSignal();
-    }
 
     return true;
   } catch (error) {

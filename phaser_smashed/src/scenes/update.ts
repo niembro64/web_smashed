@@ -342,7 +342,7 @@ export function updatePlayers(game: SmashedGame): void {
         if (
           getHasGameDurationPassedPlayer(
             player,
-            game.debug.Simple_Stage ? 0 : game.durationPlayerDead,
+            game.debug.Simple_Stage ? 0 : game.durationPlayerDeadInCloud || 0,
             game
           )
         ) {

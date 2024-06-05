@@ -57,7 +57,7 @@ export const debugInit: Debug = {
   Chomp_Explosion: false,
   Chomp_Velocities: false,
   Char_Override: false,
-  Char_Override_ID: 3,
+  Char_Override_ID: 0,
   Bullets_Allow_Groups: true,
   Trophies_On_Shots: false,
   Trophies_Always: false,

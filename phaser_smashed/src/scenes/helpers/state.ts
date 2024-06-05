@@ -1,3 +1,4 @@
+import { send } from 'process';
 import { axiosUpsertOne, print, saveNeuralNetwork } from '../../views/client';
 import SmashedGame from '../SmashedGame';
 import {
@@ -61,20 +62,27 @@ import {
   updateShotsOnPlayers,
 } from './text';
 
-export const sendRestartSignal = () => {
+export const sendRestartSignal = (game: SmashedGame, delaySeconds: number) => {
+  if (!game.debug.Auto_Restart) {
+    return;
+  }
+
   print('SENDING RESTART SIGNAL');
-  window.dispatchEvent(
-    new CustomEvent('nn-train', {
-      detail: {
-        name: 'restart-game',
-        value: null,
-        error: null,
-        numIter: null,
-        numObj: null,
-        logPeriod: null,
-      },
-    })
-  );
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new CustomEvent('nn-train', {
+        detail: {
+          name: 'restart-game',
+          value: null,
+          error: null,
+          numIter: null,
+          numObj: null,
+          logPeriod: null,
+        },
+      })
+    );
+  }, delaySeconds * 1000);
 };
 
 export function setGameState(game: SmashedGame, state: GameState): void {
@@ -174,10 +182,18 @@ export function setGameState(game: SmashedGame, state: GameState): void {
         print('  BEST EXPRESS RATING', bestExpressNN?.score);
 
         if (bestExpressNN.playerIndex !== firstExpressNNIndex) {
-          saveNeuralNetwork(game.nnExpressNets[bestExpressNN.playerIndex]);
+          (async () => {
+            await saveNeuralNetwork(
+              game.nnExpressNets[bestExpressNN.playerIndex]
+            );
+            sendRestartSignal(game, 3);
+          })();
+        } else {
+          print('  NOT SAVING NEURAL NETWORK');
+          sendRestartSignal(game, 3);
         }
-      } else if (game.debug.Auto_Restart) {
-        sendRestartSignal();
+      } else {
+        sendRestartSignal(game, 3);
       }
 
       if (!game.debug.Auto_Restart) {

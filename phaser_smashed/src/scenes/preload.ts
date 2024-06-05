@@ -26,19 +26,15 @@ export function preload(game: SmashedGame): void {
   // Pull Configs
   //////////////////////////////
   const nnJsonExpress_FromReact = game.game.registry.get('nnJsonExpress');
-
   game.sessionMoment = game.game.registry.get('myMoment');
-  // print('game.sessionMoment', game.sessionMoment);
   game.smashConfig = game.game.registry.get('smashConfig');
   game.debug = game.game.registry.get('debug');
-  // print('this.smashConfig', game.smashConfig);
   game.BASE_PLAYER_JUMP_PHYSICAL *= game.debug.Gravity_Light ? 0.6 : 1;
   game.BASE_PLAYER_JUMP_WALL *= game.debug.Gravity_Light ? 0.6 : 1;
 
   if (game.smashConfig) {
-    game.durationPlayerDead = game.smashConfig.players.length * 2000;
-    game.playerChoicesCharacterType = [];
-    game.playerChoicesInputType = [];
+    game.durationPlayerDeadInCloud = game.smashConfig.players.length * 2000;
+
     game.smashConfig.players.forEach((player, playerIndex) => {
       if (game.debug.Char_Override) {
         game.playerChoicesCharacterType.push(game.debug.Char_Override_ID);
@@ -165,7 +161,10 @@ export function preload(game: SmashedGame): void {
   game.load.image('button_down', 'images/pswitch_down.png');
   game.load.image('button_up', 'images/pswitch_up.png');
   game.load.image('bullet_bill_tower', 'images/bullet_bill_line_tower.png');
-  game.load.image('bullet_bill_tower_left', 'images/bullet_bill_line_tower_left.png');
+  game.load.image(
+    'bullet_bill_tower_left',
+    'images/bullet_bill_line_tower_left.png'
+  );
   game.load.image('bullet_bill_cannon', 'images/bullet_bill_cannon.png');
 
   // BULLET BILLS

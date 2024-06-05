@@ -331,7 +331,7 @@ function Play() {
     if (numAutoRestarts === 0) {
       return;
     }
-    
+
     onClickStartStartButton();
   }, [numAutoRestarts]);
 
@@ -2440,7 +2440,16 @@ function Play() {
         </div>
       )}
 
-      {debugState.Dev_Mode && <div className="dev-mode-div">Dev Mode</div>}
+      {(debugState.Dev_Mode ||
+        debugState.Auto_Restart ||
+        debugState.Auto_Start) && (
+        <div className="dev-mode-div">
+          {(debugState.Dev_Mode ? 'Dev_Mode' : '') +
+            (debugState.Auto_Restart ? ' Auto_Restart' : '') +
+            (debugState.Auto_Start ? ' Auto_Start' : '')}
+        </div>
+      )}
+
       {webStateCurr === 'web-state-game' && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">

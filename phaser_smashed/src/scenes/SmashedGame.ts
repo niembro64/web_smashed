@@ -227,7 +227,7 @@ export default class SmashedGame extends Phaser.Scene {
   ////////// PLAYER CONSTANTS
   ////////////////////////////////
   DURATION_PLAYER_HURT: number = 1000;
-  durationPlayerDead: number = 5000; // will be some function of number of players
+  durationPlayerDeadInCloud: number | null = null;
   DURATION_PLAYER_FILTER_FLICKER_SLOW: number = this.DURATION_PLAYER_HURT / 10;
   DURATION_PLAYER_FILTER_FLICKER_FAST: number =
     this.DURATION_PLAYER_FILTER_FLICKER_SLOW * 0.5;
@@ -250,7 +250,7 @@ export default class SmashedGame extends Phaser.Scene {
   ////////////////////////////////
   ////////// PLAYER VARIRABLES
   ////////////////////////////////
-  playerChoicesCharacterType: CharacterId[] = [0, 1, 2, 3];
+  playerChoicesCharacterType: CharacterId[] = [];
   playerChoicesInputType: InputType[] = [];
   // playerSpawnOrder: number[] = [2, 0, 1, 3];
   playerSpawnOrder: number[] = [0, 1, 2, 3];
