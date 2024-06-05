@@ -1501,6 +1501,9 @@ function Play() {
                         }}
                       >
                         <div className="startImageWrapper">
+                          {/* ////////////////////////////////////// */}
+                          {/* CHARACTER SELECTION EMPTY */}
+                          {/* ////////////////////////////////////// */}
                           {inputArray[pIndex] !== 0 && (
                             <img
                               id={(() => {
@@ -1547,6 +1550,10 @@ function Play() {
                         </div>
                       </div>
                     )}
+
+                    {/* ////////////////////////////////////// */}
+                    {/* CHARACTER SELECTION IMAGE */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] !== 0 && (
                       <div
                         className="player-char"
@@ -1603,9 +1610,6 @@ function Play() {
                         }}
                       >
                         <span>Off</span>
-                        {/* <div className="button-input-emoji">
-                          {emoji.cloudWhite}
-                        </div> */}
                       </div>
                     )}
 
