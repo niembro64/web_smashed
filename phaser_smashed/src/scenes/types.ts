@@ -580,7 +580,7 @@ export interface SmashConfig {
 
 export interface PlayerConfigSmall {
   characterId: CharacterId;
-  input: InputType;
+  input: InputType | null;
 }
 
 export interface PlayerConfig {

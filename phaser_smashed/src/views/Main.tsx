@@ -128,6 +128,29 @@ function Play() {
       // set inputs to all input 5
       setInputArrayEffect([5, 5, 5, 5]);
 
+      // set all characters to 0
+
+      const choices: PlayerConfigSmall[] = [
+        {
+          characterId: 0,
+          input: null,
+        },
+        {
+          characterId: 0,
+          input: null,
+        },
+        {
+          characterId: 0,
+          input: null,
+        },
+        {
+          characterId: 0,
+          input: null,
+        },
+      ];
+
+      setSmashConfig({ players: [...choices] });
+
       setTimeout(() => {
         print('debugState.NN_Train_Evolving Button setTimeout');
         setDebugState((prev: Debug) => {
@@ -285,7 +308,7 @@ function Play() {
           stopRecording();
           break;
         default:
-          print('BROKEN_____________________');
+          throw new Error('gameStateReact.nameCurr not found');
       }
     };
 
@@ -1523,12 +1546,14 @@ function Play() {
                         }}
                       >
                         <div className="startImageWrapper">
-                          <div
-                            className={
-                              'id-circle ' +
-                              idColors[getNumActiveBeforeMe(pIndex)]
-                            }
-                          ></div>
+                          {!debugState.Chars_Colored && (
+                            <div
+                              className={
+                                'id-circle ' +
+                                idColors[getNumActiveBeforeMe(pIndex)]
+                              }
+                            />
+                          )}
 
                           <img
                             id={(() => {
