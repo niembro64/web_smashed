@@ -744,22 +744,25 @@ h2 {
   background-color: var(--id-green);
 }
 
-.img-colorize-red {
-  filter: sepia(1) hue-rotate(0deg) saturate(10);
+#fill-index-0 {
+  filter: brightness(0) invert(1) brightness(0.1) sepia() hue-rotate(290deg)
+    saturate(25);
 }
 
-.img-colorize-blue {
-  filter: sepia(1) hue-rotate(202deg) saturate(10);
+#fill-index-1 {
+  filter: brightness(0) invert(1) brightness(0.15) sepia() hue-rotate(150deg)
+    saturate(30);
 }
 
-.img-colorize-yellow {
-  filter: sepia(1) hue-rotate(58deg) saturate(10);
+#fill-index-2 {
+  filter: brightness(0) invert(1) brightness(0.5) sepia() hue-rotate(20deg)
+    saturate(30);
 }
 
-.img-colorize-green {
-  filter: sepia(1) hue-rotate(90deg) saturate(10);
+#fill-index-3 {
+ filter: brightness(0) invert(1) brightness(0.2) sepia() hue-rotate(100deg)
+    saturate(30);
 }
-
 
 .playLink {
   height: 15%;

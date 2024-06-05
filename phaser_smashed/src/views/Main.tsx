@@ -1490,6 +1490,9 @@ function Play() {
               {smashConfig.players.map((p, pIndex) => {
                 return (
                   <div className="player-choice" key={pIndex}>
+                    {/* ////////////////////////////////////// */}
+                    {/* CHARACTER SELECTION EMPTY */}
+                    {/* ////////////////////////////////////// */}
                     {inputArray[pIndex] === 0 && (
                       <div
                         className="player-char"
@@ -1501,51 +1504,6 @@ function Play() {
                         }}
                       >
                         <div className="startImageWrapper">
-                          {/* ////////////////////////////////////// */}
-                          {/* CHARACTER SELECTION EMPTY */}
-                          {/* ////////////////////////////////////// */}
-                          {inputArray[pIndex] !== 0 && (
-                            <img
-                              id={(() => {
-                                switch (pIndex) {
-                                  case 0:
-                                    return 'fill-index-0';
-                                  case 1:
-                                    return 'fill-index-1';
-                                  case 2:
-                                    return 'fill-index-2';
-                                  case 3:
-                                    return 'fill-index-3';
-                                  default:
-                                    return '';
-                                }
-                              })()}
-                              className={
-                                'startImage' +
-                                (pIndex > 1 ? 'Inverse' : 'Normal') +
-                                (pIndex === 0
-                                  ? ' img-colorize-red'
-                                  : pIndex === 1
-                                  ? ' img-colorize-blue'
-                                  : pIndex === 2
-                                  ? ' img-colorize-yellow'
-                                  : pIndex === 3
-                                  ? ' img-colorize-green'
-                                  : '')
-                              }
-                              src={
-                                'images/character_' +
-                                p.characterId.toString() +
-                                '_cropped.png'
-                              }
-                              width={
-                                (
-                                  55 * smashConfigOptions[p.characterId].scale
-                                ).toString() + '%'
-                              }
-                              alt="char"
-                            />
-                          )}
                           <p className="player-char-image-name"></p>
                         </div>
                       </div>
@@ -1573,6 +1531,24 @@ function Play() {
                           ></div>
 
                           <img
+                            id={(() => {
+                              if (debugState.Chars_Colored) {
+                                switch (pIndex) {
+                                  case 0:
+                                    return 'fill-index-0';
+                                  case 1:
+                                    return 'fill-index-1';
+                                  case 2:
+                                    return 'fill-index-2';
+                                  case 3:
+                                    return 'fill-index-3';
+                                  default:
+                                    throw new Error('pIndex not found');
+                                }
+                              } else {
+                                return '';
+                              }
+                            })()}
                             className={
                               'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal')
                             }
