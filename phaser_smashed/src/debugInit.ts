@@ -15,7 +15,7 @@ export const debugInit: Debug = {
   NN_Help_Wall: true,
   Simple_Stage: false,
 
-  Dev_Mode: true,
+  Dev_Mode: false,
 
   Dur_Seconds: false,
   Mode_Infinity: false,
