@@ -144,7 +144,7 @@ function createGamePathPoints(game: SmashedGame): void {
   pathPoints.graphics = game.add.graphics();
 
   // Draw the path
-  pathPoints.graphics.lineStyle(10, 0xff00ff, 1);
+  pathPoints.graphics.lineStyle(0, 0xffffff, 1);
   pathPoints.graphics.beginPath();
   pathPoints.graphics.moveTo(
     pathPoints.pathPoints[0].x,
