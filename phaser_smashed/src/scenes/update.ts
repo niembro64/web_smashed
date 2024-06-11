@@ -288,7 +288,8 @@ export function updatePlayers(game: SmashedGame): void {
           ///////// attackEnergy hit => hurt
           ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-hurt', game);
-        } else if (!willPlayerBeInBoundaryNextFrame(player, game)) {
+        // } else if (!willPlayerBeInBoundaryNextFrame(player, game)) {
+        } else if (!isPlayerInGameBoundary(player, game)) {
           ////////////////////////////////
           ///////// offscreen => dead
           ////////////////////////////////

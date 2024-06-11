@@ -65,6 +65,9 @@ export function isPlayerInGameBoundary(
   game: SmashedGame
 ): boolean {
   const point: Position = player.char.sprite.body.position;
+
+  if (!point || !point.x || !point.y) return false;
+
   const boundaryPoints: Position[] = game.gamePathPoints;
 
   const shape: Line[] = [];
@@ -100,6 +103,9 @@ export function willPlayerBeInBoundaryNextFrame(
   game: SmashedGame
 ): boolean {
   const point: Position = player.char.sprite.body.position;
+
+  if (!point || !point.x || !point.y) return false;
+
   const nextPoint: Position = {
     x: point.x + player.char.sprite.body.velocity.x,
     y: point.y + player.char.sprite.body.velocity.y,
