@@ -596,7 +596,9 @@ function Play() {
   ///////////////////////////////////////
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(
-    debugInit.Dev_Mode ? inputArrayInitDevMode : inputArrayInit
+    debugInit.Dev_Mode || debugInit.Auto_Start
+      ? inputArrayInitDevMode
+      : inputArrayInit
   );
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(
     debugState.Dev_Mode ? smashConfigInitDevMode : smashConfigInit

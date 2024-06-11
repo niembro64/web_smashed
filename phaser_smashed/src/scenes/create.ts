@@ -156,6 +156,11 @@ function createGamePathPoints(game: SmashedGame): void {
       print(pointIndex, 'point', point);
       pathPoints.graphics.lineTo(point.x, point.y);
     });
+  pathPoints.graphics.lineTo(
+    pathPoints.pathPoints[0].x,
+    pathPoints.pathPoints[0].y
+  );
+  
   pathPoints.graphics.strokePath();
 }
 

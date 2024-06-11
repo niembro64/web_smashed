@@ -837,6 +837,17 @@ export default class SmashedGame extends Phaser.Scene {
     x: 1 / SCREEN_DIMENSIONS.WIDTH,
     y: 1 / SCREEN_DIMENSIONS.HEIGHT,
   };
+
+  flagPlatformTopLeft: Position = {
+    x: SCREEN_DIMENSIONS.WIDTH * 0.86,
+    y: SCREEN_DIMENSIONS.HEIGHT * 0.67,
+  };
+
+  flagStairsBottom: Position = {
+    x: this.flagPlatformTopLeft.x - 385,
+    y: this.flagPlatformTopLeft.y + 385,
+  };
+
   gamePathPoints: Position[] = [
     {
       x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
@@ -848,39 +859,48 @@ export default class SmashedGame extends Phaser.Scene {
     },
     {
       x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
-      y: (SCREEN_DIMENSIONS.HEIGHT * (1 - this.percentOfScreen.y)) / 2,
+      y: this.flagPlatformTopLeft.y,
+    },
+
+    {
+      x: this.flagPlatformTopLeft.x,
+      y: this.flagPlatformTopLeft.y,
+    },
+
+    {
+      x: this.flagStairsBottom.x,
+      y: this.flagStairsBottom.y,
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.49,
+      y: this.flagStairsBottom.y,
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.49,
+      y: this.flagStairsBottom.y - 120,
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.28,
+      y: this.flagStairsBottom.y - 120,
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.16,
+      y: this.flagStairsBottom.y - 120,
+    },
+    // {
+    //   x: SCREEN_DIMENSIONS.WIDTH * 0.16,
+    //   y: this.flagStairsBottom.y,
+    // },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * 0.16,
+      y: this.flagStairsBottom.y,
     },
     {
       x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-      y: (SCREEN_DIMENSIONS.HEIGHT * (1 - this.percentOfScreen.y)) / 2,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-      y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
+      y: this.flagStairsBottom.y,
     },
   ];
-  // gamePathPoints: Position[] = [
-  //   {
-  //     x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-  //     y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
-  //   },
-  //   {
-  //     x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
-  //     y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
-  //   },
-  //   {
-  //     x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
-  //     y: SCREEN_DIMENSIONS.HEIGHT * (1 - this.percentOfScreen.y),
-  //   },
-  //   {
-  //     x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-  //     y: SCREEN_DIMENSIONS.HEIGHT * (1 - this.percentOfScreen.y),
-  //   },
-  //   {
-  //     x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-  //     y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
-  //   },
-  // ];
+
   gameBoundaryPath: GameBoundaryObject = {
     pathPoints: this.gamePathPoints,
     graphics: null,
