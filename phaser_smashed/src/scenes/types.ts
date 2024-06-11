@@ -411,6 +411,11 @@ export interface Position {
   y: number;
 }
 
+export type Line = {
+  start: Position;
+  end: Position;
+};
+
 export interface AttackPhysical {
   sprite: any | Phaser.GameObjects.Sprite;
   state: AttackStateWithTime;
@@ -619,6 +624,11 @@ export interface FireFlower {
   numUpdateIndexesToWaitFast: number;
 }
 
+export type GameBoundaryObject = {
+  pathPoints: Position[];
+  graphics: any;
+};
+
 export type BulletBillTower = {
   scale: number;
   sprite: any;
@@ -672,7 +682,7 @@ export type BulletBillSparkLine = {
   percentPathCurrCompleted: number;
   speed: number;
   pathPoints: Position[];
-  path: Phaser.Curves.Path | null;
+  // path: Phaser.Curves.Path | null;
   pathPointsIndexCurr: number;
   emitter: any;
   particles: any;

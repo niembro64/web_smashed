@@ -26,6 +26,7 @@ import {
   BulletBillCombo,
   BulletBillSparkLine,
   FireFlower,
+  GameBoundaryObject,
   Player,
   Position,
 } from './types';
@@ -46,6 +47,7 @@ export function create(game: SmashedGame) {
   createSplashRuleFinished(game); // MAYBE
   createPSwitch(game);
   createFireFlower(game);
+
   createBulletBillSparkLine(game);
   createBulletBillTowers(game);
   createExplosionsBack(game);
@@ -85,6 +87,7 @@ export function create(game: SmashedGame) {
   createHitboxOverlap(game);
   createEndDataMatrices(game);
   createShake(game);
+  createGamePathPoints(game);
   // createBulletBillSparkLine(game);
 
   createBulletBillSparkLineEmitter(game);
@@ -133,6 +136,27 @@ function createBulletBillTowers(game: SmashedGame): void {
   towerLeft.sprite.setImmovable(true);
   towerLeft.sprite.setOrigin(0.5, 0.5);
   towerLeft.sprite.body.allowGravity = false;
+}
+
+function createGamePathPoints(game: SmashedGame): void {
+  const pathPoints: GameBoundaryObject = game.gameBoundaryPath;
+
+  pathPoints.graphics = game.add.graphics();
+
+  // Draw the path
+  pathPoints.graphics.lineStyle(10, 0xff00ff, 1);
+  pathPoints.graphics.beginPath();
+  pathPoints.graphics.moveTo(
+    pathPoints.pathPoints[0].x,
+    pathPoints.pathPoints[0].y
+  );
+  pathPoints.pathPoints
+    .slice(1)
+    .forEach((point: Position, pointIndex: Number) => {
+      print(pointIndex, 'point', point);
+      pathPoints.graphics.lineTo(point.x, point.y);
+    });
+  pathPoints.graphics.strokePath();
 }
 
 function createBulletBillSparkLine(game: SmashedGame) {

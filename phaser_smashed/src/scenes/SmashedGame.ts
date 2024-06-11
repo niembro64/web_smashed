@@ -13,6 +13,7 @@ import {
   EndCup,
   FireFlower,
   Flag,
+  GameBoundaryObject,
   GameStateWithTime,
   InputType,
   Lava,
@@ -832,6 +833,37 @@ export default class SmashedGame extends Phaser.Scene {
     },
   };
 
+  percentOfScreen: Position = {
+    x: 1 / SCREEN_DIMENSIONS.WIDTH,
+    y: 1 / SCREEN_DIMENSIONS.HEIGHT,
+  };
+  gamePathPoints: Position[] = [
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
+      y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
+      y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
+      y: SCREEN_DIMENSIONS.HEIGHT * (1 - this.percentOfScreen.y),
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
+      y: SCREEN_DIMENSIONS.HEIGHT * (1 - this.percentOfScreen.y),
+    },
+    {
+      x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
+      y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
+    },
+  ];
+  gameBoundaryPath: GameBoundaryObject = {
+    pathPoints: this.gamePathPoints,
+    graphics: null,
+  };
+
   bbPathPoints: Position[] = [
     {
       x: SCREEN_DIMENSIONS.WIDTH * 0.7285,
@@ -899,7 +931,6 @@ export default class SmashedGame extends Phaser.Scene {
       percentPathCurrCompleted: 0,
       pathPoints: this.bbPathPoints,
       pathPointsIndexCurr: 0,
-      path: null,
     },
     bullet: {
       scale: this.bbScale,
