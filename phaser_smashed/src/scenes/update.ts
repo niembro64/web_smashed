@@ -11,7 +11,7 @@ import {
   updateNumShotsLeft,
 } from './helpers/drinking';
 import { getIsFlagShots } from './helpers/flag';
-import { isPointInShape } from './helpers/math';
+import { isPlayerInGameBoundary, willPlayerBeInBoundaryNextFrame } from './helpers/math';
 import {
   getIsPlayerOffscreen,
   setRespawn,
@@ -288,9 +288,7 @@ export function updatePlayers(game: SmashedGame): void {
           ///////// attackEnergy hit => hurt
           ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-hurt', game);
-        } else if (
-          !isPointInShape(player.char.sprite.body.position, game.gamePathPoints)
-        ) {
+        } else if (!willPlayerBeInBoundaryNextFrame(player, game)) {
           ////////////////////////////////
           ///////// offscreen => dead
           ////////////////////////////////

@@ -1,5 +1,5 @@
-import { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Line, Position } from '../types';
+import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
+import { Line, Player, Position } from '../types';
 
 export function normalRandom(mean: number = 0, stdev: number = 1) {
   let u, v, s;
@@ -60,10 +60,13 @@ function doLinesIntersect(line1: Line, line2: Line): boolean {
 /**
  * Check if a point is inside an irregular shape using ray tracing
  */
-export function isPointInShape(
-  point: Position,
-  boundaryPoints: Position[]
+export function isPlayerInGameBoundary(
+  player: Player,
+  game: SmashedGame
 ): boolean {
+  const point: Position = player.char.sprite.body.position;
+  const boundaryPoints: Position[] = game.gamePathPoints;
+
   const shape: Line[] = [];
   for (let i = 0; i < boundaryPoints.length; i++) {
     const start = boundaryPoints[i];
@@ -79,6 +82,45 @@ export function isPointInShape(
 
     // Check if the point is exactly on a line segment
     if (isPointOnLine(point, line)) {
+      return true;
+    }
+
+    // Count intersections of the ray with shape edges
+    if (doLinesIntersect(ray, line)) {
+      intersections++;
+    }
+  }
+
+  // Position is inside if the number of intersections is odd, outside if even
+  return intersections % 2 !== 0;
+}
+
+export function willPlayerBeInBoundaryNextFrame(
+  player: Player,
+  game: SmashedGame
+): boolean {
+  const point: Position = player.char.sprite.body.position;
+  const nextPoint: Position = {
+    x: point.x + player.char.sprite.body.velocity.x,
+    y: point.y + player.char.sprite.body.velocity.y,
+  };
+  const boundaryPoints: Position[] = game.gamePathPoints;
+
+  const shape: Line[] = [];
+  for (let i = 0; i < boundaryPoints.length; i++) {
+    const start = boundaryPoints[i];
+    const end = boundaryPoints[(i + 1) % boundaryPoints.length];
+    shape.push({ start, end });
+  }
+
+  let intersections = 0;
+  const rayEndPoint: Position = { x: SCREEN_DIMENSIONS.WIDTH, y: point.y }; // Horizontal ray to the right
+
+  for (const line of shape) {
+    const ray = { start: nextPoint, end: rayEndPoint };
+
+    // Check if the point is exactly on a line segment
+    if (isPointOnLine(nextPoint, line)) {
       return true;
     }
 
