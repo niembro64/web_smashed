@@ -17,6 +17,8 @@ export const debugInit: Debug = {
 
   Dev_Mode: false,
 
+  
+
   Dur_Seconds: false,
   Mode_Infinity: false,
   Minutes: 2, //01234567

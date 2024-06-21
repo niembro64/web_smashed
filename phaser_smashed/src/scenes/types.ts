@@ -626,7 +626,7 @@ export interface FireFlower {
 
 export type GameBoundaryObject = {
   pathPoints: Position[];
-  graphics: any;
+  graphics: Phaser.GameObjects.Graphics | null;
 };
 
 export type BulletBillTower = {
@@ -906,15 +906,6 @@ export interface NNInput {
   emitterOn: number;
   powerState: number;
   stateHurt: number;
-
-  // controllerCurrUp: number;
-  // controllerCurrDown: number;
-  // controllerCurrLeft: number;
-  // controllerCurrRight: number;
-  // controllerCurrA: number;
-  // controllerCurrB: number;
-  // controllerCurrX: number;
-  // controllerCurrY: number;
 
   controllerPrevUp: number;
   controllerPrevDown: number;
