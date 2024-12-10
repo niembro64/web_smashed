@@ -11,7 +11,8 @@ import {
   emoji,
 } from '../scenes/types';
 
-export const inputArrayInit: InputType[] = [0, 0, 0, 0];
+export const inputArrayReset: InputType[] = [0, 0, 0, 0];
+export const inputArrayInit: InputType[] = [3, 3, 3, 3];
 export const inputArrayInitDevMode: InputType[] = [5, 5, 5, 5];
 // export const inputArrayInitDebug: InputType[] = [3, 3, 3, 3];
 export const inputArrayInitMax: number = 4;

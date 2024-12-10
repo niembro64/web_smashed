@@ -46,6 +46,7 @@ import {
   idColors,
   inputArrayInit,
   inputArrayInitDevMode,
+  inputArrayReset,
   keyboardGroups,
   p1Keys,
   p2Keys,
@@ -643,7 +644,7 @@ function Play() {
 
   const setInputArrayEffect = (newInputArray: InputType[]): void => {
     soundManager.blipBeedeeSound();
-    setInputArray((prevArray: InputType[]) => inputArrayInit);
+    setInputArray((prevArray: InputType[]) => inputArrayReset);
 
     newInputArray.forEach((item, index) => {
       if (item === 0) {
@@ -1646,7 +1647,7 @@ function Play() {
                           onClickOscura(pIndex);
                         }}
                       >
-                        <span>Gamepad</span>
+                        <span>GAMEPAD</span>
                         {getNumGamepads() > 1 && (
                           <span id="input-sub">
                             {getNumControllersExistLower(pIndex) + 1}
@@ -1693,7 +1694,7 @@ function Play() {
                           onClickOscura(pIndex);
                         }}
                       >
-                        <span>Keyboard</span>
+                        <span>KEYBOARD</span>
                         {getNumKeyboards() > 1 &&
                           getDoesKeyboardExistLower(pIndex) && (
                             <span id="input-sub">Arrows</span>
@@ -1743,8 +1744,8 @@ function Play() {
                           onClickOscura(pIndex);
                         }}
                       >
-                        <span>Bot</span>
-                        <span id="input-sub">{'If -> Then'}</span>
+                        <span>BOT</span>
+                        <span id="input-sub">ROBOT</span>
                         <div className="button-input-emoji">{emoji.bot}</div>
                       </div>
                     )}
@@ -1778,8 +1779,8 @@ function Play() {
                           onClickOscura(pIndex);
                         }}
                       >
-                        <span>Static</span>
-                        <span id="input-sub">Neural Network</span>
+                        <span>BOT</span>
+                        <span id="input-sub">NEURAL NETWORK</span>
                         <div className="button-input-emoji">{emoji.brain}</div>
                       </div>
                     )}
@@ -1813,8 +1814,8 @@ function Play() {
                           onClickOscura(pIndex);
                         }}
                       >
-                        <span>Evolving</span>
-                        <span id="input-sub">Neural Network</span>
+                        <span>BOT</span>
+                        <span id="input-sub">EVOLVING NN</span>
                         <div className="button-input-emoji">{emoji.dna}</div>
                       </div>
                     )}
