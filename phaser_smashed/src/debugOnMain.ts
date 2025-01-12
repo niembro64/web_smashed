@@ -71,4 +71,5 @@ export const debugOnMain: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
+  Allow_Mobile: false
 };

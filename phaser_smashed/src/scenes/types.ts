@@ -3,6 +3,7 @@ import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 
 export interface Debug {
+  Allow_Mobile: boolean;
   NN_Reset_Evolving: boolean;
   NN_Train_Evolving: boolean;
   Auto_Restart: boolean;

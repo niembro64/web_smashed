@@ -1,6 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
+  Allow_Mobile: true,
   Auto_Start: false,
   Auto_Restart: false,
   Super_Speed: false,
@@ -16,8 +17,6 @@ export const debugInit: Debug = {
   Simple_Stage: false,
 
   Dev_Mode: false,
-
-  
 
   Dur_Seconds: false,
   Mode_Infinity: false,

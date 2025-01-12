@@ -69,4 +69,5 @@ export const debugMax: Debug = {
   Flower_1000_Balls: true,
   Flower_ShootRndAmt: 4,
   Flower_HighTrajectory: 2,
+  Allow_Mobile: true
 };

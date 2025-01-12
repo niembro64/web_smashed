@@ -2538,7 +2538,7 @@ function Play() {
         </div>
       )}
 
-      {isMobile && (
+      {!debugInit.Allow_Mobile && isMobile && (
         <div className="mobile-warning">
           {/* <img src="/images/table.png" alt="table" /> */}
           <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
