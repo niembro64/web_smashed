@@ -1,3 +1,5 @@
+// Main.tsx
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import '@fontsource/press-start-2p';
 import html2canvas from 'html2canvas';
@@ -59,11 +61,11 @@ import {
 } from './reactHelpers';
 import { debugOnMain } from '../debugOnMain';
 import { debugMax } from '../debugMax';
+import InputTypeBlock from '../scenes/components/InputTypeBlock';
+import CornerPieces from '../scenes/components/CornerPieces';
 
 export const blipDelay = 200;
-
 export const baseGravity = 3000;
-
 export const gravLightMultiplier = 0.5;
 
 function Main() {
@@ -1488,15 +1490,12 @@ function Main() {
                 >
                   {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
                 </h1>
-                {debugState.Title_Screws &&
-                  webStateCurr === 'web-state-init' && (
-                    <>
-                      <div className="start-title-corner-piece"></div>
-                      <div className="start-title-corner-piece"></div>
-                      <div className="start-title-corner-piece"></div>
-                      <div className="start-title-corner-piece"></div>
-                    </>
-                  )}
+
+                {/* CORNER PIECES OFFLOADED */}
+                <CornerPieces
+                  debugState={debugState}
+                  webStateCurr={webStateCurr}
+                />
               </div>
             </div>
           )}
@@ -1517,308 +1516,27 @@ function Main() {
               {smashConfig.players.map((p, pIndex) => {
                 return (
                   <div className="player-choice" key={pIndex}>
-                    {/* ////////////////////////////////////// */}
-                    {/* CHARACTER SELECTION EMPTY */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 0 && (
-                      <div
-                        className="player-char"
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <div className="startImageWrapper">
-                          <p className="player-char-image-name"></p>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* ////////////////////////////////////// */}
-                    {/* CHARACTER SELECTION IMAGE */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] !== 0 && (
-                      <div
-                        className="player-char"
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickRotateSelection(pIndex);
-                        }}
-                      >
-                        <div className="startImageWrapper">
-                          {!debugState.Chars_Colored && (
-                            <div
-                              className={
-                                'id-circle ' +
-                                idColors[getNumActiveBeforeMe(pIndex)]
-                              }
-                            />
-                          )}
-
-                          <img
-                            id={(() => {
-                              if (debugState.Chars_Colored) {
-                                switch (pIndex) {
-                                  case 0:
-                                    return 'fill-index-0';
-                                  case 1:
-                                    return 'fill-index-1';
-                                  case 2:
-                                    return 'fill-index-2';
-                                  case 3:
-                                    return 'fill-index-3';
-                                  default:
-                                    throw new Error('pIndex not found');
-                                }
-                              } else {
-                                return '';
-                              }
-                            })()}
-                            className={
-                              'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal')
-                            }
-                            src={
-                              'images/character_' +
-                              p.characterId.toString() +
-                              '_cropped.png'
-                            }
-                            width={
-                              (
-                                55 * smashConfigOptions[p.characterId].scale
-                              ).toString() + '%'
-                            }
-                            alt="char"
-                          />
-
-                          <p className="player-char-image-name">
-                            {smashConfigOptions[p.characterId].name}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* ////////////////////////////////////// */}
-                    {/* EMPTY OFF */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 0 && (
-                      <div
-                        className="b-oscuro b-dark"
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <span>Off</span>
-                      </div>
-                    )}
-
-                    {/* ////////////////////////////////////// */}
-                    {/* GAMEPAD CONTROLLER */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 1 && (
-                      <div
-                        className={
-                          'b-oscuro b-dark' +
-                          (() => {
-                            switch (getNumActiveBeforeMe(pIndex)) {
-                              case 0:
-                                return ' b-dark-red';
-                              case 1:
-                                return ' b-dark-blue';
-                              case 2:
-                                return ' b-dark-yellow';
-                              case 3:
-                                return ' b-dark-green';
-                              default:
-                                return '';
-                            }
-                          })()
-                        }
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <span>GAMEPAD</span>
-                        {getNumGamepads() > 1 && (
-                          <span id="input-sub">
-                            {getNumControllersExistLower(pIndex) + 1}
-                          </span>
-                        )}
-                        {pIndex < 2 && (
-                          <div className="button-input-emoji">
-                            {emoji.gamepad}
-                          </div>
-                        )}
-                        {!(pIndex < 2) && (
-                          <div className="button-input-emoji">
-                            {emoji.gamepad}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {/* ////////////////////////////////////// */}
-                    {/* KEYBOARD */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 2 && (
-                      <div
-                        className={
-                          'b-oscuro b-dark' +
-                          (() => {
-                            switch (getNumActiveBeforeMe(pIndex)) {
-                              case 0:
-                                return ' b-dark-red';
-                              case 1:
-                                return ' b-dark-blue';
-                              case 2:
-                                return ' b-dark-yellow';
-                              case 3:
-                                return ' b-dark-green';
-                              default:
-                                return '';
-                            }
-                          })()
-                        }
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <span>KEYBOARD</span>
-                        {getNumKeyboards() > 1 &&
-                          getDoesKeyboardExistLower(pIndex) && (
-                            <span id="input-sub">Arrows</span>
-                          )}
-                        {getNumKeyboards() > 1 &&
-                          !getDoesKeyboardExistLower(pIndex) && (
-                            <span id="input-sub">WASD</span>
-                          )}
-                        {pIndex < 2 && (
-                          <div className="button-input-emoji">
-                            {emoji.keyboardWhite}
-                          </div>
-                        )}
-                        {!(pIndex < 2) && (
-                          <div className="button-input-emoji">
-                            {emoji.keyboardWhite}​
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {/* ////////////////////////////////////// */}
-                    {/* BOT ROBOT */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 3 && (
-                      <div
-                        className={
-                          'b-oscuro b-dark' +
-                          (() => {
-                            switch (getNumActiveBeforeMe(pIndex)) {
-                              case 0:
-                                return ' b-dark-red';
-                              case 1:
-                                return ' b-dark-blue';
-                              case 2:
-                                return ' b-dark-yellow';
-                              case 3:
-                                return ' b-dark-green';
-                              default:
-                                return '';
-                            }
-                          })()
-                        }
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <span>BOT</span>
-                        <span id="input-sub">ROBOT</span>
-                        <div className="button-input-emoji">{emoji.bot}</div>
-                      </div>
-                    )}
-
-                    {/* ////////////////////////////////////// */}
-                    {/* NEURAL NETWORK STATIC BRAIN */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 4 && (
-                      <div
-                        className={
-                          'b-oscuro b-dark' +
-                          (() => {
-                            switch (getNumActiveBeforeMe(pIndex)) {
-                              case 0:
-                                return ' b-dark-red';
-                              case 1:
-                                return ' b-dark-blue';
-                              case 2:
-                                return ' b-dark-yellow';
-                              case 3:
-                                return ' b-dark-green';
-                              default:
-                                return '';
-                            }
-                          })()
-                        }
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <span>BOT</span>
-                        <span id="input-sub">NEURAL NETWORK</span>
-                        <div className="button-input-emoji">{emoji.brain}</div>
-                      </div>
-                    )}
-
-                    {/* ////////////////////////////////////// */}
-                    {/* NEURAL NETWORK EVOLVING DNA */}
-                    {/* ////////////////////////////////////// */}
-                    {inputArray[pIndex] === 5 && (
-                      <div
-                        className={
-                          'b-oscuro b-dark' +
-                          (() => {
-                            switch (getNumActiveBeforeMe(pIndex)) {
-                              case 0:
-                                return ' b-dark-red';
-                              case 1:
-                                return ' b-dark-blue';
-                              case 2:
-                                return ' b-dark-yellow';
-                              case 3:
-                                return ' b-dark-green';
-                              default:
-                                return '';
-                            }
-                          })()
-                        }
-                        onMouseEnter={() => {
-                          soundManager.blipSoundSoft();
-                        }}
-                        onClick={() => {
-                          onClickOscura(pIndex);
-                        }}
-                      >
-                        <span>BOT</span>
-                        <span id="input-sub">EVOLVING NN</span>
-                        <div className="button-input-emoji">{emoji.dna}</div>
-                      </div>
-                    )}
+                    {/* Instead of repeating the same conditional blocks,
+                        we now offload them to InputTypeBlock */}
+                    <InputTypeBlock
+                      input={inputArray[pIndex]}
+                      pIndex={pIndex}
+                      p={p}
+                      debugState={{
+                        ...debugState,
+                        idColors, // to preserve original usage of idColors
+                      }}
+                      getNumActiveBeforeMe={getNumActiveBeforeMe}
+                      smashConfigOptions={smashConfigOptions}
+                      onClickRotateSelection={onClickRotateSelection}
+                      onClickOscura={onClickOscura}
+                      soundManager={soundManager}
+                      inputArray={inputArray}
+                      getNumKeyboards={getNumKeyboards}
+                      getDoesKeyboardExistLower={getDoesKeyboardExistLower}
+                      getNumGamepads={getNumGamepads}
+                      getNumControllersExistLower={getNumControllersExistLower}
+                    />
                   </div>
                 );
               })}
@@ -2280,7 +1998,7 @@ function Main() {
                 onClick={(e) => {
                   e.stopPropagation();
                   soundManager.blipBeedeeSound();
-                  setHideNiemoIp((x) => !hideNiemoIp);
+                  setHideNiemoIp((x) => !x);
                 }}
               >
                 Filter
@@ -2449,7 +2167,6 @@ function Main() {
         )}
       </div>
 
-      {/* { */}
       {webStateCurr === 'web-state-game' && nnProgress !== null && (
         <div className="neural-network-train-status">
           <span>Neural Network Training</span>
