@@ -7,6 +7,7 @@ import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
 import { useEffect, useRef, useState } from 'react';
 import '../App.css';
+import { Tooltip } from 'react-tooltip';
 import { debugInit } from '../debugInit';
 import {
   nnNumTrainingBarTicks,
@@ -27,6 +28,7 @@ import {
   bar,
   emoji,
   inputTypeNum,
+  tooltipDelay,
 } from '../scenes/types';
 import DebugOptions from './DebugOptions';
 import InputGroup from './InputPresets';
@@ -1562,6 +1564,16 @@ function Main() {
             >
               {emoji.dice}
             </div>
+
+            <div>
+              {/* <button
+                id="my-button"
+                data-tooltip-content="Hello, I'm a tooltip!"
+              >
+                Hover over me
+              </button>
+              <Tooltip anchorId="my-button" /> */}
+            </div>
             <div
               onMouseEnter={() => {
                 if (inputArray.filter((x) => x !== 0).length === 0) {
@@ -1578,9 +1590,16 @@ function Main() {
               onClick={() => {
                 onClickStartStartButton();
               }}
+              data-tooltip-content="Start the Game!"
             >
               <span>START</span>
             </div>
+            <Tooltip
+              anchorSelect=".b-start"
+              place="bottom"
+              delayShow={tooltipDelay}
+              style={{ backgroundColor: 'black', color: 'white' }}
+            />
           </div>
         </div>
       )}

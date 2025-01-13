@@ -2,6 +2,8 @@ import { Moment } from 'moment';
 import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 
+export const tooltipDelay = 500;
+
 export interface Debug {
   Allow_Mobile: boolean;
   NN_Reset_Evolving: boolean;
