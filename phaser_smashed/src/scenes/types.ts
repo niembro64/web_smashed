@@ -12,7 +12,7 @@ export const toolTipStyle: CSSProperties = {
   paddingRight: '30px',
   paddingLeft: '30px',
   borderRadius: '25px',
-  fontSize: '1.5em',
+  // fontSize: '1.5em',
 };
 
 export interface Debug {
