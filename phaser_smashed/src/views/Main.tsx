@@ -1350,6 +1350,41 @@ function Main() {
 
   return (
     <div id="top-level" className="over-div">
+      <Tooltip
+        opacity={1}
+        anchorSelect=".b-all-bots"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+        />
+
+      <Tooltip
+        opacity={1}
+        anchorSelect=".b-dark"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+        />
+
+      <Tooltip
+        opacity={1}
+        anchorSelect=".b-start"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+        />
+
+      <Tooltip
+        opacity={1}
+        anchorSelect=".player-char"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+      />
       {!debugState.Dev_Mode &&
         debugState.Show_Helper_Keyboard &&
         webStateCurr !== 'web-state-setup' &&
@@ -1566,21 +1601,6 @@ function Main() {
             >
               {emoji.dice}
             </div>
-            <Tooltip
-              anchorSelect=".b-all-bots"
-              place="top"
-              delayHide={tooltipDelay}
-              delayShow={tooltipDelay}
-              style={toolTipStyle}
-            />
-
-            <Tooltip
-              anchorSelect=".b-dark"
-              place="top"
-              delayHide={tooltipDelay}
-              delayShow={tooltipDelay}
-              style={toolTipStyle}
-            />
 
             <div
               onMouseEnter={() => {
@@ -1602,13 +1622,6 @@ function Main() {
             >
               <span>START</span>
             </div>
-            <Tooltip
-              anchorSelect=".b-start"
-              place="top"
-              delayHide={tooltipDelay}
-              delayShow={tooltipDelay}
-              style={toolTipStyle}
-            />
           </div>
         </div>
       )}

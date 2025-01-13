@@ -7,6 +7,7 @@ import {
   InputType,
   SmashConfig,
   emoji,
+  textForEachCharacter,
 } from '../scenes/types';
 
 const textForEachType = {
@@ -72,6 +73,7 @@ function InputTypeBlock({
 
       {input !== 0 && (
         <div
+          data-tooltip-content={textForEachCharacter[p.characterId]}
           className="player-char"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
