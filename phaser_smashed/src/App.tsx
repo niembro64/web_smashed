@@ -3,7 +3,7 @@ import './App.css';
 // import "@fontsource/press-start-2p";
 
 import { Switch, Route } from 'react-router-dom';
-import Play from './views/Main';
+import Main from './views/Main';
 
 function App() {
   // The debounce function receives our function as a parameter
@@ -44,7 +44,7 @@ function App() {
     <>
       <Switch>
         <Route exact path="/">
-          <Play />
+          <Main />
         </Route>
       </Switch>
     </>

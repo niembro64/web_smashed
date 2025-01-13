@@ -66,7 +66,7 @@ export const baseGravity = 3000;
 
 export const gravLightMultiplier = 0.5;
 
-function Play() {
+function Main() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -920,7 +920,7 @@ function Play() {
     setTimeout(() => {
       // @ts-ignore
       myPhaser.current = new Phaser.Game(config);
-      myPhaser.current.registry.set('parentContext', Play);
+      myPhaser.current.registry.set('parentContext', Main);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debugState);
       myPhaser.current.registry.set('myMoment', myMoment);
@@ -2551,4 +2551,4 @@ function Play() {
   );
 }
 
-export default Play;
+export default Main;
