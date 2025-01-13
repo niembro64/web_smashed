@@ -1,8 +1,19 @@
 import { Moment } from 'moment';
 import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
+import { CSSProperties } from 'react';
 
 export const tooltipDelay = 500;
+
+export const toolTipStyle: CSSProperties = {
+  color: 'white',
+  backgroundColor: 'black',
+  padding: '10px',
+  paddingRight: '30px',
+  paddingLeft: '30px',
+  borderRadius: '25px',
+  fontSize: '1.5em',
+};
 
 export interface Debug {
   Allow_Mobile: boolean;

@@ -28,6 +28,7 @@ import {
   bar,
   emoji,
   inputTypeNum,
+  toolTipStyle,
   tooltipDelay,
 } from '../scenes/types';
 import DebugOptions from './DebugOptions';
@@ -1561,19 +1562,18 @@ function Main() {
                   }, i * blipDelay * 0.25);
                 }
               }}
+              data-tooltip-content="Randomize Characters"
             >
               {emoji.dice}
             </div>
+            <Tooltip
+              anchorSelect=".b-all-bots"
+              place="top"
+              delayHide={tooltipDelay}
+              delayShow={tooltipDelay}
+              style={toolTipStyle}
+            />
 
-            <div>
-              {/* <button
-                id="my-button"
-                data-tooltip-content="Hello, I'm a tooltip!"
-              >
-                Hover over me
-              </button>
-              <Tooltip anchorId="my-button" /> */}
-            </div>
             <div
               onMouseEnter={() => {
                 if (inputArray.filter((x) => x !== 0).length === 0) {
@@ -1596,9 +1596,10 @@ function Main() {
             </div>
             <Tooltip
               anchorSelect=".b-start"
-              place="bottom"
+              place="top"
+              delayHide={tooltipDelay}
               delayShow={tooltipDelay}
-              style={{ backgroundColor: 'black', color: 'white' }}
+              style={toolTipStyle}
             />
           </div>
         </div>
