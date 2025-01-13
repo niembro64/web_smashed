@@ -3,8 +3,8 @@ import { Debug } from './scenes/types';
 // TRUE means SHOWN ON MAIN PAGE
 export const debugOnMain: Debug = {
   Auto_Restart: false,
-  NN_Train_Static: true,
-  NN_Train_Evolving: true,
+  NN_Train_Static: false,
+  NN_Train_Evolving: false,
   NN_Reset_Evolving: false,
   Super_Speed: false,
   NN_Help_Screen: false,
@@ -41,7 +41,7 @@ export const debugOnMain: Debug = {
   Chars_Colored: true,
   Title_Screws: false,
   Health_Inverted: false,
-  Matrices_Always: true,
+  Matrices_Always: false,
   Console_Log_Buttons: false,
   Console_Log_Connected: false,
   Update_Loops_Skip: 0, // 012
@@ -59,8 +59,8 @@ export const debugOnMain: Debug = {
   Bullets_Allow_Groups: false,
   Trophies_On_Shots: false,
   Chomp_Explosion: false,
-  Trophies_Always: true,
-  Inst_Replay: 0,
+  Trophies_Always: false,
+  Inst_Replay: 1,
   Replay_FastSlow: false,
   Game_Music: 0, // 012
   Flower_On_Init: false,
