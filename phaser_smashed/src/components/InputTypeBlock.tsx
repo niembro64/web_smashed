@@ -187,8 +187,6 @@ function InputTypeBlock({
       {input === 2 && (
         <div
           data-tooltip-content={(() => {
-            const numKeyboards = getNumKeyboards();
-
             const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
 
             if (isARROWS) {
@@ -196,14 +194,6 @@ function InputTypeBlock({
             } else {
               return 'Refer to "Buttons" above';
             }
-
-            // if (numKeyboards === 1) {
-            //   return 'Player using WASD on the Left Side of the Keyboard';
-            // } else if (numKeyboards === 2) {
-            //   return 'Player using Arrow Keys on the Right Side of the Keyboard';
-            // }
-
-            // return 'Keyboard Player';
           })()}
           className={
             'b-oscuro b-dark' +
