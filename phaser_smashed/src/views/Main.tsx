@@ -1727,7 +1727,7 @@ function Main() {
               }}
             >
               {showControls && <span className="dark-span">Buttons</span>}
-              {!showControls && <span>Buttons</span>}
+              {!showControls && <span>Controls</span>}
             </div>
             <div
               onMouseEnter={() => {
@@ -1793,7 +1793,7 @@ function Main() {
                 onClickPlayNavBody('Controls');
               }}
             >
-              <h1>Buttons</h1>
+              <h1>Controls</h1>
               <div id="controls-col">
                 {characterMoves.map((charMove, charMoveIndex) => {
                   return (

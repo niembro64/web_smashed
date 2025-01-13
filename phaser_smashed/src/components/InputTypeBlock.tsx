@@ -192,9 +192,9 @@ function InputTypeBlock({
             const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
 
             if (isARROWS) {
-              return 'Refer to "Buttons" above';
+              return 'Refer to "Controls" above';
             } else {
-              return 'Refer to "Buttons" above';
+              return 'Refer to "Controls" above';
             }
           })()}
           className={
