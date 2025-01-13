@@ -594,7 +594,7 @@ export const textForEachCharacter = {
   3: 'Kirby can fly and shoot his mirror wand',
   4: 'Chez throws a hammer',
   5: 'Black Chez is huge and throws a huge hammer',
-  6: 'Green Koopa throws a green shell',
+  6: 'Green Koopa throws a powerful green shell',
   7: 'Red Koopa throws a heat-seeking red shell',
   8: 'Blue Koopa throws a flying blue shell',
 };
