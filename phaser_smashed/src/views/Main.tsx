@@ -1574,6 +1574,14 @@ function Main() {
               style={toolTipStyle}
             />
 
+            <Tooltip
+              anchorSelect=".b-dark"
+              place="top"
+              delayHide={tooltipDelay}
+              delayShow={tooltipDelay}
+              style={toolTipStyle}
+            />
+
             <div
               onMouseEnter={() => {
                 if (inputArray.filter((x) => x !== 0).length === 0) {

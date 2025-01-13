@@ -9,6 +9,15 @@ import {
   emoji,
 } from '../scenes/types';
 
+const textForEachType = {
+  0: 'Click to Turn On a Player',
+  1: 'A Player with a Gamepad (Controller)',
+  // 2: 'A Player with a Keyboard',
+  3: 'A Normal "Scripted" Bot',
+  4: 'A Neural Network Trainined to Play the Game',
+  5: 'A Bot that is subject to Darwinian Evolution',
+};
+
 interface InputTypeBlockProps {
   input: InputType;
   pIndex: number;
@@ -120,6 +129,7 @@ function InputTypeBlock({
       {/* Input Status */}
       {input === 0 && (
         <div
+          data-tooltip-content={textForEachType[input]}
           className="b-oscuro b-dark"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
@@ -134,6 +144,7 @@ function InputTypeBlock({
 
       {input === 1 && (
         <div
+          data-tooltip-content={textForEachType[input]}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -175,6 +186,25 @@ function InputTypeBlock({
 
       {input === 2 && (
         <div
+          data-tooltip-content={(() => {
+            const numKeyboards = getNumKeyboards();
+
+            const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
+
+            if (isARROWS) {
+              return 'Refer to "Buttons" above';
+            } else {
+              return 'Refer to "Buttons" above';
+            }
+
+            // if (numKeyboards === 1) {
+            //   return 'Player using WASD on the Left Side of the Keyboard';
+            // } else if (numKeyboards === 2) {
+            //   return 'Player using Arrow Keys on the Right Side of the Keyboard';
+            // }
+
+            // return 'Keyboard Player';
+          })()}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -217,6 +247,7 @@ function InputTypeBlock({
 
       {input === 3 && (
         <div
+          data-tooltip-content={textForEachType[input]}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -249,6 +280,7 @@ function InputTypeBlock({
 
       {input === 4 && (
         <div
+          data-tooltip-content={textForEachType[input]}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -281,6 +313,7 @@ function InputTypeBlock({
 
       {input === 5 && (
         <div
+          data-tooltip-content={textForEachType[input]}
           className={
             'b-oscuro b-dark' +
             (() => {
