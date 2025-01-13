@@ -5,7 +5,7 @@ import '@fontsource/press-start-2p';
 import html2canvas from 'html2canvas';
 import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import '../App.css';
 import { debugInit } from '../debugInit';
 import {
@@ -69,6 +69,150 @@ export const baseGravity = 3000;
 export const gravLightMultiplier = 0.5;
 
 function Main() {
+  const [connectedGamepads, setConnectedGamepads] = useState<Gamepad[]>([]);
+  const [positions, setPositions] = useState<{
+    [index: number]: { x: number; y: number };
+  }>({});
+
+  const animationRef = useRef<number | null>(null);
+
+  // When a new controller connects
+  const onGamepadConnected = useCallback((e: GamepadEvent) => {
+    const gp = e.gamepad;
+    // Make sure we don't double-add the same gamepad
+    setConnectedGamepads((prev) => {
+      const alreadyThere = prev.some((g) => g.index === gp.index);
+      if (!alreadyThere) return [...prev, gp];
+      return prev;
+    });
+  }, []);
+
+  // When a controller disconnects
+  const onGamepadDisconnected = useCallback((e: GamepadEvent) => {
+    setConnectedGamepads((prev) =>
+      prev.filter((g) => g.index !== e.gamepad.index)
+    );
+  }, []);
+
+  // Helper for simulating clicks
+  const dispatchMouseEvent = useCallback(
+    (type: 'mousedown' | 'mouseup', x: number, y: number) => {
+      const evt = new MouseEvent(type, {
+        clientX: x,
+        clientY: y,
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+      document.dispatchEvent(evt);
+    },
+    []
+  );
+
+  const updateGamepads = useCallback(() => {
+    const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+
+    // Update all gamepad positions in one go
+    setPositions((prevPositions) => {
+      const newPositions = { ...prevPositions };
+
+      connectedGamepads.forEach((gp) => {
+        if (!gp) return;
+        const current = gamepads[gp.index];
+        if (!current) return;
+
+        // If we don't have an entry yet, place it at center
+        if (!newPositions[gp.index]) {
+          newPositions[gp.index] = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+          };
+        }
+
+        const pos = newPositions[gp.index];
+
+        // Axes (left stick typically)
+        const axisX = current.axes[0] || 0;
+        const axisY = current.axes[1] || 0;
+
+        const deadzone = 0.15;
+        const speed = 5;
+
+        // Move horizontally
+        if (Math.abs(axisX) > deadzone) {
+          pos.x += axisX * speed;
+        }
+
+        // Move vertically
+        if (Math.abs(axisY) > deadzone) {
+          pos.y += axisY * speed;
+        }
+
+        // D-pad buttons (commonly 12=Up, 13=Down, 14=Left, 15=Right)
+        if (current.buttons[12]?.pressed) pos.y -= speed; // Up
+        if (current.buttons[13]?.pressed) pos.y += speed; // Down
+        if (current.buttons[14]?.pressed) pos.x -= speed; // Left
+        if (current.buttons[15]?.pressed) pos.x += speed; // Right
+
+        // Bound to window if desired
+        if (pos.x < 0) pos.x = 0;
+        if (pos.y < 0) pos.y = 0;
+        if (pos.x > window.innerWidth) pos.x = window.innerWidth;
+        if (pos.y > window.innerHeight) pos.y = window.innerHeight;
+
+        // A button -> mousedown/mouseup
+        // Typically button 0 is “A” on many controllers
+        const aButton = current.buttons[0];
+
+        if (aButton) {
+          // We need a custom property to track whether we "did" the press
+          if (aButton.pressed && !(aButton as any).didPress) {
+            (aButton as any).didPress = true;
+            dispatchMouseEvent('mousedown', pos.x, pos.y);
+          } else if (!aButton.pressed && (aButton as any).didPress) {
+            (aButton as any).didPress = false;
+            dispatchMouseEvent('mouseup', pos.x, pos.y);
+          }
+        }
+
+        newPositions[gp.index] = pos;
+      });
+
+      return newPositions;
+    });
+
+    // Keep polling on every frame
+    animationRef.current = requestAnimationFrame(updateGamepads);
+  }, [connectedGamepads, dispatchMouseEvent]);
+
+  useEffect(() => {
+    window.addEventListener('gamepadconnected', onGamepadConnected);
+    window.addEventListener('gamepaddisconnected', onGamepadDisconnected);
+
+    // Start the loop
+    animationRef.current = requestAnimationFrame(updateGamepads);
+
+    return () => {
+      window.removeEventListener('gamepadconnected', onGamepadConnected);
+      window.removeEventListener('gamepaddisconnected', onGamepadDisconnected);
+
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [onGamepadConnected, onGamepadDisconnected, updateGamepads]);
+
+
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
+  /////////////////////////////////////////////
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -1393,7 +1537,6 @@ function Main() {
             </div>
           </div>
         )}
-
       {webStateCurr === 'web-state-load' && (
         <div className="loader">
           <div className="spinner-box">
@@ -2166,7 +2309,6 @@ function Main() {
           </div>
         )}
       </div>
-
       {webStateCurr === 'web-state-game' && nnProgress !== null && (
         <div className="neural-network-train-status">
           <span>Neural Network Training</span>
@@ -2219,7 +2361,6 @@ function Main() {
           </div>
         </div>
       )}
-
       {(debugState.Dev_Mode ||
         debugState.Auto_Restart ||
         debugState.Auto_Start) && (
@@ -2229,7 +2370,6 @@ function Main() {
             (debugState.Auto_Start ? ' Auto_Start' : '')}
         </div>
       )}
-
       {webStateCurr === 'web-state-game' && !isReplayHidden && (
         <div className="video-playback-container">
           <div className="video-playback-super">
@@ -2254,7 +2394,6 @@ function Main() {
           </div>
         </div>
       )}
-
       {!debugInit.Allow_Mobile && isMobile && (
         <div className="mobile-warning">
           {/* <img src="/images/table.png" alt="table" /> */}
@@ -2264,6 +2403,30 @@ function Main() {
           <span>desktop or laptop.</span>
         </div>
       )}
+      {/* ////////////////////////////////////////// */}
+      {/* // GAMEPADS */}
+      {/* ////////////////////////////////////////// */}
+      {connectedGamepads.map((gp) => {
+        const dotPos = positions[gp.index];
+        if (!dotPos) return null;
+        return (
+          <img
+            key={gp.index}
+            src="images/white_trans.png"
+            alt="controller dot"
+            style={{
+              position: 'absolute',
+              left: dotPos.x,
+              top: dotPos.y,
+              transform: 'translate(-50%, -50%)',
+              pointerEvents: 'none',
+              width: 32,
+              height: 32,
+              zIndex: 100,
+            }}
+          />
+        );
+      })}
     </div>
   );
 }
