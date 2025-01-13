@@ -588,7 +588,7 @@ export type CharacterName =
   | 'B-Koopa';
 
 export const textForEachCharacter = {
-  0: 'Mario shoots fireballs',
+  0: 'Mario throws fireballs',
   1: 'Link has a strong sword that he can throw',
   2: 'Pikachu throws his empty vodka bottle',
   3: 'Kirby can fly and shoot his mirror wand',

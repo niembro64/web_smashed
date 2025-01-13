@@ -75,6 +75,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
 
         return (
           <div
+            // data-tooltip-content={'asdf'}
             id={showHomeList ? 'home-debug' : 'option-debug'}
             className={
               typeof value === 'boolean'
