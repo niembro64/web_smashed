@@ -26,7 +26,7 @@ export const debugInit: Debug = {
   Stage: 11, // 0 - 10 inclusive
   Music_Active: true,
   Ready_Sound_Active: false,
-  Use_Camera: true,
+  Use_Camera: false,
   Cameras_Visible: false,
   Colliders_P_v_P: false,
   Colliders_P_v_AP: false,
