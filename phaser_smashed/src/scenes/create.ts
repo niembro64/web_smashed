@@ -1809,6 +1809,7 @@ function createBackgroundOutlineFront(game: SmashedGame): void {
   // game.BACKGROUND_OUTLINE.setOrigin(0.5, 0.5);
   game.BACKGROUND_OUTLINE_FRONT.setImmovable(true);
   game.BACKGROUND_OUTLINE_FRONT.body.allowGravity = false;
+  game.BACKGROUND_OUTLINE_FRONT.setDepth(1);
 }
 
 function createBackgroundOutlineBack(game: SmashedGame): void {
@@ -1944,6 +1945,8 @@ function createSplashes(game: SmashedGame): void {
         )
         .setOrigin(0.5, 0.5)
         .setAlpha(1);
+
+      splash.text.setDepth(1);
     }
   });
 }
