@@ -642,11 +642,12 @@ function createChomp(game: SmashedGame): void {
   for (let i = 0; i < c.NUM_LINKS; i++) {
     c.links.push({ sprite: null });
     c.links[i].sprite = game.physics.add.sprite(b.x, b.y, 'chomp_link');
-    c.links[i].sprite.setScale(0.5);
+    c.links[i].sprite.setScale(c.scaleLinksNormal);
     c.links[i].sprite.body.allowGravity = false;
     c.links[i].sprite.setBounce(0);
     c.links[i].sprite.setOrigin(0.5, 1);
     c.links[i].sprite.setImmovable(true);
+    c.links[i].sprite.setTint(c.tintMuted);
     game.physics.add.collider(c.links[i].sprite, game.PLATFORMS);
   }
 
@@ -678,7 +679,7 @@ function createChomp(game: SmashedGame): void {
   game.anims.create(config_walking);
 
   c.sprite = game.physics.add.sprite(c.originX, c.originY - 10, 'chomp');
-  c.sprite.setScale(1.3);
+  c.sprite.setScale(c.scaleChompNormal);
   c.sprite.body.allowGravity = true;
   c.sprite.setBounceX(1);
   c.sprite.setBounceY(0.5);
@@ -686,6 +687,7 @@ function createChomp(game: SmashedGame): void {
   c.sprite.setVelocityX(30);
   c.sprite.setVelocityY(-100);
   c.sprite.setMass(c.MASS);
+  c.sprite.setTint(c.tintMuted);
   c.sprite.play('chompanimation_walking');
 
   game.physics.add.collider(c.sprite, game.PLATFORMS);

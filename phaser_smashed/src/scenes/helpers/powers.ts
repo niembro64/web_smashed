@@ -159,14 +159,31 @@ export function setChompPowerState(
       c.emitterDark.visible = false;
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_walking');
+      c.sprite.setScale(c.scaleChompNormal);
+
+      // grayscale
+      c.sprite.setTint(c.tintMuted);
+
       c.soundHurt.play();
+
+      c.links.forEach((link) => {
+        link.sprite.setScale(c.scaleLinksNormal);
+        link.sprite.setTint(c.tintMuted);
+      });
+
       break;
     case 'dark':
       c.emitterDark.visible = true;
       c.darknessMoments.chomp = game.gameNanoseconds;
       c.sprite.play('chompanimation_chomping');
+      c.sprite.setScale(c.scaleChompMad);
       game.chomp.soundBBWoah.setRate(1);
+      game.chomp.sprite.setTint(c.tintNormal);
       setMusicChompSheepRate(game, game.chomp.musicRates.chomp);
+      c.links.forEach((link) => {
+        link.sprite.setScale(c.scaleLinksMad);
+        link.sprite.setTint(c.tintNormal);
+      });
       break;
   }
 }

@@ -792,6 +792,12 @@ export interface Chomp {
   originX: number;
   originY: number;
   radius: number;
+  scaleLinksNormal: number;
+  scaleLinksMad: number;
+  scaleChompNormal: number;
+  tintMuted: number;
+  tintNormal: number;
+  scaleChompMad: number;
   percentFramesAttack: number;
   percentFramesWalk: number;
   NUM_LINKS: number;

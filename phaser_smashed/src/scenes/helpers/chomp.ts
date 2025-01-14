@@ -1,3 +1,4 @@
+import { Scale } from 'phaser';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { Player } from '../types';
 import { getDistance, getNormalizedVector, getVector } from './damage';
@@ -147,10 +148,13 @@ export function updateChompLinkPositions(game: SmashedGame): void {
 
   const { x, y } = getVector(startX, startY, endX, endY);
 
+  const chompY: number = y;
+  const chompX: number = x;
+
   links.forEach((link, i) => {
     const percent = i / numLinks;
-    const newX = startX + x * percent;
-    const newY = startY + y * percent;
+    const newX = startX + chompX * percent;
+    const newY = startY + chompY * percent;
 
     link.sprite.x = newX;
     link.sprite.y = newY;
