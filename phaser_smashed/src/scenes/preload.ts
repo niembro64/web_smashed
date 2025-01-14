@@ -96,6 +96,7 @@ export function preload(game: SmashedGame): void {
     'chainChompSheep',
     pathSounds + game.FILE_SOUNDS.CHAIN_CHOMP_SHEEP
   );
+  game.load.audio('flag_spikes', pathSounds + game.FILE_SOUNDS.SPIKES);
   game.load.audio('ping', pathSounds + game.FILE_SOUNDS.PING);
   game.load.audio('ping2', pathSounds + game.FILE_SOUNDS.PING2);
   game.load.audio('pop', pathSounds + game.FILE_SOUNDS.POP);

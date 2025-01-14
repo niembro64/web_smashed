@@ -91,6 +91,7 @@ export default class SmashedGame extends Phaser.Scene {
   CAMERA_OFFSET_Y: number = -50;
 
   FILE_SOUNDS: any = {
+    SPIKES: 'spikes.mp3',
     INTRO: 'deep.mp3',
     GUN: 'throw.wav',
     SHOT: 'shot.wav',

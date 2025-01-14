@@ -382,6 +382,11 @@ function createFlagSpikes(game: SmashedGame): void {
   f.sprite.setBounce(0);
   f.sprite.setImmovable(true);
   f.sprite.body.allowGravity = false;
+
+  f.sound = game.sound.add('flag_spikes', {
+    volume: 0.2,
+    rate: 1,
+  });
 }
 
 function createPole(game: SmashedGame): void {
@@ -876,7 +881,7 @@ function createHitboxOverlap(game: SmashedGame): void {
         function () {
           if (game.flag.flagSpikes.sprite.visible) {
             setPlayerState(player, playerIndex, 'player-state-dead', game);
-            // game.flag.flagSpikes.sound.play();
+            game.flag.flagSpikes.sound.play();
           }
         }
       );
