@@ -774,7 +774,15 @@ export interface Flag {
   soundFlagMusicBox: any;
   afterPauseResumeMusicFlagMusicBox: boolean;
   firework: any;
+  flagSpikes: FlagSpikes;
 }
+
+export type FlagSpikes = {
+  sprite: any;
+  sound: any;
+  posInit: Position;
+  scale: number;
+};
 
 export interface Chomp {
   sprite: any | Phaser.GameObjects.Sprite;

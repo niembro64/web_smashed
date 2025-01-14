@@ -55,6 +55,7 @@ export function create(game: SmashedGame) {
   createFirework(game);
   createPole(game);
   createFlag(game);
+  createFlagSpikes(game);
   createEmitterChomp(game);
   createEmittersPlayers(game);
   createPlatforms(game);
@@ -366,6 +367,20 @@ function createFlag(game: SmashedGame): void {
     volume: 0.35,
     loop: true,
   });
+}
+
+function createFlagSpikes(game: SmashedGame): void {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
+  const f = game.flag.flagSpikes;
+
+  f.sprite = game.physics.add.sprite(f.posInit.x, f.posInit.y, 'flag_spikes');
+
+  f.sprite.setBounce(0);
+  f.sprite.setImmovable(true);
+  f.sprite.body.allowGravity = false;
 }
 
 function createPole(game: SmashedGame): void {

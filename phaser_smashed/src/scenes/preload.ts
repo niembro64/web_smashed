@@ -224,6 +224,10 @@ export function preload(game: SmashedGame): void {
     'background_outline_lava',
     'images/outline_blocks_11_lava.png'
   );
+  game.load.image(
+    'flag_spikes',
+    'images/flag_spikes.png'
+  );
   game.load.image('centerWhite', 'images/wx.png');
   game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');
