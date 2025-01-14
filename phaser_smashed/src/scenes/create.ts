@@ -641,14 +641,16 @@ function createChomp(game: SmashedGame): void {
 
   for (let i = 0; i < c.NUM_LINKS; i++) {
     c.links.push({ sprite: null });
-    c.links[i].sprite = game.physics.add.sprite(b.x, b.y, 'chomp_link');
-    c.links[i].sprite.setScale(c.scaleLinksNormal);
-    c.links[i].sprite.body.allowGravity = false;
-    c.links[i].sprite.setBounce(0);
-    c.links[i].sprite.setOrigin(0.5, 1);
-    c.links[i].sprite.setImmovable(true);
-    c.links[i].sprite.setTint(c.tintMuted);
-    game.physics.add.collider(c.links[i].sprite, game.PLATFORMS);
+
+    const link = c.links[i];
+    link.sprite = game.physics.add.sprite(b.x, b.y, 'chomp_link');
+    link.sprite.setScale(c.scaleLinksNormal);
+    link.sprite.body.allowGravity = false;
+    link.sprite.setBounce(0);
+    link.sprite.setOrigin(0.5, 1);
+    link.sprite.setImmovable(true);
+    link.sprite.setTint(c.tintMuted);
+    game.physics.add.collider(link.sprite, game.PLATFORMS);
   }
 
   const config_chomping = {
