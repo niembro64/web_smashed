@@ -1064,11 +1064,11 @@ export default class SmashedGame extends Phaser.Scene {
     flagSpikes: {
       sprite: null,
       posDown: {
-        x: SCREEN_DIMENSIONS.WIDTH * 0.892,
+        x: SCREEN_DIMENSIONS.WIDTH * 0.8935,
         y: SCREEN_DIMENSIONS.HEIGHT * 0.635 + 50,
       },
       posUp: {
-        x: SCREEN_DIMENSIONS.WIDTH * 0.892,
+        x: SCREEN_DIMENSIONS.WIDTH * 0.8935,
         y: SCREEN_DIMENSIONS.HEIGHT * 0.635,
       },
       state: 'down',
