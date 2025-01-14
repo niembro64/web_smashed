@@ -78,22 +78,19 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   return (
     <div className="input-group">
       {inputConfigurations.map((inputConfig, index) => (
-        <div key={index}>
-          <div
-            data-tooltip-content={inputConfig.tooltipText}
-            className="b-all-bots"
-            onMouseEnter={() => {
-              soundManager.blipSoundSoft();
-            }}
-            onClick={() =>
-              setInputArrayEffect(inputConfig.config as InputType[])
-            }
-          >
-            <span className={'vs-span'}>{inputConfig.emojis}</span>
-            {inputConfig.extraEmojis && (
-              <span className={'vs-span'}>{inputConfig.extraEmojis}</span>
-            )}
-          </div>
+        <div
+          key={index}
+          data-tooltip-content={inputConfig.tooltipText}
+          className="b-all-bots"
+          onMouseEnter={() => {
+            soundManager.blipSoundSoft();
+          }}
+          onClick={() => setInputArrayEffect(inputConfig.config as InputType[])}
+        >
+          <span className={'vs-span'}>{inputConfig.emojis}</span>
+          {inputConfig.extraEmojis && (
+            <span className={'vs-span'}>{inputConfig.extraEmojis}</span>
+          )}
         </div>
       ))}
     </div>

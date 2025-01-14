@@ -85,7 +85,7 @@ export function updateGameStatePlay(
   updateChompStateLightIfHasBeenLongEnough(game);
   updateFlagToucher(game);
   updateFlagOwner(game);
-  updateFlagButton(game);
+  // updateFlagButton(game);
   updateFlagMovement(game);
   updateFlagColor(game);
   updateSuicide(game);
