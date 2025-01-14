@@ -206,8 +206,6 @@ function createBulletBillSparkLine(game: SmashedGame) {
     0,
     0xffffff
   );
-
-  // game.bulletBillCombo.sparkLine.emitter.startFollow(bbSparkLine.spark);
 }
 
 function createPSwitchFlag(game: SmashedGame): void {

@@ -6,6 +6,7 @@ import {
   FlagSpikesState,
   Player,
 } from '../types';
+import { getNearestPlayerAliveFromXY } from './movement';
 import { setPlayerPowerState } from './powers';
 import { setBGMusicResume, setMusicBoxPause, setMusicBoxResume } from './sound';
 
@@ -218,10 +219,12 @@ export const setFlagOwnerNullIfDead = (
   }
 };
 
-export const setFlagSpikesState = (
-  game: SmashedGame,
-  stateNew: FlagSpikesState
-): void => {
+export const setFlagSpikesState = (params: {
+  game: SmashedGame;
+  stateNew: FlagSpikesState;
+}): void => {
+  const { game, stateNew } = params;
+
   const flagSpikes: FlagSpikes = game.flag.flagSpikes;
   const button: FlagButton = game.flag.flagButton;
 
@@ -231,6 +234,7 @@ export const setFlagSpikesState = (
 
       button.spriteUp.setAlpha(0);
       button.spriteDown.setAlpha(1);
+
       flagSpikes.sound.play();
       break;
     case 'down':
@@ -250,48 +254,57 @@ export const updateFlagButton = (game: SmashedGame): void => {
   const button: FlagButton = game.flag.flagButton;
   const flag: Flag = game.flag;
 
-  const players: Player[] = game.players;
-  let touchingButton: boolean = false;
+  const obj: { player: Player; playerIndex: number } | null =
+    getNearestPlayerAliveFromXY(button.posInit.x, button.posInit.y, game);
+
+  if (obj === null) {
+    return;
+  }
+
+  const player = obj.player;
 
   const dX: number = (button.spriteDown.width * button.scale * 1.2) / 2;
   const dY: number = 30;
 
-  for (let i = 0; i < players.length; i++) {
-    const player: Player = players[i];
+  let playerIndexTouching: number | null;
 
-    if (
-      player.char.sprite.x > button.posInit.x - dX &&
-      player.char.sprite.x < button.posInit.x + dX &&
-      player.char.sprite.y > button.posInit.y - dY &&
-      player.char.sprite.y < button.posInit.y + dY
-    ) {
-      touchingButton = true;
-      break;
-    }
+  if (
+    player.char.sprite.x > button.posInit.x - dX &&
+    player.char.sprite.x < button.posInit.x + dX &&
+    player.char.sprite.y > button.posInit.y - dY &&
+    player.char.sprite.y < button.posInit.y + dY
+  ) {
+    playerIndexTouching = obj.playerIndex;
+  } else {
+    playerIndexTouching = null;
   }
+
+  button.playerIndexPressing = playerIndexTouching;
 
   switch (flag.flagSpikes.state) {
     case 'down':
-      if (touchingButton) {
-        setFlagSpikesState(game, 'up');
+      if (playerIndexTouching === null) {
+        return;
       }
+
+      setFlagSpikesState({
+        game: game,
+        stateNew: 'up',
+      });
+
       break;
     case 'up':
-      if (!touchingButton) {
-        setFlagSpikesState(game, 'down');
+      if (playerIndexTouching !== null) {
+        return;
       }
+
+      setFlagSpikesState({
+        game: game,
+        stateNew: 'down',
+      });
+
       break;
     default:
       throw new Error('updateFlagButton: state not recognized');
   }
-
-  // if (touched) {
-  //   if (flag.flagSpikes.state === 'down') {
-  //     setFlagSpikesState(game, 'up');
-  //   }
-  // } else {
-  //   if (flag.flagSpikes.state === 'up') {
-  //     setFlagSpikesState(game, 'down');
-  //   }
-  // }
 };
