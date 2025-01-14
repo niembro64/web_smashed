@@ -740,7 +740,7 @@ export default class SmashedGame extends Phaser.Scene {
   flashActiveMs: number = 50;
   flashCooldownMs: number = 1000;
 
-  chompX: number = 512;
+  chompX: number = 635;
   chompY: number = 964;
   chomp: Chomp = {
     sprite: null,
@@ -749,7 +749,7 @@ export default class SmashedGame extends Phaser.Scene {
     damage: 0,
     originX: this.chompX,
     originY: this.chompY,
-    radius: 150,
+    radius: 300,
     tintMuted: 0x7f7f7f,
     tintNormal: 0xffffff,
     percentFramesAttack: 0.1,

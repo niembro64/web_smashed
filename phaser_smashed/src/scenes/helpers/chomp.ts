@@ -74,7 +74,10 @@ export function updateChompVelocity(game: SmashedGame): void {
       originX,
       originY
     );
-    body.setVelocityX(xNew * 100);
+
+    const newX: number = xNew * (powerStateCurr.name === 'dark' ? 500 : 50);
+
+    body.setVelocityX(newX);
     body.setVelocityY(yNew * 200);
     return;
   }
@@ -105,9 +108,9 @@ export function updateChompVelocity(game: SmashedGame): void {
   if (powerStateCurr.name === 'dark') {
     chomp.soundAttack.play();
     body.setVelocityY(-1 * Math.abs(yNew + 0.3) * 700 - 400);
-    body.setVelocityX(xNew * 400);
+    body.setVelocityX(xNew * 700);
   } else {
-    body.setVelocityX(xNew * 110);
+    body.setVelocityX(xNew * 50);
   }
 }
 
