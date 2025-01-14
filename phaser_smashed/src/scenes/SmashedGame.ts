@@ -74,7 +74,8 @@ export default class SmashedGame extends Phaser.Scene {
   PLATFORMS: any | Phaser.GameObjects.Sprite;
   BACKGROUND: any | Phaser.GameObjects.Sprite;
   BACKGROUND_OUTLINE_FRONT: any | Phaser.GameObjects.Sprite;
-  BACKGROUND_OUTLINE_BACK: any | Phaser.GameObjects.Sprite;
+  BACKGROUND_OUTLINE_CASTLE: any | Phaser.GameObjects.Sprite;
+  BACKGROUND_OUTLINE_LAVA: any | Phaser.GameObjects.Sprite;
   TABLE: any | Phaser.GameObjects.Sprite;
   table_health_give: number = 1;
   powerupActive: boolean = false;
@@ -605,48 +606,6 @@ export default class SmashedGame extends Phaser.Scene {
       start: Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE,
       select: Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT,
     },
-    // {
-    //   up: Phaser.Input.Keyboard.KeyCodes.UP,
-    //   down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-    //   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-    //   right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-    //   A: Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
-    //   B: Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
-    //   X: Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
-    //   Y: Phaser.Input.Keyboard.KeyCodes.NUMPAD_ZERO,
-    //   L: Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE,
-    //   R: Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX,
-    // },
-    // {
-    //   up: Phaser.Input.Keyboard.KeyCodes.T,
-    //   down: Phaser.Input.Keyboard.KeyCodes.G,
-    //   left: Phaser.Input.Keyboard.KeyCodes.F,
-    //   right: Phaser.Input.Keyboard.KeyCodes.H,
-    //   A: Phaser.Input.Keyboard.KeyCodes.V,
-    //   B: Phaser.Input.Keyboard.KeyCodes.B,
-    //   X: Phaser.Input.Keyboard.KeyCodes.B,
-    //   Y: Phaser.Input.Keyboard.KeyCodes.B,
-    // },
-    // {
-    //   up: Phaser.Input.Keyboard.KeyCodes.I,
-    //   down: Phaser.Input.Keyboard.KeyCodes.K,
-    //   left: Phaser.Input.Keyboard.KeyCodes.J,
-    //   right: Phaser.Input.Keyboard.KeyCodes.L,
-    //   A: Phaser.Input.Keyboard.KeyCodes.O,
-    //   B: Phaser.Input.Keyboard.KeyCodes.P,
-    //   X: Phaser.Input.Keyboard.KeyCodes.P,
-    //   Y: Phaser.Input.Keyboard.KeyCodes.P,
-    // },
-    // {
-    //   up: Phaser.Input.Keyboard.KeyCodes.UP,
-    //   down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-    //   left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-    //   right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-    //   A: Phaser.Input.Keyboard.KeyCodes.END,
-    //   B: Phaser.Input.Keyboard.KeyCodes.PAGE_DOWN,
-    //   X: Phaser.Input.Keyboard.KeyCodes.PAGE_DOWN,
-    //   Y: Phaser.Input.Keyboard.KeyCodes.PAGE_DOWN,
-    // },
   ];
 
   pit = {
@@ -917,7 +876,7 @@ export default class SmashedGame extends Phaser.Scene {
     { x: SCREEN_DIMENSIONS.WIDTH * 0.42, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
 
     { x: SCREEN_DIMENSIONS.WIDTH * 0.15, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
-    
+
     // { x: SCREEN_DIMENSIONS.WIDTH * 0.1, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },
 
     { x: SCREEN_DIMENSIONS.WIDTH * 0.03, y: SCREEN_DIMENSIONS.HEIGHT * 0.95 },

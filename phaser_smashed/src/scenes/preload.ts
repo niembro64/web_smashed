@@ -216,6 +216,14 @@ export function preload(game: SmashedGame): void {
     'background_outline_back',
     'images/outline_blocks_11_back.png'
   );
+  game.load.image(
+    'background_outline_castle',
+    'images/outline_blocks_11_castle.png'
+  );
+  game.load.image(
+    'background_outline_lava',
+    'images/outline_blocks_11_lava.png'
+  );
   game.load.image('centerWhite', 'images/wx.png');
   game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');

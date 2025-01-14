@@ -56,7 +56,7 @@ export const debugInit: Debug = {
   Allow_BlackChez: false,
 
   Allow_SlowMo: true,
-  Chomp_Explosion: false,
+  Chomp_Explosion: true,
   Chomp_Velocities: false,
   Char_Override: false,
   Char_Override_ID: 0,

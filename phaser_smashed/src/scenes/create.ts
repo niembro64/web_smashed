@@ -38,7 +38,8 @@ export function create(game: SmashedGame) {
   createSoundsGame(game);
   createBackground(game);
   createSplashBlack(game);
-  createBackgroundOutlineBack(game);
+  createBackgroundOutlineCastle(game);
+  createBackgroundOutlineLava(game);
   createExplosionBulletBillCannon(game);
   createBulletBill(game);
   createBackgroundOutlineFront(game);
@@ -1329,6 +1330,7 @@ function createLava(i: number, game: SmashedGame, posX: number): void {
   game.lavas[i].sprite.body.allowGravity = false;
   game.lavas[i].sprite.play('lava_moving');
   game.lavas[i].sprite.setOrigin(0, 0);
+  game.lavas[i].sprite.setDepth(1);
 }
 
 function createPlayers(game: SmashedGame): void {
@@ -1812,19 +1814,39 @@ function createBackgroundOutlineFront(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_FRONT.setDepth(1);
 }
 
-function createBackgroundOutlineBack(game: SmashedGame): void {
-  game.BACKGROUND_OUTLINE_BACK = game.physics.add.sprite(
+function createBackgroundOutlineCastle(game: SmashedGame): void {
+  game.BACKGROUND_OUTLINE_CASTLE = game.physics.add.sprite(
     SCREEN_DIMENSIONS.WIDTH / 2,
     SCREEN_DIMENSIONS.HEIGHT / 2,
-    'background_outline_back'
+    'background_outline_castle'
   );
-  game.BACKGROUND_OUTLINE_BACK.setScale(
+  game.BACKGROUND_OUTLINE_CASTLE.setScale(
     game.SCREEN_SCALE.WIDTH,
     game.SCREEN_SCALE.HEIGHT
   );
   // game.BACKGROUND_OUTLINE.setOrigin(0.5, 0.5);
-  game.BACKGROUND_OUTLINE_BACK.setImmovable(true);
-  game.BACKGROUND_OUTLINE_BACK.body.allowGravity = false;
+  game.BACKGROUND_OUTLINE_CASTLE.setImmovable(true);
+  game.BACKGROUND_OUTLINE_CASTLE.body.allowGravity = false;
+
+  // game.BACKGROUND_OUTLINE_BACK.setAlpha(0.5);
+}
+function createBackgroundOutlineLava(game: SmashedGame): void {
+  game.BACKGROUND_OUTLINE_LAVA = game.physics.add.sprite(
+    SCREEN_DIMENSIONS.WIDTH / 2,
+    SCREEN_DIMENSIONS.HEIGHT / 2,
+    'background_outline_lava'
+  );
+  game.BACKGROUND_OUTLINE_LAVA.setScale(
+    game.SCREEN_SCALE.WIDTH,
+    game.SCREEN_SCALE.HEIGHT
+  );
+  // game.BACKGROUND_OUTLINE.setOrigin(0.5, 0.5);
+  game.BACKGROUND_OUTLINE_LAVA.setImmovable(true);
+  game.BACKGROUND_OUTLINE_LAVA.body.allowGravity = false;
+
+  game.BACKGROUND_OUTLINE_LAVA.setDepth(1);
+
+  // game.BACKGROUND_OUTLINE_BACK.setAlpha(0.5);
 }
 
 function createTable(game: SmashedGame): void {
@@ -1967,6 +1989,8 @@ function createScoreboardShotGlass(game: SmashedGame): void {
         'cup' + (i + 1).toString()
       )
       .setOrigin(0.5, 0.5);
+
+    endCup.sprite.setDepth(1);
   });
 
   game.players.forEach((player, playerIndex) => {
@@ -1988,6 +2012,8 @@ function createScoreboardShotGlass(game: SmashedGame): void {
       0xffffff,
       game.colorCircles[playerIndex].colorNumber
     );
+
+    player.shotGlassImage.setDepth(1);
   });
 }
 
@@ -2022,6 +2048,8 @@ function createScoreboardShotGlassNumber(game: SmashedGame): void {
       )
       .setOrigin(0.5, 0.5)
       .setAlpha(1);
+
+    player.shotGlassNumber.setDepth(1);
   });
 }
 
@@ -2056,6 +2084,8 @@ function createScoreboardReady(game: SmashedGame): void {
         }
       )
       .setOrigin(0.5, 0.5);
+
+    player.scoreBoardReady.setDepth(1);
   });
 }
 
@@ -2085,6 +2115,8 @@ function createScoreboardController(game: SmashedGame): void {
         },
       })
       .setOrigin(0.5, 0.5);
+
+    player.scoreBoardController.setDepth(1);
   });
 }
 
@@ -2146,6 +2178,9 @@ function createScoreboard(game: SmashedGame): void {
   game.scoreBoardTimeGame.setAlpha(1);
   game.scoreBoardTimeTime.setAlpha(1);
 
+  game.scoreBoardTimeGame.setDepth(1);
+  game.scoreBoardTimeTime.setDepth(1);
+
   game.players.forEach((player, playerIndex) => {
     player.scoreBoardUpper = game.add
       .text(
@@ -2176,6 +2211,8 @@ function createScoreboard(game: SmashedGame): void {
       )
       .setOrigin(0.5, 0)
       .setScale(1 / game.cameras.main.zoom, 1 / game.cameras.main.zoom);
+
+    player.scoreBoardUpper.setDepth(1);
   });
 
   game.players.forEach((player, playerIndex) => {
@@ -2207,6 +2244,8 @@ function createScoreboard(game: SmashedGame): void {
       )
       .setOrigin(0.5, 1)
       .setScale(1 / game.cameras.main.zoom, 1 / game.cameras.main.zoom);
+
+    player.scoreBoardLower.setDepth(1);
   });
 }
 
