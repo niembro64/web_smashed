@@ -1055,14 +1055,14 @@ export default class SmashedGame extends Phaser.Scene {
       scale: 0.11,
       spriteDown: null,
       spriteUp: null,
-      posInit: {
-        x: 1400.5,
-        y: 429,
-      },
       // posInit: {
-      // x: SCREEN_DIMENSIONS.WIDTH * 0.5,
-      // y: SCREEN_DIMENSIONS.HEIGHT * 0.5,
+      //   x: 1400.5,
+      //   y: 429,
       // },
+      posInit: {
+        x: this.chompX,
+        y: this.chompY,
+      },
       playerIndexPressing: null,
     },
     flagSpikes: {

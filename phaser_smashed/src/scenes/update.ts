@@ -1,6 +1,6 @@
 import { print } from '../views/client';
 import SmashedGame from './SmashedGame';
-import { updateGameStatePlay } from './gameStates.ts/gameStatePlay';
+import { updateGameStatePlay } from './gameStates.ts/updateGameStatePlay';
 import {
   updateAirDodge,
   updatePhysicalAttackFollowsPlayer,
