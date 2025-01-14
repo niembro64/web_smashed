@@ -15,6 +15,7 @@ import {
 } from '../helpers/damage';
 import { updateFireFlowerShooting } from '../helpers/fireFlower';
 import {
+  updateFlagButton,
   updateFlagColor,
   updateFlagMovement,
   updateFlagOwner,
@@ -84,6 +85,7 @@ export function updateGameStatePlay(
   updateChompStateLightIfHasBeenLongEnough(game);
   updateFlagToucher(game);
   updateFlagOwner(game);
+  updateFlagButton(game);
   updateFlagMovement(game);
   updateFlagColor(game);
   updateSuicide(game);

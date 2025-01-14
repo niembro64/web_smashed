@@ -760,6 +760,7 @@ export interface Box {
   right: number;
 }
 
+export type FlagSpikesState = 'up' | 'down';
 export interface Flag {
   flagSpeedDark: number;
   flagSpeed: number;
@@ -789,8 +790,10 @@ export interface Flag {
 export type FlagSpikes = {
   sprite: any;
   sound: any;
-  posInit: Position;
+  posDown: Position;
   scale: number;
+  state: FlagSpikesState;
+  posUp: Position;
 };
 
 export interface Chomp {

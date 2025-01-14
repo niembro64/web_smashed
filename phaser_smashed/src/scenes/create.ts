@@ -410,15 +410,14 @@ function createFlagSpikes(game: SmashedGame): void {
   }
 
   const f = game.flag.flagSpikes;
-
-  f.sprite = game.physics.add.sprite(f.posInit.x, f.posInit.y, 'flag_spikes');
+  f.sprite = game.physics.add.sprite(f.posDown.x, f.posDown.y, 'flag_spikes');
 
   f.sprite.setBounce(0);
   f.sprite.setImmovable(true);
   f.sprite.body.allowGravity = false;
 
   f.sound = game.sound.add('flag_spikes', {
-    volume: 0.2,
+    volume: 0.04,
     rate: 1,
   });
 }
@@ -917,7 +916,7 @@ function createHitboxOverlap(game: SmashedGame): void {
         player.char.sprite,
         game.flag.flagSpikes.sprite,
         function () {
-          if (game.flag.flagSpikes.sprite.visible) {
+          if (game.flag.flagSpikes.state === 'up') {
             setPlayerState(player, playerIndex, 'player-state-dead', game);
             game.flag.flagSpikes.sound.play();
           }
