@@ -164,9 +164,9 @@ export const characterMoves: CharacterMove[] = [
   { button: 'D-Pad', move: 'Move', status: emoji.greenCheck },
   { button: 'Ground + X', move: 'Jump', status: emoji.greenCheck },
   { button: 'Air + X', move: 'Double Jump', status: emoji.greenCheck },
-  { button: 'Air + D-Pad + A', move: 'Air Dodge', status: emoji.caution },
-  { button: 'B', move: 'Physical Attack', status: emoji.caution },
-  { button: 'Y', move: 'Energy Attack', status: emoji.greenCheck },
+  { button: 'Air + D-Pad + A', move: 'Aerial Evade', status: emoji.caution },
+  { button: 'B', move: 'Melee Attack', status: emoji.caution },
+  { button: 'Y', move: 'Projectile Attack', status: emoji.greenCheck },
   { button: 'Forward + B', move: 'Smash Attack', status: emoji.redX },
   {
     button: 'Air + Wall + Forward',

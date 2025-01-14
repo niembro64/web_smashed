@@ -11,7 +11,8 @@ import {
 } from '../scenes/types';
 
 const textForEachType = {
-  0: 'Click to Turn On a Player',
+  // 0: 'Click to Turn On a Player',
+  0: '',
   1: 'A Player with a Gamepad (Controller)',
   // 2: 'A Player with a Keyboard',
   3: 'A Normal "Scripted" Bot',
@@ -192,9 +193,9 @@ function InputTypeBlock({
             const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
 
             if (isARROWS) {
-              return 'Refer to "Controls" above';
+              return '"Arrows" (Refer to Controls)';
             } else {
-              return 'Refer to "Controls" above';
+              return '"WASD" (Refer to Controls)';
             }
           })()}
           className={

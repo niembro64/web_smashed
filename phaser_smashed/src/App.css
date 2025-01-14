@@ -498,7 +498,7 @@ h2 {
   width: 45vw;
   background-color: rgba(128, 128, 128, 0.1);
   padding: 0.7vw 1vw 0vw 1vw;
-  margin: 0vw 0vw 0.5vw 0vw;
+  margin: 0vw 0.5vw 0.5vw 0vw;
   border-radius: var(--border-radius-small);
   display: flex;
   flex-direction: row;
@@ -760,7 +760,7 @@ h2 {
 }
 
 #fill-index-3 {
- filter: brightness(0) invert(1) brightness(0.2) sepia() hue-rotate(100deg)
+  filter: brightness(0) invert(1) brightness(0.2) sepia() hue-rotate(100deg)
     saturate(30);
 }
 
