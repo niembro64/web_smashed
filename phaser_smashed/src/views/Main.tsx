@@ -1800,7 +1800,8 @@ function Main() {
                     <div id="move" key={charMoveIndex}>
                       <h5>{charMove.move}</h5>
                       <h5>
-                        {charMove.button} {charMove.status}
+                        {charMove.button}
+                        {/* {charMove.status} */}
                       </h5>
                     </div>
                   );

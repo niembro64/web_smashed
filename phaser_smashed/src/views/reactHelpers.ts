@@ -162,25 +162,26 @@ export const p2Keys: string[] = [
 
 export const characterMoves: CharacterMove[] = [
   { button: 'D-Pad', move: 'Move', status: emoji.greenCheck },
-  { button: 'Ground + X', move: 'Jump', status: emoji.greenCheck },
-  { button: 'Air + X', move: 'Double Jump', status: emoji.greenCheck },
-  { button: 'Air + D-Pad + A', move: 'Aerial Evade', status: emoji.caution },
-  { button: 'B', move: 'Melee Attack', status: emoji.caution },
+  // { button: 'Ground + X', move: 'Jump', status: emoji.greenCheck },
+  { button: 'X', move: 'Jump', status: emoji.greenCheck },
+  // { button: 'Air + X', move: 'Double Jump', status: emoji.greenCheck },
+  { button: 'B', move: 'Melee Attack', status: emoji.greenCheck },
   { button: 'Y', move: 'Projectile Attack', status: emoji.greenCheck },
-  { button: 'Forward + B', move: 'Smash Attack', status: emoji.redX },
-  {
-    button: 'Air + Wall + Forward',
-    move: 'Wall Slide',
-    status: emoji.greenCheck,
-  },
+  { button: 'Start', move: 'Pause', status: emoji.greenCheck },
+  { button: 'Air + D-Pad + A', move: 'Aerial Evade', status: emoji.greenCheck },
+  // { button: 'Forward + B', move: 'Smash Attack', status: emoji.caution },
+  // {
+  //   button: 'Air + Wall + Forward',
+  //   move: 'Wall Slide',
+  //   status: emoji.greenCheck,
+  // },
   {
     button: 'L + R for 5 Seconds',
     move: 'Suicide',
     status: emoji.greenCheck,
   },
-  { button: 'Start', move: 'Pause', status: emoji.greenCheck },
-  { button: 'Paused + Any Button', move: 'Ready', status: emoji.greenCheck },
-  { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
+  // { button: 'Paused + Any Button', move: 'Ready', status: emoji.greenCheck },
+  // { button: 'Paused + All Ready', move: 'UnPause', status: emoji.greenCheck },
 ];
 
 export const baseGravity = 3000;
