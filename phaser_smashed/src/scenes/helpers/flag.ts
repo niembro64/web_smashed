@@ -281,12 +281,12 @@ export const updateFlagButton = (game: SmashedGame): void => {
 
   button.playerIndexPressing = playerIndexTouching;
 
+  if (playerIndexTouching === null) {
+    return;
+  }
+
   switch (flag.flagSpikes.state) {
     case 'down':
-      if (playerIndexTouching === null) {
-        return;
-      }
-
       setFlagSpikesState({
         game: game,
         stateNew: 'up',
@@ -294,10 +294,6 @@ export const updateFlagButton = (game: SmashedGame): void => {
 
       break;
     case 'up':
-      if (playerIndexTouching !== null) {
-        return;
-      }
-
       setFlagSpikesState({
         game: game,
         stateNew: 'down',
