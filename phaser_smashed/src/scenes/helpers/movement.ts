@@ -906,3 +906,41 @@ export const getPercentOfScreenTravelled = (
     percentY: percentY,
   };
 };
+
+export const getNearestPlayerAliveInRadiusFromPoint = (params: {
+  x: number;
+  y: number;
+  radius: number;
+  game: SmashedGame;
+}): { player: Player | null; playerIndex: number | null } => {
+  const { x, y, radius, game } = params;
+
+  let nearestPlayer: Player | null = null;
+  let nearestPlayerIndex: number | null = null;
+
+  let shortestDistance = Infinity;
+  for (let i = 0; i < game.players.length; i++) {
+    const player = game.players[i];
+    if (player.state.name !== 'player-state-alive') {
+      continue;
+    }
+
+    const distance = getDistance(
+      x,
+      y,
+      player.char.sprite.x,
+      player.char.sprite.y
+    );
+
+    if (distance < radius && distance < shortestDistance) {
+      shortestDistance = distance;
+      nearestPlayer = player;
+      nearestPlayerIndex = i;
+    }
+  }
+
+  return {
+    player: nearestPlayer,
+    playerIndex: nearestPlayerIndex,
+  };
+};

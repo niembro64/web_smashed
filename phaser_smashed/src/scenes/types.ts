@@ -760,7 +760,7 @@ export interface Box {
   right: number;
 }
 
-export type FlagSpikesState = 'up' | 'down';
+export type FlagSpikesState = 'spikes-up' | 'spikes-down';
 export interface Flag {
   flagSpeedDark: number;
   flagSpeed: number;

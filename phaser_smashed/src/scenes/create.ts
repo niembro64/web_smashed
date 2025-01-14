@@ -914,7 +914,7 @@ function createHitboxOverlap(game: SmashedGame): void {
         player.char.sprite,
         game.flag.flagSpikes.sprite,
         function () {
-          if (game.flag.flagSpikes.state === 'up') {
+          if (game.flag.flagSpikes.state === 'spikes-up') {
             setPlayerState(player, playerIndex, 'player-state-dead', game);
             game.flag.flagSpikes.sound.play();
           }

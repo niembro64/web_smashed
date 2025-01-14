@@ -6,7 +6,11 @@ import {
   FlagSpikesState,
   Player,
 } from '../types';
-import { getNearestPlayerAliveFromXY } from './movement';
+import { print } from '../../views/client';
+import {
+  getNearestPlayerAliveFromXY,
+  getNearestPlayerAliveInRadiusFromPoint,
+} from './movement';
 import { setPlayerPowerState } from './powers';
 import { setBGMusicResume, setMusicBoxPause, setMusicBoxResume } from './sound';
 
@@ -229,7 +233,7 @@ export const setFlagSpikesState = (params: {
   const button: FlagButton = game.flag.flagButton;
 
   switch (stateNew) {
-    case 'up':
+    case 'spikes-up':
       flagSpikes.sprite.setPosition(flagSpikes.posUp.x, flagSpikes.posUp.y);
 
       button.spriteUp.setAlpha(0);
@@ -237,7 +241,7 @@ export const setFlagSpikesState = (params: {
 
       flagSpikes.sound.play();
       break;
-    case 'down':
+    case 'spikes-down':
       flagSpikes.sprite.setPosition(flagSpikes.posDown.x, flagSpikes.posDown.y);
 
       button.spriteUp.setAlpha(1);
@@ -254,53 +258,26 @@ export const updateFlagButton = (game: SmashedGame): void => {
   const button: FlagButton = game.flag.flagButton;
   const flag: Flag = game.flag;
 
-  const obj: { player: Player; playerIndex: number } | null =
-    getNearestPlayerAliveFromXY(button.posInit.x, button.posInit.y, game);
+  const { player, playerIndex } = getNearestPlayerAliveInRadiusFromPoint({
+    x: button.spriteUp.x,
+    y: button.spriteUp.y,
+    radius: 50,
+    game: game,
+  });
 
-  if (obj === null) {
-    return;
-  }
-
-  const player = obj.player;
-
-  const dX: number = (button.spriteDown.width * button.scale * 1.2) / 2;
-  const dY: number = 30;
-
-  let playerIndexTouching: number | null;
+  button.playerIndexPressing = playerIndex;
 
   if (
-    player.char.sprite.x > button.posInit.x - dX &&
-    player.char.sprite.x < button.posInit.x + dX &&
-    player.char.sprite.y > button.posInit.y - dY &&
-    player.char.sprite.y < button.posInit.y + dY
+    button.playerIndexPressing !== null &&
+    flag.flagSpikes.state === 'spikes-down'
   ) {
-    playerIndexTouching = obj.playerIndex;
-  } else {
-    playerIndexTouching = null;
+    setFlagSpikesState({ game, stateNew: 'spikes-up' });
   }
 
-  button.playerIndexPressing = playerIndexTouching;
-
-  if (playerIndexTouching === null) {
-    return;
-  }
-
-  switch (flag.flagSpikes.state) {
-    case 'down':
-      setFlagSpikesState({
-        game: game,
-        stateNew: 'up',
-      });
-
-      break;
-    case 'up':
-      setFlagSpikesState({
-        game: game,
-        stateNew: 'down',
-      });
-
-      break;
-    default:
-      throw new Error('updateFlagButton: state not recognized');
+  if (
+    button.playerIndexPressing === null &&
+    flag.flagSpikes.state === 'spikes-up'
+  ) {
+    setFlagSpikesState({ game, stateNew: 'spikes-down' });
   }
 };
