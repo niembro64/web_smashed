@@ -193,7 +193,7 @@ export interface Player {
   playerReadySound: any;
   circleOffset: number;
   endPlace: number;
-  controllerButtonPresses: ControllerNumButtonoPresses;
+  controllerButtonPresses: ControllerNumButtonPresses;
   averagePositionXY: AveragePositionXY;
   nnRating: number | null;
   maxPositionsXY: MMaxPositionsXY;
@@ -209,7 +209,7 @@ export type MaxPositions = {
   end: number;
 };
 
-export type ControllerNumButtonoPresses = {
+export type ControllerNumButtonPresses = {
   up: NumButtonPresses;
   down: NumButtonPresses;
   left: NumButtonPresses;
@@ -698,6 +698,14 @@ export type BulletBillComboState =
   | 'shooting'
   | 'cooldown';
 
+export type FlagButton = {
+  scale: number;
+  spriteDown: any;
+  spriteUp: any;
+  posInit: Position;
+  playerIndexPressing: number | null;
+};
+
 export type BulletBillButton = {
   scale: number;
   distanceTrigger: number;
@@ -775,6 +783,7 @@ export interface Flag {
   afterPauseResumeMusicFlagMusicBox: boolean;
   firework: any;
   flagSpikes: FlagSpikes;
+  flagButton: FlagButton;
 }
 
 export type FlagSpikes = {

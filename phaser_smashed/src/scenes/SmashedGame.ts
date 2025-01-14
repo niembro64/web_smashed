@@ -1051,6 +1051,16 @@ export default class SmashedGame extends Phaser.Scene {
     soundFlagMusicBox: null,
     soundFlagComplete: null,
     firework: null,
+    flagButton: {
+      scale: 0.11,
+      spriteDown: null,
+      spriteUp: null,
+      posInit: {
+        x: SCREEN_DIMENSIONS.WIDTH * 0.5,
+        y: SCREEN_DIMENSIONS.HEIGHT * 0.5,
+      },
+      playerIndexPressing: null,
+    },
     flagSpikes: {
       sprite: null,
       posInit: {

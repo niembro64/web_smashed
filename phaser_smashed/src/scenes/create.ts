@@ -26,6 +26,7 @@ import {
   BulletBillCombo,
   BulletBillSparkLine,
   FireFlower,
+  FlagButton,
   GameBoundaryObject,
   Player,
   Position,
@@ -47,7 +48,8 @@ export function create(game: SmashedGame) {
   createLavas(game);
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
-  createPSwitch(game);
+  createPSwitchBB(game);
+  createPSwitchFlag(game);
   createFireFlower(game);
 
   createBulletBillSparkLine(game);
@@ -208,7 +210,39 @@ function createBulletBillSparkLine(game: SmashedGame) {
   // game.bulletBillCombo.sparkLine.emitter.startFollow(bbSparkLine.spark);
 }
 
-function createPSwitch(game: SmashedGame): void {
+function createPSwitchFlag(game: SmashedGame): void {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
+  const button: FlagButton = game.flag.flagButton;
+
+  button.spriteDown = game.physics.add.sprite(
+    button.posInit.x,
+    button.posInit.y,
+    'button_down'
+  );
+  button.spriteDown.setBounce(0);
+  button.spriteDown.setScale(button.scale);
+  button.spriteDown.setImmovable(true);
+  button.spriteDown.body.allowGravity = false;
+  button.spriteDown.setOrigin(0.5, 1);
+  button.spriteDown.setAlpha(0);
+
+  button.spriteUp = game.physics.add.sprite(
+    button.posInit.x,
+    button.posInit.y,
+    'button_up'
+  );
+  button.spriteUp.setBounce(0);
+  button.spriteUp.setScale(button.scale);
+  button.spriteUp.setImmovable(true);
+  button.spriteUp.body.allowGravity = false;
+  button.spriteUp.setOrigin(0.5, 1);
+  button.spriteUp.setAlpha(1);
+}
+
+function createPSwitchBB(game: SmashedGame): void {
   const button: BulletBillButton = game.bulletBillCombo.button;
 
   button.spriteUp = game.physics.add.sprite(

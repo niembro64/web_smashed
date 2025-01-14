@@ -1,7 +1,7 @@
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import {
   AveragePositionXY,
-  ControllerNumButtonoPresses,
+  ControllerNumButtonPresses,
   MMaxPositionsXY as MaxPositionsXY,
   Player,
 } from '../types';
@@ -708,7 +708,7 @@ export function updatePlayerControllerCountersAndPositionCounters(
   player: Player
 ): void {
   const padCurr = player.padCurr;
-  const cbp: ControllerNumButtonoPresses = player.controllerButtonPresses;
+  const cbp: ControllerNumButtonPresses = player.controllerButtonPresses;
   const apxy: AveragePositionXY = player.averagePositionXY;
   const mpxy: MaxPositionsXY = player.maxPositionsXY;
 
