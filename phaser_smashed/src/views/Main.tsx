@@ -1914,6 +1914,7 @@ function Main() {
                 {workingControllersAmazon.map((controller) => {
                   return (
                     <a
+                      key={controller.name}
                       onMouseEnter={() => {
                         soundManager.blipSoundSoft();
                       }}

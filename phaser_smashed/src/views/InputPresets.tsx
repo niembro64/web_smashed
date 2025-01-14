@@ -78,10 +78,9 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   return (
     <div className="input-group">
       {inputConfigurations.map((inputConfig, index) => (
-        <>
+        <div key={index}>
           <div
             data-tooltip-content={inputConfig.tooltipText}
-            key={index}
             className="b-all-bots"
             onMouseEnter={() => {
               soundManager.blipSoundSoft();
@@ -95,7 +94,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
               <span className={'vs-span'}>{inputConfig.extraEmojis}</span>
             )}
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
