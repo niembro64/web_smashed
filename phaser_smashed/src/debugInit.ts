@@ -57,7 +57,7 @@ export const debugInit: Debug = {
 
   Allow_SlowMo: true,
   Chomp_Explosion: true,
-  Chomp_Velocities: false,
+  Chomp_Velocities: true,
   Char_Override: false,
   Char_Override_ID: 0,
   Bullets_Allow_Groups: true,

@@ -31,6 +31,7 @@ import {
   Position,
 } from './types';
 import { setPreUpdate } from './update';
+import { setPlayerState } from './helpers/state';
 
 export function create(game: SmashedGame) {
   createPreCreate(game);
@@ -866,6 +867,20 @@ function createPlayerIdCircles(game: SmashedGame): void {
 function createHitboxOverlap(game: SmashedGame): void {
   if (!game.debug.Simple_Stage) {
     game.players.forEach((player, playerIndex) => {
+      ////////////////////////////////////
+      // FLAG SPIKES PLAYERS OVERLAP
+      ////////////////////////////////////
+      game.physics.add.overlap(
+        player.char.sprite,
+        game.flag.flagSpikes.sprite,
+        function () {
+          if (game.flag.flagSpikes.sprite.visible) {
+            setPlayerState(player, playerIndex, 'player-state-dead', game);
+            // game.flag.flagSpikes.sound.play();
+          }
+        }
+      );
+
       ////////////////////////////////////
       // FIREFLOWER BULLETS OVERLAP
       ////////////////////////////////////
