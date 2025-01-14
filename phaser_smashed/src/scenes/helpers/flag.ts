@@ -261,7 +261,7 @@ export const updateFlagButton = (game: SmashedGame): void => {
   const { player, playerIndex } = getNearestPlayerAliveInRadiusFromPoint({
     x: button.spriteUp.x,
     y: button.spriteUp.y,
-    radius: 50,
+    radius: 64,
     game: game,
   });
 

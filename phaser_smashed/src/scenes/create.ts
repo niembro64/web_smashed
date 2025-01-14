@@ -49,9 +49,8 @@ export function create(game: SmashedGame) {
   createSplashes(game);
   createSplashRuleFinished(game); // MAYBE
   createPSwitchBB(game);
-  createPSwitchFlag(game);
   createFireFlower(game);
-
+  
   createBulletBillSparkLine(game);
   createBulletBillTowers(game);
   createExplosionsBack(game);
@@ -73,6 +72,7 @@ export function create(game: SmashedGame) {
   createScoreboardController(game);
   createScoreboardReady(game);
   createChomp(game);
+  createPSwitchFlag(game);
   createEmitterChompFollowChomp(game);
   createPlayers(game);
   createExplosionsFront(game);
