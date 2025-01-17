@@ -540,7 +540,11 @@ function Main() {
         musicManager.musicSetupScreenRef.current.play();
         musicManager.musicLoadingScreenRef.current.pause();
 
-        setTopBarDivExists(true);
+        if (!isMobile) {
+          if (!isMobile) {
+            setTopBarDivExists(true);
+          }
+        }
 
         if (debugState.Auto_Start && webStatePrev === 'web-state-init') {
           print('AUTO START');
@@ -566,7 +570,10 @@ function Main() {
         goPlay();
         musicManager.musicSetupScreenRef.current.pause();
         musicManager.musicLoadingScreenRef.current.pause();
-        setTopBarDivExists(true);
+
+        if (!isMobile) {
+          setTopBarDivExists(true);
+        }
 
         const numKeyboards = getNumKeyboardsInUse();
         switch (numKeyboards) {
@@ -763,6 +770,16 @@ function Main() {
       }
     }
     return numActiveBeforeMe;
+  };
+
+  const getNumPlayersBeforeMe = (index: number): number => {
+    let numPlayersBeforeMe = 0;
+    for (let i = 0; i < index; i++) {
+      if (inputArray[i] === 1 || inputArray[i] === 2) {
+        numPlayersBeforeMe++;
+      }
+    }
+    return numPlayersBeforeMe;
   };
 
   useEffect(() => {
@@ -1284,11 +1301,11 @@ function Main() {
   const getNumKeyboards = (): number => {
     let numK: number = 0;
 
-    inputArray.forEach((ia: number, iaIndex: number) => {
-      if (ia === 2) {
+    for (let i = 0; i < inputArray.length; i++) {
+      if (inputArray[i] === 2) {
         numK++;
       }
-    });
+    }
 
     return numK;
   };
@@ -1303,6 +1320,19 @@ function Main() {
     }
 
     return pads;
+  };
+
+  const getNumPlayers = (): number => {
+    print('inputArray', inputArray);
+    const numKeyboards: number = getNumKeyboards();
+    const numControllers: number = getNumGamepads();
+
+    print('numGamepads', numKeyboards);
+    print('numControllers', numControllers);
+    const total: number = numKeyboards + numControllers;
+
+    print('total', total);
+    return total;
   };
 
   const onClickBackButtonHandler = () => {
@@ -1557,6 +1587,8 @@ function Main() {
                     {/* Instead of repeating the same conditional blocks,
                         we now offload them to InputTypeBlock */}
                     <InputTypeBlock
+                      getNumPlayers={getNumPlayers}
+                      getNumPlayersBeforeMe={getNumPlayersBeforeMe}
                       input={inputArray[pIndex]}
                       pIndex={pIndex}
                       p={p}
@@ -1663,8 +1695,8 @@ function Main() {
                   onClickPlayNavButtons('Options');
                 }}
               >
-                {showOptions && <span className="dark-span">Options</span>}
-                {!showOptions && <span>Options</span>}
+                {showOptions && <span className="dark-span">OPTIONS</span>}
+                {!showOptions && <span>OPTIONS</span>}
               </div>
             )}
             {webStateCurr === 'web-state-setup' && (
@@ -1677,8 +1709,10 @@ function Main() {
                   onClickPlayNavButtons('Controllers');
                 }}
               >
-                {showControllers && <span className="dark-span">Pads</span>}
-                {!showControllers && <span>Pads</span>}
+                {showControllers && (
+                  <span className="dark-span">CONTROLLERS</span>
+                )}
+                {!showControllers && <span>CONTROLLERS</span>}
               </div>
             )}
             {webStateCurr !== 'web-state-setup' && (
@@ -1691,7 +1725,7 @@ function Main() {
                   onClickBackButtonHandler();
                 }}
               >
-                <span>Back</span>
+                <span>BACK</span>
               </div>
             )}
             {webStateCurr !== 'web-state-setup' && (
@@ -1704,7 +1738,7 @@ function Main() {
                   onClickStartStartButton();
                 }}
               >
-                <span>ReStart</span>
+                <span>RESTART</span>
               </div>
             )}
 
@@ -1717,8 +1751,8 @@ function Main() {
                 onClickPlayNavButtons('Controls');
               }}
             >
-              {showControls && <span className="dark-span">Buttons</span>}
-              {!showControls && <span>Controls</span>}
+              {showControls && <span className="dark-span">CONTROLS</span>}
+              {!showControls && <span>CONTROLS</span>}
             </div>
             <div
               onMouseEnter={() => {
@@ -1729,8 +1763,8 @@ function Main() {
                 onClickPlayNavButtons('Rules-N64');
               }}
             >
-              {showRulesN64 && <span className="dark-span">Rules</span>}
-              {!showRulesN64 && <span>Rules</span>}
+              {showRulesN64 && <span className="dark-span">RULES</span>}
+              {!showRulesN64 && <span>RULES</span>}
             </div>
             {webStateCurr === 'web-state-setup' && (
               <div
@@ -1742,8 +1776,8 @@ function Main() {
                   onClickPlayNavButtons('About');
                 }}
               >
-                {showAbout && <span className="dark-span">About</span>}
-                {!showAbout && <span>About</span>}
+                {showAbout && <span className="dark-span">ABOUT</span>}
+                {!showAbout && <span>ABOUT</span>}
               </div>
             )}
           </div>
@@ -2212,7 +2246,7 @@ function Main() {
 
       {webStateCurr === 'web-state-game' && nnProgress !== null && (
         <div className="neural-network-train-status">
-          <span>Neural Network Training</span>
+          <span>AI Training</span>
           <div className="neural-network-train-top">
             <span>
               {percentDoneBar(nnProgress)} {Math.floor((nnProgress || 0) * 100)}

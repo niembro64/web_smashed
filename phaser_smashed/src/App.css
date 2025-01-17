@@ -1,9 +1,9 @@
 :root {
   --gray-dark: #080808;
-  --gray-medium: #111111;
-  --gray-light: #222222;
-  --gray-lighter: #555555;
-  --gray-lightest: #888888;
+  --gray-medium: #222222;
+  --gray-light: #444444;
+  --gray-lighter: #666666;
+  --gray-lightest: #aaaaaa;
   --green-active: hsl(100, 20%, 30%);
   --magenta-active: hsl(300, 20%, 30%);
   --orange-active: hsl(30, 20%, 30%);
@@ -220,7 +220,7 @@ h2 {
   padding: 0 2%;
   margin: 0;
   color: transparent;
-  font-size: 140%;
+  font-size: 1.5vw;
   transition: 2s ease;
   cursor: pointer;
 }
@@ -283,6 +283,7 @@ h2 {
   -ms-user-select: text;
   user-select: text;
   color: white;
+  font-size: 1vw;
 }
 
 .horiz-item-big::-webkit-scrollbar {
@@ -440,7 +441,8 @@ h2 {
 
 #home-debug {
   width: 100%;
-  height: 4vw;
+  /* height: 4vw; */
+  text-transform: uppercase;
 
   border-radius: var(--border-radius-small);
   display: flex;
@@ -449,6 +451,7 @@ h2 {
   align-items: center;
   cursor: pointer;
   margin-bottom: 0.25vw;
+  height: 6vw;
 }
 
 #home-debug:hover {
@@ -459,8 +462,8 @@ h2 {
 }
 
 #option-debug {
-  width: calc(100% / 4.1);
-  height: 2vw;
+  width: calc(100% / 3.1);
+  height: 6vw;
 
   border-radius: var(--border-radius-small);
   display: flex;
@@ -469,6 +472,7 @@ h2 {
   align-items: center;
   cursor: pointer;
   margin-bottom: 0.25vw;
+  text-transform: uppercase;
 }
 
 #option-debug:hover {
@@ -482,7 +486,8 @@ h2 {
   flex: 1;
   margin: 0;
   padding: 0;
-  font-size: 0.8vw;
+  font-size: 1.2vw;
+  /* TODO: HERE FONT SIZE */
   padding: 0vw 1vw 0vw 1vw;
 }
 .option-debug-true {
@@ -685,13 +690,16 @@ h2 {
   align-items: flex-start;
   flex-wrap: wrap;
   overflow: scroll;
+  max-height: 80vh; /* Set a maximum height, adjust as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal scrollbar if not needed */
 
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 }
 .player-choices-right {
-  flex: 4;
+  flex: 2.6;
   height: 100%;
   padding: 0vw 0.5vw;
   display: flex;
@@ -794,7 +802,7 @@ h2 {
   padding: 0.5vw 3vw 0vw 3vw;
   margin-right: 2%;
   color: rgba(255, 255, 255, 1);
-  font-size: 2vw;
+  font-size: 3vw;
   transition: 0.5s ease;
   z-index: 0;
   display: flex;
@@ -813,7 +821,7 @@ h2 {
   padding: 0.5vw 3vw 0vw 3vw;
   margin-right: 2%;
   color: rgba(255, 255, 255, 1);
-  font-size: 2vw;
+  font-size: 3vw;
   transition: 0.5s ease;
   z-index: 0;
   display: flex;
@@ -1811,6 +1819,10 @@ h2 {
 .keyboard-left-checkmark > span {
   font-size: 1vw;
   font-weight: normal;
+}
+
+.small {
+  font-size: 0.8vw;
 }
 
 .small-spinner {

@@ -1,11 +1,9 @@
 // InputTypeBlock.tsx
 
-import React from 'react';
 import {
   CharacterId,
   Debug,
   InputType,
-  SmashConfig,
   emoji,
   textForEachCharacter,
 } from '../scenes/types';
@@ -26,10 +24,12 @@ interface InputTypeBlockProps {
   p: { characterId: CharacterId; input: number | null };
   debugState: Debug;
   getNumActiveBeforeMe: (index: number) => number;
+  getNumPlayersBeforeMe: (index: number) => number;
   smashConfigOptions: { name: string; scale: number; nameShort: string }[];
   onClickRotateSelection: (playerIndex: number) => void;
   onClickOscura: (playerIndex: number) => void;
   soundManager: any;
+  getNumPlayers: () => number;
   inputArray: InputType[];
   getNumKeyboards: () => number;
   getDoesKeyboardExistLower: (myI: number) => boolean;
@@ -41,8 +41,10 @@ function InputTypeBlock({
   input,
   pIndex,
   p,
+  getNumPlayers,
   debugState,
   getNumActiveBeforeMe,
+  getNumPlayersBeforeMe,
   smashConfigOptions,
   onClickRotateSelection,
   onClickOscura,
@@ -172,12 +174,20 @@ function InputTypeBlock({
             onClickOscura(pIndex);
           }}
         >
-          <span>GAMEPAD</span>
-          {getNumGamepads() > 1 && (
+          <span>
+            PLAYER{' '}
+            {getNumPlayers() > 1 ? getNumPlayersBeforeMe(pIndex) + 1 : ''}
+          </span>
+          {/* {getNumGamepads() > 1 && (
             <span id="input-sub">
               {getNumControllersExistLower(pIndex) + 1}
             </span>
-          )}
+          )} */}
+
+          <span id="input-sub">
+            CONTROLLER
+            {/* CONTROLLER {getNumControllersExistLower(pIndex) + 1} */}
+          </span>
           {pIndex < 2 && (
             <div className="button-input-emoji">{emoji.gamepad}</div>
           )}
@@ -222,13 +232,18 @@ function InputTypeBlock({
             onClickOscura(pIndex);
           }}
         >
-          <span>KEYBOARD</span>
+          <span>
+            PLAYER{' '}
+            {getNumPlayers() > 1 ? getNumPlayersBeforeMe(pIndex) + 1 : ''}
+          </span>
           {getNumKeyboards() > 1 && getDoesKeyboardExistLower(pIndex) && (
-            <span id="input-sub">Arrows</span>
+            <span id="input-sub">ARROW KEYS</span>
           )}
           {getNumKeyboards() > 1 && !getDoesKeyboardExistLower(pIndex) && (
-            <span id="input-sub">WASD</span>
+            <span id="input-sub">WASD KEYS</span>
           )}
+
+          {getNumKeyboards() === 1 && <span id="input-sub">KEYBOARD</span>}
           {pIndex < 2 && (
             <div className="button-input-emoji">{emoji.keyboardWhite}</div>
           )}
@@ -299,7 +314,7 @@ function InputTypeBlock({
           }}
         >
           <span>BOT</span>
-          <span id="input-sub">NEURAL NETWORK</span>
+          <span id="input-sub">AI</span>
           <div className="button-input-emoji">{emoji.brain}</div>
         </div>
       )}
@@ -332,7 +347,7 @@ function InputTypeBlock({
           }}
         >
           <span>BOT</span>
-          <span id="input-sub">EVOLVING NN</span>
+          <span id="input-sub">EVOLVING</span>
           <div className="button-input-emoji">{emoji.dna}</div>
         </div>
       )}

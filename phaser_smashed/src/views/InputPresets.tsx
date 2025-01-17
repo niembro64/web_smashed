@@ -46,13 +46,13 @@ export const InputGroup: React.FC<InputGroupProps> = ({
       extraEmojis: emoji.bot + emoji.bot,
     },
     {
-      tooltipText: 'Four Neural Networks',
+      tooltipText: 'Four AI Bots',
       config: [4, 4, 4, 4],
       emojis: emoji.brain + emoji.brain,
       extraEmojis: emoji.brain + emoji.brain,
     },
     {
-      tooltipText: 'Four "Evolving" Neural Networks',
+      tooltipText: 'Four Evolving AI Bots',
       config: [5, 5, 5, 5],
       emojis: emoji.dna + emoji.dna,
       extraEmojis: emoji.dna + emoji.dna,

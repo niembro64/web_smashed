@@ -42,13 +42,6 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
         let textToShow: string = 'XXX';
 
         switch (key) {
-          // case 'Mode_Infinity':
-          //   if (value) {
-          //     textToShow = 'Shots Mode';
-          //   } else {
-          //     textToShow = 'Time Mode';
-          //   }
-          //   break;
           case 'Minutes':
             if (debugState.Dur_Seconds) {
               textToShow = value + ' Seconds';
@@ -58,13 +51,18 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
             break;
           default:
             textToShow = replaceUnderscoreWithSpace(
+              // (typeof value === 'boolean'
+              //   ? value
+              //     ? showHomeList
+              //       ? ''
+              //       : emoji.greenCheck
+              //     : showHomeList
+              //     ? ''
+              //     : emoji.redX
+              //   : value) +
               (typeof value === 'boolean'
                 ? value
-                  ? showHomeList
-                    ? ''
-                    : emoji.greenCheck
-                  : showHomeList
-                  ? ''
+                  ? emoji.greenCheck
                   : emoji.redX
                 : value) +
                 '_' +
@@ -81,9 +79,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               typeof value === 'boolean'
                 ? value
                   ? 'option-debug-true'
-                  : // : showHomeList
-                    // ? 'option-debug-true'
-                    'option-debug-false'
+                  : 'option-debug-false'
                 : 'option-debug-true'
             }
             key={index}
