@@ -1386,15 +1386,6 @@ function Main() {
         style={toolTipStyle}
       />
 
-      {/* <Tooltip
-        opacity={1}
-        anchorSelect="#home-debug"
-        place="top"
-        delayHide={tooltipDelay}
-        delayShow={tooltipDelay}
-        style={toolTipStyle}
-      /> */}
-
       {!debugState.Dev_Mode &&
         debugState.Show_Helper_Keyboard &&
         webStateCurr !== 'web-state-setup' &&
