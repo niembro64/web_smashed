@@ -41,7 +41,6 @@ import {
   updatePadPreviousAndDebounced,
 } from '../helpers/pad';
 import {
-  updateChompFilterState,
   updateChompStateLightIfHasBeenLongEnough,
 } from '../helpers/powers';
 import {
@@ -81,7 +80,6 @@ export function updateGameStatePlay(
   updateSpritesheets(game);
   updateTimeSlowdown(game);
   updateAtThreeShots(game);
-  updateChompFilterState(game);
   updateChompStateLightIfHasBeenLongEnough(game);
   updateFlagToucher(game);
   updateFlagOwner(game);

@@ -798,8 +798,6 @@ export type FlagSpikes = {
 
 export interface Chomp {
   sprite: any | Phaser.GameObjects.Sprite;
-  filterStateCurr: ChompFilterState;
-  filterStatePrev: ChompFilterState;
   damage: number;
   originX: number;
   originY: number;

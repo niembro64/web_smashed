@@ -744,8 +744,6 @@ export default class SmashedGame extends Phaser.Scene {
   chompY: number = 964;
   chomp: Chomp = {
     sprite: null,
-    filterStateCurr: { name: 'none', gameStamp: 0 },
-    filterStatePrev: { name: 'none', gameStamp: 0 },
     damage: 0,
     originX: this.chompX,
     originY: this.chompY,
