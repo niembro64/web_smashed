@@ -6,6 +6,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       // Overwrite or extend default Tailwind theme settings if desired
     },
   },

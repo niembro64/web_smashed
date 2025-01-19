@@ -38,7 +38,7 @@ export function create(game: SmashedGame) {
   createPreCreate(game);
   createDataMatrices(game);
   createSoundsGame(game);
-  createBackground(game);
+  createBackgroundDarkXP(game);
   createSplashBlack(game);
   createBackgroundOutlineCastle(game);
   createBackgroundOutlineLava(game);
@@ -50,7 +50,7 @@ export function create(game: SmashedGame) {
   createSplashRuleFinished(game); // MAYBE
   createPSwitchBB(game);
   createFireFlower(game);
-  
+
   createBulletBillSparkLine(game);
   createBulletBillTowers(game);
   createExplosionsBack(game);
@@ -127,6 +127,8 @@ function createBulletBillTowers(game: SmashedGame): void {
   towerCenter.sprite.setOrigin(0.5, 0.5);
   towerCenter.sprite.body.allowGravity = false;
 
+  towerCenter.sprite.setDepth(-2);
+
   const towerLeft = game.bulletBillCombo.towerLeft;
   // add image to towerLeft sprite
   towerLeft.sprite = game.physics.add.sprite(
@@ -141,6 +143,8 @@ function createBulletBillTowers(game: SmashedGame): void {
   towerLeft.sprite.setImmovable(true);
   towerLeft.sprite.setOrigin(0.5, 0.5);
   towerLeft.sprite.body.allowGravity = false;
+
+  towerLeft.sprite.setDepth(-2);
 }
 
 function createGamePathPoints(game: SmashedGame): void {
@@ -186,6 +190,7 @@ function createBulletBillSparkLine(game: SmashedGame) {
 
   // Draw the path
   bbSparkLine.graphics.lineStyle(10, 0x000000, 1);
+  bbSparkLine.graphics.setDepth(-2);
   bbSparkLine.graphics.beginPath();
   bbSparkLine.graphics.moveTo(
     bbSparkLine.pathPoints[0].x,
@@ -1771,6 +1776,7 @@ function createBulletBill(game: SmashedGame): void {
   bbCombo.bullet.sprite.setOrigin(0.5, 0.5);
   bbCombo.bullet.sprite.body.setMass(bbCombo.bullet.mass);
   bbCombo.bullet.sprite.setImmovable(true);
+  bbCombo.bullet.sprite.setDepth(-1);
 
   for (let i = 0; i < game.players.length; i++) {
     const newColoredBullet = game.physics.add.sprite(
@@ -1784,6 +1790,7 @@ function createBulletBill(game: SmashedGame): void {
     newColoredBullet.setOrigin(0.5, 0.5);
     newColoredBullet.body.setMass(bbCombo.bullet.mass);
     newColoredBullet.setImmovable(true);
+    newColoredBullet.setDepth(-1);
 
     bbCombo.bullet.sprites_colored.push(newColoredBullet);
   }
@@ -1798,6 +1805,8 @@ function createBulletBill(game: SmashedGame): void {
   bbCombo.cannon.sprite.setImmovable(true);
   bbCombo.cannon.sprite.body.allowGravity = false;
   bbCombo.cannon.sprite.setOrigin(0.5, 0.5);
+
+  bbCombo.cannon.sprite.setDepth(-1);
 }
 
 function createCollidersBulletBill(game: SmashedGame): void {
@@ -1851,7 +1860,7 @@ function createCollidersBulletBill(game: SmashedGame): void {
   }
 }
 
-function createBackground(game: SmashedGame): void {
+function createBackgroundDarkXP(game: SmashedGame): void {
   const scaleUp = 1.1;
 
   game.BACKGROUND = game.physics.add.sprite(
@@ -1866,6 +1875,8 @@ function createBackground(game: SmashedGame): void {
   // game.BACKGROUND.setOrigin(0.5, 0.5);
   game.BACKGROUND.setImmovable(true);
   game.BACKGROUND.body.allowGravity = false;
+
+  game.BACKGROUND.setDepth(-2);
 }
 
 function createBackgroundOutlineFront(game: SmashedGame): void {
@@ -1881,7 +1892,7 @@ function createBackgroundOutlineFront(game: SmashedGame): void {
   // game.BACKGROUND_OUTLINE.setOrigin(0.5, 0.5);
   game.BACKGROUND_OUTLINE_FRONT.setImmovable(true);
   game.BACKGROUND_OUTLINE_FRONT.body.allowGravity = false;
-  game.BACKGROUND_OUTLINE_FRONT.setDepth(1);
+  game.BACKGROUND_OUTLINE_FRONT.setDepth(-1);
 }
 
 function createBackgroundOutlineCastle(game: SmashedGame): void {
@@ -1898,7 +1909,7 @@ function createBackgroundOutlineCastle(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_CASTLE.setImmovable(true);
   game.BACKGROUND_OUTLINE_CASTLE.body.allowGravity = false;
 
-  // game.BACKGROUND_OUTLINE_BACK.setAlpha(0.5);
+  game.BACKGROUND_OUTLINE_CASTLE.setDepth(-1);
 }
 function createBackgroundOutlineLava(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_LAVA = game.physics.add.sprite(
@@ -2037,8 +2048,6 @@ function createSplashes(game: SmashedGame): void {
         )
         .setOrigin(0.5, 0.5)
         .setAlpha(1);
-
-      splash.text.setDepth(1);
     }
   });
 }
