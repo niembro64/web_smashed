@@ -87,18 +87,13 @@ function StartScreen({
             'start-title' +
             (webStateCurr === 'web-state-setup'
               ? ' start-title-start'
-              : ' start-title-init')
+              : ' start-title-init cursor-pointer')
           }
           onMouseDown={() => {
             setWebStateCurr('web-state-setup');
           }}
         >
-          <div
-            className="start-title-div"
-            onMouseDown={() => {
-              // Force webState to setup
-            }}
-          >
+          <div className="start-title-div">
             <img
               className="start-title-div-img"
               src="images/smashed_x10_gif.gif"
