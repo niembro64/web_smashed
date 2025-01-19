@@ -7,32 +7,23 @@ import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
 import { useEffect, useRef, useState } from 'react';
 import '../App.css';
-import { Tooltip } from 'react-tooltip';
 import { debugInit } from '../debugInit';
-import {
-  nnNumTrainingBarTicks,
-  replaceNNExpressWithNNClient,
-} from '../scenes/helpers/nn';
+import { debugMax } from '../debugMax';
+import { debugOnMain } from '../debugOnMain';
+import { replaceNNExpressWithNNClient } from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
-import { momentStringToMoment } from '../scenes/helpers/time';
 import {
   ButtonName,
   CharacterId,
   Debug,
   GameStateWithTime,
   InputType,
-  KeyboardGroup,
   PlayerConfigSmall,
   SmashConfig,
   WebState,
   bar,
-  emoji,
   inputTypeNum,
-  toolTipStyle,
-  tooltipDelay,
 } from '../scenes/types';
-import DebugOptions from './DebugOptions';
-import InputGroup from './InputPresets';
 import { MusicManager, MusicManagerType } from './MusicManager';
 import SoundManager, { SoundManagerType } from './SoundManager';
 import {
@@ -43,34 +34,20 @@ import {
   fetchNeuralNetwork,
   getAllGameHistory,
   print,
-  sumNumbersIn2DArrayString,
 } from './client';
-import {
-  characterMoves,
-  configInit,
-  idColors,
-  inputArrayInit,
-  inputArrayInitDevMode,
-  inputArrayReset,
-  keyboardGroups,
-  p1Keys,
-  p2Keys,
-  quotes,
-  smashConfigInit,
-  smashConfigInitDevMode,
-  smashConfigInitMax,
-  smashConfigOptions,
-  workingControllersAmazon,
-} from './reactHelpers';
-import { debugOnMain } from '../debugOnMain';
-import { debugMax } from '../debugMax';
-import CornerPieces from '../components/CornerPieces';
-import InputTypeBlock from '../components/InputTypeBlock';
 
 // >>> NEW imports from the newly created files:
-import Popups from './Popups';
 import NeuralNetworkTrainStatus from './NeuralNetworkTrainStatus';
+import Popups from './Popups';
 import VideoReplay from './VideoReplay';
+import { configInit, inputArrayInit, inputArrayInitDevMode, inputArrayReset, p1Keys, p2Keys, quotes, smashConfigInit, smashConfigInitDevMode, smashConfigInitMax, smashConfigOptions } from './reactHelpers';
+import LoadingScreen from './LoadingScreen';
+import StartScreen from './StartScreen';
+import KeyboardExplainer from './KeyboardExplainer';
+import TooltipsAll from './ToolTipsAll';
+import TopBar from './TopBar';
+import DevModeDiv from './DevModeDiv';
+import MobileWarning from './MobileWarning';
 
 // Keep these exports the same:
 export const blipDelay = 200;
@@ -88,7 +65,7 @@ function Main() {
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
 
-  // Keep your original Refs for media recording if needed
+  // Keep your original Refs for media recording
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -98,7 +75,7 @@ function Main() {
   const nnJsonExpress = useRef<string | null>(null);
 
   ////////////////////////////////
-  // Reste NN_Rest_Evolving Button
+  // Reste NN_Reset_Evolving Button
   ////////////////////////////////
   useEffect(() => {
     if (debugState.NN_Reset_Evolving) {
@@ -106,7 +83,6 @@ function Main() {
     }
     (async () => {
       const x = await replaceNNExpressWithNNClient();
-
       setTimeout(() => {
         print('debugState.NN_Reset_Evolving Button setTimeout');
         setDebugState((prev: Debug) => {
@@ -144,22 +120,10 @@ function Main() {
 
       // set all characters to 0
       const choices: PlayerConfigSmall[] = [
-        {
-          characterId: 0,
-          input: null,
-        },
-        {
-          characterId: 0,
-          input: null,
-        },
-        {
-          characterId: 0,
-          input: null,
-        },
-        {
-          characterId: 0,
-          input: null,
-        },
+        { characterId: 0, input: null },
+        { characterId: 0, input: null },
+        { characterId: 0, input: null },
+        { characterId: 0, input: null },
       ];
       setSmashConfig({ players: [...choices] });
 
@@ -685,22 +649,10 @@ function Main() {
     const inputArrayNew: InputType[] = [3, 3, 3, 3];
     const smashConfigNew: SmashConfig = {
       players: [
-        {
-          characterId: 0,
-          input: 0,
-        },
-        {
-          characterId: 1,
-          input: 0,
-        },
-        {
-          characterId: 2,
-          input: 0,
-        },
-        {
-          characterId: 7,
-          input: 0,
-        },
+        { characterId: 0, input: 0 },
+        { characterId: 1, input: 0 },
+        { characterId: 2, input: 0 },
+        { characterId: 7, input: 0 },
       ],
     };
     debugStateCopy.Minutes = 10;
@@ -889,19 +841,19 @@ function Main() {
     if (
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-      'game-state-start' &&
+        'game-state-start' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-      'game-state-paused' &&
+        'game-state-paused' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-      'game-state-first-blood' &&
+        'game-state-first-blood' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-      'game-state-screen-clear' &&
+        'game-state-screen-clear' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-      'game-state-captured-flag' &&
+        'game-state-captured-flag' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-finished'
@@ -1190,433 +1142,97 @@ function Main() {
   // RENDER
   return (
     <div id="top-level" className="over-div">
-      <Tooltip
-        opacity={1}
-        anchorSelect=".b-all-bots"
-        place="top"
-        delayHide={tooltipDelay}
-        delayShow={tooltipDelay}
-        style={toolTipStyle}
-      />
-      <Tooltip
-        opacity={1}
-        anchorSelect=".b-dark"
-        place="top"
-        delayHide={tooltipDelay}
-        delayShow={tooltipDelay}
-        style={toolTipStyle}
-      />
-      <Tooltip
-        opacity={1}
-        anchorSelect=".b-start"
-        place="top"
-        delayHide={tooltipDelay}
-        delayShow={tooltipDelay}
-        style={toolTipStyle}
-      />
-      <Tooltip
-        opacity={1}
-        anchorSelect=".player-char"
-        place="top"
-        delayHide={tooltipDelay}
-        delayShow={tooltipDelay}
-        style={toolTipStyle}
-      />
+      {/* All global Tooltips in one place */}
+      <TooltipsAll />
 
       {/* KEYBOARD EXPLAINER BLOCKS */}
-      {!debugState.Dev_Mode &&
-        debugState.Show_Helper_Keyboard &&
-        webStateCurr !== 'web-state-setup' &&
-        numKeyboards === 2 &&
-        !bothKeysTouched && (
-          <div
-            className="keyboard-explainer-double"
-            onClick={() => {
-              onClickPlayNavButtons('Controls');
-            }}
-          >
-            {!p1KeysTouched && (
-              <div className="keyboard-left-checkmark">
-                <span>Awaiting</span>
-                <div className="small-spinner ss-red"></div>
-                <span>WASD</span>
-              </div>
-            )}
-            {!p2KeysTouched && (
-              <div className="keyboard-right-checkmark">
-                <span>Awaiting</span>
-                <div className="small-spinner ss-blue"></div>
-                <span>Arrows</span>
-              </div>
-            )}
-          </div>
-        )}
-      {!debugState.Dev_Mode &&
-        debugState.Show_Helper_Keyboard &&
-        webStateCurr !== 'web-state-setup' &&
-        numKeyboards === 1 &&
-        !p1KeysTouched && (
-          <div
-            className="keyboard-explainer-single"
-            onClick={() => {
-              onClickPlayNavButtons('Controls');
-            }}
-          >
-            <div className="keyboard-left-checkmark">
-              <span>Awaiting</span>
-              <div className="small-spinner ss-red"></div>
-              <span>WASD</span>
-            </div>
-          </div>
-        )}
+      <KeyboardExplainer
+        debugState={debugState}
+        webStateCurr={webStateCurr}
+        numKeyboards={numKeyboards}
+        bothKeysTouched={bothKeysTouched}
+        p1KeysTouched={p1KeysTouched}
+        p2KeysTouched={p2KeysTouched}
+        onClickPlayNavButtons={onClickPlayNavButtons}
+      />
 
       {/* LOADING SCREEN */}
       {webStateCurr === 'web-state-load' && (
-        <div className="loader">
-          <div className="spinner-box">
-            <div className="spinner-rotate-x">
-              <div className="spinner-rotate-y">
-                <div className="spinner">
-                  <div className="cube_side">
-                    <div className="cube_side_inside"></div>
-                  </div>
-                  <div className="cube_side">
-                    <div className="cube_side_inside"></div>
-                  </div>
-                  <div className="cube_side">
-                    <div className="cube_side_inside"></div>
-                  </div>
-                  <div className="cube_side">
-                    <div className="cube_side_inside"></div>
-                  </div>
-                  <div className="cube_side">
-                    <div className="cube_side_inside"></div>
-                  </div>
-                  <div className="cube_side">
-                    <div className="cube_side_inside"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="loading-table-wrapper">
-            <img
-              className="loading-table"
-              src="/images/table.png"
-              alt="table"
-            />
-          </div>
-          {!debugState.Typed_Loading_Text && (
-            <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
-          )}
-          <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
-        </div>
+        <LoadingScreen
+          debugState={debugState}
+          quotesRandomNumber={quotesRandomNumber}
+          quotes={quotes}
+        />
       )}
 
+      {/* PHASER Container */}
       <div className="phaser-container" id="phaser-container"></div>
 
       {/* START SCREEN (Init/Setup) */}
-      {(webStateCurr === 'web-state-setup' ||
-        webStateCurr === 'web-state-init') && (
-        <div className="start-class-div">
-          {!debugState.Dev_Mode && (
-            <div
-              className={
-                'black-hiding-div' +
-                (webStateCurr === 'web-state-init'
-                  ? ' black-hiding-div-init'
-                  : ' black-hiding-div-start')
-              }
-            />
-          )}
-
-          {/* Title + CornerPieces */}
-          <div className={'start-title-wrapper'}>
-            <div
-              className={
-                'start-title' +
-                (webStateCurr === 'web-state-setup'
-                  ? ' start-title-start'
-                  : ' start-title-init')
-              }
-            >
-              <div
-                className="start-title-div"
-                onMouseDown={() => {
-                  setWebStateCurr('web-state-setup');
-                }}
-              >
-                <img
-                  className="start-title-div-img"
-                  src="images/smashed_x10_gif.gif"
-                  alt="Smashed Title Gif"
-                />
-              </div>
-              <h1
-                className="start-title-h1"
-                id={
-                  webStateCurr === 'web-state-init' ? 'niemo-games' : undefined
-                }
-                onMouseDown={() => {
-                  setWebStateCurr('web-state-setup');
-                }}
-              >
-                {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
-              </h1>
-
-              {/* corner pieces */}
-              <CornerPieces
-                debugState={debugState}
-                webStateCurr={webStateCurr}
-              />
-            </div>
-          </div>
-
-          {/* Players Setup */}
-          <div className="player-choices">
-            <div className="player-choices-left">
-              <DebugOptions
-                showHomeList={true}
-                soundManager={soundManager}
-                debugState={debugState}
-                mainOptionsDebugShowState={mainOptionsDebugShowState}
-                setDebugState={setDebugState}
-                getMaxFromKey={getMaxFromKey}
-                setMainOptionsDebugShowState={setMainOptionsDebugShowState}
-              />
-            </div>
-            <div className="player-choices-right">
-              {smashConfig.players.map((p, pIndex) => {
-                return (
-                  <div className="player-choice" key={pIndex}>
-                    <InputTypeBlock
-                      getNumPlayers={getNumPlayers}
-                      getNumPlayersBeforeMe={getNumPlayersBeforeMe}
-                      input={inputArray[pIndex]}
-                      pIndex={pIndex}
-                      p={p}
-                      debugState={{
-                        ...debugState,
-                        idColors, // preserve your usage of idColors
-                      }}
-                      getNumActiveBeforeMe={getNumActiveBeforeMe}
-                      smashConfigOptions={smashConfigOptions}
-                      onClickRotateSelection={onClickRotateSelection}
-                      onClickOscura={onClickOscura}
-                      soundManager={soundManager}
-                      inputArray={inputArray}
-                      getNumKeyboards={getNumKeyboards}
-                      getDoesKeyboardExistLower={getDoesKeyboardExistLower}
-                      getNumGamepads={getNumGamepads}
-                      getNumControllersExistLower={getNumControllersExistLower}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="bottom-zone">
-            <InputGroup
-              soundManager={soundManager}
-              setInputArrayEffect={setInputArrayEffect}
-            />
-            <div
-              className="b-all-bots"
-              id="dice"
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              onClick={async () => {
-                for (let i = 0; i < 3; i++) {
-                  setTimeout(() => {
-                    randomizeCharacters();
-                  }, i * blipDelay * 0.25);
-                }
-              }}
-              data-tooltip-content="Randomize Characters"
-            >
-              {emoji.dice}
-            </div>
-
-            <div
-              onMouseEnter={() => {
-                if (inputArray.filter((x) => x !== 0).length === 0) {
-                  return;
-                }
-                soundManager.blipSoundSoft();
-              }}
-              className={
-                inputArray.filter((x) => x !== 0).length === 0
-                  ? 'b-start-inactive'
-                  : 'b-start'
-              }
-              onClick={() => {
-                onClickStartStartButton();
-              }}
-              data-tooltip-content="Start the Game!"
-            >
-              <span>START</span>
-            </div>
-          </div>
-        </div>
-      )}
+      <StartScreen
+        setWebStateCurr={setWebStateCurr}
+        webStateCurr={webStateCurr}
+        debugState={debugState}
+        smashConfig={smashConfig}
+        inputArray={inputArray}
+        setDebugState={setDebugState}
+        setMainOptionsDebugShowState={setMainOptionsDebugShowState}
+        mainOptionsDebugShowState={mainOptionsDebugShowState}
+        soundManager={soundManager}
+        getMaxFromKey={getMaxFromKey}
+        onClickStartStartButton={onClickStartStartButton}
+        setInputArrayEffect={setInputArrayEffect}
+        randomizeCharacters={randomizeCharacters}
+        onClickRotateSelection={onClickRotateSelection}
+        onClickOscura={onClickOscura}
+        getNumPlayersBeforeMe={getNumPlayersBeforeMe}
+        getNumActiveBeforeMe={getNumActiveBeforeMe}
+        getNumPlayers={getNumPlayers}
+        getNumKeyboards={getNumKeyboards}
+        getDoesKeyboardExistLower={getDoesKeyboardExistLower}
+        getNumGamepads={getNumGamepads}
+      />
 
       {/* TOP BAR */}
-      <div className="over-div">
-        {topBarDivExists && (
-          <div
-            onMouseEnter={() => {
-              soundManager.blipSoundSoft();
-            }}
-            className={
-              openEye
-                ? 'top-bar-eye-open ' +
-                  (webStateCurr === 'web-state-game' ? 'bg-black' : 'bg-trans')
-                : 'top-bar-eye-closed bg-trans'
-            }
-          >
-            <img
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className="eye-mark"
-              src={
-                !openEye
-                  ? '/images/eye-shut-trans.png'
-                  : '/images/eye-open-trans.png'
-              }
-              alt="question mark"
-              onClick={onClickEye}
-            />
+      <TopBar
+        openEye={openEye}
+        webStateCurr={webStateCurr}
+        onClickEye={onClickEye}
+        onClickPlayNavButtons={onClickPlayNavButtons}
+        onClickBackButtonHandler={onClickBackButtonHandler}
+        onClickStartStartButton={onClickStartStartButton}
+        showControls={showControls}
+        showControllers={showControllers}
+        showRulesN64={showRulesN64}
+        showAbout={showAbout}
+        showOptions={showOptions}
+        topBarDivExists={topBarDivExists}
+        soundManager={soundManager}
+      />
 
-            {webStateCurr === 'web-state-setup' && (
-              <div
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                className="link-tag"
-                onClick={() => {
-                  onClickPlayNavButtons('Options');
-                }}
-              >
-                {showOptions && <span className="dark-span">OPTIONS</span>}
-                {!showOptions && <span>OPTIONS</span>}
-              </div>
-            )}
-
-            {webStateCurr === 'web-state-setup' && (
-              <div
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                className="link-tag"
-                onClick={() => {
-                  onClickPlayNavButtons('Controllers');
-                }}
-              >
-                {showControllers && (
-                  <span className="dark-span">CONTROLLERS</span>
-                )}
-                {!showControllers && <span>CONTROLLERS</span>}
-              </div>
-            )}
-
-            {webStateCurr !== 'web-state-setup' && (
-              <div
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                className="link-tag"
-                onClick={() => {
-                  onClickBackButtonHandler();
-                }}
-              >
-                <span>BACK</span>
-              </div>
-            )}
-
-            {webStateCurr !== 'web-state-setup' && (
-              <div
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                className="link-tag"
-                onClick={() => {
-                  onClickStartStartButton();
-                }}
-              >
-                <span>RESTART</span>
-              </div>
-            )}
-
-            <div
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className="link-tag"
-              onClick={() => {
-                onClickPlayNavButtons('Controls');
-              }}
-            >
-              {showControls && <span className="dark-span">CONTROLS</span>}
-              {!showControls && <span>CONTROLS</span>}
-            </div>
-
-            <div
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className="link-tag"
-              onClick={() => {
-                onClickPlayNavButtons('Rules-N64');
-              }}
-            >
-              {showRulesN64 && <span className="dark-span">RULES</span>}
-              {!showRulesN64 && <span>RULES</span>}
-            </div>
-
-            {webStateCurr === 'web-state-setup' && (
-              <div
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                className="link-tag"
-                onClick={() => {
-                  onClickPlayNavButtons('About');
-                }}
-              >
-                {showAbout && <span className="dark-span">ABOUT</span>}
-                {!showAbout && <span>ABOUT</span>}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* >>> Now we import and render Popups.tsx instead of all that code inline <<< */}
-        <Popups
-          showRulesN64={showRulesN64}
-          showControls={showControls}
-          showControllers={showControllers}
-          showAbout={showAbout}
-          showHistory={showHistory}
-          showOptions={showOptions}
-          captureScreenshot={captureScreenshot}
-          allSessions={allSessions}
-          hideNiemoIp={hideNiemoIp}
-          setHideNiemoIp={setHideNiemoIp}
-          scrollerRef={scrollerRef}
-          tz={tz}
-          debugState={debugState}
-          mainOptionsDebugShowState={mainOptionsDebugShowState}
-          setDebugState={setDebugState}
-          getMaxFromKey={getMaxFromKey}
-          setMainOptionsDebugShowState={setMainOptionsDebugShowState}
-          soundManager={soundManager}
-          smashConfig={smashConfig}
-          onClickPlayNavBody={onClickPlayNavBody}
-        />
-      </div>
+      {/* Popups (RulesN64, Controls, Controllers, About, History, Options) */}
+      <Popups
+        showRulesN64={showRulesN64}
+        showControls={showControls}
+        showControllers={showControllers}
+        showAbout={showAbout}
+        showHistory={showHistory}
+        showOptions={showOptions}
+        captureScreenshot={captureScreenshot}
+        allSessions={allSessions}
+        hideNiemoIp={hideNiemoIp}
+        setHideNiemoIp={setHideNiemoIp}
+        scrollerRef={scrollerRef}
+        tz={tz}
+        debugState={debugState}
+        mainOptionsDebugShowState={mainOptionsDebugShowState}
+        setDebugState={setDebugState}
+        getMaxFromKey={getMaxFromKey}
+        setMainOptionsDebugShowState={setMainOptionsDebugShowState}
+        soundManager={soundManager}
+        smashConfig={smashConfig}
+        onClickPlayNavBody={onClickPlayNavBody}
+      />
 
       {/* NEURAL NETWORK TRAINING STATUS BAR */}
       {webStateCurr === 'web-state-game' && nnProgress !== null && (
@@ -1644,24 +1260,11 @@ function Main() {
         />
       )}
 
-      {(debugState.Dev_Mode ||
-        debugState.Auto_Restart ||
-        debugState.Auto_Start) && (
-        <div className="dev-mode-div">
-          {(debugState.Dev_Mode ? 'Dev_Mode' : '') +
-            (debugState.Auto_Restart ? ' Auto_Restart' : '') +
-            (debugState.Auto_Start ? ' Auto_Start' : '')}
-        </div>
-      )}
+      {/* Dev_Mode / Auto_Restart / Auto_Start */}
+      <DevModeDiv debugState={debugState} />
 
-      {!debugInit.Allow_Mobile && isMobile && (
-        <div className="mobile-warning">
-          <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
-          <span>Smashed Bros</span>
-          <span>is best played on a </span>
-          <span>desktop or laptop.</span>
-        </div>
-      )}
+      {/* Mobile Warning */}
+      <MobileWarning isMobile={isMobile} allowMobile={debugInit.Allow_Mobile} />
     </div>
   );
 }
