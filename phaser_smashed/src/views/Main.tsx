@@ -66,13 +66,19 @@ import { debugOnMain } from '../debugOnMain';
 import { debugMax } from '../debugMax';
 import CornerPieces from '../components/CornerPieces';
 import InputTypeBlock from '../components/InputTypeBlock';
+
+// >>> NEW imports from the newly created files:
+import Popups from './Popups';
+import NeuralNetworkTrainStatus from './NeuralNetworkTrainStatus';
+import VideoReplay from './VideoReplay';
+
+// Keep these exports the same:
 export const blipDelay = 200;
 export const baseGravity = 3000;
 export const gravLightMultiplier = 0.5;
 
 function Main() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
-
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
@@ -81,6 +87,8 @@ function Main() {
   const musicManager: MusicManagerType = MusicManager();
 
   const [isReplayHidden, setIsReplayHidden] = useState(false);
+
+  // Keep your original Refs for media recording if needed
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -135,7 +143,6 @@ function Main() {
       setInputArrayEffect([5, 5, 5, 5]);
 
       // set all characters to 0
-
       const choices: PlayerConfigSmall[] = [
         {
           characterId: 0,
@@ -154,7 +161,6 @@ function Main() {
           input: null,
         },
       ];
-
       setSmashConfig({ players: [...choices] });
 
       setTimeout(() => {
@@ -172,10 +178,6 @@ function Main() {
   const pullExpressNeuralNet = async () => {
     nnJsonExpress.current = await fetchNeuralNetwork();
     print('nnJsonExpress.current', nnJsonExpress.current);
-    if (nnJsonExpress.current !== null) {
-      // printWeightsAndBiases(nnJsonExpress.current as any);
-      // @ts-ignore
-    }
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
@@ -190,10 +192,10 @@ function Main() {
     }
     setVideoGray(false);
 
+    // keep original logic
     const s = 5;
     const m = 2;
     const duration = video.duration;
-
     const pStart = duration - s > 0 ? duration - s : 0;
     const pMid = duration - m > 0 ? duration - m : 0;
     const pEnd = duration;
@@ -203,7 +205,6 @@ function Main() {
       if (current >= pStart && current < pMid) {
         return;
       }
-
       if (current >= pMid && current < pEnd) {
         video.playbackRate = 0.5;
         return;
@@ -223,6 +224,7 @@ function Main() {
     }
   };
 
+  // Keep your replay effect logic:
   useEffect(() => {
     if (debugState.Inst_Replay === 0 || debugState.Simple_Stage) {
       setIsReplayHidden(true);
@@ -231,27 +233,19 @@ function Main() {
 
     const startRecording = () => {
       setIsReplayHidden(true);
-
       const canvas = myPhaser.current?.canvas;
-
-      if (!canvas) {
-        return;
-      }
+      if (!canvas) return;
 
       const stream = canvas.captureStream();
       const mediaRecorder = new MediaRecorder(
         stream,
         debugState.Inst_Replay === 1
-          ? {
-              videoBitsPerSecond: 20000,
-            }
+          ? { videoBitsPerSecond: 20000 }
           : debugState.Inst_Replay === 2
-          ? {
-              videoBitsPerSecond: 100000,
-            }
+          ? { videoBitsPerSecond: 100000 }
           : debugState.Inst_Replay === 3
           ? {
-              // FULL QUALITY
+              /* FULL QUALITY */
             }
           : {}
       );
@@ -259,7 +253,6 @@ function Main() {
       mediaRecorder.ondataavailable = (e) => {
         chunksRef.current.push(e.data);
       };
-
       mediaRecorder.onstop = () => {
         setIsReplayHidden(false);
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
@@ -276,7 +269,6 @@ function Main() {
 
     const stopRecording = () => {
       const mediaRecorder = mediaRecorderRef.current;
-
       if (mediaRecorder) {
         setTimeout(() => {
           mediaRecorder.stop();
@@ -291,7 +283,6 @@ function Main() {
       bar();
 
       const s = gameStateReact.nameCurr;
-
       switch (s) {
         case 'game-state-start':
           break;
@@ -299,17 +290,9 @@ function Main() {
           startRecording();
           break;
         case 'game-state-paused':
-          stopRecording();
-          break;
         case 'game-state-first-blood':
-          stopRecording();
-          break;
         case 'game-state-screen-clear':
-          stopRecording();
-          break;
         case 'game-state-captured-flag':
-          stopRecording();
-          break;
         case 'game-state-finished':
           stopRecording();
           break;
@@ -325,6 +308,16 @@ function Main() {
     };
   }, [debugState.ReplayOn]);
 
+  // Keep your training states
+  const [nnJson, setNnJson] = useState<string | null>(null);
+  const [nnRatios, setNnRatios] = useState<number[] | null>(null);
+  const [nnProgress, setNnProgress] = useState<number | null>(null);
+  const [nnErrorCurr, setNnErrorCurr] = useState<number | null>(null);
+  const [nnErrInit, setNnErrInit] = useState<number | null>(null);
+  const [nnNumObj, setNnNumObj] = useState<number | null>(null);
+  const [nnNumIter, setNnNumIter] = useState<number | null>(null);
+  const [nnLogPeriod, setNnLogPeriod] = useState<number | null>(null);
+
   const setAllTrainingStatesToNull = () => {
     setNnJson(null);
     setNnRatios(null);
@@ -336,50 +329,12 @@ function Main() {
     setNnLogPeriod(null);
   };
 
-  const [nnJson, setNnJson] = useState<string | null>(null);
-  const [nnRatios, setNnRatios] = useState<number[] | null>(null);
-  const [nnProgress, setNnProgress] = useState<number | null>(null);
-  const [nnErrorCurr, setNnErrorCurr] = useState<number | null>(null);
-  const [nnErrInit, setNnErrInit] = useState<number | null>(null);
-  const [nnNumObj, setNnNumObj] = useState<number | null>(null);
-  const [nnNumIter, setNnNumIter] = useState<number | null>(null);
-  const [nnLogPeriod, setNnLogPeriod] = useState<number | null>(null);
-
-  const numberToStringWithThreeDigitsAndOneDecimal = (n: number): string => {
-    return n.toFixed(0).padStart(3, '0');
-  };
-
-  const numberToStringWithTwoDigits = (n: number): string => {
-    return n.toFixed(0).padStart(2, '0');
-  };
-
-  const percentDoneBar = (n: number): string => {
-    const incomplete = '-';
-    const complete = '|';
-
-    let str = '';
-    for (let i = 0; i < nnNumTrainingBarTicks; i++) {
-      if (i < n * nnNumTrainingBarTicks) {
-        str += complete;
-      } else {
-        str += incomplete;
-      }
-    }
-
-    // console.log('str', str);
-
-    return str;
-  };
-
   const [numAutoRestarts, setNumAutoRestarts] = useState<number>(0);
 
   useEffect(() => {
     print('numAutoRestarts', numAutoRestarts);
-    if (numAutoRestarts === 0) {
-      return;
-    }
+    if (numAutoRestarts === 0) return;
     onClickStartStartButton();
-    // onClickBackButtonHandler();
   }, [numAutoRestarts]);
 
   useEffect(() => {
@@ -414,9 +369,6 @@ function Main() {
           break;
         case 'restart-game':
           print('RESTART GAME SIGNAL RECEIVED');
-          // setWebStateCurr('web-state-setup');
-          // onClickStartStartButton();
-          // onClickBackButtonHandler();
           setNumAutoRestarts((prev) => prev + 1);
           break;
         default:
@@ -433,28 +385,20 @@ function Main() {
     }
   }, [nnErrorCurr, nnErrInit]);
 
-  // const [session, setSession] = useState<SessionInfo | null>(null);
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
-
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(true);
 
   function captureScreenshot() {
     print('Capture Screenshot');
-
     const element = document.querySelector('#top-level');
-
     html2canvas(element as HTMLElement).then((canvas) => {
       const dataUrl = canvas.toDataURL();
-
       const link = document.createElement('a');
-
       link.href = dataUrl;
-
       const m: Moment = moment();
       const mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
       const fileName = `Smashed_Rules_${mFormatted}.png`;
       link.download = fileName;
-
       link.click();
     });
   }
@@ -467,28 +411,11 @@ function Main() {
 
   const setWebStateCurr = (webStateNext: WebState) => {
     if (webStateNext === webStateCurr) {
-      throw new Error('ws === webStateCurr' + webStateNext);
+      throw new Error('ws === webStateCurr ' + webStateNext);
     }
-
     setWebStatePrev(webStateCurr);
     setWebStateXXXX(webStateNext);
   };
-
-  useEffect(() => {
-    if (!myPhaser || !myPhaser.current) {
-      return;
-    }
-
-    return () => {
-      if (!myPhaser || !myPhaser.current) {
-        return;
-      }
-
-      myPhaser.current.events.off('scoreUpdate', (x: any) => {
-        print('scoreUpdate', x);
-      });
-    };
-  }, [myPhaser, myPhaser.current]);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -525,7 +452,6 @@ function Main() {
     switch (webStateCurr) {
       case 'web-state-init':
         print('init');
-
         setP1KeysTouched(true);
         setP2KeysTouched(true);
         break;
@@ -533,17 +459,13 @@ function Main() {
         setTimeout(() => {
           setOpenEye(true);
         }, 6000);
-
         choosePlay();
         soundManager.startSound();
-
         musicManager.musicSetupScreenRef.current.play();
         musicManager.musicLoadingScreenRef.current.pause();
 
         if (!isMobile) {
-          if (!isMobile) {
-            setTopBarDivExists(true);
-          }
+          setTopBarDivExists(true);
         }
 
         if (debugState.Auto_Start && webStatePrev === 'web-state-init') {
@@ -591,21 +513,13 @@ function Main() {
             break;
         }
         break;
-
       default:
         break;
     }
   }, [webStateCurr]);
 
   ///////////////////////////////////////
-  ///////////////////////////////////////
   // set initial inputs in inputArray
-  // 0 -> none
-  // 1 -> gamepad
-  // 2 -> keyboard
-  // 3 -> bot Rules-Based
-  // 4 -> bot Neural-Network
-  ///////////////////////////////////////
   ///////////////////////////////////////
   const [inputArray, setInputArray] = useState<InputType[]>(
     debugInit.Dev_Mode || debugInit.Auto_Start
@@ -615,15 +529,14 @@ function Main() {
   const [smashConfig, setSmashConfig] = useState<SmashConfig>(
     debugState.Dev_Mode ? smashConfigInitDevMode : smashConfigInit
   );
+
   const [smashConfigAllowed, setSmashConfigAllowed] = useState<boolean[]>([]);
 
   useEffect(() => {
     let newSmashConfigAllowed: boolean[] = [];
-
     for (let i = 0; i < smashConfigInitMax; i++) {
       newSmashConfigAllowed.push(false);
     }
-
     newSmashConfigAllowed[0] = true;
     newSmashConfigAllowed[1] = true;
     newSmashConfigAllowed[2] = true;
@@ -632,19 +545,14 @@ function Main() {
     if (debugState.Allow_Chez) {
       newSmashConfigAllowed[4] = true;
     }
-
     if (debugState.Allow_BlackChez) {
       newSmashConfigAllowed[5] = true;
     }
-
     if (debugState.Allow_Koopas) {
       newSmashConfigAllowed[6] = true;
       newSmashConfigAllowed[7] = true;
       newSmashConfigAllowed[8] = true;
     }
-
-    // print('newSmashConfigAllowed', newSmashConfigAllowed);
-    //
     setSmashConfigAllowed(newSmashConfigAllowed);
   }, [
     debugState.Allow_Chez,
@@ -661,7 +569,6 @@ function Main() {
       if (item === 0) {
         return;
       }
-
       setTimeout(() => {
         soundManager.blipBeedeeSound();
         setInputArray((prevArray: InputType[]) => {
@@ -675,12 +582,8 @@ function Main() {
     });
   };
 
-  //////////////////////////////////////////////
-  // kill if its still alive on reload
-  // let's try this
-  //////////////////////////////////////////////
+  // kill if still alive on reload
   useEffect(() => {
-    // kill smashed game
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
@@ -696,68 +599,49 @@ function Main() {
       print('webState !== start');
       return;
     }
-
     const choices = [...smashConfig.players];
     const choice = choices[positionIndex];
     choice.characterId = charId;
-
     setSmashConfig({ players: [...choices] });
   };
 
   const randomizeCharacters = () => {
     soundManager.dice();
-
-    print('smashConfigAllowed', smashConfigAllowed);
-
     const numTotalAllowed: number = smashConfigAllowed.filter((x) => x).length;
     let inputArrayLocal = [...inputArray];
     if (!numTotalAllowed) {
-      print('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', numTotalAllowed);
+      print('No allowed characters');
       return;
     }
-
     if (inputArrayLocal.filter((x) => x !== 0).length === 0) {
-      print('inputArrayToUse.filter((x) => x !== 0).length === 0');
       inputArrayLocal = [3, 3, 3, 3];
       setInputArray(inputArrayLocal);
     }
-
-    print('numTotal', numTotalAllowed);
-
     const newPlayers: PlayerConfigSmall[] = [];
-
     for (let i = 0; i < 4; i++) {
       const oldId: number = smashConfig.players[i].characterId;
       let newId: number | null = null;
       let isAllowed: boolean = false;
-
       while (!isAllowed) {
         newId = Math.floor(Math.random() * numTotalAllowed);
-
         if (smashConfigAllowed[newId] && newId !== oldId) {
           isAllowed = true;
         }
       }
-
-      print('new', newId, 'old', oldId);
-
       newPlayers.push({
         characterId: newId as CharacterId,
         input: 0,
       });
     }
-
     let blipIndex = 0;
     for (let i = 0; i < 4; i++) {
       if (inputArrayLocal[i] === 0) {
         continue;
       }
-
       setTimeout(() => {
         soundManager.blipBeedeeSound();
         setCharacterSlot(newPlayers[i].characterId, i);
       }, blipIndex * blipDelay);
-
       blipIndex += 1;
     }
   };
@@ -782,51 +666,43 @@ function Main() {
     return numPlayersBeforeMe;
   };
 
-  useEffect(() => {
-    print('smashConfig', smashConfig);
-  }, [smashConfig]);
-
   const [config, setConfig] =
     useState<Phaser.Types.Core.GameConfig>(configInit);
-
   const [prevent, setPrevent] = useState<boolean>(true);
+
   useEffect(() => {
     if (!debugState) {
       return;
     }
-
     if (prevent) {
       setPrevent(false);
       return;
     }
-
     if (!debugState?.NN_Brand_New) {
       return;
     }
     const debugStateCopy = { ...debugState };
     const inputArrayNew: InputType[] = [3, 3, 3, 3];
-
     const smashConfigNew: SmashConfig = {
       players: [
         {
           characterId: 0,
-          input: 0, // don't set this here
+          input: 0,
         },
         {
           characterId: 1,
-          input: 0, // don't set this here
+          input: 0,
         },
         {
           characterId: 2,
-          input: 0, // don't set this here
+          input: 0,
         },
         {
           characterId: 7,
-          input: 0, // don't set this here
+          input: 0,
         },
       ],
     };
-
     debugStateCopy.Minutes = 10;
     debugStateCopy.Simple_Stage = true;
     setSmashConfig(smashConfigNew);
@@ -836,7 +712,6 @@ function Main() {
 
   let setTimeoutQuotesLengthStart: number = 3000;
   const [quotesRandomNumber, setQuotesRandomNumber] = useState(0);
-
   const componentPseudoLoad = useRef(true);
   const intervalClock: any = useRef(null);
 
@@ -847,14 +722,11 @@ function Main() {
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
   const onClickStartStartButton = async () => {
-    // wait 2 seconds
-
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
       myPhaser.current.destroy(true);
     }
-
     setAllTrainingStatesToNull();
 
     setShowControls(false);
@@ -865,53 +737,29 @@ function Main() {
     setShowOptions(false);
 
     const players = JSON.parse(JSON.stringify(smashConfig.players));
-
     const newPlayers: PlayerConfigSmall[] = [];
     inputArray.forEach((input, inputIndex) => {
       switch (input) {
         case 0:
           break;
         case 1:
-          newPlayers.push({
-            characterId: players[inputIndex].characterId,
-            input: inputArray[inputIndex],
-          });
-          break;
         case 2:
-          newPlayers.push({
-            characterId: players[inputIndex].characterId,
-            input: inputArray[inputIndex],
-          });
-          break;
         case 3:
-          newPlayers.push({
-            characterId: players[inputIndex].characterId,
-            input: inputArray[inputIndex],
-          });
-          break;
         case 4:
-          newPlayers.push({
-            characterId: players[inputIndex].characterId,
-            input: inputArray[inputIndex],
-          });
-          break;
         case 5:
           newPlayers.push({
             characterId: players[inputIndex].characterId,
-            input: inputArray[inputIndex],
+            input: input,
           });
           break;
         default:
-          print("inputArray[inputIndex] didn't match any cases");
-          throw new Error("inputArray[inputIndex] didn't match any cases");
+          throw new Error('no match for input');
       }
     });
-
     if (newPlayers.length === 0) {
       print('newPlayers.length === 0');
-      throw new Error('newPlayers.length === 0');
+      throw new Error('No players selected');
     }
-
     const newSmashConfig: SmashConfig = { players: [...newPlayers] };
     setQuotesRandomNumber(Math.floor(Math.random() * quotes.length));
 
@@ -919,9 +767,7 @@ function Main() {
       setTimeoutQuotesLengthStart = 0;
     }
     const myMoment = moment();
-
     setWebStateCurr('web-state-load');
-
     await pullExpressNeuralNet();
 
     const c: ClientInformation = await fetchClientData();
@@ -931,13 +777,8 @@ function Main() {
       newSmashConfig,
       debugState
     );
-    // setSession(s);
+    // do whatever with s if you like
 
-    ///////////////////////////////////////////////////
-    ///////////////////////////////////////////////////
-    // PHASER GAME CREATION
-    ///////////////////////////////////////////////////
-    ///////////////////////////////////////////////////
     setTimeout(() => {
       // @ts-ignore
       myPhaser.current = new Phaser.Game(config);
@@ -972,7 +813,6 @@ function Main() {
     const newInputArray = [...inputArray];
     newInputArray[playerIndex] = i as InputType;
     setInputArray([...newInputArray]);
-    print('i', i, 'newInputArray', newInputArray);
   };
 
   const bamPlay = (): void => {
@@ -991,9 +831,9 @@ function Main() {
     soundManager.meleeChoose();
   };
 
+  // ephemeral code you had for setting first char slot
   const setFirstCharacterSlot = (charId: CharacterId): void => {
     if (debugState.Allow_BlackChez || webStateCurr !== 'web-state-setup') {
-      print('debugState.UseChez || webState !== start');
       return;
     }
     if (charId === 4) {
@@ -1004,33 +844,24 @@ function Main() {
       woahPlay();
       setInputArray([2, 0, 0, 0]);
     }
-
     const choices = [...smashConfig.players];
-    const choice = choices[0];
-    choice.characterId = charId;
-
+    choices[0].characterId = charId;
     setSmashConfig({ players: [...choices] });
   };
 
   const onClickRotateSelection = (playerIndex: number): void => {
     soundManager.blipBeedeeSound();
     const choices = [...smashConfig.players];
-    const choice = choices[playerIndex];
-    let newCharacterId = (choice.characterId + 1) % smashConfigOptions.length;
-
+    let newCharacterId =
+      (choices[playerIndex].characterId + 1) % smashConfigOptions.length;
     const numAllowed = smashConfigAllowed.filter((x) => x).length;
-
     if (numAllowed === 0) {
-      print('numAllowed === 0');
       return;
     }
-
     while (!smashConfigAllowed[newCharacterId]) {
       newCharacterId = (newCharacterId + 1) % smashConfigInitMax;
     }
-
-    choice.characterId = newCharacterId as CharacterId;
-
+    choices[playerIndex].characterId = newCharacterId as CharacterId;
     setSmashConfig({ players: [...choices] });
   };
 
@@ -1044,41 +875,37 @@ function Main() {
   useEffect(() => {
     if (showAbout) {
       (async () => {
-        const allSessions: SessionInfo[] = await getAllGameHistory();
-        setAllSessions(allSessions);
+        const allSess: SessionInfo[] = await getAllGameHistory();
+        setAllSessions(allSess);
       })();
     }
   }, [showAbout]);
 
   const clickPauseParent = () => {
-    // @ts-ignore
-    print('GAME STATE', myPhaser.current?.scene?.keys?.game.gameState.nameCurr);
     if (webStateCurr !== 'web-state-game') {
-      print('webStateCurr !== web-state-game');
       return;
     }
-
+    // @ts-ignore
     if (
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-        'game-state-start' &&
+      'game-state-start' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-        'game-state-paused' &&
+      'game-state-paused' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-        'game-state-first-blood' &&
+      'game-state-first-blood' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-        'game-state-screen-clear' &&
+      'game-state-screen-clear' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
-        'game-state-captured-flag' &&
+      'game-state-captured-flag' &&
       // @ts-ignore
       myPhaser.current?.scene?.keys?.game.gameState.nameCurr !==
         'game-state-finished'
     ) {
-      print('CLICK AND PAUSING');
       // @ts-ignore
       setGameState(myPhaser.current?.scene?.keys?.game, 'game-state-paused');
     }
@@ -1086,9 +913,9 @@ function Main() {
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
     soundManager.blipBeedeeSound();
-
     print('Click NavBody: ', buttonName);
 
+    // close all
     setShowControls(false);
     setShowControllers(false);
     setShowRulesN64(false);
@@ -1103,6 +930,7 @@ function Main() {
 
     switch (buttonName) {
       case 'Back':
+        // close all
         setShowControls(false);
         setShowControllers(false);
         setShowRulesN64(false);
@@ -1167,6 +995,7 @@ function Main() {
         setShowOptions(!showOptions);
         break;
       default:
+        // close all
         setShowControls(false);
         setShowControllers(false);
         setShowRulesN64(false);
@@ -1270,13 +1099,11 @@ function Main() {
 
   const getNumControllersExistLower = (myI: number): number => {
     let num: number = 0;
-
     inputArray.forEach((ia: number, iaIndex: number) => {
       if (ia === 1 && iaIndex < myI) {
         num++;
       }
     });
-
     return num;
   };
 
@@ -1287,52 +1114,39 @@ function Main() {
   }, []);
 
   const getDoesKeyboardExistLower = (myI: number): boolean => {
-    let exists: boolean = false;
-
+    let exists = false;
     inputArray.forEach((ia: number, iaIndex: number) => {
       if (ia === 2 && iaIndex < myI) {
         exists = true;
       }
     });
-
     return exists;
   };
 
   const getNumKeyboards = (): number => {
-    let numK: number = 0;
-
+    let numK = 0;
     for (let i = 0; i < inputArray.length; i++) {
       if (inputArray[i] === 2) {
         numK++;
       }
     }
-
     return numK;
   };
 
   const getNumGamepads = (): number => {
-    let pads: number = 0;
-
+    let pads = 0;
     for (let i = 0; i < inputArray.length; i++) {
       if (inputArray[i] === 1) {
         pads++;
       }
     }
-
     return pads;
   };
 
   const getNumPlayers = (): number => {
-    print('inputArray', inputArray);
-    const numKeyboards: number = getNumKeyboards();
-    const numControllers: number = getNumGamepads();
-
-    print('numGamepads', numKeyboards);
-    print('numControllers', numControllers);
-    const total: number = numKeyboards + numControllers;
-
-    print('total', total);
-    return total;
+    const numK = getNumKeyboards();
+    const numControllers = getNumGamepads();
+    return numK + numControllers;
   };
 
   const onClickBackButtonHandler = () => {
@@ -1345,11 +1159,9 @@ function Main() {
     clearInterval(intervalClock.current);
     intervalClock.current = null;
     componentPseudoLoad.current = true;
-
     if (myPhaser.current) {
       myPhaser.current.destroy(true);
     }
-
     setWebStateCurr('web-state-setup');
   };
 
@@ -1372,12 +1184,10 @@ function Main() {
   }, [p1KeysTouched, p2KeysTouched]);
 
   const getMaxFromKey = (key: string) => {
-    print('getInitFromKey', key);
-
-    const newVal = debugMax[key as keyof Debug];
-    return newVal;
+    return debugMax[key as keyof Debug];
   };
 
+  // RENDER
   return (
     <div id="top-level" className="over-div">
       <Tooltip
@@ -1388,7 +1198,6 @@ function Main() {
         delayShow={tooltipDelay}
         style={toolTipStyle}
       />
-
       <Tooltip
         opacity={1}
         anchorSelect=".b-dark"
@@ -1397,7 +1206,6 @@ function Main() {
         delayShow={tooltipDelay}
         style={toolTipStyle}
       />
-
       <Tooltip
         opacity={1}
         anchorSelect=".b-start"
@@ -1406,7 +1214,6 @@ function Main() {
         delayShow={tooltipDelay}
         style={toolTipStyle}
       />
-
       <Tooltip
         opacity={1}
         anchorSelect=".player-char"
@@ -1416,6 +1223,7 @@ function Main() {
         style={toolTipStyle}
       />
 
+      {/* KEYBOARD EXPLAINER BLOCKS */}
       {!debugState.Dev_Mode &&
         debugState.Show_Helper_Keyboard &&
         webStateCurr !== 'web-state-setup' &&
@@ -1462,6 +1270,7 @@ function Main() {
           </div>
         )}
 
+      {/* LOADING SCREEN */}
       {webStateCurr === 'web-state-load' && (
         <div className="loader">
           <div className="spinner-box">
@@ -1497,14 +1306,16 @@ function Main() {
               alt="table"
             />
           </div>
-
           {!debugState.Typed_Loading_Text && (
             <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
           )}
           <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
         </div>
       )}
+
       <div className="phaser-container" id="phaser-container"></div>
+
+      {/* START SCREEN (Init/Setup) */}
       {(webStateCurr === 'web-state-setup' ||
         webStateCurr === 'web-state-init') && (
         <div className="start-class-div">
@@ -1518,56 +1329,50 @@ function Main() {
               }
             />
           )}
-          {true && (
-            <div className={'start-title-wrapper'}>
+
+          {/* Title + CornerPieces */}
+          <div className={'start-title-wrapper'}>
+            <div
+              className={
+                'start-title' +
+                (webStateCurr === 'web-state-setup'
+                  ? ' start-title-start'
+                  : ' start-title-init')
+              }
+            >
               <div
-                className={
-                  'start-title' +
-                  (webStateCurr === 'web-state-setup'
-                    ? ' start-title-start'
-                    : ' start-title-init')
-                }
+                className="start-title-div"
                 onMouseDown={() => {
-                  print('mouse down');
-                }}
-                onMouseUp={() => {
-                  print('mouse up');
+                  setWebStateCurr('web-state-setup');
                 }}
               >
-                <div
-                  className="start-title-div"
-                  onMouseDown={() => {
-                    setWebStateCurr('web-state-setup');
-                  }}
-                >
-                  <img
-                    className="start-title-div-img"
-                    src="images/smashed_x10_gif.gif"
-                    alt="Smashed Title Gif"
-                  />
-                </div>
-                <h1
-                  className="start-title-h1"
-                  id={
-                    '' +
-                    (webStateCurr === 'web-state-init' ? 'niemo-games' : '')
-                  }
-                  onMouseDown={() => {
-                    setWebStateCurr('web-state-setup');
-                  }}
-                >
-                  {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
-                </h1>
-
-                {/* CORNER PIECES OFFLOADED */}
-                <CornerPieces
-                  debugState={debugState}
-                  webStateCurr={webStateCurr}
+                <img
+                  className="start-title-div-img"
+                  src="images/smashed_x10_gif.gif"
+                  alt="Smashed Title Gif"
                 />
               </div>
-            </div>
-          )}
+              <h1
+                className="start-title-h1"
+                id={
+                  webStateCurr === 'web-state-init' ? 'niemo-games' : undefined
+                }
+                onMouseDown={() => {
+                  setWebStateCurr('web-state-setup');
+                }}
+              >
+                {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
+              </h1>
 
+              {/* corner pieces */}
+              <CornerPieces
+                debugState={debugState}
+                webStateCurr={webStateCurr}
+              />
+            </div>
+          </div>
+
+          {/* Players Setup */}
           <div className="player-choices">
             <div className="player-choices-left">
               <DebugOptions
@@ -1584,8 +1389,6 @@ function Main() {
               {smashConfig.players.map((p, pIndex) => {
                 return (
                   <div className="player-choice" key={pIndex}>
-                    {/* Instead of repeating the same conditional blocks,
-                        we now offload them to InputTypeBlock */}
                     <InputTypeBlock
                       getNumPlayers={getNumPlayers}
                       getNumPlayersBeforeMe={getNumPlayersBeforeMe}
@@ -1594,7 +1397,7 @@ function Main() {
                       p={p}
                       debugState={{
                         ...debugState,
-                        idColors, // to preserve original usage of idColors
+                        idColors, // preserve your usage of idColors
                       }}
                       getNumActiveBeforeMe={getNumActiveBeforeMe}
                       smashConfigOptions={smashConfigOptions}
@@ -1612,6 +1415,7 @@ function Main() {
               })}
             </div>
           </div>
+
           <div className="bottom-zone">
             <InputGroup
               soundManager={soundManager}
@@ -1640,7 +1444,6 @@ function Main() {
                 if (inputArray.filter((x) => x !== 0).length === 0) {
                   return;
                 }
-
                 soundManager.blipSoundSoft();
               }}
               className={
@@ -1658,6 +1461,8 @@ function Main() {
           </div>
         </div>
       )}
+
+      {/* TOP BAR */}
       <div className="over-div">
         {topBarDivExists && (
           <div
@@ -1699,6 +1504,7 @@ function Main() {
                 {!showOptions && <span>OPTIONS</span>}
               </div>
             )}
+
             {webStateCurr === 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
@@ -1715,6 +1521,7 @@ function Main() {
                 {!showControllers && <span>CONTROLLERS</span>}
               </div>
             )}
+
             {webStateCurr !== 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
@@ -1728,6 +1535,7 @@ function Main() {
                 <span>BACK</span>
               </div>
             )}
+
             {webStateCurr !== 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
@@ -1754,6 +1562,7 @@ function Main() {
               {showControls && <span className="dark-span">CONTROLS</span>}
               {!showControls && <span>CONTROLS</span>}
             </div>
+
             <div
               onMouseEnter={() => {
                 soundManager.blipSoundSoft();
@@ -1766,6 +1575,7 @@ function Main() {
               {showRulesN64 && <span className="dark-span">RULES</span>}
               {!showRulesN64 && <span>RULES</span>}
             </div>
+
             {webStateCurr === 'web-state-setup' && (
               <div
                 onMouseEnter={() => {
@@ -1783,518 +1593,55 @@ function Main() {
           </div>
         )}
 
-        {/* ////////////////////////////////// */}
-        {/* PLAY OPTIONS */}
-        {/* ////////////////////////////////// */}
-        {showOptions && (
-          <div className="over-div">
-            <div
-              className="popup"
-              onClick={() => {
-                onClickPlayNavBody('Options');
-              }}
-            >
-              <h1>Debug Options</h1>
-              <div className="player-choices-left">
-                <DebugOptions
-                  showHomeList={false}
-                  soundManager={soundManager}
-                  debugState={debugState}
-                  mainOptionsDebugShowState={mainOptionsDebugShowState}
-                  setDebugState={setDebugState}
-                  getMaxFromKey={getMaxFromKey}
-                  setMainOptionsDebugShowState={setMainOptionsDebugShowState}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {showControls && (
-          <div className="over-div">
-            <div
-              className="popup"
-              onClick={() => {
-                onClickPlayNavBody('Controls');
-              }}
-            >
-              <h1>Controls</h1>
-              <div id="controls-col">
-                {characterMoves.map((charMove, charMoveIndex) => {
-                  return (
-                    <div id="move" key={charMoveIndex}>
-                      <h5>{charMove.move}</h5>
-                      <h5>
-                        {charMove.button}
-                        {/* {charMove.status} */}
-                      </h5>
-                    </div>
-                  );
-                })}
-                {keyboardGroups.map((kGroup: KeyboardGroup[], kIndex) => {
-                  return (
-                    <div id="keyboard" key={kIndex}>
-                      <div id="keyboard-top">
-                        <h3>Keyboard {kGroup[0].right}</h3>
-                      </div>
-                      {kGroup.map((kItem, kItemIndex) => {
-                        return (
-                          <div id="keyboard-bottom" key={kItemIndex}>
-                            <div id="keyboard-left">{kItem.left}</div>
-                            <div id="keyboard-right">{kItem.right}</div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-                <div className="keyboard-buttons"></div>
-              </div>
-            </div>
-          </div>
-        )}
-        {showRulesN64 && (
-          <div>
-            <div
-              className="popup"
-              onClick={() => {
-                onClickPlayNavBody('Rules-N64');
-              }}
-            >
-              <div className="rules-top">
-                <div className="rules-col">
-                  <h1>Web Rules</h1>
-                  <div className="rules-outline-web">
-                    <img
-                      id="rules-web-gif"
-                      src="images/smashed_x10_gif.gif"
-                      alt="smash title"
-                    />
-                    <p className="rules-web-since rules-small rules-italic">
-                      ★ ★ ★ Since 2022 ★ ★ ★
-                    </p>
-                    <div className="rules-ul">
-                      <div className="rules-li">
-                        <div className="rules-big">First Blood</div>
-                        <p className="rules-small">
-                          If others have never died...
-                        </p>
-                        <p className="rules-small">And you just died...</p>
-                        <p className="rules-small rules-end">
-                          You take 1 shot.
-                        </p>
-                      </div>
-                      <div className="rules-li">
-                        <div className="rules-big">Screen Clear</div>
-                        <p className="rules-small">
-                          If someone else just died...
-                        </p>
-                        <p className="rules-small">
-                          And all are dead but you...
-                        </p>
-                        <p className="rules-small rules-end">
-                          They each take 1 shot.
-                        </p>
-                      </div>
-                      <div className="rules-li">
-                        <div className="rules-big">Capture The Flag</div>
-                        <p className="rules-small">If you raised the flag...</p>
-                        <p className="rules-small rules-end">
-                          All others each take a shot.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="rules-col">
-                  <h1>N64 Rules</h1>
-                  <div
-                    className="rules-outline-n64"
-                    onClick={() => {
-                      captureScreenshot();
-                    }}
-                  >
-                    <img
-                      id="RulesN64Image"
-                      src="images/smashRulesGimp01.png"
-                      alt="Smashed Rules-N64"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {showControllers && (
-          <div>
-            <div
-              className="popup"
-              onClick={() => {
-                onClickPlayNavBody('Controllers');
-              }}
-            >
-              <h1>GamePads</h1>
-              <div id="wcl">
-                <h2>GamePads Suggested: </h2>
-                {workingControllersAmazon.map((controller) => {
-                  return (
-                    <a
-                      key={controller.name}
-                      onMouseEnter={() => {
-                        soundManager.blipSoundSoft();
-                      }}
-                      className="working-controller"
-                      href={controller.url}
-                    >
-                      <span>
-                        {emoji.greenCheck} &nbsp;
-                        {controller.name}
-                      </span>
-                    </a>
-                  );
-                })}
-              </div>
-              <div id="wcl">
-                <h2>Accessories Suggested: </h2>
-                <a
-                  onMouseEnter={() => {
-                    soundManager.blipSoundSoft();
-                  }}
-                  className="working-controller"
-                  href="https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/"
-                >
-                  <span>{emoji.greenCheck} &nbsp;USB-A Extension Cord</span>
-                </a>
-                <a
-                  onMouseEnter={() => {
-                    soundManager.blipSoundSoft();
-                  }}
-                  className="working-controller"
-                  href="https://www.amazon.com/gp/product/B01N5KGBGQ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1"
-                >
-                  <span>{emoji.greenCheck} &nbsp;USB-C Splitter</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {showAbout && (
-          <div>
-            <div
-              className="popup"
-              onClick={() => {
-                onClickPlayNavBody('About');
-              }}
-            >
-              <h1>About</h1>
-              <div className="horiz">
-                <div
-                  className="horiz-item-big"
-                  onClick={(x) => {
-                    x.stopPropagation();
-                  }}
-                >
-                  <p>
-                    This game is a tribute to "Smashed Bros", a drinking game
-                    invented in St. Louis in late 2009 at the Chemon House.
-                  </p>
-                  <p>niemeyer.eric@gmail.com</p>
-                </div>
-                <div className="horiz-item-small">
-                  <div className="about-image-wrapper">
-                    <img
-                      className="about-image about-image-pixelated"
-                      src="./images/character_3_cropped.png"
-                      alt="kirby"
-                      onMouseDown={() => {
-                        print('MOUSE DOWN');
-                        setFirstCharacterSlot(5);
-                      }}
-                    />
-                  </div>
-                  <a
-                    onMouseEnter={() => {
-                      soundManager.blipSoundSoft();
-                    }}
-                    className="btn btn-dark text-light"
-                    href="https://niemo.io/"
-                  >
-                    <span className="text-white small">Website</span>
-                  </a>
-                </div>
-                <div className="horiz-item-small">
-                  <div className="about-image-wrapper">
-                    <img
-                      className="about-image"
-                      src="./images/NA_new.png"
-                      alt="Niemo Audio"
-                      onMouseDown={() => {
-                        print('MOUSE DOWN');
-                      }}
-                    />
-                  </div>
-                  <a
-                    onMouseEnter={() => {
-                      soundManager.blipSoundSoft();
-                    }}
-                    className="btn btn-dark text-light"
-                    href="https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv"
-                  >
-                    <span className="text-white small">Music</span>
-                  </a>
-                </div>
-                <div className="horiz-item-small">
-                  <div className="about-image-wrapper">
-                    <img
-                      className="about-image about-image-pixelated"
-                      src="./images/blockcracked.png"
-                      alt="Niemo Audio"
-                      onMouseDown={() => {
-                        print('MOUSE DOWN');
-                      }}
-                    />
-                  </div>
-                  <a
-                    onMouseEnter={() => {
-                      soundManager.blipSoundSoft();
-                    }}
-                    className="btn btn-dark text-light"
-                    href="https://resume.niemo.io/"
-                  >
-                    <span className="text-white small">Resume</span>
-                  </a>
-                </div>
-              </div>
-              <div
-                id="show-all"
-                onMouseEnter={() => {
-                  soundManager.blipSoundSoft();
-                }}
-                className={hideNiemoIp ? ' show-all-hide' : ' show-all-show'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  soundManager.blipBeedeeSound();
-                  setHideNiemoIp((x) => !x);
-                }}
-              >
-                Filter
-              </div>
-              <div className="scroller" ref={scrollerRef}>
-                <table>
-                  <thead>
-                    <tr id="tr-header">
-                      <td id="title" className="td-left">
-                        {' '}
-                        GAMES TZ:{tz}
-                      </td>
-                      <th id="title" className="td-left">
-                        CONFIG
-                      </th>
-                      <th id="title" className="td-right">
-                        SHOTS
-                      </th>
-                      <th id="title" className="td-right">
-                        DEATHS
-                      </th>
-                      <th id="title" className="td-right">
-                        HITS
-                      </th>
-                      <th> </th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {allSessions.map((s: SessionInfo, sIndex: number) => {
-                      print(s.city, s.ip);
-                      if (
-                        hideNiemoIp &&
-                        (s.ip === '69.124.166.109' ||
-                          s.ip === '169.254.225.231' ||
-                          s.ip === '24.186.254.151' ||
-                          s.ip === '24.186.254.151' ||
-                          s.ip === '69.115.173.120' ||
-                          s.ip === '' ||
-                          s.ip === 'null' ||
-                          s?.ip === null)
-                      ) {
-                        return null;
-                      }
-
-                      // if (hideNiemoIp && s.city === 'Stamford') {
-                      //   return null;
-                      // }
-
-                      let gameViewTop: string = '';
-                      let gameViewBottom: string = '';
-                      let sc: SmashConfig | null = null;
-                      try {
-                        sc = JSON.parse(s.smashConfig);
-                        // print('smashConfig', sc);
-                      } catch (e) {
-                        print('error parsing smashConfigString', e);
-                      }
-                      if (sc !== null) {
-                        sc.players.forEach((sessionPlayer: any) => {
-                          gameViewTop +=
-                            smashConfigOptions[sessionPlayer.characterId]
-                              .nameShort + ' ';
-                          print('sessionPlayer.input', sessionPlayer.input);
-
-                          switch (sessionPlayer.input) {
-                            case 0:
-                              gameViewBottom += sessionPlayer.input + ' ';
-                              break;
-                            case 1:
-                              gameViewBottom += '' + emoji.gamepad + ' ';
-                              break;
-                            case 2:
-                              gameViewBottom += '' + emoji.keyboardWhite + ' ';
-                              break;
-                            case 3:
-                              gameViewBottom += '' + emoji.bot + ' ';
-                              break;
-                            case 4:
-                              gameViewBottom += '' + emoji.brain + ' ';
-                              break;
-                            case 5:
-                              gameViewBottom += '' + emoji.dna + ' ';
-                              break;
-                            default:
-                              throw new Error('input not found');
-                          }
-                        });
-                      }
-                      const allSessionsLength: number = allSessions.length;
-                      const totalDigits = allSessionsLength.toString().length;
-                      const paddedIndex = (allSessionsLength - sIndex)
-                        .toString()
-                        .padStart(totalDigits, '\u00a0');
-                      const sessionMomentObject = momentStringToMoment(
-                        s.momentCreated
-                      );
-                      const mTZ = require('moment-timezone');
-                      const clientTimezone =
-                        Intl.DateTimeFormat().resolvedOptions().timeZone;
-                      const formattedDate = mTZ
-                        .tz(moment(sessionMomentObject), clientTimezone)
-                        .format('YYYY-MM-DD HH:mm');
-                      let totalShots: number = 0;
-                      if (
-                        s.matrixShotsUnto === null ||
-                        s.matrixShotsUnto === 'null'
-                      ) {
-                      } else {
-                        totalShots = sumNumbersIn2DArrayString(
-                          s.matrixShotsUnto
-                        );
-                      }
-                      let totalDeaths: number = 0;
-                      if (
-                        s.matrixDeathsUnto === null ||
-                        s.matrixDeathsUnto === 'null'
-                      ) {
-                      } else {
-                        totalDeaths = sumNumbersIn2DArrayString(
-                          s.matrixDeathsUnto
-                        );
-                      }
-                      let totalHits: number = 0;
-                      if (
-                        s.matrixHitsUnto === null ||
-                        s.matrixHitsUnto === 'null'
-                      ) {
-                      } else {
-                        totalHits = sumNumbersIn2DArrayString(s.matrixHitsUnto);
-                      }
-                      return (
-                        <tr id={sIndex % 2 ? 'td-odd' : 'td-even'} key={sIndex}>
-                          <td className="td-left">
-                            <div id="td-info">
-                              {paddedIndex} {formattedDate} {s.ip}
-                            </div>
-
-                            <div id="td-info">
-                              {s.country} {s.region} {s.city}
-                            </div>
-                          </td>
-
-                          <td className="td-left">
-                            <div>{gameViewTop ? gameViewTop : ' '}</div>
-                            <div>{gameViewBottom ? gameViewBottom : ' '}</div>
-                          </td>
-                          <td className="td-right">
-                            {totalShots ? totalShots : ' '}
-                          </td>
-                          <td className="td-right">
-                            {totalDeaths ? totalDeaths : ' '}
-                          </td>
-                          <td className="td-right">
-                            {totalHits ? totalHits : ' '}
-                          </td>
-                          <td> </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* >>> Now we import and render Popups.tsx instead of all that code inline <<< */}
+        <Popups
+          showRulesN64={showRulesN64}
+          showControls={showControls}
+          showControllers={showControllers}
+          showAbout={showAbout}
+          showHistory={showHistory}
+          showOptions={showOptions}
+          captureScreenshot={captureScreenshot}
+          allSessions={allSessions}
+          hideNiemoIp={hideNiemoIp}
+          setHideNiemoIp={setHideNiemoIp}
+          scrollerRef={scrollerRef}
+          tz={tz}
+          debugState={debugState}
+          mainOptionsDebugShowState={mainOptionsDebugShowState}
+          setDebugState={setDebugState}
+          getMaxFromKey={getMaxFromKey}
+          setMainOptionsDebugShowState={setMainOptionsDebugShowState}
+          soundManager={soundManager}
+          smashConfig={smashConfig}
+          onClickPlayNavBody={onClickPlayNavBody}
+        />
       </div>
 
+      {/* NEURAL NETWORK TRAINING STATUS BAR */}
       {webStateCurr === 'web-state-game' && nnProgress !== null && (
-        <div className="neural-network-train-status">
-          <span>AI Training</span>
-          <div className="neural-network-train-top">
-            <span>
-              {percentDoneBar(nnProgress)} {Math.floor((nnProgress || 0) * 100)}
-              %
-            </span>
-            <span> Error Init {nnErrInit || 0}</span>
-            <span> Error Curr {nnErrorCurr || 0}</span>
-            <span>
-              {' '}
-              ITER {nnNumIter || 0} | OBJ {nnNumObj || 0}
-            </span>
-            {/* <span> Num Object {nnNumObj || 0}</span> */}
-            {/* <span> Log Period {nnLogPeriod || 0}</span> */}
-          </div>
+        <NeuralNetworkTrainStatus
+          nnProgress={nnProgress}
+          nnErrorCurr={nnErrorCurr}
+          nnErrInit={nnErrInit}
+          nnNumIter={nnNumIter}
+          nnNumObj={nnNumObj}
+          nnJson={nnJson}
+          nnRatios={nnRatios}
+          soundManager={soundManager}
+          debugState={debugState}
+        />
+      )}
 
-          <div className="neural-network-train-bottom">
-            <div
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className={nnJson === null ? ' b-start-inactive' : 'b-start'}
-              onClick={() => {
-                if (nnJson !== null && navigator.clipboard !== undefined) {
-                  navigator.clipboard.writeText(nnJson);
-
-                  soundManager.blipBeedeeSound();
-                }
-              }}
-            >
-              <span>Copy Weights</span>
-            </div>
-            <div
-              onMouseEnter={() => {
-                soundManager.blipSoundSoft();
-              }}
-              className={nnRatios === null ? ' b-start-inactive' : 'b-start'}
-              onClick={() => {
-                if (nnRatios !== null && navigator.clipboard !== undefined) {
-                  navigator.clipboard.writeText(nnRatios.toString());
-
-                  soundManager.blipBeedeeSound();
-                }
-              }}
-            >
-              <span>Copy Ratios</span>
-            </div>
-          </div>
-        </div>
+      {/* VIDEO REPLAY */}
+      {webStateCurr === 'web-state-game' && (
+        <VideoReplay
+          debugState={debugState}
+          isReplayHidden={isReplayHidden}
+          videoGray={videoGray}
+          handleTimeUpdate={handleTimeUpdate}
+          videoRef={videoRef}
+        />
       )}
 
       {(debugState.Dev_Mode ||
@@ -2307,34 +1654,8 @@ function Main() {
         </div>
       )}
 
-      {webStateCurr === 'web-state-game' && !isReplayHidden && (
-        <div className="video-playback-container">
-          <div className="video-playback-super">
-            {videoGray && <p className="replay">FAST FORWARD</p>}
-            {!videoGray && <p className="replay">INSTANT REPLAY</p>}
-            <video
-              className={
-                videoGray
-                  ? 'video-playback video-playback-gray'
-                  : 'video-playback video-playback-normal'
-              }
-              ref={videoRef}
-              onTimeUpdate={() => {
-                print('onTimeUpdate');
-                handleTimeUpdate();
-              }}
-              onLoadedMetadata={() => {
-                print('onLoadedMetadata');
-                handleTimeUpdate();
-              }}
-            />
-          </div>
-        </div>
-      )}
-
       {!debugInit.Allow_Mobile && isMobile && (
         <div className="mobile-warning">
-          {/* <img src="/images/table.png" alt="table" /> */}
           <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
           <span>Smashed Bros</span>
           <span>is best played on a </span>
