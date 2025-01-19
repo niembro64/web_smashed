@@ -89,6 +89,9 @@ function StartScreen({
               ? ' start-title-start'
               : ' start-title-init')
           }
+          onMouseDown={() => {
+            setWebStateCurr('web-state-setup');
+          }}
         >
           <div
             className="start-title-div"
@@ -105,9 +108,6 @@ function StartScreen({
           <h1
             className="start-title-h1"
             id={webStateCurr === 'web-state-init' ? 'niemo-games' : undefined}
-            onMouseDown={() => {
-              setWebStateCurr('web-state-setup');
-            }}
           >
             {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
           </h1>

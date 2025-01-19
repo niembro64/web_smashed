@@ -241,9 +241,9 @@ export default function Popups(props: PopupsProps) {
               onClickPlayNavBody('Controllers');
             }}
           >
-            <h1>GamePads</h1>
+            <h1>Controllers</h1>
             <div id="wcl">
-              <h2>GamePads Suggested: </h2>
+              <h2>Controllers Suggested: </h2>
               {workingControllersAmazon.map((controller) => {
                 return (
                   <a
