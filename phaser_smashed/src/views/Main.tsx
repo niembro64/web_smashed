@@ -40,7 +40,19 @@ import {
 import NeuralNetworkTrainStatus from './NeuralNetworkTrainStatus';
 import Popups from './Popups';
 import VideoReplay from './VideoReplay';
-import { configInit, inputArrayInit, inputArrayInitDevMode, inputArrayReset, p1Keys, p2Keys, quotes, smashConfigInit, smashConfigInitDevMode, smashConfigInitMax, smashConfigOptions } from './reactHelpers';
+import {
+  configInit,
+  inputArrayInit,
+  inputArrayInitDevMode,
+  inputArrayReset,
+  p1Keys,
+  p2Keys,
+  quotes,
+  smashConfigInit,
+  smashConfigInitDevMode,
+  smashConfigInitMax,
+  smashConfigOptions,
+} from './reactHelpers';
 import LoadingScreen from './LoadingScreen';
 import StartScreen from './StartScreen';
 import KeyboardExplainer from './KeyboardExplainer';
@@ -1141,7 +1153,10 @@ function Main() {
 
   // RENDER
   return (
-    <div id="top-level" className="over-div">
+    <div
+      id="top-level"
+      className="aspect-[16/9] max-w-screen max-h-screen w-auto h-auto m-auto absolute top-0 bottom-0 left-0 right-0"
+    >
       {/* All global Tooltips in one place */}
       <TooltipsAll />
 
@@ -1166,7 +1181,10 @@ function Main() {
       )}
 
       {/* PHASER Container */}
-      <div className="phaser-container" id="phaser-container"></div>
+      <div
+        className="absolute p-0 m-0 w-full h-auto z-0"
+        id="phaser-container"
+      ></div>
 
       {/* START SCREEN (Init/Setup) */}
       <StartScreen
