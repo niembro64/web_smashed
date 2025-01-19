@@ -559,7 +559,7 @@ function createExplosionsBack(game: SmashedGame): void {
       -500,
       'explosion256'
     );
-    e.sprite.setScale(2);
+    e.sprite.setScale(4);
     e.sprite.body.allowGravity = false;
     e.sprite.setBounce(0);
     e.sprite.setOrigin(0.5, 0.5);
@@ -600,7 +600,7 @@ function createExplosionBulletBillCannon(game: SmashedGame): void {
     'explosion256'
   );
 
-  bbBullet.explosionSprite.setScale(5);
+  bbBullet.explosionSprite.setScale(10);
   bbBullet.explosionSprite.body.allowGravity = false;
   bbBullet.explosionSprite.setBounce(0);
   bbBullet.explosionSprite.setOrigin(0.5, 0.5);
@@ -619,7 +619,7 @@ function createExplosionsFront(game: SmashedGame): void {
       end: 47,
       first: 0,
     }),
-    frameRate: game.chomp.explosionFPS * 0.8,
+    frameRate: game.chomp.explosionFPS,
     repeat: 0,
   };
 
@@ -1926,8 +1926,6 @@ function createBackgroundOutlineLava(game: SmashedGame): void {
   game.BACKGROUND_OUTLINE_LAVA.body.allowGravity = false;
 
   game.BACKGROUND_OUTLINE_LAVA.setDepth(1);
-
-  // game.BACKGROUND_OUTLINE_BACK.setAlpha(0.5);
 }
 
 function createTable(game: SmashedGame): void {

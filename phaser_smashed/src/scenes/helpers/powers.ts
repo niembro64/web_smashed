@@ -53,28 +53,29 @@ export function setChompFilterState(
   const curr = game.chomp.filterStateCurr;
   const prev = game.chomp.filterStatePrev;
 
+  switch (curr.name) {
+    case 'none':
+      print('setChompFilterState none');
+      // game.chomp.sprite.clearTint();
+      break;
+    case 'cooldown':
+      print('setChompFilterState cooldown');
+      // game.chomp.sprite.clearTint();
+      break;
+    case 'hurt':
+      game.chomp.soundHurt.play();
+      print('setChompFilterState hurt');
+      // game.chomp.sprite.clearTint();
+      // game.chomp.sprite.setTintFill(0xffffff);
+
+      break;
+  }
+
   prev.name = curr.name;
   prev.gameStamp = curr.gameStamp;
 
   curr.name = stateName;
   curr.gameStamp = game.gameNanoseconds;
-
-  switch (curr.name) {
-    case 'none':
-      print('setChompFilterState none');
-      game.chomp.sprite.clearTint();
-      break;
-    case 'cooldown':
-      print('setChompFilterState cooldown');
-      game.chomp.sprite.clearTint();
-      break;
-    case 'hurt':
-      game.chomp.soundHurt.play();
-      print('setChompFilterState hurt');
-      game.chomp.sprite.setTintFill(0xffffff);
-
-      break;
-  }
 }
 
 export function updateChompFilterState(game: SmashedGame): void {
@@ -91,25 +92,27 @@ export function updateChompFilterStatePlayer(
   const c = game.chomp;
   const curr = c.filterStateCurr;
 
-  if (damage > 0 && curr.name === 'none') {
-    setChompFilterState('hurt', game);
-    c.damage += damage;
-
-    const { x, y }: xyVector = getNormalizedVector(
-      player.char.attackEnergy.sprite.x,
-      player.char.attackEnergy.sprite.y,
-      c.sprite.x,
-      c.sprite.y
-    );
-
-    const b = c.sprite.body;
-
-    b.setVelocityX(b.velocity.x + x * 500);
-    b.setVelocityY(b.velocity.y + y * 500);
-  }
-
   switch (curr.name) {
     case 'none':
+      if (damage <= 0) {
+        break;
+      }
+
+      setChompFilterState('hurt', game);
+      c.damage += damage;
+
+      const { x, y }: xyVector = getNormalizedVector(
+        player.char.attackEnergy.sprite.x,
+        player.char.attackEnergy.sprite.y,
+        c.sprite.x,
+        c.sprite.y
+      );
+
+      const b = c.sprite.body;
+
+      b.setVelocityX(b.velocity.x + x * 500);
+      b.setVelocityY(b.velocity.y + y * 500);
+
       break;
     case 'cooldown':
       if (

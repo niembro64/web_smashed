@@ -292,12 +292,25 @@ export function preload(game: SmashedGame): void {
     },
   });
 
+  // game.load.spritesheet({
+  //   key: 'explosion256',
+  //   url: 'images/explosion_256.png',
+  //   frameConfig: {
+  //     frameWidth: 256,
+  //     frameHeight: 256,
+  //     startFrame: 0,
+  //     endFrame: 47,
+  //     margin: 0,
+  //     spacing: 0,
+  //   },
+  // });
+
   game.load.spritesheet({
     key: 'explosion256',
-    url: 'images/explosion_256.png',
+    url: 'images/explosion_128_minus_0.png',
     frameConfig: {
-      frameWidth: 256,
-      frameHeight: 256,
+      frameWidth: 128,
+      frameHeight: 128,
       startFrame: 0,
       endFrame: 47,
       margin: 0,
