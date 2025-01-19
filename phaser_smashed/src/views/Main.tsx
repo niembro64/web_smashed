@@ -467,7 +467,7 @@ function Main() {
 
   const setWebStateCurr = (webStateNext: WebState) => {
     if (webStateNext === webStateCurr) {
-      throw new Error('ws === webStateCurr');
+      throw new Error('ws === webStateCurr' + webStateNext);
     }
 
     setWebStatePrev(webStateCurr);
