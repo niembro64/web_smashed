@@ -1160,7 +1160,6 @@ function Main() {
     >
       {/* All global Tooltips in one place */}
       <TooltipsAll />
-
       {/* KEYBOARD EXPLAINER BLOCKS */}
       <KeyboardExplainer
         debugState={debugState}
@@ -1171,7 +1170,6 @@ function Main() {
         p2KeysTouched={p2KeysTouched}
         onClickPlayNavButtons={onClickPlayNavButtons}
       />
-
       {/* LOADING SCREEN */}
       {webStateCurr === 'web-state-load' && (
         <LoadingScreen
@@ -1180,38 +1178,38 @@ function Main() {
           quotes={quotes}
         />
       )}
-
       {/* PHASER Container */}
       <div
         className="absolute p-0 m-0 w-full h-auto z-0"
         id="phaser-container"
       ></div>
-
       {/* START SCREEN (Init/Setup) */}
-      <StartScreen
-        setWebStateCurr={setWebStateCurr}
-        webStateCurr={webStateCurr}
-        debugState={debugState}
-        smashConfig={smashConfig}
-        inputArray={inputArray}
-        setDebugState={setDebugState}
-        setMainOptionsDebugShowState={setMainOptionsDebugShowState}
-        mainOptionsDebugShowState={mainOptionsDebugShowState}
-        soundManager={soundManager}
-        getMaxFromKey={getMaxFromKey}
-        onClickStartStartButton={onClickStartStartButton}
-        setInputArrayEffect={setInputArrayEffect}
-        randomizeCharacters={randomizeCharacters}
-        onClickRotateSelection={onClickRotateSelection}
-        onClickOscura={onClickOscura}
-        getNumPlayersBeforeMe={getNumPlayersBeforeMe}
-        getNumActiveBeforeMe={getNumActiveBeforeMe}
-        getNumPlayers={getNumPlayers}
-        getNumKeyboards={getNumKeyboards}
-        getDoesKeyboardExistLower={getDoesKeyboardExistLower}
-        getNumGamepads={getNumGamepads}
-      />
-
+      {(webStateCurr === 'web-state-setup' ||
+        webStateCurr === 'web-state-init') && (
+        <StartScreen
+          setWebStateCurr={setWebStateCurr}
+          webStateCurr={webStateCurr}
+          debugState={debugState}
+          smashConfig={smashConfig}
+          inputArray={inputArray}
+          setDebugState={setDebugState}
+          setMainOptionsDebugShowState={setMainOptionsDebugShowState}
+          mainOptionsDebugShowState={mainOptionsDebugShowState}
+          soundManager={soundManager}
+          getMaxFromKey={getMaxFromKey}
+          onClickStartStartButton={onClickStartStartButton}
+          setInputArrayEffect={setInputArrayEffect}
+          randomizeCharacters={randomizeCharacters}
+          onClickRotateSelection={onClickRotateSelection}
+          onClickOscura={onClickOscura}
+          getNumPlayersBeforeMe={getNumPlayersBeforeMe}
+          getNumActiveBeforeMe={getNumActiveBeforeMe}
+          getNumPlayers={getNumPlayers}
+          getNumKeyboards={getNumKeyboards}
+          getDoesKeyboardExistLower={getDoesKeyboardExistLower}
+          getNumGamepads={getNumGamepads}
+        />
+      )}
       {/* TOP BAR */}
       <TopBar
         openEye={openEye}
@@ -1228,7 +1226,6 @@ function Main() {
         topBarDivExists={topBarDivExists}
         soundManager={soundManager}
       />
-
       {/* Popups (RulesN64, Controls, Controllers, About, History, Options) */}
       <Popups
         showRulesN64={showRulesN64}
@@ -1252,7 +1249,6 @@ function Main() {
         smashConfig={smashConfig}
         onClickPlayNavBody={onClickPlayNavBody}
       />
-
       {/* NEURAL NETWORK TRAINING STATUS BAR */}
       {webStateCurr === 'web-state-game' && nnProgress !== null && (
         <NeuralNetworkTrainStatus
@@ -1267,7 +1263,6 @@ function Main() {
           debugState={debugState}
         />
       )}
-
       {/* VIDEO REPLAY */}
       {webStateCurr === 'web-state-game' && (
         <VideoReplay
@@ -1278,10 +1273,8 @@ function Main() {
           videoRef={videoRef}
         />
       )}
-
       {/* Dev_Mode / Auto_Restart / Auto_Start */}
       <DevModeDiv debugState={debugState} />
-
       {/* Mobile Warning */}
       <MobileWarning isMobile={isMobile} allowMobile={debugInit.Allow_Mobile} />
     </div>

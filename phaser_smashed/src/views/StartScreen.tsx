@@ -62,9 +62,7 @@ function StartScreen({
   getDoesKeyboardExistLower,
   getNumGamepads,
 }: StartScreenProps) {
-  if (webStateCurr !== 'web-state-setup' && webStateCurr !== 'web-state-init') {
-    return null;
-  }
+
 
   return (
     <div className="start-class-div">

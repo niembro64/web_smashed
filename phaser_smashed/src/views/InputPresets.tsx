@@ -107,7 +107,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           >
             {inputConfig.config.map((inputType, i) =>
               inputType === 0 ? null : (
-                <span key={i} className="text-4xl m-1 shadow">
+                <span key={i} className="text-4xl m-1">
                   {MapEmojiToInputType(inputType)}
                 </span>
               )
