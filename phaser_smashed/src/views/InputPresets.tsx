@@ -95,10 +95,9 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           <div
             key={index}
             data-tooltip-content={inputConfig.tooltipText}
-            // Combine your base styles with the layout classes
-            className={`input-preset h-full w-[130px] bg-black cursor-pointer px-3 pb-3 pt-1 hover:bg-sky-800 active:bg-sky-500 ${layoutClasses} ${
-              isFirst ? 'rounded-l-xl' : ''
-            } ${isLast ? 'rounded-r-xl' : ''}`}
+            className={`input-preset h-full w-[130px] bg-sky-950 cursor-pointer px-3 pb-3 pt-1 hover:bg-sky-800 active:bg-sky-500 ${layoutClasses} ${
+              isFirst ? 'rounded-l-3xl' : ''
+            } ${isLast ? 'rounded-r-3xl' : ''}`}
             onMouseEnter={() => {
               soundManager.blipSoundSoft();
             }}
@@ -108,7 +107,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           >
             {inputConfig.config.map((inputType, i) =>
               inputType === 0 ? null : (
-                <span key={i} className="text-4xl m-1">
+                <span key={i} className="text-4xl m-1 shadow">
                   {MapEmojiToInputType(inputType)}
                 </span>
               )

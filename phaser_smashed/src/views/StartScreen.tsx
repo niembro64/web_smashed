@@ -187,17 +187,25 @@ function StartScreen({
             }
             soundManager.blipSoundSoft();
           }}
-          className={
+          className={`h-full pt-2 pr-12 pl-14 flex flex-col justify-center align-center rounded-3xl ${
             inputArray.filter((x) => x !== 0).length === 0
-              ? 'b-start-inactive'
-              : 'b-start'
-          }
+              ? 'bg-stone-950'
+              : 'bg-sky-950 cursor-pointer hover:bg-sky-800 active:bg-sky-500'
+          }`}
           onClick={() => {
             onClickStartStartButton();
           }}
           data-tooltip-content="Start the Game!"
         >
-          <span>START</span>
+          <span
+            className={`text-7xl ${
+              inputArray.filter((x) => x !== 0).length === 0
+                ? 'text-white/10'
+                : 'text-white'
+            }`}
+          >
+            START
+          </span>
         </div>
       </div>
     </div>
