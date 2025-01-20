@@ -1,8 +1,8 @@
 :root {
-  --gray-dark: #080808;
-  --gray-medium: #222222;
-  --gray-light: #444444;
-  --gray-lighter: #666666;
+  --gray-dark: #111111;
+  --gray-medium: #333333;
+  --gray-light: #555555;
+  --gray-lighter: #777777;
   --gray-lightest: #aaaaaa;
   --green-active: hsl(100, 20%, 30%);
   --magenta-active: hsl(300, 20%, 30%);
@@ -788,19 +788,17 @@ h2 {
   flex: 0.2;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding: 1vw 0% 1vw 0%;
+  padding: 1vw;
 }
 
 .b-start {
   justify-self: flex-end;
   height: 100%;
   background-color: var(--blue-start);
-  border: 0px solid;
   border-radius: var(--border-radius-small);
   padding: 0.5vw 3vw 0vw 3vw;
-  margin-right: 2%;
   color: rgba(255, 255, 255, 1);
   font-size: 3vw;
   transition: 0.5s ease;
@@ -815,12 +813,8 @@ h2 {
 .b-start-inactive {
   justify-self: flex-end;
   height: 100%;
-  background-color: var(--blue-start);
-  border: 0px solid;
   border-radius: var(--border-radius-small);
   padding: 0.5vw 3vw 0vw 3vw;
-  margin-right: 2%;
-  color: rgba(255, 255, 255, 1);
   font-size: 3vw;
   transition: 0.5s ease;
   z-index: 0;
@@ -852,7 +846,7 @@ h2 {
   /* border-radius: var(--border-radius-small); */
   padding: 0vw 0.5vw 0vw 0.5vw;
 
-  margin-right: 0.25vw;
+  /* margin-right: 0.25vw; */
 
   color: rgba(255, 255, 255, 0.2);
   font-size: 1vw;
@@ -1595,6 +1589,9 @@ h2 {
 }
 .vs-span {
   font-size: 1.5vw;
+  padding-left: 0.2vw;
+  padding-right: 0.2vw;
+  /* border: 1px solid white; */
 }
 
 .dev-mode-div {
@@ -1875,6 +1872,20 @@ h2 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  /* border: 1px dashed red; */
+  padding: 0.5vw;
+  background-color: var(--gray-dark);
+  border-radius: 1vw;
+}
+
+.input-group-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5vw;
+  margin: 0 1vw 0 1vw;
 }
 
 #dice {

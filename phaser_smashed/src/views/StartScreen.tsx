@@ -12,7 +12,7 @@ import {
 } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import DebugOptions from './DebugOptions';
-import InputGroup from './InputPresets';
+import InputPresets from './InputPresets';
 import { idColors, smashConfigOptions } from './reactHelpers';
 
 interface StartScreenProps {
@@ -157,7 +157,7 @@ function StartScreen({
       </div>
 
       <div className="bottom-zone">
-        <InputGroup
+        <InputPresets
           soundManager={soundManager}
           setInputArrayEffect={setInputArrayEffect}
         />

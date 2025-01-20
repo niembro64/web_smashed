@@ -34,7 +34,7 @@ const mapInputTypeToEmoji = (inputType: InputType): string => {
   }
 };
 
-export const InputGroup: React.FC<InputGroupProps> = ({
+export const InputPresets: React.FC<InputGroupProps> = ({
   setInputArrayEffect,
   soundManager,
 }) => {
@@ -67,25 +67,35 @@ export const InputGroup: React.FC<InputGroupProps> = ({
 
   return (
     <div className="input-group">
+      <div className="input-group-header ">
+        <span>INPUT</span>
+        <span>PRESETS</span>
+      </div>
       {inputConfigurations.map((inputConfig, index) => (
         <div
           key={index}
           data-tooltip-content={inputConfig.tooltipText}
-          className="b-all-bots"
+          className="b-all-bots flex flex-row"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
           }}
-          onClick={() => setInputArrayEffect(inputConfig.config as InputType[])}
+          onClick={() => setInputArrayEffect(inputConfig.config)}
         >
-          <span className={'vs-span'}>
-            {inputConfig.config.map((x) => {
-              return mapInputTypeToEmoji(x);
-            })}
-          </span>
+          {inputConfig.config.map((x) => {
+            if (x === 0) {
+              return null;
+            }
+
+            return (
+              <span className={'vs-span'} key={x}>
+                {mapInputTypeToEmoji(x)}
+              </span>
+            );
+          })}
         </div>
       ))}
     </div>
   );
 };
 
-export default InputGroup;
+export default InputPresets;
