@@ -141,7 +141,7 @@ export default function Popups(props: PopupsProps) {
                 {keyboardGroups.map((group, groupIndex) => (
                   <div className="keyboard-group" key={groupIndex}>
                     <div className="keyboard-group-header">
-                      Keyboard {group[0].right}
+                      {groupIndex === 0 ? <h4>Player 1 (Left Side)</h4> : <h4>Player 2 (Right Side)</h4>}
                     </div>
                     {group.map((kItem, kItemIndex) => (
                       <div className="keyboard-row" key={kItemIndex}>
