@@ -330,10 +330,10 @@ export default function Popups(props: PopupsProps) {
                   className="btn btn-dark text-light"
                   href="https://niemo.io/"
                 >
-                  <span className="text-white small">Website</span>
+                  <span className="text-white small">niemo.io</span>
                 </a>
               </div>
-              <div className="horiz-item-small">
+              {/* <div className="horiz-item-small">
                 <div className="about-image-wrapper">
                   <img
                     className="about-image"
@@ -374,7 +374,7 @@ export default function Popups(props: PopupsProps) {
                 >
                   <span className="text-white small">Resume</span>
                 </a>
-              </div>
+              </div> */}
             </div>
             <div
               id="show-all"

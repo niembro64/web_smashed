@@ -63,7 +63,7 @@ export const debugInit: Debug = {
   Bullets_Allow_Groups: true,
   Trophies_On_Shots: false,
   Trophies_Always: false,
-  Inst_Replay: 2,
+  Inst_Replay: 1,
   Replay_FastSlow: false,
   Game_Music: 0, // 0123
   Flower_On_Init: false,

@@ -24,8 +24,6 @@ export default function VideoReplay({
   debugState,
   videoRef,
 }: VideoReplayProps) {
-  // const videoRef = useRef<HTMLVideoElement>(null);
-
   // Keep the same styling and classes from your original code
   if (isReplayHidden) {
     return null;

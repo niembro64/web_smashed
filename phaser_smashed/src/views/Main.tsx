@@ -212,13 +212,14 @@ function Main() {
       const canvas = myPhaser.current?.canvas;
       if (!canvas) return;
 
-      const stream = canvas.captureStream();
+      const fps = 30; // or 60 if you can handle it
+      const stream = canvas.captureStream(fps);
       const mediaRecorder = new MediaRecorder(
         stream,
         debugState.Inst_Replay === 1
-          ? { videoBitsPerSecond: 20000 }
+          ? { videoBitsPerSecond: 20_000 }
           : debugState.Inst_Replay === 2
-          ? { videoBitsPerSecond: 100000 }
+          ? { videoBitsPerSecond: 100_000 }
           : debugState.Inst_Replay === 3
           ? {
               /* FULL QUALITY */

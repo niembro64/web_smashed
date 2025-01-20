@@ -783,16 +783,6 @@ h2 {
   text-decoration: none;
 }
 
-.bottom-zone {
-  width: 100%;
-  flex: 0.2;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  padding: 1vw 0% 1vw 0%;
-}
-
 .b-start {
   justify-self: flex-end;
   height: 100%;
@@ -1593,11 +1583,6 @@ h2 {
 .game-bar-time > p {
   margin-bottom: -2%;
 }
-.vs-span {
-  font-size: 1.5vw;
-  /* font-weight: bold; */
-  /* margin: 0 1%; */
-}
 
 .dev-mode-div {
   position: absolute;
@@ -1868,15 +1853,6 @@ h2 {
   100% {
     transform: rotate(0deg) rotateX(-205deg) rotateY(25deg);
   }
-}
-
-.input-group {
-  height: 100%;
-  width: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
 
 #dice {

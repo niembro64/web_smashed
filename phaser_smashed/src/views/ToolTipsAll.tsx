@@ -9,6 +9,14 @@ function TooltipsAll() {
     <>
       <Tooltip
         opacity={1}
+        anchorSelect=".input-preset"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+      />
+      <Tooltip
+        opacity={1}
         anchorSelect=".b-all-bots"
         place="top"
         delayHide={tooltipDelay}

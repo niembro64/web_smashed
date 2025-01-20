@@ -156,11 +156,12 @@ function StartScreen({
         </div>
       </div>
 
-      <div className="bottom-zone">
+      <div className="flex-[0.2] w-full flex flex-row justify-between items-center py-4">
         <InputGroup
           soundManager={soundManager}
           setInputArrayEffect={setInputArrayEffect}
         />
+
         <div
           className="b-all-bots"
           id="dice"
