@@ -693,6 +693,7 @@ h2 {
   max-height: 80vh; /* Set a maximum height, adjust as needed */
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Hide horizontal scrollbar if not needed */
+  margin-left: 1vw;
 
   /* &::-webkit-scrollbar {
     display: none;
