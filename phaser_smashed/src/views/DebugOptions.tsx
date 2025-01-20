@@ -51,15 +51,6 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
             break;
           default:
             textToShow = replaceUnderscoreWithSpace(
-              // (typeof value === 'boolean'
-              //   ? value
-              //     ? showHomeList
-              //       ? ''
-              //       : emoji.greenCheck
-              //     : showHomeList
-              //     ? ''
-              //     : emoji.redX
-              //   : value) +
               (typeof value === 'boolean'
                 ? value
                   ? emoji.greenCheck
@@ -73,15 +64,18 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
 
         return (
           <div
-            // data-tooltip-content={'asdf'}
-            id={showHomeList ? 'home-debug' : 'option-debug'}
-            className={
-              typeof value === 'boolean'
-                ? value
-                  ? 'option-debug-true'
-                  : 'option-debug-false'
-                : 'option-debug-true'
-            }
+            className={`
+              ${
+                typeof value === 'boolean'
+                  ? value
+                    ? 'option-debug-true'
+                    : 'option-debug-false'
+                  : 'option-debug-true'
+              }
+
+              ${showHomeList ? 'w-full' : 'w-[49%]'} 
+              cursor-pointer h-20 bg-sky-950 hover:bg-sky-800 active:bg-sky-500 rounded-3xl m-1 flex items-center justify-start pl-[2vw] text-[1.5vw] uppercase
+              `}
             key={index}
             onMouseEnter={() => {
               soundManager.blipSoundSoft();

@@ -439,9 +439,8 @@ h2 {
   image-rendering: pixelated;
 }
 
-#home-debug {
+/* #home-debug {
   width: 100%;
-  /* height: 4vw; */
   text-transform: uppercase;
 
   border-radius: var(--border-radius-small);
@@ -487,7 +486,6 @@ h2 {
   margin: 0;
   padding: 0;
   font-size: 1.2vw;
-  /* TODO: HERE FONT SIZE */
   padding: 0vw 1vw 0vw 1vw;
 }
 .option-debug-true {
@@ -497,7 +495,7 @@ h2 {
 .option-debug-false {
   color: rgba(255, 255, 255, 0.5);
   background-color: black;
-}
+} */
 
 #move {
   width: 45vw;

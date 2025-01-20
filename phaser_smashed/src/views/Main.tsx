@@ -68,7 +68,9 @@ export const gravLightMultiplier = 0.5;
 
 function Main() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const isMobile: boolean = /iPhone|iPad|iPod|Android/i.test(
+    navigator.userAgent
+  );
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
