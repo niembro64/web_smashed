@@ -849,7 +849,7 @@ h2 {
 
   /* margin-right: 0.25vw; */
 
-  color: rgba(255, 255, 255, 0.2);
+  /* color: rgba(255, 255, 255, 0.2); */
   font-size: 1vw;
   transition: 0.5s ease;
   z-index: 0;
@@ -866,12 +866,10 @@ h2 {
   transition: 0s ease;
   background-color: hsl(200, 0%, 15%);
   border: 0px solid;
-  color: rgba(255, 255, 255, 1);
 }
 .b-all-bots:active {
   transition: 0s ease;
 
-  color: grey;
   background-color: hsl(200, 0%, 05%);
   border: 0px solid;
 }
@@ -1875,7 +1873,7 @@ h2 {
   align-items: center;
 
   /* border: 1px dashed red; */
-  padding: 0.5vw;
+  /* padding: 0.5vw; */
   background-color: var(--gray-dark);
   border-radius: 1vw;
 }
@@ -1885,8 +1883,8 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.5vw;
-  margin: 0 1vw 0 1vw;
+  font-size: 1.2vw;
+  margin: 0 1.5vw 0 1.5vw;
 }
 
 #dice {
