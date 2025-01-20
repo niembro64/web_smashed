@@ -84,14 +84,14 @@ export const workingControllersAmazon: WorkingController[] = [
 
 export const keyboardGroups: KeyboardGroup[][] = [
   [
-    { left: 'D-Pad:', right: 'W A S D' },
-    { left: 'A X B Y:', right: 'F G H Space' },
-    { left: 'L Select Start R:', right: 'R T Y U' },
+    { left: 'D-Pad', right: 'W A S D' },
+    { left: 'A X B Y', right: 'F G H Space' },
+    { left: 'L Select Start R', right: 'R T Y U' },
   ],
   [
-    { left: 'D-Pad:', right: 'ArrowKeys' },
-    { left: 'A X B Y:', right: '4 5 6 Enter' },
-    { left: 'L Select Start R:', right: '7 8 9 +' },
+    { left: 'D-Pad', right: 'ArrowKeys' },
+    { left: 'A X B Y', right: '4 5 6 Enter' },
+    { left: 'L Select Start R', right: '7 8 9 +' },
   ],
 ];
 
