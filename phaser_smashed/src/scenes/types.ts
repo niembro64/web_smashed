@@ -587,16 +587,27 @@ export type CharacterName =
   | 'R-Koopa'
   | 'B-Koopa';
 
+// export const textForEachCharacter = {
+//   0: 'Mario throws fireballs',
+//   1: 'Link has a strong sword that he can throw',
+//   2: 'Pikachu throws his empty vodka bottle',
+//   3: 'Kirby can fly and shoot his mirror wand',
+//   4: 'Chez throws a hammer',
+//   5: 'Black Chez is huge and throws a huge hammer',
+//   6: 'Green Koopa throws a powerful green shell',
+//   7: 'Red Koopa throws a heat-seeking red shell',
+//   8: 'Blue Koopa throws a flying blue shell',
+// };
 export const textForEachCharacter = {
-  0: 'Mario throws fireballs',
-  1: 'Link has a strong sword that he can throw',
-  2: 'Pikachu throws his empty vodka bottle',
-  3: 'Kirby can fly and shoot his mirror wand',
-  4: 'Chez throws a hammer',
-  5: 'Black Chez is huge and throws a huge hammer',
-  6: 'Green Koopa throws a powerful green shell',
-  7: 'Red Koopa throws a heat-seeking red shell',
-  8: 'Blue Koopa throws a flying blue shell',
+  0: 'MARIO THROWS FIREBALLS',
+  1: 'LINK HAS A SWORD',
+  2: 'PIKACHU THROWS HIS EMPTY VODKA BOTTLE',
+  3: 'KIRBY HAS A MIRROR WAND',
+  4: 'CHEZ THROWS A HAMMER',
+  5: 'BLACK CHEZ IS RIDICULOUS',
+  6: 'GREEN-KOOPA HAS A POWERFUL SHELL',
+  7: 'RED-KOOPA HAS A SEEKING SHELL',
+  8: 'BLUE-KOOPA CAN FLY',
 };
 
 export type CharacterNameShort =

@@ -4,18 +4,23 @@ import moment from 'moment';
 import { useEffect } from 'react';
 
 import { momentStringToMoment } from '../scenes/helpers/time';
-import { ButtonName, Debug, emoji, KeyboardGroup, SmashConfig } from '../scenes/types';
+import {
+  ButtonName,
+  Debug,
+  emoji,
+  KeyboardGroup,
+  SmashConfig,
+} from '../scenes/types';
 import DebugOptions from './DebugOptions';
 import { SessionInfo, sumNumbersIn2DArrayString } from './client';
 import { SoundManagerType } from './SoundManager';
-import { characterMoves, keyboardGroups, smashConfigOptions, workingControllersAmazon } from './reactHelpers';
+import {
+  characterMoves,
+  keyboardGroups,
+  smashConfigOptions,
+  workingControllersAmazon,
+} from './reactHelpers';
 
-// KEEP ALL COMMENTS AND STYLING
-// We simply moved them into this file.
-
-/**
- * Props for Popups
- */
 interface PopupsProps {
   showRulesN64: boolean;
   showControls: boolean;
@@ -23,32 +28,19 @@ interface PopupsProps {
   showAbout: boolean;
   showHistory: boolean;
   showOptions: boolean;
-
   onClickPlayNavBody: (buttonName: ButtonName) => void;
-
-  // for "Rules-N64" screenshot
   captureScreenshot: () => void;
-
-  // for "About/History"
   allSessions: SessionInfo[];
   hideNiemoIp: boolean;
   setHideNiemoIp: React.Dispatch<React.SetStateAction<boolean>>;
   scrollerRef: React.RefObject<HTMLDivElement>;
   tz: string;
-
-  // debug options
   debugState: Debug;
   mainOptionsDebugShowState: Debug;
   setDebugState: React.Dispatch<React.SetStateAction<Debug>>;
   getMaxFromKey: (key: string) => number;
   setMainOptionsDebugShowState: React.Dispatch<React.SetStateAction<Debug>>;
-
-  // for subtle sound effects
   soundManager: SoundManagerType;
-  /**
-   * We also need the smashConfig if you'd like to show it;
-   * or if not, you can remove it. It's used if you do more dynamic debug stuff.
-   */
   smashConfig: SmashConfig;
 }
 
@@ -77,8 +69,6 @@ export default function Popups(props: PopupsProps) {
     setMainOptionsDebugShowState,
     soundManager,
   } = props;
-
-  
 
   // useEffect just as an example if we want to fetch data on About or History:
   useEffect(() => {
@@ -119,40 +109,49 @@ export default function Popups(props: PopupsProps) {
       {/* ////////////////////////////////// */}
       {showControls && (
         <div className="over-div">
-          <div
-            className="popup"
-            onClick={() => {
-              onClickPlayNavBody('Controls');
-            }}
-          >
+          <div className="popup" onClick={() => onClickPlayNavBody('Controls')}>
             <h1>Controls</h1>
-            <div id="controls-col">
-              {characterMoves.map((charMove, charMoveIndex) => {
-                return (
-                  <div id="move" key={charMoveIndex}>
-                    <h5>{charMove.move}</h5>
-                    <h5>{charMove.button}</h5>
-                  </div>
-                );
-              })}
-              {keyboardGroups.map((kGroup: KeyboardGroup[], kIndex) => {
-                return (
-                  <div id="keyboard" key={kIndex}>
-                    <div id="keyboard-top">
-                      <h3>Keyboard {kGroup[0].right}</h3>
+
+            {/* MAIN WRAPPER */}
+            <div className="controls-wrapper">
+              {/* LEFT COLUMN */}
+              <div className="controls-left">
+                <img
+                  className="snes"
+                  src="images/snes.png"
+                  alt="SNES Controller"
+                />
+                <div className="moves-list">
+                  {characterMoves.map((charMove, index) => (
+                    <div className="move" key={index}>
+                      <h5>{charMove.move}</h5>
+                      <h5>{charMove.button}</h5>
                     </div>
-                    {kGroup.map((kItem, kItemIndex) => {
-                      return (
-                        <div id="keyboard-bottom" key={kItemIndex}>
-                          <div id="keyboard-left">{kItem.left}</div>
-                          <div id="keyboard-right">{kItem.right}</div>
-                        </div>
-                      );
-                    })}
+                  ))}
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN */}
+              <div className="controls-right">
+                <img
+                  className="snes"
+                  src="images/keyboard_colors.png"
+                  alt="Keyboard"
+                />
+                {keyboardGroups.map((group, groupIndex) => (
+                  <div className="keyboard-group" key={groupIndex}>
+                    <div className="keyboard-group-header">
+                      Keyboard {group[0].right}
+                    </div>
+                    {group.map((kItem, kItemIndex) => (
+                      <div className="keyboard-row" key={kItemIndex}>
+                        <h5>{kItem.left}</h5>
+                        <h5>{kItem.right}</h5>
+                      </div>
+                    ))}
                   </div>
-                );
-              })}
-              <div className="keyboard-buttons"></div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -242,6 +241,7 @@ export default function Popups(props: PopupsProps) {
             }}
           >
             <h1>Controllers</h1>
+            <img className="snes" src="images/snes.png" alt="SNES Controller" />
             <div id="wcl">
               <h2>Controllers Suggested: </h2>
               {workingControllersAmazon.map((controller) => {

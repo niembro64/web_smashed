@@ -56,9 +56,15 @@ body {
   margin: 0;
 }
 
+h1 {
+  font-size: 2vw;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
+}
+
 h2 {
-  margin-top: 1.5%;
-  margin-bottom: 0.7%;
+  margin-top: 1.5vw;
+  margin-bottom: 0.7vw;
 }
 
 .over-div {
@@ -223,16 +229,6 @@ h2 {
   font-size: 1.5vw;
   transition: 2s ease;
   cursor: pointer;
-}
-
-#controls-col {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
 .horiz {
@@ -499,8 +495,9 @@ h2 {
   background-color: black;
 }
 
-#move {
-  width: 45vw;
+.move {
+  margin-bottom: 0.5vw;
+  /* width: 100%;
   background-color: rgba(128, 128, 128, 0.1);
   padding: 0.7vw 1vw 0vw 1vw;
   margin: 0vw 0.5vw 0.5vw 0vw;
@@ -508,14 +505,13 @@ h2 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; */
 }
 #keyboard {
-  width: 45vw;
+  /* width: 45vw; */
   background-color: rgba(128, 128, 128, 0.1);
   padding: 1.5vw 1vw 1vw 1vw;
   margin: 0vw 0vw 0.5vw 0vw;
-  border-radius: var(--border-radius-small);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -528,6 +524,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 0.5vw;
 }
 #keyboard-left {
   width: 100%;
@@ -552,21 +549,88 @@ h2 {
   padding: 0;
   font-size: small;
 }
-.keyboard-buttons {
-  width: 40%;
-  height: 140px;
+
+/* --- Controls Popup Styles --- */
+
+/* Wrapper for the entire “show controls” content */
+.controls-wrapper {
+  /* Let the popup’s .popup handle sizing; just fill its space */
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 2vw;
+  margin: 2vw auto; /* Some space around the content */
+}
+
+/* Left side: SNES image + moves list */
+.controls-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* The SNES controller image */
+.snes {
+  /* width: 10vw; */
+  margin-bottom: 1vw;
+  border: none; /* Remove border if not needed */
+}
+
+/* Wrapper for all moves */
+.moves-list {
+  width: 100%;
+  margin-top: 1vw;
+}
+
+/* Individual move row */
+.move {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  background-image: url(../public/images/keyboard_colors.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: hue-rotate(180deg) invert(1);
+  margin-bottom: 0.5vw;
+  padding: 0.5vw;
+  border-radius: var(--border-radius-small);
+  background-color: rgba(128, 128, 128, 0.1);
 }
-#move > h5 {
+
+/* Right side: Keyboard info */
+.controls-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Each group of keyboard mappings */
+.keyboard-group {
+  width: 100%;
+  margin-bottom: 1vw;
+  padding: 1vw;
+  border-radius: var(--border-radius-small);
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+/* A small header for each group (like "Keyboard W, A, S, D ...") */
+.keyboard-group-header {
+  font-size: 1.2vw;
+  font-weight: bold;
+  margin-bottom: 0.5vw;
+}
+
+/* Individual keyboard rows */
+.keyboard-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 0.5vw;
+}
+
+h5 {
   font-size: 1.1vw;
 }
 #rules-web-gif {
@@ -2087,4 +2151,9 @@ td > div:nth-child(2) {
 #niemo-games {
   font-size: 2.88vw;
   margin-bottom: -1.8vw;
+}
+
+.snes {
+  height: 10vw;
+  margin-bottom: 1vw;
 }

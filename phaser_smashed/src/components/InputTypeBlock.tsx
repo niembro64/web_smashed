@@ -77,7 +77,7 @@ function InputTypeBlock({
       {input !== 0 && (
         <div
           data-tooltip-content={textForEachCharacter[p.characterId]}
-          className="player-char"
+          className="player-char uppercase"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
           }}
