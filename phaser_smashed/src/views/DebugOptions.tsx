@@ -51,15 +51,6 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
             break;
           default:
             textToShow = replaceUnderscoreWithSpace(
-              // (typeof value === 'boolean'
-              //   ? value
-              //     ? showHomeList
-              //       ? ''
-              //       : emoji.greenCheck
-              //     : showHomeList
-              //     ? ''
-              //     : emoji.redX
-              //   : value) +
               (typeof value === 'boolean'
                 ? value
                   ? emoji.greenCheck

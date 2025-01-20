@@ -6,8 +6,8 @@ import { Tooltip } from 'react-tooltip';
 export type InputConfiguration = {
   tooltipText: string;
   config: InputType[];
-  emojis: string;
-  extraEmojis?: string;
+  // emojis: string;
+  // extraEmojis?: string;
 };
 
 interface InputGroupProps {
@@ -15,64 +15,54 @@ interface InputGroupProps {
   soundManager: SoundManagerType;
 }
 
+const mapInputTypeToEmoji = (inputType: InputType): string => {
+  switch (inputType) {
+    case 0:
+      return '';
+    case 1:
+      return emoji.gamepad;
+    case 2:
+      return emoji.keyboardWhite;
+    case 3:
+      return emoji.bot;
+    case 4:
+      return emoji.brain;
+    case 5:
+      return emoji.dna;
+    default:
+      throw new Error('Invalid InputType: ' + inputType);
+  }
+};
+
 export const InputGroup: React.FC<InputGroupProps> = ({
   setInputArrayEffect,
   soundManager,
 }) => {
   const inputConfigurations: InputConfiguration[] = [
-    // { config: [2, 3, 0, 0], emojis: emoji.keyboardWhite + emoji.bot },
-    // { config: [2, 4, 0, 0], emojis: emoji.keyboardWhite + emoji.brain },
-    // { config: [1, 1, 0, 0], emojis: emoji.gamepad + emoji.gamepad },
-    // {
-    //   config: [2, 0, 3, 4],
-    //   emojis: emoji.keyboardWhite,
-    //   extraEmojis: emoji.bot + emoji.brain,
-    // },
+    {
+      tooltipText: 'Keyboard Player vs Bot',
+      config: [2, 3, 0, 0],
+    },
     {
       tooltipText: 'Two Players on the same Keyboard, WASD vs ARROWS',
       config: [2, 2, 0, 0],
-      emojis: emoji.keyboardWhite + emoji.keyboardWhite,
     },
     {
       tooltipText: 'Four Players with Gamepads',
       config: [1, 1, 1, 1],
-      emojis: emoji.gamepad + emoji.gamepad,
-      extraEmojis: emoji.gamepad + emoji.gamepad,
     },
     {
       tooltipText: 'Four Bots',
       config: [3, 3, 3, 3],
-      emojis: emoji.bot + emoji.bot,
-      extraEmojis: emoji.bot + emoji.bot,
     },
     {
       tooltipText: 'Four AI Bots',
       config: [4, 4, 4, 4],
-      emojis: emoji.brain + emoji.brain,
-      extraEmojis: emoji.brain + emoji.brain,
     },
     {
       tooltipText: 'Four Evolving AI Bots',
       config: [5, 5, 5, 5],
-      emojis: emoji.dna + emoji.dna,
-      extraEmojis: emoji.dna + emoji.dna,
     },
-    {
-      tooltipText: 'WASD Keyboard Player vs Mixed Bots',
-      config: [2, 3, 4, 5],
-      emojis: emoji.keyboardWhite + emoji.brain,
-      extraEmojis: emoji.bot + emoji.dna,
-    },
-    // {
-    //   config: [3, 3, 4, 4],
-    //   emojis: emoji.bot + emoji.brain,
-    //   extraEmojis: emoji.bot + emoji.brain,
-    // },
-    // {
-    //   config: [4, 4, 5, 5],
-    //   emojis: emoji.brain + emoji.dna,
-    //   extraEmojis: emoji.brain + emoji.dna,
-    // },
   ];
 
   return (
@@ -87,10 +77,11 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           }}
           onClick={() => setInputArrayEffect(inputConfig.config as InputType[])}
         >
-          <span className={'vs-span'}>{inputConfig.emojis}</span>
-          {inputConfig.extraEmojis && (
-            <span className={'vs-span'}>{inputConfig.extraEmojis}</span>
-          )}
+          <span className={'vs-span'}>
+            {inputConfig.config.map((x) => {
+              return mapInputTypeToEmoji(x);
+            })}
+          </span>
         </div>
       ))}
     </div>
