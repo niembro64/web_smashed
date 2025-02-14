@@ -3,6 +3,7 @@ import { Debug, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import { replaceUnderscoreWithSpace } from './reactHelpers';
 import { debugHide } from '../debugHide';
+import ReactGA from 'react-ga4';
 
 interface DebugOptionsProps {
   soundManager: SoundManagerType;
@@ -78,6 +79,12 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               soundManager.blipSoundSoft();
             }}
             onClick={(e) => {
+              ReactGA.event({
+                action: 'debug_option_click',
+                category: 'Debug',
+                label: key,
+              });
+
               soundManager.blipBeedeeSound();
               e.stopPropagation();
 
