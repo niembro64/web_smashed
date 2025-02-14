@@ -1,9 +1,11 @@
 // Popups.tsx
 
 import moment from 'moment';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { momentStringToMoment } from '../scenes/helpers/time';
+import ReactGA from 'react-ga4';
+
 import {
   ButtonName,
   Debug,
@@ -141,7 +143,11 @@ export default function Popups(props: PopupsProps) {
                 {keyboardGroups.map((group, groupIndex) => (
                   <div className="keyboard-group" key={groupIndex}>
                     <div className="keyboard-group-header">
-                      {groupIndex === 0 ? <h4>Player 1 (Left Side)</h4> : <h4>Player 2 (Right Side)</h4>}
+                      {groupIndex === 0 ? (
+                        <h4>Player 1 (Left Side)</h4>
+                      ) : (
+                        <h4>Player 2 (Right Side)</h4>
+                      )}
                     </div>
                     {group.map((kItem, kItemIndex) => (
                       <div className="keyboard-row" key={kItemIndex}>
@@ -326,9 +332,21 @@ export default function Popups(props: PopupsProps) {
                 <a
                   onMouseEnter={() => {
                     soundManager.blipSoundSoft();
+                    ReactGA.event({
+                      action: 'kirby',
+                      category: 'About',
+                      label: 'Hover Website',
+                    });
                   }}
                   className="btn btn-dark text-light"
                   href="https://niemo.io/"
+                  onClick={(e) => {
+                    ReactGA.event({
+                      action: 'kirby',
+                      category: 'About',
+                      label: 'Click Website',
+                    });
+                  }}
                 >
                   <span className="text-white small">Website</span>
                 </a>
@@ -347,9 +365,21 @@ export default function Popups(props: PopupsProps) {
                 <a
                   onMouseEnter={() => {
                     soundManager.blipSoundSoft();
+                    ReactGA.event({
+                      action: 'niemo_audio',
+                      category: 'About',
+                      label: 'Hover Soundcloud',
+                    });
                   }}
                   className="btn btn-dark text-light"
                   href="https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv"
+                  onClick={(e) => {
+                    ReactGA.event({
+                      action: 'niemo_audio',
+                      category: 'About',
+                      label: 'Click Soundcloud',
+                    });
+                  }}
                 >
                   <span className="text-white small">Music</span>
                 </a>
@@ -368,11 +398,24 @@ export default function Popups(props: PopupsProps) {
                 <a
                   onMouseEnter={() => {
                     soundManager.blipSoundSoft();
+                    ReactGA.event({
+                      action: 'resume',
+                      category: 'About',
+                      label: 'Hover Seouldat',
+                    });
                   }}
                   className="btn btn-dark text-light"
-                  href="https://resume.niemo.io/"
+                  href="http://34.230.11.31:1444/"
+                  // href="https://resume.niemo.io/"
+                  onClick={(e) => {
+                    ReactGA.event({
+                      action: 'resume',
+                      category: 'About',
+                      label: 'Click Seouldat',
+                    });
+                  }}
                 >
-                  <span className="text-white small">Resume</span>
+                  <span className="text-white small">Seouldat</span>
                 </a>
               </div>
             </div>
@@ -386,6 +429,12 @@ export default function Popups(props: PopupsProps) {
                 e.stopPropagation();
                 soundManager.blipBeedeeSound();
                 props.setHideNiemoIp((x) => !x);
+
+                ReactGA.event({
+                  action: 'hide_niemo_ip',
+                  category: 'About',
+                  label: 'Hide Niemo IP',
+                });
               }}
             >
               Filter
