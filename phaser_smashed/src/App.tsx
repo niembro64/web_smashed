@@ -5,6 +5,14 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Main from './views/Main';
 
+import ReactGA from 'react-ga4';
+
+// Replace with your GA4 Measurement ID
+ReactGA.initialize('G-ZJKVQHDXR8');
+
+// Optionally send a pageview for the initial load
+ReactGA.send('pageview');
+
 function App() {
   // The debounce function receives our function as a parameter
   const debounce = (fn: any) => {
