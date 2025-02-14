@@ -2,6 +2,7 @@ import React from 'react';
 import { InputType, emoji, toolTipStyle, tooltipDelay } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import { Tooltip } from 'react-tooltip';
+import ReactGA from 'react-ga4';
 
 export type InputConfiguration = {
   tooltipText: string;
@@ -78,8 +79,21 @@ export const InputPresets: React.FC<InputGroupProps> = ({
           className="b-all-bots flex flex-row"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
+            ReactGA.event({
+              action: 'input_preset_hover',
+              category: 'Input',
+              label: inputConfig.tooltipText,
+            });
           }}
-          onClick={() => setInputArrayEffect(inputConfig.config)}
+          onClick={() => {
+            setInputArrayEffect(inputConfig.config);
+
+            ReactGA.event({
+              action: 'input_preset_click',
+              category: 'Input',
+              label: inputConfig.tooltipText,
+            });
+          }}
         >
           {inputConfig.config.map((x) => {
             if (x === 0) {
