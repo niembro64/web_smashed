@@ -5,13 +5,14 @@ import '@fontsource/press-start-2p';
 import html2canvas from 'html2canvas';
 import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../App.css';
 import { debugInit } from '../debugInit';
 import { debugMax } from '../debugMax';
 import { debugOnMain } from '../debugOnMain';
 import { replaceNNExpressWithNNClient } from '../scenes/helpers/nn';
 import { setGameState } from '../scenes/helpers/state';
+import ReactGA from 'react-ga4';
 import {
   ButtonName,
   CharacterId,
@@ -686,6 +687,11 @@ function Main() {
   const [numKeyboards, setNumKeyboards] = useState<number>(0);
 
   const onClickStartStartButton = async () => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Start',
+      label: 'Start Button',
+    });
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
@@ -768,6 +774,12 @@ function Main() {
     playerIndex: number,
     newInput: InputType
   ): void => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Set Input',
+      label: 'Player ' + playerIndex + ' to ' + newInput,
+    });
+
     soundManager.blipBeedeeSound();
     let i = newInput;
     let k = getNumKeyboardsInUse();
@@ -797,6 +809,12 @@ function Main() {
 
   // ephemeral code you had for setting first char slot
   const setFirstCharacterSlot = (charId: CharacterId): void => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Set Character',
+      label: 'First Character Slot: ' + charId,
+    });
+
     if (debugState.Allow_BlackChez || webStateCurr !== 'web-state-setup') {
       return;
     }
@@ -814,6 +832,12 @@ function Main() {
   };
 
   const onClickRotateSelection = (playerIndex: number): void => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Rotate Selection',
+      label: 'Player ' + playerIndex,
+    });
+
     soundManager.blipBeedeeSound();
     const choices = [...smashConfig.players];
     let newCharacterId =
@@ -876,6 +900,12 @@ function Main() {
   };
 
   const onClickPlayNavBody = (buttonName: ButtonName) => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Click Nav Body',
+      label: buttonName,
+    });
+
     soundManager.blipBeedeeSound();
     print('Click NavBody: ', buttonName);
 
@@ -889,6 +919,11 @@ function Main() {
   };
 
   const onClickPlayNavButtons = (buttonName: ButtonName) => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Click Nav Buttons',
+      label: buttonName,
+    });
     soundManager.blipBeedeeSound();
     clickPauseParent();
 
@@ -970,6 +1005,12 @@ function Main() {
   };
 
   const onClickOscura = (index: number) => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Oscura',
+      label: 'Player ' + index,
+    });
+
     onClickSetInputArrayElement(
       index,
       inputArray[index] + 1 >= inputTypeNum
@@ -982,6 +1023,12 @@ function Main() {
     const k = event.key;
 
     if (webStateCurr === 'web-state-init') {
+      ReactGA.event({
+        category: 'Game',
+        action: 'Key Press',
+        label: 'Init',
+      });
+
       switch (k) {
         case 'Enter':
           setWebStateCurr('web-state-setup');
@@ -990,6 +1037,12 @@ function Main() {
     }
 
     if (webStateCurr === 'web-state-setup') {
+      ReactGA.event({
+        category: 'Game',
+        action: 'Key Press',
+        label: 'Key Setup: ' + k,
+      });
+
       let pIndex;
       switch (k) {
         case 'Enter':
@@ -1061,16 +1114,6 @@ function Main() {
     window.addEventListener<'keydown'>('keydown', cb, { once: true });
   }, [anyKeyWasPressed]);
 
-  const getNumControllersExistLower = (myI: number): number => {
-    let num: number = 0;
-    inputArray.forEach((ia: number, iaIndex: number) => {
-      if (ia === 1 && iaIndex < myI) {
-        num++;
-      }
-    });
-    return num;
-  };
-
   const [tz, setTz] = useState('');
   useEffect(() => {
     const clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -1114,6 +1157,12 @@ function Main() {
   };
 
   const onClickBackButtonHandler = () => {
+    ReactGA.event({
+      category: 'Game',
+      action: 'Click Back Button',
+      label: 'Back Button',
+    });
+    
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
