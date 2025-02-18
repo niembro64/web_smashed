@@ -119,7 +119,7 @@ export function setPlayWiiMusicWaitShort(game: SmashedGame): void {
     game.SOUND_PAUSED.play();
   }
 }
-export function setPlayWiiMusicWaitLong(game: SmashedGame): void {
+export function updatePlayWiiMusicWaitLong(game: SmashedGame): void {
   if (!game.SOUND_PAUSED) {
     return;
   }

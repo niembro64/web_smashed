@@ -11,7 +11,10 @@ import {
   updateNumShotsLeft,
 } from './helpers/drinking';
 import { getIsFlagShots } from './helpers/flag';
-import { isPlayerInGameBoundary, willPlayerBeInBoundaryNextFrame } from './helpers/math';
+import {
+  isPlayerInGameBoundary,
+  willPlayerBeInBoundaryNextFrame,
+} from './helpers/math';
 import {
   getIsPlayerOffscreen,
   setRespawn,
@@ -47,7 +50,7 @@ import {
   setMusicChompSheepPlay,
   setPauseSoundPowerup,
   setPlaySoundPowerup,
-  setPlayWiiMusicWaitLong,
+  updatePlayWiiMusicWaitLong,
 } from './helpers/sound';
 import {
   getHasGameDurationPassedAttack,
@@ -159,7 +162,7 @@ export function update(game: SmashedGame, time: number, delta: number): void {
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
-      setPlayWiiMusicWaitLong(game);
+      updatePlayWiiMusicWaitLong(game);
 
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
@@ -176,7 +179,7 @@ export function update(game: SmashedGame, time: number, delta: number): void {
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
-      setPlayWiiMusicWaitLong(game);
+      updatePlayWiiMusicWaitLong(game);
 
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
@@ -192,7 +195,7 @@ export function update(game: SmashedGame, time: number, delta: number): void {
       ////////////////////////////////
       ///////// WHILE IN LOOP
       ////////////////////////////////
-      setPlayWiiMusicWaitLong(game);
+      updatePlayWiiMusicWaitLong(game);
 
       if (
         getLongEnoughTimeDuration(game.DURATION_GAME_SHOT, game) &&
@@ -288,7 +291,7 @@ export function updatePlayers(game: SmashedGame): void {
           ///////// attackEnergy hit => hurt
           ////////////////////////////////
           setPlayerState(player, playerIndex, 'player-state-hurt', game);
-        // } else if (!willPlayerBeInBoundaryNextFrame(player, game)) {
+          // } else if (!willPlayerBeInBoundaryNextFrame(player, game)) {
         } else if (!isPlayerInGameBoundary(player, game)) {
           ////////////////////////////////
           ///////// offscreen => dead

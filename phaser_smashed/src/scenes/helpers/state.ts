@@ -112,6 +112,7 @@ export function setGameState(game: SmashedGame, state: GameState): void {
       setSoundStartPlay(game);
       setPhysicsAndMusicResume(game);
       setSplashDataOff(game);
+
       break;
     case 'game-state-paused':
       setRuleSplashOn(game, 'splash-paused');
