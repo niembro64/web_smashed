@@ -433,9 +433,9 @@ function Main() {
         setP2KeysTouched(true);
         break;
       case 'web-state-setup':
-        setTimeout(() => {
-          setOpenEye(true);
-        }, 6000);
+        // setTimeout(() => {
+        //   setOpenEye(true);
+        // }, 6000);
         choosePlay();
         soundManager.startSound();
         musicManager.musicSetupScreenRef.current.play();
@@ -463,9 +463,9 @@ function Main() {
         setShowLoaderIntervalFunction();
         break;
       case 'web-state-game':
-        setTimeout(() => {
-          setOpenEye(true);
-        }, 3000);
+        // setTimeout(() => {
+        //   setOpenEye(true);
+        // }, 3000);
         goPlay();
         musicManager.musicSetupScreenRef.current.pause();
         musicManager.musicLoadingScreenRef.current.pause();
@@ -1162,7 +1162,7 @@ function Main() {
       action: 'Click Back Button',
       label: 'Back Button',
     });
-    
+
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
       myPhaser.current.scene.keys.game.loaded = false;
@@ -1237,6 +1237,7 @@ function Main() {
 
       {/* START SCREEN (Init/Setup) */}
       <StartScreen
+        openEye={openEye}
         setWebStateCurr={setWebStateCurr}
         webStateCurr={webStateCurr}
         debugState={debugState}

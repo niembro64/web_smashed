@@ -95,13 +95,13 @@ export const InputPresets: React.FC<InputGroupProps> = ({
             });
           }}
         >
-          {inputConfig.config.map((x) => {
+          {inputConfig.config.map((x, index) => {
             if (x === 0) {
               return null;
             }
 
             return (
-              <span className={'vs-span'} key={x}>
+              <span className={'vs-span'} key={'input-config' + index}>
                 {mapInputTypeToEmoji(x)}
               </span>
             );

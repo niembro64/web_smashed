@@ -16,6 +16,7 @@ import InputPresets from './InputPresets';
 import { idColors, smashConfigOptions } from './reactHelpers';
 
 interface StartScreenProps {
+  openEye: boolean;
   setWebStateCurr: (webState: WebState) => void;
   webStateCurr: WebState;
   debugState: Debug;
@@ -40,6 +41,7 @@ interface StartScreenProps {
 }
 
 function StartScreen({
+  openEye,
   setWebStateCurr,
   webStateCurr,
   debugState,
@@ -114,21 +116,25 @@ function StartScreen({
 
       {/* Players Setup */}
       <div className="player-choices">
-        <div className="player-choices-left">
-          <DebugOptions
-            showHomeList={true}
-            soundManager={soundManager}
-            debugState={debugState}
-            mainOptionsDebugShowState={mainOptionsDebugShowState}
-            setDebugState={setDebugState}
-            getMaxFromKey={getMaxFromKey}
-            setMainOptionsDebugShowState={setMainOptionsDebugShowState}
-          />
-        </div>
+        {openEye ? (
+          <div className="player-choices-left">
+            <DebugOptions
+              useHomeList={true}
+              soundManager={soundManager}
+              debugState={debugState}
+              mainOptionsDebugShowState={mainOptionsDebugShowState}
+              setDebugState={setDebugState}
+              getMaxFromKey={getMaxFromKey}
+              setMainOptionsDebugShowState={setMainOptionsDebugShowState}
+            />
+          </div>
+        ) : (
+          <div className="w-[10%]" />
+        )}
         <div className="player-choices-right">
           {smashConfig.players.map((p: PlayerConfigSmall, pIndex: number) => {
             return (
-              <div className="player-choice" key={pIndex}>
+              <div className="player-choice" key={'player-choice' + pIndex}>
                 <InputTypeBlock
                   getNumPlayers={getNumPlayers}
                   getNumPlayersBeforeMe={getNumPlayersBeforeMe}
@@ -154,30 +160,41 @@ function StartScreen({
             );
           })}
         </div>
+
+        {!openEye && <div className="w-[10%]" />}
       </div>
 
-      <div className="bottom-zone">
-        <InputPresets
-          soundManager={soundManager}
-          setInputArrayEffect={setInputArrayEffect}
-        />
-        <div
-          className="b-all-bots"
-          id="dice"
-          onMouseEnter={() => {
-            soundManager.blipSoundSoft();
-          }}
-          onClick={async () => {
-            for (let i = 0; i < 3; i++) {
-              setTimeout(() => {
-                randomizeCharacters();
-              }, i * 200 * 0.25);
-            }
-          }}
-          data-tooltip-content="Randomize Characters"
-        >
-          🎲
-        </div>
+      {/* <div className="bottom-zone"> */}
+      <div
+        className={`w-[100%] flex-[0.2] flex flex-row items-center p-[1%] ${
+          openEye ? 'justify-between' : 'justify-center'
+        }`}
+      >
+        {openEye && (
+          <InputPresets
+            soundManager={soundManager}
+            setInputArrayEffect={setInputArrayEffect}
+          />
+        )}
+        {openEye && (
+          <div
+            className="b-all-bots"
+            id="dice"
+            onMouseEnter={() => {
+              soundManager.blipSoundSoft();
+            }}
+            onClick={async () => {
+              for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                  randomizeCharacters();
+                }, i * 200 * 0.25);
+              }
+            }}
+            data-tooltip-content="Randomize Characters"
+          >
+            🎲
+          </div>
+        )}
 
         <div
           onMouseEnter={() => {

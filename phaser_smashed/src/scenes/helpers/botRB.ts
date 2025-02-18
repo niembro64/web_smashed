@@ -527,7 +527,7 @@ export function updateBotRules(
   if (
     !game.debug.Simple_Stage &&
     !isPlayerOneAndTraining &&
-    game.flag.completedCurr === 'flag-not-completed'
+    game.flag.flagStateCurr === 'flag-not-completed'
   ) {
     ///////////////////////
     // ON GROUND

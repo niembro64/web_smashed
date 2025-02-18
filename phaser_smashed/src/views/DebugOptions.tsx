@@ -9,7 +9,7 @@ interface DebugOptionsProps {
   soundManager: SoundManagerType;
   debugState: Debug;
   setDebugState: React.Dispatch<React.SetStateAction<Debug>>;
-  showHomeList: boolean;
+  useHomeList: boolean;
   getMaxFromKey: (key: string) => number;
   mainOptionsDebugShowState: Debug;
   setMainOptionsDebugShowState: React.Dispatch<React.SetStateAction<Debug>>;
@@ -20,7 +20,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
   debugState,
   setDebugState,
   getMaxFromKey,
-  showHomeList,
+  useHomeList,
   mainOptionsDebugShowState,
   setMainOptionsDebugShowState,
 }) => {
@@ -33,10 +33,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
 
         const putKeyOnHome: boolean = !!mainOptionsDebugShowState[key];
 
-        if (
-          (showHomeList && !putKeyOnHome) ||
-          (!showHomeList && putKeyOnHome)
-        ) {
+        if ((useHomeList && !putKeyOnHome) || (!useHomeList && putKeyOnHome)) {
           return null;
         }
 
@@ -66,7 +63,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
         return (
           <div
             // data-tooltip-content={'asdf'}
-            id={showHomeList ? 'home-debug' : 'option-debug'}
+            id={useHomeList ? 'home-debug' : 'option-debug'}
             className={
               typeof value === 'boolean'
                 ? value

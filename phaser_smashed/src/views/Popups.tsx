@@ -93,7 +93,7 @@ export default function Popups(props: PopupsProps) {
             <h1>Debug Options</h1>
             <div className="player-choices-left">
               <DebugOptions
-                showHomeList={false}
+                useHomeList={false}
                 soundManager={soundManager}
                 debugState={debugState}
                 mainOptionsDebugShowState={mainOptionsDebugShowState}
@@ -125,7 +125,7 @@ export default function Popups(props: PopupsProps) {
                 />
                 <div className="moves-list">
                   {characterMoves.map((charMove, index) => (
-                    <div className="move" key={index}>
+                    <div className="move" key={'char-move' + index}>
                       <h5>{charMove.move}</h5>
                       <h5>{charMove.button}</h5>
                     </div>
@@ -141,7 +141,10 @@ export default function Popups(props: PopupsProps) {
                   alt="Keyboard"
                 />
                 {keyboardGroups.map((group, groupIndex) => (
-                  <div className="keyboard-group" key={groupIndex}>
+                  <div
+                    className="keyboard-group"
+                    key={'keyboard-group' + groupIndex}
+                  >
                     <div className="keyboard-group-header">
                       {groupIndex === 0 ? (
                         <h4>Player 1 (Left Side)</h4>
@@ -253,7 +256,7 @@ export default function Popups(props: PopupsProps) {
               {workingControllersAmazon.map((controller) => {
                 return (
                   <a
-                    key={controller.name}
+                    key={'controller' + controller.name}
                     onMouseEnter={() => {
                       soundManager.blipSoundSoft();
                     }}
@@ -562,7 +565,10 @@ export default function Popups(props: PopupsProps) {
                     }
 
                     return (
-                      <tr id={sIndex % 2 ? 'td-odd' : 'td-even'} key={sIndex}>
+                      <tr
+                        id={sIndex % 2 ? 'td-odd' : 'td-even'}
+                        key={'what-am-i' + sIndex}
+                      >
                         <td className="td-left">
                           <div id="td-info">
                             {paddedIndex} {formattedDate} {s.ip}
