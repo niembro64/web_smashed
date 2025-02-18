@@ -1025,7 +1025,7 @@ export default class SmashedGame extends Phaser.Scene {
   flag: Flag = {
     flagSpeedDark: 250,
     flagSpeed: 80,
-    flagStateCurr: 'none',
+    // flagStateCurr: 'none',
     yPositionInit: (this.flagBoxBottom + this.flagBoxTop) / 2,
     box: {
       top: this.flagBoxTop,

@@ -764,7 +764,7 @@ export type FlagSpikesState = 'spikes-up' | 'spikes-down';
 export interface Flag {
   flagSpeedDark: number;
   flagSpeed: number;
-  flagStateCurr: 'none' | 'up' | 'down';
+  // flagStateCurr: 'none' | 'up' | 'down';
   box: Box;
   poleTouchStamps: PoleTouchStamp[];
   completedCurr: boolean;
