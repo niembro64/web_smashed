@@ -767,8 +767,8 @@ export interface Flag {
   movement: 'none' | 'up' | 'down';
   box: Box;
   poleTouchStamps: PoleTouchStamp[];
-  completedCurr: boolean;
-  completedPrev: boolean;
+  completedIdCurr: number | null;
+  completedIdPrev: number | null;
   toucherCurr: Owner;
   toucherPrev: Owner;
   ownerCurr: Owner;

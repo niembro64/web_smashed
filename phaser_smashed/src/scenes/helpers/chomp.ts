@@ -1,6 +1,4 @@
-import { Scale } from 'phaser';
-import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
-import { Player } from '../types';
+import SmashedGame from '../SmashedGame';
 import { getDistance, getNormalizedVector, getVector } from './damage';
 import { getNearestPlayerAliveFromXY } from './movement';
 import { getDoesAnythingHaveDark } from './powers';

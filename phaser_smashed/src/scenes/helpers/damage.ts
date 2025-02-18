@@ -1,4 +1,3 @@
-import { random } from 'brain.js/dist/layer';
 import { print } from '../../views/client';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import {
@@ -21,6 +20,79 @@ import {
 } from './powers';
 import { setPauseSoundPowerup, setResumeSoundPowerup } from './sound';
 import { setPlayerState } from './state';
+
+export function onHitHandlerChompAttack(params: {
+  playerHit: Player;
+  playerHitIndex: number;
+  game: SmashedGame;
+}): void {
+  const { playerHit, playerHitIndex, game } = params;
+
+  if (playerHit.emitterPlayer.on) {
+    return;
+  }
+
+  // update last hit by matrix for playerHit
+
+  for (let bj = 0; bj < game.players.length; bj++) {
+    if (bj === playerHitIndex) {
+      game.wasLastHitByMatrix[playerHitIndex][bj] = true;
+      game.numberHitByMatrix[playerHitIndex][bj]++;
+    } else {
+      game.wasLastHitByMatrix[playerHitIndex][bj] = false;
+    }
+  }
+
+  const vector = getNormalizedVector(
+    game.chomp.sprite.x,
+    game.chomp.sprite.y,
+    playerHit.char.sprite.x,
+    playerHit.char.sprite.y
+  );
+
+  playerHit.char.damageCurr += 500;
+
+  const pHit = playerHit.char.sprite;
+
+  pHit.setVelocityX(vector.x);
+
+  pHit.setVelocityY(vector.y);
+}
+export function onHitHandlerArbitraryAttack(params: {
+  playerHit: Player;
+  playerHitIndex: number;
+  direction: xyVector;
+  j: number;
+  damage: number;
+  game: SmashedGame;
+}): void {
+  const { playerHit, playerHitIndex, direction, j, damage, game } = params;
+
+  if (playerHit.emitterPlayer.on) {
+    return;
+  }
+
+  game.overlappingPlayerIAttackEnergyJ[playerHitIndex][j] = true;
+
+  for (let bj = 0; bj < game.players.length; bj++) {
+    if (bj === j) {
+      game.wasLastHitByMatrix[playerHitIndex][bj] = true;
+      game.numberHitByMatrix[playerHitIndex][j]++;
+    } else {
+      game.wasLastHitByMatrix[playerHitIndex][bj] = false;
+    }
+  }
+
+  const vector = direction;
+
+  playerHit.char.damageCurr += damage;
+
+  const pHit = playerHit.char.sprite;
+
+  pHit.setVelocityX(vector.x);
+
+  pHit.setVelocityY(vector.y);
+}
 
 export function onHitHandlerAttackPhysical(
   player: Player,

@@ -110,7 +110,7 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
     return;
   }
 
-  if (game.debug.Flower_On_Init || game.flag.completedCurr) {
+  if (game.debug.Flower_On_Init || game.flag.completedIdCurr !== null) {
     // game.fireFlower.sprite.setTint(0xffffff);
 
     if (game.updateIndex % game.fireFlower.numUpdateIndexesToWait !== 0) {

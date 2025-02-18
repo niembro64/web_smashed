@@ -4,6 +4,7 @@ import SmashedGame, { SCREEN_DIMENSIONS } from './SmashedGame';
 import { setAttackPhysicalOffscreen } from './helpers/attacks';
 import { BulletsFireFlower, BulletsPlayer } from './helpers/bullets';
 import {
+  onHitHandlerArbitraryAttack,
   onHitHandlerAttackEnergy,
   onHitHandlerAttackPhysical,
   onHitHandlerBulletBill,
@@ -918,9 +919,21 @@ function createHitboxOverlap(game: SmashedGame): void {
         player.char.sprite,
         game.flag.flagSpikes.sprite,
         function () {
-          if (game.flag.flagSpikes.state === 'spikes-up') {
-            setPlayerState(player, playerIndex, 'player-state-dead', game);
+          if (
+            game.flag.flagSpikes.state === 'spikes-up' &&
+            game.flag.flagButton.playerIndexPressing !== null
+          ) {
+            // setPlayerState(player, playerIndex, 'player-state-dead', game);
             game.flag.flagSpikes.sound.play();
+
+            onHitHandlerArbitraryAttack({
+              playerHit: player,
+              playerHitIndex: playerIndex,
+              direction: { x: 0, y: -5000 },
+              j: 0,
+              damage: 1000,
+              game: game,
+            });
           }
         }
       );
