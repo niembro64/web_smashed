@@ -16,7 +16,7 @@ export const getIsInPoleArea = (
   game: SmashedGame
 ): boolean => {
   const f = game.flag;
-  if (f.completedIdCurr !== null) {
+  if (f.completedIdCurr) {
     return false;
   }
 
@@ -37,7 +37,7 @@ export const updateFlagToucher = (game: SmashedGame): void => {
 
   const f = game.flag;
 
-  if (f.completedIdCurr !== null) {
+  if (f.completedIdCurr) {
     return;
   }
 
@@ -90,11 +90,11 @@ export const updateFlagMovement = (game: SmashedGame): void => {
 
   const { flag } = game;
 
-  if (flag.completedIdPrev !== null) return;
+  if (flag.completedIdPrev) return;
 
   flag.completedIdPrev = flag.completedIdCurr;
 
-  if (flag.completedIdCurr !== null) {
+  if (flag.completedIdCurr) {
     flag.spriteFlagMover.body.setVelocityY(0);
     return;
   }
@@ -103,7 +103,7 @@ export const updateFlagMovement = (game: SmashedGame): void => {
   const ownerId = flag.ownerCurr.id;
 
   if (ownerId !== null && flag.spriteFlagMover.y < flag.box.top) {
-    flag.completedIdCurr = ownerId;
+    flag.completedIdCurr = true;
     const playerOwner = game.players[ownerId];
     setPlayerPowerState('none', playerOwner, game);
     setBGMusicResume(game);
@@ -132,7 +132,7 @@ export const updateFlagOwner = (game: SmashedGame): void => {
   const { toucherCurr, ownerCurr, spriteFlagMover, box, completedIdCurr } =
     game.flag;
 
-  if (completedIdCurr !== null || toucherCurr.id === null) return;
+  if (completedIdCurr || toucherCurr.id === null) return;
 
   if (spriteFlagMover.y > box.bottom && toucherCurr.id !== ownerCurr.id) {
     ownerCurr.id = toucherCurr.id;
@@ -155,7 +155,7 @@ export const updateFlagColor = (game: SmashedGame): void => {
     completedIdPrev,
   } = game.flag;
 
-  if (completedIdCurr !== null && completedIdPrev === null) return;
+  if (completedIdCurr && !completedIdPrev) return;
 
   const color =
     ownerCurr.id === null
@@ -177,9 +177,7 @@ export const getIsFlagShots = (game: SmashedGame): boolean => {
     return false;
   }
 
-  return (
-    game.flag.completedIdCurr !== null && game.flag.completedIdPrev === null
-  );
+  return game.flag.completedIdCurr && !game.flag.completedIdPrev;
 };
 
 export const setFlagOwnerNullIfDead = (
@@ -192,7 +190,7 @@ export const setFlagOwnerNullIfDead = (
 
   const { ownerCurr, ownerPrev, completedIdCurr } = game.flag;
 
-  if (completedIdCurr === null && ownerCurr.id === player.playerId) {
+  if (!completedIdCurr && ownerCurr.id === player.playerId) {
     ownerPrev.id = ownerCurr.id;
     ownerPrev.gameStamp = ownerCurr.gameStamp;
 

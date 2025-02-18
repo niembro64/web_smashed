@@ -527,7 +527,7 @@ export function updateBotRules(
   if (
     !game.debug.Simple_Stage &&
     !isPlayerOneAndTraining &&
-    game.flag.completedIdCurr === null
+    !game.flag.completedIdCurr
   ) {
     ///////////////////////
     // ON GROUND
