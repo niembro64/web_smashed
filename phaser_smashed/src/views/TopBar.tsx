@@ -67,7 +67,7 @@ function TopBar({
           soundManager.blipSoundSoft();
         }}
         // ALPHA ON HOVER
-        className="eye-mark text-2xl -mt-2"
+        className="eye-mark text-2xl"
         onClick={() => {
           // setOpenEye(true);
           onClickEye();
