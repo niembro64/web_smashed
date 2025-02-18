@@ -1,6 +1,6 @@
 // TopBar.tsx
 
-import { ButtonName } from '../scenes/types';
+import { ButtonName, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 
 interface TopBarProps {
@@ -47,10 +47,10 @@ function TopBar({
         openEye
           ? 'top-bar-eye-open ' +
             (webStateCurr === 'web-state-game' ? 'bg-black' : 'bg-trans')
-          : 'top-bar-eye-closed bg-trans'
+          : 'top-bar-eye-closed bg-trans  '
       }
     >
-      <img
+      {/* <img
         onMouseEnter={() => {
           soundManager.blipSoundSoft();
         }}
@@ -60,7 +60,21 @@ function TopBar({
         }
         alt="question mark"
         onClick={onClickEye}
-      />
+      /> */}
+
+      <div
+        onMouseEnter={() => {
+          soundManager.blipSoundSoft();
+        }}
+        // ALPHA ON HOVER
+        className="eye-mark text-2xl -mt-2"
+        onClick={() => {
+          // setOpenEye(true);
+          onClickEye();
+        }}
+      >
+        <span>{emoji.gear}</span>
+      </div>
 
       {webStateCurr === 'web-state-setup' && (
         <div
@@ -92,7 +106,7 @@ function TopBar({
         </div>
       )}
 
-      {webStateCurr !== 'web-state-setup' && (
+      {/* {webStateCurr !== 'web-state-setup' && (
         <div
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
@@ -104,7 +118,7 @@ function TopBar({
         >
           <span>BACK</span>
         </div>
-      )}
+      )} */}
 
       {webStateCurr !== 'web-state-setup' && (
         <div

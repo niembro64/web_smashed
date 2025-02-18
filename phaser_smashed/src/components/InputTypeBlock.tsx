@@ -19,6 +19,7 @@ const textForEachType = {
 };
 
 interface InputTypeBlockProps {
+  openEye: boolean;
   input: InputType;
   pIndex: number;
   p: { characterId: CharacterId; input: number | null };
@@ -38,6 +39,7 @@ interface InputTypeBlockProps {
 }
 
 function InputTypeBlock({
+  openEye,
   input,
   pIndex,
   p,
@@ -86,7 +88,7 @@ function InputTypeBlock({
           }}
         >
           <div className="startImageWrapper">
-            {!debugState.Chars_Colored && (
+            {openEye && !debugState.Chars_Colored && (
               <div
                 className={
                   'id-circle ' +
@@ -114,7 +116,9 @@ function InputTypeBlock({
                   return '';
                 }
               })()}
-              className={'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal')}
+              className={
+                'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal') + ' pb-[20%]'
+              }
               src={
                 'images/character_' + p.characterId.toString() + '_cropped.png'
               }
@@ -124,15 +128,17 @@ function InputTypeBlock({
               alt="char"
             />
 
-            <p className="player-char-image-name">
-              {smashConfigOptions[p.characterId].name}
-            </p>
+            {openEye && (
+              <p className="player-char-image-name">
+                {smashConfigOptions[p.characterId].name}
+              </p>
+            )}
           </div>
         </div>
       )}
 
       {/* Input Status */}
-      {input === 0 && (
+      {openEye && input === 0 && (
         <div
           data-tooltip-content={textForEachType[input]}
           className="b-oscuro b-dark"
@@ -147,7 +153,7 @@ function InputTypeBlock({
         </div>
       )}
 
-      {input === 1 && (
+      {openEye && input === 1 && (
         <div
           data-tooltip-content={textForEachType[input]}
           className={
@@ -197,7 +203,7 @@ function InputTypeBlock({
         </div>
       )}
 
-      {input === 2 && (
+      {openEye && input === 2 && (
         <div
           data-tooltip-content={(() => {
             const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
@@ -253,7 +259,7 @@ function InputTypeBlock({
         </div>
       )}
 
-      {input === 3 && (
+      {openEye && input === 3 && (
         <div
           data-tooltip-content={textForEachType[input]}
           className={
@@ -286,7 +292,7 @@ function InputTypeBlock({
         </div>
       )}
 
-      {input === 4 && (
+      {openEye && input === 4 && (
         <div
           data-tooltip-content={textForEachType[input]}
           className={
@@ -319,7 +325,7 @@ function InputTypeBlock({
         </div>
       )}
 
-      {input === 5 && (
+      {openEye && input === 5 && (
         <div
           data-tooltip-content={textForEachType[input]}
           className={

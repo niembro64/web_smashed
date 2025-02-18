@@ -9,6 +9,7 @@ import {
   InputType,
   PlayerConfigSmall,
   WebState,
+  emoji,
 } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import DebugOptions from './DebugOptions';
@@ -17,6 +18,7 @@ import { idColors, smashConfigOptions } from './reactHelpers';
 
 interface StartScreenProps {
   openEye: boolean;
+  // setOpenEye: React.Dispatch<React.SetStateAction<boolean>>;
   setWebStateCurr: (webState: WebState) => void;
   webStateCurr: WebState;
   debugState: Debug;
@@ -42,6 +44,7 @@ interface StartScreenProps {
 
 function StartScreen({
   openEye,
+  // setOpenEye,
   setWebStateCurr,
   webStateCurr,
   debugState,
@@ -136,6 +139,7 @@ function StartScreen({
             return (
               <div className="player-choice" key={'player-choice' + pIndex}>
                 <InputTypeBlock
+                  openEye={openEye}
                   getNumPlayers={getNumPlayers}
                   getNumPlayersBeforeMe={getNumPlayersBeforeMe}
                   input={inputArray[pIndex]}
@@ -192,9 +196,24 @@ function StartScreen({
             }}
             data-tooltip-content="Randomize Characters"
           >
-            🎲
+            {emoji.dice}
           </div>
         )}
+
+        {/* {!openEye && (
+          <div
+            onMouseEnter={() => {
+              soundManager.blipSoundSoft();
+            }}
+            // ALPHA ON HOVER
+            className="text-4xl cursor-pointer mr-4 opacity-20 hover:opacity-100"
+            onClick={() => {
+              setOpenEye(true);
+            }}
+          >
+            <span>{emoji.gear}</span>
+          </div>
+        )} */}
 
         <div
           onMouseEnter={() => {
@@ -211,7 +230,6 @@ function StartScreen({
           onClick={() => {
             onClickStartStartButton();
           }}
-          data-tooltip-content="Start the Game!"
         >
           <span>START</span>
         </div>

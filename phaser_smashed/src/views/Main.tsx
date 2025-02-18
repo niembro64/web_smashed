@@ -397,8 +397,32 @@ function Main() {
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const onClickEye = () => {
-    soundManager.blipBeedeeSound();
-    setOpenEye(!openEye);
+    switch (webStateCurr) {
+      case 'web-state-setup':
+        setOpenEye((prev) => {
+          if (prev) {
+            setInputArrayEffect(inputArrayInit);
+            setSmashConfig(smashConfigInit);
+          } else {
+            setSmashConfig({
+              players: [
+                { characterId: 7, input: 0 },
+                { characterId: 8, input: 0 },
+                { characterId: 4, input: 0 },
+                { characterId: 6, input: 0 },
+              ],
+            });
+            setInputArrayEffect([2, 2, 3, 3]);
+          }
+          return !prev;
+        });
+        break;
+      case 'web-state-game':
+        onClickBackButtonHandler();
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -1207,7 +1231,7 @@ function Main() {
       className="aspect-[16/9] max-w-screen max-h-screen w-auto h-auto m-auto absolute top-0 bottom-0 left-0 right-0"
     >
       {/* All global Tooltips in one place */}
-      <TooltipsAll />
+      {openEye && <TooltipsAll />}
 
       {/* KEYBOARD EXPLAINER BLOCKS */}
       <KeyboardExplainer
@@ -1238,6 +1262,7 @@ function Main() {
       {/* START SCREEN (Init/Setup) */}
       <StartScreen
         openEye={openEye}
+        // setOpenEye={setOpenEye}
         setWebStateCurr={setWebStateCurr}
         webStateCurr={webStateCurr}
         debugState={debugState}
