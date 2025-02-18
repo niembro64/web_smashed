@@ -1025,7 +1025,6 @@ export default class SmashedGame extends Phaser.Scene {
   flag: Flag = {
     flagSpeedDark: 250,
     flagSpeed: 80,
-    // flagStateCurr: 'none',
     yPositionInit: (this.flagBoxBottom + this.flagBoxTop) / 2,
     box: {
       top: this.flagBoxTop,
@@ -1038,8 +1037,8 @@ export default class SmashedGame extends Phaser.Scene {
     toucherPrev: { id: null, gameStamp: Infinity },
     ownerCurr: { id: null, gameStamp: Infinity },
     ownerPrev: { id: null, gameStamp: Infinity },
-    completedCurr: false,
-    completedPrev: false,
+    completedCurr: 'flag-not-completed',
+    completedPrev: 'flag-not-completed',
     spriteFlagMover: null,
     spriteFlagStationary: null,
     spriteFlagChar: null,

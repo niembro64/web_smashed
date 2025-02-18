@@ -761,14 +761,14 @@ export interface Box {
 }
 
 export type FlagSpikesState = 'spikes-up' | 'spikes-down';
+export type FlagState = 'flag-completed' | 'flag-not-completed';
 export interface Flag {
   flagSpeedDark: number;
   flagSpeed: number;
-  // flagStateCurr: 'none' | 'up' | 'down';
   box: Box;
   poleTouchStamps: PoleTouchStamp[];
-  completedCurr: boolean;
-  completedPrev: boolean;
+  completedCurr: FlagState;
+  completedPrev: FlagState;
   toucherCurr: Owner;
   toucherPrev: Owner;
   ownerCurr: Owner;
