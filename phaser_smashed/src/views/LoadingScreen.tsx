@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Debug } from '../scenes/types';
+import { isMobile } from './Main';
+import { mobileMayNotWorkText } from './reactHelpers';
 
 interface LoadingScreenProps {
   debugState: Debug;
@@ -48,10 +50,21 @@ function LoadingScreen({
       <div className="loading-table-wrapper">
         <img className="loading-table" src="/images/table.png" alt="table" />
       </div>
-      {!debugState.Typed_Loading_Text && (
-        <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
+
+      {isMobile ? (
+        <div className="flex-[1] mt-[2vw] flex flex-col items-center text-center text-[1.5vw]">
+          {mobileMayNotWorkText.map((text, i) => (
+            <span key={i}>{text}</span>
+          ))}
+        </div>
+      ) : (
+        <>
+          {!debugState.Typed_Loading_Text && (
+            <p className="first-loader-p">{quotes[quotesRandomNumber].text}</p>
+          )}
+          <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
+        </>
       )}
-      <p className="second-loader-p">- {quotes[quotesRandomNumber].name}</p>
     </div>
   );
 }

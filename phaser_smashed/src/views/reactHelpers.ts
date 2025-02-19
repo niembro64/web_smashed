@@ -231,3 +231,8 @@ export const configInit: Phaser.Types.Core.GameConfig = {
 export const replaceUnderscoreWithSpace = (str: string): string => {
   return str.replace(/_/g, ' ');
 };
+
+export const mobileMayNotWorkText: string[] = [
+  'GAME MAY NOT LOAD',
+  'ON MOBILE DEVICE',
+];

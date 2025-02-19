@@ -14,7 +14,11 @@ import {
 import { SoundManagerType } from './SoundManager';
 import DebugOptions from './DebugOptions';
 import InputPresets from './InputPresets';
-import { idColors, smashConfigOptions } from './reactHelpers';
+import {
+  idColors,
+  mobileMayNotWorkText,
+  smashConfigOptions,
+} from './reactHelpers';
 import { isMobile } from './Main';
 
 interface StartScreenProps {
@@ -209,8 +213,9 @@ function StartScreen({
               soundManager.blipSoundSoft();
             }}
           >
-            <span>GAME MAY NOT LOAD</span>
-            <span>ON MOBILE DEVICE</span>
+            {mobileMayNotWorkText.map((text, i) => (
+              <span key={i}>{text}</span>
+            ))}
           </div>
         )}
 
