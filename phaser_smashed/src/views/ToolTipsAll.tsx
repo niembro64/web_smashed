@@ -39,6 +39,14 @@ function TooltipsAll() {
         delayShow={tooltipDelay}
         style={toolTipStyle}
       />
+      <Tooltip
+        opacity={1}
+        anchorSelect=".debug-class"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+      />
     </>
   );
 }

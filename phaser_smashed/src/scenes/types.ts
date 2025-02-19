@@ -8,8 +8,8 @@ export const tooltipDelay = 500;
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
   // backgroundColor: 'black',
-  color: 'black',
-  backgroundColor: 'white',
+  color: 'white',
+  backgroundColor: 'rgb(37, 99, 235)',
   paddingTop: '10px',
 
   paddingBottom: '8px',

@@ -2,6 +2,7 @@ import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugi
 import SmashedGame from '../scenes/SmashedGame';
 import {
   CharacterMove,
+  Debug,
   InputType,
   KeyboardGroup,
   PlayerConfig,
@@ -10,6 +11,7 @@ import {
   WorkingController,
   emoji,
 } from '../scenes/types';
+import { debugDescriptions } from '../debugDescriptions';
 
 export const inputArrayReset: InputType[] = [0, 0, 0, 0];
 export const inputArrayInit: InputType[] = [3, 3, 3, 3];
@@ -236,3 +238,11 @@ export const mobileMayNotWorkText: string[] = [
   'GAME MAY NOT LOAD',
   'ON MOBILE DEVICE',
 ];
+
+export function getDebugDescription(key: keyof Debug): string {
+  const s: string = debugDescriptions[key];
+
+  const sCaps: string = s ? s.toUpperCase() : '';
+
+  return sCaps;
+}
