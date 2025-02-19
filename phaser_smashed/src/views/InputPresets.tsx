@@ -60,10 +60,10 @@ export const InputPresets: React.FC<InputGroupProps> = ({
       tooltipText: 'FOUR AI BOTS',
       config: [4, 4, 4, 4],
     },
-    {
-      tooltipText: 'FOUR EVOLVING AI BOTS',
-      config: [5, 5, 5, 5],
-    },
+    // {
+    //   tooltipText: 'FOUR EVOLVING AI BOTS',
+    //   config: [5, 5, 5, 5],
+    // },
   ];
 
   return (

@@ -177,7 +177,7 @@ function StartScreen({
 
       {/* <div className="bottom-zone"> */}
       <div
-        className={`w-[100vw] flex-[0.2] flex flex-row items-center p-[1vw] ${
+        className={`w-[100%] flex-[0.2] flex flex-row items-center p-[1vw] ${
           openEye ? 'justify-between' : 'justify-center'
         }`}
       >
