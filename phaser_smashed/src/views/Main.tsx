@@ -66,10 +66,10 @@ import MobileWarning from './MobileWarning';
 export const blipDelay = 200;
 export const baseGravity = 3000;
 export const gravLightMultiplier = 0.5;
+export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function Main() {
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
@@ -88,7 +88,7 @@ function Main() {
   const nnJsonExpress = useRef<string | null>(null);
 
   ////////////////////////////////
-  // Reste NN_Reset_Evolving Button
+  // Reset NN_Reset_Evolving Button
   ////////////////////////////////
   useEffect(() => {
     if (debugState.NN_Reset_Evolving) {
@@ -1357,7 +1357,7 @@ function Main() {
       <DevModeDiv debugState={debugState} />
 
       {/* Mobile Warning */}
-      <MobileWarning isMobile={isMobile} allowMobile={debugInit.Allow_Mobile} />
+      {isMobile && !debugInit.Allow_Mobile && <MobileWarning />}
     </div>
   );
 }

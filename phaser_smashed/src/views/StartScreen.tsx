@@ -15,6 +15,7 @@ import { SoundManagerType } from './SoundManager';
 import DebugOptions from './DebugOptions';
 import InputPresets from './InputPresets';
 import { idColors, smashConfigOptions } from './reactHelpers';
+import { isMobile } from './Main';
 
 interface StartScreenProps {
   openEye: boolean;
@@ -201,6 +202,17 @@ function StartScreen({
             {emoji.dice}
           </div>
         )}
+        {!openEye && isMobile && (
+          <div
+            className="w-[40vw] mr-[1vw] text-gray-500 text-[2vw] flex flex-col items-center justify-center"
+            onMouseEnter={() => {
+              soundManager.blipSoundSoft();
+            }}
+          >
+            <span>GAME MAY NOT LOAD </span>
+            <span>ON MOBILE DEVICE</span>
+          </div>
+        )}
 
         {!openEye && (
           <div
@@ -210,11 +222,11 @@ function StartScreen({
               }
               soundManager.blipSoundSoft();
             }}
-            className={`w-[22%] ${
+            className={`w-[22%]  ${
               inputArray.filter((x) => x !== 0).length === 0
                 ? 'b-start-inactive'
                 : 'b-start'
-            }`}
+            } `}
             onClick={() => {
               onClickEye();
             }}

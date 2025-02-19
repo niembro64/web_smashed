@@ -1,16 +1,6 @@
 // MobileWarning.tsx
 
-import React from 'react';
-
-interface MobileWarningProps {
-  isMobile: boolean;
-  allowMobile: boolean;
-}
-
-function MobileWarning({ isMobile, allowMobile }: MobileWarningProps) {
-  if (allowMobile || !isMobile) {
-    return null;
-  }
+function MobileWarning() {
   return (
     <div className="mobile-warning">
       <img src="images/smashed_x10_gif.gif" alt="Smashed Title Gif" />
