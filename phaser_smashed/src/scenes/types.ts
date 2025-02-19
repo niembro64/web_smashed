@@ -15,8 +15,8 @@ export const toolTipStyle: CSSProperties = {
   // backgroundColor: 'rgb(37, 99, 235)',
   // backgroundColor: 'rgb(107, 114, 128)',
 
-  // borderWidth: '0.2vw',
-  // borderColor: 'white',
+  borderWidth: '0.2vw',
+  borderColor: 'white',
   width: '30vw',
   paddingRight: '2vw',
   paddingLeft: '2vw',

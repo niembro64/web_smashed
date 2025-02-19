@@ -1646,7 +1646,7 @@ h5 {
 
 .dev-mode-div {
   position: absolute;
-  top: 15vw;
+  top: 5vw;
   right: 5vw;
   width: auto;
   height: auto;
@@ -1667,24 +1667,25 @@ h5 {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: calc(100vw * (9 / 16));
+  width: 100%;
+  height: 100%;
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   color: white;
-  font-size: 1.5vw;
+  font-size: 1.5%;
   font-weight: bold;
   text-align: center;
   pointer-events: none;
-  padding: 3vw;
+  padding: 3%;
 }
 
 .video-playback-super {
-  width: 60vw;
-  height: calc(60vw * (9 / 16));
+  /* border: 10px dashed red; */
+  width: 100%;
+  height: 65%;
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -1694,7 +1695,7 @@ h5 {
 
 .video-playback {
   background-color: black;
-  border-radius: 2vw;
+  border-radius: var(--border-radius-small);
   border: 0.5vw solid white;
   box-shadow: 1vw 1vw 2vw 1vw rgba(0, 0, 0);
 }
@@ -1706,19 +1707,19 @@ h5 {
 }
 .replay {
   position: absolute;
-  bottom: 13vw;
+  bottom: 25%;
   z-index: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 1.5vw;
+  font-size: 1.3vw;
   text-align: center;
-  padding: 10vw 1vw 1vw 1vw;
+  padding: 10% 2% 1% 2%;
   pointer-events: none;
   animation: replayTextAnimation 1s infinite alternate;
-  text-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 1);
+  text-shadow: 0% 0% 1% rgba(0, 0, 0, 1);
   background-color: var(--magenta-active);
   border-bottom-left-radius: var(--border-radius-small);
   border-bottom-right-radius: var(--border-radius-small);

@@ -51,7 +51,7 @@ export const debugOnMain: Debug = {
   Allow_Chez: false,
   Allow_SlowMo: true,
 
-  Dev_Mode: false,
+  Dev_Mode: true,
   Dev_Zoom: 0,
   Char_Override: false,
 
