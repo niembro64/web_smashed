@@ -583,6 +583,15 @@ function Main() {
     });
   };
 
+  useEffect(() => {
+    if (
+      webStateCurr === 'web-state-setup' &&
+      webStatePrev === 'web-state-game'
+    ) {
+      onClickEye();
+    }
+  }, [webStateCurr, webStatePrev]);
+
   // kill if still alive on reload
   useEffect(() => {
     if (myPhaser?.current?.scene?.keys?.game) {

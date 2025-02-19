@@ -10,7 +10,7 @@
   --blue-start: hsl(200, 70%, 10%);
   --blue-start-lighter: hsl(200, 70%, 20%);
   --border-radius-big: 100vw;
-  --border-radius-small: 1vw;
+  --border-radius-small: 0.5vw;
   --duration-hover: 0.2s;
   --distance-hover-pos: 15%;
   --distance-hover-neg: calc(-1 * var(--distance-hover-pos));
