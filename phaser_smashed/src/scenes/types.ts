@@ -3,21 +3,24 @@ import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 import { CSSProperties } from 'react';
 
-export const tooltipDelay = 500;
+export const tooltipDelay = 2000;
 
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
   // backgroundColor: 'black',
   color: 'white',
-  backgroundColor: 'rgb(192, 38, 211)',
-  // backgroundColor: 'rgb(37, 99, 235)',
+  // backgroundColor: 'rgb(192, 38, 211)',
+  backgroundColor: 'rgb(37, 99, 235)',
+  // backgroundColor: 'rgb(107, 114, 128)',
 
+  borderWidth: '0.2vw',
+  borderColor: 'white',
   width: '30vw',
-  paddingRight: '1vww',
-  paddingLeft: '1vw',
+  paddingRight: '2vw',
+  paddingLeft: '2vw',
   paddingTop: '1.3vw',
   paddingBottom: '1vw',
-  borderRadius: '0.5vw',
+  borderRadius: '2.5vw',
   textAlign: 'center',
   zIndex: 1000,
   // fontSize: '1.5em',
