@@ -353,7 +353,7 @@ function InputTypeBlock({
           }}
         >
           <span>BOT</span>
-          <span id="input-sub">EVOLVING</span>
+          <span id="input-sub">DARWIN</span>
           <div className="button-input-emoji">{emoji.dna}</div>
         </div>
       )}
