@@ -440,14 +440,14 @@ h2 {
   /* height: 4vw; */
   text-transform: uppercase;
 
-  border-radius: var(--border-radius-small);
+  border-radius: 1vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   margin-bottom: 0.25vw;
-  height: 6vw;
+  padding: 0.5vw 0.5vw 0.2vw 0.5vw;
 }
 
 #home-debug:hover {
@@ -458,8 +458,8 @@ h2 {
 }
 
 #option-debug {
-  width: calc(100% / 3.1);
-  height: 6vw;
+  width: calc(90vw / 3.1);
+  /* height: 5vw; */
 
   border-radius: var(--border-radius-small);
   display: flex;
@@ -467,32 +467,27 @@ h2 {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 0.25vw;
+  margin-bottom: 0.5vw;
+  padding: 0.5vw 0.5vw 0.2vw 0.5vw;
   text-transform: uppercase;
 }
 
 #option-debug:hover {
   background-color: var(--gray-medium);
+  color: white;
 }
 #option-debug:active {
   background-color: var(--gray-light);
+  color: white;
 }
 
-.option-debug-text {
-  flex: 1;
-  margin: 0;
-  padding: 0;
-  font-size: 1.2vw;
-  /* TODO: HERE FONT SIZE */
-  padding: 0vw 1vw 0vw 1vw;
-}
 .option-debug-true {
-  color: white;
-  background-color: var(--gray-dark);
+  color: black;
+  background-color: white;
 }
 .option-debug-false {
   color: rgba(255, 255, 255, 0.5);
-  background-color: black;
+  /* background-color: black; */
 }
 
 .move {

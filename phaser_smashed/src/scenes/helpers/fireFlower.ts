@@ -164,7 +164,17 @@ export const updateFireFlowerShooting = (game: SmashedGame) => {
         break;
     }
 
-    if (shootHighTrajectory) {
+    if (!game.debug.Flower_Gravity) {
+      const angle = Math.atan2(
+        enemy.char.sprite.body.position.y - game.fireFlower.posInit.y,
+        enemy.char.sprite.body.position.x - game.fireFlower.posInit.x
+      );
+
+      invertedYProjectileVelocity = {
+        x: Math.cos(angle) * 1200,
+        y: -Math.sin(angle) * 1200,
+      };
+    } else if (shootHighTrajectory) {
       ///////////////////////////////////////////////
       // Lobbed Projectile
       ///////////////////////////////////////////////

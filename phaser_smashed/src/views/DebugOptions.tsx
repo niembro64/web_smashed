@@ -51,8 +51,8 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
             textToShow = replaceUnderscoreWithSpace(
               (typeof value === 'boolean'
                 ? value
-                  ? emoji.greenCheck
-                  : emoji.redX
+                  ? emoji.blank
+                  : emoji.blank
                 : value) +
                 '_' +
                 key
@@ -119,7 +119,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
               }
             }}
           >
-            <div className={'option-debug-text'}>{textToShow}</div>
+            {textToShow}
           </div>
         );
       })}

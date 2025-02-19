@@ -47,7 +47,7 @@ export const debugOnMain: Debug = {
   Update_Loops_Skip: 0, // 012
   Load_Time_Extra: false,
   Allow_Koopas: false,
-  Allow_BlackChez: false,
+  Allow_BlackChez: true,
   Allow_Chez: false,
   Allow_SlowMo: false,
 
@@ -63,13 +63,13 @@ export const debugOnMain: Debug = {
   Inst_Replay: 1,
   Replay_FastSlow: false,
   Game_Music: 0, // 012
-  Flower_On_Init: false,
-  Flower_Rapid_Fire: false,
-  Flower_Full_Screen: false,
-  Flower_Gravity: false,
+  Flower_On_Init: true,
+  Flower_Rapid_Fire: true,
+  Flower_Full_Screen: true,
+  Flower_Gravity: true,
   Flower_Bounce_Wall: false,
-  Flower_1000_Balls: false,
+  Flower_1000_Balls: true,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
-  Allow_Mobile: false
+  Allow_Mobile: false,
 };
