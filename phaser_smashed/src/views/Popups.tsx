@@ -315,11 +315,15 @@ export default function Popups(props: PopupsProps) {
                   x.stopPropagation();
                 }}
               >
-                <p>
+                <p
+                className='uppercase'
+                >
                   This game is a tribute to "Smashed Bros", a drinking game
                   invented in St. Louis in late 2009 at the Chemon House.
                 </p>
-                <p>niemeyer.eric@gmail.com</p>
+                <p
+                className='uppercase'
+                >niemeyer.eric@gmail.com</p>
               </div>
               <div className="horiz-item-small">
                 <div className="about-image-wrapper">
@@ -351,7 +355,7 @@ export default function Popups(props: PopupsProps) {
                     });
                   }}
                 >
-                  <span className="text-white small">Website</span>
+                  <span className="text-white small">WEBSITE</span>
                 </a>
               </div>
               <div className="horiz-item-small">
@@ -384,7 +388,7 @@ export default function Popups(props: PopupsProps) {
                     });
                   }}
                 >
-                  <span className="text-white small">Music</span>
+                  <span className="text-white small">MUSIC</span>
                 </a>
               </div>
               <div className="horiz-item-small">
@@ -418,7 +422,7 @@ export default function Popups(props: PopupsProps) {
                     });
                   }}
                 >
-                  <span className="text-white small">Seouldat</span>
+                  <span className="text-white small">SEOULDAT</span>
                 </a>
               </div>
             </div>
@@ -440,14 +444,14 @@ export default function Popups(props: PopupsProps) {
                 });
               }}
             >
-              Filter
+              FILTER
             </div>
 
             <div className="scroller" ref={scrollerRef}>
               <table>
                 <thead>
                   <tr id="tr-header">
-                    <td id="title" className="td-left">
+                    <td id="title" className="td-left uppercase">
                       GAMES TZ:{tz}
                     </td>
                     <th id="title" className="td-left">
