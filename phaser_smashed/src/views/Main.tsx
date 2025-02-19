@@ -109,7 +109,7 @@ function Main() {
   }, [debugState.NN_Reset_Evolving]);
 
   ////////////////////////////////
-  // Reste NN_Train_Evolving Button
+  // Reset NN_Train_Evolving Button
   ////////////////////////////////
   useEffect(() => {
     if (debugState.NN_Train_Evolving) {
