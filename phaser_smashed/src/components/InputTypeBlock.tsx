@@ -116,9 +116,9 @@ function InputTypeBlock({
                   return '';
                 }
               })()}
-              className={`startImage ${pIndex > 1 ? 'Inverse' : 'Normal'} ${
-                openEye ? 'pb-[0.5vw]' : 'pb-[2vw]'
-              }`}
+              className={`startImage pixelated ${
+                pIndex > 1 ? 'Inverse' : 'Normal'
+              } ${openEye ? 'pb-[0.8vw]' : 'pb-[2vw]'}`}
               src={
                 'images/character_' + p.characterId.toString() + '_cropped.png'
               }

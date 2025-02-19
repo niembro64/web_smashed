@@ -113,7 +113,7 @@ function StartScreen({
             />
           </div>
           <h1
-            className="start-title-h1"
+            className="start-title-h1 pixelated"
             id={webStateCurr === 'web-state-init' ? 'niemo-games' : undefined}
           >
             {webStateCurr === 'web-state-init' ? 'START' : 'SMASHED'}
