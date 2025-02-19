@@ -3,7 +3,7 @@ import { print } from '../views/client';
 import { BulletsPlayer } from './helpers/bullets';
 import { CSSProperties } from 'react';
 
-export const tooltipDelay = 2000;
+export const tooltipDelay = 1000;
 
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
