@@ -11,11 +11,11 @@ import {
 const textForEachType = {
   // 0: 'Click to Turn On a Player',
   0: '',
-  1: 'A Player with a Gamepad (Controller)',
+  1: 'Player with a Gamepad (Controller)',
   // 2: 'A Player with a Keyboard',
-  3: 'A Normal "Scripted" Bot',
-  4: 'A Neural Network Trainined to Play the Game',
-  5: 'A Bot that is subject to Darwinian Evolution',
+  3: 'Scripted Bot',
+  4: 'Neural Network',
+  5: 'Bot Subject to Darwinian Evolution',
 };
 
 interface InputTypeBlockProps {
@@ -116,9 +116,9 @@ function InputTypeBlock({
                   return '';
                 }
               })()}
-              className={
-                'startImage' + (pIndex > 1 ? 'Inverse' : 'Normal') + ' pb-[20%]'
-              }
+              className={`startImage ${pIndex > 1 ? 'Inverse' : 'Normal'} ${
+                openEye ? 'pb-[0.5vw]' : 'pb-[2vw]'
+              }`}
               src={
                 'images/character_' + p.characterId.toString() + '_cropped.png'
               }

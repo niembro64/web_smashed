@@ -12,7 +12,7 @@
   --border-radius-big: 100vw;
   --border-radius-small: 1vw;
   --duration-hover: 0.2s;
-  --distance-hover-pos: 18%;
+  --distance-hover-pos: 15%;
   --distance-hover-neg: calc(-1 * var(--distance-hover-pos));
   --id-red: #e81224;
   --id-blue: #0078d7;
@@ -452,9 +452,11 @@ h2 {
 
 #home-debug:hover {
   background-color: var(--gray-medium);
+  color: white;
 }
 #home-debug:active {
   background-color: var(--gray-light);
+  color: white;
 }
 
 #option-debug {
@@ -1283,10 +1285,10 @@ h5 {
 
 .player-char-image-name {
   position: absolute;
-  bottom: calc(var(--distance-hover-neg) - 2%);
+  bottom: calc(var(--distance-hover-neg));
   width: 100%;
   height: 100%;
-  padding: 0;
+  padding: 0 0 .7vw 0;
   font-size: 1.7vw;
 
   display: flex;
