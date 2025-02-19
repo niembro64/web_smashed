@@ -24,6 +24,7 @@ export const toolTipStyle: CSSProperties = {
   paddingBottom: '1vw',
   borderRadius: '2.5vw',
   textAlign: 'center',
+  fontSize: '1vw',
   zIndex: 1000,
   // fontSize: '1.5em',
 };
