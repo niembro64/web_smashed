@@ -1768,7 +1768,7 @@ h5 {
 .keyboard-explainer-double {
   position: absolute;
   top: 20%;
-  left: 5%;
+  left: 25%;
   width: 50%;
   height: 25%;
   background-color: rgba(0, 0, 0, 0);
@@ -1790,14 +1790,14 @@ h5 {
 
   overflow: visible;
   z-index: 1;
-  opacity: 0.5;
+  /* opacity: 0.5; */
 
   cursor: pointer;
 }
 .keyboard-explainer-single {
   position: absolute;
   top: 20%;
-  left: 5%;
+  left: 25%;
   width: 50%;
   height: 25%;
   background-color: rgba(0, 0, 0, 0);
@@ -1807,7 +1807,7 @@ h5 {
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 2rem;
+  font-size: 2vw;
   font-weight: bold;
   text-align: center;
 
@@ -1819,7 +1819,7 @@ h5 {
 
   overflow: visible;
   z-index: 1;
-  opacity: 0.5;
+  /* opacity: 0.5; */
 
   cursor: pointer;
 }
@@ -1838,7 +1838,7 @@ h5 {
   justify-content: space-around;
   align-items: center;
   color: white;
-  font-size: 2rem;
+  font-size: 2vw;
   font-weight: bold;
   text-align: center;
 
@@ -1859,7 +1859,7 @@ h5 {
   justify-content: space-around;
   align-items: center;
   color: white;
-  font-size: 2rem;
+  font-size: 2vw;
   font-weight: bold;
   text-align: center;
 
@@ -1880,8 +1880,8 @@ h5 {
   position: relative;
   width: 20%;
   height: 20%;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 10px solid white;
+  background-color: rgba(0, 0, 0, 1);
+  border: 1% solid white;
   border-radius: 50%;
   width: 10%;
   height: 10%;
@@ -1894,14 +1894,14 @@ h5 {
 }
 
 .ss-blue {
-  border: 10px solid #0078d7;
+  border: 1vw solid #0078d7;
   background-color: #0078d7;
   animation-delay: 0.5s;
   animation: spinnerAnimation 3s infinite linear;
   animation-delay: 1.5s;
 }
 .ss-red {
-  border: 10px solid #e81224;
+  border: 1vw solid #e81224;
   background-color: #e81224;
   animation: spinnerAnimation 3s infinite linear;
 }

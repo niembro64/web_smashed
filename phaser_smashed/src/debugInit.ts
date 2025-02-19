@@ -37,7 +37,7 @@ export const debugInit: Debug = {
   Colliders_AB_v_AP: false,
   Colliders_P_v_BB: false,
   Title_Screws: true,
-  Show_Helper_Keyboard: false,
+  Show_Helper_Keyboard: true,
   Friction_Air_Active: true,
   AE_Wrap_Screen: false,
   Wall_Jumps_Active: true,
