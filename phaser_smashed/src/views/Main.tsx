@@ -1245,13 +1245,13 @@ function Main() {
       />
 
       {/* LOADING SCREEN */}
-      {webStateCurr === 'web-state-load' && (
+      {/* {webStateCurr === 'web-state-load' && ( */}
         <LoadingScreen
           debugState={debugState}
           quotesRandomNumber={quotesRandomNumber}
           quotes={quotes}
         />
-      )}
+      {/* )} */}
 
       {/* PHASER Container */}
       <div
