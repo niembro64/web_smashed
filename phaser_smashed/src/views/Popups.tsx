@@ -90,7 +90,7 @@ export default function Popups(props: PopupsProps) {
               onClickPlayNavBody('Options');
             }}
           >
-            <h1>Debug Options</h1>
+            <h1>Extra Options</h1>
             <div className="player-choices-left">
               <DebugOptions
                 useHomeList={false}
