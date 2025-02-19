@@ -135,7 +135,7 @@ function StartScreen({
             />
           </div>
         ) : (
-          <div className="w-[10%]" />
+          <div className="w-[10vw]" />
         )}
         <div className="player-choices-right">
           {smashConfig.players.map((p: PlayerConfigSmall, pIndex: number) => {
@@ -168,12 +168,12 @@ function StartScreen({
           })}
         </div>
 
-        {!openEye && <div className="w-[10%]" />}
+        {!openEye && <div className="w-[10vw]" />}
       </div>
 
       {/* <div className="bottom-zone"> */}
       <div
-        className={`w-[100%] flex-[0.2] flex flex-row items-center p-[1%] ${
+        className={`w-[100vw] flex-[0.2] flex flex-row items-center p-[1vw] ${
           openEye ? 'justify-between' : 'justify-center'
         }`}
       >
@@ -209,7 +209,7 @@ function StartScreen({
               soundManager.blipSoundSoft();
             }}
           >
-            <span>GAME MAY NOT LOAD </span>
+            <span>GAME MAY NOT LOAD</span>
             <span>ON MOBILE DEVICE</span>
           </div>
         )}
@@ -222,7 +222,7 @@ function StartScreen({
               }
               soundManager.blipSoundSoft();
             }}
-            className={`w-[22%]  ${
+            className={`w-[22vw]  ${
               inputArray.filter((x) => x !== 0).length === 0
                 ? 'b-start-inactive'
                 : 'b-start'
@@ -234,7 +234,7 @@ function StartScreen({
             <span>{'PLAY'}</span>
           </div>
         )}
-        {!openEye && <div className="w-[1%]" />}
+        {!openEye && <div className="w-[1vw]" />}
 
         <div
           onMouseEnter={() => {
@@ -243,7 +243,7 @@ function StartScreen({
             }
             soundManager.blipSoundSoft();
           }}
-          className={`w-[22%] ${
+          className={`w-[22vw] ${
             inputArray.filter((x) => x !== 0).length === 0
               ? 'b-start-inactive'
               : 'b-start'
