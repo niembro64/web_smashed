@@ -11,11 +11,11 @@ import {
 const textForEachType = {
   // 0: 'Click to Turn On a Player',
   0: '',
-  1: 'Player with a Gamepad (Controller)',
+  1: 'PLAYER ON USB CONTROLLER',
   // 2: 'A Player with a Keyboard',
-  3: 'Scripted Bot',
-  4: 'Neural Network',
-  5: 'Bot Subject to Darwinian Evolution',
+  3: 'SCRIPTED BOT',
+  4: 'NEURAL NETWORK BOT',
+  5: 'BOT SUBJECT TO DARWINIAN EVOLUTION',
 };
 
 interface InputTypeBlockProps {
@@ -209,9 +209,9 @@ function InputTypeBlock({
             const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
 
             if (isARROWS) {
-              return '"Arrows" (Refer to Controls)';
+              return 'PLAYER ON KEYBOARD ARROWS - REFER TO CONTROLS';
             } else {
-              return '"WASD" (Refer to Controls)';
+              return 'PLAYER ON KEYBOARD WASD - REFER TO CONTROLS';
             }
           })()}
           className={

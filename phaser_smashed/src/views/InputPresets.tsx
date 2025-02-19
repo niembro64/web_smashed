@@ -41,27 +41,27 @@ export const InputPresets: React.FC<InputGroupProps> = ({
 }) => {
   const inputConfigurations: InputConfiguration[] = [
     {
-      tooltipText: 'Keyboard Player vs Bot',
+      tooltipText: 'KEYBOARD PLAYER VS BOT',
       config: [2, 3, 0, 0],
     },
     {
-      tooltipText: 'Two Players on the same Keyboard, WASD vs ARROWS',
+      tooltipText: 'TWO PLAYERS ON THE SAME KEYBOARD - WASD VS ARROWS',
       config: [2, 2, 0, 0],
     },
     {
-      tooltipText: 'Four Players with Gamepads',
+      tooltipText: 'FOUR PLAYERS ON USB CONTROLLERS',
       config: [1, 1, 1, 1],
     },
     {
-      tooltipText: 'Four Bots',
+      tooltipText: 'FOUR SCRIPTED BOTS',
       config: [3, 3, 3, 3],
     },
     {
-      tooltipText: 'Four AI Bots',
+      tooltipText: 'FOUR AI BOTS',
       config: [4, 4, 4, 4],
     },
     {
-      tooltipText: 'Four Evolving AI Bots',
+      tooltipText: 'FOUR EVOLVING AI BOTS',
       config: [5, 5, 5, 5],
     },
   ];

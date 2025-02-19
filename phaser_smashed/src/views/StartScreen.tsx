@@ -201,7 +201,7 @@ function StartScreen({
                 }, i * 200 * 0.25);
               }
             }}
-            data-tooltip-content="Randomize Characters"
+            data-tooltip-content="RANDOMIZE CHARACTERS"
           >
             {emoji.dice}
           </div>

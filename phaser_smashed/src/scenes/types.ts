@@ -92,6 +92,10 @@ export interface Debug {
   [key: string]: any; // add index signature
 }
 
+export type DebugDescriptions = {
+  [K in keyof Debug]: string;
+};
+
 export interface CharacterMove {
   button: string;
   move: string;
