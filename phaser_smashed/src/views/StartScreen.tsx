@@ -19,6 +19,7 @@ import { idColors, smashConfigOptions } from './reactHelpers';
 interface StartScreenProps {
   openEye: boolean;
   // setOpenEye: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickEye: () => void;
   setWebStateCurr: (webState: WebState) => void;
   webStateCurr: WebState;
   debugState: Debug;
@@ -45,6 +46,7 @@ interface StartScreenProps {
 function StartScreen({
   openEye,
   // setOpenEye,
+  onClickEye,
   setWebStateCurr,
   webStateCurr,
   debugState,
@@ -200,20 +202,19 @@ function StartScreen({
           </div>
         )}
 
-        {/* {!openEye && (
+        {!openEye && (
           <div
             onMouseEnter={() => {
               soundManager.blipSoundSoft();
             }}
-            // ALPHA ON HOVER
             className="text-4xl cursor-pointer mr-4 opacity-20 hover:opacity-100"
             onClick={() => {
-              setOpenEye(true);
+              onClickEye();
             }}
           >
             <span>{emoji.gear}</span>
           </div>
-        )} */}
+        )}
 
         <div
           onMouseEnter={() => {
@@ -231,7 +232,7 @@ function StartScreen({
             onClickStartStartButton();
           }}
         >
-          <span>START</span>
+          <span>{openEye ? 'START' : 'WATCH'}</span>
         </div>
       </div>
     </div>

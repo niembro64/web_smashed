@@ -1262,7 +1262,7 @@ function Main() {
       {/* START SCREEN (Init/Setup) */}
       <StartScreen
         openEye={openEye}
-        // setOpenEye={setOpenEye}
+        onClickEye={onClickEye}
         setWebStateCurr={setWebStateCurr}
         webStateCurr={webStateCurr}
         debugState={debugState}
