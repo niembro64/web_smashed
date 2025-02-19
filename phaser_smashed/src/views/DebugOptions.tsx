@@ -64,7 +64,7 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
           <div
             data-tooltip-content={getDebugDescription(key)}
             id={useHomeList ? 'home-debug' : 'option-debug'}
-            className={`debug-class ${
+            className={`debug-class text-[1vw] ${
               typeof value === 'boolean'
                 ? value
                   ? 'option-debug-true'
