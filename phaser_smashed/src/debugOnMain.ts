@@ -49,7 +49,7 @@ export const debugOnMain: Debug = {
   Allow_Koopas: false,
   Allow_BlackChez: true,
   Allow_Chez: false,
-  Allow_SlowMo: false,
+  Allow_SlowMo: true,
 
   Dev_Mode: false,
   Dev_Zoom: 0,

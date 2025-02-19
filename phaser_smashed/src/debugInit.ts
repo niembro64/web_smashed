@@ -25,7 +25,7 @@ export const debugInit: Debug = {
   Dev_Zoom: 8,
   Stage: 11, // 0 - 10 inclusive
   Music_Active: true,
-  Ready_Sound_Active: false,
+  Ready_Sound_Active: true,
   Use_Camera: true,
   Cameras_Visible: false,
   Colliders_P_v_P: false,
