@@ -1687,7 +1687,7 @@ h5 {
   font-weight: bold;
   text-align: center;
   pointer-events: none;
-  padding: 2vw;
+  padding: 3vw;
 }
 
 .video-playback-super {
@@ -1714,16 +1714,16 @@ h5 {
 }
 .replay {
   position: absolute;
-  bottom: 15vw;
+  bottom: 13vw;
   z-index: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 1vw;
+  font-size: 1.5vw;
   text-align: center;
-  padding: 10vw 2vw 1vw 2vw;
+  padding: 10vw 1vw 1vw 1vw;
   pointer-events: none;
   animation: replayTextAnimation 1s infinite alternate;
   text-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 1);
