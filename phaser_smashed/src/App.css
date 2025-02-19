@@ -1639,8 +1639,8 @@ h5 {
 }
 .vs-span {
   font-size: 1.5vw;
-  padding-left: 0.2vw;
-  padding-right: 0.2vw;
+  padding-left: 0.2%;
+  padding-right: 0.2%;
   /* border: 1px solid white; */
 }
 
