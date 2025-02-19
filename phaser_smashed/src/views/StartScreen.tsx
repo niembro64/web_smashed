@@ -205,16 +205,24 @@ function StartScreen({
         {!openEye && (
           <div
             onMouseEnter={() => {
+              if (inputArray.filter((x) => x !== 0).length === 0) {
+                return;
+              }
               soundManager.blipSoundSoft();
             }}
-            className="text-4xl cursor-pointer mr-4 opacity-20 hover:opacity-100"
+            className={`w-[22%] ${
+              inputArray.filter((x) => x !== 0).length === 0
+                ? 'b-start-inactive'
+                : 'b-start'
+            }`}
             onClick={() => {
               onClickEye();
             }}
           >
-            <span>{emoji.gear}</span>
+            <span>{'PLAY'}</span>
           </div>
         )}
+        {!openEye && <div className="w-[1%]" />}
 
         <div
           onMouseEnter={() => {
@@ -223,11 +231,11 @@ function StartScreen({
             }
             soundManager.blipSoundSoft();
           }}
-          className={
+          className={`w-[22%] ${
             inputArray.filter((x) => x !== 0).length === 0
               ? 'b-start-inactive'
               : 'b-start'
-          }
+          }`}
           onClick={() => {
             onClickStartStartButton();
           }}

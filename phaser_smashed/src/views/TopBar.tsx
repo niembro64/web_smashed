@@ -106,7 +106,7 @@ function TopBar({
         </div>
       )}
 
-      {/* {webStateCurr !== 'web-state-setup' && (
+      {webStateCurr !== 'web-state-setup' && (
         <div
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
@@ -118,7 +118,7 @@ function TopBar({
         >
           <span>BACK</span>
         </div>
-      )} */}
+      )}
 
       {webStateCurr !== 'web-state-setup' && (
         <div
