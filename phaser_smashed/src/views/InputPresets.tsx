@@ -3,6 +3,7 @@ import { InputType, emoji, toolTipStyle, tooltipDelay } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 import { Tooltip } from 'react-tooltip';
 import ReactGA from 'react-ga4';
+import { useTopLevelStore } from '../stores/TopLevelStore';
 
 export type InputConfiguration = {
   tooltipText: string;
@@ -39,6 +40,8 @@ export const InputPresets: React.FC<InputGroupProps> = ({
   setInputArrayEffect,
   soundManager,
 }) => {
+  const { tl_width, tl_tailwind, tl_text_lg, tl_text_md } = useTopLevelStore();
+
   const inputConfigurations: InputConfiguration[] = [
     {
       tooltipText: 'KEYBOARD PLAYER VS BOT',
@@ -68,12 +71,20 @@ export const InputPresets: React.FC<InputGroupProps> = ({
 
   return (
     <div className="input-group">
-      <div className="input-group-header ">
+      <div
+        style={{
+          fontSize: tl_text_md,
+        }}
+        className="input-group-header "
+      >
         <span>INPUT</span>
         <span>PRESETS</span>
       </div>
       {inputConfigurations.map((inputConfig, index) => (
         <div
+          style={{
+            fontSize: tl_text_lg,
+          }}
           key={index}
           data-tooltip-content={inputConfig.tooltipText}
           className="b-all-bots flex flex-row"

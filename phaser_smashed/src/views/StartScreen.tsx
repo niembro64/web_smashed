@@ -20,6 +20,7 @@ import {
   smashConfigOptions,
 } from './reactHelpers';
 import { isMobile } from './Main';
+import { useTopLevelStore } from '../stores/TopLevelStore';
 
 interface StartScreenProps {
   openEye: boolean;
@@ -74,6 +75,8 @@ function StartScreen({
   getDoesKeyboardExistLower,
   getNumGamepads,
 }: StartScreenProps) {
+  const { tl_width } = useTopLevelStore();
+
   if (webStateCurr !== 'web-state-setup' && webStateCurr !== 'web-state-init') {
     return null;
   }
@@ -113,6 +116,7 @@ function StartScreen({
             />
           </div>
           <h1
+            style={{ fontSize: tl_width ? tl_width * 0.05 + 'px' : '1vw' }}
             className="start-title-h1 pixelated"
             id={webStateCurr === 'web-state-init' ? 'niemo-games' : undefined}
           >

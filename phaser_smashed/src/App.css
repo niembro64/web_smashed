@@ -1160,7 +1160,7 @@ h5 {
 
 .start-title > h1 {
   flex: 1;
-  font-size: 4vw;
+  /* font-size: 4vw; */
   text-align: center;
   margin: 0;
   width: 100%;
@@ -1643,7 +1643,7 @@ h5 {
   margin-bottom: -2vw;
 }
 .vs-span {
-  font-size: 1.5vw;
+  /* font-size: 1.5vw; */
   padding-left: 0.2%;
   padding-right: 0.2%;
   /* border: 1px solid white; */
@@ -1938,7 +1938,7 @@ h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.2vw;
+  /* font-size: 1.2vw; */
   margin: 0 1.5vw 0 1.5vw;
 }
 
