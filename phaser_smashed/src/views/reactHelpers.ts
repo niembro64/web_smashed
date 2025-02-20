@@ -1,3 +1,5 @@
+// reactHelpers.ts
+
 import ShakePositionPlugin from 'phaser3-rex-plugins/plugins/shakeposition-plugin.js';
 import SmashedGame from '../scenes/SmashedGame';
 import {

@@ -1,11 +1,11 @@
-// import { useState } from "react";
+// App.tsx
 import './App.css';
-// import "@fontsource/press-start-2p";
 
 import { Switch, Route } from 'react-router-dom';
 import Main from './views/Main';
 
 import ReactGA from 'react-ga4';
+import { TopLevelProvider } from './stores/TopLevelStore';
 
 // Replace with your GA4 Measurement ID
 ReactGA.initialize('G-ZJKVQHDXR8');
@@ -52,7 +52,9 @@ function App() {
     <>
       <Switch>
         <Route exact path="/">
-          <Main />
+          <TopLevelProvider>
+            <Main />
+          </TopLevelProvider>
         </Route>
       </Switch>
     </>

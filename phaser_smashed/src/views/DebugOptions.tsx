@@ -1,9 +1,13 @@
 import React from 'react';
 import { Debug, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
-import { getDebugDescription, replaceUnderscoreWithSpace } from './reactHelpers';
+import {
+  getDebugDescription,
+  replaceUnderscoreWithSpace,
+} from './reactHelpers';
 import { debugHide } from '../debugHide';
 import ReactGA from 'react-ga4';
+import { useTopLevelStore } from '../stores/TopLevelStore';
 
 interface DebugOptionsProps {
   soundManager: SoundManagerType;
@@ -24,6 +28,8 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
   mainOptionsDebugShowState,
   setMainOptionsDebugShowState,
 }) => {
+  const { tl_width, tl_tailwind, tl_text_md } = useTopLevelStore();
+
   return (
     <>
       {Object.entries(debugState).map(([key, value], index) => {
@@ -64,7 +70,10 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
           <div
             data-tooltip-content={getDebugDescription(key)}
             id={useHomeList ? 'home-debug' : 'option-debug'}
-            className={`debug-class text-[1vw] ${
+            style={{
+              fontSize: tl_text_md,
+            }}
+            className={`debug-class ${
               typeof value === 'boolean'
                 ? value
                   ? 'option-debug-true'

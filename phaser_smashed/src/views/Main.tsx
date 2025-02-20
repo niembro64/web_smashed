@@ -61,6 +61,7 @@ import TooltipsAll from './ToolTipsAll';
 import TopBar from './TopBar';
 import DevModeDiv from './DevModeDiv';
 import MobileWarning from './MobileWarning';
+import { useTopLevelStore } from '../stores/TopLevelStore';
 
 // Keep these exports the same:
 export const blipDelay = 200;
@@ -69,6 +70,9 @@ export const gravLightMultiplier = 0.5;
 export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function Main() {
+  const { tl_width: topLevelWidth, tl_tailwind: topLevelFontSize } =
+    useTopLevelStore();
+
   const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
