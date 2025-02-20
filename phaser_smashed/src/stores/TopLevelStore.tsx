@@ -45,7 +45,7 @@ export const TopLevelProvider = ({ children }: { children: ReactNode }) => {
         const newFontSizeTailwind = `text-[${newFontSize}px]`;
         const newFontSizeStyle = `${newFontSize}px`;
         const newFontSizeLg = `${newFontSize * 1.5}px`;
-        const newFontSizeXl = `${newFontSize * 2}px`;
+        const newFontSizeXl = `${newFontSize * 3}px`;
 
         console.log('newFontSizeTailwind', newFontSizeTailwind);
         console.log('newFontSizeStyle', newFontSizeStyle);

@@ -75,7 +75,7 @@ function StartScreen({
   getDoesKeyboardExistLower,
   getNumGamepads,
 }: StartScreenProps) {
-  const { tl_width } = useTopLevelStore();
+  const { tl_width, tl_text_xl } = useTopLevelStore();
 
   if (webStateCurr !== 'web-state-setup' && webStateCurr !== 'web-state-init') {
     return null;
@@ -117,6 +117,7 @@ function StartScreen({
           </div>
           <h1
             style={{ fontSize: tl_width ? tl_width * 0.05 + 'px' : '1vw' }}
+            // style={{ fontSize: '5vw' }}
             className="start-title-h1 pixelated"
             id={webStateCurr === 'web-state-init' ? 'niemo-games' : undefined}
           >
@@ -225,6 +226,7 @@ function StartScreen({
 
         {!openEye && (
           <div
+            style={{ fontSize: tl_text_xl }}
             onMouseEnter={() => {
               if (inputArray.filter((x) => x !== 0).length === 0) {
                 return;
@@ -246,6 +248,7 @@ function StartScreen({
         {!openEye && <div className="w-[1vw]" />}
 
         <div
+          style={{ fontSize: tl_text_xl }}
           onMouseEnter={() => {
             if (inputArray.filter((x) => x !== 0).length === 0) {
               return;
