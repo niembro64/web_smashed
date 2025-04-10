@@ -55,6 +55,7 @@
     "productName": "Phaser Smashed",
     "files": [
       "build/**/*",
+      "node_modules/**/*",
       "public/electron.js",
       "public/preload.js",
       "package.json"
@@ -73,7 +74,10 @@
       "buildResources": "assets",
       "output": "dist"
     },
-    "asar": true,
+    "asar": false,
+    "asarUnpack": [
+      "build/**/*"
+    ],
     "win": {
       "target": "nsis",
       "icon": "assets/icon.ico",

@@ -1,11 +1,18 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const url = require('url');
 
 // Check if we're in development mode without relying on electron-is-dev
 const isDev = process.env.NODE_ENV === 'development' || 
               process.env.DEBUG_PROD === 'true' || 
               !app.isPackaged;
+
+// Enable debug logging to help troubleshoot any issues
+console.log('App starting with these settings:');
+console.log('- isDev:', isDev);
+console.log('- App path:', app.getAppPath());
+console.log('- __dirname:', __dirname);
 
 // Initialize Steamworks if in production
 let steamworks = null;
@@ -33,6 +40,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
+    backgroundColor: '#000000', // Add background color to prevent white flash
+    show: false, // Don't show until ready-to-show event
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -41,22 +50,70 @@ function createWindow() {
     icon: path.join(__dirname, '../assets/icon.png')
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(
-    isDev
-      ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`
-  );
+  // Show window when ready to avoid white flash
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
+
+  // Open dev tools in both dev and production modes during testing
+  if (isDev || process.env.DEBUG_PROD === 'true') {
+    mainWindow.webContents.openDevTools();
+  }
+
+  // Load the index.html of the app.
+  if (isDev) {
+    // In development mode, load from localhost server
+    console.log('Loading from dev server: http://localhost:3000');
+    mainWindow.loadURL('http://localhost:3000');
+  } else {
+    // In production mode, load local file
+    const indexPath = path.join(__dirname, '../build/index.html');
+    const indexUrl = url.format({
+      pathname: indexPath,
+      protocol: 'file:',
+      slashes: true
+    });
+    console.log('Loading from production path:', indexPath);
+    console.log('URL format:', indexUrl);
+    
+    // Try loading the URL
+    mainWindow.loadURL(indexUrl)
+      .catch(error => {
+        console.error('Failed to load app:', error);
+        
+        // Try alternative paths as fallback
+        const altPath = path.join(process.resourcesPath, 'build/index.html');
+        console.log('Trying alternative path:', altPath);
+        
+        const altUrl = url.format({
+          pathname: altPath,
+          protocol: 'file:',
+          slashes: true
+        });
+        
+        return mainWindow.loadURL(altUrl);
+      });
+  }
 
   // Remove menu bar in production
   if (!isDev) {
     mainWindow.setMenuBarVisibility(false);
   }
 
-  // Open the DevTools automatically in development mode
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
+  // Add error handling for page load failures
+  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Failed to load:', errorCode, errorDescription);
+    
+    // Try alternative loading method as last resort
+    if (!isDev) {
+      const lastResortPath = path.join(app.getAppPath(), 'build', 'index.html');
+      console.log('Last resort - trying to load from:', lastResortPath);
+      
+      mainWindow.loadFile(lastResortPath).catch(err => {
+        console.error('Last resort load failed:', err);
+      });
+    }
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
