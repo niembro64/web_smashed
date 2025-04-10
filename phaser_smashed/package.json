@@ -35,28 +35,36 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:web": "react-scripts build",
+    "postbuild": "cp -r public/electron.js build/ && cp -r public/images build/",
     "start:electron": "yarn build:web && electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "prod": "yarn build:web && npx electron.cmd .",
+    "dist": "yarn build:web && electron-builder",
+    "dist:win": "yarn build:web && electron-builder --win",
+    "dist:mac": "yarn build:web && electron-builder --mac",
+    "prod": "yarn build:web && electron .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "build": {
     "appId": "com.yourcompany.yourgame",
-    "productName": "My Phaser Game",
+    "productName": "Smashed",
     "files": [
-      "build/**/*",
-      "electron.js"
+      "build/**/*"
     ],
     "directories": {
       "buildResources": "assets"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "public/images/character_0.png"
     },
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "icon": "public/images/character_0.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     }
   },
   "eslintConfig": {
