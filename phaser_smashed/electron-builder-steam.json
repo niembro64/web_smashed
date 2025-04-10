@@ -3,35 +3,35 @@
   "productName": "Phaser Smashed",
   "files": [
     "build/**/*",
-    "node_modules/**/*",
     "public/electron.js",
     "public/preload.js",
     "package.json"
   ],
   "extraResources": [
     {
-      "from": "steam_api/",
-      "to": "steam_api",
-      "filter": ["**/*"]
+      "from": "steam_api",
+      "to": "steam_api"
     },
     {
-      "from": "assets/",
-      "to": "assets",
-      "filter": ["**/*"]
+      "from": "assets",
+      "to": "assets"
     }
   ],
   "directories": {
     "buildResources": "assets",
     "output": "dist"
   },
+  "asar": true,
   "win": {
     "target": "nsis",
-    "icon": "assets/icon.ico"
+    "icon": "assets/icon.ico",
+    "artifactName": "${productName}-Steam-${version}.${ext}"
   },
   "nsis": {
     "oneClick": false,
     "allowToChangeInstallationDirectory": true,
-    "createDesktopShortcut": true
+    "createDesktopShortcut": true,
+    "deleteAppDataOnUninstall": false
   },
   "publish": null
 }
