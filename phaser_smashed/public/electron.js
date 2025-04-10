@@ -1,7 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const isDev = require('electron-is-dev');
 const fs = require('fs');
+
+// Check if we're in development mode without relying on electron-is-dev
+const isDev = process.env.NODE_ENV === 'development' || 
+              process.env.DEBUG_PROD === 'true' || 
+              !app.isPackaged;
 
 // Initialize Steamworks if in production
 let steamworks = null;

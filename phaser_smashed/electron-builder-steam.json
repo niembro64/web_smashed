@@ -4,36 +4,34 @@
   "files": [
     "build/**/*",
     "node_modules/**/*",
+    "public/electron.js",
+    "public/preload.js",
     "package.json"
   ],
   "extraResources": [
     {
       "from": "steam_api/",
-      "to": ".",
+      "to": "steam_api",
+      "filter": ["**/*"]
+    },
+    {
+      "from": "assets/",
+      "to": "assets",
       "filter": ["**/*"]
     }
   ],
   "directories": {
-    "buildResources": "assets"
+    "buildResources": "assets",
+    "output": "dist"
   },
   "win": {
     "target": "nsis",
-    "icon": "assets/icon.ico",
-    "extraFiles": [
-      {
-        "from": "steam_api/win/",
-        "to": ".",
-        "filter": ["*.dll"]
-      }
-    ]
+    "icon": "assets/icon.ico"
   },
   "nsis": {
     "oneClick": false,
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true
   },
-  "publish": {
-    "provider": "generic",
-    "url": "https://example.com/auto-updates"
-  }
+  "publish": null
 }

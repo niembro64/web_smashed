@@ -40,8 +40,9 @@
     "electron:start": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron:build": "npm run build && electron-builder build --win --publish never",
     "electron:build:all": "npm run build && electron-builder build -mwl",
-    "package:win": "npm run build && electron-builder build --win",
-    "package:steam": "npm run build && electron-builder build --win --config electron-builder-steam.json"
+    "package:win": "npm run build && electron-builder build --win --dir=false",
+    "package:steam": "npm run build && electron-builder build --win --config electron-builder-steam.json --dir=false",
+    "package:quick": "electron-builder build --win --dir=true --publish=never"
   },
   "build": {
     "appId": "com.phaser.smashed",
@@ -49,10 +50,25 @@
     "files": [
       "build/**/*",
       "node_modules/**/*",
+      "public/electron.js",
+      "public/preload.js",
       "package.json"
     ],
+    "extraResources": [
+      {
+        "from": "steam_api/",
+        "to": "steam_api",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "assets/",
+        "to": "assets",
+        "filter": ["**/*"]
+      }
+    ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "assets",
+      "output": "dist"
     },
     "win": {
       "target": [
@@ -62,7 +78,8 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
     }
   },
   "eslintConfig": {
@@ -92,7 +109,6 @@
     "cross-env": "^7.0.3",
     "electron": "^29.1.0",
     "electron-builder": "^24.9.1",
-    "electron-is-dev": "^2.0.0",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
     "wait-on": "^7.2.0"

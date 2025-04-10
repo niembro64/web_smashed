@@ -9,12 +9,16 @@ contextBridge.exposeInMainWorld(
       ipcRenderer.send('save-screenshot', dataUrl);
     },
     onScreenshotSaved: (callback) => {
+      // Clean up previous listeners to avoid memory leaks
+      ipcRenderer.removeAllListeners('screenshot-saved');
       ipcRenderer.on('screenshot-saved', (event, result) => callback(result));
     },
     unlockAchievement: (achievementName) => {
       ipcRenderer.send('unlock-achievement', achievementName);
     },
     onAchievementUnlocked: (callback) => {
+      // Clean up previous listeners to avoid memory leaks
+      ipcRenderer.removeAllListeners('achievement-unlocked');
       ipcRenderer.on('achievement-unlocked', (event, result) => callback(result));
     },
     // Add this to identify when running in Electron

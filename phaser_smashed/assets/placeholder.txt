@@ -1,0 +1,6 @@
+This directory is for game assets required for building the Windows executable.
+
+You should place the following files here:
+- icon.ico - Windows application icon
+- icon.png - General application icon
+- Any other assets needed for packaging
