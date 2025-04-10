@@ -71,7 +71,7 @@ import { Player, inputTypeNNClient, inputTypeNNExpress } from './types';
 export function setPreUpdate(game: SmashedGame): void {
   setBGMusicPlay(game);
   setGameState(game, 'game-state-play');
-  game.loaded = true;
+  game.gameLoaded = true;
   console.log('Game loaded set to true');
   print('players', game.players);
   setBGMusicSpeedNormal(game);

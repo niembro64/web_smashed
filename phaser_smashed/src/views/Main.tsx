@@ -451,7 +451,7 @@ function Main() {
       
       const myInterval = setInterval(() => {
         // @ts-ignore
-        if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+        if (myPhaser?.current?.scene?.keys?.game?.gameLoaded) {
           console.log('Game loaded detected, transitioning to game state');
           setTimeout(
             () => {
@@ -620,7 +620,7 @@ function Main() {
   useEffect(() => {
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
-      myPhaser.current.scene.keys.game.loaded = false;
+      myPhaser.current.scene.keys.game.gameLoaded = false;
       myPhaser.current.destroy(true);
     }
   }, []);
@@ -751,7 +751,7 @@ function Main() {
     });
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
-      myPhaser.current.scene.keys.game.loaded = false;
+      myPhaser.current.scene.keys.game.gameLoaded = false;
       myPhaser.current.destroy(true);
     }
     setAllTrainingStatesToNull();
@@ -1222,7 +1222,7 @@ function Main() {
 
     if (myPhaser?.current?.scene?.keys?.game) {
       // @ts-ignore
-      myPhaser.current.scene.keys.game.loaded = false;
+      myPhaser.current.scene.keys.game.gameLoaded = false;
     }
     onClickPlayNavButtons('Back');
     setNumClicks(numClicks + 1);
