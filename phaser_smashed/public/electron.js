@@ -43,10 +43,60 @@ function createWindow() {
   win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
     console.error('Failed to load content:', errorCode, errorDescription);
     
-    // On load failure, try to show an error screen
-    win.webContents.executeJavaScript(`
-      document.body.innerHTML = '<div style="color: white; font-family: Arial; padding: 50px; background: #333; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;"><h2>Failed to load game content</h2><p>Error: ${errorDescription} (${errorCode})</p><p>Please check the console for more details.</p></div>';
-    `).catch(e => console.error('Failed to show error page:', e));
+    // On load failure, load a basic HTML directly
+    const htmlContent = `
+      <html>
+        <head>
+          <title>Smashed - Error Loading</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #000000;
+              color: #ffffff;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+              margin: 0;
+              padding: 20px;
+              text-align: center;
+            }
+            h1 { color: #ff6666; margin-bottom: 10px; }
+            .error-code { font-family: monospace; background: #333; padding: 5px 10px; border-radius: 4px; }
+            .actions { margin-top: 30px; }
+            button {
+              background: #444;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+              margin: 10px;
+              cursor: pointer;
+              border-radius: 4px;
+            }
+            button:hover { background: #555; }
+            .log-path { font-size: 12px; color: #aaa; margin-top: 20px; }
+          </style>
+        </head>
+        <body>
+          <h1>Failed to Load Game Content</h1>
+          <p>The game couldn't be loaded properly.</p>
+          <p>Error: <span class="error-code">${errorDescription} (${errorCode})</span></p>
+          
+          <div class="actions">
+            <button onclick="window.location.reload()">Retry Loading</button>
+          </div>
+          
+          <p class="log-path">
+            You can find error logs at:<br>
+            <span class="error-code">%AppData%\\Smashed\\smashed-log.txt</span>
+          </p>
+        </body>
+      </html>
+    `;
+    
+    win.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`)
+      .catch(err => console.error('Failed to load error page:', err));
   });
   
   // Listen for page loaded event
@@ -248,25 +298,52 @@ app.whenReady().then(() => {
   console.log('Exe path:', app.getPath('exe'));
   
   // Create file for logs in user data directory
-  const logFile = path.join(app.getPath('userData'), 'smashed-log.txt');
+  let logFile;
   try {
+    const userDataPath = app.getPath('userData');
+    // Ensure the directory exists
+    if (!fs.existsSync(userDataPath)) {
+      fs.mkdirSync(userDataPath, { recursive: true });
+      console.log('Created user data directory:', userDataPath);
+    }
+    
+    logFile = path.join(userDataPath, 'smashed-log.txt');
     fs.writeFileSync(logFile, `Smashed launched at ${new Date().toISOString()}\n`, { flag: 'a' });
     fs.appendFileSync(logFile, `App path: ${app.getAppPath()}\n`);
     fs.appendFileSync(logFile, `Running in ${isDev ? 'development' : 'production'} mode\n`);
+    fs.appendFileSync(logFile, `Platform: ${process.platform}\n`);
+    
+    // Try to get additional environment info
+    try {
+      const electronVersion = process.versions.electron;
+      const nodeVersion = process.versions.node;
+      const v8Version = process.versions.v8;
+      fs.appendFileSync(logFile, `Electron: ${electronVersion}, Node: ${nodeVersion}, V8: ${v8Version}\n`);
+    } catch (envErr) {
+      fs.appendFileSync(logFile, `Error getting versions: ${envErr}\n`);
+    }
     
     // Redirect console.log to file
     const originalConsoleLog = console.log;
     const originalConsoleError = console.error;
     
     console.log = function() {
-      const args = Array.from(arguments).join(' ');
-      fs.appendFileSync(logFile, `[LOG] ${args}\n`);
+      try {
+        const args = Array.from(arguments).join(' ');
+        fs.appendFileSync(logFile, `[LOG] ${args}\n`);
+      } catch (logErr) {
+        // Don't crash if logging fails
+      }
       originalConsoleLog.apply(console, arguments);
     };
     
     console.error = function() {
-      const args = Array.from(arguments).join(' ');
-      fs.appendFileSync(logFile, `[ERROR] ${args}\n`);
+      try {
+        const args = Array.from(arguments).join(' ');
+        fs.appendFileSync(logFile, `[ERROR] ${args}\n`);
+      } catch (logErr) {
+        // Don't crash if logging fails
+      }
       originalConsoleError.apply(console, arguments);
     };
     
