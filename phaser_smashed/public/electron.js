@@ -161,12 +161,27 @@ function createWindow() {
             ];
             
             document.getElementById('loadGameBtn').addEventListener('click', () => {
-              // Try to go to the app location
-              try {
-                window.location = 'file://' + appPath + '/build/index.html';
-              } catch(e) {
-                document.getElementById('infoArea').innerHTML = '<pre>Error: ' + e.toString() + '</pre>';
-              }
+              const infoArea = document.getElementById('infoArea');
+              infoArea.innerHTML = '<div style="text-align:center;margin:10px;"><p>Checking various paths...</p></div>';
+              
+              // Try multiple paths
+              const tryPaths = [
+                'file://' + resourcesPath + '/app/build/index.html',
+                'file://' + resourcesPath + '/app/index.html',
+                'file://' + resourcesPath + '/build/index.html',
+                'file://' + appPath + '/build/index.html'
+              ];
+              
+              // Create buttons for each path
+              let buttonsHtml = '<div style="display:flex;flex-direction:column;align-items:center;margin:20px;">';
+              tryPaths.forEach((path, index) => {
+                buttonsHtml += `<button style="margin:5px;padding:10px;width:80%;" onclick="window.location='${path}'">Try Path ${index+1}</button>`;
+              });
+              buttonsHtml += '</div>';
+              
+              infoArea.innerHTML = buttonsHtml + 
+                '<div style="margin-top:20px;"><p>If all paths fail, check the log file at:</p>' +
+                '<pre>%AppData%\\Smashed\\smashed-log.txt</pre></div>';
             });
             
             document.getElementById('showPathsBtn').addEventListener('click', () => {
@@ -176,14 +191,40 @@ function createWindow() {
             });
             
             document.getElementById('showDirsBtn').addEventListener('click', () => {
-              fetch('file-list://' + appPath)
-                .then(response => response.text())
-                .then(data => {
-                  document.getElementById('infoArea').innerHTML = '<h3>Directory Contents:</h3><pre>' + data + '</pre>';
-                })
-                .catch(err => {
-                  document.getElementById('infoArea').innerHTML = '<pre>Error: ' + err.toString() + '</pre>';
-                });
+              const infoArea = document.getElementById('infoArea');
+              infoArea.innerHTML = '<h3>Checking Directory...</h3>';
+              
+              // This approach uses a simpler mechanism than fetch since fetch was failing
+              let html = '<h3>Important Paths:</h3>';
+              html += '<pre>App Path: ' + appPath + '</pre>';
+              html += '<pre>Resources Path: ' + resourcesPath + '</pre>';
+              html += '<pre>User Data: ' + userData + '</pre>';
+              
+              // Add a direct link to load index.html from different locations
+              html += '<h3>Try Direct Loading:</h3>';
+              html += '<div style="display:flex;flex-direction:column;align-items:center;">';
+              
+              // Try these specific paths that might work in Windows portable builds
+              [
+                resourcesPath + '/app/build/index.html',
+                resourcesPath + '/build/index.html',
+                appPath + '/build/index.html',
+                resourcesPath + '/app/build/app.html',
+                resourcesPath + '/build/app.html',
+                appPath + '/build/app.html', 
+                appPath + '/index.html',
+                resourcesPath + '/index.html',
+                resourcesPath + '/app/index.html',
+                'C:/Users/nieme/Code/web_smashed/phaser_smashed/build/index.html'
+              ].forEach((path, i) => {
+                html += `<button style="margin:5px;width:80%;padding:10px;" 
+                         onclick="window.open('file://${path}', '_blank')">
+                         Load from: ...${path.slice(-40)}
+                         </button>`;
+              });
+              
+              html += '</div>';
+              infoArea.innerHTML = html;
             });
           </script>
         </body>
@@ -192,17 +233,78 @@ function createWindow() {
         fs.writeFileSync(testHtmlPath, testHtml);
         console.log('Created test HTML at:', testHtmlPath);
         
+        // Add a way to directly launch the game by adding a menu option
+        const { Menu } = require('electron');
+        
+        const template = [
+          {
+            label: 'File',
+            submenu: [
+              {
+                label: 'Load Game (index.html)',
+                click: async () => {
+                  try {
+                    // Try various paths
+                    const paths = [
+                      path.join(resourcesPath, 'app', 'build', 'index.html'),
+                      path.join(resourcesPath, 'build', 'index.html'),
+                      path.join(appPath, 'build', 'index.html'),
+                      path.join(resourcesPath, 'app', 'build', 'app.html'),
+                      path.join(resourcesPath, 'build', 'app.html'),
+                      path.join(appPath, 'build', 'app.html')
+                    ];
+                    
+                    // Try each path
+                    for (const p of paths) {
+                      if (fs.existsSync(p)) {
+                        console.log('Found and loading:', p);
+                        await win.loadFile(p);
+                        return;
+                      }
+                    }
+                    
+                    dialog.showErrorBox('Error', 'Could not find index.html in any expected location');
+                  } catch (err) {
+                    console.error('Error loading game:', err);
+                    dialog.showErrorBox('Error', 'Failed to load game: ' + err.message);
+                  }
+                }
+              },
+              {
+                label: 'Reload',
+                click: () => win.reload()
+              },
+              {
+                label: 'Toggle DevTools',
+                click: () => win.webContents.toggleDevTools()
+              },
+              { type: 'separator' },
+              {
+                label: 'Exit',
+                click: () => app.quit()
+              }
+            ]
+          }
+        ];
+        
+        const menu = Menu.buildFromTemplate(template);
+        Menu.setApplicationMenu(menu);
+        
         // Register custom protocol to read directory contents
         if (protocol) {
-          protocol.registerFileProtocol('file-list', (request, callback) => {
-            try {
-              const url = request.url.substr(12); // Remove 'file-list://'
-              const dirContents = fs.readdirSync(url).join('\n');
-              callback({ data: dirContents, mimeType: 'text/plain' });
-            } catch (error) {
-              callback({ data: 'Error: ' + error.toString(), mimeType: 'text/plain' });
-            }
-          });
+          try {
+            protocol.registerFileProtocol('file-list', (request, callback) => {
+              try {
+                const url = request.url.substr(12); // Remove 'file-list://'
+                const dirContents = fs.readdirSync(url).join('\n');
+                callback({ data: dirContents, mimeType: 'text/plain' });
+              } catch (error) {
+                callback({ data: 'Error: ' + error.toString(), mimeType: 'text/plain' });
+              }
+            });
+          } catch (protocolError) {
+            console.error('Error registering protocol:', protocolError);
+          }
         }
         
         // Try to load this page first instead of the game
