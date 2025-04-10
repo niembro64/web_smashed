@@ -55,10 +55,7 @@
       "buildResources": "assets",
       "output": "dist"
     },
-    "asar": true,
-    "asarUnpack": [
-      "build/images/**/*"
-    ],
+    "asar": false,
     "win": {
       "target": "nsis",
       "icon": "public/images/character_0.png",
