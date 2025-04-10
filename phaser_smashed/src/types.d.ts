@@ -1,5 +1,3 @@
-/// <reference types="react-scripts" />
-
 // Define Electron API interface for TypeScript
 interface ElectronAPI {
   saveScreenshot: (dataUrl: string) => void;
@@ -9,9 +7,7 @@ interface ElectronAPI {
   isElectron: boolean;
 }
 
-// Properly augment the Window interface for TypeScript
-declare global {
-  interface Window {
-    electron?: ElectronAPI;
-  }
+// Augment the Window interface
+declare interface Window {
+  electron?: ElectronAPI;
 }

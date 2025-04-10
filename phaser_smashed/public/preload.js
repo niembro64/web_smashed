@@ -16,7 +16,9 @@ contextBridge.exposeInMainWorld(
     },
     onAchievementUnlocked: (callback) => {
       ipcRenderer.on('achievement-unlocked', (event, result) => callback(result));
-    }
+    },
+    // Add this to identify when running in Electron
+    isElectron: true
   }
 );
 

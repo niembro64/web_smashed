@@ -376,10 +376,10 @@ function Main() {
       const dataUrl = canvas.toDataURL();
       
       // Check if running in Electron
-      if (window.electron) {
+      if (typeof window !== 'undefined' && 'electron' in window) {
         // Use Electron API for saving
-        window.electron.saveScreenshot(dataUrl);
-        window.electron.onScreenshotSaved((result) => {
+        window.electron?.saveScreenshot(dataUrl);
+        window.electron?.onScreenshotSaved((result: {success: boolean, path?: string, error?: string}) => {
           if (result.success) {
             console.log('Screenshot saved to:', result.path);
           } else {
