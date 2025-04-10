@@ -2,6 +2,7 @@
   "name": "create-react-phaser3-app",
   "version": "0.1.0",
   "private": true,
+  "main": "electron.js",
   "dependencies": {
     "@fontsource/press-start-2p": "^4.5.10",
     "@testing-library/jest-dom": "^5.14.1",
@@ -32,8 +33,29 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:web": "react-scripts build",
+    "start:electron": "yarn build:web && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "build": {
+    "appId": "com.yourcompany.yourgame",
+    "productName": "My Phaser Game",
+    "files": [
+      "build/**/*",
+      "electron.js"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +80,8 @@
     "@types/react-howler": "^5.2.0",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.20",
+    "electron": "^24.3.2",
+    "electron-builder": "^24.3.0",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17"
   }
