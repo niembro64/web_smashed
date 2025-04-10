@@ -30,6 +30,7 @@ export const toolTipStyle: CSSProperties = {
 };
 
 export interface Debug {
+  Allow_API_Calls: boolean;
   Allow_Mobile: boolean;
   NN_Reset_Evolving: boolean;
   NN_Train_Evolving: boolean;

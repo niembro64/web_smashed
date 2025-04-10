@@ -775,16 +775,16 @@ function Main() {
     }
     const myMoment = moment();
     setWebStateCurr('web-state-load');
+
     await pullExpressNeuralNet();
 
-    const c: ClientInformation = await fetchClientData();
-    const s: SessionInfo = await axiosSaveOne(
-      myMoment,
-      c,
-      newSmashConfig,
-      debugState
-    );
-    // do whatever with s if you like
+    const c: ClientInformation | null = await fetchClientData();
+    const s: SessionInfo | null = await axiosSaveOne({
+      momentCreated: myMoment,
+      clientInformation: c,
+      smashConfig: newSmashConfig,
+      debug: debugState,
+    });
 
     setTimeout(() => {
       // @ts-ignore

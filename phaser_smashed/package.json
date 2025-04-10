@@ -1,8 +1,9 @@
 {
   "name": "create-react-phaser3-app",
   "version": "0.1.0",
+  "homepage": "./",
   "private": true,
-  "main": "electron.js",
+  "main": "build/electron.js",
   "dependencies": {
     "@fontsource/press-start-2p": "^4.5.10",
     "@testing-library/jest-dom": "^5.14.1",
@@ -37,6 +38,7 @@
     "start:electron": "yarn build:web && electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
+    "prod": "yarn build:web && npx electron.cmd .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

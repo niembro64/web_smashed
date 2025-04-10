@@ -1,6 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugHide: Debug = {
+  Allow_API_Calls: true,
   Auto_Restart: false,
   NN_Reset_Evolving: false,
   NN_Train_Static: false,
@@ -70,5 +71,5 @@ export const debugHide: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
-  Allow_Mobile: false
+  Allow_Mobile: false,
 };

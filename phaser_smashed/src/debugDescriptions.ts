@@ -1,6 +1,7 @@
 import { DebugDescriptions } from './scenes/types';
 
 export const debugDescriptions: DebugDescriptions = {
+  Allow_API_Calls: 'Allow API calls to be made',
   Allow_Mobile: 'Whether to allow mobile devices to play the game',
   NN_Reset_Evolving:
     "Replace the saved neural network weights in the database with the default weights from the client's neural network weights",

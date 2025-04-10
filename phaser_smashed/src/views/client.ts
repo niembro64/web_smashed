@@ -3,6 +3,8 @@ import moment, { Moment } from 'moment';
 import { Debug, SmashConfig } from '../scenes/types';
 import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
 import { sendRestartSignal } from '../scenes/helpers/state';
+import { debugInit } from '../debugInit';
+import { debug } from 'console';
 
 export interface ClientInformation {
   city: string;
@@ -20,7 +22,11 @@ export interface ClientInformation {
 
 export const nodeEnvIsProduction = process.env.NODE_ENV === 'production';
 
-export const fetchClientData = async (): Promise<ClientInformation> => {
+export const fetchClientData = async (): Promise<ClientInformation | null> => {
+  if (!debugInit.Allow_API_Calls) {
+    print('axiosUpsertOne: Allow_API_Calls is false');
+    return null;
+  }
   // let counterContainer = document.querySelector("#visits");
   // let resetButton = document.querySelector('#reset');
   let visitCountString: string | null = localStorage.getItem('page_view');
@@ -82,12 +88,24 @@ export interface SessionInfo {
 
 export type GameMatrix = number[][];
 
-export const axiosSaveOne = async (
-  momentCreated: Moment,
-  clientInformation: ClientInformation,
-  smashConfig: SmashConfig,
-  debug: Debug
-): Promise<SessionInfo> => {
+export const axiosSaveOne = async (params: {
+  momentCreated: Moment;
+  clientInformation: ClientInformation | null;
+  smashConfig: SmashConfig;
+  debug: Debug;
+}): Promise<SessionInfo | null> => {
+  const { momentCreated, clientInformation, smashConfig, debug } = params;
+
+  if (!debugInit.Allow_API_Calls) {
+    print('axiosSaveOne: Allow_API_Calls is false');
+    return null;
+  }
+
+  if (!clientInformation) {
+    print('axiosSaveOne: clientInformation is null');
+    return null;
+  }
+
   let sessionInfo: SessionInfo = {
     smashConfig: JSON.stringify(smashConfig),
     debug: JSON.stringify(debug),
@@ -135,6 +153,11 @@ export const axiosUpsertOne = async (
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<void> => {
+  if (!debugInit.Allow_API_Calls) {
+    print('axiosUpsertOne: Allow_API_Calls is false');
+    return;
+  }
+
   print(
     'about to call timestamp:',
     moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
@@ -189,6 +212,11 @@ export const axiosUpsertOne = async (
 };
 
 export const getAllGameHistory = async (): Promise<SessionInfo[]> => {
+  if (!debugInit.Allow_API_Calls) {
+    print('axiosGetAll: Allow_API_Calls is false');
+    return [];
+  }
+
   let response;
   if (nodeEnvIsProduction) {
     // response = await axios.get('http://3.86.180.36:8000/api/smashed');
@@ -200,7 +228,7 @@ export const getAllGameHistory = async (): Promise<SessionInfo[]> => {
   return response.data;
 };
 
-export function sumNumbersIn2DArrayString(s: string) {
+export function sumNumbersIn2DArrayString(s: string): number {
   const arr: number[][] = JSON.parse(s);
   const sum = arr
     .reduce((acc, curr) => {
@@ -253,6 +281,11 @@ const getApiBaseUrl = () => {
 export const fetchNeuralNetwork =
   // async (): Promise<INeuralNetworkJSON | null> => {
   async (): Promise<any> => {
+    if (!debugInit.Allow_API_Calls) {
+      print('fetchNeuralNetwork: Allow_API_Calls is false');
+      return null;
+    }
+
     try {
       const response = await axios.get(`${getApiBaseUrl()}/api/neural-network`);
       const neuralNetwork = response.data;
@@ -268,6 +301,11 @@ export const fetchNeuralNetwork =
 
 // Function to send the updated neural network to the backend
 export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
+  if (!debugInit.Allow_API_Calls) {
+    print('saveNeuralNetwork: Allow_API_Calls is false');
+    return false;
+  }
+
   let firstWeight;
   firstWeight = getFirstWeightOfNNJson(nn);
   // if (!nn?.toJSON) {
@@ -304,6 +342,11 @@ export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
 export const getFirstWeightOfNNJson = (
   neuralNetwork: INeuralNetworkJSON
 ): number | null => {
+  if (!debugInit.Allow_API_Calls) {
+    print('getFirstWeightOfNNJson: Allow_API_Calls is false');
+    return null;
+  }
+
   print('neuralNetwork', neuralNetwork);
   if (
     neuralNetwork &&
