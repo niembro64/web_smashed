@@ -37,6 +37,9 @@ export default class SmashedGame extends Phaser.Scene {
   ////////// GAME DEBUG
   ////////////////////////////////
   debug!: Debug;
+  
+  // Flag to check if game is loaded
+  loaded: boolean = false;
 
   sessionMoment: Moment = moment();
 
