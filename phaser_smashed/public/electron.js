@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, protocol } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -25,7 +25,6 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       webSecurity: false,
-      // Add preload script path if needed later
     },
     show: false, // Don't show until loaded
   });
@@ -103,11 +102,6 @@ function createWindow() {
   win.webContents.on('did-finish-load', () => {
     console.log('Page loaded successfully');
   });
-  
-  // Listen for console messages from the renderer
-  win.webContents.on('console-message', (event, level, message, line, sourceId) => {
-    console.log(`[Renderer ${level}] ${message}`);
-  });
 
   if (isDev) {
     // In development, load from the React dev server
@@ -120,209 +114,197 @@ function createWindow() {
   } else {
     // In production, load from the build directory
     try {
-      // STEP 1: Create and load a test page first to verify rendering
-      const testHtmlPath = path.join(app.getPath('userData'), 'test.html');
-      try {
-        const testHtml = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Smashed Test Page</title>
-          <style>
-            body { background: #000; color: white; font-family: Arial; padding: 20px; text-align: center; }
-            h1 { color: #ff0; }
-            button { background: #444; color: white; border: none; padding: 10px 20px; margin: 10px; cursor: pointer; }
-            pre { background: #333; padding: 10px; text-align: left; max-height: 200px; overflow: auto; margin: 10px; }
-          </style>
-        </head>
-        <body>
-          <h1>Smashed Test Page</h1>
-          <p>If you can see this page, rendering is working correctly.</p>
-          <div>
-            <button id="loadGameBtn">Load Game</button>
-            <button id="showPathsBtn">Show Possible Paths</button>
-            <button id="showDirsBtn">Show Directory Contents</button>
-          </div>
-          <div id="infoArea"></div>
-          
-          <script>
-            // Get app paths from window
-            const appPath = '${app.getAppPath().replace(/\\/g, '\\\\')}';
-            const resourcesPath = '${process.resourcesPath.replace(/\\/g, '\\\\')}';
-            const userData = '${app.getPath('userData').replace(/\\/g, '\\\\')}';
-            
-            // Generate all possible index.html paths for Windows
-            const paths = [
-              appPath + '/build/index.html',
-              appPath + '/index.html',
-              resourcesPath + '/app/build/index.html',
-              resourcesPath + '/app.asar/build/index.html',
-              resourcesPath + '/build/index.html'
-            ];
-            
-            document.getElementById('loadGameBtn').addEventListener('click', () => {
-              const infoArea = document.getElementById('infoArea');
-              infoArea.innerHTML = '<div style="text-align:center;margin:10px;"><p>Checking various paths...</p></div>';
-              
-              // Try multiple paths
-              const tryPaths = [
-                'file://' + resourcesPath + '/app/build/index.html',
-                'file://' + resourcesPath + '/app/index.html',
-                'file://' + resourcesPath + '/build/index.html',
-                'file://' + appPath + '/build/index.html'
-              ];
-              
-              // Create buttons for each path
-              let buttonsHtml = '<div style="display:flex;flex-direction:column;align-items:center;margin:20px;">';
-              tryPaths.forEach((path, index) => {
-                buttonsHtml += `<button style="margin:5px;padding:10px;width:80%;" onclick="window.location='${path}'">Try Path ${index+1}</button>`;
-              });
-              buttonsHtml += '</div>';
-              
-              infoArea.innerHTML = buttonsHtml + 
-                '<div style="margin-top:20px;"><p>If all paths fail, check the log file at:</p>' +
-                '<pre>%AppData%\\Smashed\\smashed-log.txt</pre></div>';
-            });
-            
-            document.getElementById('showPathsBtn').addEventListener('click', () => {
-              const infoArea = document.getElementById('infoArea');
-              infoArea.innerHTML = '<h3>Possible Paths:</h3><pre>' + 
-                paths.join('\\n') + '</pre>';
-            });
-            
-            document.getElementById('showDirsBtn').addEventListener('click', () => {
-              const infoArea = document.getElementById('infoArea');
-              infoArea.innerHTML = '<h3>Checking Directory...</h3>';
-              
-              // This approach uses a simpler mechanism than fetch since fetch was failing
-              let html = '<h3>Important Paths:</h3>';
-              html += '<pre>App Path: ' + appPath + '</pre>';
-              html += '<pre>Resources Path: ' + resourcesPath + '</pre>';
-              html += '<pre>User Data: ' + userData + '</pre>';
-              
-              // Add a direct link to load index.html from different locations
-              html += '<h3>Try Direct Loading:</h3>';
-              html += '<div style="display:flex;flex-direction:column;align-items:center;">';
-              
-              // Try these specific paths that might work in Windows portable builds
-              [
-                resourcesPath + '/app/build/index.html',
-                resourcesPath + '/build/index.html',
-                appPath + '/build/index.html',
-                resourcesPath + '/app/build/app.html',
-                resourcesPath + '/build/app.html',
-                appPath + '/build/app.html', 
-                appPath + '/index.html',
-                resourcesPath + '/index.html',
-                resourcesPath + '/app/index.html',
-                'C:/Users/nieme/Code/web_smashed/phaser_smashed/build/index.html'
-              ].forEach((path, i) => {
-                html += `<button style="margin:5px;width:80%;padding:10px;" 
-                         onclick="window.open('file://${path}', '_blank')">
-                         Load from: ...${path.slice(-40)}
-                         </button>`;
-              });
-              
-              html += '</div>';
-              infoArea.innerHTML = html;
-            });
-          </script>
-        </body>
-        </html>`;
-        
-        fs.writeFileSync(testHtmlPath, testHtml);
-        console.log('Created test HTML at:', testHtmlPath);
-        
-        // Add a way to directly launch the game by adding a menu option
-        const { Menu } = require('electron');
-        
-        const template = [
-          {
-            label: 'File',
-            submenu: [
-              {
-                label: 'Load Game (index.html)',
-                click: async () => {
-                  try {
-                    // Try various paths
-                    const paths = [
-                      path.join(resourcesPath, 'app', 'build', 'index.html'),
-                      path.join(resourcesPath, 'build', 'index.html'),
-                      path.join(appPath, 'build', 'index.html'),
-                      path.join(resourcesPath, 'app', 'build', 'app.html'),
-                      path.join(resourcesPath, 'build', 'app.html'),
-                      path.join(appPath, 'build', 'app.html')
-                    ];
-                    
-                    // Try each path
-                    for (const p of paths) {
-                      if (fs.existsSync(p)) {
-                        console.log('Found and loading:', p);
+      // Add a menu for direct loading and diagnostics
+      const { Menu } = require('electron');
+      
+      const template = [
+        {
+          label: 'File',
+          submenu: [
+            {
+              label: 'Load Game',
+              click: async () => {
+                try {
+                  // Try various paths for index.html
+                  const possiblePaths = [
+                    path.join(app.getAppPath(), 'build', 'index.html'),
+                    path.join(process.resourcesPath, 'app', 'build', 'index.html'),
+                    path.join(process.resourcesPath, 'build', 'index.html'),
+                    path.join(app.getAppPath(), 'build', 'app.html'),
+                    path.join(process.resourcesPath, 'app', 'build', 'app.html'),
+                    path.join(process.resourcesPath, 'build', 'app.html')
+                  ];
+                  
+                  // Try each path
+                  let loaded = false;
+                  for (const p of possiblePaths) {
+                    console.log('Checking path:', p);
+                    if (fs.existsSync(p)) {
+                      console.log('Found file at:', p);
+                      try {
                         await win.loadFile(p);
-                        return;
+                        console.log('Successfully loaded:', p);
+                        loaded = true;
+                        break;
+                      } catch (loadErr) {
+                        console.error('Failed to load:', p, loadErr);
                       }
                     }
-                    
-                    dialog.showErrorBox('Error', 'Could not find index.html in any expected location');
-                  } catch (err) {
-                    console.error('Error loading game:', err);
-                    dialog.showErrorBox('Error', 'Failed to load game: ' + err.message);
                   }
+                  
+                  if (!loaded) {
+                    console.error('Could not find index.html in any expected location');
+                    win.webContents.loadURL('data:text/html,<html><body style="background: black; color: white; font-family: sans-serif; padding: 2em; text-align: center;"><h1>Could not find game file</h1><p>The game files could not be found in any expected location.</p></body></html>');
+                  }
+                } catch (err) {
+                  console.error('Error in load game menu:', err);
                 }
-              },
-              {
-                label: 'Reload',
-                click: () => win.reload()
-              },
-              {
-                label: 'Toggle DevTools',
-                click: () => win.webContents.toggleDevTools()
-              },
-              { type: 'separator' },
-              {
-                label: 'Exit',
-                click: () => app.quit()
               }
-            ]
-          }
-        ];
-        
-        const menu = Menu.buildFromTemplate(template);
-        Menu.setApplicationMenu(menu);
-        
-        // Register custom protocol to read directory contents
-        if (protocol) {
-          try {
-            protocol.registerFileProtocol('file-list', (request, callback) => {
-              try {
-                const url = request.url.substr(12); // Remove 'file-list://'
-                const dirContents = fs.readdirSync(url).join('\n');
-                callback({ data: dirContents, mimeType: 'text/plain' });
-              } catch (error) {
-                callback({ data: 'Error: ' + error.toString(), mimeType: 'text/plain' });
-              }
-            });
-          } catch (protocolError) {
-            console.error('Error registering protocol:', protocolError);
-          }
+            },
+            {
+              label: 'Toggle DevTools',
+              click: () => win.webContents.toggleDevTools()
+            },
+            { type: 'separator' },
+            {
+              label: 'Exit',
+              click: () => app.quit()
+            }
+          ]
         }
-        
-        // Try to load this page first instead of the game
-        win.loadFile(testHtmlPath)
-          .then(() => {
-            console.log('Test page loaded successfully');
-          })
-          .catch(err => {
-            console.error('Failed to load test page:', err);
-          });
-      } catch (testErr) {
-        console.error('Error creating test page:', testErr);
-        // Show error directly
-        win.loadURL('data:text/html,<html><body style="background:#000;color:white;font-family:sans-serif;padding:20px;text-align:center;"><h1>Smashed Error</h1><p>Failed to create test page: ' + testErr.message + '</p></body></html>');
+      ];
+      
+      const menu = Menu.buildFromTemplate(template);
+      Menu.setApplicationMenu(menu);
+      
+      // Try to load directly from one of the most likely locations
+      console.log('Attempting to load the game directly...');
+      
+      // Try to find index.html in likely locations
+      const indexPaths = [
+        path.join(app.getAppPath(), 'build', 'index.html'),
+        path.join(process.resourcesPath, 'app', 'build', 'index.html'),
+        path.join(process.resourcesPath, 'build', 'index.html')
+      ];
+      
+      let loaded = false;
+      
+      for (const indexPath of indexPaths) {
+        try {
+          if (fs.existsSync(indexPath)) {
+            console.log('Found index.html at:', indexPath);
+            const content = fs.readFileSync(indexPath, 'utf8').substring(0, 200);
+            console.log('File content starts with:', content);
+            
+            if (content.includes('<!DOCTYPE html>') || content.includes('<html')) {
+              console.log('Loading file:', indexPath);
+              win.loadFile(indexPath);
+              loaded = true;
+              break;
+            } else {
+              console.log('File exists but does not appear to be HTML');
+            }
+          }
+        } catch (err) {
+          console.error('Error checking path:', indexPath, err);
+        }
       }
-    } catch (outerError) {
-      console.error('Outer error in electron.js:', outerError);
-      win.loadURL('data:text/html,<html><body style="background:#000;color:white;font-family:sans-serif;padding:20px;"><h1>Error</h1><p>' + outerError.message + '</p></body></html>');
+      
+      // If we couldn't load the game directly, show a simple HTML page with buttons
+      if (!loaded) {
+        console.log('Could not auto-load game file, showing diagnostic page');
+        const helpHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Smashed - Diagnostics</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #000000;
+                color: #ffffff;
+                margin: 0;
+                padding: 20px;
+                text-align: center;
+              }
+              h1 { color: #ff0; margin-bottom: 20px; }
+              .button-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 20px 0;
+                gap: 10px;
+              }
+              button {
+                background: #444;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                width: 80%;
+                max-width: 600px;
+                cursor: pointer;
+                text-align: left;
+                border-radius: 4px;
+              }
+              button:hover { background: #555; }
+              .path-info {
+                background: #222;
+                padding: 10px;
+                margin: 10px 0;
+                text-align: left;
+                border-radius: 4px;
+                overflow-wrap: break-word;
+                max-width: 80%;
+                margin: 0 auto;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Smashed Game Launcher</h1>
+            <p>Select from one of the following options to launch the game:</p>
+            
+            <div class="button-container" id="buttons"></div>
+            
+            <div class="path-info">
+              <p>App Path: <span id="app-path"></span></p>
+              <p>Resources Path: <span id="res-path"></span></p>
+            </div>
+            
+            <script>
+              // Path information
+              document.getElementById('app-path').textContent = '${app.getAppPath().replace(/\\/g, '\\\\')}';
+              document.getElementById('res-path').textContent = '${process.resourcesPath.replace(/\\/g, '\\\\')}';
+              
+              // Create buttons for each path
+              const buttonContainer = document.getElementById('buttons');
+              const paths = [
+                ['App Path / build / index.html', '${path.join(app.getAppPath(), 'build', 'index.html').replace(/\\/g, '\\\\')}'],
+                ['Resources / app / build / index.html', '${path.join(process.resourcesPath, 'app', 'build', 'index.html').replace(/\\/g, '\\\\')}'],
+                ['Resources / build / index.html', '${path.join(process.resourcesPath, 'build', 'index.html').replace(/\\/g, '\\\\')}'],
+                ['App Path / build / app.html', '${path.join(app.getAppPath(), 'build', 'app.html').replace(/\\/g, '\\\\')}'],
+                ['Resources / app / build / app.html', '${path.join(process.resourcesPath, 'app', 'build', 'app.html').replace(/\\/g, '\\\\')}'],
+                ['Resources / build / app.html', '${path.join(process.resourcesPath, 'build', 'app.html').replace(/\\/g, '\\\\')}']
+              ];
+              
+              paths.forEach(([label, path]) => {
+                const button = document.createElement('button');
+                button.textContent = label;
+                button.onclick = function() {
+                  window.location = 'file://' + path;
+                };
+                buttonContainer.appendChild(button);
+              });
+            </script>
+          </body>
+          </html>
+        `;
+        
+        win.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(helpHtml)}`);
+      }
+      
+    } catch (error) {
+      console.error('Error in production mode:', error);
+      win.loadURL(`data:text/html;charset=utf-8,<html><body style="background:black;color:white;font-family:sans-serif;padding:2em;text-align:center;"><h1>Error</h1><p>${error.message}</p></body></html>`);
     }
   }
 }
