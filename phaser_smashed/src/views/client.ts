@@ -27,44 +27,88 @@ export const fetchClientData = async (): Promise<ClientInformation | null> => {
     print('axiosUpsertOne: Allow_API_Calls is false');
     return null;
   }
-  // let counterContainer = document.querySelector("#visits");
-  // let resetButton = document.querySelector('#reset');
-  let visitCountString: string | null = localStorage.getItem('page_view');
-  let visitCountNumber: number = Number(visitCountString)
-    ? Number(visitCountString)
-    : 0;
+  
+  try {
+    // let counterContainer = document.querySelector("#visits");
+    // let resetButton = document.querySelector('#reset');
+    let visitCountString: string | null = localStorage.getItem('page_view');
+    let visitCountNumber: number = Number(visitCountString)
+      ? Number(visitCountString)
+      : 0;
 
-  // Check if page_view entry is present
-  if (visitCountString !== null) {
-    visitCountNumber =
-      (Number(visitCountString) ? Number(visitCountString) : 0) + 1;
-    localStorage.setItem('page_view', JSON.stringify(visitCountNumber));
-  } else {
-    localStorage.setItem('page_view', '1');
+    // Check if page_view entry is present
+    if (visitCountString !== null) {
+      visitCountNumber =
+        (Number(visitCountString) ? Number(visitCountString) : 0) + 1;
+      localStorage.setItem('page_view', JSON.stringify(visitCountNumber));
+    } else {
+      localStorage.setItem('page_view', '1');
+    }
+
+    // Check if running in Electron
+    const isElectron = window.navigator.userAgent.toLowerCase().indexOf('electron') > -1;
+    
+    if (isElectron) {
+      // Skip API call in Electron and return a mock object
+      console.log('Running in Electron - skipping ipapi call');
+      let clientInformation: ClientInformation = {
+        ip: '127.0.0.1',
+        momentCreated: JSON.stringify(moment()),
+        city: 'Local',
+        region: 'Local',
+        country: 'Local',
+        clientVisits: visitCountNumber,
+        countryArea: 0,
+        latitude: 0,
+        longitude: 0,
+        network: 'local',
+        postal: '00000',
+      };
+      
+      print('clientInformation (local)', clientInformation);
+      return clientInformation;
+    }
+    
+    let response = await fetch('https://ipapi.co/json/');
+    let responseJSON = await response.json();
+
+    print('responseJSON', responseJSON);
+
+    let clientInformation: ClientInformation = {
+      ip: responseJSON.ip,
+      momentCreated: JSON.stringify(moment()),
+      city: responseJSON.city,
+      region: responseJSON.region,
+      country: responseJSON.country,
+      clientVisits: visitCountNumber,
+      countryArea: responseJSON.country_area,
+      latitude: responseJSON.latitude,
+      longitude: responseJSON.longitude,
+      network: responseJSON.network,
+      postal: responseJSON.postal,
+    };
+
+    print('clientInformation', clientInformation);
+
+    return clientInformation;
+  } catch (error) {
+    console.error('Error in fetchClientData:', error);
+    
+    // Return a fallback object on error
+    return {
+      ip: '0.0.0.0',
+      momentCreated: JSON.stringify(moment()),
+      city: 'Unknown',
+      region: 'Unknown',
+      country: 'Unknown',
+      clientVisits: 0,
+      countryArea: 0,
+      latitude: 0,
+      longitude: 0,
+      network: 'unknown',
+      postal: '00000',
+    };
   }
-
-  let response = await fetch('https://ipapi.co/json/');
-  let responseJSON = await response.json();
-
-  print('responseJSON', responseJSON);
-
-  let clientInformation: ClientInformation = {
-    ip: responseJSON.ip,
-    momentCreated: JSON.stringify(moment()),
-    city: responseJSON.city,
-    region: responseJSON.region,
-    country: responseJSON.country,
-    clientVisits: visitCountNumber,
-    countryArea: responseJSON.country_area,
-    latitude: responseJSON.latitude,
-    longitude: responseJSON.longitude,
-    network: responseJSON.network,
-    postal: responseJSON.postal,
-  };
-
-  print('clientInformation', clientInformation);
-
-  return clientInformation;
 };
 
 export interface SessionInfo {
@@ -104,6 +148,34 @@ export const axiosSaveOne = async (params: {
   if (!clientInformation) {
     print('axiosSaveOne: clientInformation is null');
     return null;
+  }
+  
+  // Check if running in Electron
+  const isElectron = window.navigator.userAgent.toLowerCase().indexOf('electron') > -1;
+  if (isElectron) {
+    console.log('Running in Electron - skipping session save to API');
+    
+    // Return a mock session info for Electron
+    let sessionInfo: SessionInfo = {
+      smashConfig: JSON.stringify(smashConfig),
+      debug: JSON.stringify(debug),
+      ip: clientInformation.ip,
+      momentCreated: moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+      city: clientInformation.city,
+      region: clientInformation.region,
+      country: clientInformation.country,
+      clientVisits: clientInformation.clientVisits,
+      countryArea: clientInformation.countryArea,
+      latitude: clientInformation.latitude,
+      longitude: clientInformation.longitude,
+      network: clientInformation.network,
+      postal: clientInformation.postal,
+      matrixShotsUnto: 'null',
+      matrixDeathsUnto: 'null',
+      matrixHitsUnto: 'null',
+    };
+    
+    return sessionInfo;
   }
 
   let sessionInfo: SessionInfo = {
@@ -157,57 +229,68 @@ export const axiosUpsertOne = async (
     print('axiosUpsertOne: Allow_API_Calls is false');
     return;
   }
-
-  print(
-    'about to call timestamp:',
-    moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
-  );
-
-  let s: SessionInfo;
-  if (nodeEnvIsProduction) {
-    let apiString: string =
-      '/api/smashedByMomentCreated/' +
-      moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    print('apiString', apiString);
-    s = await axios.get(apiString);
-  } else {
-    let apiString: string =
-      'http://localhost:8000/api/smashedByMomentCreated/' +
-      moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    print('apiString', apiString);
-    s = await axios.get(apiString);
+  
+  // Check if running in Electron
+  const isElectron = window.navigator.userAgent.toLowerCase().indexOf('electron') > -1;
+  if (isElectron) {
+    console.log('Running in Electron - skipping matrix upsert to API');
+    return;
   }
 
-  print('axiosUpsertOne');
-  print('PREVIOUS SESSION PULLED', s);
-
-  let si: SessionInfo = {
-    smashConfig: s.smashConfig,
-    debug: s.debug,
-    ip: s.ip,
-    momentCreated: moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
-    city: s.city,
-    region: s.region,
-    country: s.country,
-    clientVisits: s.clientVisits,
-    countryArea: s.countryArea,
-    latitude: s.latitude,
-    longitude: s.longitude,
-    network: s.network,
-    postal: s.postal,
-    matrixShotsUnto: JSON.stringify(matrixShotsUnto),
-    matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
-    matrixHitsUnto: JSON.stringify(matrixHitsUnto),
-  };
-  print('NEW SESSION', si);
-
-  if (nodeEnvIsProduction) {
-    await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
-  } else {
-    await axios.patch(
-      'http://localhost:8000/api/smashed/momentCreated/' + si.momentCreated,
-      si
+  try {
+    print(
+      'about to call timestamp:',
+      moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     );
+
+    let s: SessionInfo;
+    if (nodeEnvIsProduction) {
+      let apiString: string =
+        '/api/smashedByMomentCreated/' +
+        moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      print('apiString', apiString);
+      s = await axios.get(apiString);
+    } else {
+      let apiString: string =
+        'http://localhost:8000/api/smashedByMomentCreated/' +
+        moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      print('apiString', apiString);
+      s = await axios.get(apiString);
+    }
+
+    print('axiosUpsertOne');
+    print('PREVIOUS SESSION PULLED', s);
+
+    let si: SessionInfo = {
+      smashConfig: s.smashConfig,
+      debug: s.debug,
+      ip: s.ip,
+      momentCreated: moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+      city: s.city,
+      region: s.region,
+      country: s.country,
+      clientVisits: s.clientVisits,
+      countryArea: s.countryArea,
+      latitude: s.latitude,
+      longitude: s.longitude,
+      network: s.network,
+      postal: s.postal,
+      matrixShotsUnto: JSON.stringify(matrixShotsUnto),
+      matrixDeathsUnto: JSON.stringify(matrixDeathsUnto),
+      matrixHitsUnto: JSON.stringify(matrixHitsUnto),
+    };
+    print('NEW SESSION', si);
+
+    if (nodeEnvIsProduction) {
+      await axios.patch('/api/smashed/momentCreated/' + si.momentCreated, si);
+    } else {
+      await axios.patch(
+        'http://localhost:8000/api/smashed/momentCreated/' + si.momentCreated,
+        si
+      );
+    }
+  } catch (error) {
+    console.error('Error in axiosUpsertOne:', error);
   }
 };
 
@@ -216,16 +299,28 @@ export const getAllGameHistory = async (): Promise<SessionInfo[]> => {
     print('axiosGetAll: Allow_API_Calls is false');
     return [];
   }
-
-  let response;
-  if (nodeEnvIsProduction) {
-    // response = await axios.get('http://3.86.180.36:8000/api/smashed');
-    response = await axios.get('/api/smashed');
-  } else {
-    response = await axios.get('http://localhost:8000/api/smashed');
+  
+  // Check if running in Electron
+  const isElectron = window.navigator.userAgent.toLowerCase().indexOf('electron') > -1;
+  if (isElectron) {
+    console.log('Running in Electron - skipping game history fetch');
+    return [];
   }
 
-  return response.data;
+  try {
+    let response;
+    if (nodeEnvIsProduction) {
+      // response = await axios.get('http://3.86.180.36:8000/api/smashed');
+      response = await axios.get('/api/smashed');
+    } else {
+      response = await axios.get('http://localhost:8000/api/smashed');
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching game history:', error);
+    return [];
+  }
 };
 
 export function sumNumbersIn2DArrayString(s: string): number {
@@ -285,6 +380,13 @@ export const fetchNeuralNetwork =
       print('fetchNeuralNetwork: Allow_API_Calls is false');
       return null;
     }
+    
+    // Check if running in Electron
+    const isElectron = window.navigator.userAgent.toLowerCase().indexOf('electron') > -1;
+    if (isElectron) {
+      console.log('Running in Electron - skipping neural network fetch');
+      return null;
+    }
 
     try {
       const response = await axios.get(`${getApiBaseUrl()}/api/neural-network`);
@@ -303,6 +405,13 @@ export const fetchNeuralNetwork =
 export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
   if (!debugInit.Allow_API_Calls) {
     print('saveNeuralNetwork: Allow_API_Calls is false');
+    return false;
+  }
+  
+  // Check if running in Electron
+  const isElectron = window.navigator.userAgent.toLowerCase().indexOf('electron') > -1;
+  if (isElectron) {
+    console.log('Running in Electron - skipping neural network save');
     return false;
   }
 

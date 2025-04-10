@@ -157,8 +157,13 @@ function Main() {
   }, [debugState.NN_Train_Evolving]);
 
   const pullExpressNeuralNet = async () => {
-    nnJsonExpress.current = await fetchNeuralNetwork();
-    print('nnJsonExpress.current', nnJsonExpress.current);
+    try {
+      nnJsonExpress.current = await fetchNeuralNetwork();
+      print('nnJsonExpress.current', nnJsonExpress.current);
+    } catch (error) {
+      console.error('Error pulling neural network:', error);
+      nnJsonExpress.current = null;
+    }
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =
@@ -440,9 +445,24 @@ function Main() {
     print('webStateCurr', webStateCurr);
 
     const setShowLoaderIntervalFunction = () => {
+      // Set a maximum wait time (10 seconds) to avoid infinite waiting
+      const maxWaitTime = 10000; // 10 seconds
+      const startTime = Date.now();
+      
       const myInterval = setInterval(() => {
         // @ts-ignore
         if (myPhaser?.current?.scene?.keys?.game?.loaded) {
+          console.log('Game loaded detected, transitioning to game state');
+          setTimeout(
+            () => {
+              setWebStateCurr('web-state-game');
+            },
+            debugState.Dev_Mode ? 0 : 1
+          );
+          clearInterval(myInterval);
+        } else if (Date.now() - startTime > maxWaitTime) {
+          // Force transition after max wait time even if loaded isn't true
+          console.log('Maximum wait time exceeded, forcing transition to game state');
           setTimeout(
             () => {
               setWebStateCurr('web-state-game');
@@ -451,7 +471,7 @@ function Main() {
           );
           clearInterval(myInterval);
         }
-      }, 1);
+      }, 100); // Check every 100ms instead of 1ms to reduce CPU usage
     };
 
     switch (webStateCurr) {

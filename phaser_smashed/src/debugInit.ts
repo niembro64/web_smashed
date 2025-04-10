@@ -1,14 +1,14 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
-  Allow_API_Calls: false,
+  Allow_API_Calls: false, // Keep this false for Electron builds
   Allow_Mobile: true,
   Auto_Start: false,
   Auto_Restart: false,
   Super_Speed: false,
   NN_Train_Static: false,
-  NN_Train_Evolving: true,
-  NN_Reset_Evolving: true,
+  NN_Train_Evolving: false, // Set to false for Electron builds
+  NN_Reset_Evolving: false, // Set to false for Electron builds 
   NN_Brand_New: false,
 
   NN_Help_Screen: true,
