@@ -1,27 +1,74 @@
-# Phaser 3 + Create React App template
-![image](https://user-images.githubusercontent.com/11501902/149049053-f46a9d1e-7075-4258-9102-cdbcbe7198ba.png)
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Phaser Smashed
 
-## What's included? - [Check the preview](https://create-react-phaser3-app.netlify.app/)
+A Phaser 3-based Smash-style game built with React.
 
-- [Phaser 3](https://github.com/photonstorm/phaser) - overlaid canvas with the config in `src/PhaserGame.ts` and a scene in `src/scenes/`
-- [Create React App](https://github.com/facebook/create-react-app) - React, TSX, ES6, TypeScript, no need to install bundler, ...etc
-- An example button in `src/App.tsx` showing how to communicate with Phaser within a React component
-- That's it!
-## Getting started
+## Development
 
-Clone the project and in the project directory, you can run:
+To start the development server:
 
-### `yarn install` or `npm install`
+```bash
+npm install
+npm start
+```
 
-Install all the packages in `create react app` + Phaser 3
+This runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `yarn start` or `npm run start`
+## Electron Development
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To run the game in Electron during development:
 
-### `yarn build` or `npm run build`
+```bash
+npm run electron:start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Building for Windows
+
+To build the game as a Windows desktop application:
+
+```bash
+npm run package:win
+```
+
+This will create an installer in the `dist` folder.
+
+## Building for Steam
+
+1. Set up your Steam application ID in `public/electron.js`
+2. Make sure you have the Steam SDK files in the `steam_api` folder
+3. Run the build command:
+
+```bash
+npm run package:steam
+```
+
+## Steam Integration
+
+This game includes Steam integration for:
+- Achievements
+- Screenshots
+- Leaderboards
+
+To enable these features, you need to:
+1. Register your game on Steam
+2. Get your App ID from Steamworks
+3. Update the App ID in `public/electron.js`
+4. Add your Steam API files to the `steam_api` folder
+
+## Project Structure
+
+- `/src` - React application source code
+- `/src/scenes` - Phaser game scenes
+- `/src/views` - React UI components
+- `/public` - Static assets
+- `/public/images` - Game images
+- `/public/sounds` - Game sounds
+
+## Building for Web
+
+The standard web build can still be created with:
+
+```bash
+npm run build
+```
+
+This builds the app for web production to the `build` folder. It correctly bundles React in production mode and optimizes the build for web browsers.

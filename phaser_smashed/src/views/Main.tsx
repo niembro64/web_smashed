@@ -374,13 +374,28 @@ function Main() {
     const element = document.querySelector('#top-level');
     html2canvas(element as HTMLElement).then((canvas) => {
       const dataUrl = canvas.toDataURL();
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      const m: Moment = moment();
-      const mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
-      const fileName = `Smashed_Rules_${mFormatted}.png`;
-      link.download = fileName;
-      link.click();
+      
+      // Check if running in Electron
+      if (window.electron) {
+        // Use Electron API for saving
+        window.electron.saveScreenshot(dataUrl);
+        window.electron.onScreenshotSaved((result) => {
+          if (result.success) {
+            console.log('Screenshot saved to:', result.path);
+          } else {
+            console.error('Failed to save screenshot:', result.error);
+          }
+        });
+      } else {
+        // Fallback to browser download
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        const m: Moment = moment();
+        const mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
+        const fileName = `Smashed_Rules_${mFormatted}.png`;
+        link.download = fileName;
+        link.click();
+      }
     });
   }
 

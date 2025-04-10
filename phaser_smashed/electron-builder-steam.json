@@ -1,0 +1,39 @@
+{
+  "appId": "com.phaser.smashed",
+  "productName": "Phaser Smashed",
+  "files": [
+    "build/**/*",
+    "node_modules/**/*",
+    "package.json"
+  ],
+  "extraResources": [
+    {
+      "from": "steam_api/",
+      "to": ".",
+      "filter": ["**/*"]
+    }
+  ],
+  "directories": {
+    "buildResources": "assets"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "assets/icon.ico",
+    "extraFiles": [
+      {
+        "from": "steam_api/win/",
+        "to": ".",
+        "filter": ["*.dll"]
+      }
+    ]
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true
+  },
+  "publish": {
+    "provider": "generic",
+    "url": "https://example.com/auto-updates"
+  }
+}
