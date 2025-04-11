@@ -29,6 +29,7 @@ import {
 } from './types';
 import { preload } from './preload';
 import { update } from './update';
+import { debugInit } from '../debugInit';
 
 export const SCREEN_DIMENSIONS = { WIDTH: 1920, HEIGHT: 1080 };
 
@@ -1114,7 +1115,7 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 1,
         scaleCharSpriteImage: 1,
         sprite: null,
-        srcSpriteSheet: 'images/sprite_sheet_8.1_mario_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites ? 'images/sprite_sheet_8.1_mario_4x.png' : 'images/sprite_sheet_8.1_monke_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -1627,7 +1628,7 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 1,
         scaleCharSpriteImage: 1,
         sprite: null,
-        srcSpriteSheet: 'images/sprite_sheet_8.1_pikachu_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites ? 'images/sprite_sheet_8.1_pikachu_4x.png' : "images/sprite_sheet_8.1_squirrel_4x.png",
         runRate: 1,
         spriteSize: {
           width: 16,
