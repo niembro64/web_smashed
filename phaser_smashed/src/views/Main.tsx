@@ -372,35 +372,37 @@ function Main() {
   // Helper function to check if we're running in Electron
   const isElectron = () => {
     return (
-      typeof window !== 'undefined' && 
-      (
-        'electron' in window || 
-        (window.navigator && window.navigator.userAgent && window.navigator.userAgent.indexOf('Electron') >= 0)
-      )
+      typeof window !== 'undefined' &&
+      ('electron' in window ||
+        (window.navigator &&
+          window.navigator.userAgent &&
+          window.navigator.userAgent.indexOf('Electron') >= 0))
     );
   };
 
   function captureScreenshot() {
     print('Capture Screenshot');
     console.log('Running in Electron:', isElectron());
-    
+
     const element = document.querySelector('#top-level');
     html2canvas(element as HTMLElement).then((canvas) => {
       const dataUrl = canvas.toDataURL();
-      
+
       // Check if running in Electron
       if (isElectron() && 'electron' in window) {
         console.log('Using Electron API for screenshots');
         // Use Electron API for saving
         try {
           window.electron?.saveScreenshot(dataUrl);
-          window.electron?.onScreenshotSaved((result: {success: boolean, path?: string, error?: string}) => {
-            if (result.success) {
-              console.log('Screenshot saved to:', result.path);
-            } else {
-              console.error('Failed to save screenshot:', result.error);
+          window.electron?.onScreenshotSaved(
+            (result: { success: boolean; path?: string; error?: string }) => {
+              if (result.success) {
+                console.log('Screenshot saved to:', result.path);
+              } else {
+                console.error('Failed to save screenshot:', result.error);
+              }
             }
-          });
+          );
         } catch (error) {
           console.error('Error using Electron screenshot API:', error);
           // Fall back to browser method if Electron API fails
@@ -412,7 +414,7 @@ function Main() {
       }
     });
   }
-  
+
   function saveScreenshotBrowser(dataUrl: string) {
     console.log('Using browser API for screenshots');
     const link = document.createElement('a');
