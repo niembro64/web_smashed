@@ -47,13 +47,13 @@
     "package:win:debug": "cross-env DEBUG_PROD=true npm run clean && npm run build && electron-builder build --win --dir=false"
   },
   "author": {
-    "name": "Phaser Smashed Team",
-    "email": "example@example.com"
+    "name": "Eric Niemeyer",
+    "email": "niemeyer.eric@gmail.com"
   },
-  "description": "A Phaser 3-based Smash-style game",
+  "description": "Multiplayer Platform Fighter Drinking Game",
   "build": {
     "appId": "com.phaser.smashed",
-    "productName": "Phaser Smashed",
+    "productName": "WebSmashed",
     "files": [
       "build/**/*",
       "node_modules/**/*",
