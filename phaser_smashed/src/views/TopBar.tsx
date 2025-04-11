@@ -1,5 +1,6 @@
 // TopBar.tsx
 
+import { debugInit } from '../debugInit';
 import { ButtonName, emoji } from '../scenes/types';
 import { SoundManagerType } from './SoundManager';
 
@@ -91,7 +92,7 @@ function TopBar({
         </div>
       )}
 
-      {webStateCurr === 'web-state-setup' && (
+      {debugInit.Nintendo_Sprites && webStateCurr === 'web-state-setup' && (
         <div
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
