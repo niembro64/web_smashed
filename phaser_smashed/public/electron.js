@@ -13,6 +13,9 @@ console.log('App starting with these settings:');
 console.log('- isDev:', isDev);
 console.log('- App path:', app.getAppPath());
 console.log('- __dirname:', __dirname);
+console.log('- Platform:', process.platform);
+console.log('- Process cwd:', process.cwd());
+console.log('- Resources path:', process.resourcesPath || 'Not available');
 
 // Initialize Steamworks if in production
 let steamworks = null;
@@ -66,32 +69,37 @@ function createWindow() {
     console.log('Loading from dev server: http://localhost:3000');
     mainWindow.loadURL('http://localhost:3000');
   } else {
-    // In production mode, load local file
-    const indexPath = path.join(__dirname, '../build/index.html');
+    // In production mode, try several paths to find the index.html file
+    let indexPaths = [
+      path.join(__dirname, '../build/index.html'),
+      path.join(app.getAppPath(), 'build', 'index.html'),
+      path.join(process.resourcesPath, 'build', 'index.html'),
+      path.join(process.resourcesPath, 'app.asar', 'build', 'index.html'),
+      path.join(__dirname, 'build', 'index.html')
+    ];
+    
+    console.log('Possible production paths:');
+    indexPaths.forEach((p, i) => console.log(`${i+1}. ${p} (exists: ${fs.existsSync(p)})`));
+    
+    // Find the first path that exists
+    const validPath = indexPaths.find(p => fs.existsSync(p)) || indexPaths[0];
+    console.log('Selected path:', validPath, `(exists: ${fs.existsSync(validPath)})`);
+    
     const indexUrl = url.format({
-      pathname: indexPath,
+      pathname: validPath,
       protocol: 'file:',
       slashes: true
     });
-    console.log('Loading from production path:', indexPath);
-    console.log('URL format:', indexUrl);
     
     // Try loading the URL
+    console.log('Loading URL:', indexUrl);
     mainWindow.loadURL(indexUrl)
       .catch(error => {
         console.error('Failed to load app:', error);
         
-        // Try alternative paths as fallback
-        const altPath = path.join(process.resourcesPath, 'build/index.html');
-        console.log('Trying alternative path:', altPath);
-        
-        const altUrl = url.format({
-          pathname: altPath,
-          protocol: 'file:',
-          slashes: true
-        });
-        
-        return mainWindow.loadURL(altUrl);
+        // Try using loadFile as a last resort
+        console.log('Trying loadFile instead of loadURL');
+        return mainWindow.loadFile(validPath);
       });
   }
 
@@ -100,18 +108,60 @@ function createWindow() {
     mainWindow.setMenuBarVisibility(false);
   }
 
-  // Add error handling for page load failures
-  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+  // Add enhanced error handling for page load failures
+  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription, validatedURL, isMainFrame) => {
     console.error('Failed to load:', errorCode, errorDescription);
+    console.error('URL that failed:', validatedURL);
+    console.error('Is main frame:', isMainFrame);
     
-    // Try alternative loading method as last resort
+    // Try alternative loading methods as last resort
     if (!isDev) {
-      const lastResortPath = path.join(app.getAppPath(), 'build', 'index.html');
-      console.log('Last resort - trying to load from:', lastResortPath);
+      // List all files in the build directory to help debugging
+      try {
+        const buildDir = path.join(app.getAppPath(), 'build');
+        console.log('Contents of build directory:');
+        if (fs.existsSync(buildDir)) {
+          fs.readdirSync(buildDir).forEach(file => {
+            console.log(`- ${file}`);
+          });
+        } else {
+          console.log('Build directory does not exist:', buildDir);
+        }
+      } catch (err) {
+        console.error('Error listing build directory contents:', err);
+      }
       
-      mainWindow.loadFile(lastResortPath).catch(err => {
-        console.error('Last resort load failed:', err);
-      });
+      // Try a direct file load
+      try {
+        const lastResortPath = path.join(app.getAppPath(), 'build', 'index.html');
+        console.log('Last resort - trying to load from:', lastResortPath);
+        
+        mainWindow.loadFile(lastResortPath).catch(err => {
+          console.error('Last resort load failed:', err);
+          
+          // Try one more alternative location
+          const appRootPath = path.join(__dirname, '..');
+          console.log('Checking application root path:', appRootPath);
+          
+          try {
+            fs.readdirSync(appRootPath).forEach(file => {
+              console.log(`Root: ${file}`);
+            });
+          } catch (dirErr) {
+            console.error('Error listing root directory:', dirErr);
+          }
+        });
+      } catch (err) {
+        console.error('Error in last resort loading:', err);
+      }
+    }
+  });
+  
+  // Add console logging for debugging
+  mainWindow.webContents.on('console-message', (event, level, message, line, sourceId) => {
+    console.log(`[Renderer Console][${level}]: ${message}`);
+    if (sourceId) {
+      console.log(`Source: ${sourceId}:${line}`);
     }
   });
 

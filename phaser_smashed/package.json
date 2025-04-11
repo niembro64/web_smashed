@@ -43,7 +43,8 @@
     "electron:build:all": "npm run clean && npm run build && electron-builder build -mwl",
     "package:win": "npm run clean && npm run build && electron-builder build --win --dir=false",
     "package:steam": "npm run clean && npm run build && electron-builder build --win --config electron-builder-steam.json --dir=false",
-    "package:quick": "npm run clean && electron-builder build --win --dir=true --publish=never"
+    "package:quick": "npm run clean && electron-builder build --win --dir=true --publish=never",
+    "package:win:debug": "cross-env DEBUG_PROD=true npm run clean && npm run build && electron-builder build --win --dir=false"
   },
   "author": {
     "name": "Phaser Smashed Team",
@@ -74,7 +75,7 @@
       "buildResources": "assets",
       "output": "dist"
     },
-    "asar": false,
+    "asar": true,
     "asarUnpack": [
       "build/**/*"
     ],
@@ -88,6 +89,9 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "deleteAppDataOnUninstall": false
+    },
+    "extraMetadata": {
+      "main": "public/electron.js"
     }
   },
   "eslintConfig": {

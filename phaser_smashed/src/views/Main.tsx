@@ -369,34 +369,59 @@ function Main() {
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
   const [hideNiemoIp, setHideNiemoIp] = useState<boolean>(true);
 
+  // Helper function to check if we're running in Electron
+  const isElectron = () => {
+    return (
+      typeof window !== 'undefined' && 
+      (
+        'electron' in window || 
+        (window.navigator && window.navigator.userAgent && window.navigator.userAgent.indexOf('Electron') >= 0)
+      )
+    );
+  };
+
   function captureScreenshot() {
     print('Capture Screenshot');
+    console.log('Running in Electron:', isElectron());
+    
     const element = document.querySelector('#top-level');
     html2canvas(element as HTMLElement).then((canvas) => {
       const dataUrl = canvas.toDataURL();
       
       // Check if running in Electron
-      if (typeof window !== 'undefined' && 'electron' in window) {
+      if (isElectron() && 'electron' in window) {
+        console.log('Using Electron API for screenshots');
         // Use Electron API for saving
-        window.electron?.saveScreenshot(dataUrl);
-        window.electron?.onScreenshotSaved((result: {success: boolean, path?: string, error?: string}) => {
-          if (result.success) {
-            console.log('Screenshot saved to:', result.path);
-          } else {
-            console.error('Failed to save screenshot:', result.error);
-          }
-        });
+        try {
+          window.electron?.saveScreenshot(dataUrl);
+          window.electron?.onScreenshotSaved((result: {success: boolean, path?: string, error?: string}) => {
+            if (result.success) {
+              console.log('Screenshot saved to:', result.path);
+            } else {
+              console.error('Failed to save screenshot:', result.error);
+            }
+          });
+        } catch (error) {
+          console.error('Error using Electron screenshot API:', error);
+          // Fall back to browser method if Electron API fails
+          saveScreenshotBrowser(dataUrl);
+        }
       } else {
         // Fallback to browser download
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        const m: Moment = moment();
-        const mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
-        const fileName = `Smashed_Rules_${mFormatted}.png`;
-        link.download = fileName;
-        link.click();
+        saveScreenshotBrowser(dataUrl);
       }
     });
+  }
+  
+  function saveScreenshotBrowser(dataUrl: string) {
+    console.log('Using browser API for screenshots');
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    const m: Moment = moment();
+    const mFormatted = m.format('YYYY-MM-DD-HH-mm-ss');
+    const fileName = `Smashed_Rules_${mFormatted}.png`;
+    link.download = fileName;
+    link.click();
   }
 
   const [numClicks, setNumClicks] = useState<number>(0);
