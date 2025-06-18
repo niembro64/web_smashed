@@ -200,6 +200,11 @@ export function preload(game: SmashedGame): void {
   game.load.image('greenshell', 'images/greenshell.png');
   game.load.image('redshell', 'images/redshell.png');
   game.load.image('blueshell', 'images/blueshell_wing.png');
+
+  game.load.image('orangeshell', 'images/orangeshell.png');
+  game.load.image('cyanshell', 'images/cyanshell.png');
+  game.load.image('magentashell', 'images/magentashell.png');
+
   game.load.image('bottle', 'images/bottle.png');
   game.load.image('hammer', 'images/ham.png');
   game.load.image('blackHammer', 'images/blackHammer.png');
@@ -225,10 +230,7 @@ export function preload(game: SmashedGame): void {
     'background_outline_lava',
     'images/outline_blocks_11_lava.png'
   );
-  game.load.image(
-    'flag_spikes',
-    'images/flag_spikes.png'
-  );
+  game.load.image('flag_spikes', 'images/flag_spikes.png');
   game.load.image('centerWhite', 'images/wx.png');
   game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');

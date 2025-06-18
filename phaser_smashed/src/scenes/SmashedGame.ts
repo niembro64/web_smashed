@@ -1115,7 +1115,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 1,
         scaleCharSpriteImage: 1,
         sprite: null,
-        srcSpriteSheet: debugInit.Nintendo_Sprites ? 'images/sprite_sheet_8.1_mario_4x.png' : 'images/sprite_sheet_8.1_monke_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_mario_4x.png'
+          : 'images/sprite_sheet_8.1_monke_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -1371,7 +1373,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 1,
         scaleCharSpriteImage: 1,
         sprite: null,
-        srcSpriteSheet: debugInit.Nintendo_Sprites? 'images/sprite_sheet_8.1_link_4x.png' : 'images/sprite_sheet_8.1_kaitlyn_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_link_4x.png'
+          : 'images/sprite_sheet_8.1_kaitlyn_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -1628,7 +1632,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 1,
         scaleCharSpriteImage: 1,
         sprite: null,
-        srcSpriteSheet: debugInit.Nintendo_Sprites ? 'images/sprite_sheet_8.1_pikachu_4x.png' : "images/sprite_sheet_8.1_squirrel_4x.png",
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_pikachu_4x.png'
+          : 'images/sprite_sheet_8.1_squirrel_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -1877,7 +1883,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 1,
         scaleCharSpriteImage: 1,
         sprite: null,
-        srcSpriteSheet: 'images/sprite_sheet_8.1_kirby_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_kirby_4x.png'
+          : 'images/sprite_sheet_8.1_seedboy_4x.png',
         runRate: 1,
         spriteSize: {
           width: 13,
@@ -2654,7 +2662,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 0.7,
         scaleCharSpriteImage: 0.7,
         sprite: null,
-        srcSpriteSheet: 'images/sprite_sheet_8.1_greenkoopa_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_greenkoopa_4x.png'
+          : 'images/sprite_sheet_8.1_magentasnail_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -2719,7 +2729,7 @@ export default class SmashedGame extends Phaser.Scene {
           velPrevY: 0,
           accX: 0,
           accY: 0,
-          srcImage: 'greenshell',
+          srcImage: debugInit.Nintendo_Sprites ? 'greenshell' : 'magentashell',
           bounceY: 0.1,
           bounceX: 1,
           gravity: true,
@@ -2910,7 +2920,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteReality: 0.7,
         scaleCharSpriteImage: 0.7,
         sprite: null,
-        srcSpriteSheet: 'images/sprite_sheet_8.1_redkoopa_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_redkoopa_4x.png'
+          : 'images/sprite_sheet_8.1_cyansnail_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -2975,7 +2987,7 @@ export default class SmashedGame extends Phaser.Scene {
           velPrevY: 0,
           accX: 0,
           accY: 0,
-          srcImage: 'redshell',
+          srcImage: debugInit.Nintendo_Sprites ? 'redshell' : 'cyanshell',
           bounceY: 0.1,
           bounceX: 1.3,
           gravity: true,
@@ -3166,7 +3178,9 @@ export default class SmashedGame extends Phaser.Scene {
         scaleCharSpriteImage: 0.7,
         sprite: null,
         zoom: 0.7,
-        srcSpriteSheet: 'images/sprite_sheet_8.1_bluekoopa_4x.png',
+        srcSpriteSheet: debugInit.Nintendo_Sprites
+          ? 'images/sprite_sheet_8.1_bluekoopa_4x.png'
+          : 'images/sprite_sheet_8.1_orangesnail_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
@@ -3234,7 +3248,7 @@ export default class SmashedGame extends Phaser.Scene {
           velPrevY: 0,
           accX: 0,
           accY: 0,
-          srcImage: 'blueshell',
+          srcImage: debugInit.Nintendo_Sprites ? 'blueshell' : 'orangeshell',
           bounceY: 2,
           bounceX: 2,
           gravity: false,
