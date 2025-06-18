@@ -1,5 +1,6 @@
 // InputTypeBlock.tsx
 
+import { debugInit } from '../debugInit';
 import {
   CharacterId,
   Debug,
@@ -120,7 +121,11 @@ function InputTypeBlock({
                 pIndex > 1 ? 'Inverse' : 'Normal'
               } ${openEye ? 'pb-[0.8vw]' : 'pb-[2vw]'}`}
               src={
-                'images/character_' + p.characterId.toString() + '_cropped.png'
+                'images/' +
+                (debugInit.Nintendo_Sprites ? '' : 'alt_') +
+                'character_' +
+                p.characterId.toString() +
+                '_cropped.png'
               }
               width={
                 (55 * smashConfigOptions[p.characterId].scale).toString() + '%'

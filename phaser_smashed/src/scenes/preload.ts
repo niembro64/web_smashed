@@ -9,6 +9,7 @@ import {
 } from './helpers/nn';
 import { nnJsonNNClient } from './helpers/nnJson';
 import { InputType, inputTypeNNClient, inputTypeNNExpress } from './types';
+import { debugInit } from '../debugInit';
 
 export function ensureTypeInput<Input>(
   argument: Input | undefined | null,
@@ -321,7 +322,11 @@ export function preload(game: SmashedGame): void {
   });
 
   game.playerOptions.forEach((pOption, pOptionIndex) => {
-    game.load.image(pOption.char.name, pOption.char.src);
+    const srcToUse: string =
+      (debugInit.Nintendo_Sprites ? pOption.char.src : 'alt_') +
+      pOption.char.src;
+
+    game.load.image(pOption.char.name, srcToUse);
   });
 
   game.load.image('gun', 'images/white_trans.png');
