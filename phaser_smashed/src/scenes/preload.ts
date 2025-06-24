@@ -299,7 +299,9 @@ export function preload(game: SmashedGame): void {
 
   game.load.spritesheet({
     key: 'chomp',
-    url: 'images/chompsheet5.png',
+    url: debugInit.Nintendo_Sprites
+      ? 'images/chompsheet5.png'
+      : 'images/alt_chompsheet5.png',
     frameConfig: {
       frameWidth: 64,
       frameHeight: 64,
