@@ -122,7 +122,11 @@ export default function Popups(props: PopupsProps) {
               <div className="controls-left">
                 <img
                   className="snes"
-                  src="images/snes.png"
+                  src={
+                    debugInit.Nintendo_Sprites
+                      ? 'images/snes.png'
+                      : 'images/snes_alt.png'
+                  }
                   alt="SNES Controller"
                 />
                 <div className="moves-list">
