@@ -128,9 +128,9 @@ export const smashConfigOptionsAlt: PlayerConfigAlt[] = [
   { characterId: 3, scale: 0.7, name: 'Seed', nameShort: 'SED' },
   { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
   { characterId: 5, scale: 1.2, name: 'B-Chez', nameShort: 'BCZ' },
-  { characterId: 6, scale: 0.6, name: 'G-Snail', nameShort: 'GSN' },
-  { characterId: 7, scale: 0.6, name: 'R-Snail', nameShort: 'RSN' },
-  { characterId: 8, scale: 0.6, name: 'B-Snail', nameShort: 'BSN' },
+  { characterId: 6, scale: 0.6, name: 'M-Snail', nameShort: 'MSN' },
+  { characterId: 7, scale: 0.6, name: 'C-Snail', nameShort: 'CSN' },
+  { characterId: 8, scale: 0.6, name: 'O-Snail', nameShort: 'OSN' },
 ];
 
 export const quotes: Quote[] = [

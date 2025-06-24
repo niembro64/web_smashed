@@ -608,9 +608,9 @@ export type CharacterNameAlt =
   | 'Seed'
   | 'Chez'
   | 'B-Chez'
-  | 'G-Snail'
-  | 'R-Snail'
-  | 'B-Snail';
+  | 'M-Snail'
+  | 'C-Snail'
+  | 'O-Snail';
 
 export const textForEachCharacter = {
   0: 'MARIO THROWS FIREBALLS',
@@ -631,9 +631,9 @@ export const textForEachCharacterAlt = {
   3: 'SEED HAS A MIRROR WAND',
   4: 'CHEZ THROWS A HAMMER',
   5: 'BLACK CHEZ IS RIDICULOUS',
-  6: 'GREEN-SNAIL HAS A POWERFUL SHELL',
-  7: 'RED-SNAIL HAS A SEEKING SHELL',
-  8: 'BLUE-SNAIL CAN FLY',
+  6: 'MAGENTA-SNAIL HAS A POWERFUL SHELL',
+  7: 'CYAN-SNAIL HAS A SEEKING SHELL',
+  8: 'ORANGE-SNAIL CAN FLY',
 };
 
 export type CharacterNameShort =
@@ -654,9 +654,9 @@ export type CharacterNameShortAlt =
   | 'SED'
   | 'CHZ'
   | 'BCZ'
-  | 'GSN'
-  | 'RSN'
-  | 'BSN';
+  | 'MSN'
+  | 'CSN'
+  | 'OSN';
 
 export interface SmashConfig {
   players: PlayerConfigSmall[];
