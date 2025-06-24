@@ -161,7 +161,13 @@ export function preload(game: SmashedGame): void {
   // Load Images
   //////////////////////////////
   game.load.image('button_down', 'images/pswitch_down.png');
-  game.load.image('button_up', 'images/pswitch_up.png');
+  game.load.image(
+    'button_up',
+
+    debugInit.Nintendo_Sprites
+      ? 'images/pswitch_up.png'
+      : 'images/pswitch_up_alt.png'
+  );
   game.load.image('bullet_bill_tower', 'images/bullet_bill_line_tower.png');
   game.load.image(
     'bullet_bill_tower_left',
@@ -249,7 +255,11 @@ export function preload(game: SmashedGame): void {
   game.load.image('flag', 'images/qflag3.png');
   game.load.image('blank', 'images/blank.png');
   game.load.image('pole', 'images/pole.png');
-  game.load.image('background', 'images/darkxp.jpg');
+  game.load.image(
+    'background',
+
+    debugInit.Nintendo_Sprites ? 'images/darkxp.jpg' : 'images/darkxp_alt.jpg'
+  );
   game.load.image(
     'background_outline_front',
     'images/outline_blocks_11_front.png'
@@ -266,15 +276,18 @@ export function preload(game: SmashedGame): void {
     'background_outline_lava',
     'images/outline_blocks_11_lava.png'
   );
-  game.load.image('flag_spikes', 'images/flag_spikes.png');
-  game.load.image('centerWhite', 'images/wx.png');
-  game.load.image('centerBlack', 'images/bx.png');
+
+  const prefix: string = debugInit.Nintendo_Sprites ? 'images/' : 'images/alt_';
+
+  game.load.image('flag_spikes', prefix + 'flag_spikes.png');
+  game.load.image('centerWhite', prefix + 'wx.png');
+  game.load.image('centerBlack', prefix + 'bx.png');
   game.load.image('centerMagenta', 'images/mx.png');
   game.load.image('centerRed', 'images/rx.png');
-  game.load.image('platformHorizontal', 'images/brickhoriz.bmp');
-  game.load.image('platformShort', 'images/brickhorizshorter.bmp');
-  game.load.image('platformVertical', 'images/brickvert.bmp');
-  game.load.image('brick', 'images/blockcracked.png');
+  game.load.image('platformHorizontal', prefix + 'brickhoriz.bmp');
+  game.load.image('platformShort', prefix + 'brickhorizshorter.bmp');
+  game.load.image('platformVertical', prefix + 'brickvert.bmp');
+  game.load.image('brick', prefix + 'blockcracked.png');
   game.load.image('flag_joey', 'images/flagpole_JK2.png');
   game.load.image('glass_full', 'images/niemo_shot_full_t2.png');
   game.load.image('glass_empty', 'images/niemo_shot_empty.png');
