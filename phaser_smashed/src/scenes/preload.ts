@@ -219,7 +219,12 @@ export function preload(game: SmashedGame): void {
   game.load.image('bottle', 'images/bottle.png');
   game.load.image('hammer', 'images/ham.png');
   game.load.image('blackHammer', 'images/blackHammer.png');
-  game.load.image('sword', 'images/sword_right.png');
+  game.load.image(
+    'sword',
+    debugInit.Nintendo_Sprites
+      ? 'images/sword_right.png'
+      : 'images/alt_sword_right.png'
+  );
   game.load.image('table', 'images/table.png');
   game.load.image('flag', 'images/qflag3.png');
   game.load.image('blank', 'images/blank.png');
