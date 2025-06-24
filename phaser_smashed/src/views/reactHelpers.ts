@@ -125,7 +125,7 @@ export const smashConfigOptionsAlt: PlayerConfigAlt[] = [
   { characterId: 0, scale: 1, name: 'Monkee', nameShort: 'MNK' },
   { characterId: 1, scale: 0.9, name: 'Kaitlyn', nameShort: 'KTY' },
   { characterId: 2, scale: 1, name: 'Surprice', nameShort: 'SUR' },
-  { characterId: 3, scale: 0.7, name: 'Seed', nameShort: 'SED' },
+  { characterId: 3, scale: 0.9, name: 'Seed', nameShort: 'SED' },
   { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
   { characterId: 5, scale: 1.2, name: 'B-Chez', nameShort: 'BCZ' },
   { characterId: 6, scale: 0.7, name: 'M-Snail', nameShort: 'MSN' },
