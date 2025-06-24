@@ -53,6 +53,7 @@ import {
   smashConfigInitDevMode,
   smashConfigInitMax,
   smashConfigOptions,
+  smashConfigOptionsAlt,
 } from './reactHelpers';
 import LoadingScreen from './LoadingScreen';
 import StartScreen from './StartScreen';
@@ -920,7 +921,10 @@ function Main() {
     soundManager.blipBeedeeSound();
     const choices = [...smashConfig.players];
     let newCharacterId =
-      (choices[playerIndex].characterId + 1) % smashConfigOptions.length;
+      (choices[playerIndex].characterId + 1) %
+      (debugInit.Nintendo_Sprites
+        ? smashConfigOptions.length
+        : smashConfigOptionsAlt.length);
     const numAllowed = smashConfigAllowed.filter((x) => x).length;
     if (numAllowed === 0) {
       return;

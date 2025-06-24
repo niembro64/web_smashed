@@ -18,9 +18,11 @@ import {
   idColors,
   mobileMayNotWorkText,
   smashConfigOptions,
+  smashConfigOptionsAlt,
 } from './reactHelpers';
 import { isMobile } from './Main';
 import { useTopLevelStore } from '../stores/TopLevelStore';
+import { debugInit } from '../debugInit';
 
 interface StartScreenProps {
   openEye: boolean;
@@ -162,7 +164,11 @@ function StartScreen({
                     idColors, // preserve usage of idColors
                   }}
                   getNumActiveBeforeMe={getNumActiveBeforeMe}
-                  smashConfigOptions={smashConfigOptions}
+                  smashConfigOptions={
+                    debugInit.Nintendo_Sprites
+                      ? smashConfigOptions
+                      : smashConfigOptionsAlt
+                  }
                   onClickRotateSelection={onClickRotateSelection}
                   onClickOscura={onClickOscura}
                   soundManager={soundManager}

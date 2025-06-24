@@ -7,6 +7,7 @@ import {
   InputType,
   emoji,
   textForEachCharacter,
+  textForEachCharacterAlt,
 } from '../scenes/types';
 
 const textForEachType = {
@@ -79,7 +80,11 @@ function InputTypeBlock({
 
       {input !== 0 && (
         <div
-          data-tooltip-content={textForEachCharacter[p.characterId]}
+          data-tooltip-content={
+            debugInit.Nintendo_Sprites
+              ? textForEachCharacter[p.characterId]
+              : textForEachCharacterAlt[p.characterId]
+          }
           className="player-char uppercase"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();

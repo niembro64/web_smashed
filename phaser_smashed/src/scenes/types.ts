@@ -601,6 +601,17 @@ export type CharacterName =
   | 'R-Koopa'
   | 'B-Koopa';
 
+export type CharacterNameAlt =
+  | 'Monkee'
+  | 'Kaitlyn'
+  | 'Surprice'
+  | 'Seed'
+  | 'Chez'
+  | 'B-Chez'
+  | 'G-Snail'
+  | 'R-Snail'
+  | 'B-Snail';
+
 export const textForEachCharacter = {
   0: 'MARIO THROWS FIREBALLS',
   1: 'LINK HAS A SWORD',
@@ -611,6 +622,18 @@ export const textForEachCharacter = {
   6: 'GREEN-KOOPA HAS A POWERFUL SHELL',
   7: 'RED-KOOPA HAS A SEEKING SHELL',
   8: 'BLUE-KOOPA CAN FLY',
+};
+
+export const textForEachCharacterAlt = {
+  0: 'MONKEE THROWS FIREBALLS',
+  1: 'KATILYN HAS A SWORD',
+  2: 'SURPRICE THROWS HIS BOTTLE',
+  3: 'SEED HAS A MIRROR WAND',
+  4: 'CHEZ THROWS A HAMMER',
+  5: 'BLACK CHEZ IS RIDICULOUS',
+  6: 'GREEN-SNAIL HAS A POWERFUL SHELL',
+  7: 'RED-SNAIL HAS A SEEKING SHELL',
+  8: 'BLUE-SNAIL CAN FLY',
 };
 
 export type CharacterNameShort =
@@ -624,6 +647,17 @@ export type CharacterNameShort =
   | 'RKP'
   | 'BKP';
 
+export type CharacterNameShortAlt =
+  | 'MNK'
+  | 'KTY'
+  | 'SUR'
+  | 'SED'
+  | 'CHZ'
+  | 'BCZ'
+  | 'GSN'
+  | 'RSN'
+  | 'BSN';
+
 export interface SmashConfig {
   players: PlayerConfigSmall[];
 }
@@ -636,6 +670,14 @@ export interface PlayerConfigSmall {
 export interface PlayerConfig {
   name: CharacterName;
   nameShort: CharacterNameShort;
+  characterId: CharacterId;
+  scale: number;
+  input?: InputType;
+}
+
+export interface PlayerConfigAlt {
+  name: CharacterNameAlt;
+  nameShort: CharacterNameShortAlt;
   characterId: CharacterId;
   scale: number;
   input?: InputType;

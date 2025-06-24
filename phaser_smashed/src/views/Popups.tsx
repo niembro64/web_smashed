@@ -20,8 +20,10 @@ import {
   characterMoves,
   keyboardGroups,
   smashConfigOptions,
+  smashConfigOptionsAlt,
   workingControllersAmazon,
 } from './reactHelpers';
+import { debugInit } from '../debugInit';
 
 interface PopupsProps {
   showRulesN64: boolean;
@@ -315,15 +317,11 @@ export default function Popups(props: PopupsProps) {
                   x.stopPropagation();
                 }}
               >
-                <p
-                className='uppercase'
-                >
+                <p className="uppercase">
                   This game is a tribute to "Smashed Bros", a drinking game
                   invented in St. Louis in late 2009 at the Chemon House.
                 </p>
-                <p
-                className='uppercase'
-                >niemeyer.eric@gmail.com</p>
+                <p className="uppercase">niemeyer.eric@gmail.com</p>
               </div>
               <div className="horiz-item-small">
                 <div className="about-image-wrapper">
@@ -497,9 +495,11 @@ export default function Popups(props: PopupsProps) {
 
                     if (sc !== null) {
                       sc.players.forEach((sessionPlayer: any) => {
-                        gameViewTop +=
-                          smashConfigOptions[sessionPlayer.characterId]
-                            .nameShort + ' ';
+                        gameViewTop += debugInit.Nintendo_Sprites
+                          ? smashConfigOptions[sessionPlayer.characterId]
+                              .nameShort + ' '
+                          : smashConfigOptionsAlt[sessionPlayer.characterId]
+                              .nameShort + ' ';
 
                         switch (sessionPlayer.input) {
                           case 0:

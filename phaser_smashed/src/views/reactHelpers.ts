@@ -8,12 +8,14 @@ import {
   InputType,
   KeyboardGroup,
   PlayerConfig,
+  PlayerConfigAlt,
   Quote,
   SmashConfig,
   WorkingController,
   emoji,
 } from '../scenes/types';
 import { debugDescriptions } from '../debugDescriptions';
+import { debugInit } from '../debugInit';
 
 export const inputArrayReset: InputType[] = [0, 0, 0, 0];
 export const inputArrayInit: InputType[] = [3, 3, 3, 3];
@@ -117,6 +119,18 @@ export const smashConfigOptions: PlayerConfig[] = [
   { characterId: 6, scale: 0.6, name: 'G-Koopa', nameShort: 'GKP' },
   { characterId: 7, scale: 0.6, name: 'R-Koopa', nameShort: 'RKP' },
   { characterId: 8, scale: 0.6, name: 'B-Koopa', nameShort: 'BKP' },
+];
+
+export const smashConfigOptionsAlt: PlayerConfigAlt[] = [
+  { characterId: 0, scale: 1, name: 'Monkee', nameShort: 'MNK' },
+  { characterId: 1, scale: 0.9, name: 'Kaitlyn', nameShort: 'KTY' },
+  { characterId: 2, scale: 1, name: 'Surprice', nameShort: 'SUR' },
+  { characterId: 3, scale: 0.7, name: 'Seed', nameShort: 'SED' },
+  { characterId: 4, scale: 1.2, name: 'Chez', nameShort: 'CHZ' },
+  { characterId: 5, scale: 1.2, name: 'B-Chez', nameShort: 'BCZ' },
+  { characterId: 6, scale: 0.6, name: 'G-Snail', nameShort: 'GSN' },
+  { characterId: 7, scale: 0.6, name: 'R-Snail', nameShort: 'RSN' },
+  { characterId: 8, scale: 0.6, name: 'B-Snail', nameShort: 'BSN' },
 ];
 
 export const quotes: Quote[] = [
