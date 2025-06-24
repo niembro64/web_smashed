@@ -164,20 +164,20 @@ export function preload(game: SmashedGame): void {
   game.load.image(
     'button_up',
 
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/pswitch_up.png'
       : 'images/pswitch_up_alt.png'
   );
   game.load.image(
     'bullet_bill_tower',
 
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_line_tower.png'
       : 'images/bullet_bill_line_tower_alt.png'
   );
   game.load.image(
     'bullet_bill_tower_left',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_line_tower_left.png'
       : 'images/bullet_bill_line_tower_left_alt.png'
   );
@@ -187,31 +187,31 @@ export function preload(game: SmashedGame): void {
   game.load.image(
     'bullet_bill_bullet',
 
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_bullet.png'
       : 'images/alt_bullet_bill_bullet.png'
   );
   game.load.image(
     'bullet_bill_bullet_0',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_bullet_red_2.png'
       : 'images/alt_bullet_bill_bullet_red_2.png'
   );
   game.load.image(
     'bullet_bill_bullet_1',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_bullet_blue_2.png'
       : 'images/alt_bullet_bill_bullet_blue_2.png'
   );
   game.load.image(
     'bullet_bill_bullet_2',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_bullet_yellow_2.png'
       : 'images/alt_bullet_bill_bullet_yellow_2.png'
   );
   game.load.image(
     'bullet_bill_bullet_3',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/bullet_bill_bullet_green_2.png'
       : 'images/alt_bullet_bill_bullet_green_2.png'
   );
@@ -219,13 +219,13 @@ export function preload(game: SmashedGame): void {
   game.load.image(
     'bulletFireBall',
 
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/fireball_2x.png'
       : 'images/iceball_2x.png'
   );
   game.load.image(
     'cannon',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/fire_flower_5x_t.png'
       : 'images/ice_flower_5x_t.png'
   );
@@ -238,7 +238,7 @@ export function preload(game: SmashedGame): void {
   game.load.image('blockcracked', 'images/blockcracked.png');
   game.load.image(
     'fireball',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/fireball_2x.png'
       : 'images/iceball_2x.png'
   );
@@ -255,7 +255,7 @@ export function preload(game: SmashedGame): void {
   game.load.image('blackHammer', 'images/blackHammer.png');
   game.load.image(
     'sword',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/sword_right.png'
       : 'images/alt_sword_right.png'
   );
@@ -266,7 +266,7 @@ export function preload(game: SmashedGame): void {
   game.load.image(
     'background',
 
-    debugInit.Nintendo_Sprites ? 'images/darkxp.jpg' : 'images/darkxp_alt.jpg'
+    game.debug.Nintendo_Sprites ? 'images/darkxp.jpg' : 'images/darkxp_alt.jpg'
   );
   game.load.image(
     'background_outline_front',
@@ -278,7 +278,7 @@ export function preload(game: SmashedGame): void {
   );
   game.load.image(
     'background_outline_castle',
-    debugInit.Nintendo_Sprites
+    game.debug.Nintendo_Sprites
       ? 'images/outline_blocks_11_castle.png'
       : 'images/outline_blocks_11_castle_alt.png'
   );
@@ -287,7 +287,9 @@ export function preload(game: SmashedGame): void {
     'images/outline_blocks_11_lava.png'
   );
 
-  const prefix: string = debugInit.Nintendo_Sprites ? 'images/' : 'images/alt_';
+  const prefix: string = game.debug.Nintendo_Sprites
+    ? 'images/'
+    : 'images/alt_';
 
   game.load.image('flag_spikes', prefix + 'flag_spikes.png');
   game.load.image('centerWhite', prefix + 'wx.png');
@@ -342,7 +344,7 @@ export function preload(game: SmashedGame): void {
 
   game.load.spritesheet({
     key: 'chomp',
-    url: debugInit.Nintendo_Sprites
+    url: game.debug.Nintendo_Sprites
       ? 'images/chompsheet5.png'
       : 'images/alt_chompsheet5.png',
     frameConfig: {
@@ -383,7 +385,7 @@ export function preload(game: SmashedGame): void {
 
   game.playerOptions.forEach((pOption, pOptionIndex) => {
     const srcToUse: string =
-      (debugInit.Nintendo_Sprites ? pOption.char.src : 'alt_') +
+      (game.debug.Nintendo_Sprites ? pOption.char.src : 'alt_') +
       pOption.char.src;
 
     game.load.image(pOption.char.name, srcToUse);
