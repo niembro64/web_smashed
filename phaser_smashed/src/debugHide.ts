@@ -49,7 +49,7 @@ export const debugHide: Debug = {
   Console_Log_Connected: false,
   Update_Loops_Skip: 0, // 012
   Load_Time_Extra: false,
-  Allow_Koopas: false,
+  Allow_Shell_Chars: false,
   Allow_Chez: false,
   Allow_BlackChez: false,
   Allow_SlowMo: false,
@@ -71,5 +71,5 @@ export const debugHide: Debug = {
   Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
-  Allow_Mobile: false
+  Allow_Mobile: false,
 };

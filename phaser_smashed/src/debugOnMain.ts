@@ -47,7 +47,7 @@ export const debugOnMain: Debug = {
   Console_Log_Connected: false,
   Update_Loops_Skip: 0, // 012
   Load_Time_Extra: false,
-  Allow_Koopas: false,
+  Allow_Shell_Chars: false,
   Allow_BlackChez: true,
   Allow_Chez: false,
   Allow_SlowMo: true,

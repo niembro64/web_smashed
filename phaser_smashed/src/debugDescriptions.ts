@@ -1,3 +1,4 @@
+import { debugInit } from './debugInit';
 import { DebugDescriptions } from './scenes/types';
 
 export const debugDescriptions: DebugDescriptions = {
@@ -52,7 +53,9 @@ export const debugDescriptions: DebugDescriptions = {
   Load_Time_Extra: 'Add extra load time to the game',
   Allow_Chez: 'Allow Chez to be used in the game',
   Allow_BlackChez: 'Allow BlackChez to be used in the game',
-  Allow_Koopas: 'Allow Koopas to be used in the game',
+  Allow_Shell_Chars:
+    (debugInit.Nintendo_Sprites ? 'Allow Koopas' : 'Allow Snails') +
+    ' to be used in the game',
   Allow_SlowMo: 'Allow slow motion to be used in the game',
   Char_Override: 'Override the character selection',
   Char_Override_ID: 'Character ID to override the character selection with',

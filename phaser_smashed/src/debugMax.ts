@@ -41,7 +41,7 @@ export const debugMax: Debug = {
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
   Load_Time_Extra: true,
-  Allow_Koopas: true,
+  Allow_Shell_Chars: true,
   Allow_BlackChez: true,
   Allow_Chez: false,
   Allow_SlowMo: true,
@@ -70,5 +70,5 @@ export const debugMax: Debug = {
   Flower_1000_Balls: true,
   Flower_ShootRndAmt: 4,
   Flower_HighTrajectory: 2,
-  Allow_Mobile: true
+  Allow_Mobile: true,
 };

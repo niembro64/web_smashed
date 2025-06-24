@@ -596,7 +596,7 @@ function Main() {
     if (debugState.Allow_BlackChez) {
       newSmashConfigAllowed[5] = true;
     }
-    if (debugState.Allow_Koopas) {
+    if (debugState.Allow_Shell_Chars) {
       newSmashConfigAllowed[6] = true;
       newSmashConfigAllowed[7] = true;
       newSmashConfigAllowed[8] = true;
@@ -605,7 +605,7 @@ function Main() {
   }, [
     debugState.Allow_Chez,
     debugState.Allow_BlackChez,
-    debugState.Allow_Koopas,
+    debugState.Allow_Shell_Chars,
     debugState,
   ]);
 

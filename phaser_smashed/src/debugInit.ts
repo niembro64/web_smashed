@@ -52,7 +52,7 @@ export const debugInit: Debug = {
   Console_Log_Connected: false,
   Update_Loops_Skip: 2, // 012
   Load_Time_Extra: false,
-  Allow_Koopas: true,
+  Allow_Shell_Chars: true,
   Allow_Chez: true,
   Allow_BlackChez: false,
 
