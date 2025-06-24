@@ -189,7 +189,12 @@ export function preload(game: SmashedGame): void {
   );
 
   game.load.image('bulletFireBall', 'images/fireball_2x.png');
-  game.load.image('cannon', 'images/fire_flower_5x_t.png');
+  game.load.image(
+    'cannon',
+    debugInit.Nintendo_Sprites
+      ? 'images/fire_flower_5x_t.png'
+      : 'images/ice_flower_5x_t.png'
+  );
   game.load.image('fist-gray', 'images/fist-gray.png');
   game.load.image('fist-black', 'images/fist-black.png');
   game.load.image('fist-white', 'images/fist.png');
@@ -197,7 +202,12 @@ export function preload(game: SmashedGame): void {
   game.load.image('laser', 'images/laser.png');
   game.load.image('mirror', 'images/mirror.png');
   game.load.image('blockcracked', 'images/blockcracked.png');
-  game.load.image('fireball', 'images/fireball_2x.png');
+  game.load.image(
+    'fireball',
+    debugInit.Nintendo_Sprites
+      ? 'images/fireball_2x.png'
+      : 'images/iceball_2x.png'
+  );
   game.load.image('greenshell', 'images/greenshell.png');
   game.load.image('redshell', 'images/redshell.png');
   game.load.image('blueshell', 'images/blueshell_wing.png');
