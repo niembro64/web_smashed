@@ -1634,7 +1634,7 @@ export default class SmashedGame extends Phaser.Scene {
         sprite: null,
         srcSpriteSheet: debugInit.Nintendo_Sprites
           ? 'images/sprite_sheet_8.1_pikachu_4x.png'
-          : 'images/sprite_sheet_8.1_squirrel_4x.png',
+          : 'images/sprite_sheet_8.1_surprice_4x.png',
         runRate: 1,
         spriteSize: {
           width: 16,
