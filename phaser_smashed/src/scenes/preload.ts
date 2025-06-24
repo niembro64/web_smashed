@@ -168,10 +168,18 @@ export function preload(game: SmashedGame): void {
       ? 'images/pswitch_up.png'
       : 'images/pswitch_up_alt.png'
   );
-  game.load.image('bullet_bill_tower', 'images/bullet_bill_line_tower.png');
+  game.load.image(
+    'bullet_bill_tower',
+
+    debugInit.Nintendo_Sprites
+      ? 'images/bullet_bill_line_tower.png'
+      : 'images/bullet_bill_line_tower_alt.png'
+  );
   game.load.image(
     'bullet_bill_tower_left',
-    'images/bullet_bill_line_tower_left.png'
+    debugInit.Nintendo_Sprites
+      ? 'images/bullet_bill_line_tower_left.png'
+      : 'images/bullet_bill_line_tower_left_alt.png'
   );
   game.load.image('bullet_bill_cannon', 'images/bullet_bill_cannon.png');
 
