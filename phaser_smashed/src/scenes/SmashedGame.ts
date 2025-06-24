@@ -2395,7 +2395,7 @@ export default class SmashedGame extends Phaser.Scene {
       scoreBoardController: 'X',
       state: { name: 'player-state-start', gameStamp: 0, timeStamp: 0 },
       char: {
-        name: 'BlackChez',
+        name: 'B-Chez',
         initializeCharPosition: {
           x: 200,
           y: 100,
@@ -2645,7 +2645,7 @@ export default class SmashedGame extends Phaser.Scene {
       scoreBoardController: 'X',
       state: { name: 'player-state-start', gameStamp: 0, timeStamp: 0 },
       char: {
-        name: debugInit.Nintendo_Sprites ? 'GreenKoopa' : 'MagentaSnail',
+        name: debugInit.Nintendo_Sprites ? 'G-Koopa' : 'M-Snail',
         initializeCharPosition: {
           // lookingRight: false,
           x: 200,
@@ -2905,8 +2905,8 @@ export default class SmashedGame extends Phaser.Scene {
       char: {
         name:
           debugInit.Nintendo_Sprites || debugInit.SNES_Sprites
-            ? 'BlueKoopa'
-            : 'CyanSnail',
+            ? 'B-Koopa'
+            : 'C-Snail',
 
         initializeCharPosition: {
           // lookingRight: false,
@@ -3167,8 +3167,8 @@ export default class SmashedGame extends Phaser.Scene {
       char: {
         name:
           debugInit.Nintendo_Sprites || debugInit.SNES_Sprites
-            ? 'RedKoopa'
-            : 'OrangeSnail',
+            ? 'R-Koopa'
+            : 'O-Snail',
 
         initializeCharPosition: {
           x: 200,

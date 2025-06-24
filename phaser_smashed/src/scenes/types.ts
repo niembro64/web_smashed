@@ -256,7 +256,7 @@ export type NumButtonPresses = {
 };
 
 export interface Char {
-  name: string;
+  name: CharacterName | CharacterNameAlt;
   colorFilterBlink: boolean;
   src: string;
   scaleCharSpriteImage: number;
