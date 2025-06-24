@@ -270,7 +270,9 @@ export function preload(game: SmashedGame): void {
   );
   game.load.image(
     'background_outline_castle',
-    'images/outline_blocks_11_castle.png'
+    debugInit.Nintendo_Sprites
+      ? 'images/outline_blocks_11_castle.png'
+      : 'images/outline_blocks_11_castle_alt.png'
   );
   game.load.image(
     'background_outline_lava',
