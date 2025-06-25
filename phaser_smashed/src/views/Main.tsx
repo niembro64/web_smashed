@@ -70,9 +70,6 @@ export const gravLightMultiplier = 0.5;
 export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function Main() {
-  const { tl_width: topLevelWidth, tl_tailwind: topLevelFontSize } =
-    useTopLevelStore();
-
   const myPhaser = useRef<Phaser.Game | null>(
     null
   ) as MutableRefObject<Phaser.Game | null>;
