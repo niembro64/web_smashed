@@ -100,7 +100,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
 
   const numObj: number = randomizedNnObjects.length;
 
-  const numIter = Math.floor(100 * Math.exp(-numObj * 0.0001) + 10);
+  const numIter = Math.floor(10000 * Math.exp(-numObj * 0.0001) + 10);
   const logPeriod = 1;
 
   window.dispatchEvent(
