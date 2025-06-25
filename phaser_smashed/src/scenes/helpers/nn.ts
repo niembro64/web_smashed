@@ -517,7 +517,8 @@ export const deleteLastNNObjects = (
   }
 
   if (numToDelete > game.nnObjects.length) {
-    print('numToDelete > game.nnObjects.length');
+    print('deleteLastNNObjects: numToDelete is greater than nnObjects length');
+    game.nnObjects = [];
     return;
   }
 
@@ -714,15 +715,15 @@ export const getRatingOfInstance = (
       ? 1
       : getNNReductionRatioFromGame(game);
 
-  const shot_w = 0;
+  const shot_w = 3;
   const death_w = 2;
   const hit_w = 1;
 
-  const shot_give = 0;
-  const shot_take = 0;
-  const death_give = 3;
+  const shot_give = 1;
+  const shot_take = -1;
+  const death_give = 1;
   const death_take = -1;
-  const hit_give = 3;
+  const hit_give = 1;
   const hit_take = -1;
 
   const scoreActions =
