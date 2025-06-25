@@ -206,6 +206,8 @@ export const characterMoves: CharacterMove[] = [
 // 🏴‍☠️🏳️🏁🏴
 // 🔴🟠🟡🟢🔵🟣🟤⚫⚪
 // ⌨🎮
+// bars horizontal all widths
+// ─ 
 
 export const replaceUnderscoreWithSpace = (str: string): string => {
   return str.replace(/_/g, ' ');
@@ -217,9 +219,10 @@ export const mobileMayNotWorkText: string[] = [
 ];
 
 export function getDebugDescription(key: keyof Debug): string {
-  const s: string = debugDescriptions[key];
+  const s: string[] = debugDescriptions[key];
 
-  const sCaps: string = s ? s.toUpperCase() : '';
+  const sCaps: string[] = s ? s.map((str) => str.toUpperCase()) : [];
 
-  return sCaps;
+  return sCaps.join(' ───────────────────────────────────── ');
+  // return sCaps.join('\n');
 }

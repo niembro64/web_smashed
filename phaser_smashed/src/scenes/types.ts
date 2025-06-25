@@ -105,7 +105,7 @@ export interface Debug {
 }
 
 export type DebugDescriptions = {
-  [K in keyof Debug]: string;
+  [K in keyof Debug]: string[];
 };
 
 export interface CharacterMove {

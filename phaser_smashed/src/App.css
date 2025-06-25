@@ -454,12 +454,12 @@ h2 {
 }
 
 #home-debug:hover {
-  background-color: var(--gray-medium);
-  color: white;
+  background-color: var(--gray-dark);
+  /* color: white; */
 }
 #home-debug:active {
-  background-color: var(--gray-light);
-  color: white;
+  background-color: var(--gray-medium);
+  /* color: white; */
 }
 
 #option-debug {
@@ -479,20 +479,21 @@ h2 {
 }
 
 #option-debug:hover {
-  background-color: var(--gray-medium);
-  color: white;
+  background-color: var(--gray-dark);
+  /* color: white; */
 }
 #option-debug:active {
-  background-color: var(--gray-light);
+  background-color: var(--gray-medium);
   color: white;
 }
 
 .option-debug-true {
-  color: black;
-  background-color: white;
+  /* color: var(--id-green); */
+  color: rgba(255, 255, 255, 1);
+  /* background-color: white; */
 }
 .option-debug-false {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.3);
   /* background-color: black; */
 }
 

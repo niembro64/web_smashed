@@ -2,9 +2,11 @@ import { Debug } from './scenes/types';
 
 // TRUE means SHOWN ON MAIN PAGE
 export const debugOnMain: Debug = {
+  Mode_Infinity: true,
+  Dur_Seconds: false,
   Nintendo_Sprites: false,
   Pixel_Density: 0,
-  Force_Pixelated: false,
+  Force_Pixelated: true,
   Auto_Restart: false,
   NN_Train_Static: false,
   NN_Train_Evolving: false,
@@ -17,8 +19,6 @@ export const debugOnMain: Debug = {
   NN_Help_Wall: false,
   Simple_Stage: false,
   Stage: 0, //0123456
-  Mode_Infinity: true,
-  Dur_Seconds: false,
   Shots: 0,
   Minutes: 1, //01234567
   Music_Active: false,
@@ -50,11 +50,11 @@ export const debugOnMain: Debug = {
   Update_Loops_Skip: 0, // 012
   Load_Time_Extra: false,
   Allow_Shell_Chars: false,
-  Allow_BlackChez: true,
+  Allow_BlackChez: false,
   Allow_Chez: false,
   Allow_SlowMo: true,
 
-  Dev_Mode: true,
+  Dev_Mode: false,
   Dev_Zoom: 0,
   Char_Override: false,
 
@@ -66,12 +66,12 @@ export const debugOnMain: Debug = {
   Inst_Replay: 1,
   Replay_FastSlow: false,
   Game_Music: 0, // 012
-  Flower_On_Init: true,
-  Flower_Rapid_Fire: true,
-  Flower_Full_Screen: true,
-  Flower_Gravity: true,
+  Flower_On_Init: false,
+  Flower_Rapid_Fire: false,
+  Flower_Full_Screen: false,
+  Flower_Gravity: false,
   Flower_Bounce_Wall: false,
-  Flower_1000_Balls: true,
+  Flower_1000_Balls: false,
   Flower_ShootRndAmt: 0,
   Flower_HighTrajectory: 0,
   Allow_Mobile: false,
