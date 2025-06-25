@@ -246,12 +246,18 @@ export const setFlagSpikesState = (params: {
 };
 
 export const updateFlagButton = (game: SmashedGame): void => {
+  if (game.debug.Simple_Stage) {
+    return;
+  }
+
   const button: FlagButton = game.flag.flagButton;
   const flag: Flag = game.flag;
 
   const { player, playerIndex } = getNearestPlayerAliveInRadiusFromPoint({
-    x: button.spriteUp.x,
-    y: button.spriteUp.y,
+    // x: button.spriteUp.x,
+    // y: button.spriteUp.y,
+    x: button.spriteUp?.x || 1920 * (1 / 3),
+    y: button.spriteUp?.y || 1080 * (2 / 3),
     radius: 64,
     game: game,
   });
