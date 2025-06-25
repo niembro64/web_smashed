@@ -48,6 +48,8 @@ export const nnConfigNNClient = {
   useGpu: true,
 };
 
+const iterConst: number = 10000;
+
 /////////////////////////////////
 // EXPRESS
 /////////////////////////////////
@@ -100,7 +102,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
 
   const numObj: number = randomizedNnObjects.length;
 
-  const numIter = Math.floor(10000 * Math.exp(-numObj * 0.0001) + 10);
+  const numIter = Math.floor(iterConst * Math.exp(-numObj * 0.0001) + 10);
   const logPeriod = 1;
 
   window.dispatchEvent(
