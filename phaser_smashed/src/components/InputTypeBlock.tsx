@@ -9,16 +9,16 @@ import {
   textForEachCharacter,
   textForEachCharacterAlt,
 } from '../scenes/types';
+import { getTypeDescription } from '../views/reactHelpers';
 
-const textForEachType = {
-  // 0: 'Click to Turn On a Player',
-  0: '',
-  1: 'PLAYER ON USB CONTROLLER',
-  // 2: 'A Player with a Keyboard',
-  3: 'SCRIPTED BOT',
-  4: 'NEURAL NETWORK BOT',
-  5: 'BOT SUBJECT TO DARWINIAN EVOLUTION',
-};
+const textForEachType: string[][] = [
+  [],
+  ['PLAYER ON USB CONTROLLER'],
+  [],
+  ['SCRIPTED BOT'],
+  ['NEURAL NETWORK BOT'],
+  ['BOT SUBJECT TO DARWINIAN EVOLUTION'],
+];
 
 interface InputTypeBlockProps {
   openEye: boolean;
@@ -150,7 +150,7 @@ function InputTypeBlock({
       {/* Input Status */}
       {openEye && input === 0 && (
         <div
-          data-tooltip-content={textForEachType[input]}
+          data-tooltip-content={getTypeDescription(textForEachType[input])}
           className="b-oscuro b-dark"
           onMouseEnter={() => {
             soundManager.blipSoundSoft();
@@ -165,7 +165,7 @@ function InputTypeBlock({
 
       {openEye && input === 1 && (
         <div
-          data-tooltip-content={textForEachType[input]}
+          data-tooltip-content={getTypeDescription(textForEachType[input])}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -271,7 +271,7 @@ function InputTypeBlock({
 
       {openEye && input === 3 && (
         <div
-          data-tooltip-content={textForEachType[input]}
+          data-tooltip-content={getTypeDescription(textForEachType[input])}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -304,7 +304,7 @@ function InputTypeBlock({
 
       {openEye && input === 4 && (
         <div
-          data-tooltip-content={textForEachType[input]}
+          data-tooltip-content={getTypeDescription(textForEachType[input])}
           className={
             'b-oscuro b-dark' +
             (() => {
@@ -337,7 +337,7 @@ function InputTypeBlock({
 
       {openEye && input === 5 && (
         <div
-          data-tooltip-content={textForEachType[input]}
+          data-tooltip-content={getTypeDescription(textForEachType[input])}
           className={
             'b-oscuro b-dark' +
             (() => {

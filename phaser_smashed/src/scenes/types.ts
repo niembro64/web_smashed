@@ -1087,3 +1087,73 @@ export type PlayerIndexAndScore = {
   playerIndex: number;
   score: number;
 };
+
+// ┌──────────────┬───────────┬───────────────────────────────────────────────┐
+// │  CHARACTER   │ CODEPT    │ USE-CASE / NOTES                              │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  BASIC ASCII │           │                                               │
+// │  -           │ U+002D    │ Thin horiz. line (works everywhere)           │
+// │  _           │ U+005F    │ Low horiz. line / underline                   │
+// │  =           │ U+003D    │ Double-rule look                              │
+// │  |           │ U+007C    │ Basic vertical                               │
+// │  #           │ U+0023    │ Quick thick divider or progress fill          │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  LIGHT LINES (single)                                                    │
+// │  ─           │ U+2500    │ Light horizontal                              │
+// │  │           │ U+2502    │ Light vertical                                │
+// │  ┄           │ U+2504    │ Light horiz. triple-dash (faded look)         │
+// │  ┈           │ U+2508    │ Light horiz. quad-dash  (even lighter)        │
+// │  ┆           │ U+2506    │ Light vert. triple-dash                       │
+// │  ┊           │ U+250A    │ Light vert. quad-dash                         │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  HEAVY LINES (bold)                                                      │
+// │  ━           │ U+2501    │ Heavy horizontal                              │
+// │  ┃           │ U+2503    │ Heavy vertical                                │
+// │  ┅           │ U+2505    │ Heavy horiz. triple-dash (faded heavy)        │
+// │  ┉           │ U+2509    │ Heavy horiz. quad-dash                        │
+// │  ┇           │ U+2507    │ Heavy vert. triple-dash                       │
+// │  ┋           │ U+250B    │ Heavy vert. quad-dash                         │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  DOUBLE LINES (old-school “ANSI art”)                                    │
+// │  ═           │ U+2550    │ Double horizontal                             │
+// │  ║           │ U+2551    │ Double vertical                               │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  CORNERS & INTERSECTIONS (mix & match)                                   │
+// │  ┌ ┐ └ ┘     │ U+250C-U+2518 │ Light box corners                         │
+// │  ├ ┤ ┬ ┴ ┼   │ U+251C-U+253C │ Light tees / cross                        │
+// │  ┏ ┓ ┗ ┛     │ U+250F-U+251B │ Heavy box corners                         │
+// │  ┣ ┫ ┳ ┻ ╋   │ U+2523-U+254B │ Heavy tees / cross                        │
+// │  ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ │ U+2554-U+256C │ Full “double-line” set             │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  BLOCK ELEMENTS — “Faded” / Shading                                      │
+// │  ░           │ U+2591    │ Light shade  (≈25 % fill)                     │
+// │  ▒           │ U+2592    │ Medium shade (≈50 % fill)                     │
+// │  ▓           │ U+2593    │ Dark shade  (≈75 % fill)                      │
+// │  █           │ U+2588    │ Full block (100 %)                            │
+// │  ▀           │ U+2580    │ Upper half block                              │
+// │  ▄           │ U+2584    │ Lower half block                              │
+// │  ▌           │ U+258C    │ Left half block                               │
+// │  ▐           │ U+2590    │ Right half block                              │
+// │  ▙ ▚ ▛ ▜     │ U+2599-U+259C │ Quadrant blocks for fine dithering       │
+// ├──────────────┼───────────┼───────────────────────────────────────────────┤
+// │  BRAILLE DOTS (super-fine 2×4 matrix)                                    │
+// │  ⣀ – ⣿     │ U+2800-U+28FF │ 256 half-cell shades; great for images   │
+// └──────────────┴───────────┴───────────────────────────────────────────────┘
+// Quick gradients
+// You can get seven handy brightness steps using only two families of glyphs:
+
+// arduino
+// Copy
+// Edit
+// ░ ▒ ▓ █       # classic three-step + solid
+// ┈ ┄ ─ ━       # ultra-light → heavy solid
+// Interleave them (or combine with color ANSI codes) to create faded progress bars, waveforms, or ASCII charts that degrade gracefully on monochrome terminals.
+
+// Tips for real-world use
+// Purpose	Recommended set	Why it works
+// Simple tables/frames	─ │ ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼	Light lines look crisp, don’t overwhelm text.
+// Heavy emphasis boxes	━ ┃ ┏ ┓ ┗ ┛ ┣ ┫ ┳ ┻ ╋	Thick stroke pops out from surrounding UI.
+// Retro “ANSI-BBS” look	═ ║ ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬	Matches classic DOS/ANSI art.
+// Subtle separators	┄ ┆ (triple-dash) or ASCII - / _	Plenty of whitespace—pleasant in dense logs.
+// Vertical bar charts	▁ ▂ ▃ ▄ ▅ ▆ ▇ █ (1/8-block series)	Gives eight discrete heights in one cell column.
+// Smooth grayscale art	Braille dots ⣿ set (needs 2 × 4 sub-pixel)	Highest detail possible without moving to images.

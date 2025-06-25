@@ -207,7 +207,9 @@ export const characterMoves: CharacterMove[] = [
 // 🔴🟠🟡🟢🔵🟣🟤⚫⚪
 // ⌨🎮
 // bars horizontal all widths
-// ─ 
+// ─
+// empty space characters
+// ─────────────────────────────────────
 
 export const replaceUnderscoreWithSpace = (str: string): string => {
   return str.replace(/_/g, ' ');
@@ -218,11 +220,23 @@ export const mobileMayNotWorkText: string[] = [
   'ON MOBILE DEVICE',
 ];
 
+export const toolTipDescriptionJoinString = ' ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ';
+// export const toolTipDescriptionJoinString = ' ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ ';
+// export const toolTipDescriptionJoinString =
+//   ' ───────────────────────────────────── ';
+
 export function getDebugDescription(key: keyof Debug): string {
   const s: string[] = debugDescriptions[key];
 
   const sCaps: string[] = s ? s.map((str) => str.toUpperCase()) : [];
 
-  return sCaps.join(' ───────────────────────────────────── ');
+  return sCaps.join(toolTipDescriptionJoinString);
+  // return sCaps.join('\n');
+}
+
+export function getTypeDescription(s: string[]): string {
+  const sCaps: string[] = s ? s.map((str) => str.toUpperCase()) : [];
+
+  return sCaps.join(toolTipDescriptionJoinString);
   // return sCaps.join('\n');
 }
