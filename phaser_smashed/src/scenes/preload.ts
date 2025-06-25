@@ -7,7 +7,7 @@ import {
   nnConfigNNClient,
   nnConfigNNExpress,
 } from './helpers/nn';
-import { nnJsonNNClient } from './helpers/nnJson';
+import { nnJsonNNClient_37_100_8 } from './helpers/nnJson';
 import { InputType, inputTypeNNClient, inputTypeNNExpress } from './types';
 import { debugInit } from '../debugInit';
 
@@ -430,7 +430,9 @@ export function preload(game: SmashedGame): void {
   }
 
   for (let i = 0; i < numClientNNs; i++) {
-    game.nnClientNets[i] = game.nnClientNets[i].fromJSON(nnJsonNNClient);
+    game.nnClientNets[i] = game.nnClientNets[i].fromJSON(
+      nnJsonNNClient_37_100_8
+    );
 
     ////////////////////////////////////////
     // KEEP THIS HERE IN CASE WE WANT

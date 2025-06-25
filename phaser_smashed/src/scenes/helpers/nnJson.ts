@@ -1,4 +1,6 @@
-export const nnJsonNNClient = {
+import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
+
+export const nnJsonNNClient_37_100_8: INeuralNetworkJSON = {
   type: 'NeuralNetwork',
   sizes: [37, 100, 8],
   layers: [
@@ -1853,6 +1855,7 @@ export const nnJsonNNClient = {
     outputSize: 0,
     binaryThresh: 0.5,
     hiddenLayers: [100],
+    // @ts-ignore
     useGpu: true,
   },
   trainOpts: {

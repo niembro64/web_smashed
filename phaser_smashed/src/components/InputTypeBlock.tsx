@@ -13,11 +13,19 @@ import { getTypeDescription } from '../views/reactHelpers';
 
 const textForEachType: string[][] = [
   [],
-  ['PLAYER ON USB CONTROLLER'],
+  ['PLAYER ON USB CONTROLLER', 'REFER TO CONTROLS TAB'],
   [],
-  ['SCRIPTED BOT'],
-  ['NEURAL NETWORK BOT'],
-  ['BOT SUBJECT TO DARWINIAN EVOLUTION'],
+  ['SCRIPTED BOT', 'PRE-PROGRAMMED BOT'],
+  [
+    'NEURAL NETWORK BOT',
+    'MLP FF NN TRAINED ON GOOD EXAMPLE GAMES',
+    'INPUT IS WORLD STATE',
+  ],
+  [
+    'EVOLUTION NN BOT',
+    'AN INSTANCE OF THE NN BOT THAT EVOLVES',
+    'IF THERE ARE MULTIPLE, ONLY THE BEST PERFORMER IS KEPT',
+  ],
 ];
 
 interface InputTypeBlockProps {

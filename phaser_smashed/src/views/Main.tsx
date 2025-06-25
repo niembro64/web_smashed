@@ -63,6 +63,8 @@ import DevModeDiv from './DevModeDiv';
 import MobileWarning from './MobileWarning';
 import { useTopLevelStore } from '../stores/TopLevelStore';
 import { configInit, resolutions } from './smashedConfigInit';
+import { nnJsonNNClient_37_100_8 } from '../scenes/helpers/nnJson';
+import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
 
 // Keep these exports the same:
 export const blipDelay = 200;
@@ -88,7 +90,7 @@ function Main() {
 
   const [videoGray, setVideoGray] = useState(false);
 
-  const nnJsonExpress = useRef<string | null>(null);
+  const nnJsonExpress = useRef<INeuralNetworkJSON | null>(null);
 
   ////////////////////////////////
   // Reset NN_Reset_Evolving Button
@@ -158,6 +160,13 @@ function Main() {
   const pullExpressNeuralNet = async () => {
     nnJsonExpress.current = await fetchNeuralNetwork();
     print('nnJsonExpress.current', nnJsonExpress.current);
+
+    if (!nnJsonExpress.current) {
+      print('No neural network found');
+
+      // @ts-ignore
+      nnJsonExpress.current = nnJsonNNClient_37_100_8;
+    }
   };
 
   const [mainOptionsDebugShowState, setMainOptionsDebugShowState] =

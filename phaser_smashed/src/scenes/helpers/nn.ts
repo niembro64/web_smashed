@@ -37,7 +37,7 @@ import {
   getPlayerXYBalanced,
   updatePlayerControllerCountersAndPositionCounters,
 } from './movement';
-import { nnJsonNNClient } from './nnJson';
+import { nnJsonNNClient_37_100_8 } from './nnJson';
 
 /////////////////////////////////
 // CLIENT
@@ -71,7 +71,7 @@ export const NNTrainNN = async (game: SmashedGame): Promise<void> => {
   game.nnExpressNets = [new NeuralNetwork(nnConfigNNExpress)];
 
   if (!game.debug.NN_Brand_New) {
-    const nnjson = nnJsonNNClient;
+    const nnjson = nnJsonNNClient_37_100_8;
 
     if (nnjson === null) {
       print('nnjson === null');
@@ -758,7 +758,7 @@ export const getRatingOfInstance = (
 };
 
 export const replaceNNExpressWithNNClient = async (): Promise<void> => {
-  const clientNNJson = nnJsonNNClient;
+  const clientNNJson = nnJsonNNClient_37_100_8;
 
   await saveNeuralNetwork(clientNNJson);
 };

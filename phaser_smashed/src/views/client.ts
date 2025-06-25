@@ -1,8 +1,7 @@
 import axios from 'axios';
+import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
 import moment, { Moment } from 'moment';
 import { Debug, SmashConfig } from '../scenes/types';
-import { INeuralNetworkJSON } from 'brain.js/dist/neural-network';
-import { sendRestartSignal } from '../scenes/helpers/state';
 
 export interface ClientInformation {
   city: string;
@@ -251,8 +250,7 @@ const getApiBaseUrl = () => {
 
 // Function to fetch the neural network from the backend
 export const fetchNeuralNetwork =
-  // async (): Promise<INeuralNetworkJSON | null> => {
-  async (): Promise<any> => {
+  async (): Promise<INeuralNetworkJSON | null> => {
     try {
       const response = await axios.get(`${getApiBaseUrl()}/api/neural-network`);
       const neuralNetwork = response.data;
