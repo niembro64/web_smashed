@@ -12,47 +12,45 @@ import { updateBotRules } from './botRB';
 import { updatePadCurrKeyboard } from './keyboard';
 import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMomentBoolean } from './powers';
+import { GamepadManager } from './GamepadManager';
+
+const gamepadManager = GamepadManager.getInstance();
 
 export function updateGamePadsMaster(game: SmashedGame): void {
   let numPlayers = game.players.length;
+  const connectedGamepads = gamepadManager.getConnectedGamepads();
   let padIndex = 0;
-  let numPads = game.input.gamepad.gamepads.length;
 
+  // Assign gamepads to players who need them
   for (let i = 0; i < numPlayers; i++) {
-    if (game.players[i].inputType === 1 && padIndex < numPads) {
-      game.players[i].gamepad = game.input.gamepad.getPad(padIndex);
+    if (game.players[i].inputType === 1 && padIndex < connectedGamepads.length) {
+      game.players[i].gamepad = game.input.gamepad.getPad(connectedGamepads[padIndex].index);
       padIndex++;
     }
   }
 
+  // Update each player's input
   game.players.forEach((player, playerIndex) => {
     let inputType: InputType = player.inputType;
 
     switch (inputType) {
-      case 0:
+      case 0: // None
         break;
-      case 1:
+      case 1: // Gamepad
         if (player?.gamepad) {
-          if (player?.gamepad?.axes?.length === 4) {
-            print('CONTROLLER TYPE: PRO', player.gamepad);
-            updatePadCurrControllerTypePro(player, game);
-          } else if (player?.gamepad?.axes?.length) {
-            updatePadCurrControllerTypeHat(player, game);
-          } else {
-            updatePadCurrControllerTypeButtons(player, playerIndex, game);
-          }
+          updatePadCurrGamepad(player, playerIndex, game);
         }
         break;
-      case 2:
+      case 2: // Keyboard
         updatePadCurrKeyboard(player, game);
         break;
-      case 3:
+      case 3: // Rule-based Bot
         updateBotRules(player, playerIndex, game);
         break;
-      case 4:
+      case 4: // Neural Network Client
         updateBotNN(player, playerIndex, game, inputType);
         break;
-      case 5:
+      case 5: // Neural Network Express
         updateBotNN(player, playerIndex, game, inputType);
         break;
       default:
@@ -61,235 +59,73 @@ export function updateGamePadsMaster(game: SmashedGame): void {
   });
 }
 
+export function updatePadCurrGamepad(
+  player: Player,
+  playerIndex: number,
+  game: SmashedGame
+): void {
+  // Get the gamepad state using the new GamepadManager
+  const gamepadState = gamepadManager.getGamepadState(player.gamepad.index);
+  
+  if (!gamepadState) {
+    return;
+  }
+  
+  // Update player's pad current state
+  player.padCurr.A = gamepadState.A;
+  player.padCurr.B = gamepadState.B;
+  player.padCurr.X = gamepadState.X;
+  player.padCurr.Y = gamepadState.Y;
+  player.padCurr.L = gamepadState.L;
+  player.padCurr.R = gamepadState.R;
+  player.padCurr.start = gamepadState.start;
+  player.padCurr.select = gamepadState.select;
+  
+  // D-pad / movement
+  player.padCurr.up = gamepadState.up;
+  player.padCurr.down = gamepadState.down;
+  player.padCurr.left = gamepadState.left;
+  player.padCurr.right = gamepadState.right;
+  
+  // Debug logging
+  if (game.debug.Console_Log_Buttons) {
+    const buttons = ['A', 'B', 'X', 'Y', 'L', 'R', 'start', 'select', 'up', 'down', 'left', 'right'];
+    buttons.forEach(button => {
+      if (gamepadState[button]) {
+        print(`Player ${playerIndex} pressed ${button}`);
+      }
+    });
+  }
+}
+
+// Keep the old functions for backwards compatibility but mark as deprecated
+/** @deprecated Use updatePadCurrGamepad instead */
 export function updatePadCurrControllerTypePro(
   player: Player,
   game: SmashedGame
 ): void {
-  player.padCurr.A = player.gamepad.A;
-  player.padCurr.B = player.gamepad.B;
-  player.padCurr.X = player.gamepad.X;
-  player.padCurr.Y = player.gamepad.Y;
-  player.padCurr.L = player.gamepad.L1;
-  player.padCurr.R = player.gamepad.R1;
-
-  // EMN TODO Not Ideal
-  player.padCurr.start = false;
-  player.padCurr.select = false;
-
-  // for (let i = 0; i < player?.gamepad?.axes.length; i++) {
-  //   print(i, player?.gamepad?.axes[i]?.getValue());
-  // }
-  let stickX = player?.gamepad?.axes[0]?.getValue();
-  let stickY = player?.gamepad?.axes[1]?.getValue();
-  let tol = 0.3;
-
-  if (stickX !== null || stickY !== null) {
-    if (stickX === 0 && stickY === 0) {
-      player.padCurr.left = false;
-      player.padCurr.right = false;
-      player.padCurr.up = false;
-      player.padCurr.down = false;
-    }
-    // print('stickX', stickX);
-    // print('stickY', stickY);
-    // if (stickX === -1 && stickY === -1) {
-    //   player.padCurr.left = true;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = true;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // } else if (stickX === -1 && stickY === 1) {
-    //   player.padCurr.left = true;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = false;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // } else if (stickX === 1 && stickY === -1) {
-    //   player.padCurr.left = false;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = true;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // } else if (stickX === 1 && stickY === 1) {
-    //   player.padCurr.left = false;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = false;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // }
-
-    // if (stickX === -1) {
-    //   player.padCurr.left = true;
-    //   player.padCurr.right = !player.padCurr.left;
-    // } else if (stickX === 1) {
-    //   player.padCurr.left = false;
-    //   player.padCurr.right = !player.padCurr.left;
-    // }
-    // if (stickY === -1) {
-    //   player.padCurr.up = true;
-    //   player.padCurr.down = !player.padCurr.up;
-    // } else if (stickY === 1) {
-    //   player.padCurr.up = false;
-    //   player.padCurr.down = !player.padCurr.up;
-    // }
-
-    //  non boolean
-    // if (stickX < -tol && stickY < -tol) {
-    //   player.padCurr.left = true;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = true;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // } else if (stickX < -tol && stickY > tol) {
-    //   player.padCurr.left = true;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = false;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // } else if (stickX > tol && stickY < -tol) {
-    //   player.padCurr.left = false;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = true;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // } else if (stickX > tol && stickY > tol) {
-    //   player.padCurr.left = false;
-    //   player.padCurr.right = !player.padCurr.left;
-    //   player.padCurr.up = false;
-    //   player.padCurr.down = !player.padCurr.up;
-    //   return;
-    // }
-
-    if (stickX < -tol) {
-      player.padCurr.left = true;
-      player.padCurr.right = !player.padCurr.left;
-    } else if (stickX > tol) {
-      player.padCurr.left = false;
-      player.padCurr.right = !player.padCurr.left;
-    } else {
-      player.padCurr.left = false;
-      player.padCurr.right = false;
-    }
-    if (stickY < -tol) {
-      player.padCurr.up = true;
-      player.padCurr.down = !player.padCurr.up;
-    } else if (stickY > tol) {
-      player.padCurr.up = false;
-      player.padCurr.down = !player.padCurr.up;
-    } else {
-      player.padCurr.up = false;
-      player.padCurr.down = false;
-    }
-  }
+  updatePadCurrGamepad(player, 0, game);
 }
 
+/** @deprecated Use updatePadCurrGamepad instead */
 export function updatePadCurrControllerTypeHat(
   player: Player,
   game: SmashedGame
 ): void {
-  player.padCurr.A = player.gamepad.A;
-  player.padCurr.B = player.gamepad.B;
-  player.padCurr.X = player.gamepad.X;
-  player.padCurr.Y = player.gamepad.Y;
-  player.padCurr.L = player.gamepad.L1;
-  player.padCurr.R = player.gamepad.R1;
-
-  // EMN TODO Not Ideal
-  player.padCurr.start = false;
-  player.padCurr.select = false;
-
-  // NO STICK TRY HAT
-  let hatVal = player?.gamepad?.axes[9]?.getValue();
-  let vals = game.GAMEPAD_HAT_VALUES;
-  if (hatVal < vals[0]) {
-    player.padCurr.up = true;
-    player.padCurr.down = false;
-    player.padCurr.left = false;
-    player.padCurr.right = false;
-  } else if (hatVal < vals[1]) {
-    player.padCurr.up = true;
-    player.padCurr.down = false;
-    player.padCurr.left = false;
-    player.padCurr.right = true;
-  } else if (hatVal < vals[2]) {
-    player.padCurr.up = false;
-    player.padCurr.down = false;
-    player.padCurr.left = false;
-    player.padCurr.right = true;
-  } else if (hatVal < vals[3]) {
-    player.padCurr.up = false;
-    player.padCurr.down = true;
-    player.padCurr.left = false;
-    player.padCurr.right = true;
-  } else if (hatVal < vals[4]) {
-    player.padCurr.up = false;
-    player.padCurr.down = true;
-    player.padCurr.left = false;
-    player.padCurr.right = false;
-  } else if (hatVal < vals[5]) {
-    player.padCurr.up = false;
-    player.padCurr.down = true;
-    player.padCurr.left = true;
-    player.padCurr.right = false;
-  } else if (hatVal < vals[6]) {
-    player.padCurr.up = false;
-    player.padCurr.down = false;
-    player.padCurr.left = true;
-    player.padCurr.right = false;
-  } else if (hatVal < vals[7]) {
-    player.padCurr.up = true;
-    player.padCurr.down = false;
-    player.padCurr.left = true;
-    player.padCurr.right = false;
-  } else {
-    player.padCurr.up = false;
-    player.padCurr.down = false;
-    player.padCurr.left = false;
-    player.padCurr.right = false;
-  }
+  updatePadCurrGamepad(player, 0, game);
 }
 
+/** @deprecated Use updatePadCurrGamepad instead */
 export function updatePadCurrControllerTypeButtons(
   player: Player,
   playerIndex: number,
   game: SmashedGame
 ): void {
-  player.padCurr.up = player.gamepad.up;
-  player.padCurr.down = player.gamepad.down;
-  player.padCurr.left = player.gamepad.left;
-  player.padCurr.right = player.gamepad.right;
-  player.padCurr.A = player.gamepad.A;
-  player.padCurr.B = player.gamepad.B;
-  player.padCurr.X = player.gamepad.X;
-  player.padCurr.Y = player.gamepad.Y;
-  player.padCurr.L = player.gamepad.L1;
-  player.padCurr.R = player.gamepad.R1;
-
-  // EMN TODO Not Ideal
-  player.padCurr.start = false;
-  player.padCurr.select = false;
-
-  if (
-    player?.gamepad?.buttons?.length &&
-    player?.gamepad?.buttons[9]?.pressed !== undefined &&
-    player?.gamepad?.buttons[9]?.pressed !== null
-  ) {
-    player.padCurr.start = !!player.gamepad?.buttons[9]?.pressed;
-  }
-  if (
-    player?.gamepad?.buttons?.length &&
-    player?.gamepad?.buttons[8]?.pressed !== undefined &&
-    player?.gamepad?.buttons[8]?.pressed !== null
-  ) {
-    player.padCurr.select = !!player.gamepad?.buttons[8]?.pressed;
-  }
+  updatePadCurrGamepad(player, playerIndex, game);
 }
 
 export function getControllerIsRealController(gamepad: Gamepad): boolean {
-  if (gamepad.id.includes('Jabra')) {
-    return false;
-  }
-  return true;
+  return gamepadManager.isRealController(gamepad);
 }
 
 export function getIsAnyPlayerPausing(game: SmashedGame): boolean {
@@ -759,9 +595,9 @@ export function debugUpdateControllersPrintConnected(game: SmashedGame): void {
   if (!game.debug.Console_Log_Connected) {
     return;
   }
-  game.players.forEach((player, playerIndex) => {
-    print('PLAYER', playerIndex, 'CONTROLLER', player?.gamepad);
-    print('PLAYER', playerIndex, 'CONTROLLER', player?.gamepad.id);
+  const connectedGamepads = gamepadManager.getConnectedGamepads();
+  connectedGamepads.forEach((gamepad, index) => {
+    print(`Connected Gamepad ${index}: ${gamepad.id}`);
   });
 }
 
