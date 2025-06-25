@@ -38,6 +38,7 @@ import {
   updatePlayerControllerCountersAndPositionCounters,
 } from './movement';
 import { nnJsonNNClient_37_100_8 } from './nnJson';
+import { NNRatiosNNClient } from './nnButtonRatios';
 
 /////////////////////////////////
 // CLIENT
@@ -46,11 +47,7 @@ export const nnConfigNNClient = {
   hiddenLayers: [100],
   useGpu: true,
 };
-export const NNRatiosNNClient: number[] = [
-  0.07072905331882481, 0.21201975391311625, 0.5024273876286934,
-  0.4975726123713066, 0.06851092324432911, 0.3027538294132418,
-  0.35364526659412404, 0.05285845819034067,
-];
+
 /////////////////////////////////
 // EXPRESS
 /////////////////////////////////
