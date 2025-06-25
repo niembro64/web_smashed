@@ -24,7 +24,7 @@ export const debugInit: Debug = {
   Minutes: 2, //01234567
   Shots: 8, //7
   Dev_Zoom: 8,
-  Stage: 11, // 0 - 10 inclusive
+  Stage: 12, // 0 - 12 inclusive
   Music_Active: true,
   Ready_Sound_Active: true,
   Use_Camera: true,
