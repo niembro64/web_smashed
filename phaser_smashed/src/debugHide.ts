@@ -2,6 +2,7 @@ import { Debug } from './scenes/types';
 
 export const debugHide: Debug = {
   Nintendo_Sprites: true,
+  Pixel_Density: 1,
   Force_Pixelated: false,
   Auto_Restart: false,
   NN_Reset_Evolving: false,

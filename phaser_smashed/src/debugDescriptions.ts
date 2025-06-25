@@ -3,6 +3,8 @@ import { DebugDescriptions } from './scenes/types';
 
 export const debugDescriptions: DebugDescriptions = {
   Nintendo_Sprites: 'Whether to use Nintendo sprites',
+  Pixel_Density:
+    'Pixel density of the game - 0 = 480p, 1 = 720p, 2 = 1080p, 3 = 1440p, 4 = 4k',
   Force_Pixelated: 'Force pixelated graphics',
   Allow_Mobile: 'Whether to allow mobile devices to play the game',
   NN_Reset_Evolving:

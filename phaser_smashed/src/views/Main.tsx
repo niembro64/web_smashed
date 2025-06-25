@@ -62,7 +62,7 @@ import TopBar from './TopBar';
 import DevModeDiv from './DevModeDiv';
 import MobileWarning from './MobileWarning';
 import { useTopLevelStore } from '../stores/TopLevelStore';
-import { configInit } from './smashedConfigInit';
+import { configInit, resolutions } from './smashedConfigInit';
 
 // Keep these exports the same:
 export const blipDelay = 200;
@@ -828,7 +828,18 @@ function Main() {
     // do whatever with s if you like
 
     setTimeout(() => {
-      myPhaser.current = new Phaser.Game(config);
+      const configUpdated: Phaser.Types.Core.GameConfig = {
+        ...config,
+        pixelArt: debugState.Force_Pixelated,
+
+        scale: {
+          ...config.scale,
+          // width: resolutions[debugState.Pixel_Density].width,
+          // height: resolutions[debugState.Pixel_Density].height,
+        },
+      };
+
+      myPhaser.current = new Phaser.Game(configUpdated);
       myPhaser.current.registry.set('parentContext', Main);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
       myPhaser.current.registry.set('debug', debugState);

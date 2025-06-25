@@ -3,6 +3,7 @@ import { Debug } from './scenes/types';
 // TRUE means SHOWN ON MAIN PAGE
 export const debugOnMain: Debug = {
   Nintendo_Sprites: false,
+  Pixel_Density: 0,
   Force_Pixelated: false,
   Auto_Restart: false,
   NN_Train_Static: false,

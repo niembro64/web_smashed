@@ -32,6 +32,7 @@ export const toolTipStyle: CSSProperties = {
 export interface Debug {
   Nintendo_Sprites: boolean;
   Force_Pixelated: boolean;
+  Pixel_Density: number;
   Allow_Mobile: boolean;
   NN_Reset_Evolving: boolean;
   NN_Train_Evolving: boolean;
