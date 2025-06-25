@@ -291,9 +291,9 @@ export function preload(game: SmashedGame): void {
     ? 'images/'
     : 'images/alt_';
 
-  game.load.image('flag_spikes', prefix + 'flag_spikes.png');
-  game.load.image('centerWhite', prefix + 'wx.png');
-  game.load.image('centerBlack', prefix + 'bx.png');
+  game.load.image('flag_spikes', 'images/flag_spikes.png');
+  game.load.image('centerWhite', 'images/wx.png');
+  game.load.image('centerBlack', 'images/bx.png');
   game.load.image('centerMagenta', 'images/mx.png');
   game.load.image('centerRed', 'images/rx.png');
   game.load.image('platformHorizontal', prefix + 'brickhoriz.bmp');

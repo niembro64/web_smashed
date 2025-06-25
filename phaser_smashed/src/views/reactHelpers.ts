@@ -217,7 +217,7 @@ export const configInit: Phaser.Types.Core.GameConfig = {
   transparent: true,
   title: 'Smashed',
   antialias: true,
-  pixelArt: false,
+  pixelArt: true,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
