@@ -5,7 +5,7 @@ export const debugInit: Debug = {
   Minutes: 2, //01234567
   Shots: 8, //7
   Nintendo_Sprites: true,
-  Force_Pixelated: false,
+  Pixel_Graphics: false,
   Pixel_Density: 2,
   Allow_Mobile: true,
   Auto_Start: false,
@@ -21,9 +21,9 @@ export const debugInit: Debug = {
   NN_Help_Pit: true,
   NN_Help_Wall: true,
   Simple_Stage: false,
-  
+
   Dev_Mode: false,
-  
+
   Dur_Seconds: false,
   Dev_Zoom: 8,
   Stage: 12, // 0 - 12 inclusive

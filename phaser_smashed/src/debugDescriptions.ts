@@ -10,7 +10,7 @@ export const debugDescriptions: DebugDescriptions = {
     '3 = 1440p',
     '4 = 4k',
   ],
-  Force_Pixelated: ['Force pixelated graphics'],
+  Pixel_Graphics: ['Force pixelated graphics'],
   Allow_Mobile: ['Whether to allow mobile devices to play the game'],
   NN_Reset_Evolving: [
     "Replace the saved neural network weights in the database with the default weights from the client's neural network weights",
@@ -31,7 +31,13 @@ export const debugDescriptions: DebugDescriptions = {
   ],
   Minutes: ['Game duration expressed in minutes'],
   Shots: ['Number of shots players have to take before the game ends'],
-  Game_Music: ['Which music to play during the game'],
+  Game_Music: [
+    'Which music to play during the game',
+    '0: Kirby Dreamland',
+    '1: NiemoAudio - Happy Monkeys',
+    '2: NiemoAudio - Royksopp @ Macumba',
+    '3: 1200 Micrograms - DMT',
+  ],
   Music_Active: ['Whether to play music during the game'],
   Update_Loops_Skip: ['Number of update loops to skip for debugging purposes'],
   Friction_Air_Active: ['Whether to apply air friction to the characters'],

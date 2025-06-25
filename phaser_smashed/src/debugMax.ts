@@ -2,7 +2,7 @@ import { Debug } from './scenes/types';
 
 export const debugMax: Debug = {
   Nintendo_Sprites: true,
-  Force_Pixelated: true,
+  Pixel_Graphics: true,
   Pixel_Density: 4,
   Auto_Restart: false,
   NN_Reset_Evolving: false,
@@ -17,7 +17,7 @@ export const debugMax: Debug = {
   Auto_Start: true,
   Minutes: 15, //01234567
   Music_Active: true,
-  Game_Music: 4, // 012
+  Game_Music: 3, // 012
   Ready_Sound_Active: true,
   Use_Camera: true,
   Cameras_Visible: true,

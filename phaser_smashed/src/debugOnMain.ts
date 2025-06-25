@@ -6,7 +6,7 @@ export const debugOnMain: Debug = {
   Dur_Seconds: false,
   Nintendo_Sprites: false,
   Pixel_Density: 0,
-  Force_Pixelated: true,
+  Pixel_Graphics: true,
   Auto_Restart: false,
   NN_Train_Static: false,
   NN_Train_Evolving: false,
@@ -65,7 +65,7 @@ export const debugOnMain: Debug = {
   Trophies_Always: false,
   Inst_Replay: 1,
   Replay_FastSlow: false,
-  Game_Music: 0, // 012
+  Game_Music: 1, // 012
   Flower_On_Init: false,
   Flower_Rapid_Fire: false,
   Flower_Full_Screen: false,

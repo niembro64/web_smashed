@@ -449,7 +449,7 @@ h2 {
   cursor: pointer;
   /* margin-top: 0.25vw; */
   /* margin-bottom: 0.25vw; */
-  padding: 0.5vw 0.5vw 0.2vw 0.5vw;
+  padding: 1vw 0.5vw 0.6vw 0.5vw;
   text-align: center;
 }
 
@@ -473,7 +473,8 @@ h2 {
   align-items: center;
   cursor: pointer;
   /* margin: 0.5vw; */
-  padding: 0.5vw 1vw 0.2vw 1vw;
+  /* padding: 0.5vw 1vw 0.2vw 1vw; */
+  padding: 1vw 0.5vw 0.6vw 0.5vw;
   text-transform: uppercase;
   text-align: center;
 }

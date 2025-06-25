@@ -830,7 +830,7 @@ function Main() {
     setTimeout(() => {
       const configUpdated: Phaser.Types.Core.GameConfig = {
         ...config,
-        pixelArt: debugState.Force_Pixelated,
+        pixelArt: debugState.Pixel_Graphics,
 
         scale: {
           ...config.scale,
