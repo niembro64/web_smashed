@@ -5,7 +5,7 @@ import '@fontsource/press-start-2p';
 import html2canvas from 'html2canvas';
 import moment, { Moment } from 'moment';
 import Phaser from 'phaser';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import '../App.css';
 import { debugInit } from '../debugInit';
 import { debugMax } from '../debugMax';
@@ -42,7 +42,6 @@ import NeuralNetworkTrainStatus from './NeuralNetworkTrainStatus';
 import Popups from './Popups';
 import VideoReplay from './VideoReplay';
 import {
-  configInit,
   inputArrayInit,
   inputArrayInitDevMode,
   inputArrayReset,
@@ -63,10 +62,10 @@ import TopBar from './TopBar';
 import DevModeDiv from './DevModeDiv';
 import MobileWarning from './MobileWarning';
 import { useTopLevelStore } from '../stores/TopLevelStore';
+import { configInit } from './smashedConfigInit';
 
 // Keep these exports the same:
 export const blipDelay = 200;
-export const baseGravity = 3000;
 export const gravLightMultiplier = 0.5;
 export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -74,7 +73,9 @@ function Main() {
   const { tl_width: topLevelWidth, tl_tailwind: topLevelFontSize } =
     useTopLevelStore();
 
-  const myPhaser: React.RefObject<Phaser.Game> = useRef<Phaser.Game>(null);
+  const myPhaser = useRef<Phaser.Game | null>(
+    null
+  ) as MutableRefObject<Phaser.Game | null>;
 
   const [debugState, setDebugState] = useState<Debug>(debugInit);
 
@@ -830,7 +831,6 @@ function Main() {
     // do whatever with s if you like
 
     setTimeout(() => {
-      // @ts-ignore
       myPhaser.current = new Phaser.Game(config);
       myPhaser.current.registry.set('parentContext', Main);
       myPhaser.current.registry.set('smashConfig', newSmashConfig);
