@@ -44,7 +44,7 @@ import { NNRatiosNNClient } from './nnButtonRatios';
 // CLIENT
 /////////////////////////////////
 export const nnConfigNNClient = {
-  hiddenLayers: [100],
+  hiddenLayers: [10, 8, 8, 8],
   useGpu: true,
 };
 
