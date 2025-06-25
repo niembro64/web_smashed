@@ -219,9 +219,15 @@ function InputTypeBlock({
             const isARROWS: boolean = getDoesKeyboardExistLower(pIndex);
 
             if (isARROWS) {
-              return 'PLAYER ON KEYBOARD ARROWS - REFER TO CONTROLS';
+              return getTypeDescription([
+                'PLAYER ON KEYBOARD ARROWS',
+                'REFER TO CONTROLS TAB',
+              ]);
             } else {
-              return 'PLAYER ON KEYBOARD WASD - REFER TO CONTROLS';
+              return getTypeDescription([
+                'PLAYER ON KEYBOARD WASD',
+                'REFER TO CONTROLS TAB',
+              ]);
             }
           })()}
           className={
