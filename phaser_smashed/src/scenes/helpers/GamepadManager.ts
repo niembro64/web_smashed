@@ -57,8 +57,8 @@ export class GamepadManager {
   private gamepads: Map<number, Gamepad> = new Map();
   private mappings: Map<string, ControllerMapping> = new Map();
   private config: GamepadConfig = {
-    deadZone: 0.15,
-    analogToDigitalThreshold: 0.5,
+    deadZone: 0.3,
+    analogToDigitalThreshold: 0.7,
     vibrationEnabled: true
   };
   
@@ -210,8 +210,10 @@ export class GamepadManager {
     const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
     const isChrome = navigator.userAgent.toLowerCase().includes('chrome');
     
-    // Log controller info for debugging
-    print(`Detecting controller: ${gamepad.id}, axes: ${gamepad.axes.length}, buttons: ${gamepad.buttons.length}, platform: ${navigator.platform}, browser: ${navigator.userAgent}`);
+    // Log controller info for debugging (only when debug flag is on)
+    if (false) { // Set to true for debugging
+      print(`Detecting controller: ${gamepad.id}, axes: ${gamepad.axes.length}, buttons: ${gamepad.buttons.length}, platform: ${navigator.platform}`);
+    }
     
     // Check for specific controller types
     if (id.includes('xbox') || id.includes('xinput') || id.includes('microsoft')) {
@@ -334,7 +336,7 @@ export class GamepadManager {
     const gamepads = navigator.getGamepads();
     const gamepad = gamepads[index];
     
-    if (!gamepad) {
+    if (!gamepad || !gamepad.connected) {
       return null;
     }
     
@@ -457,8 +459,12 @@ export class GamepadManager {
     state.leftStickUp = state.leftStickY < -threshold;
     state.leftStickDown = state.leftStickY > threshold;
     
-    // If no D-pad input, use left stick as D-pad
-    if (!state.up && !state.down && !state.left && !state.right) {
+    // Only use left stick as D-pad if controller doesn't have D-pad buttons AND there's actual stick input
+    const hasActualStickInput = Math.abs(state.leftStickX) > threshold || Math.abs(state.leftStickY) > threshold;
+    const hasDpadButtons = mapping.dpadMode === 'buttons' && 
+      mapping.buttons.up !== undefined && mapping.buttons.up >= 0;
+    
+    if (!hasDpadButtons && !state.up && !state.down && !state.left && !state.right && hasActualStickInput) {
       state.up = state.leftStickUp;
       state.down = state.leftStickDown;
       state.left = state.leftStickLeft;

@@ -68,6 +68,19 @@ export function updatePadCurrGamepad(
   const gamepadState = gamepadManager.getGamepadState(player.gamepad.index);
   
   if (!gamepadState) {
+    // Reset all inputs to false when no gamepad state is available
+    player.padCurr.A = false;
+    player.padCurr.B = false;
+    player.padCurr.X = false;
+    player.padCurr.Y = false;
+    player.padCurr.L = false;
+    player.padCurr.R = false;
+    player.padCurr.start = false;
+    player.padCurr.select = false;
+    player.padCurr.up = false;
+    player.padCurr.down = false;
+    player.padCurr.left = false;
+    player.padCurr.right = false;
     return;
   }
   
