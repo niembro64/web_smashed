@@ -293,7 +293,6 @@ export class GamepadManager {
       console.log(`DEBUG → Failed to read raw gamepad data: ${e}`);
     }
 
-    // const id = gamepad.id.toLowerCase();
     const id = gamepad.id.toLowerCase();
     const isMac = navigator.platform.toLowerCase().includes('mac');
 
@@ -307,7 +306,17 @@ export class GamepadManager {
       };
     }
 
-    // 2) Nintendo Switch Pro Controller on macOS/Chrome reports ABXY reversed
+    // 2) Specific cheap USB Gamepad (Vendor: 0079 Product: 0011)
+    if (id.includes('vendor: 0079') && id.includes('product: 0011')) {
+      return {
+        name: 'Cheap USB SNES (Vendor:0079 Product:0011)',
+        buttons: this.standardMapping,
+        axes: { leftStickX: 0, leftStickY: 1, rightStickX: 2, rightStickY: 3 },
+        dpadMode: 'buttons',
+      };
+    }
+
+    // 3) Nintendo Switch Pro Controller on macOS/Chrome reports ABXY reversed
     if (id.includes('pro controller')) {
       return {
         name: 'Switch Pro (Mac raw)',
@@ -323,14 +332,14 @@ export class GamepadManager {
       };
     }
 
-    // 3) SNES-style USB clones: usually report D-pad as buttons
+    // 4) SNES-style USB clones: fallback
     if (
       id.includes('snes') ||
       id.includes('super nintendo') ||
       id.includes('usb gamepad')
     ) {
       return {
-        name: 'SNES-style USB',
+        name: 'SNES-style USB fallback',
         buttons: this.standardMapping,
         axes: { leftStickX: 0, leftStickY: 1, rightStickX: 2, rightStickY: 3 },
         dpadMode: 'buttons',
@@ -356,7 +365,7 @@ export class GamepadManager {
       return this.mappings.get(isMac ? 'mac-playstation' : 'playstation')!;
     }
 
-    // Dedicated Switch Pro (when browser mapping not standard)
+    // Dedicated Switch Pro (non-standard)
     if (id.includes('nintendo') && id.includes('switch')) {
       return this.mappings.get('switch-pro')!;
     }
@@ -366,45 +375,29 @@ export class GamepadManager {
       return this.mappings.get('8bitdo')!;
     }
 
-    // Vendor/product fallbacks (mostly Firefox)
+    // Vendor/product fallbacks
     if (id.includes('054c-05c4')) {
-      // PS4 vendor
       return this.mappings.get(isMac ? 'mac-playstation' : 'playstation')!;
     }
     if (id.includes('045e-02d1') || id.includes('045e-02dd')) {
-      // Xbox vendor
       return this.mappings.get(isMac ? 'mac-xbox' : 'xbox')!;
     }
 
     // Heuristic fallback for hat-based D-pad
     if (gamepad.axes.length >= 4) {
-      // If there's a POV hat axis (often axis 9), prefer that
       if (gamepad.axes.length > 9 && Math.abs(gamepad.axes[9]) > 0.1) {
         return this.mappings.get('generic-hat')!;
       }
-      // If it's exactly 4 axes + 17 buttons, it's likely standard
       if (gamepad.buttons.length === 17) {
         return this.mappings.get('xbox')!;
       }
-      // If more axes, treat as a generic USB analog stick
       if (gamepad.axes.length >= 5) {
         return this.mappings.get('generic-usb')!;
       }
-      // Otherwise default to Xbox-like
       return this.mappings.get('xbox')!;
     }
 
-    // Fallback: on macOS, force button-based D-pad for generic USB
-    if (isMac) {
-      return {
-        name: 'Generic USB (Mac fixed)',
-        buttons: this.standardMapping,
-        axes: { leftStickX: 0, leftStickY: 1, rightStickX: 3, rightStickY: 4 },
-        dpadMode: 'buttons',
-      };
-    }
-
-    // Last resort: generic USB using original mapping
+    // Last resort: generic USB mapping
     return this.mappings.get('generic-usb')!;
   }
 
