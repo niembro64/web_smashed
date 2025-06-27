@@ -275,6 +275,7 @@ export class GamepadManager {
       this.gamepads.delete(e.gamepad.index);
     });
   }
+
   private detectControllerType(gamepad: Gamepad): ControllerMapping {
     const id = gamepad.id.toLowerCase();
     const isMac = navigator.platform.toLowerCase().includes('mac');
@@ -305,7 +306,7 @@ export class GamepadManager {
       };
     }
 
-    // 3) SNES-style USB clones: D-pad as buttons on Windows, but Mac Chrome exposes a POV hat
+    // 3) SNES-style USB clones: usually report D-pad as buttons
     if (
       id.includes('snes') ||
       id.includes('super nintendo') ||
@@ -315,8 +316,7 @@ export class GamepadManager {
         name: 'SNES-style USB',
         buttons: this.standardMapping,
         axes: { leftStickX: 0, leftStickY: 1, rightStickX: 2, rightStickY: 3 },
-        dpadMode: isMac ? 'hat' : 'buttons',
-        hatAxisIndex: isMac ? 9 : undefined,
+        dpadMode: 'buttons',
       };
     }
 
@@ -377,7 +377,17 @@ export class GamepadManager {
       return this.mappings.get('xbox')!;
     }
 
-    // Last resort: generic USB
+    // Fallback: on macOS, force button-based D-pad for generic USB
+    if (isMac) {
+      return {
+        name: 'Generic USB (Mac fixed)',
+        buttons: this.standardMapping,
+        axes: { leftStickX: 0, leftStickY: 1, rightStickX: 3, rightStickY: 4 },
+        dpadMode: 'buttons',
+      };
+    }
+
+    // Last resort: generic USB using original mapping
     return this.mappings.get('generic-usb')!;
   }
 
