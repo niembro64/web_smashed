@@ -9,11 +9,18 @@ import {
   textForEachCharacter,
   textForEachCharacterAlt,
 } from '../scenes/types';
+import { isMac } from '../stores/TopLevelStore';
 import { getTypeDescription } from '../views/reactHelpers';
 
 const textForEachType: string[][] = [
   [],
-  ['PLAYER ON USB CONTROLLER', 'REFER TO CONTROLS TAB'],
+  isMac
+    ? [
+        'PLAYER ON USB CONTROLLER',
+        'REFER TO CONTROLS TAB',
+        "YOU ARE ON MAC OS --- IF YOUR CONTROLLER ISN'T WORKING, TRY A DIFFERENT BROWSER OR DIFFERENT OS",
+      ]
+    : ['PLAYER ON USB CONTROLLER', 'REFER TO CONTROLS TAB'],
   [],
   ['SCRIPTED BOT', 'PRE-PROGRAMMED BOT'],
   [
