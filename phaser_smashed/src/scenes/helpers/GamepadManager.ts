@@ -177,18 +177,24 @@ export class GamepadManager {
     });
     
     // Generic USB controllers (often cheap controllers)
+    // this.mappings.set('generic-usb', {
+    //   name: 'Generic USB Controller',
+    //   buttons: {
+    //     A: 2, B: 1, X: 3, Y: 0,
+    //     L1: 4, R1: 5, L2: 6, R2: 7,
+    //     select: 8, start: 9,
+    //     L3: 10, R3: 11,
+    //     up: -1, down: -1, left: -1, right: -1  // Often use axes/HAT
+    //   },
+    //   axes: { leftStickX: 0, leftStickY: 1, rightStickX: 3, rightStickY: 4 },
+    //   dpadMode: 'hat',
+    //   hatAxisIndex: 9
+    // });
     this.mappings.set('generic-usb', {
       name: 'Generic USB Controller',
-      buttons: {
-        A: 2, B: 1, X: 3, Y: 0,
-        L1: 4, R1: 5, L2: 6, R2: 7,
-        select: 8, start: 9,
-        L3: 10, R3: 11,
-        up: -1, down: -1, left: -1, right: -1  // Often use axes/HAT
-      },
+      buttons: this.standardMapping, // ← include up:12, down:13, left:14, right:15
       axes: { leftStickX: 0, leftStickY: 1, rightStickX: 3, rightStickY: 4 },
-      dpadMode: 'hat',
-      hatAxisIndex: 9
+      dpadMode: 'buttons', // ← use the button indices
     });
   }
   
