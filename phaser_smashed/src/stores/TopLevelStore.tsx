@@ -6,6 +6,8 @@ import React, {
   ReactNode,
 } from 'react';
 
+import { print } from '../../src/views/client';
+
 interface TopLevelContextType {
   tl_width: number | null;
   tl_tailwind: string;
@@ -27,8 +29,7 @@ export const TopLevelProvider = ({ children }: { children: ReactNode }) => {
   const [topLevelWidth, setTopLevelWidth] = useState<number | null>(null);
   const [topLevelFontSizeTailwind, setTopLevelFontSizeTailwind] =
     useState<string>('1vw');
-  const [topLevelFontSizeMd, setTopLevelFontSizeMd] =
-    useState<string>('1vw');
+  const [topLevelFontSizeMd, setTopLevelFontSizeMd] = useState<string>('1vw');
   const [topLevelFontSizeLg, setTopLevelFontSizeLg] = useState<string>('1vw');
   const [topLevelFontSizeXl, setTopLevelFontSizeXl] = useState<string>('1vw');
 
@@ -47,8 +48,8 @@ export const TopLevelProvider = ({ children }: { children: ReactNode }) => {
         const newFontSizeLg = `${newFontSize * 1.5}px`;
         const newFontSizeXl = `${newFontSize * 3}px`;
 
-        console.log('newFontSizeTailwind', newFontSizeTailwind);
-        console.log('newFontSizeStyle', newFontSizeStyle);
+        print('newFontSizeTailwind', newFontSizeTailwind);
+        print('newFontSizeStyle', newFontSizeStyle);
 
         setTopLevelFontSizeTailwind(newFontSizeTailwind);
         setTopLevelFontSizeMd(newFontSizeStyle);
