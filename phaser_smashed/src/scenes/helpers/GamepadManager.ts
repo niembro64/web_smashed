@@ -57,8 +57,8 @@ export class GamepadManager {
   private gamepads: Map<number, Gamepad> = new Map();
   private mappings: Map<string, ControllerMapping> = new Map();
   private config: GamepadConfig = {
-    deadZone: 0.3,
-    analogToDigitalThreshold: 0.7,
+    deadZone: 0.15,
+    analogToDigitalThreshold: 0.5,
     vibrationEnabled: true,
   };
 
@@ -278,20 +278,49 @@ export class GamepadManager {
 
   private detectControllerType(gamepad: Gamepad): ControllerMapping {
     const id = gamepad.id.toLowerCase();
-    const isMac = false;
-    // const isMac = navigator.platform.toLowerCase().includes('mac');
-    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
-    const isChrome = navigator.userAgent.toLowerCase().includes('chrome');
+    const isMac = navigator.platform.toLowerCase().includes('mac');
 
-    // Log controller info for debugging (only when debug flag is on)
-    if (false) {
-      // Set to true for debugging
-      print(
-        `Detecting controller: ${gamepad.id}, axes: ${gamepad.axes.length}, buttons: ${gamepad.buttons.length}, platform: ${navigator.platform}`
-      );
+    // 1) If the browser provides a standard mapping, trust it
+    if (gamepad.mapping === 'standard') {
+      return {
+        name: 'Browser-standard mapping',
+        buttons: this.standardMapping,
+        axes: { leftStickX: 0, leftStickY: 1, rightStickX: 2, rightStickY: 3 },
+        dpadMode: 'buttons',
+      };
     }
 
-    // Check for specific controller types
+    // 2) Nintendo Switch Pro Controller on macOS/Chrome (raw ABXY reversed)
+    if (id.includes('pro controller')) {
+      return {
+        name: 'Switch Pro (Mac raw)',
+        buttons: {
+          ...this.standardMapping,
+          A: this.standardMapping.B,
+          B: this.standardMapping.A,
+          X: this.standardMapping.Y,
+          Y: this.standardMapping.X,
+        },
+        axes: { leftStickX: 0, leftStickY: 1, rightStickX: 2, rightStickY: 3 },
+        dpadMode: 'buttons',
+      };
+    }
+
+    // 3) SNES-style USB clones (D-pad as buttons)
+    if (
+      id.includes('snes') ||
+      id.includes('super nintendo') ||
+      id.includes('usb gamepad')
+    ) {
+      return {
+        name: 'SNES-style USB',
+        buttons: this.standardMapping,
+        axes: { leftStickX: 0, leftStickY: 1, rightStickX: 2, rightStickY: 3 },
+        dpadMode: 'buttons',
+      };
+    }
+
+    // Existing mappings: Xbox, PlayStation, generic-hat, generic-usb, etc.
     if (
       id.includes('xbox') ||
       id.includes('xinput') ||
@@ -309,7 +338,7 @@ export class GamepadManager {
       return this.mappings.get(isMac ? 'mac-playstation' : 'playstation')!;
     }
 
-    if (id.includes('pro controller') || id.includes('nintendo')) {
+    if (id.includes('nintendo') && id.includes('switch')) {
       return this.mappings.get('switch-pro')!;
     }
 
@@ -317,38 +346,32 @@ export class GamepadManager {
       return this.mappings.get('8bitdo')!;
     }
 
-    // Check for vendor/product IDs (common in Firefox)
+    // Vendor/product overrides (Firefox)
     if (id.includes('054c-05c4')) {
-      // PS4 controller vendor/product ID
       return this.mappings.get(isMac ? 'mac-playstation' : 'playstation')!;
     }
-
     if (id.includes('045e-02d1') || id.includes('045e-02dd')) {
-      // Xbox controller vendor/product IDs
       return this.mappings.get(isMac ? 'mac-xbox' : 'xbox')!;
     }
 
-    // Heuristic detection based on axes and buttons
+    // Heuristic fallback based on axes/buttons
     if (gamepad.axes.length >= 4) {
-      // Check if it has a HAT axis (usually axis 9)
+      // HAT axis
       if (gamepad.axes.length > 9 && Math.abs(gamepad.axes[9]) > 0.1) {
         return this.mappings.get('generic-hat')!;
       }
-
-      // If it has exactly 4 axes and 17 buttons, likely standard mapping
+      // Standard Xbox-style
       if (gamepad.buttons.length === 17) {
         return this.mappings.get('xbox')!;
       }
-
-      // Generic USB controller with non-standard axis mapping
+      // Generic USB with axes
       if (gamepad.axes.length >= 5) {
         return this.mappings.get('generic-usb')!;
       }
-
-      return this.mappings.get('xbox')!; // Default to Xbox mapping
+      return this.mappings.get('xbox')!;
     }
 
-    // Basic controller without analog sticks
+    // Default to generic USB
     return this.mappings.get('generic-usb')!;
   }
 
