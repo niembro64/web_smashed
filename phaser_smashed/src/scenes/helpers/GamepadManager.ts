@@ -277,6 +277,23 @@ export class GamepadManager {
   }
 
   private detectControllerType(gamepad: Gamepad): ControllerMapping {
+    // DEBUG: Log raw button and axis data for diagnostics
+    try {
+      const pressedButtons = gamepad.buttons
+        .map((btn, idx) => (btn.pressed ? idx : null))
+        .filter((i) => i !== null);
+      print(
+        `DEBUG → Gamepad [${gamepad.index}]: id="${
+          gamepad.id
+        }", pressedButtons=${JSON.stringify(
+          pressedButtons
+        )}, axes=${JSON.stringify(gamepad.axes)}`
+      );
+    } catch (e) {
+      print(`DEBUG → Failed to read raw gamepad data: ${e}`);
+    }
+
+    // const id = gamepad.id.toLowerCase();
     const id = gamepad.id.toLowerCase();
     const isMac = navigator.platform.toLowerCase().includes('mac');
 
