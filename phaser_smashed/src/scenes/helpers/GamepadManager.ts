@@ -1,4 +1,10 @@
 import { print } from '../../views/client';
+type CheapPadState = {
+  up: boolean;
+  down: boolean;
+  left: boolean;
+  right: boolean;
+};
 
 export interface StandardGamepadMapping {
   // Face buttons (right cluster)
@@ -53,6 +59,14 @@ export interface ControllerMapping {
 }
 
 export class GamepadManager {
+  private cheapPadHidDevice: any | null = null;
+  private cheapPadState: CheapPadState = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+  };
+
   private static instance: GamepadManager;
   private gamepads: Map<number, Gamepad> = new Map();
   private mappings: Map<string, ControllerMapping> = new Map();
@@ -85,6 +99,43 @@ export class GamepadManager {
   private constructor() {
     this.initializeControllerMappings();
     this.setupEventListeners();
+
+    if (navigator.platform.toLowerCase().includes('mac')) {
+      this.initWebHidForCheapPad();
+    }
+  }
+
+  private async initWebHidForCheapPad() {
+    try {
+
+      // @ts-ignore
+      const [device] = await navigator.hid.requestDevice({
+        filters: [{ vendorId: 0x0079, productId: 0x0011 }],
+      });
+      if (!device) return;
+      this.cheapPadHidDevice = device;
+      await device.open();
+
+      
+      device.addEventListener('inputreport', (e: any) =>
+        this.handleCheapPadReport(e)
+      );
+      print('DEBUG → Cheap pad WebHID initialized');
+    } catch (err) {
+      print(`DEBUG → WebHID init failed: ${err}`);
+    }
+  }
+
+  private handleCheapPadReport(event: any) {
+    const data = event.data;
+    // HID usage page 0x01, usages 0x30..0x33 for up/down/left/right:
+    const dpadByte = data.getUint8(0); // adjust index if needed
+    this.cheapPadState = {
+      up: (dpadByte & 0x01) !== 0,
+      down: (dpadByte & 0x02) !== 0,
+      left: (dpadByte & 0x04) !== 0,
+      right: (dpadByte & 0x08) !== 0,
+    };
   }
 
   static getInstance(): GamepadManager {
@@ -282,7 +333,7 @@ export class GamepadManager {
       const pressedButtons = gamepad.buttons
         .map((btn, idx) => (btn.pressed ? idx : null))
         .filter((i) => i !== null);
-      console.log(
+      print(
         `DEBUG → Gamepad [${gamepad.index}]: id="${
           gamepad.id
         }", pressedButtons=${JSON.stringify(
@@ -290,7 +341,7 @@ export class GamepadManager {
         )}, axes=${JSON.stringify(gamepad.axes)}`
       );
     } catch (e) {
-      console.log(`DEBUG → Failed to read raw gamepad data: ${e}`);
+      print(`DEBUG → Failed to read raw gamepad data: ${e}`);
     }
 
     const id = gamepad.id.toLowerCase();
@@ -710,6 +761,18 @@ export class GamepadManager {
       state.left = state.leftStickLeft;
       state.right = state.leftStickRight;
     }
+
+    if (
+      mapping.name === 'Cheap USB SNES (Vendor:0079 Product:0011)' &&
+      this.cheapPadHidDevice
+    ) {
+      state.up = this.cheapPadState.up;
+      state.down = this.cheapPadState.down;
+      state.left = this.cheapPadState.left;
+      state.right = this.cheapPadState.right;
+      return state;
+    }
+
 
     return state;
   }
