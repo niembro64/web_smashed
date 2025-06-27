@@ -66,10 +66,10 @@ export const smashConfigInitDevMode: SmashConfig = {
 };
 
 export const workingControllersAmazon: WorkingController[] = [
-  {
-    name: 'Wired SNES iNNEXT',
-    url: 'https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/',
-  },
+  // {
+  //   name: 'Wired SNES iNNEXT',
+  //   url: 'https://www.amazon.com/dp/B01MYUDDCV?ref=ppx_yo2ov_dt_b_product_details&th=1/',
+  // },
   {
     name: 'Wired N64 KIWITATA',
     url: 'https://www.amazon.com/gp/product/B08X677HR4/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1',

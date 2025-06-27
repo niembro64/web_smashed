@@ -8,6 +8,7 @@ import React, {
 
 import { print } from '../../src/views/client';
 
+export const isMac: boolean = navigator.platform.toLowerCase().includes('mac');
 interface TopLevelContextType {
   tl_width: number | null;
   tl_tailwind: string;
