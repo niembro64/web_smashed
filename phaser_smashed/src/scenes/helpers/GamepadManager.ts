@@ -282,7 +282,7 @@ export class GamepadManager {
       const pressedButtons = gamepad.buttons
         .map((btn, idx) => (btn.pressed ? idx : null))
         .filter((i) => i !== null);
-      print(
+      console.log(
         `DEBUG → Gamepad [${gamepad.index}]: id="${
           gamepad.id
         }", pressedButtons=${JSON.stringify(
@@ -290,7 +290,7 @@ export class GamepadManager {
         )}, axes=${JSON.stringify(gamepad.axes)}`
       );
     } catch (e) {
-      print(`DEBUG → Failed to read raw gamepad data: ${e}`);
+      console.log(`DEBUG → Failed to read raw gamepad data: ${e}`);
     }
 
     // const id = gamepad.id.toLowerCase();
