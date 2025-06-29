@@ -14,7 +14,7 @@ import { getIsSpriteMoving } from './movement';
 import { getHasBeenGameDurationSinceMomentBoolean } from './powers';
 import { GamepadManager } from './GamepadManager';
 
-const gamepadManager = GamepadManager.getInstance();
+export const gamepadManager: GamepadManager = GamepadManager.getInstance();
 
 export function updateGamePadsMaster(game: SmashedGame): void {
   let numPlayers = game.players.length;
@@ -23,8 +23,13 @@ export function updateGamePadsMaster(game: SmashedGame): void {
 
   // Assign gamepads to players who need them
   for (let i = 0; i < numPlayers; i++) {
-    if (game.players[i].inputType === 1 && padIndex < connectedGamepads.length) {
-      game.players[i].gamepad = game.input.gamepad.getPad(connectedGamepads[padIndex].index);
+    if (
+      game.players[i].inputType === 1 &&
+      padIndex < connectedGamepads.length
+    ) {
+      game.players[i].gamepad = game.input.gamepad.getPad(
+        connectedGamepads[padIndex].index
+      );
       padIndex++;
     }
   }
@@ -66,7 +71,7 @@ export function updatePadCurrGamepad(
 ): void {
   // Get the gamepad state using the new GamepadManager
   const gamepadState = gamepadManager.getGamepadState(player.gamepad.index);
-  
+
   if (!gamepadState) {
     // Reset all inputs to false when no gamepad state is available
     player.padCurr.A = false;
@@ -83,7 +88,7 @@ export function updatePadCurrGamepad(
     player.padCurr.right = false;
     return;
   }
-  
+
   // Update player's pad current state
   player.padCurr.A = gamepadState.A;
   player.padCurr.B = gamepadState.B;
@@ -93,17 +98,30 @@ export function updatePadCurrGamepad(
   player.padCurr.R = gamepadState.R;
   player.padCurr.start = gamepadState.start;
   player.padCurr.select = gamepadState.select;
-  
+
   // D-pad / movement
   player.padCurr.up = gamepadState.up;
   player.padCurr.down = gamepadState.down;
   player.padCurr.left = gamepadState.left;
   player.padCurr.right = gamepadState.right;
-  
+
   // Debug logging
   if (game.debug.Console_Log_Buttons) {
-    const buttons = ['A', 'B', 'X', 'Y', 'L', 'R', 'start', 'select', 'up', 'down', 'left', 'right'];
-    buttons.forEach(button => {
+    const buttons = [
+      'A',
+      'B',
+      'X',
+      'Y',
+      'L',
+      'R',
+      'start',
+      'select',
+      'up',
+      'down',
+      'left',
+      'right',
+    ];
+    buttons.forEach((button) => {
       if (gamepadState[button]) {
         print(`Player ${playerIndex} pressed ${button}`);
       }

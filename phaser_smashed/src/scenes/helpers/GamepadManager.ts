@@ -107,7 +107,6 @@ export class GamepadManager {
 
   private async initWebHidForCheapPad() {
     try {
-
       // @ts-ignore
       const [device] = await navigator.hid.requestDevice({
         filters: [{ vendorId: 0x0079, productId: 0x0011 }],
@@ -116,7 +115,6 @@ export class GamepadManager {
       this.cheapPadHidDevice = device;
       await device.open();
 
-      
       device.addEventListener('inputreport', (e: any) =>
         this.handleCheapPadReport(e)
       );
@@ -773,7 +771,6 @@ export class GamepadManager {
       return state;
     }
 
-
     return state;
   }
 
@@ -817,5 +814,87 @@ export class GamepadManager {
 
   getConfig(): GamepadConfig {
     return { ...this.config };
+  }
+
+  /**
+   * Trigger a dual-rumble effect on the given gamepad index.
+   */
+  public async vibrateGamepad(params: {
+    index: number;
+    duration: number; // ms
+    weakMagnitude: number; // 0.0–1.0
+    strongMagnitude: number; // 0.0–1.0
+  }): Promise<void> {
+    const { index, duration, weakMagnitude, strongMagnitude } = params;
+
+    const gamepad = navigator.getGamepads()[index];
+    if (!gamepad || !gamepad.connected) {
+      return;
+    }
+
+    // Standard W3C hapticActuators (Chrome 94+)
+    const actuators = (gamepad as any).hapticActuators as
+      | GamepadHapticActuator[]
+      | undefined;
+    if (actuators && actuators.length) {
+      const act = actuators[0];
+      if (typeof act.playEffect === 'function') {
+        await act.playEffect('dual-rumble', {
+          startDelay: 0,
+          duration,
+          weakMagnitude,
+          strongMagnitude,
+        });
+        return;
+      }
+    }
+
+    // Fallback for older Chromium (`vibrationActuator`) or Firefox `pulse()`
+    const va = (gamepad as any).vibrationActuator as
+      | GamepadHapticActuator
+      | undefined;
+    if (va) {
+      if (typeof va.playEffect === 'function') {
+        await va.playEffect('dual-rumble', {
+          startDelay: 0,
+          duration,
+          weakMagnitude,
+          strongMagnitude,
+        });
+      } else if (typeof (va as any).pulse === 'function') {
+        // Firefox-style pulse
+        await (va as any).pulse(
+          Math.max(weakMagnitude, strongMagnitude),
+          duration
+        );
+      }
+    }
+  }
+
+  public vibrateHit(index: number): Promise<void> {
+    return this.vibrateGamepad({
+      index,
+      duration: 100,
+      weakMagnitude: 1,
+      strongMagnitude: 1,
+    });
+  }
+
+  public vibrateDeath(index: number): Promise<void> {
+    return this.vibrateGamepad({
+      index,
+      duration: 500,
+      weakMagnitude: 1,
+      strongMagnitude: 1,
+    });
+  }
+
+  public vibrateShot(index: number): Promise<void> {
+    return this.vibrateGamepad({
+      index,
+      duration: 2000,
+      weakMagnitude: 1,
+      strongMagnitude: 1,
+    });
   }
 }

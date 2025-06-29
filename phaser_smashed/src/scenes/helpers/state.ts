@@ -61,6 +61,7 @@ import {
   setSplashDataOn,
   updateShotsOnPlayers,
 } from './text';
+import { gamepadManager } from './pad';
 
 export const sendRestartSignal = (game: SmashedGame, delaySeconds: number) => {
   if (!game.debug.Auto_Restart) {
@@ -320,9 +321,10 @@ export function setPlayerState(
       setPlayerPowerState('none', player, game);
       if (getIsFirstBlood(game)) {
         setAddShotToMatrixFirstBlood(player, playerIndex, game);
-      }
-      if (getIsScreenClear(game)) {
+      } else if (getIsScreenClear(game)) {
         setAddToShotsMatrixScreenClear(player, playerIndex, game);
+      } else {
+        gamepadManager.vibrateDeath(playerIndex);
       }
       setSoundDiePlay(game);
       if (!getIsAttackEnergyOffscreen(player.char.attackEnergy)) {
@@ -336,6 +338,8 @@ export function setPlayerState(
       setRespawn(player, game);
       break;
     case 'player-state-hurt':
+      gamepadManager.vibrateHit(playerIndex);
+
       deleteLastNNObjects(player, playerIndex, 40, game);
       setEmitterHurtActiveTrue(player);
       setEmitterHurtVisibleTrue(player);

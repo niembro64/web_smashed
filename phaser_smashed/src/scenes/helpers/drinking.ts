@@ -1,6 +1,7 @@
 import { debug } from 'console';
 import SmashedGame from '../SmashedGame';
 import { Player } from '../types';
+import { gamepadManager } from './pad';
 
 export function getIsScreenClear(game: SmashedGame): boolean {
   if (game.players.length < 2) {
@@ -65,6 +66,9 @@ export function setAddShotToMatrixFirstBlood(
   if (player.state.name !== 'player-state-dead') {
     return;
   }
+
+  gamepadManager.vibrateShot(playerIndex);
+
   let hit: boolean = false;
 
   game.players.forEach((pj, j) => {
@@ -90,6 +94,8 @@ export function setAddToShotsMatrixScreenClear(
 
   for (let i = 0; i < game.players.length; i++) {
     if (game.players[i].state.name === 'player-state-dead') {
+      gamepadManager.vibrateShot(i);
+
       for (let j = 0; j < game.players.length; j++) {
         if (game.wasLastHitByMatrix[i][j]) {
           hit = true;
@@ -113,6 +119,8 @@ export function setAddShotsToMatrixFlagCaptured(game: SmashedGame): void {
 
   game.players.forEach((player, playerIndex) => {
     if (ownerIndex !== null && ownerIndex !== playerIndex) {
+      gamepadManager.vibrateShot(playerIndex);
+
       game.numberShotsTakenByMeMatrix[playerIndex][ownerIndex]++;
     }
   });
