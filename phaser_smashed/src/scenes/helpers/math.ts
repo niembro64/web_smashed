@@ -78,7 +78,12 @@ export function isPlayerInGameBoundary(
   }
 
   let intersections = 0;
-  const rayEndPoint: Position = { x: SCREEN_DIMENSIONS.WIDTH, y: point.y }; // Horizontal ray to the right
+  // Horizontal ray to the right — must extend past the widest boundary
+  // polygon (the alive region now stretches far off screen)
+  const rayEndPoint: Position = {
+    x: SCREEN_DIMENSIONS.WIDTH * 10,
+    y: point.y,
+  };
 
   for (const line of shape) {
     const ray = { start: point, end: rayEndPoint };
@@ -120,7 +125,12 @@ export function willPlayerBeInBoundaryNextFrame(
   }
 
   let intersections = 0;
-  const rayEndPoint: Position = { x: SCREEN_DIMENSIONS.WIDTH, y: point.y }; // Horizontal ray to the right
+  // Horizontal ray to the right — must extend past the widest boundary
+  // polygon (the alive region now stretches far off screen)
+  const rayEndPoint: Position = {
+    x: SCREEN_DIMENSIONS.WIDTH * 10,
+    y: point.y,
+  };
 
   for (const line of shape) {
     const ray = { start: nextPoint, end: rayEndPoint };

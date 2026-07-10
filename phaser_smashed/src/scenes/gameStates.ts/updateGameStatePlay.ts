@@ -48,6 +48,8 @@ import {
   updateSpritesFlipX,
   updateSpritesheets,
 } from '../helpers/sprites';
+import { updateLeftWallCombo } from '../helpers/leftWall';
+import { updateSlopePhysics } from '../helpers/slopes';
 import { updateResetAllHitboxesAttackEnergy } from '../helpers/state';
 import { updateTimeSlowdown } from '../helpers/time';
 import { updatePlayers } from '../update';
@@ -86,6 +88,8 @@ export function updateGameStatePlay(
   updateFlagButton(game);
   updateFlagMovement(game);
   updateFlagColor(game);
+  updateLeftWallCombo(game);
+  updateSlopePhysics(game);
   updateSuicide(game);
   updateEmitterPlayerSuicide(game);
   updateRemoveAttackPhysicalsIfNotNearPlayer(game);

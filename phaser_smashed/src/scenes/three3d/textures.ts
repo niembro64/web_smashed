@@ -24,10 +24,10 @@ export const THEME = {
   lavaHot: '#ffdd33',
   lava: '#ff5511',
   lavaDeep: '#a81800',
-  grass: '#4e9636',
-  grassDark: '#356b24',
-  skyTop: '#3a63c4',
-  skyHorizon: '#a8d4ec',
+  grass: '#5f8f4c',
+  grassDark: '#4a7340',
+  skyTop: '#5578b8',
+  skyHorizon: '#b0cede',
   cloud: '#ffffff',
 };
 
@@ -207,24 +207,36 @@ export function getFurTexture(hexColor: string): THREE.CanvasTexture {
  * repeat = size / tile to keep bricks the same size everywhere.
  */
 export function getBrickPatternTexture(
-  variant: 'warm' | 'dark' | 'stone'
+  variant: 'warm' | 'dark' | 'stone' | 'muted'
 ): THREE.CanvasTexture {
+  // 'muted' is the same brickwork drawn in desaturated, hazy colors so
+  // background structures read as background
   const base =
     variant === 'warm'
       ? THEME.brick
       : variant === 'dark'
       ? THEME.brickDark
+      : variant === 'muted'
+      ? '#9c8a7a'
       : THEME.stone;
   const shade =
     variant === 'warm'
       ? THEME.brickDark
       : variant === 'dark'
       ? '#6e3a1c'
+      : variant === 'muted'
+      ? '#7a6c60'
       : THEME.stoneDark;
-  const light = variant === 'warm' ? THEME.brickLight : THEME.metalLight;
+  const light =
+    variant === 'warm'
+      ? THEME.brickLight
+      : variant === 'muted'
+      ? '#ab9c8c'
+      : THEME.metalLight;
+  const mortar = variant === 'muted' ? '#c4bcae' : THEME.mortar;
 
   return makeCanvasTextureWH('bricks_' + variant, 66, 68, (ctx, w, h) => {
-    ctx.fillStyle = THEME.mortar;
+    ctx.fillStyle = mortar;
     ctx.fillRect(0, 0, w, h);
     const brickW = 33;
     const brickH = 34;
@@ -374,19 +386,15 @@ export function getFlagTexture(): THREE.CanvasTexture {
   });
 }
 
-/** Rolling-hill grass with mown stripes for the far background. */
+/** Soft rolling-hill grass — deliberately low contrast so the far
+ *  background never competes with the action. */
 export function getGrassTexture(dark: boolean): THREE.CanvasTexture {
   const base = dark ? THEME.grassDark : THEME.grass;
   return makeCanvasTextureWH('grass_' + dark, 128, 64, (ctx, w, h) => {
     ctx.fillStyle = base;
     ctx.fillRect(0, 0, w, h);
-    ctx.globalAlpha = 0.12;
-    for (let i = 0; i < 8; i++) {
-      ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#000000';
-      ctx.fillRect((i * w) / 8, 0, w / 16, h);
-    }
-    ctx.globalAlpha = 1;
-    sprinkleNoise(ctx, Math.min(w, h), '#1e3d12', 180, 0.1);
+    sprinkleNoise(ctx, Math.min(w, h), '#2e4d24', 90, 0.05);
+    sprinkleNoise(ctx, Math.min(w, h), '#ffffff', 40, 0.03);
   });
 }
 

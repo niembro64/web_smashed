@@ -5,9 +5,10 @@ import { buildEnvironment, EnvironmentHandles } from './environment';
 import {
   buildAttackModelForKey,
   buildBulletBill,
+  buildCable,
   buildCannon,
+  buildChainBeast,
   buildChainLink,
-  buildChomp,
   buildExplosion,
   buildFireFlower,
   buildFirework,
@@ -17,12 +18,14 @@ import {
   buildPlatformBlock,
   buildPole,
   buildSpikes,
+  buildStringHolder,
   buildTable,
-  buildTowerColumn,
+  buildWallSpikeRow,
   waveFlagCloth,
   PlatformVariant,
   PSwitchHandles,
 } from './models';
+import { getBrickPatternTexture, THEME } from './textures';
 import { CharacterRig } from './rigs';
 import { disposeAllCachedTextures } from './textures';
 
@@ -85,9 +88,17 @@ export class Three3D {
   // special-cased props
   private chompJaw: THREE.Group | null = null;
   private chompGroup: THREE.Group | null = null;
+  private beastLegs: THREE.Group[] = [];
   private chainLinks: { group: THREE.Group; sprite: any }[] = [];
-  private buttons: { handles: PSwitchHandles; upSprite: any; baseScaleY: number }[] =
-    [];
+  private buttons: {
+    handles: PSwitchHandles;
+    baseScaleY: number;
+    getIsUp: () => boolean;
+  }[] = [];
+  private leftWallSpikesMirror: {
+    group: THREE.Group;
+    sprite: any;
+  } | null = null;
   private flagClothMesh: THREE.Mesh | null = null;
   private fireworkRig: {
     group: THREE.Group;
@@ -247,8 +258,12 @@ export class Three3D {
       centerY: -SCREEN_DIMENSIONS.HEIGHT / 2,
       sunLight: this.sunLight!,
       hemisphereLight: this.hemisphereLight!,
-      boundaryPathPoints: this.game.gameBoundaryPath.pathPoints,
-      includeLava: !this.game.debug.Simple_Stage,
+      lavaPools: this.game.debug.Simple_Stage
+        ? []
+        : [
+            { centerX: 1165, width: 470, surfaceY: 1140 }, // the pit
+            { centerX: 1785, width: 260, surfaceY: 1140 }, // under the flag
+          ],
     });
   }
 
@@ -260,8 +275,28 @@ export class Three3D {
       brick: 'cracked',
     };
 
+    // Blocks belonging to the big staircase mass are not drawn as
+    // boxes: the whole mass is rendered as one smooth masonry ramp
+    // (matching the custom slope physics the characters glide on).
+    const isStairMassBlock = (platform: any): boolean => {
+      if (this.game.debug.Stage !== 12 || platform.texture?.key !== 'brick') {
+        return false;
+      }
+      const x = platform.x;
+      const y = platform.y;
+      if (x < 975 || x > 1640) {
+        return false;
+      }
+      const j = (1617 - x) / 33;
+      return y >= 754 + 34 * j - 20;
+    };
+
     const children: any[] = this.game.PLATFORMS?.getChildren?.() || [];
     children.forEach((platform: any) => {
+      this.track(platform);
+      if (isStairMassBlock(platform)) {
+        return;
+      }
       const variant = variantByKey[platform.texture?.key] || 'cracked';
       const block = buildPlatformBlock(
         platform.displayWidth,
@@ -271,8 +306,53 @@ export class Three3D {
       );
       block.position.set(platform.x, -platform.y, 0);
       this.scene.add(block);
-      this.track(platform);
     });
+
+    if (this.game.debug.Stage === 12 && !this.game.debug.Simple_Stage) {
+      this.buildSmoothCastleAdditions();
+    }
+  }
+
+  /**
+   * Stage 12 extras that can't be expressed as blocks: the smooth
+   * staircase ramp (one connected masonry wedge running from the
+   * rampart down into the central lava pool) and the deep castle
+   * masses that extend the stage far downward around the two pools.
+   */
+  private buildSmoothCastleAdditions(): void {
+    const masonry = getBrickPatternTexture('warm').clone();
+    masonry.needsUpdate = true;
+    masonry.repeat.set(1 / 66, 1 / 68); // extrude UVs are in world px
+    const masonryMaterial = new THREE.MeshLambertMaterial({ map: masonry });
+
+    // the ramp: surface line through the old step corners, filled
+    // solid down to the castle depths
+    const wedge = new THREE.Shape();
+    wedge.moveTo(990, -1383);
+    wedge.lineTo(1633, -720);
+    wedge.lineTo(1655, -720);
+    wedge.lineTo(1655, -2700);
+    wedge.lineTo(990, -2700);
+    wedge.closePath();
+    const ramp = new THREE.Mesh(
+      new THREE.ExtrudeGeometry(wedge, {
+        depth: PLATFORM_DEPTH,
+        bevelEnabled: false,
+      }),
+      masonryMaterial
+    );
+    ramp.position.z = -PLATFORM_DEPTH / 2;
+    this.scene.add(ramp);
+
+    // left castle mass under the low shelf, down to the depths
+    const leftMass = buildPlatformBlock(988, 1340, PLATFORM_DEPTH, 'bricks');
+    leftMass.position.set(486, -2030, 0);
+    this.scene.add(leftMass);
+
+    // right castle wall (below the rampart) running deep
+    const rightWall = buildPlatformBlock(170, 1960, PLATFORM_DEPTH, 'bricks');
+    rightWall.position.set(1990, -1720, 0);
+    this.scene.add(rightWall);
   }
 
   private buildTableProp(): void {
@@ -296,9 +376,11 @@ export class Three3D {
       this.rigs.push({ rig, player, playerIndex });
       this.track(player.char.sprite);
 
-      // physical attack (fist / sword)
+      // physical attack: the character's own body IS the punch now, so
+      // fist hitboxes get no model (the rig throws a real punch);
+      // Link's sword still gets its blade
       const ap = player.char.attackPhysical;
-      if (ap.sprite) {
+      if (ap.sprite && !(ap.sprite.texture?.key || '').includes('fist')) {
         const apModel = buildAttackModelForKey(
           ap.sprite.texture?.key || 'fist-gray',
           ap.sprite.displayWidth,
@@ -355,10 +437,11 @@ export class Three3D {
     ////////////////////////////////////////
     if (game.chomp.sprite) {
       const diameter = game.chomp.sprite.displayWidth;
-      const { group, jaw } = buildChomp(diameter);
+      const { group, jaw, legs } = buildChainBeast(diameter);
       this.scene.add(group);
       this.chompGroup = group;
       this.chompJaw = jaw;
+      this.beastLegs = legs;
       this.track(game.chomp.sprite);
 
       game.chomp.links.forEach((link) => {
@@ -402,7 +485,12 @@ export class Three3D {
       this.addMirror(flag.flagSpikes.sprite, spikes, 0);
     }
     if (flag.flagButton.spriteUp) {
-      this.buildButton(flag.flagButton.spriteUp, flag.flagButton.spriteDown);
+      // spike-trigger button — red, like all spike buttons
+      this.buildButton(
+        flag.flagButton.spriteUp,
+        flag.flagButton.spriteDown,
+        0xd93a2b
+      );
     }
     if (flag.firework) {
       const radius = flag.firework.displayWidth / 2 || 300;
@@ -451,37 +539,76 @@ export class Three3D {
       this.addMirror(coloredSprite, colored, 6);
     });
     if (bb.button.spriteUp) {
-      this.buildButton(bb.button.spriteUp, bb.button.spriteDown);
+      // the fuse-spark button — blue, distinct from the red spike buttons
+      this.buildButton(bb.button.spriteUp, bb.button.spriteDown, 0x4169e1);
     }
 
-    // towers: procedural brick watchtower columns
+    // fuse wire from the button to the cannon: straight segments through
+    // the EXACT gameplay path points the spark travels along
+    const CABLE_Z = -12;
+    const CABLE_RADIUS = 6;
+    if (bb.sparkLine.graphics) {
+      const points = bb.sparkLine.pathPoints.map(
+        (p) => new THREE.Vector3(p.x, -p.y, CABLE_Z)
+      );
+      if (points.length >= 2) {
+        this.scene.add(buildCable(points, CABLE_RADIUS));
+      }
+      this.track(bb.sparkLine.graphics);
+    }
+
+    // the two old "line tower" assets are the pylons HOLDING the fuse:
+    // masonry posts with a pipe elbow right at the cable's bend
     for (const tower of [bb.towerCenter, bb.towerLeft]) {
       if (!tower.sprite) {
         continue;
       }
-      const column = buildTowerColumn(
-        tower.sprite.displayWidth,
-        tower.sprite.displayHeight
+      const spriteX = tower.sprite.x;
+      const spriteY = -tower.sprite.y;
+      // find the cable bend this pylon is responsible for
+      const pathPoints = bb.sparkLine.pathPoints;
+      let bendIndex = 0;
+      let bestDistance = Infinity;
+      pathPoints.forEach((p, i) => {
+        const d = Math.hypot(p.x - spriteX, -p.y - spriteY);
+        if (d < bestDistance) {
+          bestDistance = d;
+          bendIndex = i;
+        }
+      });
+      const bend = pathPoints[bendIndex];
+      const hookOffset = new THREE.Vector3(
+        bend.x - spriteX,
+        -bend.y - spriteY,
+        CABLE_Z
       );
-      column.position.set(tower.sprite.x, -tower.sprite.y, -30);
-      this.scene.add(column);
+      const inDir = new THREE.Vector3();
+      const outDir = new THREE.Vector3();
+      if (bendIndex > 0) {
+        const prev = pathPoints[bendIndex - 1];
+        inDir.set(prev.x - bend.x, -prev.y + bend.y, 0).normalize();
+      }
+      if (bendIndex < pathPoints.length - 1) {
+        const next = pathPoints[bendIndex + 1];
+        outDir.set(next.x - bend.x, -next.y + bend.y, 0).normalize();
+      }
+      const holder = buildStringHolder(
+        tower.sprite.displayWidth,
+        tower.sprite.displayHeight,
+        hookOffset,
+        inDir,
+        outDir,
+        CABLE_RADIUS
+      );
+      holder.position.set(spriteX, spriteY, 0);
+      this.scene.add(holder);
       this.track(tower.sprite);
     }
 
-    // fuse wire from the button to the cannon, as a dark 3D cable
-    if (bb.sparkLine.graphics) {
-      const points = bb.sparkLine.pathPoints.map(
-        (p) => new THREE.Vector3(p.x, -p.y, -14)
-      );
-      if (points.length >= 2) {
-        const curve = new THREE.CatmullRomCurve3(points);
-        const tube = new THREE.Mesh(
-          new THREE.TubeGeometry(curve, 64, 5, 6, false),
-          new THREE.MeshLambertMaterial({ color: 0x0a0a0a })
-        );
-        this.scene.add(tube);
-      }
-      this.track(bb.sparkLine.graphics);
+    // left arena wall: same masonry as the platforms, with the cannon
+    // recessed into a metal-ringed port and retractable spikes
+    if (bb.cannon.sprite) {
+      this.buildLeftWall(bb.cannon.sprite);
     }
 
     ////////////////////////////////////////
@@ -544,10 +671,15 @@ export class Three3D {
     });
   }
 
-  private buildButton(upSprite: any, downSprite: any): void {
+  private buildButton(
+    upSprite: any,
+    downSprite: any,
+    domeColor: number
+  ): void {
     const handles = buildPSwitch(
       upSprite.displayWidth,
-      upSprite.displayHeight
+      upSprite.displayHeight,
+      domeColor
     );
     // button sprites use origin (0.5, 1) => model is built bottom-anchored
     const holder = new THREE.Group();
@@ -555,8 +687,8 @@ export class Three3D {
     this.scene.add(holder);
     this.buttons.push({
       handles,
-      upSprite,
       baseScaleY: handles.dome.scale.y,
+      getIsUp: () => upSprite.alpha > 0.5,
     });
     this.mirrors.push({
       holder,
@@ -567,6 +699,80 @@ export class Three3D {
     });
     this.track(upSprite);
     this.track(downSprite);
+  }
+
+  /**
+   * The left arena wall: built from the same masonry as the stage
+   * platforms, stretching away to the left "to infinity", with the
+   * bullet-bill cannon recessed into a metal-ringed port. Its
+   * retractable spikes and their trigger button are REAL gameplay
+   * objects (game.leftWallCombo) mirrored here.
+   */
+  private buildLeftWall(cannonSprite: any): void {
+    const wallRight = -8; // arena-facing face, just outside the boundary
+    const wallWidth = 2600; // extends far off to the left
+    const wallDepth = 150;
+    const wallCenterX = wallRight - wallWidth / 2;
+
+    const cannonY = -cannonSprite.y;
+    const portHalf = cannonSprite.displayHeight * 0.42;
+    const portTop = cannonY + portHalf;
+    const portBottom = cannonY - portHalf;
+
+    const wallTop = 170;
+    const wallBottom = -1250;
+
+    // masonry segments above and below the cannon port
+    const upperHeight = wallTop - portTop;
+    const upper = buildPlatformBlock(wallWidth, upperHeight, wallDepth, 'bricks');
+    upper.position.set(wallCenterX, portTop + upperHeight / 2, 0);
+    const lowerHeight = portBottom - wallBottom;
+    const lower = buildPlatformBlock(wallWidth, lowerHeight, wallDepth, 'bricks');
+    lower.position.set(wallCenterX, wallBottom + lowerHeight / 2, 0);
+    this.scene.add(upper, lower);
+
+    // recessed port: dark back panel + cream lintel and sill + metal ring
+    const recess = new THREE.Mesh(
+      new THREE.BoxGeometry(40, portTop - portBottom, wallDepth * 0.9),
+      new THREE.MeshLambertMaterial({ color: 0x1a1d24 })
+    );
+    recess.position.set(wallRight - 320, cannonY, 0);
+    const trimMaterial = new THREE.MeshLambertMaterial({ color: THEME.cream });
+    const lintel = new THREE.Mesh(
+      new THREE.BoxGeometry(360, 16, wallDepth * 1.06),
+      trimMaterial
+    );
+    lintel.position.set(wallRight - 180, portTop + 8, 0);
+    const sill = new THREE.Mesh(
+      new THREE.BoxGeometry(360, 16, wallDepth * 1.06),
+      trimMaterial
+    );
+    sill.position.set(wallRight - 180, portBottom - 8, 0);
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(portHalf * 0.9, 12, 10, 22),
+      new THREE.MeshLambertMaterial({ color: 0x30343c })
+    );
+    ring.rotation.y = Math.PI / 2;
+    ring.position.set(wallRight - 2, cannonY, 0);
+    this.scene.add(recess, lintel, sill, ring);
+
+    // retractable spikes: mirror of the REAL lethal spikes sprite
+    // (game.leftWallCombo.spikes), sliding out of the wall face
+    const lw = this.game.leftWallCombo;
+    if (lw.spikes.sprite) {
+      const spikeLength = 90;
+      const spikeYs = [-90, -45, 0, 45, 90];
+      const spikes = buildWallSpikeRow(spikeYs, spikeLength, 20);
+      this.scene.add(spikes);
+      this.leftWallSpikesMirror = { group: spikes, sprite: lw.spikes.sprite };
+      this.track(lw.spikes.sprite);
+    }
+
+    // the real trigger button at the bottom of the stairs — red like
+    // every spike button
+    if (lw.button.spriteUp) {
+      this.buildButton(lw.button.spriteUp, lw.button.spriteDown, 0xd93a2b);
+    }
   }
 
   ////////////////////////////////////////
@@ -698,14 +904,15 @@ export class Three3D {
       waveFlagCloth(this.flagClothMesh, this.elapsed);
     }
 
-    // buttons: two clear states — armed (up, blue, cool ring) and
-    // active (pressed, squashed, molten glow)
-    this.buttons.forEach(({ handles, upSprite, baseScaleY }) => {
-      const isUp = upSprite.alpha > 0.5;
+    // buttons: two clear states — armed (up, in the button's own color:
+    // red = spikes, blue = fuse spark) and active (pressed, squashed
+    // gray dome, molten pulsing ring)
+    this.buttons.forEach(({ handles, baseScaleY, getIsUp }) => {
+      const isUp = getIsUp();
       const targetScale = baseScaleY * (isUp ? 1 : 0.22);
       handles.dome.scale.y += (targetScale - handles.dome.scale.y) * 0.3;
       if (isUp) {
-        handles.domeMaterial.color.setHex(0x4169e1);
+        handles.domeMaterial.color.copy(handles.domeBaseColor);
         handles.domeMaterial.emissive.setHex(0x0a1030);
         handles.ringMaterial.color.setHex(0xf4f0e0);
         handles.ringMaterial.emissive.setHex(0x555540);
@@ -717,6 +924,26 @@ export class Three3D {
         handles.ringMaterial.emissive.setRGB(0.9 * pulse, 0.25 * pulse, 0.02);
       }
     });
+
+    // left wall spikes track the real lethal spikes sprite, easing
+    // between its retracted and extended positions
+    if (this.leftWallSpikesMirror) {
+      const sprite = this.leftWallSpikesMirror.sprite;
+      const group = this.leftWallSpikesMirror.group;
+      const targetX = sprite.x - 55; // cone bases inside the wall face
+      group.position.x += (targetX - group.position.x) * 0.25;
+      group.position.y = -sprite.y;
+    }
+
+    // the chained beast scuttles: legs paddle while it moves
+    if (this.beastLegs.length > 0 && game.chomp.sprite) {
+      const speed = Math.abs(game.chomp.sprite.body?.velocity?.x || 0);
+      const rate = 6 + Math.min(14, speed * 0.2);
+      this.beastLegs.forEach((leg, i) => {
+        leg.rotation.z = Math.sin(this.elapsed * rate + i * 1.7) * 0.16;
+        leg.rotation.x = Math.cos(this.elapsed * rate + i * 1.7) * 0.08;
+      });
+    }
 
     // firework burst on flag completion
     if (this.fireworkRig) {

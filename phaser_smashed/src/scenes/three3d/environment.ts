@@ -1,22 +1,19 @@
 import * as THREE from 'three';
-import { Position } from '../types';
 import {
-  getBrickPatternTexture,
   getGrassTexture,
   getLavaTexture,
-  getStuddedMetalTexture,
   makeCanvasTextureWH,
   THEME,
 } from './textures';
 
 ////////////////////////////////////////////////////////////
 // Environment for the pseudo-3D world — 100% procedural, no
-// original 2D game art. A day/night cycle drives the sky tint,
-// a sun and moon ride a slow wheel, puffy clouds drift and wrap,
-// grassy hills roll in parallax layers, a stone castle tower
-// stands behind the stage, the kill-boundary is a studded steel
-// cage with inward spikes extruded from the REAL gameplay
-// boundary polygon, and the pit is a churning lava pool.
+// original 2D game art, and deliberately calm: the sky, hills
+// and clouds are soft and low-contrast so the stage stays the
+// star. A slow day/night cycle drives the sky tint, a sun and
+// moon ride a slow wheel, puffy clouds drift and wrap, grassy
+// hills roll in parallax layers, and the pit is a churning
+// lava pool.
 ////////////////////////////////////////////////////////////
 
 const DAY_CYCLE_SECONDS = 150;
@@ -66,8 +63,8 @@ export function buildEnvironment(
     centerY: number; // three-space (negative world y)
     sunLight: THREE.DirectionalLight;
     hemisphereLight: THREE.HemisphereLight;
-    boundaryPathPoints: Position[];
-    includeLava: boolean;
+    // molten pools inside the castle (world coords)
+    lavaPools: { centerX: number; width: number; surfaceY: number }[];
   }
 ): EnvironmentHandles {
   const updaters: Array<(dt: number, t: number) => void> = [];
@@ -99,7 +96,7 @@ export function buildEnvironment(
     new THREE.MeshBasicMaterial({
       color: 0xffdd88,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.14,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     })
@@ -159,15 +156,17 @@ export function buildEnvironment(
   ////////////////////////////////////////
   // DRIFTING CLOUDS (puffball clusters, wrap around)
   ////////////////////////////////////////
+  // soft, slow, translucent — present but never distracting
   const cloudMaterial = new THREE.MeshLambertMaterial({
-    color: THEME.cloud,
+    color: 0xe8ecf0,
     transparent: true,
-    opacity: 0.92,
+    opacity: 0.55,
+    depthWrite: false,
   });
   const cloudRangeMinX = centerX - 2400;
   const cloudRangeMaxX = centerX + 2400;
   const clouds: { group: THREE.Group; speed: number }[] = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 7; i++) {
     const cloud = new THREE.Group();
     const puffCount = 4 + (i % 3);
     for (let p = 0; p < puffCount; p++) {
@@ -189,7 +188,7 @@ export function buildEnvironment(
     const s = 0.8 + ((i * 31) % 10) / 10;
     cloud.scale.setScalar(s);
     scene.add(cloud);
-    clouds.push({ group: cloud, speed: 14 + ((i * 7) % 22) });
+    clouds.push({ group: cloud, speed: 6 + ((i * 7) % 10) });
   }
   updaters.push((dt) => {
     clouds.forEach(({ group, speed }) => {
@@ -225,155 +224,38 @@ export function buildEnvironment(
   });
 
   ////////////////////////////////////////
-  // CASTLE TOWER (stone keep behind the stage)
+  // LAVA POOLS (churning volumes inside the castle shafts)
   ////////////////////////////////////////
-  const castle = new THREE.Group();
-  const stoneTexture = getBrickPatternTexture('stone').clone();
-  stoneTexture.needsUpdate = true;
-  stoneTexture.repeat.set(130 / 66, 620 / 68);
-  const stoneMaterial = new THREE.MeshLambertMaterial({
-    color: 0xffffff,
-    map: stoneTexture,
-  });
-  const keep = new THREE.Mesh(new THREE.BoxGeometry(130, 620, 120), stoneMaterial);
-  castle.add(keep);
-  // crenellations
-  const creNTexture = getBrickPatternTexture('stone').clone();
-  creNTexture.needsUpdate = true;
-  creNTexture.repeat.set(0.5, 0.6);
-  const creMaterial = new THREE.MeshLambertMaterial({ map: creNTexture });
-  for (let i = 0; i < 4; i++) {
-    const merlon = new THREE.Mesh(new THREE.BoxGeometry(26, 34, 124), creMaterial);
-    merlon.position.set(-52 + i * 34.5, 327, 0);
-    castle.add(merlon);
-  }
-  // cap ledge
-  const ledge = new THREE.Mesh(
-    new THREE.BoxGeometry(150, 16, 136),
-    new THREE.MeshLambertMaterial({ color: THEME.cream })
-  );
-  ledge.position.y = 310 - 8;
-  castle.add(ledge);
-  // arched doorway + window slits
-  const dark = new THREE.MeshLambertMaterial({ color: 0x1e1812 });
-  const door = new THREE.Mesh(new THREE.BoxGeometry(52, 90, 8), dark);
-  door.position.set(0, -265, 58);
-  const doorArch = new THREE.Mesh(
-    new THREE.CylinderGeometry(26, 26, 8, 14, 1, false, 0, Math.PI),
-    dark
-  );
-  doorArch.rotation.x = Math.PI / 2;
-  doorArch.rotation.z = Math.PI / 2;
-  doorArch.position.set(0, -220, 58);
-  castle.add(door, doorArch);
-  for (const wy of [-60, 120]) {
-    const slit = new THREE.Mesh(new THREE.BoxGeometry(14, 46, 8), dark);
-    slit.position.set(0, wy, 58);
-    castle.add(slit);
-  }
-  castle.position.set(672, -770, -190);
-  scene.add(castle);
-
-  ////////////////////////////////////////
-  // ARENA CAGE (extruded from the real kill boundary)
-  ////////////////////////////////////////
-  const points = opts.boundaryPathPoints;
-  if (points && points.length >= 3) {
-    const outer = new THREE.Shape();
-    const OUT = 2400; // how far the wall extends past the stage
-    outer.moveTo(centerX - OUT, centerY + OUT);
-    outer.lineTo(centerX + OUT, centerY + OUT);
-    outer.lineTo(centerX + OUT, centerY - OUT);
-    outer.lineTo(centerX - OUT, centerY - OUT);
-    outer.closePath();
-
-    const hole = new THREE.Path();
-    hole.moveTo(points[0].x, -points[0].y);
-    for (let i = 1; i < points.length; i++) {
-      hole.lineTo(points[i].x, -points[i].y);
-    }
-    hole.closePath();
-    outer.holes.push(hole);
-
-    const studTexture = getStuddedMetalTexture().clone();
-    studTexture.needsUpdate = true;
-    studTexture.repeat.set(1 / 64, 1 / 64); // extrude UVs are in world px
-    const cageMaterial = new THREE.MeshLambertMaterial({
-      color: 0xffffff,
-      map: studTexture,
-    });
-    const cage = new THREE.Mesh(
-      new THREE.ExtrudeGeometry(outer, {
-        depth: 150,
-        bevelEnabled: false,
-      }),
-      cageMaterial
-    );
-    cage.position.z = -45;
-    scene.add(cage);
-
-    // inward spikes along the boundary — danger has teeth
-    const spikeGeometry = new THREE.ConeGeometry(11, 30, 8);
-    const spikeMaterial = new THREE.MeshLambertMaterial({
-      color: THEME.metalLight,
-    });
-    const transforms: THREE.Matrix4[] = [];
-    const dummy = new THREE.Object3D();
-    for (let i = 0; i < points.length; i++) {
-      const a = points[i];
-      const b = points[(i + 1) % points.length];
-      const ax = a.x;
-      const ay = -a.y;
-      const bx = b.x;
-      const by = -b.y;
-      const len = Math.hypot(bx - ax, by - ay);
-      const count = Math.floor(len / 110);
-      const dx = (bx - ax) / len;
-      const dy = (by - ay) / len;
-      // interior side of the (screen-clockwise) boundary polygon
-      const nx = dy;
-      const ny = -dx;
-      for (let s = 1; s <= count; s++) {
-        const px = ax + dx * (len * s) / (count + 1);
-        const py = ay + dy * (len * s) / (count + 1);
-        dummy.position.set(px + nx * 10, py + ny * 10, 20);
-        dummy.rotation.set(0, 0, Math.atan2(ny, nx) - Math.PI / 2);
-        dummy.updateMatrix();
-        transforms.push(dummy.matrix.clone());
-      }
-    }
-    const spikes = new THREE.InstancedMesh(
-      spikeGeometry,
-      spikeMaterial,
-      transforms.length
-    );
-    transforms.forEach((m, i) => spikes.setMatrixAt(i, m));
-    spikes.instanceMatrix.needsUpdate = true;
-    scene.add(spikes);
-  }
-
-  ////////////////////////////////////////
-  // LAVA POOL (churning volume across the pit)
-  ////////////////////////////////////////
-  if (opts.includeLava) {
+  if (opts.lavaPools.length > 0) {
     const lavaTexture = getLavaTexture();
-    lavaTexture.repeat.set(6, 1);
+    lavaTexture.repeat.set(3, 1);
     const lavaSurfaceMaterial = new THREE.MeshBasicMaterial({
       map: lavaTexture,
     });
     const crustMaterial = new THREE.MeshLambertMaterial({
       color: THEME.lavaDeep,
     });
-    const lava = new THREE.Mesh(new THREE.BoxGeometry(4200, 220, 300), [
-      crustMaterial,
-      crustMaterial,
-      lavaSurfaceMaterial, // top
-      crustMaterial,
-      lavaSurfaceMaterial, // front
-      crustMaterial,
-    ]);
-    lava.position.set(centerX, -1195, 40);
-    scene.add(lava);
+
+    opts.lavaPools.forEach((pool) => {
+      const depthDown = 1500; // molten column reaching far below
+      const lava = new THREE.Mesh(
+        new THREE.BoxGeometry(pool.width, depthDown, 220),
+        [
+          crustMaterial,
+          crustMaterial,
+          lavaSurfaceMaterial, // top
+          crustMaterial,
+          lavaSurfaceMaterial, // front
+          crustMaterial,
+        ]
+      );
+      lava.position.set(pool.centerX, -pool.surfaceY - depthDown / 2, 20);
+      scene.add(lava);
+
+      const glow = new THREE.PointLight(0xff5511, 1.0, 900, 2);
+      glow.position.set(pool.centerX, -pool.surfaceY + 80, 120);
+      scene.add(glow);
+    });
 
     updaters.push((dt, t) => {
       lavaTexture.offset.x += dt * 0.015;

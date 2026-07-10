@@ -3,6 +3,7 @@ import {
   getBrickPatternTexture,
   getCrackedBlockTexture,
   getFlagTexture,
+  getFurTexture,
   getMetalTexture,
   getShellTexture,
   getWoodTexture,
@@ -100,7 +101,7 @@ export function cone(
 // PLATFORM BLOCKS
 ////////////////////////////////////////////////////////////
 
-export type PlatformVariant = 'bricks' | 'cracked' | 'stone';
+export type PlatformVariant = 'bricks' | 'cracked' | 'stone' | 'muted';
 
 const platformTextureCache: Map<string, THREE.Texture> = new Map();
 
@@ -118,7 +119,9 @@ function getSizedMasonry(
   const source =
     variant === 'cracked'
       ? getCrackedBlockTexture()
-      : getBrickPatternTexture(variant === 'stone' ? 'stone' : 'warm');
+      : getBrickPatternTexture(
+          variant === 'stone' ? 'stone' : variant === 'muted' ? 'muted' : 'warm'
+        );
   const texture = source.clone();
   texture.needsUpdate = true;
   if (variant === 'cracked') {
@@ -139,18 +142,21 @@ export function buildPlatformBlock(
   w: number,
   h: number,
   depth: number,
-  variant: PlatformVariant
+  variant: PlatformVariant,
+  tint: number = 0xffffff
 ): THREE.Mesh {
+  const sideTint = new THREE.Color(0xbbb0a0).multiply(new THREE.Color(tint));
   const front = new THREE.MeshLambertMaterial({
     map: getSizedMasonry(variant, w, h),
+    color: tint,
   });
   const top = new THREE.MeshLambertMaterial({
     map: getSizedMasonry(variant, w, depth),
-    color: 0xffffff,
+    color: tint,
   });
   const side = new THREE.MeshLambertMaterial({
     map: getSizedMasonry(variant, depth, h),
-    color: 0xbbb0a0,
+    color: sideTint,
   });
   const back = new THREE.MeshLambertMaterial({ color: THEME.stoneDark });
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, depth), [
@@ -164,17 +170,124 @@ export function buildPlatformBlock(
   return mesh;
 }
 
-/** Brick watchtower column with a cream cap ledge. */
-export function buildTowerColumn(w: number, h: number): THREE.Group {
+/**
+ * The fuse cable, following the gameplay path EXACTLY: one straight
+ * segment per pair of path points with sphere joints at the bends.
+ */
+export function buildCable(
+  points: THREE.Vector3[],
+  radius: number
+): THREE.Group {
   const group = new THREE.Group();
-  const body = buildPlatformBlock(w, h, Math.min(90, w), 'stone');
-  group.add(body);
-  const cap = new THREE.Mesh(
-    new THREE.BoxGeometry(w * 1.12, 14, Math.min(90, w) * 1.15),
-    new THREE.MeshLambertMaterial({ color: THEME.cream })
+  const material = new THREE.MeshLambertMaterial({ color: 0x141414 });
+  const joint = new THREE.SphereGeometry(radius * 1.15, 8, 6);
+  const up = new THREE.Vector3(0, 1, 0);
+  for (let i = 0; i < points.length - 1; i++) {
+    const a = points[i];
+    const b = points[i + 1];
+    const length = a.distanceTo(b);
+    if (length < 1) {
+      continue;
+    }
+    const segment = new THREE.Mesh(
+      new THREE.CylinderGeometry(radius, radius, length, 7),
+      material
+    );
+    segment.position.copy(a).add(b).multiplyScalar(0.5);
+    const direction = new THREE.Vector3().subVectors(b, a).normalize();
+    segment.quaternion.setFromUnitVectors(up, direction);
+    group.add(segment);
+
+    const knot = new THREE.Mesh(joint, material);
+    knot.position.copy(a);
+    group.add(knot);
+  }
+  return group;
+}
+
+/**
+ * String holder: a thin, muted utility pole with a small insulator
+ * arm and a pipe-elbow gripping the cable at its bend. Deliberately
+ * skinny and dull so nobody mistakes it for a platform — it is
+ * obviously just street furniture holding the fuse line.
+ */
+export function buildStringHolder(
+  w: number,
+  h: number,
+  hookOffset: THREE.Vector3,
+  inDir: THREE.Vector3,
+  outDir: THREE.Vector3,
+  cableRadius: number
+): THREE.Group {
+  const group = new THREE.Group();
+  const mutedMetal = new THREE.MeshLambertMaterial({
+    color: 0x4a4c50,
+    map: getMetalTexture('#4a4c50'),
+  });
+
+  // skinny pole from below the hook down past the holder's base
+  const poleHeight = h + Math.abs(hookOffset.y) + 10;
+  const pole = cylinder(7, 9, poleHeight, mutedMetal, 8);
+  pole.position.set(
+    hookOffset.x,
+    hookOffset.y - poleHeight / 2 + 6,
+    hookOffset.z * 0.5
   );
-  cap.position.y = h / 2 + 7;
-  group.add(cap);
+  group.add(pole);
+
+  // small cross-arm + insulator knob under the cable
+  const arm = cylinder(4, 4, 34, mutedMetal, 6);
+  arm.rotation.z = Math.PI / 2;
+  arm.position.set(hookOffset.x, hookOffset.y - 12, hookOffset.z);
+  const insulator = sphere(8, lambert(0x6a6458), 8, 6);
+  insulator.position.set(hookOffset.x, hookOffset.y - 6, hookOffset.z);
+  group.add(arm, insulator);
+
+  // pipe elbow that grips the cable at the bend
+  const elbow = new THREE.Mesh(
+    new THREE.SphereGeometry(cableRadius * 2.0, 10, 8),
+    mutedMetal
+  );
+  elbow.position.copy(hookOffset);
+  group.add(elbow);
+  const up = new THREE.Vector3(0, 1, 0);
+  for (const dir of [inDir, outDir]) {
+    if (dir.lengthSq() < 0.01) {
+      continue;
+    }
+    const sleeve = new THREE.Mesh(
+      new THREE.CylinderGeometry(cableRadius * 1.6, cableRadius * 1.6, 30, 8),
+      mutedMetal
+    );
+    sleeve.quaternion.setFromUnitVectors(up, dir.clone().normalize());
+    sleeve.position
+      .copy(hookOffset)
+      .addScaledVector(dir.clone().normalize(), 15);
+    group.add(sleeve);
+  }
+  return group;
+}
+
+/** Row of retractable wall spikes pointing +x (out of the left wall). */
+export function buildWallSpikeRow(
+  ys: number[],
+  length: number,
+  radius: number
+): THREE.Group {
+  const group = new THREE.Group();
+  const material = new THREE.MeshLambertMaterial({
+    color: 0xa8a8b0,
+    map: getMetalTexture('#a8a8b0'),
+  });
+  ys.forEach((y) => {
+    const spike = new THREE.Mesh(
+      new THREE.ConeGeometry(radius, length, 9),
+      material
+    );
+    spike.rotation.z = -Math.PI / 2; // point +x, into the arena
+    spike.position.set(length / 2, y, 0);
+    group.add(spike);
+  });
   return group;
 }
 
@@ -534,52 +647,64 @@ export interface PSwitchHandles {
   group: THREE.Group;
   dome: THREE.Mesh;
   domeMaterial: THREE.MeshLambertMaterial;
+  domeBaseColor: THREE.Color;
   ringMaterial: THREE.MeshLambertMaterial;
 }
 
 /**
- * P-switch: blue glossy dome on a riveted gold pedestal with a
- * state ring. The renderer flips it between two clear states:
- *   UP (armed)    - dome raised, blue, ring glows cool cream
- *   DOWN (active) - dome squashed flat, molten orange, ring hot
+ * Stage button: a clean industrial plunger — a colored cylinder that
+ * compresses down into a squat metal collar when pressed. The plunger
+ * color encodes the button's job (red = spikes, blue = fuse spark).
  */
-export function buildPSwitch(w: number, h: number): PSwitchHandles {
+export function buildPSwitch(
+  w: number,
+  h: number,
+  domeColor: number
+): PSwitchHandles {
   // origin matches the sprite's origin (0.5, 1) => bottom center
   const group = new THREE.Group();
 
-  const baseMaterial = lambert(THEME_GOLD, {
-    map: getMetalTexture('#f2c218'),
+  // metal collar the plunger sinks into
+  const collarMaterial = lambert(0x3d4450, {
+    map: getMetalTexture('#3d4450'),
   });
-  const base = box(w, h * 0.2, w * 0.62, baseMaterial);
-  base.position.y = h * 0.1;
-  // rivets on the pedestal corners
-  const rivetMaterial = lambert(0x7a6110);
-  for (const sx of [-1, 1]) {
-    for (const sz of [-1, 1]) {
-      const rivet = sphere(w * 0.035, rivetMaterial, 8, 6);
-      rivet.position.set(sx * w * 0.42, h * 0.2, sz * w * 0.24);
-      group.add(rivet);
-    }
-  }
+  const collar = cylinder(w * 0.52, w * 0.58, h * 0.3, collarMaterial, 18);
+  collar.position.y = h * 0.15;
 
+  // state ring on top of the collar
   const ringMaterial = lambert(0xf4f0e0, { emissive: 0x555540 });
   const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(w * 0.36, w * 0.05, 10, 22),
+    new THREE.TorusGeometry(w * 0.47, w * 0.045, 10, 24),
     ringMaterial
   );
   ring.rotation.x = Math.PI / 2;
-  ring.position.y = h * 0.22;
+  ring.position.y = h * 0.3;
 
-  const domeMaterial = lambert(0x4169e1, { emissive: 0x0a1030 });
-  const dome = new THREE.Mesh(
-    new THREE.SphereGeometry(w * 0.34, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2),
-    domeMaterial
+  // the plunger itself: geometry anchored at its base so squashing
+  // scale.y compresses it downward into the collar
+  const domeMaterial = lambert(domeColor, { emissive: 0x0a1030 });
+  const plungerGeometry = new THREE.CylinderGeometry(
+    w * 0.38,
+    w * 0.4,
+    h * 0.7,
+    18
   );
-  dome.scale.y = (h * 0.72) / (w * 0.34);
-  dome.position.y = h * 0.2;
+  plungerGeometry.translate(0, h * 0.35, 0); // base-anchored
+  const dome = new THREE.Mesh(plungerGeometry, domeMaterial);
+  dome.position.y = h * 0.18;
+  // cap disc so the top reads clearly
+  const cap = cylinder(w * 0.38, w * 0.38, h * 0.05, lambert(0xf4f0e0), 18);
+  cap.position.y = h * 0.72;
+  dome.add(cap);
 
-  group.add(base, ring, dome);
-  return { group, dome, domeMaterial, ringMaterial };
+  group.add(collar, ring, dome);
+  return {
+    group,
+    dome,
+    domeMaterial,
+    domeBaseColor: new THREE.Color(domeColor),
+    ringMaterial,
+  };
 }
 
 /** Firework burst: emissive rays flying out of a center, theme colors. */
@@ -670,7 +795,93 @@ export function buildFireFlower(
   return { group, tintable };
 }
 
-/** Chain chomp: black ball, hinged jaw full of white teeth, angry eyes. */
+/**
+ * The chained beast: a giant black widow-like spider straining at the
+ * end of the chain. Bulbous furred abdomen with a blood-red mark, six
+ * glowing red eyes, dripping white fangs on a hinged mandible (driven
+ * by the old chomp bite animation), and eight bent legs that scuttle.
+ */
+export function buildChainBeast(diameter: number): {
+  group: THREE.Group;
+  jaw: THREE.Group;
+  legs: THREE.Group[];
+} {
+  // origin matches the old sprite origin (0.5, 1) => bottom center
+  const group = new THREE.Group();
+  const r = diameter / 2;
+  const chitin = lambert(0x14100e, { map: getFurTexture('#14100e') });
+  const legMaterial = lambert(0x1c1512, { map: getFurTexture('#1c1512') });
+
+  // abdomen: big bulb behind/above, with a red hourglass mark
+  const abdomen = sphere(r * 0.72, chitin, 18, 14);
+  abdomen.scale.set(1, 1.12, 1.05);
+  abdomen.position.set(0, r * 1.15, -r * 0.55);
+  const mark = sphere(r * 0.2, lambert(0xc41111, { emissive: 0x550000 }));
+  mark.scale.set(0.8, 1.3, 0.4);
+  mark.position.set(0, r * 1.2, r * 0.14 - r * 0.55 + r * 0.62);
+  group.add(abdomen, mark);
+
+  // cephalothorax: head-chest at the front
+  const head = sphere(r * 0.46, chitin, 16, 12);
+  head.position.set(0, r * 0.72, r * 0.32);
+  group.add(head);
+
+  // six glowing eyes
+  for (let i = 0; i < 6; i++) {
+    const row = i < 3 ? 0 : 1;
+    const col = (i % 3) - 1;
+    const eye = sphere(
+      r * (row === 0 ? 0.07 : 0.045),
+      lambert(0xff2211, { emissive: 0xaa1100 }),
+      8,
+      6
+    );
+    eye.position.set(
+      col * r * 0.17,
+      r * (0.84 - row * 0.13),
+      r * 0.72
+    );
+    group.add(eye);
+  }
+
+  // hinged mandibles with fangs (the "jaw" the bite anim drives)
+  const jaw = new THREE.Group();
+  jaw.position.set(0, r * 0.62, r * 0.42);
+  for (const side of [-1, 1]) {
+    const mandible = sphere(r * 0.12, chitin, 8, 6);
+    mandible.position.set(side * r * 0.16, -r * 0.05, r * 0.16);
+    const fang = cone(r * 0.07, r * 0.3, lambert(0xf2ecdc), 8);
+    fang.rotation.x = Math.PI; // point down
+    fang.position.set(side * r * 0.16, -r * 0.24, r * 0.2);
+    jaw.add(mandible, fang);
+  }
+  group.add(jaw);
+
+  // eight bent legs, four per side
+  const legs: THREE.Group[] = [];
+  for (let i = 0; i < 8; i++) {
+    const side = i < 4 ? -1 : 1;
+    const slot = i % 4;
+    const leg = new THREE.Group();
+    leg.position.set(side * r * 0.34, r * 0.75, r * (0.28 - slot * 0.22));
+
+    const upper = cylinder(r * 0.045, r * 0.035, r * 0.62, legMaterial, 6);
+    upper.position.set(side * r * 0.26, r * 0.14, 0);
+    upper.rotation.z = side * -1.05; // up and out
+
+    const lower = cylinder(r * 0.035, r * 0.02, r * 0.72, legMaterial, 6);
+    lower.position.set(side * r * 0.58, -r * 0.28, 0);
+    lower.rotation.z = side * 0.5; // down to the ground
+
+    leg.add(upper, lower);
+    group.add(leg);
+    legs.push(leg);
+  }
+
+  return { group, jaw, legs };
+}
+
+/** @deprecated old chomp ball — kept for reference, unused. */
 export function buildChomp(diameter: number): {
   group: THREE.Group;
   jaw: THREE.Group;

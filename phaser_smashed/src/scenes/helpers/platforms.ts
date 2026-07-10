@@ -1055,11 +1055,26 @@ export function createPlatforms12(game: SmashedGame): void {
     }
   }
 
-  for (let i = 0; i < 6; i++) {
-    game.PLATFORMS.create(
-      SCREEN_DIMENSIONS.WIDTH * 0.766,
-      SCREEN_DIMENSIONS.HEIGHT * 1.0122 + i * game.ASSET_BRICK_HEIGHT,
-      'platformHorizontal'
-    );
+  ////////////////////////////////////////////////////////////
+  // Deep castle: the old floor under the right side is gone — the
+  // pit (center) and the shaft under the flag (right) are now open
+  // lava pools. Brick columns wall the pools so the castle masses
+  // extend far downward.
+  ////////////////////////////////////////////////////////////
+
+  // central pool, left wall: extends the low shelf's right edge down
+  for (let i = 0; i < 16; i++) {
+    game.PLATFORMS.create(963, 1004 + i * game.ASSET_BRICK_HEIGHT, 'brick');
+  }
+
+  // right pool, left wall: under the flag platform's left edge
+  for (let i = 0; i < 22; i++) {
+    game.PLATFORMS.create(1655, 780 + i * game.ASSET_BRICK_HEIGHT, 'brick');
+  }
+
+  // right pool, right wall: the castle's right wall running deep,
+  // keeping the little rampart above it untouched
+  for (let i = 0; i < 24; i++) {
+    game.PLATFORMS.create(1915, 750 + i * game.ASSET_BRICK_HEIGHT, 'brick');
   }
 }

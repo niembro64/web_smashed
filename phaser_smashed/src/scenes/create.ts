@@ -12,6 +12,7 @@ import {
   onHitHandlerFireBall,
 } from './helpers/damage';
 import { getInactiveBackgroundTintColor } from './helpers/fireFlower';
+import { createLeftWallCombo } from './helpers/leftWall';
 import { createPlatforms } from './helpers/platforms';
 import {
   getDoesAnythingHaveDark,
@@ -77,6 +78,7 @@ export function create(game: SmashedGame) {
   createPlayers(game);
   createExplosionsFront(game);
   createEmittersFollowPlayers(game);
+  createLeftWallCombo(game);
   createColliderTablePlayers(game);
   createKeyboards(game);
   createPlayerIdCircles(game);
@@ -1560,7 +1562,11 @@ function createAttackPhysicals(game: SmashedGame): void {
       .setActive(true)
       .setVisible(true)
       .setTint(game.colorCircles[playerIndex].colorNumber)
-      .setAlpha(0.5);
+      // the punch is the character's own body now — fist art is gone
+      // (Link's sword remains visible); the sprite stays as the hitbox
+      .setAlpha(
+        player.char.attackPhysical.srcImage.includes('fist') ? 0 : 0.5
+      );
 
     player.char.attackPhysical.sprite.body.allowGravity = false;
 

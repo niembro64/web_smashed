@@ -297,16 +297,22 @@ export function setTintAttackEnergyID(
   player.char.attackEnergy.sprite.setTint(circleColor);
   player.char.attackEnergy.sprite.setAlpha(1);
 }
+// the punch is the character's own body — fist art stays invisible
+// (Link's sword and other non-fist physical attacks remain visible)
+function getAttackPhysicalAlpha(player: Player): number {
+  return player.char.attackPhysical.srcImage.includes('fist') ? 0 : 1;
+}
+
 export function setTintAttackPhysicalID(
   player: Player,
   circleColor: number
 ): void {
   player.char.attackPhysical.sprite.setTint(circleColor);
-  player.char.attackPhysical.sprite.setAlpha(1);
+  player.char.attackPhysical.sprite.setAlpha(getAttackPhysicalAlpha(player));
 }
 export function setTintAttackPhysicalNormal(player: Player): void {
   player.char.attackPhysical.sprite.setTint(0xffffff);
-  player.char.attackPhysical.sprite.setAlpha(1);
+  player.char.attackPhysical.sprite.setAlpha(getAttackPhysicalAlpha(player));
 }
 export function setTintAttackEnergyNormal(player: Player): void {
   player.char.attackEnergy.sprite.setTint(0xffffff);
@@ -318,7 +324,7 @@ export function setFillAttackPhysicalID(
 ): void {
   player.char.attackPhysical.sprite.setTint('transparent');
   player.char.attackPhysical.sprite.setTintFill(circleColor);
-  player.char.attackPhysical.sprite.setAlpha(1);
+  player.char.attackPhysical.sprite.setAlpha(getAttackPhysicalAlpha(player));
 }
 export function setFillAttackEnergyID(
   player: Player,

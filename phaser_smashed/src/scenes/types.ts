@@ -455,6 +455,11 @@ export type Line = {
 export interface AttackPhysical {
   sprite: any | Phaser.GameObjects.Sprite;
   state: AttackStateWithTime;
+  // smash-attack bookkeeping: snapshot of the neutral values so
+  // directional smashes can scale damage/knockback per activation
+  baseDamage?: number;
+  baseHitback?: Hitback;
+  smashActive?: boolean;
   durationAttack: number;
   durationCooldown: number;
   posFromCenter: Position;

@@ -401,6 +401,12 @@ export function updateAttackPhysicals(
         ////////////////////////////////
         ///////// duration => off
         ////////////////////////////////
+        // restore neutral punch values after any smash
+        if (ap.baseDamage !== undefined && ap.baseHitback) {
+          ap.damage = ap.baseDamage;
+          ap.hitback = { x: ap.baseHitback.x, y: ap.baseHitback.y };
+          ap.smashActive = false;
+        }
         setAttackPhysicalState(
           ap,
           player,
@@ -418,7 +424,51 @@ export function updateAttackPhysicals(
       if (player.padCurr.A && !player.padPrev.A) {
         ////////////////////////////////
         ///////// button => on
+        ///////// direction + punch => SMASH attack
         ////////////////////////////////
+        if (ap.baseDamage === undefined || !ap.baseHitback) {
+          ap.baseDamage = ap.damage;
+          ap.baseHitback = { x: ap.hitback.x, y: ap.hitback.y };
+        }
+
+        const sprite = player.char.sprite;
+        const pad = player.padCurr;
+        const facing = sprite.flipX ? -1 : 1;
+
+        ap.smashActive = false;
+        ap.damage = ap.baseDamage;
+        ap.hitback = { x: ap.baseHitback.x, y: ap.baseHitback.y };
+
+        if (pad.left || pad.right) {
+          // FORWARD SMASH: the character lunges into the blow —
+          // the body itself is the attack, no floating fist
+          ap.smashActive = true;
+          ap.damage = ap.baseDamage * 1.8;
+          ap.hitback = {
+            x: ap.baseHitback.x * 1.7,
+            y: ap.baseHitback.y,
+          };
+          sprite.body.setVelocityX(sprite.body.velocity.x + facing * 700);
+          sprite.body.setVelocityY(sprite.body.velocity.y - 120);
+        } else if (pad.up) {
+          // UP SMASH: rising uppercut, launches victims skyward
+          ap.smashActive = true;
+          ap.damage = ap.baseDamage * 1.6;
+          ap.hitback = {
+            x: ap.baseHitback.x * 0.6,
+            y: ap.baseHitback.y * 2.2,
+          };
+          sprite.body.setVelocityY(sprite.body.velocity.y - 550);
+        } else if (pad.down) {
+          // DOWN SMASH: heavy close-range swat
+          ap.smashActive = true;
+          ap.damage = ap.baseDamage * 1.5;
+          ap.hitback = {
+            x: ap.baseHitback.x * 1.3,
+            y: ap.baseHitback.y * 0.5,
+          };
+        }
+
         setAttackPhysicalState(
           ap,
           player,

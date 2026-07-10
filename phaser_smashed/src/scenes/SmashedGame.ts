@@ -13,6 +13,7 @@ import {
   EndCup,
   FireFlower,
   Flag,
+  FlagSpikesState,
   GameBoundaryObject,
   GameStateWithTime,
   InputType,
@@ -818,57 +819,19 @@ export default class SmashedGame extends Phaser.Scene {
     y: this.flagPlatformTopLeft.y + 385,
   };
 
+  // The alive region. Generous at the top and right — players die only
+  // when launched FAR off the map — and dipping down into the two lava
+  // pools inside the castle (between the solid castle masses, falling
+  // ends in lava; everywhere else the walls extend far down).
   gamePathPoints: Position[] = [
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-      y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
-      y: SCREEN_DIMENSIONS.HEIGHT * this.percentOfScreen.y,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * (1 - this.percentOfScreen.x),
-      y: this.flagPlatformTopLeft.y,
-    },
-
-    {
-      x: this.flagPlatformTopLeft.x,
-      y: this.flagPlatformTopLeft.y,
-    },
-
-    {
-      x: this.flagStairsBottom.x,
-      y: this.flagStairsBottom.y,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * 0.49,
-      y: this.flagStairsBottom.y,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * 0.49,
-      y: this.flagStairsBottom.y - 120,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * 0.28,
-      y: this.flagStairsBottom.y - 120,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * 0.16,
-      y: this.flagStairsBottom.y - 120,
-    },
-    // {
-    //   x: SCREEN_DIMENSIONS.WIDTH * 0.16,
-    //   y: this.flagStairsBottom.y,
-    // },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * 0.16,
-      y: this.flagStairsBottom.y,
-    },
-    {
-      x: SCREEN_DIMENSIONS.WIDTH * this.percentOfScreen.x,
-      y: this.flagStairsBottom.y,
-    },
+    { x: -700, y: -2600 },
+    { x: 4200, y: -2600 },
+    { x: 4200, y: 2800 },
+    { x: 1900, y: 2800 },
+    { x: 1900, y: 1170 }, // lava level inside the castle (both pools)
+    { x: 930, y: 1170 },
+    { x: 930, y: 2800 },
+    { x: -700, y: 2800 },
   ];
 
   gameBoundaryPath: GameBoundaryObject = {
@@ -1019,9 +982,27 @@ export default class SmashedGame extends Phaser.Scene {
       sP2: 'pop2',
       vP2: 0.03,
     },
+    // perched on the left end of the main center platform
     posInit: {
-      x: SCREEN_DIMENSIONS.WIDTH * 0.18573,
-      y: SCREEN_DIMENSIONS.HEIGHT * 0.3356,
+      x: 645,
+      y: 505,
+    },
+  };
+
+  ////////////////////////////////
+  ////////// LEFT WALL SPIKES
+  ////////////////////////////////
+  leftWallCombo = {
+    spikes: {
+      sprite: null as any,
+      sound: null as any,
+      state: 'spikes-down' as FlagSpikesState,
+    },
+    button: {
+      scale: 0.11,
+      spriteUp: null as any,
+      spriteDown: null as any,
+      playerIndexPressing: null as number | null,
     },
   };
 
