@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import SmashedGame, { SCREEN_DIMENSIONS } from '../SmashedGame';
 import { CharacterId, Player } from '../types';
+import { buildEnvironment, EnvironmentHandles } from './environment';
 import {
   buildAttackModelForKey,
   buildBulletBill,
@@ -9,15 +10,21 @@ import {
   buildChomp,
   buildExplosion,
   buildFireFlower,
+  buildFirework,
   buildFlag,
+  buildLeaderMarker,
   buildPSwitch,
   buildPlatformBlock,
   buildPole,
   buildSpikes,
   buildTable,
+  buildTowerColumn,
+  waveFlagCloth,
+  PlatformVariant,
+  PSwitchHandles,
 } from './models';
 import { CharacterRig } from './rigs';
-import { disposeAllCachedTextures, getImageTexture } from './textures';
+import { disposeAllCachedTextures } from './textures';
 
 ////////////////////////////////////////////////////////////
 // Three3D — the pseudo-3D view of the game.
@@ -34,11 +41,15 @@ import { disposeAllCachedTextures, getImageTexture } from './textures';
 //     the z=0 plane, so everything physically meaningful lines
 //     up pixel-perfect with the 2D simulation, while boxes,
 //     rigs and props extend in depth for the 3D feel.
+//
+// The 3D world uses NO original 2D image assets: all surfaces
+// are procedural canvas textures on real geometry (see
+// textures.ts / environment.ts), themed around warm terracotta
+// masonry, cream trim, slate steel and molten gold.
 ////////////////////////////////////////////////////////////
 
 const FOV_DEGREES = 45;
 const PLATFORM_DEPTH = 90;
-const LAVA_NUM_FRAMES = 16;
 
 interface SpriteMirror {
   holder: THREE.Group; // position + z-rotation
@@ -69,21 +80,26 @@ export class Three3D {
     [];
   private explosionMirrors: ExplosionMirror[] = [];
   private ignoreList: any[] = [];
+  private environment: EnvironmentHandles | null = null;
 
   // special-cased props
-  // screen-composition layers (stage outlines) that must keep their
-  // exact 2D size on screen despite sitting at different depths
-  private screenLayers: { mesh: THREE.Mesh; z: number }[] = [];
   private chompJaw: THREE.Group | null = null;
   private chompGroup: THREE.Group | null = null;
   private chainLinks: { group: THREE.Group; sprite: any }[] = [];
-  private lavaTexture: THREE.Texture | null = null;
-  private buttonDomes: {
-    dome: THREE.Mesh;
-    upSprite: any;
-    baseScaleY: number;
-  }[] = [];
-  private flagCloth: THREE.Group | null = null;
+  private buttons: { handles: PSwitchHandles; upSprite: any; baseScaleY: number }[] =
+    [];
+  private flagClothMesh: THREE.Mesh | null = null;
+  private fireworkRig: {
+    group: THREE.Group;
+    rays: {
+      mesh: THREE.Mesh;
+      dir: THREE.Vector3;
+      material: THREE.MeshLambertMaterial;
+    }[];
+    sprite: any;
+    radius: number;
+  } | null = null;
+  private leaderMarker: { group: THREE.Group; sprite: any } | null = null;
   private flowerTintable: THREE.MeshLambertMaterial[] = [];
   private flowerBaseColors: THREE.Color[] = [];
   private flowerGroup: THREE.Group | null = null;
@@ -93,6 +109,9 @@ export class Three3D {
     models: THREE.Group[];
     bullets: any;
   }[] = [];
+
+  private sunLight: THREE.DirectionalLight | null = null;
+  private hemisphereLight: THREE.HemisphereLight | null = null;
 
   constructor(game: SmashedGame) {
     this.game = game;
@@ -137,7 +156,7 @@ export class Three3D {
       FOV_DEGREES,
       SCREEN_DIMENSIONS.WIDTH / SCREEN_DIMENSIONS.HEIGHT,
       10,
-      8000
+      12000
     );
 
     this.buildLights();
@@ -188,22 +207,18 @@ export class Three3D {
   }
 
   private buildLights(): void {
-    const hemisphere = new THREE.HemisphereLight(0xbdd4ff, 0x3a2a20, 0.95);
-    this.scene.add(hemisphere);
+    this.hemisphereLight = new THREE.HemisphereLight(0xbdd4ff, 0x3a2a20, 0.95);
+    this.scene.add(this.hemisphereLight);
 
-    const sun = new THREE.DirectionalLight(0xfff2dd, 1.0);
-    sun.position.set(
-      SCREEN_DIMENSIONS.WIDTH * 0.25,
-      600,
-      900
-    );
-    sun.target.position.set(
+    this.sunLight = new THREE.DirectionalLight(0xfff2dd, 1.0);
+    this.sunLight.position.set(SCREEN_DIMENSIONS.WIDTH * 0.25, 600, 900);
+    this.sunLight.target.position.set(
       SCREEN_DIMENSIONS.WIDTH / 2,
       -SCREEN_DIMENSIONS.HEIGHT / 2,
       0
     );
-    this.scene.add(sun);
-    this.scene.add(sun.target);
+    this.scene.add(this.sunLight);
+    this.scene.add(this.sunLight.target);
 
     if (!this.game.debug.Simple_Stage) {
       // warm glow rising from the lava at the bottom of the stage
@@ -218,119 +233,41 @@ export class Three3D {
   }
 
   private buildBackdrop(): void {
-    const nintendo = this.game.debug.Nintendo_Sprites;
-    const centerX = SCREEN_DIMENSIONS.WIDTH / 2;
-    const centerY = -SCREEN_DIMENSIONS.HEIGHT / 2;
-
-    // Windows XP "Bliss" sky, far behind the stage
-    const skyTexture = getImageTexture(
-      nintendo ? 'images/darkxp.jpg' : 'images/darkxp_alt.jpg',
-      { smooth: true }
-    );
-    const sky = new THREE.Mesh(
-      new THREE.PlaneGeometry(
-        SCREEN_DIMENSIONS.WIDTH * 2.6,
-        SCREEN_DIMENSIONS.HEIGHT * 2.6
-      ),
-      new THREE.MeshBasicMaterial({ map: skyTexture })
-    );
-    sky.position.set(centerX, centerY, -1100);
-    this.scene.add(sky);
+    // hide every 2D backdrop / outline / lava sprite; the procedural
+    // environment replaces all of them
     this.track(this.game.BACKGROUND);
-
-    // stage outline layers, kept as flat art but separated in depth;
-    // sized from the live sprites (the source images are larger than
-    // the 1920x1080 world) and scale-compensated every frame so their
-    // on-screen composition matches the 2D game exactly
-    const outlinePlane = (url: string, sprite: any, z: number): void => {
-      if (!sprite) {
-        return;
-      }
-      const material = new THREE.MeshBasicMaterial({
-        map: getImageTexture(url),
-        transparent: true,
-        depthWrite: false,
-      });
-      const plane = new THREE.Mesh(
-        new THREE.PlaneGeometry(sprite.displayWidth, sprite.displayHeight),
-        material
-      );
-      plane.position.set(sprite.x, -sprite.y, z);
-      this.scene.add(plane);
-      this.screenLayers.push({ mesh: plane, z });
-      this.track(sprite);
-    };
-
-    outlinePlane(
-      nintendo
-        ? 'images/outline_blocks_11_castle.png'
-        : 'images/outline_blocks_11_castle_alt.png',
-      this.game.BACKGROUND_OUTLINE_CASTLE,
-      -160
-    );
-    outlinePlane(
-      'images/outline_blocks_11_front.png',
-      this.game.BACKGROUND_OUTLINE_FRONT,
-      70
-    );
-    outlinePlane(
-      'images/outline_blocks_11_lava.png',
-      this.game.BACKGROUND_OUTLINE_LAVA,
-      95
-    );
-
-    // boundary path graphics (only visible in dev mode) — hide in 3D
+    this.track(this.game.BACKGROUND_OUTLINE_CASTLE);
+    this.track(this.game.BACKGROUND_OUTLINE_FRONT);
+    this.track(this.game.BACKGROUND_OUTLINE_LAVA);
     this.track(this.game.gameBoundaryPath.graphics);
+    this.game.lavas.forEach((lava) => this.track(lava.sprite));
 
-    // molten lava strip along the bottom, animated with the real frames
-    this.lavaTexture = getImageTexture(
-      'images/lava_oddVert_noPadding_256x39.png',
-      { repeat: true }
-    );
-    this.lavaTexture.repeat.set(1 / LAVA_NUM_FRAMES, 1);
-    const lavaMaterial = new THREE.MeshBasicMaterial({
-      map: this.lavaTexture,
-      transparent: true,
-    });
-    this.game.lavas.forEach((lava) => {
-      if (!lava.sprite) {
-        return;
-      }
-      const w = lava.sprite.displayWidth;
-      const h = lava.sprite.displayHeight;
-      const plane = new THREE.Mesh(
-        new THREE.PlaneGeometry(w, h),
-        lavaMaterial
-      );
-      // lava sprites use origin (0,0) => convert to center
-      plane.position.set(
-        lava.sprite.x + w / 2,
-        -(lava.sprite.y + h / 2),
-        24
-      );
-      this.scene.add(plane);
-      this.track(lava.sprite);
+    this.environment = buildEnvironment(this.scene, {
+      centerX: SCREEN_DIMENSIONS.WIDTH / 2,
+      centerY: -SCREEN_DIMENSIONS.HEIGHT / 2,
+      sunLight: this.sunLight!,
+      hemisphereLight: this.hemisphereLight!,
+      boundaryPathPoints: this.game.gameBoundaryPath.pathPoints,
+      includeLava: !this.game.debug.Simple_Stage,
     });
   }
 
   private buildPlatforms(): void {
-    const nintendo = this.game.debug.Nintendo_Sprites;
-    const prefix = nintendo ? 'images/' : 'images/alt_';
-    const urlByKey: { [key: string]: string } = {
-      platformHorizontal: prefix + 'brickhoriz.bmp',
-      platformShort: prefix + 'brickhorizshorter.bmp',
-      platformVertical: prefix + 'brickvert.bmp',
-      brick: prefix + 'blockcracked.png',
+    const variantByKey: { [key: string]: PlatformVariant } = {
+      platformHorizontal: 'bricks',
+      platformShort: 'bricks',
+      platformVertical: 'bricks',
+      brick: 'cracked',
     };
 
     const children: any[] = this.game.PLATFORMS?.getChildren?.() || [];
     children.forEach((platform: any) => {
-      const url = urlByKey[platform.texture?.key] || urlByKey.brick;
+      const variant = variantByKey[platform.texture?.key] || 'cracked';
       const block = buildPlatformBlock(
         platform.displayWidth,
         platform.displayHeight,
         PLATFORM_DEPTH,
-        url
+        variant
       );
       block.position.set(platform.x, -platform.y, 0);
       this.scene.add(block);
@@ -436,7 +373,7 @@ export class Three3D {
     }
 
     ////////////////////////////////////////
-    // FLAG: POLE + CLOTH + SPIKES + BUTTONS
+    // FLAG: POLE + CLOTH + SPIKES + BUTTONS + FIREWORK + LEADER MARKER
     ////////////////////////////////////////
     const flag = game.flag;
     if (flag.spriteFlagPole) {
@@ -449,12 +386,12 @@ export class Three3D {
       this.track(flag.spriteFlagPole);
     }
     if (flag.spriteFlagMover) {
-      const cloth = buildFlag(
+      const { group, cloth } = buildFlag(
         flag.spriteFlagMover.displayWidth,
         flag.spriteFlagMover.displayHeight
       );
-      const mirror = this.addMirror(flag.spriteFlagMover, cloth, -4);
-      this.flagCloth = mirror.model;
+      this.addMirror(flag.spriteFlagMover, group, -4);
+      this.flagClothMesh = cloth;
     }
     this.track(flag.spriteFlagStationary);
     if (flag.flagSpikes.sprite) {
@@ -466,6 +403,21 @@ export class Three3D {
     }
     if (flag.flagButton.spriteUp) {
       this.buildButton(flag.flagButton.spriteUp, flag.flagButton.spriteDown);
+    }
+    if (flag.firework) {
+      const radius = flag.firework.displayWidth / 2 || 300;
+      const { group, rays } = buildFirework(radius);
+      group.visible = false;
+      this.scene.add(group);
+      this.fireworkRig = { group, rays, sprite: flag.firework, radius };
+      this.track(flag.firework);
+    }
+    if (flag.spriteFlagChar) {
+      const marker = buildLeaderMarker(60);
+      marker.visible = false;
+      this.scene.add(marker);
+      this.leaderMarker = { group: marker, sprite: flag.spriteFlagChar };
+      this.track(flag.spriteFlagChar);
     }
 
     ////////////////////////////////////////
@@ -502,27 +454,17 @@ export class Three3D {
       this.buildButton(bb.button.spriteUp, bb.button.spriteDown);
     }
 
-    // towers: tall brick columns carrying the real tower art
+    // towers: procedural brick watchtower columns
     for (const tower of [bb.towerCenter, bb.towerLeft]) {
       if (!tower.sprite) {
         continue;
       }
-      const url =
-        tower === bb.towerCenter
-          ? game.debug.Nintendo_Sprites
-            ? 'images/bullet_bill_line_tower.png'
-            : 'images/bullet_bill_line_tower_alt.png'
-          : game.debug.Nintendo_Sprites
-          ? 'images/bullet_bill_line_tower_left.png'
-          : 'images/bullet_bill_line_tower_left_alt.png';
-      const block = buildPlatformBlock(
+      const column = buildTowerColumn(
         tower.sprite.displayWidth,
-        tower.sprite.displayHeight,
-        60,
-        url
+        tower.sprite.displayHeight
       );
-      block.position.set(tower.sprite.x, -tower.sprite.y, -30);
-      this.scene.add(block);
+      column.position.set(tower.sprite.x, -tower.sprite.y, -30);
+      this.scene.add(column);
       this.track(tower.sprite);
     }
 
@@ -603,18 +545,22 @@ export class Three3D {
   }
 
   private buildButton(upSprite: any, downSprite: any): void {
-    const { group, dome } = buildPSwitch(
+    const handles = buildPSwitch(
       upSprite.displayWidth,
       upSprite.displayHeight
     );
     // button sprites use origin (0.5, 1) => model is built bottom-anchored
     const holder = new THREE.Group();
-    holder.add(group);
+    holder.add(handles.group);
     this.scene.add(holder);
-    this.buttonDomes.push({ dome, upSprite, baseScaleY: dome.scale.y });
+    this.buttons.push({
+      handles,
+      upSprite,
+      baseScaleY: handles.dome.scale.y,
+    });
     this.mirrors.push({
       holder,
-      model: group,
+      model: handles.group,
       sprite: upSprite,
       mirrorRotation: false,
       mirrorFlip: false,
@@ -652,14 +598,6 @@ export class Three3D {
       halfHeight / Math.tan(THREE.MathUtils.degToRad(FOV_DEGREES / 2));
     this.camera.position.set(cam.midPoint.x, -cam.midPoint.y, distance);
     this.camera.lookAt(cam.midPoint.x, -cam.midPoint.y, 0);
-
-    // keep screen-composition layers the same apparent size as in 2D:
-    // a plane at depth z projects larger/smaller by distance/(distance-z),
-    // so pre-scale by the inverse
-    this.screenLayers.forEach(({ mesh, z }) => {
-      const factor = (distance - z) / distance;
-      mesh.scale.setScalar(factor);
-    });
   }
 
   private syncMirror(mirror: SpriteMirror): void {
@@ -739,7 +677,9 @@ export class Three3D {
       this.chompGroup.visible = !!sprite.visible;
       // chomp sprite origin is (0.5, 1) => y is already the bottom
       this.chompGroup.position.set(sprite.x, -sprite.y, 0);
-      this.chompGroup.rotation.y = sprite.flipX ? Math.PI * 0.15 : -Math.PI * 0.15;
+      this.chompGroup.rotation.y = sprite.flipX
+        ? Math.PI * 0.15
+        : -Math.PI * 0.15;
       const scaleRatio = sprite.scaleX / game.chomp.scaleChompNormal;
       this.chompGroup.scale.setScalar(Math.max(0.01, scaleRatio));
       if (this.chompJaw) {
@@ -753,27 +693,68 @@ export class Three3D {
       group.position.set(sprite.x, -sprite.y + sprite.displayHeight / 2, -26);
     });
 
-    // lava frame scroll
-    if (this.lavaTexture && game.lavas[0]?.sprite) {
-      const frame = Number(game.lavas[0].sprite.frame?.name) || 0;
-      this.lavaTexture.offset.x = frame / LAVA_NUM_FRAMES;
+    // flag cloth ripples in the wind
+    if (this.flagClothMesh) {
+      waveFlagCloth(this.flagClothMesh, this.elapsed);
     }
 
-    // flag cloth wave
-    if (this.flagCloth) {
-      this.flagCloth.rotation.y = Math.sin(this.elapsed * 2.4) * 0.22;
-    }
-
-    // buttons: dome squashes down when pressed
-    this.buttonDomes.forEach(({ dome, upSprite, baseScaleY }) => {
+    // buttons: two clear states — armed (up, blue, cool ring) and
+    // active (pressed, squashed, molten glow)
+    this.buttons.forEach(({ handles, upSprite, baseScaleY }) => {
       const isUp = upSprite.alpha > 0.5;
-      const target = baseScaleY * (isUp ? 1 : 0.28);
-      dome.scale.y += (target - dome.scale.y) * 0.3;
+      const targetScale = baseScaleY * (isUp ? 1 : 0.22);
+      handles.dome.scale.y += (targetScale - handles.dome.scale.y) * 0.3;
+      if (isUp) {
+        handles.domeMaterial.color.setHex(0x4169e1);
+        handles.domeMaterial.emissive.setHex(0x0a1030);
+        handles.ringMaterial.color.setHex(0xf4f0e0);
+        handles.ringMaterial.emissive.setHex(0x555540);
+      } else {
+        handles.domeMaterial.color.setHex(0x8a8a8a);
+        handles.domeMaterial.emissive.setHex(0x220800);
+        handles.ringMaterial.color.setHex(0xff5511);
+        const pulse = 0.5 + Math.sin(this.elapsed * 10) * 0.5;
+        handles.ringMaterial.emissive.setRGB(0.9 * pulse, 0.25 * pulse, 0.02);
+      }
     });
+
+    // firework burst on flag completion
+    if (this.fireworkRig) {
+      const sprite = this.fireworkRig.sprite;
+      const playing = !!sprite?.anims?.isPlaying && sprite.alpha > 0.01;
+      this.fireworkRig.group.visible = playing;
+      if (playing) {
+        const progress = sprite.anims.getProgress
+          ? sprite.anims.getProgress()
+          : 0.5;
+        this.fireworkRig.group.position.set(sprite.x, -sprite.y, 40);
+        this.fireworkRig.rays.forEach(({ mesh, dir, material }, i) => {
+          const wave = (progress + (i % 4) * 0.04) % 1;
+          const reach = this.fireworkRig!.radius * (0.15 + wave * 0.95);
+          mesh.position.copy(dir).multiplyScalar(reach);
+          const shrink = 1 - wave * 0.7;
+          mesh.scale.setScalar(Math.max(0.05, shrink));
+          material.opacity = Math.max(0, 1 - wave * wave);
+        });
+      }
+    }
+
+    // spinning gold beacon where the 2D flag shows the leader silhouette
+    if (this.leaderMarker) {
+      const sprite = this.leaderMarker.sprite;
+      const show = !!sprite?.visible && sprite.alpha > 0.01;
+      this.leaderMarker.group.visible = show;
+      if (show) {
+        this.leaderMarker.group.position.set(sprite.x, -sprite.y, 10);
+        this.leaderMarker.group.rotation.y = this.elapsed * 3;
+      }
+    }
 
     // fire flower inherits the 2D tint (grey when inactive, white when hot)
     if (this.flowerGroup && game.fireFlower.sprite) {
-      const tint = new THREE.Color(game.fireFlower.sprite.tintTopLeft ?? 0xffffff);
+      const tint = new THREE.Color(
+        game.fireFlower.sprite.tintTopLeft ?? 0xffffff
+      );
       this.flowerTintable.forEach((material, i) => {
         material.color.copy(this.flowerBaseColors[i]).multiply(tint);
       });
@@ -803,7 +784,8 @@ export class Three3D {
     this.explosionMirrors.forEach((explosion) => {
       const sprite = explosion.sprite;
       const playing = !!sprite?.anims?.isPlaying;
-      explosion.group.visible = playing && sprite.visible && sprite.alpha > 0.01;
+      explosion.group.visible =
+        playing && sprite.visible && sprite.alpha > 0.01;
       if (!explosion.group.visible) {
         return;
       }
@@ -813,7 +795,10 @@ export class Three3D {
       explosion.group.position.set(sprite.x, -sprite.y, 30);
       const scale = 0.35 + progress * 1.05;
       explosion.group.scale.setScalar(scale);
-      explosion.material.opacity = Math.max(0, 0.95 * (1 - progress * progress));
+      explosion.material.opacity = Math.max(
+        0,
+        0.95 * (1 - progress * progress)
+      );
     });
   }
 
@@ -830,6 +815,9 @@ export class Three3D {
 
     this.syncCanvasStyle();
     this.syncCamera();
+    if (this.environment) {
+      this.environment.update(dt, this.elapsed);
+    }
     this.mirrors.forEach((mirror) => this.syncMirror(mirror));
     this.syncPlayers(dt);
     this.syncStageExtras();

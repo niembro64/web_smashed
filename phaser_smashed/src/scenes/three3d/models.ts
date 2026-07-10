@@ -1,9 +1,12 @@
 import * as THREE from 'three';
 import {
-  getImageTexture,
+  getBrickPatternTexture,
+  getCrackedBlockTexture,
+  getFlagTexture,
   getMetalTexture,
   getShellTexture,
   getWoodTexture,
+  THEME,
 } from './textures';
 
 ////////////////////////////////////////////////////////////
@@ -23,6 +26,8 @@ import {
 //   fire_flower -> white petal ring, orange core, green stem
 //   chompsheet5 -> black ball, huge white teeth
 ////////////////////////////////////////////////////////////
+
+const THEME_GOLD = 0xf2c218;
 
 export function lambert(
   color: number,
@@ -95,30 +100,82 @@ export function cone(
 // PLATFORM BLOCKS
 ////////////////////////////////////////////////////////////
 
+export type PlatformVariant = 'bricks' | 'cracked' | 'stone';
+
+const platformTextureCache: Map<string, THREE.Texture> = new Map();
+
+/** Procedural masonry sized so bricks stay 33x34 world px everywhere. */
+function getSizedMasonry(
+  variant: PlatformVariant,
+  w: number,
+  h: number
+): THREE.Texture {
+  const key = variant + '|' + Math.round(w) + 'x' + Math.round(h);
+  const cached = platformTextureCache.get(key);
+  if (cached) {
+    return cached;
+  }
+  const source =
+    variant === 'cracked'
+      ? getCrackedBlockTexture()
+      : getBrickPatternTexture(variant === 'stone' ? 'stone' : 'warm');
+  const texture = source.clone();
+  texture.needsUpdate = true;
+  if (variant === 'cracked') {
+    texture.repeat.set(Math.max(1, Math.round(w / 33)), Math.max(1, Math.round(h / 34)));
+  } else {
+    texture.repeat.set(w / 66, h / 68);
+  }
+  platformTextureCache.set(key, texture);
+  return texture;
+}
+
 /**
- * A stage block: the real 2D brick art on the front face and a
- * darker mortar color on the extruded sides, so the stage reads
- * as solid brickwork instead of paper cutouts.
+ * A stage block: hand-drawn terracotta brickwork on every face
+ * (matching brick scale per face), so the stage reads as solid
+ * masonry with real depth — no original 2D art involved.
  */
 export function buildPlatformBlock(
   w: number,
   h: number,
   depth: number,
-  textureUrl: string
+  variant: PlatformVariant
 ): THREE.Mesh {
-  const face = getImageTexture(textureUrl);
-  const sideMaterial = new THREE.MeshLambertMaterial({ color: 0x6e5140 });
-  const faceMaterial = new THREE.MeshLambertMaterial({ map: face });
-  const backMaterial = new THREE.MeshLambertMaterial({ color: 0x4d382c });
+  const front = new THREE.MeshLambertMaterial({
+    map: getSizedMasonry(variant, w, h),
+  });
+  const top = new THREE.MeshLambertMaterial({
+    map: getSizedMasonry(variant, w, depth),
+    color: 0xffffff,
+  });
+  const side = new THREE.MeshLambertMaterial({
+    map: getSizedMasonry(variant, depth, h),
+    color: 0xbbb0a0,
+  });
+  const back = new THREE.MeshLambertMaterial({ color: THEME.stoneDark });
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, depth), [
-    sideMaterial, // +x
-    sideMaterial, // -x
-    sideMaterial, // +y
-    sideMaterial, // -y
-    faceMaterial, // +z (front, faces camera)
-    backMaterial, // -z
+    side, // +x
+    side, // -x
+    top, // +y
+    back, // -y
+    front, // +z (faces camera)
+    back, // -z
   ]);
   return mesh;
+}
+
+/** Brick watchtower column with a cream cap ledge. */
+export function buildTowerColumn(w: number, h: number): THREE.Group {
+  const group = new THREE.Group();
+  const body = buildPlatformBlock(w, h, Math.min(90, w), 'stone');
+  group.add(body);
+  const cap = new THREE.Mesh(
+    new THREE.BoxGeometry(w * 1.12, 14, Math.min(90, w) * 1.15),
+    new THREE.MeshLambertMaterial({ color: THEME.cream })
+  );
+  cap.position.y = h / 2 + 7;
+  group.add(cap);
+  return group;
 }
 
 ////////////////////////////////////////////////////////////
@@ -421,18 +478,36 @@ export function buildPole(w: number, h: number): THREE.Group {
   return group;
 }
 
-/** The capture flag: the real "?" flag art on a double-sided cloth plane. */
-export function buildFlag(w: number, h: number): THREE.Group {
+/**
+ * The capture flag: hand-drawn cream banner with a bold "?", on a
+ * segmented cloth plane the renderer ripples every frame.
+ */
+export function buildFlag(
+  w: number,
+  h: number
+): { group: THREE.Group; cloth: THREE.Mesh } {
   const group = new THREE.Group();
-  const texture = getImageTexture('images/qflag3.png');
   const material = new THREE.MeshLambertMaterial({
-    map: texture,
+    map: getFlagTexture(),
     side: THREE.DoubleSide,
-    transparent: true,
   });
-  const flag = new THREE.Mesh(new THREE.PlaneGeometry(w, h, 8, 1), material);
-  group.add(flag);
-  return group;
+  const cloth = new THREE.Mesh(new THREE.PlaneGeometry(w, h, 10, 4), material);
+  group.add(cloth);
+  return { group, cloth };
+}
+
+/** Ripple the flag cloth like wind is blowing through it. */
+export function waveFlagCloth(cloth: THREE.Mesh, t: number): void {
+  const geometry = cloth.geometry as THREE.PlaneGeometry;
+  const positions = geometry.attributes.position;
+  const halfW = (geometry.parameters as any).width / 2;
+  for (let i = 0; i < positions.count; i++) {
+    const x = positions.getX(i);
+    const wind = (x + halfW) / (halfW * 2); // pinned at the pole side
+    positions.setZ(i, Math.sin(t * 5 + x * 0.09) * 7 * wind);
+  }
+  positions.needsUpdate = true;
+  geometry.computeVertexNormals();
 }
 
 /** Flag spikes: a row of metal spikes on a base (flag_spikes.png). */
@@ -455,25 +530,101 @@ export function buildSpikes(w: number, h: number): THREE.Group {
   return group;
 }
 
-/** P-switch: big blue dome button on an orange base (pswitch_up.png). */
-export function buildPSwitch(w: number, h: number): {
+export interface PSwitchHandles {
   group: THREE.Group;
   dome: THREE.Mesh;
-} {
+  domeMaterial: THREE.MeshLambertMaterial;
+  ringMaterial: THREE.MeshLambertMaterial;
+}
+
+/**
+ * P-switch: blue glossy dome on a riveted gold pedestal with a
+ * state ring. The renderer flips it between two clear states:
+ *   UP (armed)    - dome raised, blue, ring glows cool cream
+ *   DOWN (active) - dome squashed flat, molten orange, ring hot
+ */
+export function buildPSwitch(w: number, h: number): PSwitchHandles {
   // origin matches the sprite's origin (0.5, 1) => bottom center
   const group = new THREE.Group();
-  const base = box(w, h * 0.18, w * 0.6, lambert(0xe8842a));
-  base.position.y = h * 0.09;
-  const dome = new THREE.Mesh(
-    new THREE.SphereGeometry(w * 0.42, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2),
-    lambert(0x4169e1)
+
+  const baseMaterial = lambert(THEME_GOLD, {
+    map: getMetalTexture('#f2c218'),
+  });
+  const base = box(w, h * 0.2, w * 0.62, baseMaterial);
+  base.position.y = h * 0.1;
+  // rivets on the pedestal corners
+  const rivetMaterial = lambert(0x7a6110);
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      const rivet = sphere(w * 0.035, rivetMaterial, 8, 6);
+      rivet.position.set(sx * w * 0.42, h * 0.2, sz * w * 0.24);
+      group.add(rivet);
+    }
+  }
+
+  const ringMaterial = lambert(0xf4f0e0, { emissive: 0x555540 });
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(w * 0.36, w * 0.05, 10, 22),
+    ringMaterial
   );
-  dome.scale.y = (h * 0.8) / (w * 0.42);
-  dome.position.y = h * 0.18;
-  const badge = box(w * 0.2, h * 0.3, w * 0.05, lambert(0xffffff));
-  badge.position.set(0, h * 0.5, w * 0.33);
-  group.add(base, dome, badge);
-  return { group, dome };
+  ring.rotation.x = Math.PI / 2;
+  ring.position.y = h * 0.22;
+
+  const domeMaterial = lambert(0x4169e1, { emissive: 0x0a1030 });
+  const dome = new THREE.Mesh(
+    new THREE.SphereGeometry(w * 0.34, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+    domeMaterial
+  );
+  dome.scale.y = (h * 0.72) / (w * 0.34);
+  dome.position.y = h * 0.2;
+
+  group.add(base, ring, dome);
+  return { group, dome, domeMaterial, ringMaterial };
+}
+
+/** Firework burst: emissive rays flying out of a center, theme colors. */
+export function buildFirework(radius: number): {
+  group: THREE.Group;
+  rays: { mesh: THREE.Mesh; dir: THREE.Vector3; material: THREE.MeshLambertMaterial }[];
+} {
+  const group = new THREE.Group();
+  const colors = [0xf2c218, 0xff5511, 0xf4f0e0, 0x66ccff];
+  const rays: {
+    mesh: THREE.Mesh;
+    dir: THREE.Vector3;
+    material: THREE.MeshLambertMaterial;
+  }[] = [];
+  for (let i = 0; i < 16; i++) {
+    const angle = (i / 16) * Math.PI * 2;
+    const tilt = ((i % 4) - 1.5) * 0.4;
+    const dir = new THREE.Vector3(
+      Math.cos(angle),
+      Math.sin(angle),
+      Math.sin(tilt) * 0.6
+    ).normalize();
+    const color = colors[i % colors.length];
+    const material = lambert(color, {
+      emissive: color,
+      transparent: true,
+      opacity: 1,
+    });
+    const mesh = sphere(radius * 0.06, material, 8, 6);
+    group.add(mesh);
+    rays.push({ mesh, dir, material });
+  }
+  return { group, rays };
+}
+
+/** Spinning gold beacon marking the flag's current owner. */
+export function buildLeaderMarker(size: number): THREE.Group {
+  const group = new THREE.Group();
+  const gem = new THREE.Mesh(
+    new THREE.OctahedronGeometry(size / 2),
+    lambert(THEME_GOLD, { emissive: 0x806508 })
+  );
+  gem.scale.y = 1.5;
+  group.add(gem);
+  return group;
 }
 
 /** Fire flower: white petal ring, warm core, leafy green stem. */
