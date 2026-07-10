@@ -1,6 +1,12 @@
 import { DebugDescriptions } from './scenes/types';
 
 export const debugDescriptions: DebugDescriptions = {
+  Mode_3D: [
+    'Graphics mode',
+    'TRUE: pseudo-3D visuals rendered with Three.js',
+    'FALSE: classic 2D sprite visuals',
+    'Gameplay physics are identical in both modes',
+  ],
   Nintendo_Sprites: ['Whether to use Nintendo sprites'],
   Pixel_Density: [
     'Pixel density of the game:',

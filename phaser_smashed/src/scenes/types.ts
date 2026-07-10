@@ -30,6 +30,7 @@ export const toolTipStyle: CSSProperties = {
 };
 
 export interface Debug {
+  Mode_3D: boolean;
   Nintendo_Sprites: boolean;
   Pixel_Graphics: boolean;
   Pixel_Density: number;

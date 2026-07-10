@@ -30,6 +30,7 @@ import {
 import { preload } from './preload';
 import { update } from './update';
 import { debugInit } from '../debugInit';
+import { Three3D } from './three3d/Three3D';
 
 export const SCREEN_DIMENSIONS = { WIDTH: 1920, HEIGHT: 1080 };
 
@@ -38,6 +39,10 @@ export default class SmashedGame extends Phaser.Scene {
   ////////// GAME DEBUG
   ////////////////////////////////
   debug!: Debug;
+
+  // Optional pseudo-3D view (Debug.Mode_3D). Rendering only —
+  // all physics and game logic stay in the 2D Phaser world.
+  three3D: Three3D | null = null;
 
   sessionMoment: Moment = moment();
 
@@ -3419,9 +3424,26 @@ export default class SmashedGame extends Phaser.Scene {
   }
   create() {
     create(this);
+
+    if (this.debug.Mode_3D) {
+      this.three3D = new Three3D(this);
+
+      const destroyThree3D = () => {
+        if (this.three3D) {
+          this.three3D.destroy();
+          this.three3D = null;
+        }
+      };
+      this.events.once(Phaser.Scenes.Events.SHUTDOWN, destroyThree3D);
+      this.events.once(Phaser.Scenes.Events.DESTROY, destroyThree3D);
+    }
   }
 
   update(time: number, delta: number) {
     update(this, time, delta);
+
+    if (this.three3D) {
+      this.three3D.update(delta);
+    }
   }
 }

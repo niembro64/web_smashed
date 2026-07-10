@@ -222,7 +222,12 @@ function Main() {
 
     const startRecording = () => {
       setIsReplayHidden(true);
-      const canvas = myPhaser.current?.canvas;
+      // in 3D mode the world is drawn on the Three.js canvas, so record
+      // that instead (the element only exists when 3D mode is active)
+      const threeCanvas = document.getElementById(
+        'three-canvas'
+      ) as HTMLCanvasElement | null;
+      const canvas = threeCanvas || myPhaser.current?.canvas;
       if (!canvas) return;
 
       const stream = canvas.captureStream();
@@ -840,6 +845,11 @@ function Main() {
       const configUpdated: Phaser.Types.Core.GameConfig = {
         ...config,
         pixelArt: debugState.Pixel_Graphics,
+        // in 3D mode the Phaser canvas is a fully transparent HUD layer
+        // sitting on top of the Three.js canvas
+        backgroundColor: debugState.Mode_3D
+          ? '#00000000'
+          : config.backgroundColor,
 
         scale: {
           ...config.scale,

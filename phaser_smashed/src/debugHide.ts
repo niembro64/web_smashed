@@ -1,6 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugHide: Debug = {
+  Mode_3D: false,
   Nintendo_Sprites: true,
   Pixel_Density: 1,
   Pixel_Graphics: false,

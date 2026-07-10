@@ -1,6 +1,7 @@
 import { Debug } from './scenes/types';
 
 export const debugInit: Debug = {
+  Mode_3D: false,
   Nintendo_Sprites: true,
   Mode_Infinity: false,
   Minutes: 2, //01234567

@@ -2,6 +2,7 @@ import { Debug } from './scenes/types';
 
 // TRUE means SHOWN ON MAIN PAGE
 export const debugOnMain: Debug = {
+  Mode_3D: true,
   Mode_Infinity: true,
   Dur_Seconds: false,
   Nintendo_Sprites: false,

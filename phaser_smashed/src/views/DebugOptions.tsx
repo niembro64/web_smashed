@@ -46,6 +46,9 @@ const DebugOptions: React.FC<DebugOptionsProps> = ({
         let textToShow: string = 'XXX';
 
         switch (key) {
+          case 'Mode_3D':
+            textToShow = value ? 'Video: 3D' : 'Video: 2D';
+            break;
           case 'Minutes':
             if (debugState.Dur_Seconds) {
               textToShow = value + ' Seconds';
