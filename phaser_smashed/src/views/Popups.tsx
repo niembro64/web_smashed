@@ -314,6 +314,7 @@ export default function Popups(props: PopupsProps) {
             }}
           >
             <h1>About</h1>
+            <p>Static demo: session history and neural-network saving are paused.</p>
             <div className="horiz">
               <div
                 className="horiz-item-big"
@@ -414,7 +415,9 @@ export default function Popups(props: PopupsProps) {
                     });
                   }}
                   className="btn btn-dark text-light"
-                  href="http://34.230.11.31:1444/"
+                  aria-disabled="true"
+                  tabIndex={-1}
+                  title="Seouldat demo is paused"
                   // href="https://resume.niemo.io/"
                   onClick={(e) => {
                     ReactGA.event({
@@ -424,7 +427,7 @@ export default function Popups(props: PopupsProps) {
                     });
                   }}
                 >
-                  <span className="text-white small">SEOULDAT</span>
+                  <span className="text-white small">SEOULDAT (PAUSED)</span>
                 </a>
               </div>
             </div>
@@ -613,7 +616,7 @@ export default function Popups(props: PopupsProps) {
               onClickPlayNavBody('History');
             }}
           >
-            <h1>History Coming Soon? Or same as About ...</h1>
+            <h1>Session history is paused in this static demo.</h1>
           </div>
         </div>
       )}

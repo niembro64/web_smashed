@@ -19,6 +19,12 @@ export interface ClientInformation {
 
 export const nodeEnvIsProduction = process.env.NODE_ENV === 'production';
 
+// Static hosting has no stats or neural-network API. Leave ordinary backend
+// builds unchanged, and use the bundled network when persistence is disabled.
+export const backendDisabled =
+  process.env.REACT_APP_STATIC_DEMO === 'true' ||
+  (typeof window !== 'undefined' && window.location.protocol === 'file:');
+
 export const fetchClientData = async (): Promise<ClientInformation> => {
   // let counterContainer = document.querySelector("#visits");
   // let resetButton = document.querySelector('#reset');
@@ -36,8 +42,15 @@ export const fetchClientData = async (): Promise<ClientInformation> => {
     localStorage.setItem('page_view', '1');
   }
 
-  let response = await fetch('https://ipapi.co/json/');
-  let responseJSON = await response.json();
+  let responseJSON: any = {};
+  if (!backendDisabled) {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      responseJSON = await response.json();
+    } catch (error) {
+      print('fetchClientData: offline', error);
+    }
+  }
 
   print('responseJSON', responseJSON);
 
@@ -108,6 +121,8 @@ export const axiosSaveOne = async (
 
   print('axiosSaveOne: sessionInfo', sessionInfo);
 
+  if (backendDisabled) return sessionInfo;
+
   let res: any = null;
   try {
     if (nodeEnvIsProduction) {
@@ -134,6 +149,7 @@ export const axiosUpsertOne = async (
   matrixDeathsUnto: GameMatrix,
   matrixHitsUnto: GameMatrix
 ): Promise<void> => {
+  if (backendDisabled) return;
   print(
     'about to call timestamp:',
     moment(momentCreated).format('YYYY-MM-DDTHH:mm:ss.SSSZ')
@@ -188,6 +204,7 @@ export const axiosUpsertOne = async (
 };
 
 export const getAllGameHistory = async (): Promise<SessionInfo[]> => {
+  if (backendDisabled) return [];
   let response;
   if (nodeEnvIsProduction) {
     // response = await axios.get('http://3.86.180.36:8000/api/smashed');
@@ -251,6 +268,7 @@ const getApiBaseUrl = () => {
 // Function to fetch the neural network from the backend
 export const fetchNeuralNetwork =
   async (): Promise<INeuralNetworkJSON | null> => {
+    if (backendDisabled) return null;
     try {
       const response = await axios.get(`${getApiBaseUrl()}/api/neural-network`);
       const neuralNetwork = response.data;
@@ -266,6 +284,7 @@ export const fetchNeuralNetwork =
 
 // Function to send the updated neural network to the backend
 export const saveNeuralNetwork = async (nn: any): Promise<boolean> => {
+  if (backendDisabled) return false;
   let firstWeight;
   firstWeight = getFirstWeightOfNNJson(nn);
   // if (!nn?.toJSON) {
